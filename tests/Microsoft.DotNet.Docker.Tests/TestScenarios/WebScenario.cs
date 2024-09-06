@@ -8,7 +8,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+public abstract class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
     : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
 {
     protected virtual int? PortOverride { get; } = null;
@@ -16,12 +16,6 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
     protected virtual string? Endpoint { get; } = null;
 
     protected override string SampleName { get; } = "web";
-
-    protected override string BuildStageTarget { get; } = "build";
-
-    // Running a scenario of unit testing within the sdk container is identical between a console app and web app,
-    // so we only want to execute it for one of those app types.
-    protected override string? TestStageTarget { get; } = null;
 
     protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Aspnet;
 
@@ -139,5 +133,30 @@ public class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, 
             containerPort,
             pathAndQuery,
             validateCallback)).Dispose();
+    }
+
+    public new class FxDependent(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+        : WebScenario(imageData, dockerHelper, outputHelper)
+    {
+        protected override TestDockerfile Dockerfile =>
+            TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.FxDependent);
+    }
+
+    public new class SelfContained(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+        : WebScenario(imageData, dockerHelper, outputHelper)
+    {
+        protected override TestDockerfile Dockerfile =>
+            TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.SelfContained);
+    }
+
+    public new class Aot(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+        : WebScenario(imageData, dockerHelper, outputHelper)
+    {
+        protected override string? Endpoint { get; } = "todos";
+        protected override string SampleName { get; } = "webapiaot";
+        protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime_Deps;
+
+        protected override TestDockerfile Dockerfile =>
+            TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.Aot);
     }
 }

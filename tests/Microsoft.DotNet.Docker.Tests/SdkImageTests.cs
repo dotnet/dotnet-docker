@@ -55,14 +55,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async void VerifyBlazorWasmScenario(ProductImageData imageData)
         {
-            // Test will fail on main branch since `dotnet workload install` does not work with an empty NuGet config.
-            bool failureExpected = !Config.IsNightlyRepo;
-
-            bool isAlpine = imageData.OS.StartsWith(OS.Alpine);
-
-            // Microsoft.NETCore.App.Runtime.Mono.linux-musl-arm* package does not exist
-            failureExpected |= isAlpine && imageData.IsArm;
-
             bool useWasmTools = true;
 
             // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
@@ -79,20 +71,13 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-            if (isAlpine && (imageData.Version.Major == 6 || imageData.Version.Major == 8))
+            if (imageData.OS.StartsWith(OS.Alpine) && (imageData.Version.Major == 6 || imageData.Version.Major == 8))
             {
                 useWasmTools = false;
             }
 
-            // Workaround to get tests passing in main while alternative solution to
-            // https://github.com/dotnet/dotnet-docker/issues/5704 is worked on
-            if (failureExpected)
-            {
-                return;
-            }
-
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
-            await testScenario.ExecuteAsync(shouldThrow: failureExpected);
+            await testScenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]
