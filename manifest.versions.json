@@ -10,8 +10,8 @@
     "aspire-dashboard|8.2|fixed-tag": "$(aspire-dashboard|8.2|product-version)",
     "aspire-dashboard|8.2|minor-tag": "8.1",
     "aspire-dashboard|8|major-tag": "8",
-    "aspire-dashboard|8.2|linux|x64|sha": "0c11ec0a862c70496f7516058e567bba86c66f1946e2f62665f644c996b61411b373fd300f86fab73768ec2bd8d15cbd1edcd04e950512ceb6e4e0d722350e43",
-    "aspire-dashboard|8.2|linux|arm64|sha": "521dde94f3c9dca33be19bf1719d539da7a523c1f94570f674a81b5b0fdaed34c0175d20c583474de9103875c2c56dfd49d16448248261f40c29f1e1315d5f7b",
+    "aspire-dashboard|8.2|linux|x64|sha": "dbc9795e38ae73e30b8e187a7d49a94478c90f463f6cce2eae835687af05be1d4b4bdfe1c99479ccf97914fb51a0f3e3bd596b6278c80b926590492daf8320e0",
+    "aspire-dashboard|8.2|linux|arm64|sha": "5fa4442132466d7c7ca445ad8444c4a59298310fe8c6a155a86460bfbcd1e8b9cfd8d8ea1e31447b1b3bfe1f6db1249ec9bb294a06a0c4576ca1ce4940cf56e0",
     "aspire-dashboard|8.2|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|8.2|base-url|nightly": "$(base-url|public|preview|nightly)",
 
