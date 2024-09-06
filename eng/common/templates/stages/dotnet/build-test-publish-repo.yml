@@ -70,47 +70,53 @@ stages:
       ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         vmImage: $(defaultLinuxAmd64PoolImage)
       ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        name: NetCore1ESPool-Internal
-        image: 1es-ubuntu-2204
+        name: $(linuxAmd64InternalPoolName)
+        image: $(linuxAmd64InternalPoolImage)
         os: linux
 
     # Linux Arm64
     linuxArm64Pool:
       os: linux
       hostArchitecture: Arm64
-      image: Mariner-2-Docker-ARM64
+      image: $(linuxArm64PoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        name: Docker-Linux-Arm-Public
+        name: $(linuxArm64PublicPoolName)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        name: Docker-Linux-Arm-Internal
+        name: $(linuxArm64InternalPoolName)
 
     # Linux Arm32
     linuxArm32Pool:
       os: linux
       hostArchitecture: Arm64
-      image: Mariner-2-Docker-ARM64
+      image: $(linuxArm32PoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        name: Docker-Linux-Arm-Public
+        name: $(linuxArm32PublicPoolName)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        name: Docker-Linux-Arm-Internal
+        name: $(linuxArm32InternalPoolName)
 
     # Windows Server 2016
     windows2016Pool:
       os: windows
-      name: Docker-2016-${{ variables['System.TeamProject'] }}
+      name: $(windowsServer2016PoolName)
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        image: $(windowsServer2016PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        image: Server2016-NESDockerBuilds-PT
+        image: $(windowsServer2016InternalPoolImage)
 
     # Windows Server 2019 (1809)
     windows1809Pool:
       os: windows
-      name: Docker-1809-${{ variables['System.TeamProject'] }}
+      name: $(windowsServer2019PoolName)
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        image: $(windowsServer2019PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        image: Server2019-1809-NESDockerBuilds-1ESPT
+        image: $(windowsServer2019InternalPoolImage)
 
     # Windows Server 2022
     windows2022Pool:
       os: windows
-      name: Docker-2022-${{ variables['System.TeamProject'] }}
+      name: $(windowsServer2022PoolName)
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        image: $(windowsServer2022PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-        image: Server2022-NESDockerBuilds-1ESPT
+        image: $(windowsServer2022InternalPoolImage)
