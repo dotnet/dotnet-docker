@@ -80,9 +80,10 @@ View the current tags at the [Microsoft Artifact Registry portal](https://mcr.mi
 
 ## Image Update Policy
 
-* We update supported .NET images within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
-* We re-build all .NET images as part of releasing new versions of .NET including new major/minor versions and servicing.
-* Distroless images such as Ubuntu Chiseled have no base image, and as such will only be updated with .NET releases and CVE fixes as described below.
+* Supported .NET images are re-built within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
+* All .NET images are re-built as part of releasing new .NET versions. This includes new major versions, minor versions, and servicing releases.
+* All images are re-built at least once per month, typically on the second Tuesday of the month, in order to pick up lower-severity CVE fixes.
+* At times, components of .NET images like PowerShell or MinGit may require updates out of band with .NET releases in order to fix critical bugs or vulnerabilities. If this happens, new images will be created with suffix as described in the [Fixed Tags documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md#fixed-version-tags).
 
 ### CVE Update Policy
 
