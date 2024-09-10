@@ -12,8 +12,8 @@ jobs:
 - job: BuildProjects
   displayName: Build Projects
   pool:
-    name: NetCore1ESPool-Internal
-    image: 1es-ubuntu-2204
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
     os: linux
   steps:
   - powershell: >

@@ -8,7 +8,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=9.0.0-rc.1.24421.1
+    DOTNET_VERSION=9.0.0-rc.1.24431.7
 
 # Install .NET Runtime
 RUN powershell -Command `
@@ -16,7 +16,7 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Runtime/$Env:DOTNET_VERSION/dotnet-runtime-$Env:DOTNET_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'f626d8dde12217e202333e83b5c6cecc369435de9ef6ab7206d5554545de791d2db97b0692c9b1f500bf05e0e35ba29cef60759ba5726ce35791beb40286880c'; `
+        $dotnet_sha512 = 'b73b3ab9ab37b703b00bcb71eb180caab3f4e32dca16afbe4bcb28b3608604456c288edd7fb9254c8facdebfe3d00b28e17e10d6abb96ca0768427b773983e26'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `

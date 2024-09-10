@@ -24,6 +24,24 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
+        public async Task VerifySelfContainedConsoleScenario(ProductImageData imageData)
+        {
+            using ConsoleAppScenario testScenario =
+                new ConsoleAppScenario.SelfContained(imageData, DockerHelper, OutputHelper);
+            await testScenario.ExecuteAsync();
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifySelfContainedWebScenario(ProductImageData imageData)
+        {
+            using WebScenario testScenario =
+                new WebScenario.SelfContained(imageData, DockerHelper, OutputHelper);
+            await testScenario.ExecuteAsync();
+        }
+
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
         public async Task VerifyAotAppScenario(ProductImageData imageData)
         {
             if (!imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT))
@@ -40,8 +58,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            using WebApiAotScenario testScenario = new(imageData, DockerHelper, OutputHelper);
-            await testScenario.ExecuteAsync();
+            using WebScenario scenario = new WebScenario.Aot(imageData, DockerHelper, OutputHelper);
+            await scenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]

@@ -13,10 +13,6 @@ extends:
       jobs:
       - job: UpdateReadmes
         displayName: Update Readmes
-        pool:
-          name: NetCore1ESPool-Internal
-          image: 1es-ubuntu-2204
-          os: linux
         steps:
         - template: /eng/common/templates/steps/init-docker-linux.yml@self
         - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
