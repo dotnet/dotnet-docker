@@ -1,5 +1,7 @@
 # Featured Tags
 
+* `9` (Release Candidate)
+  * `docker pull mcr.microsoft.com/dotnet/monitor:9`
 * `8` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor:8`
 * `6` (Long-Term Support)
