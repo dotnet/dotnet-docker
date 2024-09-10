@@ -31,9 +31,11 @@ namespace Dotnet.Docker
         public bool UpdateOnly => Email == null || Password == null || User == null || TargetBranch == null;
         public bool IsInternal => !string.IsNullOrEmpty(BinarySasQueryString) || !string.IsNullOrEmpty(ChecksumSasQueryString);
         public string ChecksumsFile { get; }
+        public ReleaseState? ReleaseState { get; }
 
         public Options(string dockerfileVersion, string[] productVersion, string versionSourceName, string email, string password, string user,
-            bool computeShas, bool stableBranding, string binarySas, string checksumSas, string sourceBranch, string targetBranch, string org, string project, string repo, string checksumsFile)
+            bool computeShas, bool stableBranding, string binarySas, string checksumSas, string sourceBranch, string targetBranch, string org,
+            string project, string repo, string checksumsFile, ReleaseState? releaseState)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
@@ -66,6 +68,8 @@ namespace Dotnet.Docker
             {
                 ProductVersions["dotnet"] = ProductVersions["aspnet"];
             }
+
+            ReleaseState = releaseState;
         }
 
         public static IEnumerable<Symbol> GetCliSymbols() =>
@@ -86,8 +90,15 @@ namespace Dotnet.Docker
                 new Option<string>("--org", "Name of the AzDO organization"),
                 new Option<string>("--project", "Name of the AzDO project"),
                 new Option<string>("--repo", "Name of the AzDO repo"),
-                new Option<string>("--checksums-file", "File containing a list of checksums for each product asset")
+                new Option<string>("--checksums-file", "File containing a list of checksums for each product asset"),
+                new Option<ReleaseState?>("--release-state", "The release state of the product assets")
             };
+    }
+
+    public enum ReleaseState
+    {
+        Prerelease,
+        Release
     }
 }
 #nullable disable
