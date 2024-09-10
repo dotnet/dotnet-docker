@@ -239,10 +239,11 @@ Tag | Dockerfile
 
 ### Image Update Policy
 
-* Supported .NET images are re-built within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
-* All .NET images are re-built as part of releasing new .NET versions. This includes new major versions, minor versions, and servicing releases.
-* All images are re-built at least once per month, typically on the second Tuesday of the month, in order to pick up lower-severity CVE fixes.
-* At times, components of .NET images like PowerShell or MinGit may require updates out of band with .NET releases in order to fix critical bugs or vulnerabilities. If this happens, new images will be created with suffix as described in the [Fixed Tags documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md#fixed-version-tags).
+* **Base Image Updates:** Images are re-built within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
+* **.NET Releases:** Images are re-built as part of releasing new .NET versions. This includes new major versions, minor versions, and servicing releases.
+* **Critical CVEs:** Images are re-built to pick up critical CVE fixes as described by the [CVE Update Policy](#cve-update-policy) below.
+* **Monthly Re-builds:** Images are re-built monthly, typically on the second Tuesday of the month, in order to pick up lower-severity CVE fixes.
+* **Out-Of-Band Updates:** Images can sometimes be re-built when out-of-band updates are necessary to address critical issues. If this happens, new fixed version tags will be updated according to the [Fixed version tags documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md#fixed-version-tags).
 
 #### CVE Update Policy
 
