@@ -156,7 +156,7 @@ Examples:
 > - These tags are considered _fixed tags_ since they reference a specific .NET patch version.
 > - They are updated in response to base image updates (like a Debian base image) for the supported life of the image (typically one month).
 > - The .NET components within the image will not be updated.
-> - In the rare event that .NET components are updated before the next regular .NET service release, then a new image with a `-1` tag will be created. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
+> - At times, components of .NET images like PowerShell or MinGit may require updates out of band with .NET releases in order to fix critical bugs or vulnerabilities. If this happens, new images will be created with a `-1` suffix appended to the fixed tag so that you can roll back to the previous fixed tag if necessary. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
 
 ### Floating version tags
 
