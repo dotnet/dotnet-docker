@@ -154,8 +154,8 @@ jobs:
         '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
         '$(artifactsPath)/eol-annotation-data/image-info-old.json'
         '$(artifactsPath)/eol-annotation-data/image-info-new.json'
-        '$(publishRepoPrefix)'
         '$(acr.server)'
+        '$(publishRepoPrefix)'
         $(generateEolAnnotationDataExtraOptions)
         $(dryRunArg)
   - template: /eng/common/templates/steps/publish-artifact.yml@self

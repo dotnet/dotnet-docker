@@ -4,8 +4,8 @@
 
 # Featured Tags
 
-* `8.1`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.1`
+* `8.2`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.2`
 
 # About
 

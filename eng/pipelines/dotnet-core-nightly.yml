@@ -22,6 +22,8 @@ variables:
 - name: officialBranches
   # comma-delimited list of branch names
   value: nightly
+- name: publishEolAnnotations
+  value: true
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
