@@ -61,7 +61,7 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.1-amd64, 9.0-amd64, 9.0.0-rc.1, 9.0, 9, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.2-amd64, 9.0-amd64, 9.0.0-rc.2, 9.0, 9, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.0.4-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.4-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.4, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.0.4-cbl-mariner-distroless-amd64, 8.0-cbl-mariner-distroless-amd64, 8.0.4-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
@@ -76,7 +76,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.1-arm64v8, 9.0-arm64v8, 9.0.0-rc.1, 9.0, 9, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0-rc.2-arm64v8, 9.0-arm64v8, 9.0.0-rc.2, 9.0, 9, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.4-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.4-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.4, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.4-cbl-mariner-distroless-arm64v8, 8.0-cbl-mariner-distroless-arm64v8, 8.0.4-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/nightly/src/monitor-base/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
