@@ -6,15 +6,16 @@ WORKDIR /source
 
 # Copy project file and restore as distinct layers
 COPY --link aspnetapp/*.csproj .
-RUN dotnet restore -a $TARGETARCH
+RUN dotnet restore -r linux-$TARGETARCH
 
 # Copy source code and publish app
 COPY --link aspnetapp/. .
-RUN dotnet publish -a $TARGETARCH --no-restore -o /app
+RUN dotnet publish --self-contained -r linux-$TARGETARCH --no-restore -o /app
 
 
-# Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+# Final stage
+# Since the app is self-contained, there's no dependency on the .NET Runtime.
+FROM mcr.microsoft.com/dotnet/runtime-deps:9.0
 EXPOSE 8080
 WORKDIR /app
 COPY --link --from=build /app .

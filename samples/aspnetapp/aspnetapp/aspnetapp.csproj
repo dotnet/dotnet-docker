@@ -1,9 +1,21 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+
+    <!-- Uncomment to enable self-contained publish. For more info, see the releasesapp and releasesapi samples.
+         https://learn.microsoft.com/en-us/dotnet/core/deploying/single-file
+         https://learn.microsoft.com/en-us/dotnet/core/deploying/ready-to-run -->
+    <!-- <PublishSingleFile>true</PublishSingleFile> -->
+    <!-- <PublishSelfContained>true</PublishSelfContained> -->
+    <!-- <PublishReadyToRun>true</PublishReadyToRun> -->
+
+    <!-- Uncomment to trim self-contained deployments.
+         https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained -->
+    <!-- <PublishTrimmed>true</PublishTrimmed> -->
   </PropertyGroup>
 
 </Project>
