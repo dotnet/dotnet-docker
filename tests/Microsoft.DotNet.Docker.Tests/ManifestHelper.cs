@@ -14,8 +14,6 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public static class ManifestHelper
     {
-        private static string DockerfileRegex = @"src/(?<repo>.+)/(?<major_minor>\d+\.\d+)/(?<os>.+)/(?<architecture>.+)";
-
         public record DockerfileInfo(string Repo, string MajorMinor, string Os, string Architecture);
 
         public static Manifest GetManifest() =>
@@ -33,6 +31,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static List<string> GetResolvedTags(Platform platform) =>
             platform.Tags.Keys.Select(GetVariableValue).ToList();
+
+        private static readonly string DockerfileRegex = @"src/(?<repo>.+)/(?<major_minor>\d+\.\d+)/(?<os>.+)/(?<architecture>.+)";
 
         public static Dictionary<DockerfileInfo, List<string>> GetDockerfileTags(Repo repo)
         {

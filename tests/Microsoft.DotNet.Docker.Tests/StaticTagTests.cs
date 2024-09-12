@@ -17,103 +17,42 @@ namespace Microsoft.DotNet.Docker.Tests
     [Trait("Category", "pre-build")]
     public class StaticTagTests
     {
-        public enum TestType
+        public enum VersionType
         {
-            Latest,
-            Platform,
-            Alpine,
-            Version
+            Major = 1,
+            MajorMinor = 2,
+            MajorMinorPatch = 3
         }
+
         private const string AlpineOs = "alpine";
         private const string LatestTagValue = "latest";
         private const string SingleNumberRegex = @"\d+";
-        private const string DoubleNumberRegex = @$"{SingleNumberRegex}\.{SingleNumberRegex}";
+        private const string MajorVersionRegex = SingleNumberRegex;
+        private const string MajorMinorVersionRegex = @$"{SingleNumberRegex}\.{SingleNumberRegex}";
         private static readonly string[] ApplianceRepos = { "monitor", "monitor-base", "aspire-dashboard" };
 
-        public static IEnumerable<object[]> GetTagTestObjects(TestType testType)
+        private enum TestType
         {
-            List<object[]> testObjects = new List<object[]>();
-            foreach (Repo repo in ManifestHelper.GetManifest().Repos)
-            {
-                switch (testType)
-                {
-                    case TestType.Latest:
-                        testObjects.Add(GetTagTestInput(testType, repo));
-                        break;
+            // Tests validating the 'latest' tags.
+            // Tests begin with "LatestTag_"
+            Latest,
 
-                    case TestType.Platform:
-                        if (ApplianceRepos.Any(repo.Name.Contains))
-                        {
-                            // Only appliance repos have major version tags
-                            // Only appliance repos have floating distro tags (new schema only)
-                            testObjects.AddRange(new[]
-                            {
-                                GetTagTestInput(testType, repo, 3, true, true, IsApplianceVersionUsingNewSchema),     // <Major.Minor.Patch>-<os>-<architecture>
-                                GetTagTestInput(testType, repo, 3, true, false, IsApplianceVersionUsingNewSchema),    // <Major.Minor.Patch>-<os>
-                                GetTagTestInput(testType, repo, 3, false, true, IsApplianceVersionUsingOldSchema),    // <Major.Minor.Patch>-<architecture>
-                                GetTagTestInput(testType, repo, 2, true, true, IsApplianceVersionUsingNewSchema),     // <Major.Minor>-<os>-<architecture>
-                                GetTagTestInput(testType, repo, 2, true, false, IsApplianceVersionUsingNewSchema),    // <Major.Minor>-<os>
-                                GetTagTestInput(testType, repo, 2, false, true, IsApplianceVersionUsingOldSchema),    // <Major.Minor>-<architecture>
-                                GetTagTestInput(testType, repo, 1, true, true, IsApplianceVersionUsingNewSchema),     // <Major>-<os>-<architecture>
-                                GetTagTestInput(testType, repo, 1, true, false, IsApplianceVersionUsingNewSchema),    // <Major>-<os>
-                            });
+            // Tests validating platform-specific tags
+            // Tags have variations of versions, oses, and architectures.
+            // Does not include tags with only versions specified (<cref="TestType.Version"/>).
+            // Tests begin with "PlatformTag_"
+            Platform,
 
-                            if (!repo.Name.Contains("monitor"))
-                            {
-                                // Monitor repos don't have these tags
-                                testObjects.Add(GetTagTestInput(testType, repo, 1, false, true, IsApplianceVersionUsingOldSchema)); // <Major>-<architecture>
-                            }
-                        }
-                        else
-                        {
-                            testObjects.AddRange(new[]
-                            {
-                                GetTagTestInput(testType, repo, 3, true, true, IsWindows),                            // <Major.Minor.Patch>-<os>-<architecture>
-                                GetTagTestInput(testType, repo, 3, true, false),                                      // <Major.Minor.Patch>-<os>
-                                GetTagTestInput(testType, repo, 2, true, true, IsWindows),                            // <Major.Minor>-<os>-<architecture>
-                                GetTagTestInput(testType, repo, 2, true, false),                                      // <Major.Minor>-<os>
-                            });
-                        }
-                        break;
+            // Tests validating alpine floating tags
+            // Tags have variations of versions and architectures.
+            // Tests begin with "FloatingAlpineTag_"
+            FloatingAlpine,
 
-                    case TestType.Alpine:
-                        if (ApplianceRepos.Any(repo.Name.Contains))
-                        {
-                            // Only appliance repos have major version alpine floating tags
-                            // Only appliance repos have major.minor.patch alpine floating tags
-                            testObjects.AddRange(new[]
-                            {
-                                GetTagTestInput(testType, repo, 3, true),                                               // <Major.Minor.Patch>-alpine-<architecture>
-                                GetTagTestInput(testType, repo, 3, false),                                              // <Major.Minor.Patch>-alpine
-                                GetTagTestInput(testType, repo, 1, true),                                               // <Major>-alpine-<architecture>
-                                GetTagTestInput(testType, repo, 1, false),                                              // <Major>-alpine
-                            });
-                        }
-                        testObjects.AddRange(new[]
-                        {
-                            GetTagTestInput(testType, repo, 2, true),                                               // <Major.Minor>-alpine-<architecture>
-                            GetTagTestInput(testType, repo, 2, false),                                              // <Major.Minor>-alpine
-                        });
-                        break;
-
-                    case TestType.Version:
-                        if (ApplianceRepos.Any(repo.Name.Contains))
-                        {
-                            // Only appliance repos have major version tags
-                            testObjects.Add(GetTagTestInput(testType, repo, 1));                                   // <Major>
-                        }
-                        testObjects.AddRange(new[]
-                        {
-                            GetTagTestInput(testType, repo, 2),                                                   // <Major.Minor>
-                            GetTagTestInput(testType, repo, 3),                                                   // <Major.Minor.Patch>
-                        });
-                        break;
-
-                    default:
-                        throw new ArgumentException("Invalid tag type", nameof(testType));
-                }
-            }
-            return testObjects.ToArray();
+            // Tests validating version tags
+            // Tags have variations of versions
+            // Does not include tags with specified oses or architectures (<cref="TestType.Platform"/>).
+            // Tests begin with "VersionTag_"
+            Version
         }
 
         [Theory]
@@ -148,7 +87,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 .First();
 
             int expectedMajorVersion = GetExpectedMajorVersion(repo);
-            int actualMajorVersion = GetMajorVersion(ManifestHelper.GetResolvedProductVersion(latestImage));
+            int actualMajorVersion = GetVersion(ManifestHelper.GetResolvedProductVersion(latestImage)).Major;
 
             actualMajorVersion.Should().Be(expectedMajorVersion, "expected latest tag to be on the latest major version");
         }
@@ -164,9 +103,9 @@ namespace Microsoft.DotNet.Docker.Tests
         // - <Major>-<architecture>                                 New schema and non-monitor for Appliance repos only
         [Theory]
         [MemberData(nameof(GetTagTestObjects), TestType.Platform)]
-        private void PlatformTag_TagExists(
+        public void PlatformTag_TagExists(
             Repo repo,
-            int versionParts,
+            VersionType versionType,
             bool checkOs,
             bool checkArchitecture,
             Func<ManifestHelper.DockerfileInfo, bool> skipDockerFileOn)
@@ -190,17 +129,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 IEnumerable<string> tags = dockerfileTag.Value
                     .Where(tag => IsTagOfFormat(
                         tag,
-                        versionParts,
+                        versionType,
                         dockerfileInfo.MajorMinor,
                         checkOs ? dockerfileInfo.Os : null,
                         checkArchitecture ? dockerfileInfo.Architecture : null));
 
-                if (versionParts == 1 && !IsExpectedMajorMinorVersion(repo, dockerfileInfo.MajorMinor))
+                if (versionType == VersionType.Major && !IsExpectedMajorMinorVersion(repo, dockerfileInfo.MajorMinor))
                 {
                     // Special case for major version tags
                     // These tags should be on the most up-to-date Major.Minor version for the respective major version
                     tags.Should().BeEmpty("expected tag to be on latest Major.Minor version for version " +
-                        GetMajorVersion(dockerfileInfo.MajorMinor) + ", but found the tag on " + dockerfileInfo);
+                        GetVersion(dockerfileInfo.MajorMinor).Major + ", but found the tag on " + dockerfileInfo);
                 }
                 else
                 {
@@ -216,8 +155,8 @@ namespace Microsoft.DotNet.Docker.Tests
         // - <Major .NET Version>-alpine-<architecture>
         // - <Major .NET Version>-alpine                            Appliance repos only
         [Theory]
-        [MemberData(nameof(GetTagTestObjects), TestType.Alpine)]
-        public void AlpineTag_OnLatestVersion(Repo repo, int versionParts, bool checkArchitecture)
+        [MemberData(nameof(GetTagTestObjects), TestType.FloatingAlpine)]
+        public void FloatingAlpineTag_OnLatestVersion(Repo repo, VersionType versionType, bool checkArchitecture)
         {
             Dictionary<ManifestHelper.DockerfileInfo, List<string>> dockerfileTags = ManifestHelper.GetDockerfileTags(repo);
 
@@ -233,16 +172,21 @@ namespace Microsoft.DotNet.Docker.Tests
             // It's possible that we don't specify the alpine version if
             // there's only a single alpine dockerfile in the repo.
             // In this is the case, a null string for the version will be used
-            string? latestAlpineVersion = alpineDockerfiles
+            Version? latestAlpineVersion = alpineDockerfiles
                 .Select(GetAlpineVersion)
-                .Where(version => !string.IsNullOrEmpty(version))
-                .OrderByDescending(version => new Version(version))
+                .Where(version => version != null)
+                .OrderByDescending(version => version)
                 .FirstOrDefault();
 
             foreach (ManifestHelper.DockerfileInfo dockerfileInfo in alpineDockerfiles)
             {
                 IEnumerable<string> alpineFloatingTags = dockerfileTags[dockerfileInfo]
-                    .Where(tag => IsTagOfFormat(tag, versionParts, dockerfileInfo.MajorMinor, AlpineOs, checkArchitecture ? dockerfileInfo.Architecture : null));
+                    .Where(tag => IsTagOfFormat(
+                        tag,
+                        versionType,
+                        majorMinor: dockerfileInfo.MajorMinor,
+                        os: AlpineOs,
+                        architecture: checkArchitecture ? dockerfileInfo.Architecture : null));
 
                 if(!alpineFloatingTags.Any())
                 {
@@ -264,14 +208,19 @@ namespace Microsoft.DotNet.Docker.Tests
         // - <Major>                                                Appliance repos only
         [Theory]
         [MemberData(nameof(GetTagTestObjects), TestType.Version)]
-        public void VersionTag_SameOsAndVersion(Repo repo, int versionParts)
+        public void VersionTag_SameOsAndVersion(Repo repo, VersionType versionType)
         {
             // Group tags -> dockerfiles
             // Skip .NET 6 dockerfiles because they include linux and windows OSes for the tags
             Dictionary<string, List<ManifestHelper.DockerfileInfo>> tagsToDockerfiles = ManifestHelper.GetDockerfileTags(repo)
                 .Where(pair => !IsDotNet6(pair.Key))
                 .SelectMany(pair => pair.Value
-                    .Where(tag => IsTagOfFormat(tag, versionParts, majorMinor: pair.Key.MajorMinor, os: null, architecture: null))
+                    .Where(tag => IsTagOfFormat(
+                        tag,
+                        versionType,
+                        majorMinor: pair.Key.MajorMinor,
+                        os: null,
+                        architecture: null))
                     .Select(tag => (tag, pair.Key)))
                 .GroupBy(pair => pair.tag, pair => pair.Key)
                 .ToDictionary(group => group.Key, group => group.ToList());
@@ -289,7 +238,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 dockerfileVersions.Should().ContainSingle(
                     "all dockerfiles for tag " + tag + " should have the same Major.Minor version");
                 
-                if (versionParts == 1)
+                if (versionType == VersionType.Major)
                 {
                     string dockerfileVersion = dockerfileVersions.First();
     
@@ -297,7 +246,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     // These tags should be on the most up-to-date Major.Minor version for the respective major version
                     IsExpectedMajorMinorVersion(repo, dockerfileVersion).Should().BeTrue(
                         "expected tag to be on the latest Major.Minor version for the major version " +
-                        GetMajorVersion(dockerfileVersion) + ", but found the tag on " + dockerfileVersion);
+                        GetVersion(dockerfileVersion).Major + ", but found the tag on " + dockerfileVersion);
                 }
 
                 List<string> dockerfileOses = dockerfiles
@@ -310,12 +259,288 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
+        private static IEnumerable<object[]> GetTagTestObjects(TestType testType)
+        {
+            List<object[]> testObjects = new List<object[]>();
+            foreach (Repo repo in ManifestHelper.GetManifest().Repos)
+            {
+                switch (testType)
+                {
+                    case TestType.Latest:
+                        testObjects.Add(GetTagTestInput(testType, repo));
+                        break;
+
+                    case TestType.Platform:
+                        if (ApplianceRepos.Any(repo.Name.Contains))
+                        {
+                            // Only appliance repos have major version tags
+                            // Only appliance repos have floating distro tags (<cref="IsApplianceVersionUsingOldSchema"/>)
+                            testObjects.AddRange(new[]
+                            {
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinorPatch, 
+                                    checkOs: true, 
+                                    checkArchitecture: true, 
+                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                ), // <Major.Minor.Patch>-<os>-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinorPatch, 
+                                    checkOs: true, 
+                                    checkArchitecture: false, 
+                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                ), // <Major.Minor.Patch>-<os>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinorPatch, 
+                                    checkOs: false, 
+                                    checkArchitecture: true, 
+                                    skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                ), // <Major.Minor.Patch>-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinor, 
+                                    checkOs: true, 
+                                    checkArchitecture: true, 
+                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                ), // <Major.Minor>-<os>-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinor, 
+                                    checkOs: true, 
+                                    checkArchitecture: false, 
+                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                ), // <Major.Minor>-<os>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinor, 
+                                    checkOs: false, 
+                                    checkArchitecture: true, 
+                                    skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                ), // <Major.Minor>-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.Major, 
+                                    checkOs: true, 
+                                    checkArchitecture: true, 
+                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                ), // <Major>-<os>-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.Major, 
+                                    checkOs: true, 
+                                    checkArchitecture: false, 
+                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                ) // <Major>-<os>
+                            });
+
+                            if (!repo.Name.Contains("monitor"))
+                            {
+                                // Monitor repos don't have these tags
+                                testObjects.Add(GetTagTestInput(
+                                    testType,
+                                    repo,
+                                    versionType: VersionType.Major,
+                                    checkOs: false,
+                                    checkArchitecture: true,
+                                    skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                )); // <Major>-<architecture>
+                            }
+                        }
+                        else
+                        {
+                            testObjects.AddRange(new[]
+                            {
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinorPatch, 
+                                    checkOs: true, 
+                                    checkArchitecture: true, 
+                                    skipDockerfileOn: IsWindows
+                                ), // <Major.Minor.Patch>-<os>-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinorPatch, 
+                                    checkOs: true, 
+                                    checkArchitecture: false
+                                ), // <Major.Minor.Patch>-<os>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinor, 
+                                    checkOs: true, 
+                                    checkArchitecture: true, 
+                                    skipDockerfileOn: IsWindows
+                                ), // <Major.Minor>-<os>-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinor, 
+                                    checkOs: true, 
+                                    checkArchitecture: false
+                                ) // <Major.Minor>-<os>
+                            });
+                        }
+                        break;
+
+                    case TestType.FloatingAlpine:
+                        if (ApplianceRepos.Any(repo.Name.Contains))
+                        {
+                            // Only appliance repos have major version alpine floating tags
+                            // Only appliance repos have major.minor.patch alpine floating tags
+                            testObjects.AddRange(new[]
+                            {
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinorPatch, 
+                                    checkArchitecture: true
+                                ), // <Major.Minor.Patch>-alpine-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.MajorMinorPatch, 
+                                    checkArchitecture: false
+                                ), // <Major.Minor.Patch>-alpine
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.Major, 
+                                    checkArchitecture: true
+                                ), // <Major>-alpine-<architecture>
+
+                                GetTagTestInput(
+                                    testType, 
+                                    repo, 
+                                    versionType: VersionType.Major, 
+                                    checkArchitecture: false
+                                ) // <Major>-alpine
+                            });
+                        }
+                        testObjects.AddRange(new[]
+                        {
+                            GetTagTestInput(
+                                testType, 
+                                repo, 
+                                versionType: VersionType.MajorMinor, 
+                                checkArchitecture: true
+                            ), // <Major.Minor>-alpine-<architecture>
+
+                            GetTagTestInput(
+                                testType, 
+                                repo, 
+                                versionType: VersionType.MajorMinor, 
+                                checkArchitecture: false
+                            ) // <Major.Minor>-alpine
+                        });
+                        break;
+
+                    case TestType.Version:
+                        if (ApplianceRepos.Any(repo.Name.Contains))
+                        {
+                            // Only appliance repos have major version tags
+                            testObjects.Add(GetTagTestInput(
+                                testType,
+                                repo,
+                                versionType: VersionType.Major
+                            )); // <Major>
+                        }
+                        testObjects.AddRange(new[]
+                        {
+                            GetTagTestInput(
+                                testType,
+                                repo,
+                                versionType: VersionType.MajorMinor
+                            ), // <Major.Minor>
+
+                            GetTagTestInput(
+                                testType,
+                                repo,
+                                versionType: VersionType.MajorMinorPatch
+                            ), // <Major.Minor.Patch>
+                        });
+                        break;
+
+                    default:
+                        throw new ArgumentException("Invalid tag type", nameof(testType));
+                }
+            }
+            return testObjects.ToArray();
+        }
+
+        private static object[] GetTagTestInput(
+            TestType testType,
+            Repo repo,
+            VersionType? versionType = null,
+            bool? checkOs = false,
+            bool? checkArchitecture = false,
+            Func<ManifestHelper.DockerfileInfo, bool>? skipDockerfileOn = null)
+        {
+            switch (testType)
+            {
+                case TestType.Latest:
+                    return [ repo ];
+
+                case TestType.Platform:
+                    if (versionType == null || checkOs == null || checkArchitecture == null)
+                    {
+                        throw new ArgumentException("'versionType', 'checkOs' and 'checkArchitecture' must be specified", nameof(testType));
+                    }
+                    return [ repo, versionType, checkOs, checkArchitecture, skipDockerfileOn ?? (_ => false) ];
+
+                case TestType.FloatingAlpine:
+                    if (versionType == null || checkArchitecture == null)
+                    {
+                        throw new ArgumentException("'versionType' and 'checkArchitecture' must be specified", nameof(testType));
+                    }
+                    return [ repo, versionType, checkArchitecture ];
+
+                case TestType.Version:
+                    if (versionType == null)
+                    {
+                        throw new ArgumentException("'versionType' must be specified", nameof(testType));
+                    }
+                    return [ repo, versionType ];
+
+                default:
+                    throw new ArgumentException("Invalid tag type", nameof(testType));
+            }
+        }
+        
         private static bool IsWindows(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.Os.Contains("windowsservercore") || dockerfileInfo.Os.Contains("nanoserver");
 
+        // Certain versions of appliance repos use a new tag schema.
+        // This new schema excludes the OS from all tags.
+        // The aspire-dashboard repo uses this schema for all versions.
+        // The monitor and monitor-base repos use this schema for versions 9 and above.
         private static bool IsApplianceVersionUsingOldSchema(ManifestHelper.DockerfileInfo dockerfileInfo) =>
-            dockerfileInfo.Repo.Contains("monitor") && GetMajorVersion(dockerfileInfo.MajorMinor) <= 8;
+            dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8;
 
+        // <cref="IsApplianceVersionUsingOldSchema"/>
         private static bool IsApplianceVersionUsingNewSchema(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             !IsApplianceVersionUsingOldSchema(dockerfileInfo);
 
@@ -329,7 +554,7 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.NotEmpty(productVersions);
 
             List<double> majorMinorVersions = productVersions
-                .GroupBy(GetMajorVersion)
+                .GroupBy(version => GetVersion(version).Major)
                 .Select(group => 
                 {
                     if (!Config.IsNightlyRepo)
@@ -344,40 +569,45 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use the latest major version on the nightly branch
                     return group;
                 })
-                .Select(group => group.Select(GetMajorMinorVersion).Max())
-                .Distinct()
+                .Select(group => group.Select(version => 
+                {
+                    Version parsedVersion = GetVersion(version);
+                    return double.Parse($"{parsedVersion.Major}.{parsedVersion.Minor}");
+                }).Max())
                 .ToList();
 
-            return majorMinorVersions.Contains(GetMajorMinorVersion(version));
+            Version inputVersion = GetVersion(version);
+            return majorMinorVersions.Contains(double.Parse($"{inputVersion.Major}.{inputVersion.Minor}"));
         }
 
         private static bool IsTagOfFormat(
             string tag,
-            int versionParts,
+            VersionType versionType,
             string? majorMinor = null,
             string? os = null,
             string? architecture = null)
         {
-            string tagRegex = versionParts switch
+            string tagRegex = versionType switch
             {
-                1 => majorMinor != null ? GetMajorVersion(majorMinor).ToString() : SingleNumberRegex,
-                2 => @$"{majorMinor ?? DoubleNumberRegex}(-preview)?",
-                3 => @$"{majorMinor ?? DoubleNumberRegex}\.{SingleNumberRegex}(-{SingleNumberRegex})?(?:-(alpha|beta|preview|rc)\.{SingleNumberRegex})?",
-                _ => throw new ArgumentException("Invalid version parts", nameof(versionParts)),
+                VersionType.Major => majorMinor != null ? GetVersion(majorMinor).Major.ToString() : MajorVersionRegex,
+                VersionType.MajorMinor => @$"{majorMinor ?? MajorMinorVersionRegex}(-preview)?",
+                VersionType.MajorMinorPatch => @$"{majorMinor ?? MajorMinorVersionRegex}\.{SingleNumberRegex}(-{SingleNumberRegex})?(?:-(alpha|beta|preview|rc)\.{SingleNumberRegex})?",
+                _ => throw new ArgumentException("Invalid version type", nameof(versionType)),
             };
 
             string patternRegex = $"^{tagRegex}" + (os != null ? $"-{os}" : string.Empty) + (architecture != null ? $"-{architecture}" : string.Empty) + "$";
             return Regex.IsMatch(tag, patternRegex);
         }
 
-        private static string GetAlpineVersion(ManifestHelper.DockerfileInfo dockerfileInfo)
+        private static Version? GetAlpineVersion(ManifestHelper.DockerfileInfo dockerfileInfo)
         {
-            Match match = Regex.Match(dockerfileInfo.Os, @$"{AlpineOs}(?<version>{DoubleNumberRegex})");
-            if (!match.Success)
+            string? parsedOs = dockerfileInfo.Os.Replace(AlpineOs, string.Empty);
+            if (string.IsNullOrEmpty(parsedOs))
             {
-                return string.Empty;
+                // No version specified
+                return null;
             }
-            return match.Groups["version"].Value;
+            return GetVersion(parsedOs);
         }
 
         private static int GetExpectedMajorVersion(Repo repo)
@@ -389,7 +619,7 @@ namespace Microsoft.DotNet.Docker.Tests
             if (productVersions.Count() == 1)
             {
                 // Use the first product version if there is only one
-                return GetMajorVersion(productVersions.First());
+                return GetVersion(productVersions.First()).Major;
             }
 
             return productVersions
@@ -405,68 +635,20 @@ namespace Microsoft.DotNet.Docker.Tests
                     // Use the latest version on the nightly branch
                     return true;
                 })
-                .Select(GetMajorVersion)
+                .Select(version => GetVersion(version).Major)
                 .Max();
         }
 
-        private static int GetMajorVersion(string input) =>
-            int.Parse(ParseVersion(input, 1));
-
-        private static double GetMajorMinorVersion(string input) =>
-            double.Parse(ParseVersion(input, 2));
-
-        private static string ParseVersion(string input, int versionParts)
+        private static Version GetVersion(string input)
         {
-            if (versionParts < 1 || versionParts > 2)
-            {
-                throw new ArgumentException("Invalid version parts", nameof(versionParts));
-            }
-
-            Match match = Regex.Match(input, versionParts == 1 ? SingleNumberRegex : DoubleNumberRegex);
+            // Version in the input can be in the form of
+            // <Major>, <Major.Minor>, or <Major.Minor.Patch>
+            Match match = Regex.Match(input, @$"^({MajorVersionRegex})(\.{SingleNumberRegex})?(\.{SingleNumberRegex})?");
             if (!match.Success)
             {
-                throw new ArgumentException($"Failed to parse version: {input}");
+                throw new ArgumentException($"Failed to parse version from '{input}'", nameof(input));
             }
-            return match.Value;
-        }
-
-        private static object[] GetTagTestInput(
-            TestType testType,
-            Repo repo,
-            int? versionParts = null,
-            bool? checkOs = false,
-            bool? checkArchitecture = false,
-            Func<ManifestHelper.DockerfileInfo, bool>? skipDockerfileOn = null)
-        {
-            switch (testType)
-            {
-                case TestType.Latest:
-                    return [ repo ];
-
-                case TestType.Platform:
-                    if (versionParts == null || checkOs == null || checkArchitecture == null)
-                    {
-                        throw new ArgumentException("'versionParts', 'checkOs' and 'checkArchitecture' must be specified", nameof(testType));
-                    }
-                    return [ repo, versionParts, checkOs, checkArchitecture, skipDockerfileOn ?? (_ => false) ];
-
-                case TestType.Alpine:
-                    if (versionParts == null || checkArchitecture == null)
-                    {
-                        throw new ArgumentException("'versionParts' and 'checkArchitecture' must be specified", nameof(testType));
-                    }
-                    return [ repo, versionParts, checkArchitecture ];
-
-                case TestType.Version:
-                    if (versionParts == null)
-                    {
-                        throw new ArgumentException("'versionParts' must be specified", nameof(testType));
-                    }
-                    return [ repo, versionParts ];
-
-                default:
-                    throw new ArgumentException("Invalid tag type", nameof(testType));
-            }
+            return new Version(match.Value);
         }
     }
 }
