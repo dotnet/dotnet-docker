@@ -5,7 +5,10 @@ The following samples and guidance demonstrate how to use .NET and Docker for de
 Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) directory.
 
 > [!IMPORTANT]
-> [.NET 8 container breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/8.0#containers)
+>
+> [.NET 9 containers breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/9.0#containers)
+>
+> [.NET 8 containers breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/8.0#containers)
 
 ## Building images
 
