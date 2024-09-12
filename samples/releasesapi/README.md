@@ -1,6 +1,6 @@
 # Release Json Report API
 
-This app demonstrates publishing an app as [native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) in containers.
+This app demonstrates publishing an app as [native AOT](https://learn.microsoft.com/dotnet/nightly/core/deploying/native-aot/) in containers.
 
 > [!NOTE]
 > The base images used by this sample are in preview.

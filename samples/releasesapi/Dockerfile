@@ -1,21 +1,20 @@
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:8.0-jammy-aot AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:9.0-noble-aot AS build
 ARG TARGETARCH
 WORKDIR /source
 
 # copy csproj and restore as distinct layers
-COPY *.csproj .
-COPY *.config .
+COPY --link *.csproj NuGet.config .
 RUN dotnet restore -r linux-$TARGETARCH
 
 # copy and publish app and libraries
-COPY . .
+COPY --link . .
 RUN dotnet publish -r linux-$TARGETARCH --no-restore -o /app releasesapi.csproj
 RUN rm /app/*.dbg /app/*.Development.json
 
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/nightly/runtime-deps:8.0-jammy-chiseled-aot
+FROM mcr.microsoft.com/dotnet/nightly/runtime-deps:9.0-noble-chiseled-aot
 WORKDIR /app
-COPY --from=build /app .
+COPY --link --from=build /app .
 USER $APP_UID
 ENTRYPOINT ["./releasesapi"]
