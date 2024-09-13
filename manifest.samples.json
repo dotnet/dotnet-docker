@@ -22,6 +22,262 @@
       "images": [
         {
           "sharedTags": {
+            "dotnetapp-9.0": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "dotnetapp-9.0-alpine-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "dotnetapp-9.0-alpine-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "dotnetapp-9.0-alpine-arm64v8": {}
+              },
+              "variant": "v8"
+            },
+            {
+              "buildArgs": {
+                "TAG": "1809"
+              },
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "dotnetapp-9.0-nanoserver-1809": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2022"
+              },
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "dotnetapp-9.0-nanoserver-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "dotnetapp-chiseled-9.0": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "os": "linux",
+              "osVersion": "ubuntu",
+              "tags": {
+                "dotnetapp-chiseled-9.0-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "os": "linux",
+              "osVersion": "ubuntu",
+              "tags": {
+                "dotnetapp-chiseled-9.0-arm32v7": {}
+              },
+              "variant": "v7"
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "os": "linux",
+              "osVersion": "ubuntu",
+              "tags": {
+                "dotnetapp-chiseled-9.0-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "aspnetapp-9.0": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "aspnetapp-9.0-alpine-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-alpine-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "aspnetapp-9.0-alpine-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-alpine-arm32v7"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
+              "os": "linux",
+              "osVersion": "alpine",
+              "tags": {
+                "aspnetapp-9.0-alpine-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-alpine-arm64v8"
+                  ]
+                }
+              ]
+            },
+            {
+              "buildArgs": {
+                "TAG": "1809"
+              },
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-1809",
+              "tags": {
+                "aspnetapp-9.0-nanoserver-1809": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-nanoserver-1809"
+                  ]
+                }
+              ]
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2022"
+              },
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2022",
+              "tags": {
+                "aspnetapp-9.0-nanoserver-ltsc2022": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-nanoserver-ltsc2022"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "sharedTags": {
+            "aspnetapp-chiseled-9.0": {}
+          },
+          "platforms": [
+            {
+              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "os": "linux",
+              "osVersion": "ubuntu",
+              "tags": {
+                "aspnetapp-chiseled-9.0-amd64": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-chiseled-amd64"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm",
+              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "os": "linux",
+              "osVersion": "ubuntu",
+              "tags": {
+                "aspnetapp-chiseled-9.0-arm32v7": {}
+              },
+              "variant": "v7",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-chiseled-arm32v7"
+                  ]
+                }
+              ]
+            },
+            {
+              "architecture": "arm64",
+              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "os": "linux",
+              "osVersion": "ubuntu",
+              "tags": {
+                "aspnetapp-chiseled-9.0-arm64v8": {}
+              },
+              "variant": "v8",
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-chiseled-arm64v8"
+                  ]
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "sharedTags": {
             "dotnetapp-8.0": {},
             "dotnetapp": {
               "syndication": {
