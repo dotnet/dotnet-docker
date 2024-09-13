@@ -12,19 +12,19 @@ RUN dpkg --add-architecture amd64 \
         zlib1g-dev:amd64
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
+# Copy project file and restore as distinct layers
 COPY --link NuGet.config .
 COPY --link *.csproj .
 COPY --link *.config .
 RUN dotnet restore -r linux-$TARGETARCH
 
-# copy and publish app and libraries
+# Copy source code and publish app
 COPY --link . .
 RUN dotnet publish -a $TARGETARCH --sc --no-restore -o /app releasesapi.csproj
 RUN rm /app/*.dbg /app/*.Development.json
 
 
-# final stage/image
+# Final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:9.0
 WORKDIR /app
 COPY --link --from=build /app .

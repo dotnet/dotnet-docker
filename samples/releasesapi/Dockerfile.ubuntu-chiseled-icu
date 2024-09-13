@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0-noble-aot AS build
 ARG TARGETARCH
 WORKDIR /source
 
-# copy and publish app and libraries
+# Copy source code and publish app
 COPY --link . .
 RUN --mount=type=cache,target=/root/.nuget \
     --mount=type=cache,target=/source/bin \
@@ -14,7 +14,7 @@ RUN --mount=type=cache,target=/root/.nuget \
 RUN rm /app/*.dbg /app/*.Development.json
 
 
-# final stage/image
+# Final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-noble-chiseled-extra
 WORKDIR /app
 COPY --link --from=build /app .

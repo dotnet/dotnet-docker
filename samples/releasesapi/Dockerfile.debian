@@ -9,17 +9,17 @@ RUN apt-get update \
         zlib1g-dev
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
+# Copy project file and restore as distinct layers
 COPY --link *.csproj NuGet.config .
 RUN dotnet restore -r linux-$TARGETARCH
 
-# copy and publish app and libraries
+# Copy source code and publish app
 COPY --link . .
 RUN dotnet publish --no-restore -o /app releasesapi.csproj
 RUN rm /app/*.dbg /app/*.Development.json
 
 
-# final stage/image
+# Final stage/image
 FROM mcr.microsoft.com/dotnet/runtime-deps:9.0
 WORKDIR /app
 COPY --link --from=build /app .

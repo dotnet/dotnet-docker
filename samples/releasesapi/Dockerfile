@@ -2,17 +2,17 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/nightly/sdk:9.0-noble-ao
 ARG TARGETARCH
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
+# Copy project file and restore as distinct layers
 COPY --link *.csproj NuGet.config .
 RUN dotnet restore -r linux-$TARGETARCH
 
-# copy and publish app and libraries
+# Copy source code and publish app
 COPY --link . .
 RUN dotnet publish -r linux-$TARGETARCH --no-restore -o /app releasesapi.csproj
 RUN rm /app/*.dbg /app/*.Development.json
 
 
-# final stage/image
+# Final stage/image
 FROM mcr.microsoft.com/dotnet/nightly/runtime-deps:9.0-noble-chiseled-aot
 WORKDIR /app
 COPY --link --from=build /app .
