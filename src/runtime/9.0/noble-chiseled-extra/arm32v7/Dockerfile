@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-rc.2.24459.11 \
+RUN dotnet_version=9.0.0-rc.2.24461.16 \
     && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
-    && dotnet_sha512='0336f0437e1bd6649421701ebf26b24ed466f12edceb79a92c7a948324a9ae3889d637b4123f3956bdc2c630570ba5ce2a24b02d024831ce30db7a3990fa46fe' \
+    && dotnet_sha512='98d806b0dd519e866fb4175b50359d03aaf648965c2effd6626ec7480fbe44e2d3845be746b9f9cdc15cee7332614ace6f2b288143ae4e295748e5c1103344c5' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -20,7 +20,7 @@ RUN mkdir /dotnet-symlink \
 FROM $REPO:9.0.0-rc.2-noble-chiseled-extra-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-rc.2.24459.11
+ENV DOTNET_VERSION=9.0.0-rc.2.24461.16
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
