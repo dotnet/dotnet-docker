@@ -280,7 +280,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinorPatch, 
+                                    VersionType.MajorMinorPatch, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
                                     skipDockerfileOn: IsApplianceVersionUsingNewSchema
@@ -289,7 +289,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinorPatch, 
+                                    VersionType.MajorMinorPatch, 
                                     checkOs: true, 
                                     checkArchitecture: false, 
                                     skipDockerfileOn: IsApplianceVersionUsingNewSchema
@@ -298,7 +298,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinorPatch, 
+                                    VersionType.MajorMinorPatch, 
                                     checkOs: false, 
                                     checkArchitecture: true, 
                                     skipDockerfileOn: IsApplianceVersionUsingOldSchema
@@ -307,7 +307,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinor, 
+                                    VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
                                     skipDockerfileOn: IsApplianceVersionUsingNewSchema
@@ -316,7 +316,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinor, 
+                                    VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: false, 
                                     skipDockerfileOn: IsApplianceVersionUsingNewSchema
@@ -325,7 +325,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinor, 
+                                    VersionType.MajorMinor, 
                                     checkOs: false, 
                                     checkArchitecture: true, 
                                     skipDockerfileOn: IsApplianceVersionUsingOldSchema
@@ -334,7 +334,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.Major, 
+                                    VersionType.Major, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
                                     skipDockerfileOn: IsApplianceVersionUsingNewSchema
@@ -343,7 +343,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.Major, 
+                                    VersionType.Major, 
                                     checkOs: true, 
                                     checkArchitecture: false, 
                                     skipDockerfileOn: IsApplianceVersionUsingNewSchema
@@ -356,7 +356,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 testObjects.Add(GetTagTestInput(
                                     testType,
                                     repo,
-                                    versionType: VersionType.Major,
+                                    VersionType.Major,
                                     checkOs: false,
                                     checkArchitecture: true,
                                     skipDockerfileOn: IsApplianceVersionUsingOldSchema
@@ -370,7 +370,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinorPatch, 
+                                    VersionType.MajorMinorPatch, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
                                     skipDockerfileOn: IsWindows
@@ -379,7 +379,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinorPatch, 
+                                    VersionType.MajorMinorPatch, 
                                     checkOs: true, 
                                     checkArchitecture: false
                                 ), // <Major.Minor.Patch>-<os>
@@ -387,7 +387,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinor, 
+                                    VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
                                     skipDockerfileOn: IsWindows
@@ -396,7 +396,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinor, 
+                                    VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: false
                                 ) // <Major.Minor>-<os>
@@ -414,28 +414,28 @@ namespace Microsoft.DotNet.Docker.Tests
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinorPatch, 
+                                    VersionType.MajorMinorPatch, 
                                     checkArchitecture: true
                                 ), // <Major.Minor.Patch>-alpine-<architecture>
 
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.MajorMinorPatch, 
+                                    VersionType.MajorMinorPatch, 
                                     checkArchitecture: false
                                 ), // <Major.Minor.Patch>-alpine
 
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.Major, 
+                                    VersionType.Major, 
                                     checkArchitecture: true
                                 ), // <Major>-alpine-<architecture>
 
                                 GetTagTestInput(
                                     testType, 
                                     repo, 
-                                    versionType: VersionType.Major, 
+                                    VersionType.Major, 
                                     checkArchitecture: false
                                 ) // <Major>-alpine
                             });
@@ -445,14 +445,14 @@ namespace Microsoft.DotNet.Docker.Tests
                             GetTagTestInput(
                                 testType, 
                                 repo, 
-                                versionType: VersionType.MajorMinor, 
+                                VersionType.MajorMinor, 
                                 checkArchitecture: true
                             ), // <Major.Minor>-alpine-<architecture>
 
                             GetTagTestInput(
                                 testType, 
                                 repo, 
-                                versionType: VersionType.MajorMinor, 
+                                VersionType.MajorMinor, 
                                 checkArchitecture: false
                             ) // <Major.Minor>-alpine
                         });
@@ -465,7 +465,7 @@ namespace Microsoft.DotNet.Docker.Tests
                             testObjects.Add(GetTagTestInput(
                                 testType,
                                 repo,
-                                versionType: VersionType.Major
+                                VersionType.Major
                             )); // <Major>
                         }
                         testObjects.AddRange(new[]
@@ -473,13 +473,13 @@ namespace Microsoft.DotNet.Docker.Tests
                             GetTagTestInput(
                                 testType,
                                 repo,
-                                versionType: VersionType.MajorMinor
+                                VersionType.MajorMinor
                             ), // <Major.Minor>
 
                             GetTagTestInput(
                                 testType,
                                 repo,
-                                versionType: VersionType.MajorMinorPatch
+                                VersionType.MajorMinorPatch
                             ), // <Major.Minor.Patch>
                         });
                         break;
@@ -507,21 +507,21 @@ namespace Microsoft.DotNet.Docker.Tests
                 case TestType.Platform:
                     if (versionType == null || checkOs == null || checkArchitecture == null)
                     {
-                        throw new ArgumentException("'versionType', 'checkOs' and 'checkArchitecture' must be specified", nameof(testType));
+                        throw new ArgumentException($"'{nameof(versionType)}', '{nameof(checkOs)}' and '{nameof(checkArchitecture)}' must be specified", nameof(testType));
                     }
                     return [ repo, versionType, checkOs, checkArchitecture, skipDockerfileOn ?? (_ => false) ];
 
                 case TestType.FloatingAlpine:
                     if (versionType == null || checkArchitecture == null)
                     {
-                        throw new ArgumentException("'versionType' and 'checkArchitecture' must be specified", nameof(testType));
+                        throw new ArgumentException($"'{nameof(versionType)}' and '{nameof(checkArchitecture)}' must be specified", nameof(testType));
                     }
                     return [ repo, versionType, checkArchitecture ];
 
                 case TestType.Version:
                     if (versionType == null)
                     {
-                        throw new ArgumentException("'versionType' must be specified", nameof(testType));
+                        throw new ArgumentException($"'{nameof(versionType)}' must be specified", nameof(testType));
                     }
                     return [ repo, versionType ];
 
@@ -553,7 +553,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             Assert.NotEmpty(productVersions);
 
-            List<double> majorMinorVersions = productVersions
+            List<Version> majorMinorVersions = productVersions
                 .GroupBy(version => GetVersion(version).Major)
                 .Select(group => 
                 {
@@ -571,13 +571,15 @@ namespace Microsoft.DotNet.Docker.Tests
                 })
                 .Select(group => group.Select(version => 
                 {
+                    // Product versions are in the form of <Major.Minor.Patch>
+                    // We only care about Major.Minor so we parse out the Patch
                     Version parsedVersion = GetVersion(version);
-                    return double.Parse($"{parsedVersion.Major}.{parsedVersion.Minor}");
-                }).Max())
+                    return new Version(parsedVersion.Major, parsedVersion.Minor);
+                }).OrderByDescending(version => version).First())
                 .ToList();
 
             Version inputVersion = GetVersion(version);
-            return majorMinorVersions.Contains(double.Parse($"{inputVersion.Major}.{inputVersion.Minor}"));
+            return majorMinorVersions.Contains(new Version(inputVersion.Major, inputVersion.Minor));
         }
 
         private static bool IsTagOfFormat(
