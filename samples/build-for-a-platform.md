@@ -1,90 +1,120 @@
 # Building images for a specific platform
 
-Docker exposes [multiple ways to interact with platforms](https://docs.docker.com/build/building/multi-platform/). Sometimes this will result in the images you want and sometimes not depending on how you structure your Dockerfiles and your use of the `docker` CLI. The most common scenario for needing to pay attention to platform targeting is if you have an Arm64 development machine (like Apple M1/M*) and are pushing images to an x64 cloud. This equally applies to `docker run` and `docker build`.
+Docker exposes [multiple ways to interact with platforms](https://docs.docker.com/build/building/multi-platform/). Sometimes this will result in the images you want and sometimes not depending on how you structure your Dockerfiles and your use of the `docker` CLI. The most common scenario for needing to pay attention to platform targeting is if you have an `arm64` development machine (like Apple M1/M*) and are pushing images to an `x64` cloud. This equally applies to `docker run` and `docker build`.
 
-In Docker terminology, `platform` refers to operating system + architecture. For example the combination of Linux and x64 is a platform, described by the `linux/amd64` platform string. The `linux` part is relevant, however, the most common use for platform targeting is controlling the architecture, choosing (primarily) between `amd64` and `arm64`.
+In Docker terminology, `platform` refers to operating system + architecture. For example the combination of Linux and `x64` is a platform, described by the `linux/amd64` platform string. The `linux` part is relevant, however, the most common use for platform targeting is controlling the architecture, choosing (primarily) between `amd64` and `arm64`.
 
-There are three patterns discussed. They are equally "correct". If you are using an Apple M1 device, you probably want to consider the last pattern, with the `--platform` argument.
+This document covers the different ways you can target a specific platform or multiple platforms when building .NET container images.
 
 Notes:
 
-- `amd64` is used for historical reasons and is synonymous with "x64", however, `x64` is not an accepted alias.
+- `amd64` is used for historical reasons and is synonymous with `x64`, however, `x64` is not an accepted alias.
 - .NET tags are described in [.NET Container Tags -- Patterns and Policies](../documentation//supported-tags.md).
-- This document applies to building Linux containers, not Windows containers (which are x64 only). Some aspects apply to Windows containers, but they are not specifically addressed.
+- This document applies to Linux containers only. Windows .NET containers only support `x64`. Additionally, most of the examples on this page require BuildKit, which is not current supported for Windows containers on Windows (not to be confused with Linux containers on Windows).
 
-## Dockerfiles that build everywhere
+## Single-platform Dockerfiles
 
 The default scenario is using multi-platform tags, which will work in multiple environments.
 
 For example, using `FROM` statements like the following:
 
 ```dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:6.0
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-alpine
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine
 ```
 
-The [Dockerfile](aspnetapp/Dockerfile) example demonstrates this case, and can be built with the following pattern.
+A Dockerfile following this pattern can be built with the following command:
 
 ```bash
 docker build -t app .
 ```
 
-It can be built on any supported operating system and architecture. For example, if built on an Apple M1 machine, Docker will produce a `linux/arm64` image.
+It can be built on any supported operating system and architecture. For example, if built on a Mac with Apple Silicon, Docker will produce a `linux/arm64` image.
 
 You can inspect an image with `docker inspect` to determine OS and architecture target.
 
 ```bash
-$ docker inspect app -f "{{.Os}}\{{.Architecture}}"
-linux\amd64
+$ docker inspect app -f "{{.Os}}/{{.Architecture}}"
+linux/amd64
 ```
 
 You can also do this with base images (that you have pulled):
 
 ```bash
-$ docker inspect mcr.microsoft.com/dotnet/runtime:6.0 -f "{{.Os}}\{{.Architecture}}"
-linux\amd64
+$ docker inspect mcr.microsoft.com/dotnet/runtime:9.0 -f "{{.Os}}/{{.Architecture}}"
+linux/amd64
 ```
 
 Windows Containers include extra version information:
 
-```bash
-> docker inspect app -f "{{.Os}}\{{.Architecture}}"
-windows\amd64
-> docker inspect app -f "{{.OsVersion}}"
-10.0.17763.4010
+```pwsh
+> docker inspect mcr.microsoft.com/dotnet/runtime:9.0-nanoserver-ltsc2022 -f "{{.Os}}/{{.Architecture}}"
+windows/amd64
+> docker inspect mcr.microsoft.com/dotnet/runtime:9.0-nanoserver-ltsc2022 -f "{{.OsVersion}}"
+10.0.20348.2700
 ```
 
-This model works very well given a homogenous compute environment. For example, it works well if dev, CI, and prod machines are all x64. However, it doesn't as well in heterogenous environments, like if dev machines are Arm64 and prod machines are x64. This is because Docker defaults to the native architecture, but that means that resulting images might not match.
+This model works very well given a homogenous compute environment. For example, it works well if dev, CI, and prod machines are all `x64`. However, it doesn't as well in heterogenous environments, like if dev machines are `arm64` and prod machines are `x64`. This is because Docker defaults to the native architecture, but that means that resulting images might not match.
 
-## Lock Dockerfiles to one platform
+## Multi-platform Dockerfiles with `--platform`
 
-Another approach is to always build for one platform with Dockerfiles that reference tags for that platform. This model has the benefit that Dockerfiles are simple and always produce the same results. It has the downside that it can result in a Dockerfile per platform (in a heterogenous compute environment), requiring users to know which to build.
+.NET supports multi-platform image builds via cross-compilation. This is the recommended approach for .NET Dockerfiles, and is the pattern all of our samples use. To get started, check out the Docker [multi-platform build prerequisites](https://docs.docker.com/build/building/multi-platform/#prerequisites).
 
-The following are examples of this model:
+[BuildKit](https://docs.docker.com/build/buildkit/), the default builder for Docker, [exposes multiple environment variables](https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope) that can be used to customize multi-platform container builds. All .NET sample Dockerfiles use these variables to support multi-platform builds using the following pattern:
 
-- [Dockerfile.debian](aspnetapp/Dockerfile.debian)
-- [Dockerfile.alpine](aspnetapp/Dockerfile.alpine)
+```Dockerfile
+# Build stage
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 
-They can be built with the following pattern:
-
-```bash
-docker build -t app -f Dockerfile.debian-x64 .
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:9.0
 ```
 
-This pattern results in, for example, x64 images always being used. Those images will work on any platform but will require the use of emulation if an x64 image is used on Arm64 and vice versa. .NET doesn't support QEMU emulation, as covered later. As a result, this pattern is only appropriate for homogenous environments (all x64 or all Arm64).
+You can see [one of the sample Dockerfiles](aspnetapp/Dockerfile) for a complete example. Such a Dockerfile can be built using the following commands:
 
-## Conditionalize Dockerfile with `--platform`
+```bash
+# Build targeting the current machine's platform
+docker build -t app .
 
-The `--platform` argument is the best way to specify the desired architecture. The `--platform` argument doesn't switch Docker to a special mode, but specifies the platform to request for multi-platform tags. Single-architecture tags are unaffected by this argument. That approach enables users to lock some tags to a platform, if desired, and to enable other tags to be affected by the platform switch.
+# From an amd64 machine, build an arm64 image:
+docker buildx build --platform linux/arm64 -t app .
 
-In addition, Docker [Buildkit exposes multiple environment variables](https://docs.docker.com/reference/dockerfile/#automatic-platform-args-in-the-global-scope) that can be used to further conditionalize behavior. These environment variables can be controlled with the pattern demonstrated in [Dockerfile](https://github.com/mthalman/dredge/blob/main/src/Dockerfile). As mentioned, .NET doesn't support being run in emulation. The pattern in that Dockerfile results in the SDK always being run natively while the final image is affected by the `--platform` switch. This model also has the best performance since the bulk of computation is run natively.
+# From an arm64 machine, build an amd64 image:
+docker buildx build --platform linux/amd64 -t app .
+```
 
-> [!NOTE]
-> We are enabling this [model](https://github.com/dotnet/dotnet-docker/issues/4388#issuecomment-1421401384) in a future release.
+You can also build multiple platforms at once:
+
+```bash
+docker buildx build --platform linux/amd64,linux/arm64 -t app .
+```
+
+Using this pattern, the SDK will always run natively on the build machine by targeting the `$BUILDPLATFORM`. Then, Docker builds the final stage targeting whatever platform you passed in via the `--platform` argument. This works thanks to .NET's native support for cross-compilation. The build runs on your build machine's architecture and outputs IL for the target architecture. The app is then copied to the final stage without running any commands on the target image - there's no emulation involved.
+
+If you are cross-compiling images, be cautious of using `RUN` instructions on the final image layer. Any instructions in the final layer will be run under emulation when targeting a platform that isn't the same as the build platform. The best practice is to use the final layer for composing the image's filesystem by copying files from other intermediate layers. This model also has the best performance since all computation is run natively. Do not run any `dotnet` commands or executables in the final layer if you are cross-building your Dockerfile, since [.NET doesn't support running under QEMU emulation](#net-and-qemu).
+
+## Locking Dockerfiles to one platform
+
+Another approach is to always build for one platform by using matching architecture-specific tags for each stage. This model has the benefit that Dockerfiles are simple and always produce the same results. It has the downside that it can result in a Dockerfile per platform (in a heterogenous compute environment), requiring users to know which to build.
+
+```Dockerfile
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine-amd64 AS build
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine-amd64
+```
+
+Building a Dockerfile with single-platform tags does not require passing the `--platform` argument to the build command.
+
+This pattern results in, for example, `amd64` images always being used. Those images will work on any platform but will require the use of emulation if an `amd64` image is used on `arm64` and vice versa. .NET doesn't support QEMU emulation, as covered later. As a result, this pattern is only appropriate for homogenous environments (all `amd64` or all `arm64`).
 
 ## .NET and QEMU
 
-Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example running x64 code on an Arm64 machine. [.NET doesn't support being run in QEMU](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#qemu). That means that the SDK needs to always be run natively, to enable [multi-stage build](https://docs.docker.com/build/building/multi-stage/). Multi-stage build is used by all of our samples.
+Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example running `x64` code on an `arm64` machine. [.NET doesn't support being run in QEMU](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#qemu). That means that the SDK needs to always be run natively, to enable [multi-stage build](https://docs.docker.com/build/building/multi-stage/). Multi-stage build is used by all of our samples.
 
 As a result, we need a reliable pattern that can produce multiple variants of images on one machine, but that doesn't use emulation. That's what this document describes.
 
