@@ -130,7 +130,7 @@ dotnet publish /p:PublishProfile=DefaultContainer
 That command can be further customized to use a different base image and publish to a container registry. You must first use `docker login` to login to the registry.
 
 ```console
-dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/nightly/aspnet:9.0-noble-chiseled /p:ContainerRegistry=docker.io /p:ContainerRepository=youraccount/aspnetapp
+dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:9.0-noble-chiseled /p:ContainerRegistry=docker.io /p:ContainerRepository=youraccount/aspnetapp
 ```
 
 ## Supported Linux distros
