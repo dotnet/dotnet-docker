@@ -17,15 +17,15 @@ The recommended way to configure [tzdata](https://en.wikipedia.org/wiki/Tz_datab
 
 ```bash
 $ docker run --rm debian date
-Wed Feb 22 03:08:10 UTC 2023
+Mon Sep 16 16:17:01 UTC 2024
 $ docker run --rm -e TZ="Etc/UTC" debian date
-Wed Feb 22 03:08:13 UTC 2023
+Mon Sep 16 16:17:31 UTC 2024
 $ docker run --rm -e TZ=$"America/New_York" debian date
-Tue Feb 21 22:08:16 EST 2023
+Mon Sep 16 12:17:51 EDT 2024
 $ docker run --rm -e TZ=$"America/Los_Angeles" debian date
-Tue Feb 21 19:08:39 PST 2023
+Mon Sep 16 09:18:08 PDT 2024
 $ docker run --rm -e TZ=$(cat /etc/timezone) debian date
-Tue Feb 21 19:08:44 PST 2023
+Mon Sep 16 09:19:26 PDT 2024
 ```
 
 The first approach uses the default timezone, which is [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time). The other examples pass specific timezones, including UTC. The last pattern passes the timezone of the host.
@@ -47,47 +47,47 @@ $ docker run --rm -it -e TZ="America/Los_Angeles" globalapp
 Hello, World!
 
 ****Print baseline timezones**
-Utc: (UTC) Coordinated Universal Time; 09/06/2024 21:55:49
-Local: (UTC) Coordinated Universal Time; 09/06/2024 21:55:49
+Utc: (UTC) Coordinated Universal Time; 09/16/2024 16:22:03
+Local: (UTC-08:00) Pacific Time (Los Angeles); 09/16/2024 09:22:03
 
 ****Print specific timezone**
 Home timezone: America/Los_Angeles
-DateTime at home: 09/06/2024 14:55:49
+DateTime at home: 09/16/2024 09:22:03
 
 ****Culture-specific dates**
-Current: 09/06/2024
+Current: 09/16/2024
 English (United States) -- en-US:
-9/6/2024 9:55:49 PM
-9/6/2024
-9:55 PM
+9/16/2024 4:22:03 PM
+9/16/2024
+4:22 PM
 English (Canada) -- en-CA:
-9/6/2024 9:55:49 p.m.
-9/6/2024
-9:55 p.m.
+9/16/2024 4:22:03 p.m.
+9/16/2024
+4:22 p.m.
 French (Canada) -- fr-CA:
-2024-09-06 21 h 55 min 49 s
-2024-09-06
-21 h 55
+2024-09-16 16 h 22 min 03 s
+2024-09-16
+16 h 22
 Croatian (Croatia) -- hr-HR:
-06. 09. 2024. 21:55:49
-06. 09. 2024.
-21:55
+16. 09. 2024. 16:22:03
+16. 09. 2024.
+16:22
 jp (Japan) -- jp-JP:
-9/6/2024 21:55:49
-9/6/2024
-21:55
+9/16/2024 16:22:03
+9/16/2024
+16:22
 Korean (South Korea) -- ko-KR:
-2024. 9. 6. 오후 9:55:49
-2024. 9. 6.
-오후 9:55
+2024. 9. 16. 오후 4:22:03
+2024. 9. 16.
+오후 4:22
 Portuguese (Brazil) -- pt-BR:
-06/09/2024 21:55:49
-06/09/2024
-21:55
+16/09/2024 16:22:03
+16/09/2024
+16:22
 Chinese (China) -- zh-CN:
-2024/9/6 21:55:49
-2024/9/6
-21:55
+2024/9/16 16:22:03
+2024/9/16
+16:22
 
 ****Culture-specific currency:**
 Current: ¤1,337.00
