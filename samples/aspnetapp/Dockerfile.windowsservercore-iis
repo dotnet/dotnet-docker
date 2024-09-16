@@ -29,11 +29,11 @@ WORKDIR /source
 
 # Copy project file and restore as distinct layers
 COPY --link aspnetapp/*.csproj .
-RUN dotnet restore --ucr
+RUN dotnet restore
 
 # Copy source code and publish app
 COPY --link aspnetapp/. .
-RUN dotnet publish --ucr --no-restore -o /app
+RUN dotnet publish --no-restore -o /app
 
 
 FROM final
