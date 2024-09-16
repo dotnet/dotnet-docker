@@ -6,7 +6,8 @@ ARG TARGETARCH
 RUN apt-get update \
     && apt-get install -y \
         clang \
-        zlib1g-dev
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /source
 
 # Copy project file and restore as distinct layers

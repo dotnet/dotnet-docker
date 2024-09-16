@@ -9,7 +9,8 @@ RUN dpkg --add-architecture amd64 \
         gcc-x86-64-linux-gnu \
         llvm \
         zlib1g-dev \
-        zlib1g-dev:amd64
+        zlib1g-dev:amd64 \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /source
 
 # Copy project file and restore as distinct layers
