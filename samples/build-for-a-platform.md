@@ -10,7 +10,7 @@ Notes:
 
 - `amd64` is used for historical reasons and is synonymous with `x64`, however, `x64` is not an accepted alias.
 - .NET tags are described in [.NET Container Tags -- Patterns and Policies](../documentation//supported-tags.md).
-- This document applies to Linux containers only. Windows .NET containers only support `x64`. Additionally, most of the examples on this page require BuildKit, which is not current supported for Windows containers on Windows (not to be confused with Linux containers on Windows).
+- This document applies to Linux containers only. Windows .NET containers only support `x64`. Additionally, most of the examples on this page require BuildKit, which is not currently supported for Windows containers.
 
 ## Single-platform Dockerfiles
 
