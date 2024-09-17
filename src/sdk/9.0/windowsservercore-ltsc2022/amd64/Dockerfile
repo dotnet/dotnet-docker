@@ -9,7 +9,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-rc.2.24464.3 `
+    DOTNET_SDK_VERSION=9.0.100-rc.2.24466.31 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -38,7 +38,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
-        $dotnet_sha512 = 'db90fea0f30c84dde25ab994102c7b4b384327c0df1aad60b333c4dbb01a32a562348f3b36ffb0549b662b1fe5a1501a9ff976f59241c5f1e3d3b931b7dc4ff0'; `
+        $dotnet_sha512 = 'c4f1e59c4f8229968cf6f5b0995a22faff7f4f3b64632d7caa7de6c9a757574dc9d44ccdda1c8731e89754360be82ed62842701bc58a03d7ed02f044569bda2a'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
