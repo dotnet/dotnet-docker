@@ -1,5 +1,3 @@
-test
-
 # .NET
 
 ## Featured Repos
