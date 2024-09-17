@@ -52,7 +52,7 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
         }
         finally
         {
-            DockerHelper.DeleteContainer(containerName);
+            DockerHelper.DeleteContainer(containerName, captureLogs: true);
         }
     }
 
