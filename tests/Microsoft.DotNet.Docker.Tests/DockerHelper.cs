@@ -111,6 +111,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static bool ContainerExists(string name) => ResourceExists("container", $"-f \"name={name}\"");
 
+        public static bool ContainerIsRunning(string name) => Execute($"inspect --format=\"{{{{.State.Running}}}}\" {name}") == "true";
+
         public void Copy(string src, string dest) => ExecuteWithLogging($"cp {src} {dest}");
 
         public void DeleteContainer(string container, bool captureLogs = false)
