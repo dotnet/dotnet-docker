@@ -6,10 +6,17 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
 
+    <!--
+      Learn more about publishing configuration:
+      https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained
+      https://learn.microsoft.com/dotnet/core/deploying/single-file
+      https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained
+      https://learn.microsoft.com/dotnet/core/deploying/ready-to-run
+    -->
+    <PublishSelfContained>true</PublishSelfContained>
     <PublishSingleFile>true</PublishSingleFile>
     <PublishTrimmed>true</PublishTrimmed>
     <PublishReadyToRun>true</PublishReadyToRun>
-    <PublishSelfContained>true</PublishSelfContained>
   </PropertyGroup>
 
   <ItemGroup>
