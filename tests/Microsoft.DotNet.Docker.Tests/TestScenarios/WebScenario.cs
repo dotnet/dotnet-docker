@@ -41,8 +41,7 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
                 optionalRunArgs: $"-p {port}",
                 runAsUser: user,
                 command: command,
-                skipAutoCleanup: true,
-                tty: false);
+                skipAutoCleanup: true);
 
             await VerifyHttpResponseFromContainerAsync(
                 containerName,
@@ -53,7 +52,7 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
         }
         finally
         {
-            DockerHelper.DeleteContainer(containerName, captureLogs: true);
+            DockerHelper.DeleteContainer(containerName);
         }
     }
 
