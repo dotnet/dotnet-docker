@@ -28,8 +28,6 @@ jobs:
     value: $(artifactsPath)/imageInfo
   - name: sourceBuildIdOutputDir
     value: $(Build.ArtifactStagingDirectory)/sourceBuildId
-  - name: imageInfoRawContentUrl
-    value: https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)
   - ${{ parameters.customPublishVariables }}
   steps:
   - template: /eng/common/templates/steps/retain-build.yml@self
@@ -106,10 +104,8 @@ jobs:
     parameters:
       dryRunArg: $(dryRunArg)
       condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
-  - script: |
-      mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
-      curl -fSL --output $(Build.ArtifactStagingDirectory)/eol-annotation-data/image-info-old.json $(imageInfoRawContentUrl)
-    displayName: Download Original Image Info File
+  - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
+    displayName: Create EOL Annotation Data Directory
   - script: >
       $(runImageBuilderCmd) publishImageInfo
       '$(imageInfoContainerDir)/image-info.json'
@@ -120,12 +116,12 @@ jobs:
       --git-repo '$(gitHubVersionsRepoInfo.repo)'
       --git-branch '$(gitHubVersionsRepoInfo.branch)'
       --git-path '$(gitHubImageInfoVersionsPath)'
+      --image-info-orig-path '$(artifactsPath)/eol-annotation-data/image-info-old.json'
+      --image-info-update-path '$(artifactsPath)/eol-annotation-data/image-info-new.json'
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Publish Image Info
-  - script: curl -fSL --output $(Build.ArtifactStagingDirectory)/eol-annotation-data/image-info-new.json $(imageInfoRawContentUrl)
-    displayName: Download Updated Image Info File
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Ingest Kusto Image Info
