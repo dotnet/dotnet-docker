@@ -111,6 +111,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static bool ContainerExists(string name) => ResourceExists("container", $"-f \"name={name}\"");
 
+        public static bool ContainerIsRunning(string name) => Execute($"inspect --format=\"{{{{.State.Running}}}}\" {name}") == "true";
+
         public void Copy(string src, string dest) => ExecuteWithLogging($"cp {src} {dest}");
 
         public void DeleteContainer(string container, bool captureLogs = false)
@@ -289,20 +291,22 @@ namespace Microsoft.DotNet.Docker.Tests
             string runAsUser = null,
             bool skipAutoCleanup = false,
             bool useMountedDockerSocket = false,
-            bool silenceOutput = false)
+            bool silenceOutput = false,
+            bool tty = true)
         {
             string cleanupArg = skipAutoCleanup ? string.Empty : " --rm";
-            string detachArg = detach ? " -d -t" : string.Empty;
+            string detachArg = detach ? " -d" : string.Empty;
+            string ttyArg = detach && tty ? " -t" : string.Empty;
             string userArg = runAsUser != null ? $" -u {runAsUser}" : string.Empty;
             string workdirArg = workdir == null ? string.Empty : $" -w {workdir}";
             string mountedDockerSocketArg = useMountedDockerSocket ? " -v /var/run/docker.sock:/var/run/docker.sock" : string.Empty;
             if (silenceOutput)
             {
                 return Execute(
-                    $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{mountedDockerSocketArg} {optionalRunArgs} {image} {command}");
+                    $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{ttyArg}{mountedDockerSocketArg} {optionalRunArgs} {image} {command}");
             }
             return ExecuteWithLogging(
-                $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{mountedDockerSocketArg} {optionalRunArgs} {image} {command}");
+                $"run --name {name}{cleanupArg}{workdirArg}{userArg}{detachArg}{ttyArg}{mountedDockerSocketArg} {optionalRunArgs} {image} {command}");
         }
 
         /// <summary>

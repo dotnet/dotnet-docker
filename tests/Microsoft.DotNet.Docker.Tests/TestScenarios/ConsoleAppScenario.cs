@@ -32,7 +32,7 @@ public abstract class ConsoleAppScenario : ProjectTemplateTestScenario
         }
         finally
         {
-            DockerHelper.DeleteContainer(containerName);
+            DockerHelper.DeleteContainer(containerName, captureLogs: true);
         }
 
         return Task.FromResult(0);

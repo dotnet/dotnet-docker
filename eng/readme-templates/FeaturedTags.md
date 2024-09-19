@@ -20,8 +20,8 @@ elif match(REPO, "monitor/base"):* `9` (Release Candidate)
   * `docker pull {{FULL_REPO}}:9`
 * `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`^
-elif match(REPO, "aspire-dashboard"):* `8.1`
-  * `docker pull {{FULL_REPO}}:8.1`^
+elif match(REPO, "aspire-dashboard"):* `8.2`
+  * `docker pull {{FULL_REPO}}:8.2`^
 else:* `9.0` (Release Candidate)
   * `docker pull {{FULL_REPO}}:9.0`
 * `8.0` (Long-Term Support)
