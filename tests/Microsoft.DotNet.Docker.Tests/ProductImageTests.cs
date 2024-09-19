@@ -421,6 +421,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 { OS: string os } when os.Contains(OS.Jammy) =>
                     [
                         "ca-certificates",
+                        "gcc-12-base",
                         "libc6",
                         "libgcc-s1",
                         "libssl3",
