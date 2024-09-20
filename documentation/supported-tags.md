@@ -148,7 +148,7 @@ Each .NET release goes through multiple [support phases](https://github.com/dotn
 
 While a new .NET version is in preview, both the fixed and floating version tags have a special preview suffix.
 When a .NET version moves from Preview to Release Candidate, the `-preview` suffix is dropped from the floating version tags.
-This is because .NET Release Candidates are typically supported for production use under a "Go-Live" license, so the preview label no longer applies.
+This is because .NET Release Candidates are supported for production use under a "Go-Live" license, so the preview label no longer applies.
 In this case, fixed versions will use an `-rc.<RC Number>` suffix since the patch version would otherwise clash with the GA release (e.g. `9.0.0`).
 
 | Support phase | Fixed version tag format | Floating version tag format |
