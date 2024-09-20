@@ -153,9 +153,9 @@ In this case, fixed versions will use an `-rc.<RC Number>` suffix since the patc
 
 | Support phase | Fixed version tag format | Floating version tag format |
 | --- | --- | --- |
-| **Preview** | `Major.Minor.Patch-preview.PreviewVersion` | `Major.Minor-preview` |
-| **Go-Live (Release Canididate)** | `Major.Minor.Patch-rc.ReleaseCandidateVersion` | `Major.Minor` |
-| **Active and Maintenance** | `Major.Minor.Patch` | `Major.Minor` |
+| **Preview** | `<Major>.<Minor>.<Patch>-preview.<PreviewVersion>` | `<Major>.<Minor>-preview` |
+| **Release Candidate (Go-Live)** | `<Major>.<Minor>.<Patch>-rc.<ReleaseCandidateVersion>` | `<Major>.<Minor>` |
+| **Active and Maintenance** | `<Major>.<Minor>.<Patch>` | `<Major>.<Minor>` |
 
 See [.NET's release policies](https://github.com/dotnet/core/blob/main/release-policies.md) for more details.
 
