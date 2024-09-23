@@ -1,4 +1,7 @@
 {
+  "includes": [
+    "manifest.versions.json"
+  ],
   "registry": "mcr.microsoft.com",
   "repos": [
     {
@@ -21,6 +24,7 @@
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/samples-tags.yml",
       "images": [
         {
+          "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "dotnetapp-9.0": {}
           },
@@ -78,6 +82,7 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "dotnetapp-chiseled-9.0": {}
           },
@@ -113,6 +118,7 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "aspnetapp-9.0": {}
           },
@@ -129,7 +135,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-amd64"
+                    "$(Repo:samples):dotnetapp-9.0-alpine-amd64"
                   ]
                 }
               ]
@@ -148,7 +154,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-arm32v7"
+                    "$(Repo:samples):dotnetapp-9.0-alpine-arm32v7"
                   ]
                 }
               ]
@@ -167,7 +173,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-arm64v8"
+                    "$(Repo:samples):dotnetapp-9.0-alpine-arm64v8"
                   ]
                 }
               ]
@@ -187,7 +193,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-1809"
+                    "$(Repo:samples):dotnetapp-9.0-nanoserver-1809"
                   ]
                 }
               ]
@@ -207,7 +213,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-ltsc2022"
+                    "$(Repo:samples):dotnetapp-9.0-nanoserver-ltsc2022"
                   ]
                 }
               ]
@@ -215,6 +221,7 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "aspnetapp-chiseled-9.0": {}
           },
@@ -231,7 +238,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-chiseled-amd64"
+                    "$(Repo:samples):dotnetapp-chiseled-9.0-amd64"
                   ]
                 }
               ]
@@ -250,7 +257,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-chiseled-arm32v7"
+                    "$(Repo:samples):dotnetapp-chiseled-9.0-arm32v7"
                   ]
                 }
               ]
@@ -269,7 +276,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-chiseled-arm64v8"
+                    "$(Repo:samples):dotnetapp-chiseled-9.0-arm64v8"
                   ]
                 }
               ]
@@ -277,6 +284,7 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "dotnetapp-8.0": {},
             "dotnetapp": {
@@ -353,6 +361,7 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "dotnetapp-chiseled-8.0": {},
             "dotnetapp-chiseled": {}
@@ -392,6 +401,7 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "aspnetapp-8.0": {},
             "aspnetapp": {
@@ -414,7 +424,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-amd64"
+                    "$(Repo:samples):dotnetapp-8.0-alpine-amd64"
                   ]
                 }
               ]
@@ -434,7 +444,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-arm32v7"
+                    "$(Repo:samples):dotnetapp-8.0-alpine-arm32v7"
                   ]
                 }
               ]
@@ -454,7 +464,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-alpine-arm64v8"
+                    "$(Repo:samples):dotnetapp-8.0-alpine-arm64v8"
                   ]
                 }
               ]
@@ -479,7 +489,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-1809"
+                    "$(Repo:samples):dotnetapp-8.0-nanoserver-1809"
                   ]
                 }
               ]
@@ -500,7 +510,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-nanoserver-ltsc2022"
+                    "$(Repo:samples):dotnetapp-8.0-nanoserver-ltsc2022"
                   ]
                 }
               ]
@@ -508,6 +518,7 @@
           ]
         },
         {
+          "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "aspnetapp-chiseled-8.0": {},
             "aspnetapp-chiseled": {}
@@ -526,7 +537,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-chiseled-amd64"
+                    "$(Repo:samples):dotnetapp-chiseled-8.0-amd64"
                   ]
                 }
               ]
@@ -546,7 +557,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-chiseled-arm32v7"
+                    "$(Repo:samples):dotnetapp-chiseled-8.0-arm32v7"
                   ]
                 }
               ]
@@ -566,7 +577,7 @@
                   "name": "test-dependencies",
                   "type": "Integral",
                   "dependencies": [
-                    "$(Repo:samples):dotnetapp-chiseled-arm64v8"
+                    "$(Repo:samples):dotnetapp-chiseled-8.0-arm64v8"
                   ]
                 }
               ]
