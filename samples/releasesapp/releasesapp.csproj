@@ -6,17 +6,22 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
 
-    <!--
-      Learn more about publishing configuration:
-      https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained
-      https://learn.microsoft.com/dotnet/core/deploying/single-file
-      https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained
-      https://learn.microsoft.com/dotnet/core/deploying/ready-to-run
-    -->
+    <!-- Learn more about self-contained publish:
+      https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained -->
     <PublishSelfContained>true</PublishSelfContained>
+
+    <!-- Learn more about single-file deployment:
+      https://learn.microsoft.com/dotnet/core/deploying/single-file -->
     <PublishSingleFile>true</PublishSingleFile>
+
+    <!-- Learn more about trimming:
+      https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained -->
     <PublishTrimmed>true</PublishTrimmed>
+
+    <!-- Learn more about ReadyToRun compilation:
+      https://learn.microsoft.com/dotnet/core/deploying/ready-to-run -->
     <PublishReadyToRun>true</PublishReadyToRun>
+
   </PropertyGroup>
 
   <ItemGroup>
