@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:8.0.401-1-noble-arm64v8
+FROM $REPO:8.0.402-noble-arm64v8
 
 COPY <<EOF /etc/apt/sources.list.d/amd64.sources
 Types: deb

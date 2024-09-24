@@ -127,7 +127,7 @@ function GetVersionDetails([string]$commitSha, [string]$dockerfileVersion) {
         $repoId = "7fa5dddb-89e8-4b26-8595-a6d15593e354"
     }
 
-    if ($UseInternalBuild) {       
+    if ($UseInternalBuild) {
         $versionDetailsUrl="https://dev.azure.com/dnceng/internal/_apis/git/repositories/$repoId/items?scopePath=/$versionDetailsPath&api-version=6.0&version=$commitSha&versionType=commit"
         $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$AzdoVersionsRepoInfoAccessToken"))
         $headers = @{
@@ -153,6 +153,7 @@ function GetVersionInfoFromBuildId([string]$buildId) {
     $configPath = Join-Path $tempDir "config.json"
 
     try {
+        write-host here
         az pipelines runs artifact download --organization https://dev.azure.com/dnceng/ --project internal --run-id $buildId --path $tempDir --artifact-name drop
 
         $config = $(Get-Content -Path $configPath | Out-String) | ConvertFrom-Json
