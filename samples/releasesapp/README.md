@@ -9,8 +9,8 @@ A similar [web API sample](../releasesapi/README.md) supports native AOT deploym
 You can build and run the sample:
 
 ```bash
-docker build --pull -t app .
-docker run --rm app
+docker build --pull -t releasesapp .
+docker run --rm releasesapp
 ```
 
 It will produce output similar to this [example app output](https://gist.github.com/richlander/4701a33592abd021f767644974c0ced6).

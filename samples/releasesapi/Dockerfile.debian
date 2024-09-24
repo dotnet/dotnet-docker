@@ -1,28 +1,28 @@
 # syntax=docker/dockerfile:1
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 ARG TARGETARCH
-RUN <<EOF
-apt-get update
-apt-get install -y clang zlib1g-dev
-EOF
+RUN apt-get update \
+    && apt-get install -y \
+        clang \
+        zlib1g-dev \
+    && rm -rf /var/lib/apt/lists/*
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
-COPY *.csproj .
-COPY *.config .
+# Copy project file and restore as distinct layers
+COPY --link *.csproj NuGet.config .
 RUN dotnet restore -r linux-$TARGETARCH
 
-# copy and publish app and libraries
-COPY . .
+# Copy source code and publish app
+COPY --link . .
 RUN dotnet publish --no-restore -o /app releasesapi.csproj
 RUN rm /app/*.dbg /app/*.Development.json
 
 
-# final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:8.0
+# Final stage/image
+FROM mcr.microsoft.com/dotnet/runtime-deps:9.0
 WORKDIR /app
-COPY --from=build /app .
+COPY --link --from=build /app .
 USER $APP_UID
 ENTRYPOINT ["./releasesapi"]

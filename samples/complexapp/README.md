@@ -142,81 +142,51 @@ docker run --rm -v ${pwd}\TestResults:c:\source\tests\TestResults complexapp-tes
 
 ## Running tests while building an image
 
-It is possible to run tests as part of `docker build`. This approach can be useful if you want `docker build` to fail if your tests fail. It is not generally recommended, as will be described later in this section.
+It is possible to run tests as part of `docker build`. This approach can be useful if you want `docker build` to fail if your tests fail. **This approach is not recommended**, as will be described later in this section.
 
-This approach can be implemented by the following pattern. It is not included in the sample Dockerfile because it is not the recommended approach.
+This approach can be implemented by adding the following instructions to the `publish` stage. It is not included in the sample Dockerfile because it is not the recommended approach.
 
 ```Dockerfile
+COPY tests/ /source/tests/
 WORKDIR /source/tests
 RUN dotnet restore
 RUN dotnet test --no-restore --logger:trx
 ```
 
-The following example demonstrates this pattern, as if it was part of [Dockerfile](Dockerfile). You would then be able run tests using the normal `docker build` pattern, as follows:
+If you build the [sample Dockerfile](Dockerfile) with this change, you will see that tests are run during the build:
 
 ```console
-docker build --pull -t complexapp .
+> docker build --progress=plain -t complexapp .
+#0 building with "desktop-linux" instance using docker driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.28kB done
+
+...
+
+#22 [publish 6/6] RUN dotnet test --no-restore --logger:trx
+#22 1.108 /usr/share/dotnet/sdk/9.0.100-rc.1.24452.12/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.RuntimeIdentifierInference.targets(326,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [/source/tests/tests.csproj]
+#22 1.748 /usr/share/dotnet/sdk/9.0.100-rc.1.24452.12/Sdks/Microsoft.NET.Sdk/targets/Microsoft.NET.RuntimeIdentifierInference.targets(326,5): message NETSDK1057: You are using a preview version of .NET. See: https://aka.ms/dotnet-support-policy [/source/libbar/libbar.csproj]
+#22 4.167   libfoo -> /source/libfoo/bin/Debug/net9.0/libfoo.dll
+#22 4.172   libbar -> /source/libbar/bin/Debug/net9.0/libbar.dll
+#22 4.620   tests -> /source/tests/bin/Debug/net9.0/tests.dll
+#22 4.642 Test run for /source/tests/bin/Debug/net9.0/tests.dll (.NETCoreApp,Version=v9.0)
+#22 4.745 VSTest version 17.12.0-preview-24412-03 (x64)
+#22 4.751
+#22 4.858 Starting test execution, please wait...
+#22 4.893 A total of 1 test files matched the specified pattern.
+#22 5.615 Results File: /source/tests/TestResults/_buildkitsandbox_2024-09-05_17_14_28.trx
+#22 5.616
+#22 5.620 Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 7 ms - tests.dll (net9.0)
+#22 DONE 5.7s
+
+...
 ```
 
-You will see that tests are run while building the image, as you can see in the following example (many build steps have been cut out to make the log easier to read).
+There are two main limitations to this approach:
 
-```console
-> docker build --pull -t complexapp .
-Sending build context to Docker daemon  12.79MB
-Step 1/24 : FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-8.0: Pulling from dotnet/sdk
-Digest: sha256:02606610ffd96978da91adeac1b73af9ac536b85a3034b061d0c7d8d9fcd6790
-Status: Image is up to date for mcr.microsoft.com/dotnet/sdk:8.0
- ---> 9817c25953a8
-Step 17/24 : RUN dotnet test --logger:trx
- ---> Running in 4678e2e6456d
-  Determining projects to restore...
-  Restored /source/tests/tests.csproj (in 7.73 sec).
-  2 of 3 projects are up-to-date for restore.
-  libbar -> /source/libbar/bin/Debug/netstandard2.0/libbar.dll
-  libfoo -> /source/libfoo/bin/Debug/netstandard2.0/libfoo.dll
-  tests -> /source/tests/bin/Debug/net8.0/tests.dll
-Test run for /source/tests/bin/Debug/net8.0/tests.dll (.NETCoreApp,Version=v8.0)
-Microsoft (R) Test Execution Command Line Tool Version 17.10.0
-Copyright (c) Microsoft Corporation.  All rights reserved.
-
-Starting test execution, please wait...
-A total of 1 test files matched the specified pattern.
-Results File: /source/tests/TestResults/_886d04dbf347_2021-09-02_18_30_59.trx
-
-Passed!  - Failed:     0, Passed:     2, Skipped:     0, Total:     2, Duration: 2 ms - /source/tests/bin/Debug/net8.0/tests.dll (net8.0)
-Removing intermediate container 4678e2e6456d
- ---> 6deeeacdaaf2
-Step 24/24 : ENTRYPOINT ["dotnet","complexapp.dll"]
- ---> Using cache
- ---> b1584b78d34a
-Successfully built b1584b78d34a
-Successfully tagged complexapp:latest
-SECURITY WARNING: You are building a Docker image from Windows against a non-Windows Docker host. All files and directories added to build context will have '-rwxr-xr-x' permissions. It is recommended to double check and reset permissions for sensitive files and directories.
-```
-
-After building the container image, it is still possible to get the logs from the intermediate container image in which the tests were run. The intermediate stage container image is listed as `6deeeacdaaf2` in the console output. Using that information, we can boot up the container image and copy the log files from it, using the following pattern:
-
-```console
-C:\git\dotnet-docker\samples\complexapp>docker images | findstr 6deeeacdaaf2
-<none>                                        <none>                    6deeeacdaaf2        About a minute ago   910MB
-C:\git\dotnet-docker\samples\complexapp>docker run --rm -dit --entrypoint tail --name complexapp-test 6deeeacdaaf2
-cb97ba418f4ceed93eab06527cbd0dfcd2c41cc2fc2dd0e6e0eed99215a6e786
-C:\git\dotnet-docker\samples\complexapp>docker cp complexapp-test:/source/tests/TestResults .
-C:\git\dotnet-docker\samples\complexapp>dir TestResults
- Volume in drive C is Windows
- Volume Serial Number is 384B-0B6E
-
- Directory of C:\git\dotnet-docker\samples\complexapp\TestResults
-
-09/02/2021  02:41 PM    <DIR>          .
-09/02/2021  02:41 PM    <DIR>          ..
-09/02/2021  02:41 PM             3,635 _4678e2e6456d_2021-09-19_22_41_08.trx
-```
-
-There are two problems with this approach. It is cumbersome and if tests fail, it is not possible to copy the logs from the intermediate container layer, since that layer won't exist. This limitation, and the difficulty of copying files out of intermediate layers, demonstrates the weakness of this approach.
-
-Alternatively, you can build with the `--rm=false` option. This leaves the intermediate build containers and you can then issue the `docker cp` command to retrieve the results. The use of docker system prune makes it easy to cleanup the intermediate build containers.
+* It's not possible to get the test logs out of the stage that was used to run the tests during the build.
+* If tests fail, the image fails to build. This leaves you without a container image that you could otherwise use to further diagnose the problem that caused the tests to fail.
 
 ## More Samples
 
