@@ -142,36 +142,55 @@ These "floating version" `latest` tag references an image with the latest `Major
 
 The following policies are used for the tag patterns we use.
 
-### Fixed version tags
+### .NET Versions
 
-"Fixed version" tags reference an image with a specific `Major.Minor.Patch` .NET version.
+Each .NET release goes through multiple [support phases](https://github.com/dotnet/core/blob/main/release-policies.md#support-phases), with varying support levels.
+
+While a new .NET version is in preview, both the fixed and floating version tags have a special preview suffix.
+When a .NET version moves from Preview to Release Candidate, the `-preview` suffix is dropped from the floating version tags.
+This is because .NET Release Candidates are supported for production use under a "Go-Live" license, so the preview label no longer applies.
+In this case, fixed versions will use an `-rc.<RC Number>` suffix since the patch version would otherwise clash with the GA release (e.g. `9.0.0`).
+
+| Support phase | Fixed version tag format | Floating version tag format |
+| --- | --- | --- |
+| **Preview** | `<Major>.<Minor>.<Patch>-preview.<PreviewVersion>` | `<Major>.<Minor>-preview` |
+| **Release Candidate (Go-Live)** | `<Major>.<Minor>.<Patch>-rc.<ReleaseCandidateVersion>` | `<Major>.<Minor>` |
+| **Active and Maintenance** | `<Major>.<Minor>.<Patch>` | `<Major>.<Minor>` |
+
+See [.NET's release policies](https://github.com/dotnet/core/blob/main/release-policies.md) for more details.
+
+#### Fixed version tags
+
+"Fixed version" tags reference an image with a specific .NET patch version.
 
 Examples:
 
 - `6.0.32`
 - `8.0.7-alpine3.20`
+- `9.0.0-preview.7`
+- `9.0.0-rc.1`
 
 > [!NOTE]
 >
-> - These tags are considered _fixed tags_ since they reference a specific .NET patch version.
-> - They are updated in response to base image updates (like a Debian base image) for the supported life of the image (typically one month).
-> - The .NET components within the image will not be updated.
+> - _Fixed version tags_ are updated according to the [image update policy](../README.md#image-update-policy) for the supported life of the image (typically one month).
+> - _Fixed version tags_ guarantee that the version of .NET in the image will never change.
 > - At times, components of .NET images like PowerShell or MinGit may require updates out of band with .NET releases in order to fix critical bugs or vulnerabilities. If this happens, new images will be created with a `-1` suffix appended to the fixed tag so that you can roll back to the previous fixed tag if necessary. The same practice will repeat itself if necessary (with `-2` and then `-3` tags).
 
-### Floating version tags
+#### Floating version tags
 
 "Floating version" tags references an image with a specific `Major.Minor` .NET version, but float on patch updates.
 
 Examples:
 
-- `6.0`
-- `8.0-alpine3.20`
+- `8.0`
+- `9.0-alpine3.20`
+- `9.0-preview`
+- `9.0-preview-noble`
 
 > [!NOTE]
 >
-> - These tags are considered _floating tags_ since they do not reference a specific .NET patch version.
-> - They are updated in response to base image updates (like a Debian base image) for the supported life of the .NET release.
-> - The .NET components within the image will be updated, which typically occurs on Patch Tuesday.
+> - _Floating version tags_ always point to the latest patch version of a given `Major.Minor` .NET release.
+> - _Floating version tags_ are updated according to the [image update policy](../README.md#image-update-policy) for the supported life of the .NET release or until the OS they are based on reaches EOL, whichever is sooner. We will post an [Announcement](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) when we remove or stop supporting images for any reason.
 
 ### OS tags and base image updates
 
@@ -184,7 +203,7 @@ Examples:
 
 > [!NOTE]
 >
-> - These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release.
+> - These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release or until the OS they are based on reaches EOL, whichever is sooner.
 > - Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
 > - If an image is only available for one operating system, then the operating system will be omitted from the tag.
 > - For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used instead of version numbers.
