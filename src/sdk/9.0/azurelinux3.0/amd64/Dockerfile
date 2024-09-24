@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:9.0.0-rc.2-azurelinux3.0-amd64
+FROM $REPO:9.0.0-azurelinux3.0-amd64
 
 ENV \
     # Do not generate certificate
@@ -7,7 +7,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-rc.2.24468.2 \
+    DOTNET_SDK_VERSION=9.0.100-rc.2.24474.4 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -23,7 +23,7 @@ RUN tdnf install -y \
 
 # Install .NET SDK
 RUN curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-x64.tar.gz \
-    && dotnet_sha512='b7a2d47bba5435905c6267646eb0a9a72375376b1e137ca5dab741eb84acf7dcd5ac980ebfcbde3cdeefc986894ea7e13844711dfdc1faa6290b9832f6b4497e' \
+    && dotnet_sha512='304d3df2a14f6ec12da77e3e8146aaae6454087efe5387fb4d2fe2fc58a5452b50978e418b3096aba0118d37d6a561b2289071da1d3fb5c8d263fc7251fdeb8c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz \
