@@ -73,7 +73,6 @@ Tags | Dockerfile | OS Version
 9.0.100-rc.1-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.100-rc.1-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 8.0.402-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.402-bookworm-slim, 8.0-bookworm-slim, 8.0.402, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.402-alpine3.20-amd64, 8.0-alpine3.20-amd64, 8.0-alpine-amd64, 8.0.402-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-8.0.402-alpine3.19-amd64, 8.0-alpine3.19-amd64, 8.0.402-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
 8.0.402-noble-amd64, 8.0-noble-amd64, 8.0.402-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 8.0.402-jammy-amd64, 8.0-jammy-amd64, 8.0.402-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.402-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.402-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
@@ -81,7 +80,6 @@ Tags | Dockerfile | OS Version
 6.0.425-1-bookworm-slim-amd64, 6.0-bookworm-slim-amd64, 6.0.425-1-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 6.0.425-1-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.425-1-bullseye-slim, 6.0-bullseye-slim, 6.0.425-1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
 6.0.425-1-alpine3.20-amd64, 6.0-alpine3.20-amd64, 6.0-alpine-amd64, 6.0.425-1-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-6.0.425-1-alpine3.19-amd64, 6.0-alpine3.19-amd64, 6.0.425-1-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/amd64/Dockerfile) | Alpine 3.19
 6.0.425-1-jammy-amd64, 6.0-jammy-amd64, 6.0.425-1-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 6.0.425-1-cbl-mariner2.0-amd64, 6.0-cbl-mariner2.0-amd64, 6.0.425-1-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 6.0.425-1-focal-amd64, 6.0-focal-amd64, 6.0.425-1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
@@ -96,7 +94,6 @@ Tags | Dockerfile | OS Version
 9.0.100-rc.1-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.100-rc.1-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.402-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.402-bookworm-slim, 8.0-bookworm-slim, 8.0.402, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.402-alpine3.20-arm64v8, 8.0-alpine3.20-arm64v8, 8.0-alpine-arm64v8, 8.0.402-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-8.0.402-alpine3.19-arm64v8, 8.0-alpine3.19-arm64v8, 8.0.402-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
 8.0.402-noble-arm64v8, 8.0-noble-arm64v8, 8.0.402-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 8.0.402-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.402-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.402-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.402-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
@@ -104,7 +101,6 @@ Tags | Dockerfile | OS Version
 6.0.425-1-bookworm-slim-arm64v8, 6.0-bookworm-slim-arm64v8, 6.0.425-1-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 6.0.425-1-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.425-1-bullseye-slim, 6.0-bullseye-slim, 6.0.425-1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
 6.0.425-1-alpine3.20-arm64v8, 6.0-alpine3.20-arm64v8, 6.0-alpine-arm64v8, 6.0.425-1-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-6.0.425-1-alpine3.19-arm64v8, 6.0-alpine3.19-arm64v8, 6.0.425-1-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/arm64v8/Dockerfile) | Alpine 3.19
 6.0.425-1-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.425-1-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 6.0.425-1-cbl-mariner2.0-arm64v8, 6.0-cbl-mariner2.0-arm64v8, 6.0.425-1-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
 6.0.425-1-focal-arm64v8, 6.0-focal-arm64v8, 6.0.425-1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
@@ -118,12 +114,10 @@ Tags | Dockerfile | OS Version
 9.0.100-rc.1-noble-arm32v7, 9.0-noble-arm32v7, 9.0.100-rc.1-noble, 9.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.402-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.402-bookworm-slim, 8.0-bookworm-slim, 8.0.402, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.402-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0-alpine-arm32v7, 8.0.402-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-8.0.402-alpine3.19-arm32v7, 8.0-alpine3.19-arm32v7, 8.0.402-alpine3.19, 8.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
 8.0.402-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.402-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.425-1-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.425-1-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 6.0.425-1-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.425-1-bullseye-slim, 6.0-bullseye-slim, 6.0.425-1, 6.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
 6.0.425-1-alpine3.20-arm32v7, 6.0-alpine3.20-arm32v7, 6.0-alpine-arm32v7, 6.0.425-1-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-6.0.425-1-alpine3.19-arm32v7, 6.0-alpine3.19-arm32v7, 6.0.425-1-alpine3.19, 6.0-alpine3.19 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/alpine3.19/arm32v7/Dockerfile) | Alpine 3.19
 6.0.425-1-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.425-1-jammy, 6.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.425-1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.425-1-focal, 6.0-focal | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
