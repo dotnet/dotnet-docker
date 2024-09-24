@@ -1,7 +1,11 @@
 {
+    "aliveStatusCodes": [200, 406],
     "ignorePatterns": [
         {
             "pattern": "^https://dev.azure.com/dnceng/internal/_build\\?definitionId=359"
+        },
+        {
+            "pattern": "^https://github.com/dotnet/dotnet-docker/blob/\\{\\{if"
         },
         {
             "pattern": "^https://github.com/dotnet/release/blob/main/.github/ISSUE_TEMPLATE/dotnet-docker-servicing-release.md"
@@ -10,11 +14,15 @@
             "pattern": "^https://mcr.microsoft.com/v2/\\{\\{REPO\\}\\}/tags/list"
         },
         {
-            "pattern": "^https://github.com/dotnet/dotnet-docker/blob/\\{\\{if"
+            "pattern": "^https://support.microsoft.com/contactus/"
         },
         {
             "pattern": "^l-is-the-package-in-the-linux-distro-base-image"
         }
     ],
-    "aliveStatusCodes": [200, 406]
+    "retry":
+    {
+        "count": 3,
+        "interval": "3000"
+    }
 }
