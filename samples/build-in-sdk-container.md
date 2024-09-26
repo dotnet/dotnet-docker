@@ -8,7 +8,7 @@ This is useful to avoid the need to install .NET on the build machine and helps 
 Docker [buildx](https://docs.docker.com/reference/cli/docker/buildx/) has built-in support for [exporting files from the docker build command](https://docs.docker.com/build/building/export/).
 Using a Dockerfile to build .NET apps is advantageous because it allows you to specify all of the apps required dependencies and build instructions in one place.
 
-The `dotnetapp` sample contains a sample [Dockerfile](Dockerfile.sdk-build) that supports this functionality.
+The `dotnetapp` sample contains a sample [Dockerfile](./dotnetapp/Dockerfile.sdk-build) that supports this functionality.
 This sample uses a multi-stage Dockerfile with a `FROM scratch` stage.
 The Dockerfile copies the build outputs into the that stage using the `COPY` instruction.
 
