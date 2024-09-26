@@ -1,6 +1,6 @@
 # Build in a .NET SDK container
 
-You can use Docker to run your build in an isolated environment using the [.NET SDK Docker image](https://hub.docker.com/r/microsoft/dotnet-sdk/).
+You can use Docker to run your build in an isolated environment using the [.NET SDK Docker image](../README.sdk.md).
 This is useful to avoid the need to install .NET on the build machine and helps ensure that your build environment is correctly configured (dev, staging, or production).
 
 ## Build using a Dockerfile (Requires buildx)
