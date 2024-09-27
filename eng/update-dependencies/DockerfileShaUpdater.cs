@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -114,6 +115,14 @@ namespace Dotnet.Docker
                     }
                     return (JObject)variables;
                 });
+
+            if (!string.IsNullOrEmpty(_options.InternalPat))
+            {
+                s_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Basic",
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
+                        _options.InternalPat))));
+            }
         }
 
         private string GetRpmArchFormat() => _arch == "arm64" ? "aarch64" : "$ARCH";
@@ -326,7 +335,7 @@ namespace Dotnet.Docker
         private async Task<string?> GetDotNetBinaryStorageChecksumsShaAsync(string productDownloadUrl)
         {
             string? sha = null;
-            string shaExt = _productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ? ".sha" : ".sha512";
+            string shaExt = _options.IsInternal || !_productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ? ".sha512" : ".sha";
 
             string shaUrl = productDownloadUrl
                 .Replace("/dotnetcli", "/dotnetclichecksums")

@@ -63,7 +63,15 @@ param(
     # The release state of the product assets
     [ValidateSet("Prerelease", "Release")]
     [string]
-    $ReleaseState
+    $ReleaseState,
+
+    # PAT used to access internal AzDO build artifacts
+    [string]
+    $InternalPat,
+
+    # Base Url for internal AzDO build artifacts
+    [string]
+    $InternalBaseUrl
 )
 
 Import-Module -force $PSScriptRoot/DependencyManagement.psm1
@@ -120,6 +128,14 @@ if ($UseStableBranding) {
 
 if ($ReleaseState) {
     $updateDepsArgs += "--release-state=$ReleaseState"
+}
+
+if ($InternalArtifactsAccessToken) {
+    $updateDepsArgs += "--internal-pat=$InternalPat"
+}
+
+if ($InternalBaseUrl) {
+    $updateDepsArgs += "--internal-base-url=$InternalBaseUrl"
 }
 
 $versionSourceName = switch ($PSCmdlet.ParameterSetName) {
