@@ -3,15 +3,16 @@ parameters:
   internalProjectName: null
   condition: true
   customInitSteps: []
+  isInternalServicingValidation: false
 
 steps:
 - template: /eng/common/templates/steps/init-docker-linux.yml@self
   parameters:
     setupImageBuilder: false
     setupTestRunner: true
-    # Clean only up when we're running an internal build, not a PR, and not doing pre-build validation.
+    # Clean only up when we're running an internal build, not a PR, not doing internal servicing validation, and not doing pre-build validation.
     # i.e. when we're building something important.
-    cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.preBuildValidation, 'false')) }}
+    cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.preBuildValidation, 'false'), eq(parameters.isInternalServicingValidation, 'false')) }}
     condition: ${{ parameters.condition }}
 - ${{ parameters.customInitSteps }}
 - script: |
@@ -21,7 +22,7 @@ steps:
     if [ "${{ parameters.preBuildValidation }}" == "true" ]; then
       additionalTestArgs="$additionalTestArgs -TestCategories pre-build"
     else
-      if [ "${{ variables['System.TeamProject'] }}" == "${{ parameters.internalProjectName }}" ] && [ "${{ variables['Build.Reason'] }}" != "PullRequest" ]; then
+      if [ "${{ variables['System.TeamProject'] }}" == "${{ parameters.internalProjectName }}" ] && [ "${{ variables['Build.Reason'] }}" != "PullRequest" ] && [ "${{ parameters.isInternalServicingValidation }}" != "true" ]; then
         additionalTestArgs="$additionalTestArgs -PullImages -Registry $(acr-staging.server) -RepoPrefix $(stagingRepoPrefix) -ImageInfoPath $(artifactsPath)/image-info.json"
         if [ "$TESTCATEGORIESOVERRIDE" != "" ]; then
           additionalTestArgs="$additionalTestArgs -TestCategories $TESTCATEGORIESOVERRIDE"
@@ -41,7 +42,7 @@ steps:
     $(imageNames.testRunner.withrepo)
   displayName: Start Test Runner Container
   condition: and(succeeded(), ${{ parameters.condition }})
-- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'false')) }}:
   - template: /eng/common/templates/steps/run-pwsh-with-auth.yml@self
     parameters:
       displayName: Docker login
@@ -72,7 +73,7 @@ steps:
     $(additionalTestArgs)"
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
-- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'false')) }}:
   - script: docker exec $(testRunner.container) docker logout $(acr-staging.server)
     displayName: Docker logout
     condition: and(always(), ${{ parameters.condition }})

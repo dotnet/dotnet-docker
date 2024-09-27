@@ -18,9 +18,12 @@ parameters:
 - name: forceDryRun
   type: boolean
   default: false
+- name: isInternalServicingValidation
+  type: string
+  default: false
 
 steps:
-- ${{ if or(eq(parameters.forceDryRun, true), eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+- ${{ if or(eq(parameters.forceDryRun, true), eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'true')) }}:
   - script: echo "##vso[task.setvariable variable=dryRunArg]--dry-run"
 - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   parameters:
