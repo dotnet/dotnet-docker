@@ -46,7 +46,7 @@ public static class TestDockerfileBuilder
         ? DockerOS.Linux
         : DockerOS.Windows;
 
-    private static bool s_useNuGetConfig = Config.IsNightlyRepo;
+    private static bool s_useNuGetConfig = Config.IsNightlyRepo || Config.IsInternal;
 
     private static string[] s_commonArgs = [
         "sdk_image",
@@ -139,6 +139,7 @@ public static class TestDockerfileBuilder
         StringBuilder buildStageBuilder = new(
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
+            ARG NuGetFeedPassword
             ARG port
             EXPOSE $port
             """);

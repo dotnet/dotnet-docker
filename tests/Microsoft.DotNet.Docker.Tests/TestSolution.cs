@@ -63,6 +63,10 @@ public class TestSolution : IDisposable
                     Path.Combine(DockerHelper.TestArtifactsDir, nuGetConfigFileName),
                     Path.Combine(solutionDir, "NuGet.config"));
             }
+            else if(Config.IsInternal)
+            {
+                nuGetConfigFileName += ".internal";
+            }
 
             File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, ".dockerignore"), Path.Combine(solutionDir, ".dockerignore"));
         }

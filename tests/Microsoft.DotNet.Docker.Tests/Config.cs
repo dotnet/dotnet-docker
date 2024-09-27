@@ -40,11 +40,8 @@ namespace Microsoft.DotNet.Docker.Tests
             Environment.GetEnvironmentVariable("DOCKERFILE_PATHS")?
                 .Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
-        public static bool IsInternal(string dotnetVersion)
-        {
-            string versionBaseUrl = GetBaseUrl(dotnetVersion);
-            return versionBaseUrl.Contains("msrc") || versionBaseUrl.Contains("internal");
-        }
+        public static bool IsInternal { get; } =
+            Environment.GetEnvironmentVariable("INTERNAL_TESTING") != null;
 
         private static bool GetIsNightlyRepo()
         {
