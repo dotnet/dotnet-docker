@@ -72,7 +72,7 @@ The following approach, running tests as an executable stage, works around that 
 ## Run tests in an executable stage
 
 Tests can also be run as the `ENTRYPOINT` of a stage in your app's Dockerfile.
-The [Dockerfile](Dockerfile) includes a `test-entrypoint` stage that demonstrates running via its `ENTRYPOINT`, as follows:
+The [complexapp Dockerfile](./complexapp/Dockerfile) includes a `test-entrypoint` stage that demonstrates running via its `ENTRYPOINT`, as follows:
 
 ```Dockerfile
 # test-entrypoint exposes tests as the default executable for the stage
