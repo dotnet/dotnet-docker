@@ -9,6 +9,7 @@ Complete tag lists:
 - [aspnet](../README.aspnet.md#full-tag-listing)
 - [sdk](../README.sdk.md#full-tag-listing)
 - [monitor](../README.monitor.md#full-tag-listing)
+- [monitor-base](../README.monitor-base.md#full-tag-listing)
 - [aspire-dashboard](../README.aspire-dashboard.md#full-tag-listing)
 - [samples](../README.samples.md#full-tag-listing)
 - [Microsoft Artifact Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/)
