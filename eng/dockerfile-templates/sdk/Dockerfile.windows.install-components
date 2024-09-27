@@ -52,7 +52,8 @@ RUN powershell -Command " `
                 "dest-dir": mingitDir
             ], "        ")}}"
 
-}}RUN powershell -Command " `
+}}{{if ARGS["dotnet-is-internal"]:SHELL ["powershell", "-command"]
+RUN `^else:RUN powershell -Command " `}}
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
@@ -74,4 +75,4 @@ RUN powershell -Command " `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
 for i, group in sdkExtractGroups:
         Get-ChildItem -Exclude {{join(map(group.paths, getFormattedPath), ",")}} -Path {{group.dir}} `
-            | Remove-Item -Force -Recurse{{if i < len(group.paths) - 1:; `}}}}}}"
+            | Remove-Item -Force -Recurse{{if i < len(group.paths) - 1:; `}}}}}}{{if !ARGS["dotnet-is-internal"]:"}}

@@ -7,7 +7,10 @@
         sha: Expected checksum of the downloaded file
         sha-var-name: Name of variable that stores the checksum ^
 
+    set isInternal to find(ARGS["url"], "content?format=file&subPath") >= 0 ^
+    set additionalWgetArgs to when(isInternal, '--header="Authorization: Basic `echo $ACCESSTOKEN:$ACCESSTOKEN | base64 -w 0`" ', '') ^
+    set additionalCurlArgs to when(isInternal, '-u :$ACCESSTOKEN --basic ', '') ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0
-}}{{if isAlpine:wget -O^else:curl -fSL --output}} {{ARGS["out-file"]}} {{ARGS["url"]}}{{if ARGS["sha"]: \
+}}{{if isAlpine:wget {{additionalWgetArgs}}-O^else:curl {{additionalCurlArgs}}-fSL --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
 && {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
 && echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha512sum -c -}}
