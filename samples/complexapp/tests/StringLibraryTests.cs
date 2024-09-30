@@ -12,10 +12,4 @@ public class StringLibraryTests
         var returnedString = StringLibrary.GetString();
         Assert.True(inputString == returnedString, "The input string was not correct.");
     }
-
-    // [Fact]
-    // public void MyTest()
-    // {
-    //     Assert.True(false);
-    // }
 }
