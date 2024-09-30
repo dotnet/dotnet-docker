@@ -10,20 +10,20 @@ Using a Dockerfile to build .NET apps is advantageous because it allows you to s
 
 The `dotnetapp` sample contains a sample [Dockerfile](./dotnetapp/Dockerfile.sdk-build) that supports this functionality.
 This sample uses a multi-stage Dockerfile with a `FROM scratch` stage.
-The Dockerfile copies the build outputs into the that stage using the `COPY` instruction.
+The Dockerfile copies the build outputs into that stage using the `COPY` instruction.
 
 ### Build single-platform binary
 
 From the `samples/dotnetapp` directory:
 
 ```pwsh
-docker build --pull -f Dockerfile.sdk-build . --output out
+docker build --pull -f Dockerfile.sdk-build --output out .
 ```
 
 You can also give it a try without cloning this repository:
 
 ```pwsh
-docker build --pull -f Dockerfile.sdk-build 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp' --output out
+docker build --pull -f Dockerfile.sdk-build --output out 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp'
 ```
 
 ### Build binaries for multiple platforms at once
