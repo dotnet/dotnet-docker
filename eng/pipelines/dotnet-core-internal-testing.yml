@@ -21,10 +21,6 @@ variables:
 - template: /eng/pipelines/variables/internal-core.yml@self
 - name: IsInternalServicingValidation
   value: true
-- name: imageBuilder.pathArgs
-  value: "--path '*9.0*'"
-- name: buildId
-  value: 2525144
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
