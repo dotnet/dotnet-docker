@@ -11,19 +11,21 @@ Using a Dockerfile to build .NET apps is advantageous because it allows you to s
 The `dotnetapp` sample contains a sample [Dockerfile](./dotnetapp/Dockerfile.sdk-build) that supports this functionality.
 This sample uses a multi-stage Dockerfile with a `FROM scratch` stage.
 The Dockerfile copies the build outputs into that stage using the `COPY` instruction.
+Then, when you provide the `--output/-o <directory>` argument to the Docker build command, Docker will copy the entire filesystem of the final stage of the image to the specified directory.
+Since the sample Dockerfile's final stage is a `FROM scratch` stage, the result is that the build outputs are placed in the specified directory on the host machine's disk.
 
 ### Build single-platform binary
 
 From the `samples/dotnetapp` directory:
 
 ```pwsh
-docker build --pull -f Dockerfile.sdk-build --output out .
+docker build --pull -f Dockerfile.sdk-build --output ./out .
 ```
 
 You can also give it a try without cloning this repository:
 
 ```pwsh
-docker build --pull -f Dockerfile.sdk-build --output out 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp'
+docker build --pull -f Dockerfile.sdk-build --output ./out 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp'
 ```
 
 ### Build binaries for multiple platforms at once
@@ -32,7 +34,7 @@ Taking advantage of Docker buildx, you can cross-build binaries for multiple pla
 For more info about how this works, see our documentation on [building images for a specific platform](./build-for-a-platform.md).
 
 ```pwsh
-docker buildx build -o out --platform linux/amd64,linux/arm64 -f .\samples\dotnetapp\Dockerfile.sdk-build .\samples\dotnetapp\
+docker buildx build --pull --platform linux/amd64,linux/arm64 -f ./samples/dotnetapp/Dockerfile.sdk-build --output out ./samples/dotnetapp/
 ```
 
 Docker buildx will create a separate sub-directory for each target platform:
@@ -46,7 +48,6 @@ C:\...\dotnetapp\out
 │       dotnetapp.dll
 │       dotnetapp.pdb
 │       dotnetapp.runtimeconfig.json
-│
 └───linux_arm64
         dotnetapp
         dotnetapp.deps.json
