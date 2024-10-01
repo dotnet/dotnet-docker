@@ -23,9 +23,6 @@ parameters:
 - name: forceDryRun
   type: boolean
   default: false
-- name: isInternalServicingValidation
-  type: string
-  default: false
 
 jobs:
 - job: ${{ parameters.name }}
@@ -40,4 +37,3 @@ jobs:
       additionalOptions: ${{ parameters.additionalOptions }}
       continueOnError: ${{ parameters.continueOnError }}
       forceDryRun: ${{ parameters.forceDryRun }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}

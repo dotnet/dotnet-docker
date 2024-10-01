@@ -14,9 +14,6 @@ parameters:
 - name: continueOnError
   type: string
   default: false
-- name: isInternalServicingValidation
-  type: string
-  default: false
 
 jobs:
 - template: /eng/common/templates/jobs/copy-base-images.yml@self
@@ -31,4 +28,3 @@ jobs:
       subscription: $(acr-staging.subscription)
       resourceGroup: $(acr-staging.resourceGroup)
     repoPrefix: $(mirrorRepoPrefix)
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}

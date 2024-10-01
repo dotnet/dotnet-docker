@@ -18,9 +18,6 @@ parameters:
 - name: forceDryRun
   type: boolean
   default: false
-- name: isInternalServicingValidation
-  type: string
-  default: false
 
 steps:
 - ${{ if or(eq(parameters.forceDryRun, true), eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
