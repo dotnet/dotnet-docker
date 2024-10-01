@@ -57,6 +57,8 @@ variables:
   value: windows-2019
 - name: defaultWindows2022PoolImage
   value: windows-2022
+- name: defaultWindows2025PoolImage
+  value: windows-2025
 
 - name: default1ESInternalPoolName
   value: NetCore1ESPool-Internal

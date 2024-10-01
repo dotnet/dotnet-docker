@@ -37,6 +37,8 @@ parameters:
     vmImage: $(defaultWindows1809PoolImage)
   windows2022Pool:
     vmImage: $(defaultWindows2022PoolImage)
+  windows2025Pool:
+    vmImage: $(defaultWindows2025PoolImage)
 
 stages:
 
@@ -146,6 +148,19 @@ stages:
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
+      name: Windows2025_amd64
+      pool: ${{ parameters.windows2025Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2025Amd64']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+  - template: /eng/common/templates/jobs/build-images.yml@self
+    parameters:
       name: WindowsLtsc2016_amd64
       pool: ${{ parameters.windows2016Pool }}
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2016Amd64']
@@ -234,6 +249,14 @@ stages:
         name: Windows2022_amd64
         pool: ${{ parameters.windows2022Pool }}
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2022Amd64']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+    - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
+      parameters:
+        name: Windows2025_amd64
+        pool: ${{ parameters.windows2025Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2025Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}

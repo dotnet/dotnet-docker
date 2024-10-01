@@ -120,3 +120,12 @@ stages:
         image: $(windowsServer2022PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         image: $(windowsServer2022InternalPoolImage)
+
+    # Windows Server 2025
+    windows2025Pool:
+      os: windows
+      name: $(windowsServer2025PoolName)
+      ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
+        image: $(windowsServer2025PublicPoolImage)
+      ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
+        image: $(windowsServer2025InternalPoolImage)
