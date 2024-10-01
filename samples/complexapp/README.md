@@ -50,12 +50,8 @@ This is different than running tests within a [.NET SDK container](../run-tests-
 
 ## Running tests
 
-There are multiple ways to run automated tests against your projects, covered in [Running Tests with Docker](../run-tests-in-sdk-container.md).
-All of the following examples use the test project from this `complexapp` sample.
-
-* [Running tests as part of Docker build](../run-tests-in-sdk-container.md#run-tests-as-part-of-docker-build)
-* [Running tests in an executable stage](../run-tests-in-sdk-container.md#run-tests-in-an-executable-stage)
-* [Running tests directly in a Docker container](../run-tests-in-sdk-container.md#run-tests-directly-in-a-docker-container)
+There are many ways to run automated tests against your projects.
+[Running Tests with Docker](../run-tests-in-sdk-container.md) is one example that covers running this sample's tests using the separate executable test stage in the [Dockerfile](./Dockerfile).
 
 ## More Samples
 

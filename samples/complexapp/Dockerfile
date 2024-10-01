@@ -29,28 +29,8 @@ COPY --link tests/ .
 RUN dotnet build --no-restore
 
 
-# Run tests in a separate stage, to optimize caching when running locally.
-# If you need to re-run tests without re-building, you can pass the Docker build
-# argument `--no-cache-filter test-run` to re-run only this stage.
-# test-run runs the test project
-FROM test-build AS test-run
-
-# Learn more about the `dotnet test` command:
-#     https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-test
-RUN dotnet test --no-build \
-    --logger "console;verbosity=detailed" \
-    --logger "trx;logfilename=TestResults.trx" \
-    # Without this condition, a failing test would cause the Dockerfile build to fail.
-    # This would make it impossible to get the test results out of the test-output stage.
-    || true
-
-# test-output is a from-scratch stage containing only test results
-FROM scratch AS test-output
-COPY --from=test-run /source/tests/TestResults/TestResults.trx .
-
-
 # test-entrypoint exposes tests as the default executable for the stage
-FROM test-build AS test-entrypoint
+FROM test-build AS test
 ENTRYPOINT ["dotnet", "test", "--no-build", "--logger:trx"]
 
 
