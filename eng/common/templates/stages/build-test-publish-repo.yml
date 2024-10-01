@@ -317,10 +317,10 @@ stages:
               or(
                 contains(variables['stages'], 'build'),
                 contains(variables['stages'], 'test'))))))"
-  jobs:
-  - template: /eng/common/templates/jobs/publish.yml@self
-    parameters:
-      pool: ${{ parameters.linuxAmd64Pool }}
-      internalProjectName: ${{ parameters.internalProjectName }}
-      customPublishVariables: ${{ parameters.customPublishVariables }}
-      customInitSteps: ${{ parameters.customPublishInitSteps }}
+    jobs:
+    - template: /eng/common/templates/jobs/publish.yml@self
+      parameters:
+        pool: ${{ parameters.linuxAmd64Pool }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        customPublishVariables: ${{ parameters.customPublishVariables }}
+        customInitSteps: ${{ parameters.customPublishInitSteps }}
