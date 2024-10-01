@@ -12,7 +12,7 @@
     set isAzureLinux to isCblMariner || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "content?format=file&subPath") >= 0 ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,
