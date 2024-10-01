@@ -6,7 +6,6 @@ parameters:
   preBuildValidation: false
   internalProjectName: null
   customInitSteps: []
-  isInternalServicingValidation: false
 
 jobs:
 - job: ${{ parameters.name }}
@@ -25,4 +24,3 @@ jobs:
       preBuildValidation: ${{ parameters.preBuildValidation }}
       internalProjectName: ${{ parameters.internalProjectName }}
       customInitSteps: ${{ parameters.customInitSteps }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}

@@ -230,7 +230,6 @@ stages:
         testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_arm64
@@ -239,7 +238,6 @@ stages:
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_arm32
@@ -248,7 +246,6 @@ stages:
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
       parameters:
         name: Windows1809_amd64
@@ -257,7 +254,6 @@ stages:
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
       parameters:
         name: Windows2022_amd64
@@ -266,7 +262,6 @@ stages:
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
       parameters:
         name: Windows2025_amd64
@@ -283,7 +278,6 @@ stages:
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
 
 ################################################################################
 # Publish Images

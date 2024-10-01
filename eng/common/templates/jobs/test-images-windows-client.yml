@@ -5,7 +5,6 @@ parameters:
   testJobTimeout: 60
   internalProjectName: null
   customInitSteps: []
-  isInternalServicingValidation: false
 
 jobs:
 - job: ${{ parameters.name }}
@@ -20,4 +19,3 @@ jobs:
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
       customInitSteps: ${{ parameters.customInitSteps }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
