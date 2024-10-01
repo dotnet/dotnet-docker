@@ -23,7 +23,7 @@ parameters:
   default: false
 
 steps:
-- ${{ if or(eq(parameters.forceDryRun, true), eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'true')) }}:
+- ${{ if or(eq(parameters.forceDryRun, true), eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
   - script: echo "##vso[task.setvariable variable=dryRunArg]--dry-run"
 - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   parameters:
