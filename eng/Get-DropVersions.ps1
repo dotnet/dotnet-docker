@@ -237,13 +237,16 @@ if ($UseInternalBuild) {
     }
 
     if ($BuildId) {
-        if ($InternalArtifactsAccessToken) {
-            $internalBaseUrl = GetInternalBaseUrl
+        if (!$InternalArtifactsAccessToken) {
+            $InternalArtifactsAccessToken = az account get-access-token --query accessToken --output tsv
+            if ($LASTEXITCODE -ne 0) {
+                Write-Error "Failed to obtain access token using Azure CLI"
+                Write-Error "Please provide 'InternalArtifactsAccessToken' parameter when using 'BuildId' option"
+                exit 1
+            }
         }
-        else {
-            Write-Error "'InternalArtifactsAccessToken' parameter is required for obtaining internal base-url, when specifying 'BuildId' option"
-            exit 1
-        }
+
+        $internalBaseUrl = GetInternalBaseUrl
     }
 
     $queryString = "$BlobStorageSasQueryString"
