@@ -45,7 +45,6 @@ ARG ACCESSTOKEN
 
 RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
     [
-        "url-suffix": urlSuffix,
         "filename": rpmFilename,
         "is-internal": isInternal
     ],
@@ -80,7 +79,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
 {{InsertTemplate("Dockerfile.install-runtime-deps-pkg",
     [
         "skip-download": isInternal
-        "url-suffix": urlSuffix,
         "filename": rpmFilename
     ]
 )}}}}{{if isMultiStage && nonRootUserSupported:
