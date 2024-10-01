@@ -1,0 +1,12 @@
+aliveStatusCodes:
+  - 200
+  - 406
+dirs:
+  - .
+  - .github
+excludedDirs:
+  - eng/readme-templates
+ignorePatterns:
+  - pattern: "^https://github.com/dotnet/release/blob/main/.github/ISSUE_TEMPLATE/dotnet-docker-servicing-release.md"
+  - pattern: "^l-is-the-package-in-the-linux-distro-base-image"
+useGitIgnore: true

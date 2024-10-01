@@ -17,8 +17,8 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Check markdown links
-        uses: gaurav-nelson/github-action-markdown-link-check@v1
+        uses: umbrelladocs/action-linkspector@v1
         with:
-          config-file: .github/linters/.check-markdown-links.json
-          use-quiet-mode: 'yes'
-          use-verbose-mode: 'no'
+          config_file: .github/linters/.linkspector.yml
+          fail_on_error: true
+          filter_mode: nofilter
