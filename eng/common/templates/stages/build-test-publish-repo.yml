@@ -75,7 +75,6 @@ stages:
       pool: ${{ parameters.linuxAmd64Pool }}
       additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
       customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/generate-matrix.yml@self
     parameters:
       matrixType: ${{ parameters.buildMatrixType }}
