@@ -43,9 +43,11 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string NanoServer = "nanoserver";
         public const string NanoServer1809 = $"{NanoServer}-1809";
         public const string NanoServerLtsc2022 = $"{NanoServer}-ltsc2022";
+        public const string NanoServerLtsc2025 = $"{NanoServer}-ltsc2025";
         public const string ServerCore = "windowsservercore";
         public const string ServerCoreLtsc2019 = $"{ServerCore}-ltsc2019";
         public const string ServerCoreLtsc2022 = $"{ServerCore}-ltsc2022";
+        public const string ServerCoreLtsc2025 = $"{ServerCore}-ltsc2025";
 
         // Helpers
         public const string ChiseledSuffix = "-chiseled";

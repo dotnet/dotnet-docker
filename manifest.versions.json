@@ -290,6 +290,9 @@
     "sdk|9.0|linux|x64|sha": "b7a2d47bba5435905c6267646eb0a9a72375376b1e137ca5dab741eb84acf7dcd5ac980ebfcbde3cdeefc986894ea7e13844711dfdc1faa6290b9832f6b4497e",
     "sdk|9.0|win|x64|sha": "7bb466148a9027c32d71c6fb0753059c17ade5f4e2ebd85a44f3cfcde4a07e1d7cc33e0f046d12dbdeca45b9ac505afe997d33181fb30e8d73fb87a08530cfd1",
 
+    "windowsservercore|ltsc2025|insider|tag": "10.0.26244.5000",
+    "nanoserver|ltsc2025|insider|tag": "10.0.26244.5000",
+
     "syft|repo": "anchore/syft",
     "syft|tag": "v1.12.2"
   }
