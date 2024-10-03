@@ -25,6 +25,11 @@ stages:
     customBuildInitSteps:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - powershell: |
+        if ($PSVersionTable.PSEdition -ne "Core") {
+          systeminfo
+        }
+      displayName: Check Windows system info
+    - powershell: |
         $imageBuilderBuildArgs = "$IMAGEBUILDERBUILDARGS"
         if ("$(publishRepoPrefix)".Contains("internal/")) {
           $sasQueryString = "$(dotnetstage-account-sas-read-token)"
