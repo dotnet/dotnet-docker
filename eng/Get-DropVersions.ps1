@@ -29,17 +29,13 @@ param(
     [switch]
     $UpdateDependencies,
 
-    # SAS query string used to access the internal blob storage location of the build
-    [string]
-    $BlobStorageSasQueryString,
-
     # PAT used to access the versions repo in AzDO
     [string]
     $AzdoVersionsRepoInfoAccessToken,
 
     # PAT used to access internal AzDO build artifacts
     [string]
-    $InternalArtifactsAccessToken
+    $InternalAccessToken
 )
 
 Import-Module -force $PSScriptRoot/DependencyManagement.psm1
@@ -98,7 +94,7 @@ function GetSdkVersionInfo([string]$sdkUrl) {
     }
 }
 
-function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [bool]$useStableBranding) {
+function ResolveSdkUrl([string]$sdkVersion, [bool]$useStableBranding) {
     if ($useStableBranding) {
         $sdkStableVersion = ($sdkVersion -split "-")[0]
     }
@@ -111,7 +107,7 @@ function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [bool]$useStab
     $containerVersion = $sdkVersion.Replace(".", "-")
 
     if ($UseInternalBuild) {
-        $sdkUrl = "https://dotnetstage.blob.core.windows.net/$containerVersion-internal/Sdk/$sdkVersion/$zipFile$queryString"
+        $sdkUrl = "https://dotnetstage.blob.core.windows.net/$containerVersion-internal/Sdk/$sdkVersion/$zipFile"
     }
     else {
         $sdkUrl = "https://dotnetbuilds.blob.core.windows.net/public/Sdk/$sdkVersion/$zipFile"
@@ -160,7 +156,7 @@ function GetVersionInfoFromBuildId([string]$buildId) {
     try {
         New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
 
-        $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$InternalArtifactsAccessToken"))
+        $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$InternalAccessToken"))
         $headers = @{
             "Authorization" = "Basic $base64AccessToken"
         }
@@ -193,7 +189,7 @@ function GetVersionInfoFromBuildId([string]$buildId) {
 }
 
 function GetArtifactUrl([string]$artifactName) {
-    $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$InternalArtifactsAccessToken"))
+    $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$InternalAccessToken"))
     $headers = @{
         "Authorization" = "Basic $base64AccessToken"
     }
@@ -237,29 +233,24 @@ if ($UseInternalBuild) {
     }
 
     if ($BuildId) {
-        if (!$InternalArtifactsAccessToken) {
-            $InternalArtifactsAccessToken = az account get-access-token --query accessToken --output tsv
+        if (!$InternalAccessToken) {
+            $InternalAccessToken = az account get-access-token --query accessToken --output tsv
             if ($LASTEXITCODE -ne 0) {
                 Write-Error "Failed to obtain access token using Azure CLI"
-                Write-Error "Please provide 'InternalArtifactsAccessToken' parameter when using 'BuildId' option"
+                Write-Error "Please provide 'InternalAccessToken' parameter when using 'BuildId' option"
                 exit 1
             }
         }
 
         $internalBaseUrl = GetInternalBaseUrl
     }
-
-    $queryString = "$BlobStorageSasQueryString"
-}
-else {
-    $queryString = ""
 }
 
 $sdkVersionInfos = @()
 
 if ($Channel) {
     $sdkFile = "dotnet-sdk-win-x64.zip"
-    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
+    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile"
 
     $sdkUrl = Resolve-DotnetProductUrl $akaMsUrl
     $sdkVersionInfos += GetSdkVersionInfo $sdkUrl
@@ -268,7 +259,7 @@ if ($Channel) {
 foreach ($sdkVersion in $SdkVersions)
 {
     $useStableBranding = Get-IsStableBranding -Version $sdkVersion
-    $sdkUrl = ResolveSdkUrl $sdkVersion $queryString $useStableBranding
+    $sdkUrl = ResolveSdkUrl $sdkVersion $useStableBranding
     $sdkVersionInfo = GetSdkVersionInfo $sdkUrl
     $sdkVersionInfos += $sdkVersionInfo
 }
@@ -317,9 +308,9 @@ if ($UpdateDependencies)
 {
     $additionalArgs = @{}
 
-    if ($internalBaseUrl -and $InternalArtifactsAccessToken) {
+    if ($internalBaseUrl -and $InternalAccessToken) {
         $additionalArgs += @{ InternalBaseUrl = "$internalBaseUrl" }
-        $additionalArgs += @{ InternalPat = "$InternalArtifactsAccessToken" }
+        $additionalArgs += @{ InternalAccessToken = "$InternalAccessToken" }
     }
 
     foreach ($versionInfo in $versionInfos) {

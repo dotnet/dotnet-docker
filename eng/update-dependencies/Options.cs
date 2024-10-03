@@ -12,9 +12,7 @@ namespace Dotnet.Docker
     public class Options
     {
         public string InternalBaseUrl { get; }
-        public string InternalPat { get; }
-        public string BinarySasQueryString { get; }
-        public string ChecksumSasQueryString { get; }
+        public string InternalAccessToken { get; }
         public bool ComputeChecksums { get; }
         public string DockerfileVersion { get; }
         public string Email { get; }
@@ -31,13 +29,13 @@ namespace Dotnet.Docker
         public string VersionSourceName { get; }
         public bool UseStableBranding { get; }
         public bool UpdateOnly => Email == null || Password == null || User == null || TargetBranch == null;
-        public bool IsInternal => !string.IsNullOrEmpty(InternalBaseUrl) || !string.IsNullOrEmpty(BinarySasQueryString) || !string.IsNullOrEmpty(ChecksumSasQueryString);
+        public bool IsInternal => !string.IsNullOrEmpty(InternalBaseUrl);
         public string ChecksumsFile { get; }
         public ReleaseState? ReleaseState { get; }
 
         public Options(string dockerfileVersion, string[] productVersion, string versionSourceName, string email, string password, string user,
             bool computeShas, bool stableBranding, string binarySas, string checksumSas, string sourceBranch, string targetBranch, string org,
-            string project, string repo, string checksumsFile, ReleaseState? releaseState, string internalBaseUrl, string internalPat)
+            string project, string repo, string checksumsFile, ReleaseState? releaseState, string internalBaseUrl, string internalAccessToken)
         {
             DockerfileVersion = dockerfileVersion;
             ProductVersions = productVersion
@@ -50,11 +48,9 @@ namespace Dotnet.Docker
             ComputeChecksums = computeShas;
             ChecksumsFile = checksumsFile;
             UseStableBranding = stableBranding;
-            BinarySasQueryString = binarySas;
-            ChecksumSasQueryString = checksumSas;
             SourceBranch = sourceBranch;
             InternalBaseUrl = internalBaseUrl;
-            InternalPat = internalPat;
+            InternalAccessToken = internalAccessToken;
 
             // Default TargetBranch to SourceBranch if it's not explicitly provided
             TargetBranch = string.IsNullOrEmpty(targetBranch) ? sourceBranch : targetBranch;
@@ -97,7 +93,7 @@ namespace Dotnet.Docker
                 new Option<string>("--checksums-file", "File containing a list of checksums for each product asset"),
                 new Option<ReleaseState?>("--release-state", "The release state of the product assets"),
                 new Option<string>("--internal-base-url", "Base Url for internal build artifacts"),
-                new Option<string>("--internal-pat", "PAT for accessing internal build artifacts")
+                new Option<string>("--internal-access-token", "PAT for accessing internal build artifacts")
             };
     }
 

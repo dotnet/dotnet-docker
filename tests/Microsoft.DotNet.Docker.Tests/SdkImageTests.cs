@@ -327,7 +327,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                     "Basic",
                     Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
-                        Config.NuGetFeedPassword))));
+                        Config.InternalAccessToken))));
 
                 await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
 

@@ -48,14 +48,6 @@ param(
     [string]
     $AzdoVariableName,
 
-    # SAS query string used to access files in the binary blob container
-    [string]
-    $BinarySasQueryString,
-
-    # SAS query string used to access files in the checksum blob container
-    [string]
-    $ChecksumSasQueryString,
-
     # File containing checksums for each product asset; used to override the behavior of locating the checksums from blob storage accounts.
     [string]
     $ChecksumsFile,
@@ -67,7 +59,7 @@ param(
 
     # PAT used to access internal AzDO build artifacts
     [string]
-    $InternalPat,
+    $InternalAccessToken,
 
     # Base Url for internal AzDO build artifacts
     [string]
@@ -110,14 +102,6 @@ if ($ComputeShas) {
     $updateDepsArgs += "--compute-shas"
 }
 
-if ($BinarySasQueryString) {
-    $updateDepsArgs += "--binary-sas=$BinarySasQueryString"
-}
-
-if ($ChecksumSasQueryString) {
-    $updateDepsArgs += "--checksum-sas=$ChecksumSasQueryString"
-}
-
 if ($ChecksumsFile) {
     $updateDepsArgs += "--checksums-file=$ChecksumsFile"
 }
@@ -130,8 +114,8 @@ if ($ReleaseState) {
     $updateDepsArgs += "--release-state=$ReleaseState"
 }
 
-if ($InternalArtifactsAccessToken) {
-    $updateDepsArgs += "--internal-pat=$InternalPat"
+if ($InternalAccessToken) {
+    $updateDepsArgs += "--internal-access-token=$InternalAccessToken"
 }
 
 if ($InternalBaseUrl) {

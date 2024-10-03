@@ -97,7 +97,7 @@ internal class NuGetConfigUpdater : IDependencyUpdater
                 pkgSourceCreds,
                 () => new XElement(pkgSrcName));
             UpdateAddElement(pkgSrcCredsEntry, "Username", "dotnet");
-            UpdateAddElement(pkgSrcCredsEntry, "ClearTextPassword", "%NuGetFeedPassword%");
+            UpdateAddElement(pkgSrcCredsEntry, "ClearTextPassword", "%InternalAccessToken%");
         }
         else
         {

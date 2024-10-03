@@ -116,12 +116,12 @@ namespace Dotnet.Docker
                     return (JObject)variables;
                 });
 
-            if (!string.IsNullOrEmpty(_options.InternalPat))
+            if (!string.IsNullOrEmpty(_options.InternalAccessToken))
             {
                 s_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                     "Basic",
                     Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
-                        _options.InternalPat))));
+                        _options.InternalAccessToken))));
             }
         }
 
@@ -314,22 +314,7 @@ namespace Dotnet.Docker
         {
             Trace.TraceInformation($"Downloading '{downloadUrl}'.");
             return ChecksumHelper.ComputeChecksumShaAsync(
-                s_httpClient, ApplySasQueryStringIfNecessary(downloadUrl, _options.BinarySasQueryString));
-        }
-
-        private static bool IsInternalUrl(string url)
-        {
-            return url.Contains("internal");
-        }
-
-        private static string ApplySasQueryStringIfNecessary(string url, string sasQueryString)
-        {
-            if (IsInternalUrl(url))
-            {
-                return url + sasQueryString;
-            }
-
-            return url;
+                s_httpClient, downloadUrl);
         }
 
         private async Task<string?> GetDotNetBinaryStorageChecksumsShaAsync(string productDownloadUrl)
@@ -345,7 +330,7 @@ namespace Dotnet.Docker
                 + shaExt;
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
-            using (HttpResponseMessage response = await s_httpClient.GetAsync(ApplySasQueryStringIfNecessary(shaUrl, _options.ChecksumSasQueryString)))
+            using (HttpResponseMessage response = await s_httpClient.GetAsync(shaUrl))
             {
                 if (response.IsSuccessStatusCode)
                 {
@@ -468,7 +453,7 @@ namespace Dotnet.Docker
                 async () =>
                 {
                     Trace.TraceInformation($"Downloading '{uri}'.");
-                    using (HttpResponseMessage response = await s_httpClient.GetAsync(ApplySasQueryStringIfNecessary(uri, _options.BinarySasQueryString)))
+                    using (HttpResponseMessage response = await s_httpClient.GetAsync(uri))
                     {
                         if (response.IsSuccessStatusCode)
                         {

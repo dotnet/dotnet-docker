@@ -117,7 +117,7 @@ public static class TestDockerfileBuilder
             $"""
             FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.AppStageName}
             ARG rid
-            ARG NuGetFeedPassword
+            ARG InternalAccessToken
             WORKDIR /source/tests
             COPY tests/*.csproj .
             RUN dotnet restore -r {FormatArg("rid")}
@@ -139,7 +139,7 @@ public static class TestDockerfileBuilder
         StringBuilder buildStageBuilder = new(
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
-            ARG NuGetFeedPassword
+            ARG InternalAccessToken
             ARG port
             EXPOSE $port
             """);
@@ -207,7 +207,7 @@ public static class TestDockerfileBuilder
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
             ARG rid
-            ARG NuGetFeedPassword
+            ARG InternalAccessToken
             ARG port
             EXPOSE $port
             """);
