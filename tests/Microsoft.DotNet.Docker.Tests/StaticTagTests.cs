@@ -274,7 +274,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         if (ApplianceRepos.Any(repo.Name.Contains))
                         {
                             // Only appliance repos have major version tags
-                            // Only appliance repos have floating distro tags (<cref="IsApplianceVersionUsingOldSchema"/>)
+                            // Only appliance repos have floating distro tags (<cref="IsApplianceVersionWithDistroTags"/>)
                             testObjects.AddRange(new[]
                             {
                                 GetTagTestInput(
@@ -283,7 +283,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinorPatch, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor.Patch>-<os>-<architecture>
 
                                 GetTagTestInput(
@@ -292,7 +292,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinorPatch, 
                                     checkOs: true, 
                                     checkArchitecture: false, 
-                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                    skipDockerfileOn: IsApplianceVersionWithoutDistroTags
                                 ), // <Major.Minor.Patch>-<os>
 
                                 GetTagTestInput(
@@ -301,7 +301,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinorPatch, 
                                     checkOs: false, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                    skipDockerfileOn: info => IsApplianceVersionWithDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor.Patch>-<architecture>
 
                                 GetTagTestInput(
@@ -310,7 +310,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor>-<os>-<architecture>
 
                                 GetTagTestInput(
@@ -319,7 +319,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: false, 
-                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                    skipDockerfileOn: IsApplianceVersionWithoutDistroTags
                                 ), // <Major.Minor>-<os>
 
                                 GetTagTestInput(
@@ -328,7 +328,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinor, 
                                     checkOs: false, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                    skipDockerfileOn: info => IsApplianceVersionWithDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor>-<architecture>
 
                                 GetTagTestInput(
@@ -337,7 +337,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.Major, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major>-<os>-<architecture>
 
                                 GetTagTestInput(
@@ -346,7 +346,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.Major, 
                                     checkOs: true, 
                                     checkArchitecture: false, 
-                                    skipDockerfileOn: IsApplianceVersionUsingNewSchema
+                                    skipDockerfileOn: IsApplianceVersionWithoutDistroTags
                                 ) // <Major>-<os>
                             });
 
@@ -359,7 +359,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.Major,
                                     checkOs: false,
                                     checkArchitecture: true,
-                                    skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                    skipDockerfileOn: IsApplianceVersionWithDistroTags
                                 )); // <Major>-<architecture>
                             }
                         }
@@ -533,16 +533,24 @@ namespace Microsoft.DotNet.Docker.Tests
         private static bool IsWindows(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.Os.Contains("windowsservercore") || dockerfileInfo.Os.Contains("nanoserver");
 
+        // All appliance-style images do not have arch-specific tags starting with version 9
+        private static bool IsApplianceVersionWithArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+            (dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8) ||
+            (dockerfileInfo.Repo.Contains("aspire") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8);
+
+        private static bool IsApplianceVersionWithoutArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+            !IsApplianceVersionWithArchTags(dockerfileInfo);
+
         // Certain versions of appliance repos use a new tag schema.
         // This new schema excludes the OS from all tags.
         // The aspire-dashboard repo uses this schema for all versions.
         // The monitor and monitor-base repos use this schema for versions 9 and above.
-        private static bool IsApplianceVersionUsingOldSchema(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+        private static bool IsApplianceVersionWithDistroTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8;
 
-        // <cref="IsApplianceVersionUsingOldSchema"/>
-        private static bool IsApplianceVersionUsingNewSchema(ManifestHelper.DockerfileInfo dockerfileInfo) =>
-            !IsApplianceVersionUsingOldSchema(dockerfileInfo);
+        // <cref="IsApplianceVersionWithDistroTags"/>
+        private static bool IsApplianceVersionWithoutDistroTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+            !IsApplianceVersionWithDistroTags(dockerfileInfo);
 
         private static bool IsDotNet6(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.MajorMinor.StartsWith("6");
