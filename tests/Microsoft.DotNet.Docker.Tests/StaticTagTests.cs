@@ -310,7 +310,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithMajorMinorTagsWithoutArchTags(info)
+                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || !IsApplianceVersionWithMajorMinorArchTags(info)
                                 ), // <Major.Minor>-<os>-<architecture>
 
                                 GetTagTestInput(
@@ -328,7 +328,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinor, 
                                     checkOs: false, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: info => IsApplianceVersionWithDistroTags(info) || IsApplianceVersionWithMajorMinorTagsWithoutArchTags(info)
+                                    skipDockerfileOn: info => IsApplianceVersionWithDistroTags(info) || !IsApplianceVersionWithMajorMinorArchTags(info)
                                 ), // <Major.Minor>-<architecture>
 
                                 GetTagTestInput(
@@ -534,17 +534,15 @@ namespace Microsoft.DotNet.Docker.Tests
             dockerfileInfo.Os.Contains("windowsservercore") || dockerfileInfo.Os.Contains("nanoserver");
 
         // All appliance-style images do not have arch-specific tags for <major>.<minor> tags starting with version 9
-        private static bool IsApplianceVersionWithMajorMinorTagsWithArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
-            (dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8) ||
+        private static bool IsApplianceVersionWithMajorMinorArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+            // Note that monitor-base still has arch-specific tags since it is a base image. Check that the repo ends with "monitor"
+            // to ensure that it is specifically checking the "dotnet/monitor" image and not "dotnet/monitor/base".
+            (dockerfileInfo.Repo.EndsWith("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8) ||
             (dockerfileInfo.Repo.Contains("aspire") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8);
 
-        private static bool IsApplianceVersionWithMajorMinorTagsWithoutArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
-            !IsApplianceVersionWithMajorMinorTagsWithArchTags(dockerfileInfo);
-
-        // Certain versions of appliance repos use a new tag schema.
-        // This new schema excludes the OS from all tags.
-        // The aspire-dashboard repo uses this schema for all versions.
-        // The monitor and monitor-base repos use this schema for versions 9 and above.
+        // Certain versions of appliance-style images do not have distro-specific tags
+        // For aspire-dashboard, this starts with 8.0
+        // For monitor and monitor-base, this starts with 9.0
         private static bool IsApplianceVersionWithDistroTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8;
 
