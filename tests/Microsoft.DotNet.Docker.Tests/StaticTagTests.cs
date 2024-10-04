@@ -283,7 +283,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinorPatch, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionWithoutDistroTags
+                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor.Patch>-<os>-<architecture>
 
                                 GetTagTestInput(
@@ -301,7 +301,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinorPatch, 
                                     checkOs: false, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionWithDistroTags
+                                    skipDockerfileOn: info => IsApplianceVersionWithDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor.Patch>-<architecture>
 
                                 GetTagTestInput(
@@ -310,7 +310,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinor, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithMajorMinorTagsWithoutArchTags(info)
+                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor>-<os>-<architecture>
 
                                 GetTagTestInput(
@@ -328,7 +328,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.MajorMinor, 
                                     checkOs: false, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: info => IsApplianceVersionWithDistroTags(info) || IsApplianceVersionWithMajorMinorTagsWithoutArchTags(info)
+                                    skipDockerfileOn: info => IsApplianceVersionWithDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major.Minor>-<architecture>
 
                                 GetTagTestInput(
@@ -337,7 +337,7 @@ namespace Microsoft.DotNet.Docker.Tests
                                     VersionType.Major, 
                                     checkOs: true, 
                                     checkArchitecture: true, 
-                                    skipDockerfileOn: IsApplianceVersionWithoutDistroTags
+                                    skipDockerfileOn: info => IsApplianceVersionWithoutDistroTags(info) || IsApplianceVersionWithoutArchTags(info)
                                 ), // <Major>-<os>-<architecture>
 
                                 GetTagTestInput(
@@ -533,13 +533,13 @@ namespace Microsoft.DotNet.Docker.Tests
         private static bool IsWindows(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.Os.Contains("windowsservercore") || dockerfileInfo.Os.Contains("nanoserver");
 
-        // All appliance-style images do not have arch-specific tags for <major>.<minor> tags starting with version 9
-        private static bool IsApplianceVersionWithMajorMinorTagsWithArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+        // All appliance-style images do not have arch-specific tags starting with version 9
+        private static bool IsApplianceVersionWithArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             (dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8) ||
             (dockerfileInfo.Repo.Contains("aspire") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8);
 
-        private static bool IsApplianceVersionWithMajorMinorTagsWithoutArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
-            !IsApplianceVersionWithMajorMinorTagsWithArchTags(dockerfileInfo);
+        private static bool IsApplianceVersionWithoutArchTags(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+            !IsApplianceVersionWithArchTags(dockerfileInfo);
 
         // Certain versions of appliance repos use a new tag schema.
         // This new schema excludes the OS from all tags.
