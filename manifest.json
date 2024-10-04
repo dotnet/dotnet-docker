@@ -9418,7 +9418,11 @@
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
-              "tags": {}
+              "tags": {
+                "$(monitor|9.0|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
             },
             {
               "architecture": "arm64",
@@ -9429,7 +9433,11 @@
               "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
-              "tags": {},
+              "tags": {
+                "$(monitor|9.0|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
               "variant": "v8"
             }
           ]
