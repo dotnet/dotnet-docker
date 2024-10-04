@@ -125,8 +125,8 @@
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|9.0|x64|sha": "$(mingit|latest|x64|sha)",
 
-    "monitor|6.3|build-version": "6.3.8",
-    "monitor|6.3|product-version": "6.3.8",
+    "monitor|6.3|build-version": "6.3.9",
+    "monitor|6.3|product-version": "6.3.9",
     "monitor|6.3|fixed-tag": "$(monitor|6.3|product-version)",
     "monitor|6.3|minor-tag": "6.3",
     "monitor|6|major-tag": "6",
