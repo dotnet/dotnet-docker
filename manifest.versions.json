@@ -137,8 +137,8 @@
     "monitor|6.3|base-url|main": "$(base-url|public|maintenance|main)",
     "monitor|6.3|base-url|nightly": "$(base-url|public|maintenance|nightly)",
 
-    "monitor|8.0|build-version": "8.0.4",
-    "monitor|8.0|product-version": "8.0.4",
+    "monitor|8.0|build-version": "8.0.5",
+    "monitor|8.0|product-version": "8.0.5",
     "monitor|8.0|fixed-tag": "$(monitor|8.0|product-version)",
     "monitor|8.0|minor-tag": "8.0",
     "monitor|8|major-tag": "8",

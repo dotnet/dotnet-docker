@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor extensions
-RUN dotnet_monitor_extension_version=8.0.4 \
+RUN dotnet_monitor_extension_version=8.0.5 \
     && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetcli.azureedge.net/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
     && dotnet_monitor_extension_sha512='7c0bdef53e84c53eafe89241f046409fe7fb0a00f95f3e8813ba87770f5f5c5ea488aff13a4ad59a2d9eaf39cd4a7f34d4f665a7fba9c84d34b823bb246cdc96' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
@@ -21,6 +21,6 @@ RUN dotnet_monitor_extension_version=8.0.4 \
 
 
 # .NET Monitor image
-FROM $REPO:8.0.4-ubuntu-chiseled-arm64v8
+FROM $REPO:8.0.5-ubuntu-chiseled-arm64v8
 
 COPY --from=installer ["/app", "/app"]
