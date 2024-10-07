@@ -9419,8 +9419,12 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-amd64": {},
-                "$(monitor|9.0|minor-tag)-amd64": {}
+                "$(monitor|9.0|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|9.0|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9433,8 +9437,12 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-arm64v8": {},
-                "$(monitor|9.0|minor-tag)-arm64v8": {}
+                "$(monitor|9.0|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|9.0|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
