@@ -226,6 +226,17 @@ Set-StrictMode -Version 2.0
 
 $tempDir = Join-Path ([System.IO.Path]::GetTempPath()) -ChildPath "dotnet-docker-get-dropversions" | Join-Path -ChildPath ([System.Guid]::NewGuid())
 
+if ($BuildId) {
+    if (!$InternalAccessToken) {
+        $InternalAccessToken = az account get-access-token --query accessToken --output tsv
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to obtain access token using Azure CLI"
+            Write-Error "Please provide 'InternalAccessToken' parameter when using 'BuildId' option"
+            exit 1
+        }
+    }
+}
+
 if ($UseInternalBuild) {
     if ($Channel)
     {
@@ -233,15 +244,6 @@ if ($UseInternalBuild) {
     }
 
     if ($BuildId) {
-        if (!$InternalAccessToken) {
-            $InternalAccessToken = az account get-access-token --query accessToken --output tsv
-            if ($LASTEXITCODE -ne 0) {
-                Write-Error "Failed to obtain access token using Azure CLI"
-                Write-Error "Please provide 'InternalAccessToken' parameter when using 'BuildId' option"
-                exit 1
-            }
-        }
-
         $internalBaseUrl = GetInternalBaseUrl
     }
 }
@@ -308,7 +310,7 @@ if ($UpdateDependencies)
 {
     $additionalArgs = @{}
 
-    if ($internalBaseUrl -and $InternalAccessToken) {
+    if ($UseInternalBuild) {
         $additionalArgs += @{ InternalBaseUrl = "$internalBaseUrl" }
         $additionalArgs += @{ InternalAccessToken = "$InternalAccessToken" }
     }
