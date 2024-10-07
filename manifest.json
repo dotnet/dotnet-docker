@@ -9551,9 +9551,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.2|fixed-tag)-amd64": {},
-                "$(aspire-dashboard|8.2|minor-tag)-amd64": {},
-                "$(aspire-dashboard|8|major-tag)-amd64": {}
+                "$(aspire-dashboard|8.2|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8.2|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8|major-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9566,9 +9572,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.2|fixed-tag)-arm64v8": {},
-                "$(aspire-dashboard|8.2|minor-tag)-arm64v8": {},
-                "$(aspire-dashboard|8|major-tag)-arm64v8": {}
+                "$(aspire-dashboard|8.2|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8.2|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8|major-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
