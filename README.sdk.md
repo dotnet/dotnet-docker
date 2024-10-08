@@ -140,6 +140,20 @@ Tags | Dockerfile | OS Version
 6.0.425-1-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.425-1-jammy, 6.0-jammy | [Dockerfile](src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.425-1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.425-1-focal, 6.0-focal | [Dockerfile](src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
+### Nano Server 2025 amd64 Tags
+
+Tag | Dockerfile
+---------| ---------------
+9.0.100-rc.2-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
+8.0.402-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
+
+### Windows Server Core 2025 amd64 Tags
+
+Tag | Dockerfile
+---------| ---------------
+9.0.100-rc.2-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+8.0.402-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+
 ### Nano Server 2022 amd64 Tags
 
 Tag | Dockerfile
