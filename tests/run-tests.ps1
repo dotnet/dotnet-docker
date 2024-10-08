@@ -31,7 +31,7 @@ param(
     [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard")]
     [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard"),
 
-    [securestring]$InternalAccessToken
+    [string]$InternalAccessToken
 )
 
 Import-Module -force $PSScriptRoot/../eng/DependencyManagement.psm1
@@ -122,7 +122,7 @@ Try {
     $env:DOTNET_MULTILEVEL_LOOKUP = '0'
 
     if ($InternalAccessToken) {
-        $env:INTERNAL_ACCESS_TOKEN = ConvertFrom-SecureString $InternalAccessToken -AsPlainText
+        $env:INTERNAL_ACCESS_TOKEN = $InternalAccessToken
         $env:INTERNAL_TESTING = 1
     }
 
