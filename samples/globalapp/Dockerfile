@@ -1,30 +1,21 @@
-ARG TAG=8.0
-# ARG TAG=8.0-jammy
-# ARG TAG=8.0-alpine
-FROM mcr.microsoft.com/dotnet/sdk:$TAG AS build
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+ARG TARGETARCH
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
-COPY *.csproj .
-RUN dotnet restore --ucr
+# Copy project file and restore as distinct layers
+COPY --link *.csproj .
+RUN dotnet restore -a $TARGETARCH
 
-# copy and publish app and libraries
-COPY . .
-RUN dotnet publish --ucr --self-contained false --no-restore -o /app
+# Copy source code and publish app
+COPY --link . .
+RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 
-# final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:$TAG
-# For Ubuntu
-# RUN apt update && DEBIAN_FRONTEND=noninteractive && apt install -y tzdata
-# For Alpine
-# ENV \
-#     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
-#     LC_ALL=en_US.UTF-8 \
-#     LANG=en_US.UTF-8
-# RUN apk add --no-cache \
-#     icu-data-full \
-#     icu-libs \
-#     tzdata
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/runtime:9.0
 WORKDIR /app
-COPY --from=build /app .
+COPY --link --from=build /app .
+USER $APP_UID
 ENTRYPOINT ["./globalapp"]

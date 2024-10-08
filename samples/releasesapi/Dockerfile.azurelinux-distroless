@@ -1,0 +1,25 @@
+# syntax=docker/dockerfile:1
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0-azurelinux3.0-aot AS build
+ARG TARGETARCH
+WORKDIR /source
+
+# Copy project file and restore as distinct layers
+COPY --link NuGet.config .
+COPY --link *.csproj .
+COPY --link *.config .
+RUN dotnet restore -r linux-$TARGETARCH
+
+# Copy source code and publish app
+COPY --link . .
+RUN dotnet publish --no-restore -o /app releasesapi.csproj
+RUN rm /app/*.dbg /app/*.Development.json
+
+
+# Final stage/image
+FROM mcr.microsoft.com/dotnet/nightly/runtime-deps:9.0-azurelinux3.0-distroless-aot
+WORKDIR /app
+COPY --link --from=build /app .
+USER $APP_UID
+ENTRYPOINT ["./releasesapi"]

@@ -17,15 +17,15 @@ The recommended way to configure [tzdata](https://en.wikipedia.org/wiki/Tz_datab
 
 ```bash
 $ docker run --rm debian date
-Wed Feb 22 03:08:10 UTC 2023
+Mon Sep 16 16:17:01 UTC 2024
 $ docker run --rm -e TZ="Etc/UTC" debian date
-Wed Feb 22 03:08:13 UTC 2023
+Mon Sep 16 16:17:31 UTC 2024
 $ docker run --rm -e TZ=$"America/New_York" debian date
-Tue Feb 21 22:08:16 EST 2023
+Mon Sep 16 12:17:51 EDT 2024
 $ docker run --rm -e TZ=$"America/Los_Angeles" debian date
-Tue Feb 21 19:08:39 PST 2023
+Mon Sep 16 09:18:08 PDT 2024
 $ docker run --rm -e TZ=$(cat /etc/timezone) debian date
-Tue Feb 21 19:08:44 PST 2023
+Mon Sep 16 09:19:26 PDT 2024
 ```
 
 The first approach uses the default timezone, which is [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time). The other examples pass specific timezones, including UTC. The last pattern passes the timezone of the host.
@@ -42,66 +42,66 @@ Etc/UTC
 The app produces the following output, for the "America/Los_Angeles" timezone:
 
 ```bash
-$ docker build --pull -t app .
-$ docker run --rm -it -e TZ="America/Los_Angeles" app
+$ docker build --pull -t globalapp .
+$ docker run --rm -it -e TZ="America/Los_Angeles" globalapp
 Hello, World!
 
 ****Print baseline timezones**
-Utc: (UTC) Coordinated Universal Time; 2/14/2023 12:09:26AM
-Local: (UTC-08:00) Pacific Time (Los Angeles); 2/13/2023 4:09:26PM
+Utc: (UTC) Coordinated Universal Time; 09/16/2024 16:22:03
+Local: (UTC-08:00) Pacific Time (Los Angeles); 09/16/2024 09:22:03
 
 ****Print specific timezone**
 Home timezone: America/Los_Angeles
-DateTime at home: 2/13/2023 4:09:26PM
+DateTime at home: 09/16/2024 09:22:03
 
 ****Culture-specific dates**
-Current: 2/14/2023
+Current: 09/16/2024
 English (United States) -- en-US:
-2/14/2023 12:09:26AM
-2/14/2023
-12:09AM
+9/16/2024 4:22:03 PM
+9/16/2024
+4:22 PM
 English (Canada) -- en-CA:
-2/14/2023 12:09:26a.m.
-2/14/2023
-12:09a.m.
+9/16/2024 4:22:03 p.m.
+9/16/2024
+4:22 p.m.
 French (Canada) -- fr-CA:
-2023-02-14 00 h 09 min 26 s
-2023-02-14
-00 h 09
+2024-09-16 16 h 22 min 03 s
+2024-09-16
+16 h 22
 Croatian (Croatia) -- hr-HR:
-14. 02. 2023. 00:09:26
-14. 02. 2023.
-00:09
+16. 09. 2024. 16:22:03
+16. 09. 2024.
+16:22
 jp (Japan) -- jp-JP:
-2/14/2023 00:09:26
-2/14/2023
-00:09
+9/16/2024 16:22:03
+9/16/2024
+16:22
 Korean (South Korea) -- ko-KR:
-2023. 2. 14. 오전 12:09:26
-2023. 2. 14.
-오전 12:09
+2024. 9. 16. 오후 4:22:03
+2024. 9. 16.
+오후 4:22
 Portuguese (Brazil) -- pt-BR:
-14/02/2023 00:09:26
-14/02/2023
-00:09
+16/09/2024 16:22:03
+16/09/2024
+16:22
 Chinese (China) -- zh-CN:
-2023/2/14 00:09:26
-2023/2/14
-00:09
+2024/9/16 16:22:03
+2024/9/16
+16:22
 
 ****Culture-specific currency:**
-Current: $1,337.00
+Current: ¤1,337.00
 en-US: $1,337.00
 en-CA: $1,337.00
-fr-CA: 1 337,00 $
+fr-CA: 1 337,00 $
 hr-HR: 1.337,00 €
-jp-JP: ¥1,337
+jp-JP: ¥ 1337
 ko-KR: ₩1,337
 pt-BR: R$ 1.337,00
 zh-CN: ¥1,337.00
 
 ****Japanese calendar**
-8/18/2019
+08/18/2019
 01/08/18
 平成元年8月18日
 平成元年8月18日

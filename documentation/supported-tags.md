@@ -9,9 +9,9 @@ Complete tag lists:
 - [aspnet](../README.aspnet.md#full-tag-listing)
 - [sdk](../README.sdk.md#full-tag-listing)
 - [monitor](../README.monitor.md#full-tag-listing)
+- [monitor-base](../README.monitor-base.md#full-tag-listing)
 - [aspire-dashboard](../README.aspire-dashboard.md#full-tag-listing)
 - [samples](../README.samples.md#full-tag-listing)
-- [Microsoft Artifact Registry](https://mcr.microsoft.com/en-us/catalog?search=dotnet/)
 
 The terms "fixed version" and "floating version" are used throughout. They are defined in [Tag policies](#tag-policies).
 
@@ -234,7 +234,7 @@ When an OS version reaches End-of-Life (EOL), its tags will no longer be maintai
 
 When a .NET version reaches EOL, its tags will continue to be maintained (rebuilt for base image updates) until the next .NET servicing date (typically on "Patch Tuesday", the 2nd Tuesday of the month).
 
-Once a tag is no longer maintained, it will be considered unsupported, will no longer be updated. Unsupported tags will continue to exist in the container registry to prevent breaking any references to it.
+Once a tag is no longer maintained, it will be considered unsupported, and will no longer be updated. Unsupported tags will continue to exist in the container registry to prevent breaking any references to it.
 
 ## Policy Changes
 

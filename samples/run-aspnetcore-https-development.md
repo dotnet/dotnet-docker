@@ -50,7 +50,7 @@ Use the following instructions, for your operating system configuration. The com
 
 Further, if you're loading SSL certificates and trimming assemblies as part of the publish, you'll also need to update the project file for the sample.  See details for how you can [support SSL certificates](https://docs.microsoft.com/en-us/dotnet/core/deploying/trim-self-contained#support-for-ssl-certificates).
 
-### Windows using Linux containers
+### Linux containers on Windows host
 
 The following example uses PowerShell.
 
@@ -97,7 +97,7 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_EN
 
 After the application starts, navigate to `https://localhost:8001` in your web browser.
 
-### macOS
+### Linux containers on macOS host
 
 ```console
 cd samples/aspnetapp
@@ -145,7 +145,7 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_EN
 
 After the application starts, navigate to `https://localhost:8001` in your web browser.
 
-### Linux
+### Linux containers on Linux host
 
 ```console
 cd samples/aspnetapp
@@ -189,7 +189,7 @@ docker run --rm -it -p 8001:8001 -e ASPNETCORE_HTTPS_PORTS=8001 -e ASPNETCORE_EN
 
 After the application starts, navigate to `https://localhost:8001` in your web browser.
 
-### Windows using Windows containers
+### Windows containers on Windows host
 
 The following example uses PowerShell.
 
