@@ -1,20 +1,27 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0-jammy AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0-noble AS build
 ARG TARGETARCH
 WORKDIR /source
 
-# copy csproj and restore as distinct layers
-COPY *.csproj .
+# Copy project file and restore as distinct layers
+COPY --link *.csproj .
 RUN dotnet restore -a $TARGETARCH
 
-# copy and publish app and libraries
-COPY . .
+# Copy source code and publish app
+COPY --link . .
 RUN dotnet publish -a $TARGETARCH --no-restore -o /app
 
 
-# final stage/image
-FROM mcr.microsoft.com/dotnet/runtime:8.0-jammy-chiseled
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/runtime:9.0-noble-chiseled
+
+# https://www.gnu.org/software/gettext/manual/html_node/Locale-Environment-Variables.html
+ENV \
+    LC_ALL=en_US.UTF-8 \
+    LANG=en_US.UTF-8
+
 WORKDIR /app
-COPY --from=build /app .
+COPY --link --from=build /app .
+USER $APP_UID
 ENTRYPOINT ["./dotnetapp"]

@@ -1,6 +1,6 @@
 # Push Docker Images to Docker Hub
 
-This sample demonstrates hot to push .NET images to the [Docker Hub](https://hub.docker.com/) container registry. The instructions are based on the [.NET Docker Sample](README.md).
+This sample demonstrates how to push .NET images to the [Docker Hub](https://hub.docker.com/) container registry. The instructions are based on the [.NET Docker Sample](README.md).
 
 Similar instructions are also available to [push to Azure Container Registry](push-image-to-acr.md).
 

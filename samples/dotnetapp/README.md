@@ -4,21 +4,26 @@ This sample demonstrates how to build container images for .NET console apps. Se
 
 ## Run the sample image
 
-You can start by launching a sample from our [container registry](https://mcr.microsoft.com/).
+You can start by launching a sample from our [container registry](https://mcr.microsoft.com/product/dotnet/samples/about).
 
 ```console
-docker run --rm mcr.microsoft.com/dotnet/samples:dotnetapp
+docker run --rm mcr.microsoft.com/dotnet/samples:dotnetapp-chiseled
 ```
-
-This container image is built with [Ubuntu Chiseled](https://devblogs.microsoft.com/dotnet/dotnet-6-is-now-in-ubuntu-2204/#net-in-chiseled-ubuntu-containers), with [Dockerfile](Dockerfile.chiseled).
 
 ## Build the image
 
-You can build and run an image using the following instructions (if you've cloned this repo):
+You can build and run an image using the following instructions (cloninig the repo isn't necessary):
 
 ```console
-docker build --pull -t dotnetapp .
+docker build --pull -t dotnetapp 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp'
 docker run --rm dotnetapp
+```
+
+Add the argument `-f <Dockerfile>` to build the sample in a different configuration.
+For example, build an [Ubuntu Chiseled](https://devblogs.microsoft.com/dotnet/dotnet-6-is-now-in-ubuntu-2204/#net-in-chiseled-ubuntu-containers) image using [Dockerfile.chiseled](Dockerfile.chiseled):
+
+```console
+docker build --pull -t dotnetapp -f Dockerfile.chiseled 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp'
 ```
 
 ## Supported Linux distros

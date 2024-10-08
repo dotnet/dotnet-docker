@@ -5,6 +5,21 @@ Azure Linux .NET images are [publicly supported](https://github.com/dotnet/dotne
 
 ## Featured Tags
 
+.NET 9
+
+* `9.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/aspnet:9.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/runtime:9.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:9.0-azurelinux3.0`
+
+.NET 8
+
+* `8.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/sdk:8.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/runtime:8.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0-azurelinux3.0`
 * `8.0-cbl-mariner2.0`
   * `docker pull mcr.microsoft.com/dotnet/sdk:8.0-cbl-mariner2.0`
   * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0-cbl-mariner2.0`
@@ -24,19 +39,20 @@ Azure Linux distroless .NET images are available for all supported .NET versions
 
 You can use the following image tags:
 
+* `9.0-azurelinux3.0-distroless`
+* `8.0-azurelinux3.0-distroless`
 * `8.0-cbl-mariner2.0-distroless`
-* `6.0-cbl-mariner2.0-distroless`
 
 ### Installing Additional Packages
 
 If your app requires additional packages besides `icu` and `tzdata`, you can follow the same pattern that .NET uses to install the .NET runtime dependencies.
 
-#### Azure Linux 3.0 (Preview)
+#### Azure Linux 3.0
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:8.0-azurelinux3.0-distroless AS base
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:9.0-azurelinux3.0-distroless AS base
 
-FROM azurelinuxpreview.azurecr.io/public/azurelinux/base/core:3.0 AS installer
+FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y fdupes \
     && tdnf clean all
@@ -85,7 +101,7 @@ COPY --from=installer /staging2/ /
 #### Azure Linux 2.0
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/aspnet:6.0-cbl-mariner2.0-distroless AS base
+FROM mcr.microsoft.com/dotnet/aspnet:8.0-cbl-mariner2.0-distroless AS base
 
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
