@@ -103,7 +103,7 @@
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0",
     "dotnet|9.0|base-url|main": "$(base-url|public|preview|main)",
-    "dotnet|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
+    "dotnet|9.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
 
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,
@@ -143,7 +143,7 @@
     "monitor|8.0|minor-tag": "8.0",
     "monitor|8|major-tag": "8",
     "monitor|8.0|base-url|main": "$(base-url|public|maintenance|main)",
-    "monitor|8.0|base-url|nightly": "$(base-url|public|preview|nightly)",
+    "monitor|8.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
     "monitor-base|8.0|linux|x64|sha": "b7bd2cb5823302eba5bb785a73b26ad1e952e04a8763d124052edeebc30bec177ecc7ecfd35ad57b367e187589fa63ecb04517ad8d4bd321842432920d4358c8",
     "monitor-base|8.0|linux|arm64|sha": "30a7cb85b8dbcadd349e30af6f130a0cec015476b7e4b3f667de389d3a945d8ced77d2352171833d137d513a6f9495b608f5619a6ac555f222ebdaffb4c0030d",
     "monitor-ext-azureblobstorage|8.0|linux|x64|sha": "3ee560beb5245dc9cdc36a8d0399c8c70997605c0d1da386da9ad30f978daaf164299c8c068883c7043df5a09c470ec089b66fda9300899d48252174f1841825",

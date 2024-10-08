@@ -9,7 +9,7 @@ RUN tdnf install -y \
 
 # Retrieve .NET Runtime
 RUN dotnet_version=9.0.0-rc.2.24473.5 \
-    && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
     && dotnet_sha512='ba0431e7bb82accab144cf1666c470549d8102a17f260cd7e0d988923a27f3ad5c10cadd160b5a180d5bb15972143f30fdb73b687d1f8ccc02e9e9334ab8c2cd' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
