@@ -2,7 +2,7 @@
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README..md) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 ## Featured Repos
 
