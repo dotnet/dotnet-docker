@@ -9,7 +9,7 @@ steps:
   parameters:
     setupImageBuilder: false
     setupTestRunner: true
-    # Clean only up when we're running an internal build, not a PR, not doing internal servicing validation, and not doing pre-build validation.
+    # Clean only up when we're running an internal build, not a PR, and not doing pre-build validation.
     # i.e. when we're building something important.
     cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.preBuildValidation, 'false')) }}
     condition: ${{ parameters.condition }}
