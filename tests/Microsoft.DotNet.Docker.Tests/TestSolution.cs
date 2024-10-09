@@ -57,13 +57,13 @@ public class TestSolution : IDisposable
             File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, "UnitTests.cs"), Path.Combine(_testProjectDir, "UnitTests.cs"));
 
             string nuGetConfigFileName = string.Empty;
-            if (Config.IsNightlyRepo)
-            {
-                nuGetConfigFileName = "NuGet.config.nightly";
-            }
-            else if(Config.IsInternal)
+            if (Config.IsInternal)
             {
                 nuGetConfigFileName = "NuGet.config.internal";
+            }
+            else if (Config.IsNightlyRepo)
+            {
+                nuGetConfigFileName = "NuGet.config.nightly";
             }
 
             if (!string.IsNullOrEmpty(nuGetConfigFileName))
