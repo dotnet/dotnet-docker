@@ -4,12 +4,11 @@ parameters:
   matrix: {}
   dockerClientOS: null
   buildJobTimeout: 60
+  commonInitStepsForMatrixAndBuild: []
   customInitSteps: []
   noCache: false
   internalProjectName: null
   publicProjectName: null
-  internalVersionsRepoRef: null
-  publicVersionsRepoRef: null
   isInternalServicingValidation: false
 
 jobs:
@@ -26,59 +25,11 @@ jobs:
   timeoutInMinutes: ${{ parameters.buildJobTimeout }}
   variables:
     imageBuilderDockerRunExtraOptions: $(build.imageBuilderDockerRunExtraOptions)
-    versionsRepoPath: versions
     sbomDirectory: $(Build.ArtifactStagingDirectory)/sbom
     imageInfoHostDir: $(Build.ArtifactStagingDirectory)/imageInfo
     imageInfoContainerDir: $(artifactsPath)/imageInfo
-    ${{ if eq(parameters.noCache, false) }}:
-      versionsBasePath: $(versionsRepoPath)/
-      pipelineDisabledCache: false
-    ${{ if eq(parameters.noCache, true) }}:
-      versionsBasePath: ""
-      pipelineDisabledCache: true
   steps:
-  - checkout: self
-  - ${{ if and(eq(variables['System.TeamProject'], parameters.publicProjectName), eq(parameters.noCache, false)) }}:
-    - checkout: ${{ parameters.publicVersionsRepoRef }}
-      path: s/$(versionsRepoPath)
-  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), eq(parameters.noCache, false)) }}:
-    - checkout: ${{ parameters.internalVersionsRepoRef }}
-      path: s/$(versionsRepoPath)
-  - ${{ if eq(parameters.noCache, false) }}:
-    - powershell: |
-        $pathSeparatorIndex = "$(Build.Repository.Name)".IndexOf("/")
-        if ($pathSeparatorIndex -ge 0) {
-          $buildRepoName = "$(Build.Repository.Name)".Substring($pathSeparatorIndex + 1)
-        }
-        else {
-          $buildRepoName = "$(Build.Repository.Name)"
-        }
-
-        $engCommonPath = "$(Build.Repository.LocalPath)/$buildRepoName/$(engCommonRelativePath)"
-        $engPath = "$(Build.Repository.LocalPath)/$buildRepoName/eng"
-        $manifest = "$buildRepoName/$(manifest)"
-        $testResultsDirectory = "$buildRepoName/$testResultsDirectory"
-
-        if ("$(testScriptPath)") {
-          $testScriptPath = "$buildRepoName/$(testScriptPath)"
-        }
-
-        echo "##vso[task.setvariable variable=buildRepoName]$buildRepoName"
-        echo "##vso[task.setvariable variable=manifest]$manifest"
-        echo "##vso[task.setvariable variable=engCommonPath]$engCommonPath"
-        echo "##vso[task.setvariable variable=engPath]$engPath"
-        echo "##vso[task.setvariable variable=testScriptPath]$testScriptPath"
-        echo "##vso[task.setvariable variable=testResultsDirectory]$testResultsDirectory"
-      displayName: Override Common Paths
-  - powershell: |
-      if ("${{ parameters.noCache }}" -eq "false") {
-        $baseContainerRepoPath = "/repo/$(buildRepoName)"
-      }
-      else {
-        $baseContainerRepoPath = "/repo"
-      }
-      echo "##vso[task.setvariable variable=baseContainerRepoPath]$baseContainerRepoPath"
-    displayName: Set Base Container Repo Path
+  - ${{ parameters.commonInitStepsForMatrixAndBuild }}
   - template: /eng/common/templates/jobs/${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}@self
     parameters:
       cleanupDocker: true
@@ -98,13 +49,9 @@ jobs:
       # to escape the single quotes that are in the string which would need to be done outside the context of PowerShell. Since
       # all we need is for that value to be in a PowerShell variable, we can get that by the fact that AzDO automatically creates
       # the environment variable for us.
-      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json"
+      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json $(commonMatrixAndBuildOptions)"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest" -and "${{ parameters.isInternalServicingValidation }}" -ne "true") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --registry-override $(acr-staging.server) --repo-prefix $(stagingRepoPrefix) --source-repo-prefix $(mirrorRepoPrefix) --push"
-      }
-
-      if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.publicProjectName }}" -and ${env:PUBLIC-MIRROR_SERVER} -ne "") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --base-override-regex '^(?!mcr\.microsoft\.com)' --base-override-sub '$(public-mirror.server)/'"
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --repo-prefix $(stagingRepoPrefix) --push"
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
@@ -130,7 +77,6 @@ jobs:
         --os-type $(osType)
         --architecture $(architecture)
         --retry
-        --source-repo $(publicGitRepoUri)
         --digests-out-var 'builtImages'
         --acr-subscription '$(acr-staging.subscription)'
         --acr-resource-group '$(acr-staging.resourceGroup)'
