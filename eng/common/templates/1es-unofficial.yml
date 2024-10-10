@@ -45,11 +45,13 @@ extends:
   parameters:
     pool: ${{ parameters.pool }}
     sdl:
-      enableAllTools: ${{ not(parameters.disableSDL) }}
       componentgovernance:
         ignoreDirectories: $(Build.SourcesDirectory)/versions
         whatIf: true
         showAlertLink: true
+      enableAllTools: ${{ not(parameters.disableSDL) }}
+      policheck:
+        enabled: true
       sbom:
         enabled: true
       sourceRepositoriesToScan:
@@ -57,4 +59,6 @@ extends:
         - repository: InternalVersionsRepo
         - repository: PublicVersionsRepo
       sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
+      tsa:
+        enabled: true
     stages: ${{ parameters.stages }}
