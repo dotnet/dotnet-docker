@@ -46,9 +46,13 @@ extends:
         ignoreDirectories: $(Build.SourcesDirectory)/versions
         whatIf: ${{ parameters.cgDryRun }}
         showAlertLink: true
+      policheck:
+        enabled: true
       sourceRepositoriesToScan:
         exclude:
         - repository: InternalVersionsRepo
         - repository: PublicVersionsRepo
       sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
+      tsa:
+        enabled: true
     stages: ${{ parameters.stages }}

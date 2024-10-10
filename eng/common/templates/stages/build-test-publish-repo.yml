@@ -82,8 +82,13 @@ stages:
       pool: ${{ parameters.linuxAmd64Pool }}
       customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
       internalProjectName: ${{ parameters.internalProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      noCache: ${{ parameters.noCache }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_amd64
@@ -91,12 +96,16 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxAmd64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
@@ -105,12 +114,16 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
@@ -119,12 +132,16 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
@@ -133,12 +150,16 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
@@ -147,12 +168,16 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2022Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
@@ -161,6 +186,12 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2025Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -174,12 +205,16 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2016Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
 
 ################################################################################
@@ -203,6 +238,7 @@ stages:
     dependsOn: Post_Build
     condition: "
       and(
+        ne(stageDependencies.Post_Build.outputs['Build.MergeImageInfoFiles.noImageInfos'], 'true'),
         ne(variables['testScriptPath'], ''),
         and(
           contains(variables['stages'], 'test'),
@@ -221,6 +257,12 @@ stages:
         isTestStage: true
         internalProjectName: ${{ parameters.internalProjectName }}
         publicProjectName: ${{ parameters.publicProjectName }}
+        commonInitStepsForMatrixAndBuild:
+        - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+          parameters:
+            noCache: ${{ parameters.noCache }}
+            internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+            publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
     - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_amd64
@@ -290,6 +332,7 @@ stages:
     condition: "
       and(
         not(canceled()),
+        ne(stageDependencies.Post_Build.outputs['Build.MergeImageInfoFiles.noImageInfos'], 'true'),
         and(
           contains(variables['stages'], 'publish'),
           or(
