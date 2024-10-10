@@ -4,6 +4,7 @@ parameters:
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
   customCopyBaseImagesInitSteps: []
+  customGenerateMatrixInitSteps: []
   customBuildInitSteps: []
   customTestInitSteps: []
   customPublishInitSteps: []
@@ -83,6 +84,7 @@ stages:
       customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
       internalProjectName: ${{ parameters.internalProjectName }}
       noCache: ${{ parameters.noCache }}
+      customInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
         parameters:
@@ -257,6 +259,7 @@ stages:
         isTestStage: true
         internalProjectName: ${{ parameters.internalProjectName }}
         publicProjectName: ${{ parameters.publicProjectName }}
+        customInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
         commonInitStepsForMatrixAndBuild:
         - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
           parameters:
