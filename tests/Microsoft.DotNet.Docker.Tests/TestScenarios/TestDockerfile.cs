@@ -46,7 +46,7 @@ public static class TestDockerfileBuilder
         ? DockerOS.Linux
         : DockerOS.Windows;
 
-    private static bool s_useNuGetConfig = Config.IsNightlyRepo;
+    private static bool s_useNuGetConfig = Config.IsNightlyRepo || Config.IsInternal;
 
     private static string[] s_commonArgs = [
         "sdk_image",
@@ -117,7 +117,7 @@ public static class TestDockerfileBuilder
             $"""
             FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.AppStageName}
             ARG rid
-            ARG NuGetFeedPassword
+            ARG InternalAccessToken
             WORKDIR /source/tests
             COPY tests/*.csproj .
             RUN dotnet restore -r {FormatArg("rid")}
@@ -139,6 +139,7 @@ public static class TestDockerfileBuilder
         StringBuilder buildStageBuilder = new(
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
+            ARG InternalAccessToken
             ARG port
             EXPOSE $port
             """);
@@ -206,7 +207,7 @@ public static class TestDockerfileBuilder
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
             ARG rid
-            ARG NuGetFeedPassword
+            ARG InternalAccessToken
             ARG port
             EXPOSE $port
             """);

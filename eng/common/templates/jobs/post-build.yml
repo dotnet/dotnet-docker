@@ -52,15 +52,24 @@ jobs:
           }
     displayName: Prune Publish Artifacts
   - powershell: |
+      $imageInfoFiles = Get-ChildItem "$(imageInfosHostDir)"
+      if ($imageInfoFiles.Count -eq 0) {
+        echo "No image info files found."
+        echo "##vso[task.setvariable variable=noImageInfos;isOutput=true]true"
+        exit 0
+      }
+
       New-Item -ItemType Directory -Path $(imageInfosHostDir)$(imageInfosOutputSubDir) -Force
       $(runImageBuilderCmd) mergeImageInfo `
         --manifest $(manifest) `
         $(imageInfosContainerDir) `
         $(imageInfosContainerDir)$(imageInfosOutputSubDir)/image-info.json `
         $(manifestVariables)
+    name: MergeImageInfoFiles
     displayName: Merge Image Info Files
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
+      condition: and(succeeded(), ne(variables['MergeImageInfoFiles.noImageInfos'], 'true'))
       path: $(sbomOutputDir)
       artifactName: sboms
       displayName: Publish SBOM Artifact
@@ -68,6 +77,7 @@ jobs:
       publicProjectName: ${{ parameters.publicProjectName }}
   - template: /eng/common/templates/steps/publish-artifact.yml@self
     parameters:
+      condition: and(succeeded(), ne(variables['MergeImageInfoFiles.noImageInfos'], 'true'))
       path: $(imageInfosHostDir)$(imageInfosOutputSubDir)
       artifactName: image-info
       displayName: Publish Image Info File Artifact

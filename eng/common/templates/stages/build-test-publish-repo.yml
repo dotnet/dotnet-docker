@@ -25,6 +25,8 @@ parameters:
   internalVersionsRepoRef: null
   publicVersionsRepoRef: null
 
+  isInternalServicingValidation: false
+
   linuxAmd64Pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
   linuxArm32Pool:
@@ -48,24 +50,25 @@ stages:
 - stage: Build
   condition: and(succeeded(), contains(variables['stages'], 'build'))
   jobs:
-  - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
-    parameters:
-      name: PreBuildValidation
-      pool: ${{ parameters.linuxAmd64Pool }}
-      testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
-      preBuildValidation: true
-      internalProjectName: ${{ parameters.internalProjectName }}
-      customInitSteps:
-        - ${{ parameters.customTestInitSteps }}
-        # These variables are normally set by the matrix. Since this test job is not generated
-        # by a matrix, we need to set them manually. They can be set to empty values since their
-        # values aren't actually used for the pre-build tests.
-        - powershell: |
-            echo "##vso[task.setvariable variable=productVersion]"
-            echo "##vso[task.setvariable variable=imageBuilderPaths]"
-            echo "##vso[task.setvariable variable=osVersions]"
-            echo "##vso[task.setvariable variable=architecture]"
-          displayName: Initialize Test Variables
+  - ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
+    - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
+      parameters:
+        name: PreBuildValidation
+        pool: ${{ parameters.linuxAmd64Pool }}
+        testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
+        preBuildValidation: true
+        internalProjectName: ${{ parameters.internalProjectName }}
+        customInitSteps:
+          - ${{ parameters.customTestInitSteps }}
+          # These variables are normally set by the matrix. Since this test job is not generated
+          # by a matrix, we need to set them manually. They can be set to empty values since their
+          # values aren't actually used for the pre-build tests.
+          - powershell: |
+              echo "##vso[task.setvariable variable=productVersion]"
+              echo "##vso[task.setvariable variable=imageBuilderPaths]"
+              echo "##vso[task.setvariable variable=osVersions]"
+              echo "##vso[task.setvariable variable=architecture]"
+            displayName: Initialize Test Variables
   - template: /eng/common/templates/jobs/copy-base-images-staging.yml@self
     parameters:
       name: CopyBaseImages
@@ -79,8 +82,13 @@ stages:
       pool: ${{ parameters.linuxAmd64Pool }}
       customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
       internalProjectName: ${{ parameters.internalProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      noCache: ${{ parameters.noCache }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_amd64
@@ -88,12 +96,17 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxAmd64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_arm64
@@ -101,12 +114,17 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_arm32
@@ -114,12 +132,17 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32']
       dockerClientOS: linux
       buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows1809_amd64
@@ -127,12 +150,17 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows2022_amd64
@@ -140,12 +168,17 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2022Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows2025_amd64
@@ -153,6 +186,12 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2025Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -166,12 +205,17 @@ stages:
       matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2016Amd64']
       dockerClientOS: windows
       buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+        parameters:
+          noCache: ${{ parameters.noCache }}
+          internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+          publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
-      publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
 
 ################################################################################
 # Post-Build
@@ -189,11 +233,12 @@ stages:
 ################################################################################
 # Test Images
 ################################################################################
-- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'false')) }}:
   - stage: Test
     dependsOn: Post_Build
     condition: "
       and(
+        ne(stageDependencies.Post_Build.outputs['Build.MergeImageInfoFiles.noImageInfos'], 'true'),
         ne(variables['testScriptPath'], ''),
         and(
           contains(variables['stages'], 'test'),
@@ -212,6 +257,12 @@ stages:
         isTestStage: true
         internalProjectName: ${{ parameters.internalProjectName }}
         publicProjectName: ${{ parameters.publicProjectName }}
+        commonInitStepsForMatrixAndBuild:
+        - template: /eng/common/templates/steps/common-init-for-matrix-and-build.yml@self
+          parameters:
+            noCache: ${{ parameters.noCache }}
+            internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
+            publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
     - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_amd64
@@ -272,44 +323,46 @@ stages:
 ################################################################################
 # Publish Images
 ################################################################################
-- stage: Publish
-  ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-    dependsOn: Test
-  ${{ else }}:
-    dependsOn: Post_Build
-  condition: "
-    and(
-      not(canceled()),
+- ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
+  - stage: Publish
+    ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+      dependsOn: Test
+    ${{ else }}:
+      dependsOn: Post_Build
+    condition: "
       and(
-        contains(variables['stages'], 'publish'),
-        or(
+        not(canceled()),
+        ne(stageDependencies.Post_Build.outputs['Build.MergeImageInfoFiles.noImageInfos'], 'true'),
+        and(
+          contains(variables['stages'], 'publish'),
           or(
-            and(
-              and(
-                contains(variables['stages'], 'build'),
-                succeeded('Post_Build')),
-              and(
-                contains(variables['stages'], 'test'),
-                in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
             or(
               and(
-                not(contains(variables['stages'], 'build')),
+                and(
+                  contains(variables['stages'], 'build'),
+                  succeeded('Post_Build')),
                 and(
                   contains(variables['stages'], 'test'),
                   in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
-              and(
-                not(contains(variables['stages'], 'test')),
+              or(
                 and(
-                  contains(variables['stages'], 'build'),
-                  succeeded('Post_Build'))))),
-          not(
-            or(
-              contains(variables['stages'], 'build'),
-              contains(variables['stages'], 'test'))))))"
-  jobs:
-  - template: /eng/common/templates/jobs/publish.yml@self
-    parameters:
-      pool: ${{ parameters.linuxAmd64Pool }}
-      internalProjectName: ${{ parameters.internalProjectName }}
-      customPublishVariables: ${{ parameters.customPublishVariables }}
-      customInitSteps: ${{ parameters.customPublishInitSteps }}
+                  not(contains(variables['stages'], 'build')),
+                  and(
+                    contains(variables['stages'], 'test'),
+                    in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
+                and(
+                  not(contains(variables['stages'], 'test')),
+                  and(
+                    contains(variables['stages'], 'build'),
+                    succeeded('Post_Build'))))),
+            not(
+              or(
+                contains(variables['stages'], 'build'),
+                contains(variables['stages'], 'test'))))))"
+    jobs:
+    - template: /eng/common/templates/jobs/publish.yml@self
+      parameters:
+        pool: ${{ parameters.linuxAmd64Pool }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        customPublishVariables: ${{ parameters.customPublishVariables }}
+        customInitSteps: ${{ parameters.customPublishInitSteps }}

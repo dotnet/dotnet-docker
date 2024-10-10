@@ -4,7 +4,6 @@
         use-local-version-var: Whether to define a local variable for the .NET SDK version instead of
             referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        url-suffix (optional): Suffix string to append the end of the URL.
         installer-stage (optional): Name of the Dockerfile stage responsible for installation
         is-rpm-install (optional): Whether to install RPM versus tarball
 
@@ -47,15 +46,14 @@
     set rpms to [
         [
             "filename": "dotnet.rpm",
-            "url": cat(baseUrl, "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-", rpmFileArch, ".rpm",
-                ARGS["url-suffix"]),
+            "url": cat(baseUrl, "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-", rpmFileArch, ".rpm"),
             "sha": VARIABLES[join(["sdk", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ],
         [
             "filename": "apphost.rpm",
             "url": cat(baseUrl, "/Runtime/", runtimeVersionDir, "/dotnet-apphost-pack-", runtimeVersionFile, "-",
-                rpmFileArch, ".rpm", ARGS["url-suffix"]),
+                rpmFileArch, ".rpm"),
             "sha": VARIABLES[join(["runtime-apphost-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ],
@@ -63,14 +61,14 @@
             "filename": "targeting-pack.rpm",
             "url": cat(baseUrl, "/Runtime/", VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")],
                 "/dotnet-targeting-pack-", runtimeTargetingPackVersionFile,
-                "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+                "-", rpmFileArch, ".rpm"),
             "sha": VARIABLES[join(["runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ],
         [
             "filename": "aspnetcore-targeting-pack.rpm",
             "url": cat(baseUrl, "/aspnetcore/Runtime/", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")],
-                "/aspnetcore-targeting-pack-", aspnetTargetingPackVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+                "/aspnetcore-targeting-pack-", aspnetTargetingPackVersionFile, "-", rpmFileArch, ".rpm"),
             "sha": VARIABLES[join(["aspnet-runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName
         ]
@@ -86,8 +84,7 @@
     set tarballs to [
         [
             "filename": "dotnet.tar.gz",
-            "url": cat(baseUrl, "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-", platform, "-", ARCH_SHORT, ".tar.gz",
-                ARGS["url-suffix"]),
+            "url": cat(baseUrl, "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-", platform, "-", ARCH_SHORT, ".tar.gz"),
             "sha": VARIABLES[join(["sdk", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")],
             "sha-var-name": commonShaVarName,
             "extract-paths": [
