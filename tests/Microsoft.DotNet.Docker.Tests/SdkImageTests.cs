@@ -8,7 +8,9 @@ using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Security.Cryptography;
+using System.Text;
 using System.Threading.Tasks;
 using SharpCompress.Common;
 using SharpCompress.Readers;
@@ -322,6 +324,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 string sdkFile = Path.GetTempFileName();
 
                 using HttpClient httpClient = new();
+                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Basic",
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
+                        Config.InternalAccessToken))));
+
                 await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
 
                 files = EnumerateArchiveContents(sdkFile)
@@ -336,7 +343,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private string GetSdkUrl(ProductImageData imageData)
         {
-            bool isInternal = Config.IsInternal(imageData.VersionString);
+            bool isInternal = Config.IsInternal;
             string sdkBuildVersion = Config.GetBuildVersion(ImageRepo, imageData.VersionString);
             string sdkFileVersionLabel = isInternal
                     ? imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper)
@@ -359,10 +366,6 @@ namespace Microsoft.DotNet.Docker.Tests
             string fileType = DockerHelper.IsLinuxContainerModeEnabled ? "tar.gz" : "zip";
             string baseUrl = Config.GetBaseUrl(imageData.VersionString);
             string url = $"{baseUrl}/Sdk/{sdkBuildVersion}/dotnet-sdk-{sdkFileVersionLabel}-{osType}-{architecture}.{fileType}";
-            if (isInternal)
-            {
-                url += Config.SasQueryString;
-            }
 
             return url;
         }

@@ -48,14 +48,6 @@ param(
     [string]
     $AzdoVariableName,
 
-    # SAS query string used to access files in the binary blob container
-    [string]
-    $BinarySasQueryString,
-
-    # SAS query string used to access files in the checksum blob container
-    [string]
-    $ChecksumSasQueryString,
-
     # File containing checksums for each product asset; used to override the behavior of locating the checksums from blob storage accounts.
     [string]
     $ChecksumsFile,
@@ -63,7 +55,15 @@ param(
     # The release state of the product assets
     [ValidateSet("Prerelease", "Release")]
     [string]
-    $ReleaseState
+    $ReleaseState,
+
+    # PAT used to access internal AzDO build artifacts
+    [string]
+    $InternalAccessToken,
+
+    # Base Url for internal AzDO build artifacts
+    [string]
+    $InternalBaseUrl
 )
 
 Import-Module -force $PSScriptRoot/DependencyManagement.psm1
@@ -102,14 +102,6 @@ if ($ComputeShas) {
     $updateDepsArgs += "--compute-shas"
 }
 
-if ($BinarySasQueryString) {
-    $updateDepsArgs += "--binary-sas=$BinarySasQueryString"
-}
-
-if ($ChecksumSasQueryString) {
-    $updateDepsArgs += "--checksum-sas=$ChecksumSasQueryString"
-}
-
 if ($ChecksumsFile) {
     $updateDepsArgs += "--checksums-file=$ChecksumsFile"
 }
@@ -120,6 +112,14 @@ if ($UseStableBranding) {
 
 if ($ReleaseState) {
     $updateDepsArgs += "--release-state=$ReleaseState"
+}
+
+if ($InternalAccessToken) {
+    $updateDepsArgs += "--internal-access-token=$InternalAccessToken"
+}
+
+if ($InternalBaseUrl) {
+    $updateDepsArgs += "--internal-base-url=$InternalBaseUrl"
 }
 
 $versionSourceName = switch ($PSCmdlet.ParameterSetName) {

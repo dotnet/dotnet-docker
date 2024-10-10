@@ -28,7 +28,7 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         _repoRoot = repoRoot;
         _options = options;
 
-        string configSuffix = (_options.SourceBranch == "nightly" ? ".nightly" : string.Empty);
+        string configSuffix = (_options.IsInternal ? ".internal" : _options.SourceBranch == "nightly" ? ".nightly" : string.Empty);
         _configPath = Path.Combine(_repoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
     }
 
@@ -97,7 +97,7 @@ internal class NuGetConfigUpdater : IDependencyUpdater
                 pkgSourceCreds,
                 () => new XElement(pkgSrcName));
             UpdateAddElement(pkgSrcCredsEntry, "Username", "dotnet");
-            UpdateAddElement(pkgSrcCredsEntry, "ClearTextPassword", "%NuGetFeedPassword%");
+            UpdateAddElement(pkgSrcCredsEntry, "ClearTextPassword", "%InternalAccessToken%");
         }
         else
         {

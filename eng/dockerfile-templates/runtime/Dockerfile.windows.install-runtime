@@ -2,7 +2,6 @@
     _ ARGS:
         - use-local-version-var (optional): Whether to define a local variable for the ASP.NET Core runtime version
             instead of referencing the environment variable.
-        - url-suffix (optional): Suffix string to append the end of the URL.
         - is-internal (optional): Whether the Dockerfile is targeting an internal build of the product. ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
@@ -22,7 +21,7 @@
         runtimeVersionDir) ^
     set url to cat(
         VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
-        "/Runtime/", runtimeVersionDir, "/dotnet-runtime-", runtimeVersionFile, "-win-x64.zip", ARGS["url-suffix"])
+        "/Runtime/", runtimeVersionDir, "/dotnet-runtime-", runtimeVersionFile, "-win-x64.zip")
 }}RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `

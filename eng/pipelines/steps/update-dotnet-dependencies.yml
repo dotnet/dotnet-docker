@@ -19,7 +19,7 @@ steps:
 
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
       $args["UseInternalBuild"] = $true
-      $args["BlobStorageSasQueryString"] = "$(dotnetstage-account-sas-read-token)"
+      $args["InternalAccessToken"] = '$(System.AccessToken)'
       $args["AzdoVersionsRepoInfoAccessToken"] = "$(dn-bot-devdiv-dnceng-rw-code-pat)"
     }
 
@@ -43,8 +43,7 @@ steps:
       }
 
       if ("${{ parameters.useInternalBuild }}" -eq "true") {
-        $args["ChecksumSasQueryString"] = '"$(dotnetchecksumsstage-account-sas-read-token)"'
-        $args["BinarySasQueryString"] = '"$(dotnetstage-account-sas-read-token)"'
+        $args["InternalAccessToken"] = '$(System.AccessToken)'
       } else {
         $args["ReleaseState"] = $(Get-ProductReleaseState)
       }

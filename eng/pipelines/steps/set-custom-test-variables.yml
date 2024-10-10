@@ -8,17 +8,15 @@ steps:
     $testInit=""
 
     if ("$(publishRepoPrefix)".Contains("internal/")) {
-      $sasQueryString = "$(dotnetstage-account-sas-read-token)"
-
       if ($Env:AGENT_OS -eq 'Linux') {
-        $testRunnerOptions="$testRunnerOptions -e SAS_QUERY_STRING='$sasQueryString' -e NUGET_FEED_PASSWORD='$(dn-bot-dnceng-artifact-feeds-rw)'"
+        $testRunnerOptions="$testRunnerOptions -e INTERNAL_TESTING='1' -e INTERNAL_ACCESS_TOKEN='$(System.AccessToken)'"
       }
 
       if ($Env:AGENT_OS -eq 'Windows_NT') {
           # Be sure to use a verbatim string when referencing the environment variables. We don't want the
           # variables to be resolved in this script. We're generating the script here to be executed by the
           # test step.
-          $testInit='$Env:SAS_QUERY_STRING=' + "'$sasQueryString'" + '; $Env:NUGET_FEED_PASSWORD=''$(dn-bot-dnceng-artifact-feeds-rw)'''
+          $testInit='$Env:INTERNAL_TESTING=''1'' ; $Env:INTERNAL_ACCESS_TOKEN=''$(System.AccessToken)'''
       }
     }
     
