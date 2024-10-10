@@ -3,8 +3,7 @@
         use-local-version-var (optional): Whether to define a local variable for the SDK version
             instead of referencing the environment variable.
         sdk-extract-groups: Metadata groups describing the paths to be extracted from the SDK zip.
-        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        url-suffix (optional): Suffix string to append the end of the URL. ^
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product. ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
@@ -24,7 +23,7 @@
         sdkVersionDir) ^
     set url to cat(
         VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
-        "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-win-x64.zip", ARGS["url-suffix"]) ^
+        "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-win-x64.zip") ^
     
     _ The sdk-extract-groups arg is an array of maps. We want to reduce that to just a single array of formatted
         paths. The "for" keyword doesn't work here because we don't want to echo any output. Instead, we'll call

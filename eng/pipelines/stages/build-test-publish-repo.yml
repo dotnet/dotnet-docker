@@ -6,6 +6,7 @@ parameters:
   internalProjectName: null
   publicProjectName: null
   linuxAmd64Pool: ""
+  isInternalServicingValidation: false
 
 stages:
 - template: /eng/common/templates/stages/dotnet/build-test-publish-repo.yml@self
@@ -13,8 +14,9 @@ stages:
     noCache: ${{ parameters.noCache }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
-    ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), and(eq(variables['System.TeamProject'], parameters.internalProjectName), eq(variables['Build.Reason'], 'PullRequest'))) }}:
+    ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), and(eq(variables['System.TeamProject'], parameters.internalProjectName), or(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'true')))) }}:
       buildMatrixType: platformVersionedOs
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
     ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
@@ -27,9 +29,9 @@ stages:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - powershell: |
         $imageBuilderBuildArgs = "$IMAGEBUILDERBUILDARGS"
-        if ("$(publishRepoPrefix)".Contains("internal/")) {
-          $sasQueryString = "$(dotnetstage-account-sas-read-token)"
-          $imageBuilderBuildArgs += " --build-arg SAS_QUERY_STRING='$sasQueryString'"
+        if ("${{ parameters.IsInternalServicingValidation }}" -eq "true") {
+          $accessToken = "$(System.AccessToken)"
+          $imageBuilderBuildArgs += " --build-arg ACCESSTOKEN='$accessToken'"
         }
         echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
       displayName: Set Custom Build Variables

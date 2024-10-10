@@ -48,7 +48,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     // If we're validating a product version environment variable for an internal build
                     // we need to trim off the "servicing" or "rtm" part of the version value.
-                    if (variable.IsProductVersion && !string.IsNullOrEmpty(Config.SasQueryString))
+                    if (variable.IsProductVersion && Config.IsInternal)
                     {
                         int servicingIndex = actualValue.IndexOf("-servicing.");
                         if (servicingIndex != -1)

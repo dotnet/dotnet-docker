@@ -32,19 +32,14 @@ namespace Microsoft.DotNet.Docker.Tests
             (Environment.GetEnvironmentVariable("IMAGE_OS_NAMES") ?? string.Empty).Split(",", StringSplitOptions.RemoveEmptyEntries);
         public static string SourceBranch { get; } =
             Environment.GetEnvironmentVariable("SOURCE_BRANCH") ?? string.Empty;
-        public static string SasQueryString { get; } =
-            Environment.GetEnvironmentVariable("SAS_QUERY_STRING") ?? string.Empty;
-        public static string NuGetFeedPassword { get; } =
-            Environment.GetEnvironmentVariable("NUGET_FEED_PASSWORD") ?? string.Empty;
+        public static string InternalAccessToken { get; } =
+            Environment.GetEnvironmentVariable("INTERNAL_ACCESS_TOKEN") ?? string.Empty;
         public static string[] Paths { get; } =
             Environment.GetEnvironmentVariable("DOCKERFILE_PATHS")?
                 .Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
-        public static bool IsInternal(string dotnetVersion)
-        {
-            string versionBaseUrl = GetBaseUrl(dotnetVersion);
-            return versionBaseUrl.Contains("msrc") || versionBaseUrl.Contains("internal");
-        }
+        public static bool IsInternal { get; } =
+            Environment.GetEnvironmentVariable("INTERNAL_TESTING") != null;
 
         private static bool GetIsNightlyRepo()
         {
