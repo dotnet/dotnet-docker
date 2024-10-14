@@ -5,7 +5,7 @@
 # Featured Tags
 
 * `8.2`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.2`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:9.0`
 
 # About
 
