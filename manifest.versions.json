@@ -17,7 +17,7 @@
 
     "aspire-dashboard|9.0|build-version": "9.0.0-rc.1.24511.1",
     "aspire-dashboard|9.0|product-version": "9.0.0-rc.1",
-    "aspire-dashboard|9.0|fixed-tag": "$(aspire-dashboard|9.0-preview|product-version)",
+    "aspire-dashboard|9.0|fixed-tag": "$(aspire-dashboard|9.0|product-version)",
     "aspire-dashboard|9.0|minor-tag": "9.0-preview",
     "aspire-dashboard|9|major-tag": "9-preview",
     "aspire-dashboard|9.0|linux|x64|sha": "df4c189f4fecb3284de436c04ab42aaf4888a0929f04c95ba3e1774e07045032cc8e77f570f2cf186fd2db12e385e866732dd98882f06ee0e5489d566d09b667",
