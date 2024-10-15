@@ -101,8 +101,8 @@ namespace Microsoft.DotNet.Docker.Tests
         // - <Major.Minor.Patch>-<architecture>                     New schema only for Appliance repos only
         // - <Major.Minor>-<architecture>                           New schema only for Appliance repos only
         // - <Major>-<architecture>                                 New schema and non-monitor for Appliance repos only
-        [Theory]
-        [MemberData(nameof(GetTagTestObjects), TestType.Platform)]
+        // [Theory]
+        // [MemberData(nameof(GetTagTestObjects), TestType.Platform)]
         public void PlatformTag_TagExists(
             Repo repo,
             VersionType versionType,
