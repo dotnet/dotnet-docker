@@ -65,7 +65,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.0-rc.2-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0, latest | [Dockerfile](src/runtime/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.0-rc.2-alpine3.20-amd64, 9.0-alpine3.20-amd64, 9.0-alpine-amd64, 9.0.0-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-noble-amd64, 9.0-noble-amd64, 9.0.0-rc.2-noble, 9.0-noble | [Dockerfile](src/runtime/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.0-rc.2-noble-chiseled-amd64, 9.0-noble-chiseled-amd64, 9.0.0-rc.2-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/runtime/9.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
@@ -73,7 +73,7 @@ Tags | Dockerfile | OS Version
 9.0.0-rc.2-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.0-rc.2-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/runtime/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-amd64, 9.0-azurelinux3.0-distroless-amd64, 9.0.0-rc.2-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/9.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-extra-amd64, 9.0-azurelinux3.0-distroless-extra-amd64, 9.0.0-rc.2-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/9.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-8.0.10-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0, latest | [Dockerfile](src/runtime/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.10-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0 | [Dockerfile](src/runtime/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.10-alpine3.20-amd64, 8.0-alpine3.20-amd64, 8.0-alpine-amd64, 8.0.10-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](src/runtime/8.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
 8.0.10-noble-amd64, 8.0-noble-amd64, 8.0.10-noble, 8.0-noble | [Dockerfile](src/runtime/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 8.0.10-noble-chiseled-amd64, 8.0-noble-chiseled-amd64, 8.0.10-noble-chiseled, 8.0-noble-chiseled | [Dockerfile](src/runtime/8.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
@@ -101,7 +101,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.0-rc.2-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0, latest | [Dockerfile](src/runtime/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.0-rc.2-alpine3.20-arm64v8, 9.0-alpine3.20-arm64v8, 9.0-alpine-arm64v8, 9.0.0-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-noble-arm64v8, 9.0-noble-arm64v8, 9.0.0-rc.2-noble, 9.0-noble | [Dockerfile](src/runtime/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.0-rc.2-noble-chiseled-arm64v8, 9.0-noble-chiseled-arm64v8, 9.0.0-rc.2-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/runtime/9.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -109,7 +109,7 @@ Tags | Dockerfile | OS Version
 9.0.0-rc.2-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.0-rc.2-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/runtime/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-arm64v8, 9.0-azurelinux3.0-distroless-arm64v8, 9.0.0-rc.2-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/9.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-extra-arm64v8, 9.0-azurelinux3.0-distroless-extra-arm64v8, 9.0.0-rc.2-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/9.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.10-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0, latest | [Dockerfile](src/runtime/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.10-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0 | [Dockerfile](src/runtime/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.10-alpine3.20-arm64v8, 8.0-alpine3.20-arm64v8, 8.0-alpine-arm64v8, 8.0.10-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](src/runtime/8.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
 8.0.10-noble-arm64v8, 8.0-noble-arm64v8, 8.0.10-noble, 8.0-noble | [Dockerfile](src/runtime/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 8.0.10-noble-chiseled-arm64v8, 8.0-noble-chiseled-arm64v8, 8.0.10-noble-chiseled, 8.0-noble-chiseled | [Dockerfile](src/runtime/8.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -137,12 +137,12 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.0-rc.2-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0, latest | [Dockerfile](src/runtime/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.0-rc.2-alpine3.20-arm32v7, 9.0-alpine3.20-arm32v7, 9.0-alpine-arm32v7, 9.0.0-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-noble-arm32v7, 9.0-noble-arm32v7, 9.0.0-rc.2-noble, 9.0-noble | [Dockerfile](src/runtime/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 9.0.0-rc.2-noble-chiseled-arm32v7, 9.0-noble-chiseled-arm32v7, 9.0.0-rc.2-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/runtime/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 9.0.0-rc.2-noble-chiseled-extra-arm32v7, 9.0-noble-chiseled-extra-arm32v7, 9.0.0-rc.2-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/runtime/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.10-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0, latest | [Dockerfile](src/runtime/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.10-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0 | [Dockerfile](src/runtime/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.10-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0-alpine-arm32v7, 8.0.10-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](src/runtime/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 8.0.10-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.10-jammy, 8.0-jammy | [Dockerfile](src/runtime/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.10-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.10-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/runtime/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
