@@ -117,14 +117,14 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.2.1, 8.2, 8 | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
-9.0.0-rc.1, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+9.0.0-preview.4, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 8.2.1, 8.2, 8 | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
-9.0.0-rc.1, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+9.0.0-preview.4, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list) for all supported and unsupported tags.*
