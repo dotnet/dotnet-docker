@@ -52,22 +52,18 @@
     _ Exclude monitor/base from repos besides monitor ^
     set repos to filter(repos, filterMonitorRepo) ^
 
+    _ Exclude this repo from its own readme ^
+    set repos to filter(repos, isNotCurrentRepo) ^
+    set samplesRepos to filter(samplesRepos, isNotCurrentRepo) ^
+
     set repos to
         when(isNightlyRepo,
             when(IS_PRODUCT_FAMILY,
                 cat(productFamilyRepos, repos, samplesRepos),
-                cat(productFamilyRepos, map(repos, insertNightly), samplesRepos)),
+                cat(productFamilyRepos, currentRepo, map(repos, insertNightly), samplesRepos)),
             when(IS_PRODUCT_FAMILY,
                 cat(map(repos, insertNightly)),
-                cat(productFamilyRepos, repos, samplesRepos))) ^
-
-    _ Exclude this repo from its own readme ^
-    set repos to filter(repos, isNotCurrentRepo) ^
-
-    _ For non-nightly product repos, show the nightly version ^
-    set repos to when(!isNightlyRepo && !IS_PRODUCT_FAMILY,
-        cat(repos, map(currentRepo, insertNightly)),
-        repos)
+                cat(productFamilyRepos, repos, map(currentRepo, insertNightly), samplesRepos)))
 
 }}{{ARGS["top-header"]}} Related Repositories
 
