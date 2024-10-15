@@ -65,6 +65,7 @@ In this repo:
 - [ ] Move `latest` tags in `manifest.json` to the new version
 - [ ] Update documentation as necessary to reference the new .NET version
 - [ ] Update IIS sample URL to final version of `dotnet-hosting-win.exe` (remove "preview" from the URL): <https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19>.
+- [ ] Remove suffix "(Release Candidate)" from Featured Tags and replace with "(Long-Term Support)" or "(Standard Support)"
 
 In other repos:
 
