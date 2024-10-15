@@ -35,7 +35,8 @@ internal static class ChiselUpdater
 
     public static string GetChiselManifestVariable(string product, string arch, string type, string dockerfileVersion = "latest")
     {
-        return string.Join('|', [product, dockerfileVersion, ToManifestArch(arch), type]);
+        // Workaround for ambiguous method call, will be fixed with https://github.com/dotnet/csharplang/issues/8374
+        return string.Join('|', new string[] { product, dockerfileVersion, ToManifestArch(arch), type });
     }
 
     private static Regex GetAssetRegex(string arch) => new(@"chisel_v\d+\.\d+\.\d+_linux_" + arch + @"\.tar\.gz");

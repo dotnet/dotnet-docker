@@ -27,9 +27,8 @@ public class TestDockerfile(IEnumerable<string> args, IEnumerable<string> stages
         IEnumerable<string> stageContents = stages.Select(stageContent =>
             string.Join(Environment.NewLine, stageContent));
 
-        string dockerfileContent = string.Join(
-            Environment.NewLine + Environment.NewLine,
-            [ argsContent, ..stageContents ]);
+        string[] contents = [ argsContent, ..stageContents ];
+        string dockerfileContent = string.Join(Environment.NewLine + Environment.NewLine, contents);
 
         return dockerfileContent;
     }
@@ -37,7 +36,7 @@ public class TestDockerfile(IEnumerable<string> args, IEnumerable<string> stages
 
 public static class TestDockerfileBuilder
 {
-    private const string CopyNuGetConfigCommands = 
+    private const string CopyNuGetConfigCommands =
         """
         WORKDIR /source
         COPY NuGet.config .
@@ -143,7 +142,7 @@ public static class TestDockerfileBuilder
             ARG port
             EXPOSE $port
             """);
-        
+
         if (s_useNuGetConfig)
         {
             buildStageBuilder.AppendLine();
@@ -185,19 +184,19 @@ public static class TestDockerfileBuilder
             FROM {TestDockerfile.BuildStageName} AS {TestDockerfile.PublishStageName}
             ARG rid
             """);
-        
+
         publishStageBuilder.AppendLine();
         publishStageBuilder.AppendLine(useWasmTools
             ? "RUN dotnet publish -r browser-wasm -c Release --self-contained true -o out"
             : "RUN dotnet publish --no-restore -c Release -o out");
-        
+
         string publishStage = publishStageBuilder.ToString();
 
         // Blazor WASM output is a static site - there are no runtime executables to be ran in the app stage.
         // Endpoint access is verified in the build stage in the SDK dockerfile.
         // App stage can remain empty in order to test publish functionality.
         string appStage = $"""FROM $runtime_deps_image AS {TestDockerfile.AppStageName}""";
-        
+
         return new TestDockerfile(s_commonArgs, stages: [ buildStage, publishStage, appStage ]);
     }
 
@@ -210,7 +209,7 @@ public static class TestDockerfileBuilder
             ARG NuGetFeedPassword
             ARG port
             EXPOSE $port
-            """);        
+            """);
 
         if (s_useNuGetConfig)
         {
