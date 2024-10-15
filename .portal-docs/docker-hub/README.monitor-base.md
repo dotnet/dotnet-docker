@@ -40,6 +40,7 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 .NET:
 
 * [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
+* [dotnet/monitor/base](https://hub.docker.com/r/microsoft/dotnet-monitor-base/): .NET Monitor Base
 * [dotnet/nightly/sdk](https://hub.docker.com/r/microsoft/dotnet-nightly-sdk/): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime/): .NET Runtime (Preview)
