@@ -6,10 +6,9 @@ This document describes the platforms (OS and architectures) supported by the of
 
 .NET supports [a broad set of operating systems and versions](https://github.com/dotnet/core/blob/master/os-lifecycle-policy.md). When producing container images, it’s impractical to support the full matrix of OS, arch, and .NET version combinations. In practice, images are produced for a select set of operating systems and versions. If official .NET container images aren't provided for your preferred OS, [let us know by opening a discussion](https://github.com/dotnet/dotnet-docker/discussions). Alternatively, you can [author your own .NET images](scenarios/installing-dotnet.md).
 
-New versions of operating systems that we support are added on a best-effort basis, typically within one month.
-New OSes are always available in the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) first, and then are usually added to the officially supported repos with the next .NET servicing release.
-Occasionally, depending on the specific timing of OS releases and .NET releases, we may add new OSes to the officially supported repos in the middle of a servicing cycle.
-All new OS releases will be accompanied by an [announcement](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements).
+- New versions of operating systems that we support are added on a best-effort basis, typically within one month.
+- New OSes are always available in the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) first, and then are added to the officially supported repos afterwards.
+- All new OS releases will be accompanied by an [announcement](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements).
 
 ### Linux
 
