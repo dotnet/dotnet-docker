@@ -42,8 +42,8 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 * [dotnet/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md): .NET Runtime Dependencies
 * [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): .NET Aspire Dashboard
-* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 * [dotnet/nightly/monitor/base](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor-base.md): .NET Monitor Base (Preview)
+* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
 
