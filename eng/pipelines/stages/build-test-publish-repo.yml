@@ -21,7 +21,8 @@ stages:
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
     testMatrixCustomBuildLegGroupArgs: --custom-build-leg-group test-dependencies
 
-    # Template paths must be relative to the YAML job that executes them
+    customGenerateMatrixInitSteps:
+    - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     customBuildInitSteps:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - powershell: |
