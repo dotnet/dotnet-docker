@@ -16,7 +16,7 @@ RUN powershell -Command `
         Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe; `
         `
         # Install the ASP.NET Core Module
-        Invoke-WebRequest -OutFile c:\dotnet-hosting-win.exe https://aka.ms/dotnet/8.0/dotnet-hosting-win.exe; `
+        Invoke-WebRequest -OutFile c:\dotnet-hosting-win.exe https://aka.ms/dotnet/9.0/dotnet-hosting-win.exe; `
         $process = Start-Process -Filepath C:\dotnet-hosting-win.exe -ArgumentList  @('/install', '/q', '/norestart', 'OPT_NO_RUNTIME=1', 'OPT_NO_X86=1', 'OPT_NO_SHAREDFX=1') -Wait -PassThru ; `
         if ($process.ExitCode -ne 0) { `
             exit $process.ExitCode; `

@@ -2,7 +2,7 @@
 
 ## Featured Tags
 
-* `9.0` (Release Candidate)
+* `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0`
@@ -15,7 +15,7 @@ This image contains the native dependencies needed by .NET. It does not include 
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-### New: Ubuntu Chiseled Images
+### Ubuntu Chiseled Images
 
 Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
 These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
@@ -43,8 +43,8 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 * [dotnet/runtime](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime.md): .NET Runtime
 * [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): .NET Aspire Dashboard
-* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 * [dotnet/nightly/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md): .NET Runtime Dependencies (Preview)
+* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
 
@@ -57,7 +57,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.0-rc.2, 9.0.0-rc.2-bookworm-slim, 9.0, 9.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.0-rc.2-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.0-rc.2-alpine3.20-amd64, 9.0-alpine3.20-amd64, 9.0-alpine-amd64, 9.0.0-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-alpine3.20-extra-amd64, 9.0-alpine3.20-extra-amd64, 9.0-alpine-extra-amd64, 9.0.0-rc.2-alpine3.20-extra, 9.0-alpine3.20-extra, 9.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/alpine3.20-extra/amd64/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-noble-amd64, 9.0-noble-amd64, 9.0.0-rc.2-noble, 9.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
@@ -66,7 +66,7 @@ Tags | Dockerfile | OS Version
 9.0.0-rc.2-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.0-rc.2-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-amd64, 9.0-azurelinux3.0-distroless-amd64, 9.0.0-rc.2-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-extra-amd64, 9.0-azurelinux3.0-distroless-extra-amd64, 9.0.0-rc.2-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-8.0.10-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.10-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.10-alpine3.20-amd64, 8.0-alpine3.20-amd64, 8.0-alpine-amd64, 8.0.10-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
 8.0.10-alpine3.20-extra-amd64, 8.0-alpine3.20-extra-amd64, 8.0-alpine-extra-amd64, 8.0.10-alpine3.20-extra, 8.0-alpine3.20-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.20-extra/amd64/Dockerfile) | Alpine 3.20
 8.0.10-noble-amd64, 8.0-noble-amd64, 8.0.10-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
@@ -95,7 +95,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.0-rc.2, 9.0.0-rc.2-bookworm-slim, 9.0, 9.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.0-rc.2-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.0-rc.2-alpine3.20-arm64v8, 9.0-alpine3.20-arm64v8, 9.0-alpine-arm64v8, 9.0.0-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-alpine3.20-extra-arm64v8, 9.0-alpine3.20-extra-arm64v8, 9.0-alpine-extra-arm64v8, 9.0.0-rc.2-alpine3.20-extra, 9.0-alpine3.20-extra, 9.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/alpine3.20-extra/arm64v8/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-noble-arm64v8, 9.0-noble-arm64v8, 9.0.0-rc.2-noble, 9.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -104,7 +104,7 @@ Tags | Dockerfile | OS Version
 9.0.0-rc.2-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.0-rc.2-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-arm64v8, 9.0-azurelinux3.0-distroless-arm64v8, 9.0.0-rc.2-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.0-rc.2-azurelinux3.0-distroless-extra-arm64v8, 9.0-azurelinux3.0-distroless-extra-arm64v8, 9.0.0-rc.2-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.10-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.10-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.10-alpine3.20-arm64v8, 8.0-alpine3.20-arm64v8, 8.0-alpine-arm64v8, 8.0.10-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
 8.0.10-alpine3.20-extra-arm64v8, 8.0-alpine3.20-extra-arm64v8, 8.0-alpine-extra-arm64v8, 8.0.10-alpine3.20-extra, 8.0-alpine3.20-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.20-extra/arm64v8/Dockerfile) | Alpine 3.20
 8.0.10-noble-arm64v8, 8.0-noble-arm64v8, 8.0.10-noble, 8.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -133,13 +133,13 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.0-rc.2, 9.0.0-rc.2-bookworm-slim, 9.0, 9.0-bookworm-slim | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.0-rc.2-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.0-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.0-rc.2, 9.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.0-rc.2-alpine3.20-arm32v7, 9.0-alpine3.20-arm32v7, 9.0-alpine-arm32v7, 9.0.0-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-alpine3.20-extra-arm32v7, 9.0-alpine3.20-extra-arm32v7, 9.0-alpine-extra-arm32v7, 9.0.0-rc.2-alpine3.20-extra, 9.0-alpine3.20-extra, 9.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/alpine3.20-extra/arm32v7/Dockerfile) | Alpine 3.20
 9.0.0-rc.2-noble-arm32v7, 9.0-noble-arm32v7, 9.0.0-rc.2-noble, 9.0-noble | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 9.0.0-rc.2-noble-chiseled-arm32v7, 9.0-noble-chiseled-arm32v7, 9.0.0-rc.2-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 9.0.0-rc.2-noble-chiseled-extra-arm32v7, 9.0-noble-chiseled-extra-arm32v7, 9.0.0-rc.2-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.10-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0, latest | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.10-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.10-bookworm-slim, 8.0-bookworm-slim, 8.0.10, 8.0 | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.10-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0-alpine-arm32v7, 8.0.10-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 8.0.10-alpine3.20-extra-arm32v7, 8.0-alpine3.20-extra-arm32v7, 8.0-alpine-extra-arm32v7, 8.0.10-alpine3.20-extra, 8.0-alpine3.20-extra, 8.0-alpine-extra | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/alpine3.20-extra/arm32v7/Dockerfile) | Alpine 3.20
 8.0.10-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.10-jammy, 8.0-jammy | [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04

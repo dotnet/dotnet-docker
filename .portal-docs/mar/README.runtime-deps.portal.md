@@ -4,7 +4,7 @@ This image contains the native dependencies needed by .NET. It does not include 
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-### New: Ubuntu Chiseled Images
+### Ubuntu Chiseled Images
 
 Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
 These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
@@ -13,7 +13,7 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 ## Featured Tags
 
-* `9.0` (Release Candidate)
+* `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0`
@@ -30,8 +30,8 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 * [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
 * [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): .NET Aspire Dashboard
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 * [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 

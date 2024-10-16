@@ -6,7 +6,7 @@ Use this image as a base image for building a .NET Monitor image with extensions
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-### New: Ubuntu Chiseled Images
+### Ubuntu Chiseled Images
 
 Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
 These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
@@ -15,7 +15,7 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 ## Featured Tags
 
-* `9` (Release Candidate)
+* `9` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor/base:9`
 * `8` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor/base:8`
@@ -31,8 +31,8 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 * [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
 * [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): .NET Aspire Dashboard
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 * [dotnet/nightly/monitor/base](https://mcr.microsoft.com/product/dotnet/nightly/monitor/base/about): .NET Monitor Base (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 
