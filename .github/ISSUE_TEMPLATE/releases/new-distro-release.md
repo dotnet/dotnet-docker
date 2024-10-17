@@ -46,14 +46,14 @@ However, in the interest of acting predictably and reducing risk, we should oper
 
 - **Alpine 3.19** - added to `main` after less than 1 week in `nightly`.
   - [Released on 2023-12-07](https://www.alpinelinux.org/posts/Alpine-3.19.0-released.html) (Thurs), two days after Patch Tuesday
-  - [Added to `nightly` on 2024-01-03](https://github.com/dotnet/dotnet-docker/pull/5065), significantly delayed due to holidays.
-  - Added to `main` on [2024-01-09](https://github.com/dotnet/dotnet-docker/discussions/5091), due to the significant delay between Alpine release and next .NET release. Releasing with 2024-02 Patch Tuesday was not desirable.
+  - [Added to `nightly` on 2024-01-03](https://redirect.github.com/dotnet/dotnet-docker/pull/5065), significantly delayed due to holidays.
+  - Added to `main` on [2024-01-09](https://redirect.github.com/dotnet/dotnet-docker/discussions/5091), due to the significant delay between Alpine release and next .NET release. Releasing with 2024-02 Patch Tuesday was not desirable.
 - **Ubuntu 24.04 "Noble"** - ARM32 release delayed, skipped for .NET 8
-  - 2024-03-05 - [Added to `nightly`](https://github.com/dotnet/dotnet-docker/pull/5241)
+  - 2024-03-05 - [Added to `nightly`](https://redirect.github.com/dotnet/dotnet-docker/pull/5241)
   - 2024-04-25 - [24.04 Released](https://ubuntu.com/blog/canonical-releases-ubuntu-24-04-noble-numbat)
-  - 2024-04-23 - Discovered issue blocking ARM32 release - [HTTPS requests fail on Ubuntu 24.04 Noble ARM32 due to bundled certs "NotTimeValid" error (dotnet/runtime#101444)](https://github.com/dotnet/runtime/issues/101444)
-  - 2024-05-14 - [Noble images added to `main`](https://github.com/dotnet/dotnet-docker/discussions/5466) (May Patch Tuesday)
-  - 2024-06-11 - [.NET 9 ARM32 Noble images added to `main`](https://github.com/dotnet/dotnet-docker/discussions/5557) (June Patch Tuesday) - allowed time for the issue to be fixed in .NET Runtime
+  - 2024-04-23 - Discovered issue blocking ARM32 release - [HTTPS requests fail on Ubuntu 24.04 Noble ARM32 due to bundled certs "NotTimeValid" error (dotnet/runtime#101444)](https://redirect.github.com/dotnet/runtime/issues/101444)
+  - 2024-05-14 - [Noble images added to `main`](https://redirect.github.com/dotnet/dotnet-docker/discussions/5466) (May Patch Tuesday)
+  - 2024-06-11 - [.NET 9 ARM32 Noble images added to `main`](https://redirect.github.com/dotnet/dotnet-docker/discussions/5557) (June Patch Tuesday) - allowed time for the issue to be fixed in .NET Runtime
 
 ## Main Branch Tasks
 
