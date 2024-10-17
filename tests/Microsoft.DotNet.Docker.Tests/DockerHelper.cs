@@ -73,18 +73,27 @@ namespace Microsoft.DotNet.Docker.Tests
             string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.copy");
             string distrolessImageTag = imageData.GetImage(imageRepo, this);
 
-            // Use the runtime-deps image as the target of the filesyste copy.
+            // Use the runtime-deps image as the target of the filesystem copy.
             // Not all images are versioned the same as the mainline .NET products.
             // Use the version family (e.g. the .NET product family version) as the
             // version of the runtime-deps image get the correct image.
             ProductImageData runtimeDepsImageData = new()
             {
-                // Special case for .NET 8.0 Aspire Dashboard images - the Dashboard is in preview even though
-                // .NET 8.0 is not. The distroless helper image should not be built with the preview version.
                 Version = imageData.VersionFamily,
                 OS = imageData.OS,
                 Arch = imageData.Arch,
             };
+
+            // Special case for Aspire Dashboard 9.0 images:
+            // Aspire Dashboard 9.0 is based on .NET 8 since Azure Linux 3.0 does not yet have FedRAMP certification.
+            // Remove workaround once https://github.com/dotnet/dotnet-docker/issues/5375 is fixed.
+            if (imageRepo == DotNetImageRepo.Aspire_Dashboard && imageData.VersionFamily == ImageVersion.V9_0)
+            {
+                runtimeDepsImageData = runtimeDepsImageData with
+                {
+                    Version = ImageVersion.V8_0
+                };
+            }
 
             // Make sure we don't try to get an image that we don't need before we specify that we want the distro-full
             // version. The image might not be on disk. The correct, distro-full versino will be pulled in the helper

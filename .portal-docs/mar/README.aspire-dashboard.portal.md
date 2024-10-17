@@ -10,7 +10,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `8.2`
+* `9.0`
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.2`
 
 ## Related Repositories
