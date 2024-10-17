@@ -59,12 +59,15 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
     [MemberData(nameof(GetImageData))]
     public void VerifyInstalledPackages(ProductImageData imageData)
     {
+
+        ProductImageData expectedPackagesImageData = imageData;
+
         // Special case for Aspire Dashboard 9.0 images:
         // Aspire Dashboard 9.0 is based on .NET 8 since Azure Linux 3.0 does not yet have FedRAMP certification.
         // Remove workaround once https://github.com/dotnet/dotnet-docker/issues/5375 is fixed.
         if (imageData.VersionFamily == ImageVersion.V9_0)
         {
-            imageData = imageData with
+            expectedPackagesImageData = imageData with
             {
                 Version = ImageVersion.V8_0
             };
@@ -72,8 +75,10 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
 
         // Aspire Dashboard image is based on an "extra" image, but doesn't have the "extra" qualifier itself, so we
         // need to make sure we compare the correct lists of packages.
-        IEnumerable<string> expectedPackages = GetExpectedPackages(imageData with { ImageVariant = DotNetImageVariant.Extra }, ImageRepo);
-        IEnumerable<string> actualPackages = GetInstalledPackages(imageData, ImageRepo, DockerHelper, [ AppPath ]);
+        IEnumerable<string> expectedPackages =
+            GetExpectedPackages(expectedPackagesImageData with { ImageVariant = DotNetImageVariant.Extra }, ImageRepo);
+        IEnumerable<string> actualPackages =
+            GetInstalledPackages(imageData, ImageRepo, DockerHelper, [ AppPath ]);
 
         ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, OutputHelper);
     }
