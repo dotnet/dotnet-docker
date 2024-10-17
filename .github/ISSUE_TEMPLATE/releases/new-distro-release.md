@@ -33,7 +33,7 @@ assignees: lbussell
 ## Determining when to move a new distro to the main branch
 
 According to our [policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#operating-systems), distros can be moved to the main branch at any time.
-However,
+However, in the interest of acting predictably and reducing risk, we should operate by the following guidelines:
 
 * The new distro **MUST** be actively tested/validated by other .NET teams. At a minimum, the Runtime must be tested.
 * The new distro **SHOULD** be in the `nightly` branch for at least 1 week prior to releasing it in the main branch.
