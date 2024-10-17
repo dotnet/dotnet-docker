@@ -42,7 +42,7 @@ However, in the interest of acting predictably and reducing risk, we should oper
   - New distros **may** release for different architectures/.NET versions at different times if there are blocking issues.
 - Alpine images **SHOULD** be released along with scheduled .NET servicing, due to their frequency.
 
-### Case studies:
+### Case studies
 
 - **Alpine 3.19** - added to `main` after less than 1 week in `nightly`.
   - [Released on 2023-12-07](https://www.alpinelinux.org/posts/Alpine-3.19.0-released.html) (Thurs), two days after Patch Tuesday
