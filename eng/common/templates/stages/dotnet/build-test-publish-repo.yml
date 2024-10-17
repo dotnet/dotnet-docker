@@ -8,6 +8,7 @@ parameters:
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
   customCopyBaseImagesInitSteps: []
+  customGenerateMatrixInitSteps: []
   customBuildInitSteps: []
   customTestInitSteps: []
   customPublishInitSteps: []
@@ -27,6 +28,7 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    customGenerateMatrixInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
     customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}

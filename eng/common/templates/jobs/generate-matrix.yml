@@ -6,6 +6,7 @@ parameters:
   isTestStage: false
   internalProjectName: null
   noCache: false
+  customInitSteps: []
   commonInitStepsForMatrixAndBuild: []
 
 jobs:
@@ -15,6 +16,7 @@ jobs:
   - ${{ parameters.commonInitStepsForMatrixAndBuild }}
   - template: /eng/common/templates/steps/retain-build.yml@self
   - template: /eng/common/templates/steps/init-docker-linux.yml@self
+  - ${{ parameters.customInitSteps }}
   - template: /eng/common/templates/steps/validate-branch.yml@self
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
