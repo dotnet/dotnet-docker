@@ -200,6 +200,7 @@ stages:
       publicProjectName: ${{ parameters.publicProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: WindowsLtsc2016_amd64
