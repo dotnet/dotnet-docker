@@ -30,8 +30,37 @@ assignees: lbussell
 1. - [ ] Wait for automatically queued CI build to finish on [dotnet-docker-nightly pipeline](https://dev.azure.com/dnceng/internal/_build?definitionId=359) (internal MSFT link)
 1. - [ ] Confirm READMEs have been updated in [Docker Hub](https://hub.docker.com/r/microsoft/dotnet) and the [MAR Portal](https://mcr.microsoft.com/en-us/catalog?search=dotnet)
 
+## Determining when to move a new distro to the main branch
+
+According to our [policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#operating-systems), distros can be moved to the main branch at any time.
+However,
+
+* The new distro **MUST** be actively tested/validated by other .NET teams. At a minimum, the Runtime must be tested.
+* The new distro **SHOULD** be in the `nightly` branch for at least 1 week prior to releasing it in the main branch.
+* The new distro **SHOULD** be released to the `main` branch on their release date if possible.
+  * New distros **may** be released with scheduled .NET servicing if more time is needed for validation.
+  * New distros **may** release for different architectures/.NET versions at different times if there are blocking issues.
+* Alpine images **SHOULD** be released along with scheduled .NET servicing, due to their frequency.
+
+### Case studies:
+
+- **Alpine 3.19** - added to `main` after less than 1 week in `nightly`.
+  - [Released on 2023-12-07](https://www.alpinelinux.org/posts/Alpine-3.19.0-released.html) (Thurs), two days after Patch Tuesday
+  - [Added to `nightly` on 2024-01-03](https://github.com/dotnet/dotnet-docker/pull/5065), significantly delayed due to holidays.
+  - Added to `main` on [2024-01-09](https://github.com/dotnet/dotnet-docker/discussions/5091), due to the significant delay between Alpine release and next .NET release. Releasing with 2024-02 Patch Tuesday was not desirable.
+- **Ubuntu 24.04 "Noble"** - ARM32 release delayed, skipped for .NET 8
+  - 2024-03-05 - [Added to `nightly`](https://github.com/dotnet/dotnet-docker/pull/5241)
+  - 2024-04-25 - [24.04 Released](https://ubuntu.com/blog/canonical-releases-ubuntu-24-04-noble-numbat)
+  - 2024-04-23 - Discovered issue blocking ARM32 release - [HTTPS requests fail on Ubuntu 24.04 Noble ARM32 due to bundled certs "NotTimeValid" error (dotnet/runtime#101444)](https://github.com/dotnet/runtime/issues/101444)
+  - 2024-05-14 - [Noble images added to `main`](https://github.com/dotnet/dotnet-docker/discussions/5466) (May Patch Tuesday)
+  - 2024-06-11 - [.NET 9 ARM32 Noble images added to `main`](https://github.com/dotnet/dotnet-docker/discussions/5557) (June Patch Tuesday) - allowed time for the issue to be fixed in .NET Runtime
+
 ## Main Branch Tasks
 
-1. - [ ] After the product teams have signed off on the new distro, merge these changes to the main branch as part of the [release process](https://github.com/dotnet/release/blob/main/.github/ISSUE_TEMPLATE/dotnet-docker-servicing-release.md) for the next .NET release
+When it's time to move a new distro to the main branch, then do the following:
+
+1. - [ ] Merge the new distro changes to the main branch as part of the [release process](https://github.com/dotnet/release/blob/main/.github/ISSUE_TEMPLATE/dotnet-docker-servicing-release.md) for the next .NET release
       - [ ] For Alpine, [file an issue](https://github.com/dotnet/dotnet-docker/issues/new?body=In+the+MMMM+YYYY+servicing+release%2C+%5BAlpine+3.XX+container+images+were+published%5D%28link+to+announcement%29.+In+the+MMMM+YYYY+servicing+release%2C+all+Alpine+floating+tags+were+updated+to+target+Alpine+3.XX+instead+of+Alpine+3.XX-1+according+to+our+%5Btagging+policy%5D%28https%3A%2F%2Fgithub.com%2Fdotnet%2Fdotnet-docker%2Fblob%2Fmain%2Fdocumentation%2Fsupported-tags.md%29.%0D%0A%0D%0APer+the+%5B.NET+Docker+platform+support+policy%5D%28https%3A%2F%2Fgithub.com%2Fdotnet%2Fdotnet-docker%2Fblob%2Fmain%2Fdocumentation%2Fsupported-platforms.md%23linux%29%2C+Alpine+3.XX+images+will+no+longer+be+maintained+starting+on+YYYY-MM-DD.+This+issue+tracks+removing+those+Dockerfiles.%0D%0A%0D%0ARelated%3A+link+to+PR+adding+Alpine+3.XX&title=Remove+Alpine+3.XX+Dockerfiles) to update the floating `alpine` tag according to our [policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md).
-1. - [ ] Create an announcement (example: [Alpine 3.10](https://github.com/dotnet/dotnet-docker/issues/1418)) unless the new distro is added only for pre-release versions in which the announcement would be incorporated in the pre-release notes.
+1. - [ ] Create announcement
+      - [ ] If the new distro is added for pre-release versions only, include the announcement in the new preview release announcement.
+      - [ ] If the new distro applies to in-support .NET versions, post a separate announcement. Example: [Alpine 3.20](https://github.com/dotnet/dotnet-docker/discussions/5556)
