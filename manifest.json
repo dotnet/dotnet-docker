@@ -3789,6 +3789,21 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "platforms": [
             {
+              "dockerfile": "src/runtime/8.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
               "dockerfile": "src/runtime/8.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
               "os": "windows",
@@ -3811,6 +3826,21 @@
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/8.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -4394,6 +4424,21 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "platforms": [
             {
+              "dockerfile": "src/runtime/9.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
               "dockerfile": "src/runtime/9.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
               "os": "windows",
@@ -4416,6 +4461,21 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/9.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -6429,6 +6489,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
+              "dockerfile": "src/aspnet/8.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "src/aspnet/8.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
               "os": "windows",
@@ -6454,6 +6532,24 @@
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -7358,6 +7454,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
+              "dockerfile": "src/aspnet/9.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "src/aspnet/9.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
               "os": "windows",
@@ -7383,6 +7497,24 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/9.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -8364,6 +8496,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
+              "dockerfile": "src/sdk/8.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(sdk|8.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(sdk|8.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "src/sdk/8.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
               "os": "windows",
@@ -8389,6 +8539,24 @@
               "tags": {
                 "$(sdk|8.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(sdk|8.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/8.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(sdk|8.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(sdk|8.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -8810,6 +8978,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
+              "dockerfile": "src/sdk/9.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(sdk|9.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(sdk|9.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "src/sdk/9.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
               "os": "windows",
@@ -8835,6 +9021,24 @@
               "tags": {
                 "$(sdk|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(sdk|9.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/9.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(sdk|9.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(sdk|9.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]

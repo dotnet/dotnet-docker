@@ -1,18 +1,39 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
-    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
+    set isServer2025 to find(OS_VERSION_NUMBER, "2025") >= 0 ^
+
+    set dotnetBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
-    set serverCoreBaseTag to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
-    set finalStageBaseRepo to when(isInternal && isServerCore, "servercore", "nanoserver")
+
+    set repoBaseUrl to "mcr.microsoft.com/windows" ^
+    set installerStageRepo to cat(repoBaseUrl, "/servercore") ^
+    set runtimeStageRepo to cat(repoBaseUrl, when(isServerCore, "/servercore", "/nanoserver")) ^
+
+    set fromImageTag to cat(OS_VERSION_NUMBER, "-amd64") ^
+
+    set installerStageRepo to when(isServer2025,
+        cat(installerStageRepo, "/insider"),
+        installerStageRepo) ^
+    set runtimeStageRepo to when(isServer2025,
+        cat(runtimeStageRepo, "/insider"),
+        runtimeStageRepo) ^
+
+    set fromImageTag to when(isServer2025,
+        VARIABLES[cat("windowsservercore|", OS_VERSION_NUMBER, "|insider|tag")],
+        fromImageTag) ^
+
+    set installerStageFromImage to cat(installerStageRepo, ":", fromImageTag) ^
+    set runtimeStageFromImage to cat(runtimeStageRepo, ":", fromImageTag)
+
 }}# escape=`
 
 {{if isSingleStage:{{
 
     _ SINGLE STAGE
 
-}}FROM {{serverCoreBaseTag}}
+}}FROM {{runtimeStageFromImage}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
     {{InsertTemplate("Dockerfile.envs", [], "    ")}}
@@ -24,9 +45,9 @@
 else:{{
 
     _ MULTI STAGE
-    
+
 }}# Installer image
-FROM {{serverCoreBaseTag}} AS installer
+FROM {{installerStageFromImage}} AS installer
 {{if isInternal:
 ARG ACCESSTOKEN
 }}
@@ -39,7 +60,7 @@ ARG ACCESSTOKEN
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/{{finalStageBaseRepo}}:{{OS_VERSION_NUMBER}}-amd64
+FROM {{runtimeStageFromImage}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
     {{InsertTemplate("Dockerfile.envs", [], "    ")}}

@@ -3,10 +3,24 @@
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
-    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
-        VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
-    set aspnetBaseTag to cat("$REPO:", tagVersion, "-", OS_VERSION) ^
+    set isServer2025 to find(OS_VERSION_NUMBER, "2025") >= 0 ^
+
+    set repoBaseUrl to "mcr.microsoft.com/windows" ^
+    set installerStageRepo to cat(repoBaseUrl, "/servercore") ^
+    set installerStageTag to cat(OS_VERSION_NUMBER, "-amd64") ^
+
+    set installerStageRepo to when(isServer2025,
+        cat(installerStageRepo, "/insider"),
+        installerStageRepo) ^
+    set installerStageTag to when(isServer2025,
+        VARIABLES[cat("windowsservercore|", OS_VERSION_NUMBER, "|insider|tag")],
+        installerStageTag) ^
+
+    set installerStageFromImage to cat(installerStageRepo, ":", installerStageTag) ^
+
+    set aspnetTagVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
+    set aspnetBaseTag to cat("$REPO:", aspnetTagVersion, "-", OS_VERSION) ^
+
     set paths to when(dotnetVersion = "6.0",
         [
             "C:\Program Files\powershell",
@@ -37,7 +51,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
     _ MULTI STAGE
 
 }}# Installer image
-FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
+FROM {{installerStageFromImage}} AS installer
 {{if isInternal:
 ARG ACCESSTOKEN
 }}
