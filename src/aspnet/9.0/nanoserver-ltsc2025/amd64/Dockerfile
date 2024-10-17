@@ -3,7 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore/insider:10.0.26244.5000 AS installer
+FROM mcr.microsoft.com/windows/servercore/insider:10.0.26304.5000 AS installer
 
 # Install ASP.NET Core Runtime
 RUN powershell -Command `
