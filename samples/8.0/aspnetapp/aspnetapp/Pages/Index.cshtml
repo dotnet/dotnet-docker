@@ -1,0 +1,98 @@
+﻿@page
+@model IndexModel
+@using System.Runtime.InteropServices
+@using System.IO
+@using System.Diagnostics
+@{
+    ViewData["Title"] = "Welcome to .NET";
+    string hostName = System.Net.Dns.GetHostName();
+    var ipList = await System.Net.Dns.GetHostAddressesAsync(hostName);
+    EnvironmentInfo env = new();
+    const double Mebi = 1024 * 1024;
+    const double Gibi = Mebi * 1024;
+}
+
+<div class="text-center">
+    <h1>Welcome to .NET</h1>
+</div>
+
+<div align="center">
+    <table class="table table-striped table-hover">
+        <tr>
+            <td>.NET version</td>
+            <td>@RuntimeInformation.FrameworkDescription</td>
+        </tr>
+        <tr>
+            <td>Operating system</td>
+            <td>@RuntimeInformation.OSDescription</td>
+        </tr>
+        <tr>
+            <td>Processor architecture</td>
+            <td>@RuntimeInformation.OSArchitecture</td>
+        </tr>
+        <tr>
+            <td>CPU cores</td>
+            <td>@Environment.ProcessorCount</td>
+        </tr>
+        <tr>
+            <td>Containerized</td>
+            <td>@(Environment.GetEnvironmentVariable("DOTNET_RUNNING_IN_CONTAINER") is null ? "false" : "true")</td>
+        </tr>
+        <tr>
+            <td>User</td>
+            <td>@(Environment.UserName)</td>
+        </tr>
+        @if (env.MemoryLimit > 0)
+        {
+            <tr>
+                <td>cgroup memory limit</td>
+                <td>@env.MemoryLimit (@GetInBestUnit(env.MemoryLimit))</td>
+            </tr>
+            <tr>
+                <td>cgroup memory usage</td>
+                <td>@env.MemoryUsage (@GetInBestUnit(env.MemoryUsage))</td>
+            </tr>
+        }
+        <tr>
+            <td>Memory, total available GC memory</td>
+            <td>@env.TotalAvailableMemoryBytes (@GetInBestUnit(env.TotalAvailableMemoryBytes))</td>
+        </tr>
+        <tr>
+            <td>Host name</td>
+            <td>@hostName</td>
+        </tr>
+        <tr>
+            <td style="vertical-align: top">Server IP address</td>
+            <td>
+                @{
+                    foreach (var ip in ipList)
+                    {
+                        @ip
+                        <br />
+                    }
+                }
+
+            </td>
+        </tr>
+    </table>
+</div>
+
+@{
+    string GetInBestUnit(long size)
+    {
+        if (size < Mebi)
+        {
+            return $"{size} bytes";
+        }
+        else if (size < Gibi)
+        {
+            double mebibytes = size / Mebi;
+            return $"{mebibytes:N2} MiB";
+        }
+        else
+        {
+            double gibibytes = size / Gibi;
+            return $"{gibibytes:N2} GiB";
+        }
+    }
+}

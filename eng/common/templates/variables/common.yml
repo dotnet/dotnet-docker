@@ -44,6 +44,10 @@ variables:
   value: ""
 - name: customCopyBaseImagesArgs
   value: ""
+- name: additionalGenerateBuildMatrixOptions
+  value: ""
+- name: trimCachedImagesForMatrix
+  value: false
 
 - name: defaultLinuxAmd64PoolImage
   value: ubuntu-latest

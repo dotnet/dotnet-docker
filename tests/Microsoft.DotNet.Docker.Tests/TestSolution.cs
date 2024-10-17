@@ -56,9 +56,18 @@ public class TestSolution : IDisposable
             CreateProjectWithSdkImage("xunit", _testProjectDir, testProjectContainerName);
             File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, "UnitTests.cs"), Path.Combine(_testProjectDir, "UnitTests.cs"));
 
-            if (Config.IsNightlyRepo)
+            string nuGetConfigFileName = string.Empty;
+            if (Config.IsInternal)
             {
-                string nuGetConfigFileName = "NuGet.config.nightly";
+                nuGetConfigFileName = "NuGet.config.internal";
+            }
+            else if (Config.IsNightlyRepo)
+            {
+                nuGetConfigFileName = "NuGet.config.nightly";
+            }
+
+            if (!string.IsNullOrEmpty(nuGetConfigFileName))
+            {
                 File.Copy(
                     Path.Combine(DockerHelper.TestArtifactsDir, nuGetConfigFileName),
                     Path.Combine(solutionDir, "NuGet.config"));

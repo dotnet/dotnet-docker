@@ -9303,9 +9303,15 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-alpine-amd64": {},
-                "$(monitor|6.3|minor-tag)-alpine-amd64": {},
-                "$(monitor|6|major-tag)-alpine-amd64": {}
+                "$(monitor|6.3|fixed-tag)-alpine-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-alpine-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-alpine-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9318,9 +9324,15 @@
               "os": "linux",
               "osVersion": "alpine3.20",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-alpine-arm64v8": {},
-                "$(monitor|6.3|minor-tag)-alpine-arm64v8": {},
-                "$(monitor|6|major-tag)-alpine-arm64v8": {}
+                "$(monitor|6.3|fixed-tag)-alpine-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-alpine-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-alpine-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9343,9 +9355,15 @@
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-ubuntu-chiseled-amd64": {},
-                "$(monitor|6.3|minor-tag)-ubuntu-chiseled-amd64": {},
-                "$(monitor|6|major-tag)-ubuntu-chiseled-amd64": {}
+                "$(monitor|6.3|fixed-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9358,9 +9376,15 @@
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-ubuntu-chiseled-arm64v8": {},
-                "$(monitor|6.3|minor-tag)-ubuntu-chiseled-arm64v8": {},
-                "$(monitor|6|major-tag)-ubuntu-chiseled-arm64v8": {}
+                "$(monitor|6.3|fixed-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9383,9 +9407,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-cbl-mariner-amd64": {},
-                "$(monitor|6.3|minor-tag)-cbl-mariner-amd64": {},
-                "$(monitor|6|major-tag)-cbl-mariner-amd64": {}
+                "$(monitor|6.3|fixed-tag)-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-cbl-mariner-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9398,9 +9428,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-cbl-mariner-arm64v8": {},
-                "$(monitor|6.3|minor-tag)-cbl-mariner-arm64v8": {},
-                "$(monitor|6|major-tag)-cbl-mariner-arm64v8": {}
+                "$(monitor|6.3|fixed-tag)-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-cbl-mariner-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9423,9 +9459,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|6.3|minor-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|6|major-tag)-cbl-mariner-distroless-amd64": {}
+                "$(monitor|6.3|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9438,9 +9480,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(monitor|6.3|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(monitor|6.3|minor-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(monitor|6|major-tag)-cbl-mariner-distroless-arm64v8": {}
+                "$(monitor|6.3|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6.3|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|6|major-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9464,8 +9512,12 @@
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|8.0|fixed-tag)-ubuntu-chiseled-amd64": {},
-                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-amd64": {}
+                "$(monitor|8.0|fixed-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9478,8 +9530,12 @@
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
-                "$(monitor|8.0|fixed-tag)-ubuntu-chiseled-arm64v8": {},
-                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-arm64v8": {}
+                "$(monitor|8.0|fixed-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9501,8 +9557,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {}
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9515,8 +9575,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {}
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9623,8 +9687,12 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-amd64": {},
-                "$(monitor|9.0|minor-tag)-amd64": {}
+                "$(monitor|9.0|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|9.0|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9637,8 +9705,12 @@
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|9.0|fixed-tag)-arm64v8": {},
-                "$(monitor|9.0|minor-tag)-arm64v8": {}
+                "$(monitor|9.0|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|9.0|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9683,9 +9755,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.2|fixed-tag)-amd64": {},
-                "$(aspire-dashboard|8.2|minor-tag)-amd64": {},
-                "$(aspire-dashboard|8|major-tag)-amd64": {}
+                "$(aspire-dashboard|8.2|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8.2|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8|major-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9698,9 +9776,15 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(aspire-dashboard|8.2|fixed-tag)-arm64v8": {},
-                "$(aspire-dashboard|8.2|minor-tag)-arm64v8": {},
-                "$(aspire-dashboard|8|major-tag)-arm64v8": {}
+                "$(aspire-dashboard|8.2|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8.2|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|8|major-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }

@@ -8,6 +8,7 @@ parameters:
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
   customCopyBaseImagesInitSteps: []
+  customGenerateMatrixInitSteps: []
   customBuildInitSteps: []
   customTestInitSteps: []
   customPublishInitSteps: []
@@ -18,6 +19,7 @@ parameters:
   linuxAmd64Pool: ""
   buildMatrixType: platformDependencyGraph
   testMatrixType: platformVersionedOs
+  isInternalServicingValidation: false
 
 stages:
 - template: /eng/common/templates/stages/build-test-publish-repo.yml@self
@@ -25,6 +27,8 @@ stages:
     noCache: ${{ parameters.noCache }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    customGenerateMatrixInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
     customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}

@@ -5,7 +5,10 @@ The following samples and guidance demonstrate how to use .NET and Docker for de
 Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) directory.
 
 > [!IMPORTANT]
-> [.NET 8 container breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/8.0#containers)
+>
+> [.NET 9 containers breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/9.0#containers)
+>
+> [.NET 8 containers breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/8.0#containers)
 
 ## Building images
 
@@ -59,7 +62,5 @@ docker run --rm -it -p 8000:8080 mcr.microsoft.com/dotnet/samples:aspnetapp
 
 ## Docker Repositories
 
-You can find .NET container images at the following Docker repositories:
-
-* [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
-* [dotnet/framework](https://hub.docker.com/r/microsoft/dotnet-framework/): .NET Framework
+* [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
+* [dotnet/framework](https://github.com/microsoft/dotnet-framework-docker/blob/main/README.md): .NET Framework, ASP.NET and WCF
