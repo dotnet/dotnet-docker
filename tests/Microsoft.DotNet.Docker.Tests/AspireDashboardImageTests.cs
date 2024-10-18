@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -39,16 +40,23 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
     [MemberData(nameof(GetImageData))]
     public void VerifyEnvironmentVariables(ProductImageData imageData)
     {
+        string baseUrl = "http://+";
+
+        // Workaround for https://github.com/dotnet/dotnet-docker/issues/5190
+        if (imageData.VersionFamily == ImageVersion.V8_0)
+        {
+            baseUrl = "http://0.0.0.0";
+        }
+
         IEnumerable<EnvironmentVariableInfo> expectedVariables =
         [
             // Unset ASPNETCORE_HTTP_PORTS from base image
             new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty),
             // These two URL environment variables should be in the more compact format, i.e. "http://+:18888", but need
             // to have a base URL of 0.0.0.0 due to a bug in the Aspire Dashboard.
-            // Change the format when https://github.com/dotnet/dotnet-docker/issues/5190 is closed.
-            new EnvironmentVariableInfo("ASPNETCORE_URLS", $"http://0.0.0.0:{DashboardWebPort}"),
-            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"http://0.0.0.0:{DashboardOtlpPort}"),
-            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL", $"http://0.0.0.0:{DashboardOtlpHttpPort}"),
+            new EnvironmentVariableInfo("ASPNETCORE_URLS", $"{baseUrl}:{DashboardWebPort}"),
+            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpPort}"),
+            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpHttpPort}"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
@@ -59,7 +67,6 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
     [MemberData(nameof(GetImageData))]
     public void VerifyInstalledPackages(ProductImageData imageData)
     {
-
         ProductImageData expectedPackagesImageData = imageData;
 
         // Special case for Aspire Dashboard 9.0 images:
