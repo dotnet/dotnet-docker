@@ -427,10 +427,21 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3",
                         "openssl",
                     ],
+                { OS: string os, Version: ImageVersion version }
+                    when os.Contains(OS.Noble) && version.Major == 8 =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "openssl",
+                    ],
                 { OS: string os } when os.Contains(OS.Noble) =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
+                        "gcc-14",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
