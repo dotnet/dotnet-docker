@@ -125,3 +125,47 @@ You would actually execute this command to use the distroless wrapper image (not
 $ docker run --rm distroless-wrapper /bin/sh -c "find ./distroless/usr/share/dotnet | grep -i third"
 ./distroless/usr/share/dotnet/ThirdPartyNotices.txt
 ```
+
+## Appliance Images
+
+### .NET Monitor 6
+
+The [.NET Monitor image](../README.monitor.md) includes .NET Monitor in addition to ASP.NET Core, with associated licenses and third party notice files. Note that the `--entrypoint` argument is specified to override the preset ENTRYPOINT directive in the .NET Monitor image.
+
+```console
+$ docker run --rm --entrypoint /bin/sh mcr.microsoft.com/dotnet/monitor:6 -c "find /usr/share/dotnet /app | grep LICENSE"
+/usr/share/dotnet/LICENSE.txt
+/app/LICENSE.TXT
+$ docker run --rm --entrypoint /bin/sh mcr.microsoft.com/dotnet/monitor:6 -c "find /usr/share/dotnet /app | grep -i third"
+/usr/share/dotnet/ThirdPartyNotices.txt
+/usr/share/dotnet/shared/Microsoft.AspNetCore.App/6.0.35/THIRD-PARTY-NOTICES.txt
+/app/THIRD-PARTY-NOTICES.TXT
+```
+
+### .NET Monitor 8+
+
+The [.NET Monitor image](../README.monitor.md) includes .NET Monitor in addition to ASP.NET Core, with associated licenses and third party notice files. Starting with .NET Monitor 8, the image is based on the distroless ASP.NET Core image; using the instructions from [Distroless Images](#distroless-images) is necessary to gather the licence and notice file paths.
+
+First, create the Dockerfile as specified in [Distroless Images](#distroless-images).
+
+Next, build the wrapper Dockerfile, specifying the image tag you wish to inspect:
+
+```console
+docker build -t distroless-wrapper --build-arg DISTROLESS_IMAGE=mcr.microsoft.com/dotnet/monitor:8 .
+```
+
+Finally, execute the following to get license and notice file paths:
+
+```console
+$ docker run --rm distroless-wrapper /bin/sh -c "find ./distroless/usr/share/dotnet ./distroless/app | grep LICENSE"
+./distroless/usr/share/dotnet/LICENSE.txt
+./distroless/app/LICENSE.TXT
+./distroless/app/extensions/AzureBlobStorage/LICENSE.TXT
+./distroless/app/extensions/S3Storage/LICENSE.TXT
+$ docker run --rm distroless-wrapper /bin/sh -c "find ./distroless/usr/share/dotnet ./distroless/app | grep -i third"
+./distroless/usr/share/dotnet/ThirdPartyNotices.txt
+./distroless/usr/share/dotnet/shared/Microsoft.AspNetCore.App/8.0.0/THIRD-PARTY-NOTICES.txt
+./distroless/app/THIRD-PARTY-NOTICES.TXT
+./distroless/app/extensions/AzureBlobStorage/THIRD-PARTY-NOTICES.TXT
+./distroless/app/extensions/S3Storage/THIRD-PARTY-NOTICES.TXT
+```
