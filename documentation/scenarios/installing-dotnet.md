@@ -10,7 +10,7 @@ Before doing all the work of authoring and maintaining a Dockerfile that install
 
 If there's a platform that you require that is available in its own Docker image, ask yourself whether it would be better to use that image and add .NET to it or would it be better to use the .NET image as the base and add the platform to it. An example scenario is using the .NET runtime with PowerShell; determine whether you would prefer to start with a [PowerShell](https://mcr.microsoft.com/product/powershell/about) image and install .NET runtime onto it or start with a [.NET runtime image](../../README.runtime.md) and install PowerShell Core onto it.
 
-In some cases, you can work around the need for the .NET runtime by publishing your application as a [self-contained app](https://learn.microsoft.com/en-us/dotnet/core/deploying/), in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the [releasesapp sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapp/README.md).
+In some cases, you can work around the need for the .NET runtime by publishing your application as a [self-contained app](https://learn.microsoft.com/en-us/dotnet/core/deploying/), in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the [releasesapp sample](../../samples/releasesapp/README.md).
 
 ## Image Purposes
 
@@ -160,7 +160,7 @@ Keep in mind the [Dockerfile best practices](https://docs.docker.com/build/build
 Here is an example Dockerfile using Debian:
 
 ```Dockerfile
-FROM amd64/debian:bookworm-slim
+FROM debian:bookworm-slim
 RUN apt-get update \
     # Install prerequisites
     && apt-get install -y --no-install-recommends \
@@ -168,7 +168,7 @@ RUN apt-get update \
        ca-certificates \
     \
     # Install Microsoft package feed
-    wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
+    && wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb \
     && dpkg -i packages-microsoft-prod.deb \
     && rm packages-microsoft-prod.deb \
     \
