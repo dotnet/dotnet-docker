@@ -1,6 +1,6 @@
 # Featured Tags
 
-* `9.0` (Release Candidate)
+* `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0`
@@ -13,13 +13,6 @@ This image contains the native dependencies needed by .NET. It does not include 
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
-## New: Ubuntu Chiseled Images
-
-Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
-These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
-
-Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
-
 # Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
@@ -31,6 +24,19 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 .NET container images have several variants that offer different combinations of flexibility and deployment size.
 The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
+## Distroless images
+
+.NET "distroless" container images contain only the minimal set of packages .NET needs, with everything else removed.
+Due to their limited set of packages, distroless containers have a minimized security attack surface, smaller deployment sizes, and faster start-up time compared to their non-distroless counterparts.
+They contain the following features:
+
+* Minimal set of packages required for .NET applications
+* Non-root user by default
+* No package manager
+* No shell
+
+.NET offers distroless images for [Azure Linux](https://github.com/dotnet/dotnet-docker/blob/main/documentation/azurelinux.md) and [Ubuntu (Chiseled)](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md).
+
 # Related Repositories
 
 .NET:
@@ -41,8 +47,8 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime
 * [dotnet/monitor](https://hub.docker.com/r/microsoft/dotnet-monitor/): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): .NET Aspire Dashboard
-* [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 * [dotnet/nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
+* [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
 .NET Framework:
 

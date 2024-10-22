@@ -2,7 +2,7 @@
 
 ## Featured Tags
 
-* `9` (Release Candidate)
+* `9` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor/base:9`
 * `8` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor/base:8`
@@ -14,13 +14,6 @@ This image contains the .NET Monitor Base installation.
 Use this image as a base image for building a .NET Monitor image with extensions.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
-
-### New: Ubuntu Chiseled Images
-
-Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
-These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
-
-Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
 
 ## Usage
 
@@ -44,8 +37,8 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 * [dotnet/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md): .NET Runtime Dependencies
 * [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): .NET Aspire Dashboard
-* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 * [dotnet/nightly/monitor/base](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor-base.md): .NET Monitor Base (Preview)
+* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
 

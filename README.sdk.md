@@ -2,7 +2,7 @@
 
 ## Featured Tags
 
-* `9.0` (Release Candidate)
+* `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:8.0`
@@ -53,8 +53,8 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 * [dotnet/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md): .NET Runtime Dependencies
 * [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): .NET Aspire Dashboard
-* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 * [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
+* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
 
@@ -67,11 +67,11 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-rc.2-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.100-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.100-rc.2, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.100-rc.2-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.100-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.100-rc.2, 9.0, latest | [Dockerfile](src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.100-rc.2-alpine3.20-amd64, 9.0-alpine3.20-amd64, 9.0-alpine-amd64, 9.0.100-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
 9.0.100-rc.2-noble-amd64, 9.0-noble-amd64, 9.0.100-rc.2-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.100-rc.2-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.100-rc.2-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-8.0.403-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.403-bookworm-slim, 8.0-bookworm-slim, 8.0.403, 8.0, latest | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.403-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.403-bookworm-slim, 8.0-bookworm-slim, 8.0.403, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.403-alpine3.20-amd64, 8.0-alpine3.20-amd64, 8.0-alpine-amd64, 8.0.403-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
 8.0.403-noble-amd64, 8.0-noble-amd64, 8.0.403-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 8.0.403-jammy-amd64, 8.0-jammy-amd64, 8.0.403-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
@@ -88,11 +88,11 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-rc.2-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.100-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.100-rc.2, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.100-rc.2-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.100-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.100-rc.2, 9.0, latest | [Dockerfile](src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.100-rc.2-alpine3.20-arm64v8, 9.0-alpine3.20-arm64v8, 9.0-alpine-arm64v8, 9.0.100-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
 9.0.100-rc.2-noble-arm64v8, 9.0-noble-arm64v8, 9.0.100-rc.2-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.100-rc.2-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.100-rc.2-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.403-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.403-bookworm-slim, 8.0-bookworm-slim, 8.0.403, 8.0, latest | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.403-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.403-bookworm-slim, 8.0-bookworm-slim, 8.0.403, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.403-alpine3.20-arm64v8, 8.0-alpine3.20-arm64v8, 8.0-alpine-arm64v8, 8.0.403-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
 8.0.403-noble-arm64v8, 8.0-noble-arm64v8, 8.0.403-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 8.0.403-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.403-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
@@ -109,10 +109,10 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.100-rc.2-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.100-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.100-rc.2, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.100-rc.2-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.100-rc.2-bookworm-slim, 9.0-bookworm-slim, 9.0.100-rc.2, 9.0, latest | [Dockerfile](src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.100-rc.2-alpine3.20-arm32v7, 9.0-alpine3.20-arm32v7, 9.0-alpine-arm32v7, 9.0.100-rc.2-alpine3.20, 9.0-alpine3.20, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 9.0.100-rc.2-noble-arm32v7, 9.0-noble-arm32v7, 9.0.100-rc.2-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.403-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.403-bookworm-slim, 8.0-bookworm-slim, 8.0.403, 8.0, latest | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.403-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.403-bookworm-slim, 8.0-bookworm-slim, 8.0.403, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.403-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0-alpine-arm32v7, 8.0.403-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 8.0.403-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.403-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 6.0.427-1-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.427-1-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](src/sdk/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
