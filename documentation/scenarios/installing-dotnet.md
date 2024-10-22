@@ -141,7 +141,9 @@ For more details please see [.NET 9 Package Publishing announcement](https://git
 
 #### Native Package Installation Example
 
-Note: distro-archive packages are typically limited to the `.1xx` SDK band, while packages.microsoft.com packages are not. Users that want to use the latest feature band builds (on distros without packages.microsoft.com packages available) must install those builds manually via [binary archive](#installing-from-a-binary-archive) or [dotnet-install script](#installing-from-dotnet-install-script).
+Below is an example Dockerfile that installs .NET on Ubuntu directly from the default Ubuntu package feeds.
+This distribution of .NET is built and supported by the Ubuntu package maintainers.
+Package installation commands for other distros are documented in [Install .NET on Linux](https://learn.microsoft.com/dotnet/core/install/linux).
 
 ```Dockerfile
 FROM ubuntu:noble
@@ -149,6 +151,9 @@ RUN apt-get update \
     && apt-get install -y dotnet-sdk-8.0 \
     && rm -rf /var/lib/apt/lists/*
 ```
+
+> [!IMPORTANT]
+> .NET packages in native distro feeds are typically limited to the `.1xx` SDK band, while packages.microsoft.com packages are not. Users that want to use the latest feature band builds (on distros without packages.microsoft.com packages available) must install those builds manually via [binary archive](#installing-from-a-binary-archive) or [dotnet-install script](#installing-from-dotnet-install-script).
 
 #### Microsoft Package Feeds Installation Example
 
