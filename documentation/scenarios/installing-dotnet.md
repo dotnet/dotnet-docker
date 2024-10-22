@@ -10,7 +10,7 @@ Before doing all the work of authoring and maintaining a Dockerfile that install
 
 If there's a platform that you require that is available in its own Docker image, ask yourself whether it would be better to use that image and add .NET to it or would it be better to use the .NET image as the base and add the platform to it. An example scenario is using the .NET runtime with PowerShell; determine whether you would prefer to start with a [PowerShell](https://mcr.microsoft.com/product/powershell/about) image and install .NET runtime onto it or start with a [.NET runtime image](../../README.runtime.md) and install PowerShell Core onto it.
 
-In some cases, you can work around the need for the .NET runtime by publishing your application as a [self-contained app](https://learn.microsoft.com/en-us/dotnet/core/deploying/), in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the [releasesapp sample](../../samples/releasesapp/README.md).
+In some cases, you can work around the need for the .NET runtime by publishing your application as a [self-contained app](https://learn.microsoft.com/dotnet/core/deploying/), in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the [releasesapp sample](../../samples/releasesapp/README.md).
 
 ## Image Purposes
 
@@ -123,7 +123,7 @@ You can track these values by making use of the information contained in the `re
 ### Installing from a Linux Package Manager
 
 For Linux, you may prefer to use your Linux distro's package manager to install .NET rather than directly from a binary archive.
-See the [Install .NET on Linux](https://docs.microsoft.com/en-us/dotnet/core/install/linux) guidance on how to install .NET from the various distro package managers.
+See the [Install .NET on Linux](https://learn.microsoft.com/dotnet/core/install/linux) guidance on how to install .NET from the various distro package managers.
 
 Using a package manager allows for easier maintenance since you only have to reference the major/minor version of the release and you'll get servicing releases "for free". This is true as long as you are mindful of Docker's caching functionality. You may need to build with the `--no-cache` option to force the build to re-execute the commands that install .NET in order to get an updated servicing release. Alternatively, you can specify the full version (major/minor/build) and increment that with each service release.
 
@@ -153,7 +153,7 @@ RUN apt-get update \
 #### Microsoft Package Feeds Installation Example
 
 Instructions for setting up the Microsoft package feed vary between Linux distros.
-Please refer to [Install .NET on Linux](https://learn.microsoft.com/en-us/dotnet/core/install/linux#packages) for detailed instructions for each supported distro.
+Please refer to [Install .NET on Linux](https://learn.microsoft.com/dotnet/core/install/linux#packages) for detailed instructions for each supported distro.
 
 Keep in mind the [Dockerfile best practices](https://docs.docker.com/build/building/best-practices/) when porting the installation commands to your Dockerfile - in particular, installing or using `sudo` in your Dockerfile is not neccesary since the default user in most base container images is `root`.
 
@@ -183,7 +183,7 @@ RUN apt-get update \
 
 ### Installing from dotnet-install script
 
-A set of [installation scripts](https://docs.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 6.0.0, the latest of a release channel such as the latest 6.0 patch, etc.
+A set of [installation scripts](https://learn.microsoft.com/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 6.0.0, the latest of a release channel such as the latest 6.0 patch, etc.
 
 In addition to installing .NET, you'll also need to ensure that the [prerequisites](https://github.com/dotnet/core/blob/main/linux.md#dependencies) are installed. The [.NET Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
 

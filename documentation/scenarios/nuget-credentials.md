@@ -61,7 +61,7 @@ If you do not store your credentials in the `nuget.config` file and instead retr
 
 Even though using a multi-stage build is a good technique to help avoid exposing credentials in the final image, it should be known that the intermediate layers produced by the build can still expose those secrets locally on the Docker host machine.
 
-For this pattern, we're going to rely on a `nuget.config` file that makes use of NuGet's support for [environment variables](https://docs.microsoft.com/en-us/nuget/reference/nuget-config-file#using-environment-variables):
+For this pattern, we're going to rely on a `nuget.config` file that makes use of NuGet's support for [environment variables](https://learn.microsoft.com/nuget/reference/nuget-config-file#using-environment-variables):
 
 ```XML
 <?xml version="1.0" encoding="UTF-8"?>
@@ -119,7 +119,7 @@ Passing the username and password values to the `docker build` command in this m
 
 ## Using the Azure Artifact Credential Provider
 
-NuGet has support for [custom credential providers](https://docs.microsoft.com/en-us/nuget/reference/extensibility/nuget-cross-platform-authentication-plugin) that provide a mechanism to authenticate to feeds both interactively and non-interactively. One such implementation of this is [Azure Artifact Credential Provider](https://github.com/Microsoft/artifacts-credprovider) which provides a mechanism to acquire credentials for restoring NuGet packages from Azure Artifacts feeds. In unattended build agent scenarios, like building Docker images, a `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` [environment variable](https://github.com/Microsoft/artifacts-credprovider#environment-variables) is used to supply an access token.
+NuGet has support for [custom credential providers](https://learn.microsoft.com/nuget/reference/extensibility/nuget-cross-platform-authentication-plugin) that provide a mechanism to authenticate to feeds both interactively and non-interactively. One such implementation of this is [Azure Artifact Credential Provider](https://github.com/Microsoft/artifacts-credprovider) which provides a mechanism to acquire credentials for restoring NuGet packages from Azure Artifacts feeds. In unattended build agent scenarios, like building Docker images, a `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` [environment variable](https://github.com/Microsoft/artifacts-credprovider#environment-variables) is used to supply an access token.
 
 If you're using Azure Artifacts for your private NuGet feeds, this scenario is for you since it provides a compatible experience between interactive developer machines and automated scenarios like Docker image builds. This allows you to use the same `nuget.config` file in either scenario. In this pattern, we'll use the environment variables and multi-stage build along with Credential Provider to pass the credentials for a private NuGet feed.
 
@@ -203,7 +203,7 @@ ENTRYPOINT ["dotnetapp"]
 > [!NOTE]
 > A script is called to install the Credential Provider. When `dotnet restore` is run, the Credential Provider is invoked to resolve the credentials and it retrieves them from the `VSS_NUGET_EXTERNAL_FEED_ENDPOINTS` environment variable.
 
-Before running `docker build`, first populate the `FEED_ACCESSTOKEN` environment variable with a [personal access token](https://docs.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate). Then, this Dockerfile would be built using this command:
+Before running `docker build`, first populate the `FEED_ACCESSTOKEN` environment variable with a [personal access token](https://learn.microsoft.com/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate). Then, this Dockerfile would be built using this command:
 
 ```bash
 docker build --build-arg FEED_ACCESSTOKEN .
