@@ -11,7 +11,7 @@
 
 This image contains the base installation of .NET Monitor, a diagnostic tool for capturing diagnostic artifacts (such as dumps and traces) in an operator-driven or automated manner. This tool is an ASP.NET application that hosts a web API for inspecting .NET processes and collecting diagnostic artifacts.
 
-This image only provides the base functionality of the .NET Monitor tool; it is only meant to be used as a base image upon which .NET Monitor extensions are installed. If you are looking for the full feature set that is provided by the .NET Monitor global tool (including the egress capabilities), see the [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md) image.
+This image only provides the base functionality of the .NET Monitor tool; it is only meant to be used as a base image upon which .NET Monitor extensions are installed. If you are looking for the full feature set that is provided by the .NET Monitor global tool (including the egress capabilities), see the [dotnet/monitor](./README.monitor.md) image.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
