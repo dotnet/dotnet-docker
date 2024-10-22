@@ -1,8 +1,6 @@
 ## About
 
-This image contains the .NET Monitor tool.
-
-Use this image as a sidecar container to collect diagnostic information from other containers running .NET Core 3.1 or later processes.
+This image contains .NET Monitor, a diagnostic tool for capturing diagnostic artifacts (such as dumps and traces) in an operator-driven or automated manner. This tool is an ASP.NET application that hosts a web API for inspecting .NET processes and collecting diagnostic artifacts. This image also contains .NET Monitor extensions for egressing artifacts to Azure Blob Storage and Amazon S3.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
@@ -45,11 +43,11 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-### Container sample: Run the tool
+You can run this image as a sidecar container to collect diagnostic information and artifacts from other containers running .NET Core 3.1 or .NET 5 and later.
 
-You can run a container with a pre-built [.NET Docker Image](https://mcr.microsoft.com/product/dotnet/monitor/about), based on the dotnet-monitor global tool.
+See [Running in Kubernetes](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/kubernetes.md) or [Running in Docker Compose](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/docker-compose.md) for examples of how to run this image in orchestration environments.
 
-See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to configure the image to be run in a Docker or Kubernetes environment, including how to configure authentication and certificates for https bindings.
+See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to configure the image and documentation for the web API.
 
 ## Support
 
