@@ -128,21 +128,7 @@ $ docker run --rm distroless-wrapper /bin/sh -c "find ./distroless/usr/share/dot
 
 ## Appliance Images
 
-### .NET Monitor 6
-
-The [.NET Monitor image](../README.monitor.md) includes .NET Monitor in addition to ASP.NET Core, with associated licenses and third party notice files. Note that the `--entrypoint` argument is specified to override the preset ENTRYPOINT directive in the .NET Monitor image.
-
-```console
-$ docker run --rm --entrypoint /bin/sh mcr.microsoft.com/dotnet/monitor:6 -c "find /usr/share/dotnet /app | grep LICENSE"
-/usr/share/dotnet/LICENSE.txt
-/app/LICENSE.TXT
-$ docker run --rm --entrypoint /bin/sh mcr.microsoft.com/dotnet/monitor:6 -c "find /usr/share/dotnet /app | grep -i third"
-/usr/share/dotnet/ThirdPartyNotices.txt
-/usr/share/dotnet/shared/Microsoft.AspNetCore.App/6.0.35/THIRD-PARTY-NOTICES.txt
-/app/THIRD-PARTY-NOTICES.TXT
-```
-
-### .NET Monitor 8+
+### .NET Monitor
 
 The [.NET Monitor image](../README.monitor.md) includes .NET Monitor in addition to ASP.NET Core, with associated licenses and third party notice files. Starting with .NET Monitor 8, the image is based on the distroless ASP.NET Core image; using the instructions from [Distroless Images](#distroless-images) is necessary to gather the licence and notice file paths.
 
