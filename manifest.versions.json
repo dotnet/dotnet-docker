@@ -71,9 +71,9 @@
     "aspnet-composite|9.0|linux-musl|arm|sha": "f613e4aabdeaaffac15dc2c17c5695d97245cc63dad437bb03a3fd0d8d991028e1f807f2a567ae48b6528d98961349cbbe4fd1bab73777bf3f928a83095a0cea",
     "aspnet-composite|9.0|linux-musl|arm64|sha": "f9ba70f21fe32c430a87fd346ea51ba9b187ef2d3ad19cb7aa4a2286ac69ff18f4e87e1d60f246fb6ae020687e20e67b6355b0d60ec9ebc01aae038062bcc04c",
 
-    "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/v1.0.0/chisel_v1.0.0_linux_amd64.tar.gz",
-    "chisel|latest|arm|url": "https://github.com/canonical/chisel/releases/download/v1.0.0/chisel_v1.0.0_linux_arm.tar.gz",
-    "chisel|latest|arm64|url": "https://github.com/canonical/chisel/releases/download/v1.0.0/chisel_v1.0.0_linux_arm64.tar.gz",
+    "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_amd64.tar.gz",
+    "chisel|latest|arm|url": "https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_arm.tar.gz",
+    "chisel|latest|arm64|url": "https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_arm64.tar.gz",
     "chisel|9.0|x64|url": "$(chisel|latest|x64|url)",
     "chisel|9.0|arm|url": "$(chisel|latest|arm|url)",
     "chisel|9.0|arm64|url": "$(chisel|latest|arm64|url)",
@@ -84,9 +84,9 @@
     "chisel|6.0|arm|url": "$(chisel|latest|arm|url)",
     "chisel|6.0|arm64|url": "$(chisel|latest|arm64|url)",
 
-    "chisel|latest|x64|sha": "cd3ad95ad5e8b77377a016c292bf7dd26c5e7c5229bda5911405c1dccb834cab9758443124c96f640f8b0555c7fe6899b1402ff9a27a6771f12ea2f96c9c4943",
-    "chisel|latest|arm|sha": "258abe691c64f391a585d83dc994f40918359d3fb5f4fa60b25279c30282fc878852a46b5d7410db65fb73cce7cdb35a9bcf23ad0fb1212d891b1103deeca314",
-    "chisel|latest|arm64|sha": "ee7c3b757f65b51a082cf9b8485ee110f357e14ef213ed254b6cc246263a2b59e9a5ab5c10ef9a35b10bd8eabd05bb1619d32d5cc04aaeb74e374c0cc38448c8",
+    "chisel|latest|x64|sha": "5c863d41e9b0829a3af57de444bdb7d1638612e5caa0a289511b5f46ec5728795152381257d30bbff012bcb5c533b6cfbc17b17b93569fd5c0e194ce2c6e0fc5",
+    "chisel|latest|arm|sha": "3e11d2b21eecb1e1ef4414b3aabfdf229f45d1b15f7ebf59fb387db15e055ddbe24dea0c6791219234fecbd27f78e95cb1c499eefcf63742073783ce0d3c2066",
+    "chisel|latest|arm64|sha": "0793124925000cc0103bce1b0f689520866565ba6d0841a3f5dcf4c1c6ffd753d059d9aa068d901f9422b4742fa51c9aa8e848f0751257329a35d99435d5cc1b",
     "chisel|9.0|x64|sha": "$(chisel|latest|x64|sha)",
     "chisel|9.0|arm|sha": "$(chisel|latest|arm|sha)",
     "chisel|9.0|arm64|sha": "$(chisel|latest|arm64|sha)",
@@ -128,8 +128,8 @@
     "libssl|jammy": "3",
     "libssl|noble": "3t64",
 
-    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.47.0.windows.2/MinGit-2.47.0.2-64-bit.zip",
-    "mingit|latest|x64|sha": "c4a5d3a2adda98b25fe59349733fca56b3843360b962dba5535282a9d8120b31",
+    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.47.0.windows.1/MinGit-2.47.0-64-bit.zip",
+    "mingit|latest|x64|sha": "6b175d4675bfa7014ba649e3c0976da2a281d89bd9a096f1f41437f9995497a8",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
@@ -301,6 +301,6 @@
     "sdk|9.0|win|x64|sha": "e3caf12195845ffec887771e1c3aca62318da9564438070570c8abba7ade27ef938aa4337a16b14c17414c9df50aa7576b087a2e6771669f5cffc7acf175b92d",
 
     "syft|repo": "anchore/syft",
-    "syft|tag": "v1.14.2"
+    "syft|tag": "v1.12.2"
   }
 }
