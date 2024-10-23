@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.47.0.windows.1/MinGit-2.47.0-64-bit.zip; `
-        $mingit_sha256 = '6b175d4675bfa7014ba649e3c0976da2a281d89bd9a096f1f41437f9995497a8'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.47.0.windows.2/MinGit-2.47.0.2-64-bit.zip; `
+        $mingit_sha256 = 'c4a5d3a2adda98b25fe59349733fca56b3843360b962dba5535282a9d8120b31'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -25,9 +25,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '9.0.100-rtm.24516.6'; `
+        $sdk_version = '9.0.100-rtm.24523.3'; `
         Invoke-WebRequest -OutFile dotnet.zip https://dotnetbuilds.azureedge.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '7ce082ad44dbb3b58bc70ea0cc8eba627c89236a958877a163cd7f9eb4904a87f74a5fd3c9ebd7ca437e9915d07b9aea4d8992326b949c48370317f98f980ca1'; `
+        $dotnet_sha512 = '03d40fd48150b189f9f0d4493ee5259f5cdeb6d79fb730d6a58d43f063a6260f9bf4d97992437adf4498dd7a69718c5129c349a024b42af67056687665d8d746'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -64,7 +64,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=9.0.100-rtm.24516.6 `
+    DOTNET_SDK_VERSION=9.0.100-rtm.24523.3 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
