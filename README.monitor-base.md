@@ -9,9 +9,9 @@
 
 ## About
 
-This image contains the .NET Monitor Base installation.
+This image contains the base installation of .NET Monitor, a diagnostic tool for capturing diagnostic artifacts (such as dumps and traces) in an operator-driven or automated manner. This tool is an ASP.NET application that hosts a web API for inspecting .NET processes and collecting diagnostic artifacts.
 
-Use this image as a base image for building a .NET Monitor image with extensions.
+This image only provides the base functionality of the .NET Monitor tool; it is only meant to be used as a base image upon which .NET Monitor extensions are installed. If you are looking for the full feature set that is provided by the .NET Monitor global tool (including the egress capabilities), see the [dotnet/monitor](./README.monitor.md) image.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
@@ -25,8 +25,6 @@ Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/
 ## Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
-
-### Building a Custom .NET Monitor Image
 
 The following Dockerfiles demonstrate how you can use this base image to build a .NET Monitor image with a custom set of extensions.
 
