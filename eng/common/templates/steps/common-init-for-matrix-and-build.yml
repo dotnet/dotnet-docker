@@ -3,6 +3,7 @@ parameters:
   internalVersionsRepoRef: null
   publicVersionsRepoRef: null
   versionsRepoPath: versions
+  isInternalServicingValidation: false
 
 steps:
 - checkout: self

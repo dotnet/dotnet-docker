@@ -75,11 +75,21 @@ if ($SdkVersion) {
 }
 
 if ($AspnetVersion) {
-    $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "aspnet-runtime-targeting-pack=$AspnetVersion", "--product-version", "aspnet-composite=$AspnetVersion")
+    $updateDepsArgs += @("--product-version", "aspnet=$AspnetVersion", "--product-version", "aspnet-composite=$AspnetVersion")
+
+    if (!$InternalBaseUrl) {
+        # rpm packages are only needed for 6.0 which isn't supported for internal testing scenarios
+        $updateDepsArgs += @("aspnet-runtime-targeting-pack=$AspnetVersion")
+    }
 }
 
 if ($RuntimeVersion) {
-    $updateDepsArgs += @("--product-version", "runtime=$RuntimeVersion", "--product-version", "runtime-apphost-pack=$RuntimeVersion", "--product-version", "runtime-targeting-pack=$RuntimeVersion", "--product-version", "runtime-host=$RuntimeVersion", "--product-version", "runtime-hostfxr=$RuntimeVersion", "--product-version", "netstandard-targeting-pack-2.1.0", "--product-version", "runtime-deps-cm.1=$RuntimeVersion", "--product-version", "runtime-deps-cm.2=$RuntimeVersion")
+    $updateDepsArgs += @("--product-version", "runtime=$RuntimeVersion")
+
+    if (!$InternalBaseUrl) {
+        # rpm packages are only needed for 6.0 which isn't supported for internal testing scenarios
+        $updateDepsArgs += @("--product-version", "runtime-apphost-pack=$RuntimeVersion", "--product-version", "runtime-targeting-pack=$RuntimeVersion", "--product-version", "runtime-host=$RuntimeVersion", "--product-version", "runtime-hostfxr=$RuntimeVersion", "--product-version", "netstandard-targeting-pack-2.1.0", "--product-version", "runtime-deps-cm.1=$RuntimeVersion", "--product-version", "runtime-deps-cm.2=$RuntimeVersion")
+    }
 }
 
 if ($MonitorVersion) {

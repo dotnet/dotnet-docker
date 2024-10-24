@@ -4,6 +4,8 @@ parameters:
   # Comma-delimited list of SDK versions to target (overrides the use of channel var to determine latest version)
   sdkVersions: ""
 
+  buildId: ""
+
 steps:
 - powershell: |
     if ("${{ parameters.sdkVersions }}" -ne "") {
@@ -11,9 +13,14 @@ steps:
         SdkVersions = "${{ parameters.sdkVersions }}" -split ","
       }
     }
-    else {
+    elseif ("${{ parameters.useInternalBuild }}" -eq "false") {
       $args = @{
         Channel = "$(channel)"
+      }
+    }
+    else {
+      $args = @{
+        BuildId = "${{ parameters.buildId }}"
       }
     }
 
@@ -44,6 +51,7 @@ steps:
 
       if ("${{ parameters.useInternalBuild }}" -eq "true") {
         $args["InternalAccessToken"] = '$(System.AccessToken)'
+        $args["InternalBaseUrl"] = '"$(internalBaseUrl)"'
       } else {
         $args["ReleaseState"] = $(Get-ProductReleaseState)
       }
