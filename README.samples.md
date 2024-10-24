@@ -95,19 +95,6 @@ dotnetapp-chiseled-8.0-amd64, dotnetapp-chiseled-amd64, dotnetapp-chiseled-8.0, 
 aspnetapp-8.0-alpine-amd64, aspnetapp-alpine-amd64, aspnetapp-8.0, aspnetapp | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.alpine) | Alpine
 aspnetapp-chiseled-8.0-amd64, aspnetapp-chiseled-amd64, aspnetapp-chiseled-8.0, aspnetapp-chiseled | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.chiseled) | Ubuntu
 
-### Linux arm32 Tags
-
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-dotnetapp-9.0-alpine-arm32v7, dotnetapp-9.0 | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-9.0-arm32v7, dotnetapp-chiseled-9.0 | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
-aspnetapp-9.0-alpine-arm32v7, aspnetapp-9.0 | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
-aspnetapp-chiseled-9.0-arm32v7, aspnetapp-chiseled-9.0 | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
-dotnetapp-8.0-alpine-arm32v7, dotnetapp-alpine-arm32v7, dotnetapp-8.0, dotnetapp, latest | [Dockerfile](samples/8.0/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-8.0-arm32v7, dotnetapp-chiseled-arm32v7, dotnetapp-chiseled-8.0, dotnetapp-chiseled | [Dockerfile](samples/8.0/dotnetapp/Dockerfile.chiseled) | Ubuntu
-aspnetapp-8.0-alpine-arm32v7, aspnetapp-alpine-arm32v7, aspnetapp-8.0, aspnetapp | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.alpine) | Alpine
-aspnetapp-chiseled-8.0-arm32v7, aspnetapp-chiseled-arm32v7, aspnetapp-chiseled-8.0, aspnetapp-chiseled | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.chiseled) | Ubuntu
-
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
@@ -120,6 +107,19 @@ dotnetapp-8.0-alpine-arm64v8, dotnetapp-alpine-arm64v8, dotnetapp-8.0, dotnetapp
 dotnetapp-chiseled-8.0-arm64v8, dotnetapp-chiseled-arm64v8, dotnetapp-chiseled-8.0, dotnetapp-chiseled | [Dockerfile](samples/8.0/dotnetapp/Dockerfile.chiseled) | Ubuntu
 aspnetapp-8.0-alpine-arm64v8, aspnetapp-alpine-arm64v8, aspnetapp-8.0, aspnetapp | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.alpine) | Alpine
 aspnetapp-chiseled-8.0-arm64v8, aspnetapp-chiseled-arm64v8, aspnetapp-chiseled-8.0, aspnetapp-chiseled | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.chiseled) | Ubuntu
+
+### Linux arm32 Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+dotnetapp-9.0-alpine-arm32v7, dotnetapp-9.0 | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-9.0-arm32v7, dotnetapp-chiseled-9.0 | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
+aspnetapp-9.0-alpine-arm32v7, aspnetapp-9.0 | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
+aspnetapp-chiseled-9.0-arm32v7, aspnetapp-chiseled-9.0 | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
+dotnetapp-8.0-alpine-arm32v7, dotnetapp-alpine-arm32v7, dotnetapp-8.0, dotnetapp, latest | [Dockerfile](samples/8.0/dotnetapp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-8.0-arm32v7, dotnetapp-chiseled-arm32v7, dotnetapp-chiseled-8.0, dotnetapp-chiseled | [Dockerfile](samples/8.0/dotnetapp/Dockerfile.chiseled) | Ubuntu
+aspnetapp-8.0-alpine-arm32v7, aspnetapp-alpine-arm32v7, aspnetapp-8.0, aspnetapp | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.alpine) | Alpine
+aspnetapp-chiseled-8.0-arm32v7, aspnetapp-chiseled-arm32v7, aspnetapp-chiseled-8.0, aspnetapp-chiseled | [Dockerfile](samples/8.0/aspnetapp/Dockerfile.chiseled) | Ubuntu
 
 ### Nano Server 2022 amd64 Tags
 
