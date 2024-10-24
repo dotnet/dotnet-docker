@@ -54,6 +54,6 @@ else {
 }
 
 # See https://github.com/NuGet/NuGet.Client/pull/4259
-$Env:NUGET_EXPERIMENTAL_CHAIN_BUILD_RETRY_POLICY = "3,1000"
+$Env:NUGET_EXPERIMENTAL_CHAIN_BUILD_RETRY_POLICY = "6,1500"
 
 if ($InstallFailed) { throw "Failed to install the .NET Core SDK" }
