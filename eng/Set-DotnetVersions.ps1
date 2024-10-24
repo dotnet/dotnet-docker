@@ -79,7 +79,7 @@ if ($AspnetVersion) {
 
     if (!$InternalBaseUrl) {
         # rpm packages are only needed for 6.0 which isn't supported for internal testing scenarios
-        $updateDepsArgs += @("aspnet-runtime-targeting-pack=$AspnetVersion")
+        $updateDepsArgs += @("--product-version", "aspnet-runtime-targeting-pack=$AspnetVersion")
     }
 }
 
