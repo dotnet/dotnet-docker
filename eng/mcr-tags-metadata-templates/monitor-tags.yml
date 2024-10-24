@@ -1,22 +1,9 @@
 $(McrTagsYmlRepo:monitor)
 $(McrTagsYmlTagGroup:9.0)
-$(McrTagsYmlTagGroup:9)
-$(McrTagsYmlTagGroup:8.1-preview-ubuntu-chiseled-amd64)
-    customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:8.1-preview-ubuntu-chiseled-arm64v8)
-    customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:8.1-preview-cbl-mariner-distroless-amd64)
-    customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:8.1-preview-cbl-mariner-distroless-arm64v8)
-    customSubTableTitle: .NET Monitor Preview Tags
-$(McrTagsYmlTagGroup:8.0.5-ubuntu-chiseled)
-$(McrTagsYmlTagGroup:8.0.5-cbl-mariner-distroless)
+$(McrTagsYmlTagGroup:8.1-preview-ubuntu-chiseled|.NET Monitor Preview Tags)
+$(McrTagsYmlTagGroup:8.1-preview-cbl-mariner-distroless|.NET Monitor Preview Tags)
 $(McrTagsYmlTagGroup:8.0-ubuntu-chiseled)
 $(McrTagsYmlTagGroup:8.0-cbl-mariner-distroless)
-$(McrTagsYmlTagGroup:6.3.9-alpine)
-$(McrTagsYmlTagGroup:6.3.9-ubuntu-chiseled)
-$(McrTagsYmlTagGroup:6.3.9-cbl-mariner)
-$(McrTagsYmlTagGroup:6.3.9-cbl-mariner-distroless)
 $(McrTagsYmlTagGroup:6.3-alpine)
 $(McrTagsYmlTagGroup:6.3-ubuntu-chiseled)
 $(McrTagsYmlTagGroup:6.3-cbl-mariner)
