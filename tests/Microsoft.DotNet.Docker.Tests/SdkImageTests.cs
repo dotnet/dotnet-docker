@@ -318,16 +318,21 @@ namespace Microsoft.DotNet.Docker.Tests
         private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
         {
             string sdkUrl = GetSdkUrl(imageData);
+            OutputHelper.WriteLine("Downloading SDK archive: " + sdkUrl);
 
             if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> files))
             {
                 string sdkFile = Path.GetTempFileName();
 
                 using HttpClient httpClient = new();
-                httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "Basic",
-                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
-                        Config.InternalAccessToken))));
+
+                if (Config.IsInternal)
+                {
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                        "Basic",
+                        Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
+                            Config.InternalAccessToken))));
+                }
 
                 await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
 
