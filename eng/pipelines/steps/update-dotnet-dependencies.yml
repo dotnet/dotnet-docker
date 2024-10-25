@@ -64,11 +64,10 @@ steps:
 - powershell: |
     Import-Module -force $(engPath)/DependencyManagement.psm1
 
-    $branchPrefix = ""
+    $targetBranch = $(Get-Branch)
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
-      $branchPrefix = "internal/release/"
+      $targetBranch = "staging-${{ parameters.buildId }}-pipeline-$(Build.BuildNumber)"
     }
-    $targetBranch = $branchPrefix + $(Get-Branch)
 
     $customArgsArray = @()
     $index=0

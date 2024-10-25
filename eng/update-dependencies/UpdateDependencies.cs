@@ -178,7 +178,7 @@ namespace Dotnet.Docker
             {
                 // Push the commit to AzDO
                 string username = Options.Email.Substring(0, Options.Email.IndexOf('@'));
-                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"testing/{FormatBranchName(Options.TargetBranch)}");
+                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"testing/{FormatBranchName(Options.DockerfileVersion)}");
                 string pushRefSpec = $@"refs/heads/{remoteBranch}";
 
                 Trace.WriteLine($"Pushing to {remoteBranch}");
