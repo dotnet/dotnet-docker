@@ -122,9 +122,9 @@ Tags | Dockerfile | OS Version
 6.0.35-jammy-amd64, 6.0-jammy-amd64, 6.0.35-jammy, 6.0-jammy | [Dockerfile](src/aspnet/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 6.0.35-jammy-chiseled-amd64, 6.0-jammy-chiseled-amd64, 6.0.35-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](src/aspnet/6.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 6.0.35-jammy-chiseled-extra-amd64, 6.0-jammy-chiseled-extra-amd64, 6.0.35-jammy-chiseled-extra, 6.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/6.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
+6.0.35-focal-amd64, 6.0-focal-amd64, 6.0.35-focal, 6.0-focal | [Dockerfile](src/aspnet/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 6.0.35-cbl-mariner2.0-amd64, 6.0-cbl-mariner2.0-amd64, 6.0.35-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](src/aspnet/6.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 6.0.35-cbl-mariner2.0-distroless-amd64, 6.0-cbl-mariner2.0-distroless-amd64, 6.0.35-cbl-mariner2.0-distroless, 6.0-cbl-mariner2.0-distroless | [Dockerfile](src/aspnet/6.0/cbl-mariner2.0-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
-6.0.35-focal-amd64, 6.0-focal-amd64, 6.0.35-focal, 6.0-focal | [Dockerfile](src/aspnet/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ### Linux arm64 Tags
 
