@@ -132,7 +132,10 @@ namespace Dotnet.Docker
         {
             string commitMessage = $"[{Options.TargetBranch}] Update dependencies from {Options.VersionSourceName}";
 
-            string branchSuffix = FormatBranchName($"UpdateDependencies-{Options.TargetBranch}-From-{Options.VersionSourceName}");
+            string branchSuffix = Options.IsInternal
+                ? Options.TargetBranch
+                : FormatBranchName($"UpdateDependencies-{Options.TargetBranch}-From-{Options.VersionSourceName}");
+
             PullRequestOptions prOptions = new()
             {
                 BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
@@ -178,7 +181,7 @@ namespace Dotnet.Docker
             {
                 // Push the commit to AzDO
                 string username = Options.Email.Substring(0, Options.Email.IndexOf('@'));
-                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"testing/{FormatBranchName(Options.DockerfileVersion)}");
+                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"testing/{Options.DockerfileVersion}-internal");
                 string pushRefSpec = $@"refs/heads/{remoteBranch}";
 
                 Trace.WriteLine($"Pushing to {remoteBranch}");
