@@ -1,7 +1,7 @@
 using System.Globalization;
 using static System.Console;
 
-string envVarName = "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT";
+const string envVarName = "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT";
 string envVarValue = Environment.GetEnvironmentVariable(envVarName) ?? "null";
 bool invariantModeEnvVarSetting = envVarValue == "true" || envVarValue == "1";
 bool invariantModeEnabled = IsInvariantModeEnabled();
@@ -20,6 +20,10 @@ try
     WriteLine($"The following should {(invariantModeEnabled ? "" : "not ")}produce an exception:");
     TestGlobalizationFunctionality();
     TestTimeZoneFunctionality();
+    if (invariantModeEnabled)
+    {
+        throw new Exception("Expected an exception when testing globalization functionality but one did not occur.")
+    }
 }
 catch (CultureNotFoundException)
 {
