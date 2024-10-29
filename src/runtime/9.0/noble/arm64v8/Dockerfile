@@ -5,7 +5,7 @@ FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=9.0.0-rtm.24516.10 \
-    && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+    && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-9.0.0-linux-arm64.tar.gz \
     && dotnet_sha512='688169a1384ba39d6a6fec2b03cf9c9a03c691dc5588f918bcaebadf496d6f5d19b53fcbe9e739d0c8950ba7b022ebc0026b0a2c1c2a527b9a3ee7d904f5dbbf' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
