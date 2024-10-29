@@ -5,7 +5,6 @@
 using System;
 using System.IO;
 using System.Threading.Tasks;
-using Xunit;
 using FluentAssertions;
 
 namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
@@ -14,20 +13,20 @@ namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 public sealed class GlobalizationScenario : ITestScenario, IDisposable
 {
     private const string Dockerfile = """
-    ARG sdk_image
-    ARG runtime_image
+        ARG sdk_image
+        ARG runtime_image
 
-    FROM ${sdk_image} AS sdk
-    RUN dotnet new console -n App -o /src --no-restore
-    WORKDIR /src
-    COPY Program.cs /src/Program.cs
-    RUN dotnet restore
-    RUN dotnet publish --no-restore -o /app
+        FROM ${sdk_image} AS sdk
+        RUN dotnet new console -n App -o /src --no-restore
+        WORKDIR /src
+        COPY Program.cs /src/Program.cs
+        RUN dotnet restore
+        RUN dotnet publish --no-restore -o /app
 
-    FROM ${runtime_image} AS runtime
-    COPY --from=sdk /app /app/
-    ENTRYPOINT ["/app/App"]
-    """;
+        FROM ${runtime_image} AS runtime
+        COPY --from=sdk /app /app/
+        ENTRYPOINT ["/app/App"]
+        """;
 
     private readonly TempFolderContext _tempFolderContext = FileHelper.UseTempFolder();
     private readonly ProductImageData _imageData;
