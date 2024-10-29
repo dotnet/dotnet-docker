@@ -46,6 +46,13 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyGlobalizationScenario(ProductImageData imageData)
         {
+            // Inclusion of tzdata and icu together was not consistent in .NET 6, so skip the test.
+            // Remove once .NET 6 is EOL.
+            if (imageData.Version.Major == 6)
+            {
+                return;
+            }
+
             using (GlobalizationScenario testScenario = new(imageData, ImageRepo, DockerHelper))
             {
                 await testScenario.ExecuteAsync();
