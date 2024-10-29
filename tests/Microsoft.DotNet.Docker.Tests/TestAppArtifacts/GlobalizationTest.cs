@@ -22,7 +22,7 @@ try
     TestTimeZoneFunctionality();
     if (invariantModeEnabled)
     {
-        throw new Exception("Expected an exception when testing globalization functionality but one did not occur.")
+        throw new Exception("Expected an exception when testing globalization functionality but one did not occur.");
     }
 }
 catch (CultureNotFoundException)
