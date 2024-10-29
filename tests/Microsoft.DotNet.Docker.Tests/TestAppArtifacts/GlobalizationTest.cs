@@ -1,33 +1,36 @@
 using System.Globalization;
 using static System.Console;
 
-string envVar = Environment.GetEnvironmentVariable("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT") ?? "null";
+string envVarName = "DOTNET_SYSTEM_GLOBALIZATION_INVARIANT";
+string envVarValue = Environment.GetEnvironmentVariable(envVarName) ?? "null";
+bool invariantModeEnvVarSetting = envVarValue == "true" || envVarValue == "1";
+bool invariantModeEnabled = IsInvariantModeEnabled();
 
-bool globalizationInvariantModeEnabled = IsGlobalizationInvariantModeEnabled();
-if (globalizationInvariantModeEnabled)
+string isEnabledString = $"Globalization invariant mode is {(invariantModeEnabled ? "enabled" : "disabled")}";
+WriteLine(isEnabledString);
+
+if (invariantModeEnabled != invariantModeEnvVarSetting)
 {
-    if (envVar != "true" && envVar != "1")
-    {
-        throw new Exception("Globalization invariant mode is enabled, but the environment variable is not set to true or 1.");
-    }
+    throw new Exception("Environment variable mis-match: " + isEnabledString
+        + $", but {envVarName} is set to `{envVarValue}`, which evaluates to {invariantModeEnvVarSetting}.");
+}
 
-    Console.WriteLine("Globalization invariant mode is enabled.");
-
-    try
-    {
-        TestGlobalizationFunctionality();
-        TestTimeZoneFunctionality();
-    }
-    catch (CultureNotFoundException)
+try
+{
+    WriteLine($"The following should {(invariantModeEnabled ? "" : "not ")}produce an exception:");
+    TestGlobalizationFunctionality();
+    TestTimeZoneFunctionality();
+}
+catch (CultureNotFoundException)
+{
+    if (invariantModeEnabled)
     {
         WriteLine("Successfully caught a CultureNotFoundException, invariant mode is working as expected.");
     }
-}
-else
-{
-    WriteLine("Globalization invariant mode is disabled. The following should not throw any exceptions:");
-    TestGlobalizationFunctionality();
-    TestTimeZoneFunctionality();
+    else
+    {
+        throw;
+    }
 }
 
 WriteLine("Globalization test succeeded");
@@ -50,7 +53,7 @@ void TestTimeZoneFunctionality()
 }
 
 // https://stackoverflow.com/a/75299176
-bool IsGlobalizationInvariantModeEnabled()
+bool IsInvariantModeEnabled()
 {
     try
     {
