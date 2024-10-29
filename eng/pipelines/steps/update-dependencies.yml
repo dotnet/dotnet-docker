@@ -1,7 +1,6 @@
 parameters:
   # The customArgsArray parameter is used to specify the configuration for multiple Dockerfile versions.
-  # This allows for a single PR to be generated for different internal .NET build versions.
-  # This is required in order to publish a single set of internal images when the PR is merged.
+  # This allows for a single branch to be generated for different internal .NET build versions.
   customArgsArray: ""
 
   useInternalBuild: false
@@ -25,7 +24,8 @@ steps:
     # how PowerShell treats a single item as a string instead of an array.
     $customArgsArray = @('${{ parameters.customArgsArray }}' | ConvertFrom-Json)
     foreach ($customArgs in $customArgsArray) {
-      # If this is the last iteration, include the credentials to cause a PR to be generated
+      # If this is the last iteration, include the credentials to cause a PR to be generated.
+      # For internal builds this will cause branch to be pushed to AzDO, but no PRs will be generated.
       if ($customArgs -eq $customArgsArray[-1]) {
         $customArgs += " $credArgs"
       }
