@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.DotNet.Docker.Tests.TestScenarios;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -39,6 +40,23 @@ namespace Microsoft.DotNet.Docker.Tests
             using ConsoleAppScenario testScenario =
                 new ConsoleAppScenario.TestProject(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
+        }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyGlobalizationScenario(ProductImageData imageData)
+        {
+            // Inclusion of tzdata and icu together was not consistent in .NET 6, so skip the test.
+            // Remove once .NET 6 is EOL.
+            if (imageData.Version.Major == 6)
+            {
+                return;
+            }
+
+            using (GlobalizationScenario testScenario = new(imageData, ImageRepo, DockerHelper))
+            {
+                await testScenario.ExecuteAsync();
+            }
         }
 
         [DotNetTheory]

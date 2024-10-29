@@ -91,6 +91,7 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_amd64
@@ -104,6 +105,7 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -122,6 +124,7 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -140,6 +143,7 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -158,6 +162,7 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -176,6 +181,7 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
@@ -194,12 +200,14 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
       publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: WindowsLtsc2016_amd64
@@ -213,6 +221,7 @@ stages:
           noCache: ${{ parameters.noCache }}
           internalVersionsRepoRef: ${{ parameters.internalVersionsRepoRef }}
           publicVersionsRepoRef: ${{ parameters.publicVersionsRepoRef }}
+          isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
       internalProjectName: ${{ parameters.internalProjectName }}

@@ -13,15 +13,7 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-      # Merge the internal release branch into the current branch but ignoring all those changes in the internal release branch
-      # This gives us a clean branch to apply updates to but also allows the PR to be merged conflict-free into the internal
-      # release branch.
-    - script: |
-        git config user.email "$(dotnetDockerBot.userName)"
-        git config user.name "$(dotnetDockerBot.email)"
-        git merge -s ours origin/internal/release/$(Build.SourceBranchName)
-      displayName: Configure Branch
     - template: steps/update-dotnet-dependencies.yml
       parameters:
         useInternalBuild: true
-        sdkVersions: $(sdkVersions)
+        buildId: $(buildId)
