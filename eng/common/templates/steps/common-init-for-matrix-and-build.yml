@@ -3,6 +3,7 @@ parameters:
   internalVersionsRepoRef: null
   publicVersionsRepoRef: null
   versionsRepoPath: versions
+  isInternalServicingValidation: false
 
 steps:
 - checkout: self
@@ -60,3 +61,14 @@ steps:
     echo "##vso[task.setvariable variable=versionsBasePath]$versionsBasePath"
     echo "##vso[task.setvariable variable=pipelineDisabledCache]$pipelineDisabledCache"
   displayName: Set Common Variables for Matrix and Build
+
+- ${{ if eq(parameters.noCache, false) }}:
+  # Special logic is needed to copy the tsaoptions.json file to a well known location for the 1ES PT.
+  # This template has multiple checkouts and AzDO doesn't have support for dynamically determining the
+  # default repo path therefore the 1es-official logic can't calculate the repo's tsa config file path.
+  - task: CopyFiles@2
+    displayName: Copy TSA Config
+    inputs:
+      SourceFolder: '$(Build.Repository.LocalPath)/$(buildRepoName)'
+      Contents: '.config/tsaoptions.json'
+      TargetFolder: '$(Build.SourcesDirectory)'
