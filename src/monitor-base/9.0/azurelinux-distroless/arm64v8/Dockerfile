@@ -11,8 +11,8 @@ RUN tdnf install -y \
 
 # Retrieve .NET Monitor Base
 RUN dotnet_monitor_version=9.0.0 \
-    && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/9.0.0-rtm.24520.4/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
-    && dotnet_monitor_base_sha512='7a28362648e895028042f36aef21d074f1cc7cce6e2cdffe62eac1b1151be44042ee3b70897e8d08b6ba6cfd3d1c80488e7db7c49709695dc4bdb5c64946bcef' \
+    && curl -fSL --output dotnet-monitor-base.tar.gz https://dotnetbuilds.azureedge.net/public/diagnostics/monitor/9.0.0-rtm.24528.3/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
+    && dotnet_monitor_base_sha512='374ae316b4a943c92544b7fe91077cbfbf21ed64aa48575b23ed20dec9887a55734aad5eb12ad5ca336e34d20fd77d23fcae7f08632866c26e63d0dd6861c503' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
@@ -20,7 +20,7 @@ RUN dotnet_monitor_version=9.0.0 \
 
 
 # .NET Monitor Base image
-FROM $REPO:9.0.0-rc.2-azurelinux3.0-distroless-arm64v8
+FROM $REPO:9.0.0-azurelinux3.0-distroless-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
