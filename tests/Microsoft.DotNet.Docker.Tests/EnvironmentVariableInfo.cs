@@ -3,7 +3,6 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -46,9 +45,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
                 else
                 {
-                    // If we're validating a product version environment variable for an internal build
+                    // If we're validating a product version environment variable for a stable build
                     // we need to trim off the "servicing" or "rtm" part of the version value.
-                    if (variable.IsProductVersion && Config.IsInternal)
+                    if (variable.IsProductVersion)
                     {
                         int servicingIndex = actualValue.IndexOf("-servicing.");
                         if (servicingIndex != -1)

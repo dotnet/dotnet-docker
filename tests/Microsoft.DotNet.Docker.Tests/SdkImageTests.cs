@@ -346,13 +346,29 @@ namespace Microsoft.DotNet.Docker.Tests
             return files;
         }
 
+        private static string GetSdkVersionFileLabel(string sdkBuildVersion, string dotnetVersion)
+        {
+            // This should be kept in sync with the template for computing the SDK version file:
+            // https://github.com/dotnet/dotnet-docker/blob/4f48d36a98187a6e350d54167ef5b568ccd3882f/eng/dockerfile-templates/sdk/Dockerfile.linux.install-sdk#L22-L31
+
+            bool isStableBranding = !sdkBuildVersion.Contains('-')
+                || sdkBuildVersion.Contains("-servicing")
+                || sdkBuildVersion.Contains("-rtm");
+
+            string sdkVersionFile = isStableBranding
+                ? Config.GetVariableValue($"sdk|{dotnetVersion}|product-version")
+                : sdkBuildVersion;
+
+            return sdkVersionFile;
+        }
+
         private string GetSdkUrl(ProductImageData imageData)
         {
             bool isInternal = Config.IsInternal;
             string sdkBuildVersion = Config.GetBuildVersion(ImageRepo, imageData.VersionString);
             string sdkFileVersionLabel = isInternal
-                    ? imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper)
-                    : sdkBuildVersion;
+                ? imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper)
+                : GetSdkVersionFileLabel(sdkBuildVersion, imageData.VersionString);
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
             if (imageData.SdkOS.StartsWith(OS.Alpine))
