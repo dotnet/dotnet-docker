@@ -22,7 +22,7 @@ body:
         ## Description
 
         Please provide a clear and concise description of the bug.
-      
+
   - type: textarea
     id: description
     attributes:
@@ -33,12 +33,10 @@ body:
   - type: input
     id: image
     attributes:
-      label: Which .NET image are you using?
-      description: Please specify the exact digest if possible; otherwise, provide the tag name.
+      label: Which .NET image(s) are you using?
+      description: Please specify the exact digest if possible; otherwise, provide the tag name
       placeholder: mcr.microsoft.com/dotnet/sdk:8.0@sha256:00ab6163f4c8fdf8ea427b1fa9d9d2312ff623d5810577ad73605a07ba67397a
-    validations:
-      required: true
-      
+
   - type: markdown
     attributes:
       value: |
@@ -46,16 +44,15 @@ body:
 
         Include minimal steps to reproduce the problem or point us to a simple repro project hosted in a GitHub repo.
         We may close this issue if:
-        
+
         * We are not able to repro the behavior you're reporting
         * The repro project you share with us is too complex
         * The repro is in a file attachment such as a zip file
-        
+
   - type: textarea
     id: steps-to-reproduce
     attributes:
       label: Steps to reproduce
-      placeholder:
 
   - type: markdown
     attributes:
@@ -64,7 +61,7 @@ body:
 
         Please include any other information that you think is helpful.
 
-        * What other did you find before opening this one?
+        * What other issues did you find before opening this one?
         * What error messages do you see?
         * When does this issue occur? Does it occur consistently?
         * Do you know of any workarounds?
@@ -81,14 +78,14 @@ body:
       label: Output of `docker version`
       description: Paste the output of `docker version` here.
       render: console
-      
+
   - type: textarea
     id: docker-info
     attributes:
       label: Output of `docker info`
       description: Paste the output of `docker info` here.
       render: console
-      
+
   - type: markdown
     attributes:
       value: Thanks for taking the time to report this!
