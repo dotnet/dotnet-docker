@@ -36,7 +36,11 @@
 {{ if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
-{{InsertTemplate("Dockerfile.envs", [ "is-composite-runtime": "true" ])}}
+{{InsertTemplate("Dockerfile.envs",
+    [
+        "is-composite-runtime": "true",
+        "is-internal": isInternal
+    ])}}
 
 # Install ASP.NET Composite Runtime
 {{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
@@ -82,7 +86,11 @@ RUN mkdir /dotnet-symlink \
 # ASP.NET Composite Image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs", [ "is-composite-runtime": "true" ])}}{{ if isDistroless:
+{{InsertTemplate("Dockerfile.envs",
+    [
+        "is-composite-runtime": "true",
+        "is-internal": isInternal
+    ])}}{{ if isDistroless:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 

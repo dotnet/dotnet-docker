@@ -97,7 +97,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # .NET SDK image
 }}FROM {{baseImageTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 [
