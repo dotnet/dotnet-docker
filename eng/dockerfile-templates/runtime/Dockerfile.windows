@@ -15,7 +15,7 @@
 }}FROM {{serverCoreBaseTag}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
-    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
+    {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal], "    ")}}
 
 # Install .NET Runtime
 {{InsertTemplate("Dockerfile.windows.install-runtime")}}
@@ -42,7 +42,7 @@ ARG ACCESSTOKEN
 FROM mcr.microsoft.com/windows/{{finalStageBaseRepo}}:{{OS_VERSION_NUMBER}}-amd64
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
-    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
+    {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal], "    ")}}
 
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\dotnet"])}}
 

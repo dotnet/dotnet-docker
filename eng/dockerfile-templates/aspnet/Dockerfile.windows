@@ -16,7 +16,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 }}FROM {{runtimeBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 {{InsertTemplate("Dockerfile.windows.install-aspnet")}}^else:
 {{
@@ -38,6 +38,6 @@ ARG ACCESSTOKEN
 # ASP.NET Core image
 FROM {{runtimeBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]}}

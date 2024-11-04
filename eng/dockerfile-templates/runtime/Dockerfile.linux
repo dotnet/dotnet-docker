@@ -41,7 +41,7 @@ _ SINGLE STAGE
 {{if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 # Install .NET Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
@@ -86,7 +86,7 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 {{ if isInternal && isRpmInstall:
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
