@@ -1,5 +1,13 @@
 {{
+    _ ARGS:
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product ^
+
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
+    set sdkVersion to when(isStableBranding && ARGS["is-internal"],
+        VARIABLES[cat("sdk|", dotnetVersion, "|product-version")],
+        VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]) ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\")
@@ -11,7 +19,7 @@
     # Do not show first run text
     DOTNET_NOLOGO=true {{lineContinuation}}
     # SDK version
-    DOTNET_SDK_VERSION={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} {{lineContinuation}}{{if isAlpine:
+    DOTNET_SDK_VERSION={{sdkVersion}} {{lineContinuation}}{{if isAlpine:
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false {{lineContinuation}}}}
     # Enable correct mode for dotnet watch (only mode supported in a container)
