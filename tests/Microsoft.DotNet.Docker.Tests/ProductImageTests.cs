@@ -427,6 +427,16 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3",
                         "openssl",
                     ],
+                { OS: OS.NobleChiseled } =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        "gcc-14",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "openssl",
+                    ],
                 { OS: string os } when os.Contains(OS.Noble) =>
                     [
                         "ca-certificates",
