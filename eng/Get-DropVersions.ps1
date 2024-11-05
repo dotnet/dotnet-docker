@@ -170,12 +170,22 @@ function GetVersionInfoFromBuildId([string]$buildId) {
 
         $isStableVersion = Get-IsStableBranding -Version $config.Sdk_Builds[0]
 
-        return [PSCustomObject]@{
-            DockerfileVersion = $config.Channel
-            SdkVersion = @($config.Sdks | Sort-Object -Descending)[0]
-            RuntimeVersion = $config.Runtime
-            AspnetVersion = $config.Asp
-            StableBranding = $isStableVersion
+        if ($UseInternalBuild) {
+            return [PSCustomObject]@{
+                DockerfileVersion = $config.Channel
+                SdkVersion = @($config.Sdk_Builds | Sort-Object -Descending)[0]
+                RuntimeVersion = $config.Runtime_Build
+                AspnetVersion = $config.Asp_Build
+                StableBranding = $isStableVersion
+            }
+        } else {
+            return [PSCustomObject]@{
+                DockerfileVersion = $config.Channel
+                SdkVersion = @($config.Sdks | Sort-Object -Descending)[0]
+                RuntimeVersion = $config.Runtime
+                AspnetVersion = $config.Asp
+                StableBranding = $isStableVersion
+            }
         }
     }
     catch [System.Management.Automation.CommandNotFoundException] {
@@ -321,6 +331,10 @@ if ($UpdateDependencies)
         Write-Host "Runtime version: $($versionInfo.RuntimeVersion)"
         Write-Host "ASP.NET Core version: $($versionInfo.AspnetVersion)"
         Write-Host
+
+        if ($versionInfo.StableBranding) {
+            $additionalArgs += @{ UseStableBranding = $versionInfo.StableBranding }
+        }
 
         $setVersionsScript = Join-Path $PSScriptRoot "Set-DotnetVersions.ps1"
         & $setVersionsScript `

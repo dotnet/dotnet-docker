@@ -29,7 +29,7 @@ variables:
 - name: windowsServer2016PublicPoolImage
   value: Server2016-NESDockerBuilds
 - name: windowsServer2016InternalPoolImage
-  value: Server2016-NESDockerBuilds-PT
+  value: Server2016-NESDockerBuilds-1ESPT
 - name: windowsServer2016PoolName
   value: Docker-2016-${{ variables['System.TeamProject'] }}
 
