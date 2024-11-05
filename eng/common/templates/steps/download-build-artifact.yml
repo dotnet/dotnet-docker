@@ -2,6 +2,7 @@ parameters:
   targetPath: ""
   artifactName: ""
   condition: true
+  continueOnError: false
 
 steps:
 - task: DownloadPipelineArtifact@1
@@ -15,3 +16,4 @@ steps:
     artifactName: ${{ parameters.artifactName }}
   displayName: Download Build Artifact(s)
   condition: and(succeeded(), ${{ parameters.condition }})
+  continueOnError: ${{ parameters.continueOnError }}
