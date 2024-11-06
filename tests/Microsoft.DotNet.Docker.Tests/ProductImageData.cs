@@ -69,9 +69,9 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> pathComponents =
             [
                 "src",
-                GetImageRepoName(imageRepo) + GetVariantSuffix(),
+                GetImageRepoName(imageRepo),
                 Version.ToString(),
-                OSDir,
+                OSDir + GetVariantSuffix(),
                 GetArchLabel()
             ];
 
