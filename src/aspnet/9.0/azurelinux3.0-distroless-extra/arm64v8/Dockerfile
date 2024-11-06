@@ -20,7 +20,7 @@ RUN aspnetcore_version=9.0.0-rtm.24516.19 \
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.0-azurelinux3.0-distroless-arm64v8
+FROM $REPO:9.0.0-azurelinux3.0-distroless-extra-arm64v8
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=9.0.0-rtm.24516.19

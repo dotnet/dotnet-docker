@@ -7150,7 +7150,7 @@
                 "REPO": "$(Repo:runtime)"
               },
               "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-extra/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux.extra",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
@@ -7288,7 +7288,7 @@
                 "REPO": "$(Repo:runtime-deps)"
               },
               "dockerfile": "src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux-composite.extra",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
