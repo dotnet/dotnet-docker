@@ -5,8 +5,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Xunit;
 using Xunit.Abstractions;
+using Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -78,6 +80,21 @@ namespace Microsoft.DotNet.Docker.Tests
                 );
 
             Assert.Contains("Exit code: 127", ex.Message);
+        }
+
+        protected async Task VerifyGlobalizationScenarioBase(ProductImageData imageData)
+        {
+            // Inclusion of tzdata and icu together was not consistent in .NET 6, so skip the test.
+            // Remove once .NET 6 is EOL.
+            if (imageData.Version.Major == 6)
+            {
+                return;
+            }
+
+            using (GlobalizationScenario testScenario = new(imageData, ImageRepo, DockerHelper))
+            {
+                await testScenario.ExecuteAsync();
+            }
         }
     }
 }
