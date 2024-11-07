@@ -31,5 +31,22 @@ namespace Microsoft.DotNet.Docker.Tests
         public override string ToString() => _version.ToString();
 
         public string GetTagName() => ToString() + (IsPreview ? "-preview" : string.Empty);
+
+        public static string TrimBuildVersionForRelease(string buildVersion)
+        {
+            int servicingIndex = buildVersion.IndexOf("-servicing.");
+            if (servicingIndex != -1)
+            {
+                buildVersion = buildVersion.Substring(0, servicingIndex);
+            }
+
+            int rtmIndex = buildVersion.IndexOf("-rtm.");
+            if (rtmIndex != -1)
+            {
+                buildVersion = buildVersion.Substring(0, rtmIndex);
+            }
+
+            return buildVersion;
+        }
     }
 }
