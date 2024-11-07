@@ -1,9 +1,13 @@
 # .NET Aspire Dashboard
 
+> **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+>
+> See [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md) for images with official releases of [.NET](https://github.com/dotnet/core).
+
 ## Featured Tags
 
-* `8.2`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:8.2`
+* `9.0`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:8.2`
 
 ## About
 
@@ -94,13 +98,13 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 .NET:
 
 * [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
-* [dotnet/sdk](https://github.com/dotnet/dotnet-docker/blob/main/README.sdk.md): .NET SDK
-* [dotnet/aspnet](https://github.com/dotnet/dotnet-docker/blob/main/README.aspnet.md): ASP.NET Core Runtime
-* [dotnet/runtime](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime.md): .NET Runtime
-* [dotnet/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md): .NET Runtime Dependencies
-* [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md): .NET Monitor Tool
+* [dotnet/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): .NET Aspire Dashboard
+* [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor.md): .NET Monitor Tool (Preview)
 * [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
-* [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): .NET Aspire Dashboard (Preview)
 
 .NET Framework:
 
@@ -113,16 +117,18 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.2.1, 8.2, 8, latest | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.2.1, 8.2, 8 | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+9.0.0-preview.4, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.2.1, 8.2, 8, latest | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.2.1, 8.2, 8 | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+9.0.0-preview.4, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 <!--End of generated tags-->
 
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/aspire-dashboard/tags/list) for all supported and unsupported tags.*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list) for all supported and unsupported tags.*
 
 ## Support
 

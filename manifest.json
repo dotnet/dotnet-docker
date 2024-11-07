@@ -8550,8 +8550,7 @@
           "sharedTags": {
             "$(aspire-dashboard|8.2|fixed-tag)": {},
             "$(aspire-dashboard|8.2|minor-tag)": {},
-            "$(aspire-dashboard|8|major-tag)": {},
-            "latest": {}
+            "$(aspire-dashboard|8|major-tag)": {}
           },
           "platforms": [
             {
@@ -8591,6 +8590,59 @@
                   "docType": "Undocumented"
                 },
                 "$(aspire-dashboard|8|major-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(aspire-dashboard|9.0|product-version)",
+          "sharedTags": {
+            "$(aspire-dashboard|9.0|fixed-tag)": {},
+            "$(aspire-dashboard|9.0|minor-tag)": {},
+            "$(aspire-dashboard|9|major-tag)": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/aspire-dashboard/9.0/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(aspire-dashboard|9.0|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|9.0|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|9|major-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/aspire-dashboard/9.0/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(aspire-dashboard|9.0|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|9.0|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(aspire-dashboard|9|major-tag)-arm64v8": {
                   "docType": "Undocumented"
                 }
               },

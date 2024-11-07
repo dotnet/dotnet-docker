@@ -15,6 +15,16 @@
     "aspire-dashboard|8.2|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|8.2|base-url|nightly": "$(base-url|public|preview|nightly)",
 
+    "aspire-dashboard|9.0|build-version": "9.0.0-preview.5.24551.3",
+    "aspire-dashboard|9.0|product-version": "9.0.0-preview.5",
+    "aspire-dashboard|9.0|fixed-tag": "$(aspire-dashboard|9.0|product-version)",
+    "aspire-dashboard|9.0|minor-tag": "9.0",
+    "aspire-dashboard|9|major-tag": "9",
+    "aspire-dashboard|9.0|linux|x64|sha": "bb59357983a0db57ec2a126d06db6f94338f0b26cb23d5565e34c69b167f25ffa6c99f2961e1b127d27bacfc78d2892cee19bad400e8c0e6b71a27a9035684f2",
+    "aspire-dashboard|9.0|linux|arm64|sha": "644399ce94fa6719c43b7c2d0b719467d9747c003faa09cdf2f8a9fed6af85380f6f0930e16c283ff28aef3575f052b07efdc45f701c19328dcfb0dd73dc931a",
+    "aspire-dashboard|9.0|base-url|main": "$(base-url|public|preview|nightly)",
+    "aspire-dashboard|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
+
     "aspnet|6.0|build-version": "6.0.35",
     "aspnet|6.0|targeting-pack-version": "$(aspnet|6.0|build-version)",
     "aspnet|6.0|linux-musl|x64|sha": "50210ced90d17ea8370fbbcade3fbfb9be92690faea77d5516dc8ade4eee83408b2d37f812cca020087441d2f3146507086792cff17f7413308eb12fa4abd66d",
