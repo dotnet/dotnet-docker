@@ -28,18 +28,18 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static void Validate(
-            IEnumerable<EnvironmentVariableInfo> variables,
+            IEnumerable<EnvironmentVariableInfo> expectedVariables,
             string imageName,
             ImageData imageData,
             DockerHelper dockerHelper)
         {
-            IDictionary<string, string> actualValues = dockerHelper.GetEnvironmentVariables(imageName);
+            IDictionary<string, string> environmentVariables = dockerHelper.GetEnvironmentVariables(imageName);
 
             using (new AssertionScope())
             {
-                foreach (EnvironmentVariableInfo variable in variables)
+                foreach (EnvironmentVariableInfo variable in expectedVariables)
                 {
-                    string actualValue = actualValues.Should()
+                    string environmentVariable = environmentVariables.Should()
                         .ContainKey(
                             variable.Name,
                             because: $"{imageName} should have the environment variable '{variable.Name}' defined")
@@ -47,7 +47,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
                     if (variable.AllowAnyValue)
                     {
-                        actualValue.Should().NotBeNullOrEmpty(
+                        environmentVariable.Should().NotBeNullOrEmpty(
                             because: $"environment variable {variable.Name} is allowed to have any value");
                     }
                     else
@@ -56,10 +56,10 @@ namespace Microsoft.DotNet.Docker.Tests
                         // we need to trim off the "servicing" or "rtm" part of the version value.
                         if (variable.IsProductVersion && Config.IsInternal)
                         {
-                            actualValue = ImageVersion.TrimBuildVersionForRelease(actualValue);
+                            environmentVariable = ImageVersion.TrimBuildVersionForRelease(environmentVariable);
                         }
 
-                        actualValue.Should().Be(variable.ExpectedValue,
+                        environmentVariable.Should().Be(variable.ExpectedValue,
                             because: $"{imageName} should have the environment variable "
                                 + $"'{variable.Name}' set to '{variable.ExpectedValue}'");
                     }
