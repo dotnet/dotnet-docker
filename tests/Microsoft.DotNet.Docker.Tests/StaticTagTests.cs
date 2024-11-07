@@ -82,14 +82,17 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetTagTestObjects), TestType.Latest)]
         public void LatestTag_OnCorrectMajorVersion(Repo repo)
         {
-            Image latestImage = repo.Images
-                .Where(image => ManifestHelper.GetResolvedSharedTags(image).Contains(LatestTagValue))
+            IEnumerable<(Image Image, List<string> SharedTags)> imageDatas = repo.Images
+                .Select(image => (Image: image, SharedTags: ManifestHelper.GetResolvedSharedTags(image)));
+
+            (Image Image, List<string> SharedTags) latestImageData = imageDatas
+                .Where(imageData => imageData.SharedTags.Contains(LatestTagValue))
                 .First();
 
-            int expectedMajorVersion = GetExpectedMajorVersion(repo);
-            int actualMajorVersion = GetVersion(ManifestHelper.GetResolvedProductVersion(latestImage)).Major;
+            int expectedMajorVersion = GetExpectedLatestMajorVersion(repo);
 
-            actualMajorVersion.Should().Be(expectedMajorVersion, "expected latest tag to be on the latest major version");
+            latestImageData.SharedTags.Should().ContainMatch($"{expectedMajorVersion}.*",
+                because: $"latest tag should be on .NET {expectedMajorVersion} in repo {repo.Name}");
         }
 
         // - <Major.Minor.Patch>-<os>-<architecture>                Non-windows only for non-Appliance repos, old schema only for Appliance repos
@@ -617,7 +620,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return GetVersion(parsedOs);
         }
 
-        private static int GetExpectedMajorVersion(Repo repo)
+        private static int GetExpectedLatestMajorVersion(Repo repo)
         {
             IEnumerable<string> productVersions = ManifestHelper.GetResolvedProductVersions(repo);
 
@@ -629,19 +632,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 return GetVersion(productVersions.First()).Major;
             }
 
+            // In non-nightly branches, preview versions should not have the latest tag
+            if (!Config.IsNightlyRepo)
+            {
+                productVersions = productVersions
+                    .Where(version => !version.Contains("-preview") && !version.Contains("-rc"));
+            }
+
             return productVersions
-                .Where(version =>
-                {
-                    if (!Config.IsNightlyRepo)
-                    {
-                        // Use the latest GA version on the main branch
-                        // Assumes that non-GA versions have a hyphen in them
-                        // e.g. non GA: 5.0.0-preview.1, GA: 5.0.0
-                        return !version.Contains('-');
-                    }
-                    // Use the latest version on the nightly branch
-                    return true;
-                })
                 .Select(version => GetVersion(version).Major)
                 .Max();
         }
