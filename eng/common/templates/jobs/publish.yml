@@ -107,21 +107,22 @@ jobs:
   - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
     displayName: Create EOL Annotation Data Directory
   - script: >
-      $(runImageBuilderCmd) publishImageInfo
-      '$(imageInfoContainerDir)/image-info.json'
-      '$(gitHubVersionsRepoInfo.userName)'
-      '$(gitHubVersionsRepoInfo.email)'
-      '$(gitHubVersionsRepoInfo.accessToken)'
-      --git-owner '$(gitHubVersionsRepoInfo.org)'
-      --git-repo '$(gitHubVersionsRepoInfo.repo)'
-      --git-branch '$(gitHubVersionsRepoInfo.branch)'
-      --git-path '$(gitHubImageInfoVersionsPath)'
-      --image-info-orig-path '$(artifactsPath)/eol-annotation-data/image-info-old.json'
-      --image-info-update-path '$(artifactsPath)/eol-annotation-data/image-info-new.json'
-      $(dryRunArg)
-      $(imageBuilder.commonCmdArgs)
+      curl -fSL
+      --output $(imageInfoHostDir)/full-image-info-orig.json
+      https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/refs/heads/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-    displayName: Publish Image Info
+    displayName: Download Latest Image Info
+  - script: >
+      $(runImageBuilderCmd) mergeImageInfo
+      $(imageInfoContainerDir)
+      $(imageInfoContainerDir)/full-image-info-new.json
+      $(manifestVariables)
+      $(dryRunArg)
+      --manifest $(manifest)
+      --publish
+      --initial-image-info-path $(imageInfoContainerDir)/full-image-info-orig.json
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: Merge Image Info
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Ingest Kusto Image Info
@@ -148,8 +149,8 @@ jobs:
       args: >
         generateEolAnnotationData
         '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
-        '$(artifactsPath)/eol-annotation-data/image-info-old.json'
-        '$(artifactsPath)/eol-annotation-data/image-info-new.json'
+        '$(imageInfoContainerDir)/full-image-info-orig.json'
+        '$(imageInfoContainerDir)/full-image-info-new.json'
         '$(acr.server)'
         '$(publishRepoPrefix)'
         $(generateEolAnnotationDataExtraOptions)
@@ -166,6 +167,20 @@ jobs:
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
       dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
+  - script: >
+      $(runImageBuilderCmd) publishImageInfo
+      '$(imageInfoContainerDir)/full-image-info-new.json'
+      '$(gitHubVersionsRepoInfo.userName)'
+      '$(gitHubVersionsRepoInfo.email)'
+      '$(gitHubVersionsRepoInfo.accessToken)'
+      --git-owner '$(gitHubVersionsRepoInfo.org)'
+      --git-repo '$(gitHubVersionsRepoInfo.repo)'
+      --git-branch '$(gitHubVersionsRepoInfo.branch)'
+      --git-path '$(gitHubImageInfoVersionsPath)'
+      $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: Publish Image Info
   - script: >
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
