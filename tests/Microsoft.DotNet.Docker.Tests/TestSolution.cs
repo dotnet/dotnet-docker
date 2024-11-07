@@ -73,7 +73,6 @@ public class TestSolution : IDisposable
                     Path.Combine(solutionDir, "NuGet.config"));
             }
 
-            File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, nuGetConfigFileName), Path.Combine(solutionDir, "NuGet.config"));
             File.Copy(Path.Combine(DockerHelper.TestArtifactsDir, ".dockerignore"), Path.Combine(solutionDir, ".dockerignore"));
         }
         catch (Exception)
