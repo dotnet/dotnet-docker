@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -233,19 +233,22 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper, extraExcludePaths);
 
             string imageName = imageData.GetImage(imageRepo, dockerHelper, skipPull: true);
-
-            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName);
+            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, outputHelper);
         }
 
         internal static void ComparePackages(
             IEnumerable<string> expectedPackages,
             IEnumerable<string> actualPackages,
             bool isDistroless,
-            string imageName)
+            string imageName,
+            ITestOutputHelper outputHelper)
         {
+            outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
+
             // Verify we only include strictly necessary packages in distroless images
             if (isDistroless)
             {
+                outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
                 actualPackages.Should().BeEquivalentTo(expectedPackages,
                     because: $"image {imageName} is distroless");
                 return;
