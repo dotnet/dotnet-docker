@@ -141,6 +141,8 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
     public new class SelfContained(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
         : WebScenario(imageData, dockerHelper, outputHelper)
     {
+        protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime_Deps;
+
         protected override TestDockerfile Dockerfile =>
             TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.SelfContained);
     }
