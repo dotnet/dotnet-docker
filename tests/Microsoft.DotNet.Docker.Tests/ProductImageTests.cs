@@ -1,4 +1,4 @@
-// Licensed to the .NET Foundation under one or more agreements.
+﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -510,7 +510,12 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
+                { OS: OS.NobleChiseled } => new[]
+                    {
+                        "libicu74",
+                        "tzdata"
+                    },
+                { OS: OS.JammyChiseled } => new[]
                     {
                         "libicu70",
                         "tzdata"
