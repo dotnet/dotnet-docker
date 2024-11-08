@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
+using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -231,34 +232,28 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper, extraExcludePaths);
 
-            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, outputHelper);
+            string imageName = imageData.GetImage(imageRepo, dockerHelper, skipPull: true);
+
+            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName);
         }
 
         internal static void ComparePackages(
             IEnumerable<string> expectedPackages,
             IEnumerable<string> actualPackages,
             bool isDistroless,
-            ITestOutputHelper outputHelper)
+            string imageName)
         {
-            outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
-
             // Verify we only include strictly necessary packages in distroless images
             if (isDistroless)
             {
-                outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
-                Assert.Equal(expectedPackages, actualPackages);
+                actualPackages.Should().BeEquivalentTo(expectedPackages,
+                    because: $"image {imageName} is distroless");
                 return;
             }
 
             // Verify satisfy .NET dependencies on non-distroless images.
             // There will be additional packages from the distro.
-            IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
-            if (missingPackages.Any())
-            {
-                outputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
-            }
-
-            Assert.Empty(missingPackages);
+            expectedPackages.Should().BeSubsetOf(actualPackages, because: $"image {imageName} is not distroless");
         }
 
         internal static IEnumerable<string> GetInstalledPackages(
