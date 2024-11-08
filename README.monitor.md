@@ -50,7 +50,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2, 9.0, 9 | [Dockerfile](src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.0.0, 9.0, 9 | [Dockerfile](src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.0.5-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.5, 8.0, 8, latest | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.0.5-cbl-mariner-distroless, 8.0-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 6.3.9-alpine, 6.3-alpine, 6-alpine, 6.3.9, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.20
@@ -62,7 +62,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0-rc.2, 9.0, 9 | [Dockerfile](src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.0, 9.0, 9 | [Dockerfile](src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.5-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.5, 8.0, 8, latest | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.5-cbl-mariner-distroless, 8.0-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 6.3.9-alpine, 6.3-alpine, 6-alpine, 6.3.9, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.20
