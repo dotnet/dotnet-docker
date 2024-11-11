@@ -8024,8 +8024,7 @@
             "$(monitor|8|major-tag)-ubuntu-chiseled": {},
             "$(monitor|8.0|fixed-tag)": {},
             "$(monitor|8.0|minor-tag)": {},
-            "$(monitor|8|major-tag)": {},
-            "latest": {}
+            "$(monitor|8|major-tag)": {}
           },
           "platforms": [
             {
@@ -8105,7 +8104,8 @@
           "sharedTags": {
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
-            "$(monitor|9|major-tag)": {}
+            "$(monitor|9|major-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -8378,8 +8378,7 @@
             "$(monitor|8|major-tag)-ubuntu-chiseled": {},
             "$(monitor|8.0|fixed-tag)": {},
             "$(monitor|8.0|minor-tag)": {},
-            "$(monitor|8|major-tag)": {},
-            "latest": {}
+            "$(monitor|8|major-tag)": {}
           },
           "platforms": [
             {
@@ -8483,7 +8482,8 @@
           "sharedTags": {
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
-            "$(monitor|9|major-tag)": {}
+            "$(monitor|9|major-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
