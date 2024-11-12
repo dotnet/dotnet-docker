@@ -3,7 +3,8 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
-using Xunit;
+using FluentAssertions;
+using FluentAssertions.Execution;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
@@ -27,46 +28,44 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static void Validate(
-            IEnumerable<EnvironmentVariableInfo> variables,
+            IEnumerable<EnvironmentVariableInfo> expectedVariables,
             string imageName,
             ImageData imageData,
             DockerHelper dockerHelper)
         {
-            IDictionary<string, string> actualValues = dockerHelper.GetEnvironmentVariables(imageName);
+            IDictionary<string, string> environmentVariables = dockerHelper.GetEnvironmentVariables(imageName);
 
-            foreach (EnvironmentVariableInfo variable in variables)
+            using (new AssertionScope())
             {
-                bool isFound = actualValues.TryGetValue(variable.Name, out string actualValue);
-                Assert.True(isFound, $"Variable '{variable.Name}' is not defined in image '{imageName}'.");
+                foreach (EnvironmentVariableInfo variable in expectedVariables)
+                {
+                    string environmentVariable = environmentVariables.Should()
+                        .ContainKey(
+                            variable.Name,
+                            because: $"{imageName} should have the environment variable '{variable.Name}' defined")
+                        .WhoseValue;
 
-                if (variable.AllowAnyValue)
-                {
-                    Assert.NotEmpty(actualValue);
-                }
-                else
-                {
-                    // If we're validating a product version environment variable for a stable build
-                    // we need to trim off the "servicing" or "rtm" part of the version value.
-                    if (variable.IsProductVersion)
+                    if (variable.AllowAnyValue)
                     {
-                        int servicingIndex = actualValue.IndexOf("-servicing.");
-                        if (servicingIndex != -1)
-                        {
-                            actualValue = actualValue.Substring(0, servicingIndex);
-                        }
-                        else
-                        {
-                            int rtmIndex = actualValue.IndexOf("-rtm.");
-                            if (rtmIndex != -1)
-                            {
-                                actualValue = actualValue.Substring(0, rtmIndex);
-                            }
-                        }
+                        environmentVariable.Should().NotBeNullOrEmpty(
+                            because: $"environment variable {variable.Name} is allowed to have any value");
                     }
+                    else
+                    {
+                        // If we're validating a product version environment variable for a stable build
+                        // we need to trim off the "servicing" or "rtm" part of the version value.
+                        if (variable.IsProductVersion && Config.IsInternal)
+                        {
+                            environmentVariable = ImageVersion.TrimBuildVersionForRelease(environmentVariable);
+                        }
 
-                    Assert.Equal(variable.ExpectedValue, actualValue);
+                        environmentVariable.Should().Be(variable.ExpectedValue,
+                            because: $"{imageName} should have the environment variable "
+                                + $"'{variable.Name}' set to '{variable.ExpectedValue}'");
+                    }
                 }
             }
+
         }
     }
 }

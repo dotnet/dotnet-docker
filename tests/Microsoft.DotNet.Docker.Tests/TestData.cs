@@ -418,7 +418,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)
         {
             IEnumerable<string> osFilterPatterns = Config.OsNames
-                .Select(osName => Config.GetFilterRegexPattern(osName));
+                .Select(Config.GetFilterRegexPattern);
 
             return imageData
                 .Where(imageData => !osFilterPatterns.Any()
@@ -428,11 +428,19 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<ImageData> FilterImagesByPath(this IEnumerable<ProductImageData> imageData, DotNetImageRepo imageRepo)
         {
             IEnumerable<string> pathPatterns = Config.Paths
-                .Select(path => Config.GetFilterRegexPattern(path));
+                .Select(Config.GetFilterRegexPattern);
 
-            return imageData
-                .Where(imageData => !pathPatterns.Any()
-                    || pathPatterns.Any(pathPattern => Regex.IsMatch(imageData.GetDockerfilePath(imageRepo), pathPattern, RegexOptions.IgnoreCase)));
+            IEnumerable<ProductImageData> filteredImageData = imageData
+                .Where(imageData =>
+                {
+                    return !pathPatterns.Any() || pathPatterns.Any(pathPattern =>
+                        {
+                            string dockerfilePath = imageData.GetDockerfilePath(imageRepo);
+                            return Regex.IsMatch(dockerfilePath, pathPattern, RegexOptions.IgnoreCase);
+                        });
+                });
+
+            return filteredImageData;
         }
 
         public static IEnumerable<ProductImageData> FilterImagesBySupportedRepo(this IEnumerable<ProductImageData> imageData, DotNetImageRepo imageRepo)

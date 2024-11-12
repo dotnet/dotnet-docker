@@ -117,14 +117,12 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.2.1, 8.2, 8 | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 9.0.1-preview.1, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.2.1, 8.2, 8 | [Dockerfile](src/aspire-dashboard/8.2/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 9.0.1-preview.1, 9.0-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 <!--End of generated tags-->
 

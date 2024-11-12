@@ -23,7 +23,6 @@
     set url to cat(
         VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-win-x64.zip") ^
-
     _ The sdk-extract-groups arg is an array of maps. We want to reduce that to just a single array of formatted
         paths. The "for" keyword doesn't work here because we don't want to echo any output. Instead, we'll call
         the map function to enumerate the array. For each group in the array, it'll format the paths of the groups
