@@ -102,8 +102,8 @@
     "dotnet|9.0|product-version": "9.0.0",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0",
-    "dotnet|9.0|base-url|main": "$(base-url|public|preview|main)",
-    "dotnet|9.0|base-url|nightly": "$(base-url|public|preview|nightly)",
+    "dotnet|9.0|base-url|main": "$(base-url|public|maintenance|main)",
+    "dotnet|9.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
 
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,
