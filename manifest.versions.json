@@ -5,7 +5,7 @@
     "base-url|public|preview|main": "$(base-url|public|maintenance|main)",
     "base-url|public|preview|nightly": "https://dotnetbuilds.azureedge.net/public",
 
-    "aspire-dashboard|9.0|build-version": "9.0.0",
+    "aspire-dashboard|9.0|build-version": "9.0.0-preview.5.24551.3",
     "aspire-dashboard|9.0|product-version": "9.0.0",
     "aspire-dashboard|9.0|fixed-tag": "$(aspire-dashboard|9.0|product-version)",
     "aspire-dashboard|9.0|minor-tag": "9.0",
