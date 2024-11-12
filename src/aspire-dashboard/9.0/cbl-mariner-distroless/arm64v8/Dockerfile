@@ -9,9 +9,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve Aspire Dashboard
-RUN dotnet_aspire_version=8.2.1-preview.1.24473.4 \
+RUN dotnet_aspire_version=9.0.0-preview.5.24551.3 \
     && curl -fSL --output aspire_dashboard.zip https://dotnetbuilds.azureedge.net/public/aspire/$dotnet_aspire_version/aspire-dashboard-linux-arm64.zip \
-    && aspire_dashboard_sha512='c6d0a9da8e459dd64f24758b60cc8b587cbf1c1300188f924d28aea3ace483858b1bb1287782121067af00b9d5533a529a070e8b376f85f7775ffd03c4b193fd' \
+    && aspire_dashboard_sha512='644399ce94fa6719c43b7c2d0b719467d9747c003faa09cdf2f8a9fed6af85380f6f0930e16c283ff28aef3575f052b07efdc45f701c19328dcfb0dd73dc931a' \
     && echo "$aspire_dashboard_sha512  aspire_dashboard.zip" | sha512sum -c - \
     && mkdir -p /app \
     && unzip aspire_dashboard.zip -d /app \
@@ -28,8 +28,8 @@ ENV \
     # Unset ASPNETCORE_HTTP_PORTS from base image
     ASPNETCORE_HTTP_PORTS= \
     # Aspire Dashboard environment variables
-    ASPNETCORE_URLS=http://0.0.0.0:18888 \
-    DOTNET_DASHBOARD_OTLP_ENDPOINT_URL=http://0.0.0.0:18889 \
-    DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL=http://0.0.0.0:18890
+    ASPNETCORE_URLS=http://+:18888 \
+    DOTNET_DASHBOARD_OTLP_ENDPOINT_URL=http://+:18889 \
+    DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL=http://+:18890
 
 ENTRYPOINT [ "dotnet", "/app/Aspire.Dashboard.dll" ]
