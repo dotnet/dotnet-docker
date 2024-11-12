@@ -87,12 +87,12 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
             buildArgs.AddRange(customBuildArgs);
         }
 
-        const string NuGetFeedPasswordVar = "NuGetFeedPassword";
+        const string InternalAccessTokenVar = "InternalAccessToken";
 
-        if (!string.IsNullOrEmpty(Config.NuGetFeedPassword))
+        if (!string.IsNullOrEmpty(Config.InternalAccessToken))
         {
-            buildArgs.Add(NuGetFeedPasswordVar);
-            Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, Config.NuGetFeedPassword);
+            buildArgs.Add(InternalAccessTokenVar);
+            Environment.SetEnvironmentVariable(InternalAccessTokenVar, Config.InternalAccessToken);
         }
 
         try
@@ -107,9 +107,9 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         }
         finally
         {
-            if (!string.IsNullOrEmpty(Config.NuGetFeedPassword))
+            if (!string.IsNullOrEmpty(Config.InternalAccessToken))
             {
-                Environment.SetEnvironmentVariable(NuGetFeedPasswordVar, null);
+                Environment.SetEnvironmentVariable(InternalAccessTokenVar, null);
             }
         }
 

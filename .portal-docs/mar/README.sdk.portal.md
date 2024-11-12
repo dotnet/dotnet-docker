@@ -12,7 +12,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `9.0` (Release Candidate)
+* `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:8.0`
@@ -29,8 +29,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
 * [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): .NET Aspire Dashboard
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 * [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 

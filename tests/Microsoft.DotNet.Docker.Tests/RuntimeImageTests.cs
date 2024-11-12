@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.DotNet.Docker.Tests.TestScenarios;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -40,6 +41,11 @@ namespace Microsoft.DotNet.Docker.Tests
                 new ConsoleAppScenario.TestProject(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
         }
+
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyGlobalizationScenario(ProductImageData imageData) =>
+            await VerifyGlobalizationScenarioBase(imageData);
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]

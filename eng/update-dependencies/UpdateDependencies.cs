@@ -132,7 +132,10 @@ namespace Dotnet.Docker
         {
             string commitMessage = $"[{Options.TargetBranch}] Update dependencies from {Options.VersionSourceName}";
 
-            string branchSuffix = FormatBranchName($"UpdateDependencies-{Options.TargetBranch}-From-{Options.VersionSourceName}");
+            string branchSuffix = Options.IsInternal
+                ? Options.TargetBranch
+                : FormatBranchName($"UpdateDependencies-{Options.TargetBranch}-From-{Options.VersionSourceName}");
+
             PullRequestOptions prOptions = new()
             {
                 BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
@@ -140,7 +143,7 @@ namespace Dotnet.Docker
 
             if (Options.IsInternal)
             {
-                await CreateAzdoPullRequest(commitMessage, prOptions);
+                await PushToAzdoBranch(commitMessage, prOptions);
             }
             else
             {
@@ -148,7 +151,7 @@ namespace Dotnet.Docker
             }
         }
 
-        private static async Task CreateAzdoPullRequest(string commitMessage, PullRequestOptions prOptions)
+        private static async Task PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
         {
             using Repository repo = new(RepoRoot);
 
@@ -178,51 +181,13 @@ namespace Dotnet.Docker
             {
                 // Push the commit to AzDO
                 string username = Options.Email.Substring(0, Options.Email.IndexOf('@'));
-                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"users/{username}/{FormatBranchName(Options.TargetBranch)}");
+                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"testing/{Options.DockerfileVersion}-internal");
                 string pushRefSpec = $@"refs/heads/{remoteBranch}";
 
                 Trace.WriteLine($"Pushing to {remoteBranch}");
 
                 // Force push
                 repo.Network.Push(remote, "+HEAD", pushRefSpec, pushOptions);
-
-                using VssConnection connection = new(
-                    new Uri($"https://dev.azure.com/{Options.AzdoOrganization}"),
-                    new VssBasicCredential(string.Empty, Options.Password));
-
-                GitHttpClient client = connection.GetClient<GitHttpClient>();
-
-                string targetBranch = $"refs/heads/{Options.TargetBranch}";
-                List<GitPullRequest> activePrs = await client.GetPullRequestsByProjectAsync(
-                    Options.AzdoProject,
-                    new GitPullRequestSearchCriteria
-                    {
-                        TargetRefName = targetBranch,
-                        Status = PullRequestStatus.Active
-                    });
-
-                string prTitle = commitMessage;
-
-                GitPullRequest? existingPr = activePrs
-                    .FirstOrDefault(pr => pr.Repository.Name == Options.AzdoRepo && pr.Title == prTitle);
-
-                if (existingPr is null)
-                {
-                    // Create the pull request
-                    GitPullRequest pullRequest = new()
-                    {
-                        Title = prTitle,
-                        SourceRefName = pushRefSpec,
-                        TargetRefName = targetBranch
-                    };
-
-                    GitPullRequest pr = await client.CreatePullRequestAsync(pullRequest, Options.AzdoProject, Options.AzdoRepo);
-                    Trace.WriteLine($"Created pull request: {GetGitPullRequestWebLink(pr)}");
-                }
-                else
-                {
-                    Trace.WriteLine($"Updated existing PR: {GetGitPullRequestWebLink(existingPr)}");
-                }
             }
             finally
             {
@@ -230,10 +195,6 @@ namespace Dotnet.Docker
                 repo.Network.Remotes.Remove(remote.Name);
             }
         }
-
-        // Normally the web link would be available within GitPullRequest.Links property but that's not populated
-        private static string GetGitPullRequestWebLink(GitPullRequest pr) =>
-            $"https://dev.azure.com/{Options.AzdoOrganization}/{Options.AzdoProject}/_git/{Options.AzdoRepo}/pullrequest/{pr.PullRequestId}";
 
         private static string GetUniqueName(IEnumerable<string> existingNames, string suggestedName, int? index = null)
         {
@@ -419,12 +380,15 @@ namespace Dotnet.Docker
             [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
+
                 ..minGitUpdaters,
+
+                // Disable additional updaters due to https://github.com/dotnet/dotnet-docker/issues/5990
                 // Chisel updaters must be listed before runtime version
                 // updaters because they check the manifest for whether the
                 // runtime versions are being updated or not
-                ..chiselUpdaters,
-                syftUpdater
+                // ..chiselUpdaters,
+                // syftUpdater
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)

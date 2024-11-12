@@ -29,13 +29,13 @@ param(
     [switch]
     $UpdateDependencies,
 
-    # SAS query string used to access the internal blob storage location of the build
-    [string]
-    $BlobStorageSasQueryString,
-
     # PAT used to access the versions repo in AzDO
     [string]
-    $AzdoVersionsRepoInfoAccessToken
+    $AzdoVersionsRepoInfoAccessToken,
+
+    # PAT used to access internal AzDO build artifacts
+    [string]
+    $InternalAccessToken
 )
 
 Import-Module -force $PSScriptRoot/DependencyManagement.psm1
@@ -94,7 +94,7 @@ function GetSdkVersionInfo([string]$sdkUrl) {
     }
 }
 
-function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [bool]$useStableBranding) {
+function ResolveSdkUrl([string]$sdkVersion, [bool]$useStableBranding) {
     if ($useStableBranding) {
         $sdkStableVersion = ($sdkVersion -split "-")[0]
     }
@@ -107,7 +107,7 @@ function ResolveSdkUrl([string]$sdkVersion, [string]$queryString, [bool]$useStab
     $containerVersion = $sdkVersion.Replace(".", "-")
 
     if ($UseInternalBuild) {
-        $sdkUrl = "https://dotnetstage.blob.core.windows.net/$containerVersion-internal/Sdk/$sdkVersion/$zipFile$queryString"
+        $sdkUrl = "https://dotnetstage.blob.core.windows.net/$containerVersion-internal/Sdk/$sdkVersion/$zipFile"
     }
     else {
         $sdkUrl = "https://dotnetbuilds.blob.core.windows.net/public/Sdk/$sdkVersion/$zipFile"
@@ -150,22 +150,42 @@ function GetDependencyVersion([string]$dependencyName, [xml]$versionDetails) {
 }
 
 function GetVersionInfoFromBuildId([string]$buildId) {
-    $configPath = Join-Path $tempDir "config.json"
+    $configFilename = "config.json"
+    $configPath = Join-Path $tempDir $configFilename
 
     try {
-        write-host here
-        az pipelines runs artifact download --organization https://dev.azure.com/dnceng/ --project internal --run-id $buildId --path $tempDir --artifact-name drop
+        New-Item -Path $tempDir -ItemType Directory -Force | Out-Null
+
+        $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$InternalAccessToken"))
+        $headers = @{
+            "Authorization" = "Basic $base64AccessToken"
+        }
+
+        $url = GetArtifactUrl 'drop'
+        $url = $url.Replace("content?format=zip", "content?format=file&subPath=%2F$configFilename")
+
+        Invoke-WebRequest -OutFile $configPath $url -Headers $headers
 
         $config = $(Get-Content -Path $configPath | Out-String) | ConvertFrom-Json
 
         $isStableVersion = Get-IsStableBranding -Version $config.Sdk_Builds[0]
 
-        return [PSCustomObject]@{
-            DockerfileVersion = $config.Channel
-            SdkVersion = @($config.Sdks | Sort-Object -Descending)[0]
-            RuntimeVersion = $config.Runtime
-            AspnetVersion = $config.Asp
-            StableBranding = $isStableVersion
+        if ($UseInternalBuild) {
+            return [PSCustomObject]@{
+                DockerfileVersion = $config.Channel
+                SdkVersion = @($config.Sdk_Builds | Sort-Object -Descending)[0]
+                RuntimeVersion = $config.Runtime_Build
+                AspnetVersion = $config.Asp_Build
+                StableBranding = $isStableVersion
+            }
+        } else {
+            return [PSCustomObject]@{
+                DockerfileVersion = $config.Channel
+                SdkVersion = @($config.Sdks | Sort-Object -Descending)[0]
+                RuntimeVersion = $config.Runtime
+                AspnetVersion = $config.Asp
+                StableBranding = $isStableVersion
+            }
         }
     }
     catch [System.Management.Automation.CommandNotFoundException] {
@@ -178,11 +198,54 @@ function GetVersionInfoFromBuildId([string]$buildId) {
     }
 }
 
+function GetArtifactUrl([string]$artifactName) {
+    $base64AccessToken = [System.Convert]::ToBase64String([System.Text.Encoding]::ASCII.GetBytes(":$InternalAccessToken"))
+    $headers = @{
+        "Authorization" = "Basic $base64AccessToken"
+    }
+
+    $artifactsUrl = "https://dev.azure.com/dnceng/internal/_apis/build/builds/$BuildId/artifacts?api-version=6.0"
+    $response = Invoke-RestMethod -Uri $artifactsUrl -Method Get -Headers $headers
+
+    $url = $null
+    foreach ($artifact in $response.value) {
+        if ($artifact.name -eq $artifactName) {
+            $url = $artifact.resource.downloadUrl
+            break
+        }
+    }
+
+    if ($url -eq $null) {
+        Write-Error "Artifact '$artifactName' was not found in build# $BuildId"
+        exit 1
+    }
+
+    return $url
+}
+
+function GetInternalBaseUrl() {
+    $shippingUrl = GetArtifactUrl 'shipping'
+
+    # Format artifact URL into base-url
+    return $shippingUrl.Replace("content?format=zip", "content?format=file&subPath=%2Fassets")
+}
+
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 Set-StrictMode -Version 2.0
 
-$tempDir = Join-Path ([System.IO.Path]::GetTempPath()) "dotnet-docker-get-dropversions" ([System.Guid]::NewGuid())
+$tempDir = Join-Path ([System.IO.Path]::GetTempPath()) -ChildPath "dotnet-docker-get-dropversions" | Join-Path -ChildPath ([System.Guid]::NewGuid())
+
+if ($BuildId) {
+    if (!$InternalAccessToken) {
+        $InternalAccessToken = az account get-access-token --query accessToken --output tsv
+        if ($LASTEXITCODE -ne 0) {
+            Write-Error "Failed to obtain access token using Azure CLI"
+            Write-Error "Please provide 'InternalAccessToken' parameter when using 'BuildId' option"
+            exit 1
+        }
+    }
+}
 
 if ($UseInternalBuild) {
     if ($Channel)
@@ -190,17 +253,16 @@ if ($UseInternalBuild) {
         $Channel = "internal/$Channel"
     }
 
-    $queryString = "$BlobStorageSasQueryString"
-}
-else {
-    $queryString = ""
+    if ($BuildId) {
+        $internalBaseUrl = GetInternalBaseUrl
+    }
 }
 
 $sdkVersionInfos = @()
 
 if ($Channel) {
     $sdkFile = "dotnet-sdk-win-x64.zip"
-    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile$queryString"
+    $akaMsUrl = "https://aka.ms/dotnet/$Channel/$sdkFile"
 
     $sdkUrl = Resolve-DotnetProductUrl $akaMsUrl
     $sdkVersionInfos += GetSdkVersionInfo $sdkUrl
@@ -209,7 +271,7 @@ if ($Channel) {
 foreach ($sdkVersion in $SdkVersions)
 {
     $useStableBranding = Get-IsStableBranding -Version $sdkVersion
-    $sdkUrl = ResolveSdkUrl $sdkVersion $queryString $useStableBranding
+    $sdkUrl = ResolveSdkUrl $sdkVersion $useStableBranding
     $sdkVersionInfo = GetSdkVersionInfo $sdkUrl
     $sdkVersionInfos += $sdkVersionInfo
 }
@@ -256,6 +318,13 @@ foreach ($sdkVersionInfo in $SdkVersionInfos) {
 
 if ($UpdateDependencies)
 {
+    $additionalArgs = @{}
+
+    if ($UseInternalBuild) {
+        $additionalArgs += @{ InternalBaseUrl = "$internalBaseUrl" }
+        $additionalArgs += @{ InternalAccessToken = "$InternalAccessToken" }
+    }
+
     foreach ($versionInfo in $versionInfos) {
         Write-Host "Dockerfile version: $($versionInfo.DockerfileVersion)"
         Write-Host "SDK version: $($versionInfo.SdkVersion)"
@@ -263,15 +332,21 @@ if ($UpdateDependencies)
         Write-Host "ASP.NET Core version: $($versionInfo.AspnetVersion)"
         Write-Host
 
+        if ($versionInfo.StableBranding) {
+            $additionalArgs += @{ UseStableBranding = $versionInfo.StableBranding }
+        }
+
         $setVersionsScript = Join-Path $PSScriptRoot "Set-DotnetVersions.ps1"
         & $setVersionsScript `
             -ProductVersion $versionInfo.DockerfileVersion `
             -RuntimeVersion $versionInfo.RuntimeVersion `
             -AspnetVersion $versionInfo.AspnetVersion `
             -SdkVersion $versionInfo.SdkVersion `
+            @additionalArgs
 
         Write-Host "`r`nDone: Updates for .NET $($versionInfo.RuntimeVersion)/$($versionInfo.SdkVersion)`r`n"
     }
 } else {
     Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
+    Write-Output "##vso[task.setvariable variable=internalBaseUrl]$internalBaseUrl"
 }

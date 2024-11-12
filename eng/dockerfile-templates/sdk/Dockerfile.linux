@@ -3,10 +3,9 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isAzureLinux to isMariner || find(OS_VERSION, "azurelinux") >= 0 ^
-    set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
-    set isRpmInstall to isFullAzureLinux && dotnetVersion = "6.0" ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isRpmInstall to isAzureLinux && dotnetVersion = "6.0" ^
     set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
         VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
@@ -78,8 +77,8 @@
 {{if isInternal || useNobleArm32Workaround:# Installer image
 FROM {{internalInstallerBase}} AS installer{{if isInternal:
 
-ARG SAS_QUERY_STRING}}
-{{if isFullAzureLinux && !isRpmInstall:
+ARG ACCESSTOKEN}}
+{{if isAzureLinux && !isRpmInstall:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["tar"]
@@ -89,7 +88,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": when(isRpmInstall, "download", "download-and-install"),
         "is-internal": isInternal,
-        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
         "is-rpm-install": isRpmInstall,
         "disable-first-run-experience": useNobleArm32Workaround,
         "no-version-env-var": useNobleArm32Workaround
@@ -99,7 +97,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # .NET SDK image
 }}FROM {{baseImageTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 [
@@ -111,7 +109,6 @@ if isRpmInstall:{{InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "copy-and-install",
         "is-internal": isInternal,
-        "url-suffix": "$SAS_QUERY_STRING",
         "installer-stage": "installer",
         "is-rpm-install": isRpmInstall
     ])}}^

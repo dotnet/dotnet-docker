@@ -17,6 +17,8 @@ jobs:
   - template: /eng/common/templates/steps/download-build-artifact.yml@self
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
+      # This can fail if no build jobs ran to produce any artifacts
+      continueOnError: true
   - powershell: |
       # Move all image-info artifacts to their own directory
       New-Item -ItemType Directory -Path $(imageInfosHostDir)

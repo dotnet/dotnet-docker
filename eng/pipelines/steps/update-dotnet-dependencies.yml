@@ -4,6 +4,8 @@ parameters:
   # Comma-delimited list of SDK versions to target (overrides the use of channel var to determine latest version)
   sdkVersions: ""
 
+  buildId: ""
+
 steps:
 - powershell: |
     if ("${{ parameters.sdkVersions }}" -ne "") {
@@ -11,15 +13,20 @@ steps:
         SdkVersions = "${{ parameters.sdkVersions }}" -split ","
       }
     }
-    else {
+    elseif ("${{ parameters.useInternalBuild }}" -eq "false") {
       $args = @{
         Channel = "$(channel)"
+      }
+    }
+    else {
+      $args = @{
+        BuildId = "${{ parameters.buildId }}"
       }
     }
 
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
       $args["UseInternalBuild"] = $true
-      $args["BlobStorageSasQueryString"] = "$(dotnetstage-account-sas-read-token)"
+      $args["InternalAccessToken"] = '$(System.AccessToken)'
       $args["AzdoVersionsRepoInfoAccessToken"] = "$(dn-bot-devdiv-dnceng-rw-code-pat)"
     }
 
@@ -43,8 +50,8 @@ steps:
       }
 
       if ("${{ parameters.useInternalBuild }}" -eq "true") {
-        $args["ChecksumSasQueryString"] = '"$(dotnetchecksumsstage-account-sas-read-token)"'
-        $args["BinarySasQueryString"] = '"$(dotnetstage-account-sas-read-token)"'
+        $args["InternalAccessToken"] = '$(System.AccessToken)'
+        $args["InternalBaseUrl"] = '"$(internalBaseUrl)"'
       } else {
         $args["ReleaseState"] = $(Get-ProductReleaseState)
       }
@@ -57,11 +64,10 @@ steps:
 - powershell: |
     Import-Module -force $(engPath)/DependencyManagement.psm1
 
-    $branchPrefix = ""
+    $targetBranch = $(Get-Branch)
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
-      $branchPrefix = "internal/release/"
+      $targetBranch = "staging-${{ parameters.buildId }}-pipeline-$(Build.BuildId)"
     }
-    $targetBranch = $branchPrefix + $(Get-Branch)
 
     $customArgsArray = @()
     $index=0

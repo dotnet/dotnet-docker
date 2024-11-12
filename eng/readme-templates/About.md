@@ -13,8 +13,4 @@
   ])}}}}
 {{InsertTemplate(join(["About", templateQualifier, "md"], "."), [ "top-header": ARGS["top-header"], "readme-host": ARGS["readme-host"] ])}}
 
-Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.{{if templateQualifier != "sdk" && templateQualifier != "aspire-dashboard":
-
-{{InsertTemplate("About.chiseled.md", [ "top-header": ARGS["top-header"] ])}}}}{{if templateQualifier = "aspnet":
-
-{{InsertTemplate("About.composite-aspnet.md", [ "top-header": ARGS["top-header"] ])}}}}
+Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.

@@ -238,7 +238,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public string GetImageUser(string image) => ExecuteWithLogging($"inspect -f \"{{{{ .Config.User }}}}\" {image}");
 
         public IDictionary<string, string> GetEnvironmentVariables(string image)
-{
+        {
             string envVarsStr = ExecuteWithLogging($"inspect -f \"{{{{json .Config.Env }}}}\" {image}");
             JArray envVarsArray = (JArray)JsonConvert.DeserializeObject(envVarsStr);
             return envVarsArray
