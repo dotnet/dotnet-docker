@@ -6,7 +6,7 @@
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to isAlpine && !isInternal ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
     set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
@@ -36,7 +36,11 @@
 {{ if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
-{{InsertTemplate("Dockerfile.envs", [ "is-composite-runtime": "true" ])}}
+{{InsertTemplate("Dockerfile.envs",
+    [
+        "is-composite-runtime": "true",
+        "is-internal": isInternal
+    ])}}
 
 # Install ASP.NET Composite Runtime
 {{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
@@ -55,7 +59,7 @@ else:{{
 # Installer image
 FROM {{installerImageTag}} AS installer
 {{ if isInternal:
-ARG SAS_QUERY_STRING
+ARG ACCESSTOKEN
 }}{{ if isDistrolessAzureLinux:
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 ^elif isFullAzureLinux:
@@ -71,7 +75,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "install-method": "download-and-install",
         "use-local-version-var": "true",
         "is-internal": isInternal,
-        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
         "is-rpm-install": false
         "is-composite-runtime": "true",
     ])}}
@@ -83,7 +86,11 @@ RUN mkdir /dotnet-symlink \
 # ASP.NET Composite Image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs", [ "is-composite-runtime": "true" ])}}{{ if isDistroless:
+{{InsertTemplate("Dockerfile.envs",
+    [
+        "is-composite-runtime": "true",
+        "is-internal": isInternal
+    ])}}{{ if isDistroless:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 

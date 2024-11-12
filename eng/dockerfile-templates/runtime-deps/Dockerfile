@@ -12,7 +12,7 @@
     set isAzureLinux to isCblMariner || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,
@@ -32,7 +32,6 @@
     set secondStageName to when(isMultiStage && nonRootUserSupported, "installer") ^
     set stagingDir to "/staging" ^
     set createUserHome to is ^
-    set urlSuffix to when(isInternal, "$SAS_QUERY_STRING", "") ^
     set rpmFilename to "dotnet-runtime-deps.rpm" ^
     set utilPkgs to when(isAzureLinux && nonRootUserSupported, ["shadow-utils"], []) ^
     set useGlobalizationInvariantMode to !ARGS["is-extra"] && (isDistroless || isAlpine) ^
@@ -42,11 +41,10 @@
     set nonRootUserComment to "# Create a non-root user and group"
 }}FROM {{baseImageRepo}}:{{baseImageTag}}{{if isMultiStage: AS {{firstStageName}}}}{{if isRpmInstall && isInternal:
 
-ARG SAS_QUERY_STRING
+ARG ACCESSTOKEN
 
 RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
     [
-        "url-suffix": urlSuffix,
         "filename": rpmFilename,
         "is-internal": isInternal
     ],
@@ -81,7 +79,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
 {{InsertTemplate("Dockerfile.install-runtime-deps-pkg",
     [
         "skip-download": isInternal
-        "url-suffix": urlSuffix,
         "filename": rpmFilename
     ]
 )}}}}{{if isMultiStage && nonRootUserSupported:

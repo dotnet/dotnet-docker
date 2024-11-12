@@ -2,7 +2,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
     set serverCoreBaseTag to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
     set finalStageBaseRepo to when(isInternal && isServerCore, "servercore", "nanoserver")
@@ -15,7 +15,7 @@
 }}FROM {{serverCoreBaseTag}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
-    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
+    {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal], "    ")}}
 
 # Install .NET Runtime
 {{InsertTemplate("Dockerfile.windows.install-runtime")}}
@@ -28,13 +28,12 @@ else:{{
 }}# Installer image
 FROM {{serverCoreBaseTag}} AS installer
 {{if isInternal:
-ARG SAS_QUERY_STRING
+ARG ACCESSTOKEN
 }}
 # Retrieve .NET Runtime
 {{InsertTemplate("Dockerfile.windows.install-runtime",
     [
         "use-local-version-var": "true",
-        "url-suffix": when(isInternal, "$Env:SAS_QUERY_STRING", ""),
         "is-internal": isInternal
     ])}}
 
@@ -43,7 +42,7 @@ ARG SAS_QUERY_STRING
 FROM mcr.microsoft.com/windows/{{finalStageBaseRepo}}:{{OS_VERSION_NUMBER}}-amd64
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
-    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
+    {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal], "    ")}}
 
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\dotnet"])}}
 

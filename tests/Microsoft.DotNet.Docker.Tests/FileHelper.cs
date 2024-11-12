@@ -58,7 +58,7 @@ namespace Microsoft.DotNet.Docker.Tests
         }
     }
 
-    public class TempFolderContext : IDisposable
+    public sealed class TempFolderContext : IDisposable
     {
         public TempFolderContext()
         {
@@ -81,7 +81,7 @@ namespace Microsoft.DotNet.Docker.Tests
         }
     }
 
-    public class TempFileContext : IDisposable
+    public sealed class TempFileContext : IDisposable
     {
         public TempFileContext()
         {

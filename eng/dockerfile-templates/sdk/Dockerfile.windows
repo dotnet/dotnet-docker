@@ -1,7 +1,7 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
     set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
@@ -25,7 +25,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 }}FROM {{aspnetBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 {{InsertTemplate("Dockerfile.windows.install-components")}}
 
@@ -39,19 +39,18 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 }}# Installer image
 FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
 {{if isInternal:
-ARG SAS_QUERY_STRING
+ARG ACCESSTOKEN
 }}
 {{InsertTemplate("Dockerfile.windows.install-components",
     [
         "use-local-version-var": "true",
         "dotnet-is-internal": isInternal,
-        "dotnet-url-suffix": when(isInternal, "$Env:SAS_QUERY_STRING", "")
     ])}}
 
 # SDK image
 FROM {{aspnetBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": paths ])}}
 

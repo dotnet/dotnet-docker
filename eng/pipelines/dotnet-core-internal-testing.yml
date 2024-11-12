@@ -1,0 +1,34 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - testing/*
+  paths:
+    include:
+    - manifest.json
+    - manifest.versions.json
+    - src/*
+pr: none
+
+resources:
+  repositories:
+  - repository: InternalVersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+
+variables:
+- template: /eng/pipelines/variables/internal-core.yml@self
+- name: IsInternalServicingValidation
+  value: true
+
+extends:
+  template: /eng/common/templates/1es-official.yml@self
+  parameters:
+    stages:
+    - template: stages/build-test-publish-repo.yml
+      parameters:
+        internalProjectName: ${{ variables.internalProjectName }}
+        publicProjectName: ${{ variables.publicProjectName }}
+        isInternalServicingValidation: ${{ variables.IsInternalServicingValidation }}
+        noCache: true

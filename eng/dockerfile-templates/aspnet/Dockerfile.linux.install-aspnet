@@ -4,7 +4,6 @@
         - use-local-version-var (optional): Whether to define a local variable for the ASP.NET Core runtime version
             instead of referencing the environment variable.
         - is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        - url-suffix (optional): Suffix string to append the end of the URL.
         - installer-stage (optional): Name of the Dockerfile stage responsible for installation
         - is-rpm-install (optional): Whether to install RPM versus tarball ^
 
@@ -33,7 +32,7 @@
     set url to cat(
         VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-", aspnetVersionFile,
-        filePlatform, "-", fileArch, ".", fileExt, ARGS["url-suffix"]) ^
+        filePlatform, "-", fileArch, ".", fileExt) ^
     set files to [
         [
             "filename": cat("aspnetcore.", fileExt),

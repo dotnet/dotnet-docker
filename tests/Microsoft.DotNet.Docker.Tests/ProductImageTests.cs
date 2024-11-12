@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
+using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -231,13 +232,15 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper, extraExcludePaths);
 
-            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, outputHelper);
+            string imageName = imageData.GetImage(imageRepo, dockerHelper, skipPull: true);
+            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, outputHelper);
         }
 
         internal static void ComparePackages(
             IEnumerable<string> expectedPackages,
             IEnumerable<string> actualPackages,
             bool isDistroless,
+            string imageName,
             ITestOutputHelper outputHelper)
         {
             outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
@@ -246,19 +249,14 @@ namespace Microsoft.DotNet.Docker.Tests
             if (isDistroless)
             {
                 outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
-                Assert.Equal(expectedPackages, actualPackages);
+                actualPackages.Should().BeEquivalentTo(expectedPackages,
+                    because: $"image {imageName} is distroless");
                 return;
             }
 
             // Verify satisfy .NET dependencies on non-distroless images.
             // There will be additional packages from the distro.
-            IEnumerable<string> missingPackages = expectedPackages.Except(actualPackages);
-            if (missingPackages.Any())
-            {
-                outputHelper.WriteLine($"Missing packages: [ {string.Join(", ", missingPackages)} ]");
-            }
-
-            Assert.Empty(missingPackages);
+            expectedPackages.Should().BeSubsetOf(actualPackages, because: $"image {imageName} is not distroless");
         }
 
         internal static IEnumerable<string> GetInstalledPackages(
@@ -427,6 +425,16 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3",
                         "openssl",
                     ],
+                { OS: OS.NobleChiseled } =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        "gcc-14",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "openssl",
+                    ],
                 { OS: string os } when os.Contains(OS.Noble) =>
                     [
                         "ca-certificates",
@@ -502,7 +510,12 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
+                { OS: OS.NobleChiseled } => new[]
+                    {
+                        "libicu74",
+                        "tzdata"
+                    },
+                { OS: OS.JammyChiseled } => new[]
                     {
                         "libicu70",
                         "tzdata"

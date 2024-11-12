@@ -6,7 +6,6 @@
         use-local-version-var (optional): Whether to define a local variable for the .NET runtime version
             instead of referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        url-suffix (optional): Suffix string to append the end of the URL.
         installer-stage (optional): Name of the Dockerfile stage responsible for installation
         is-rpm-install (optional): Whether to install RPM versus tarball
         is-composite-runtime (optional): Whether to install aspnetcore composite version ^
@@ -39,7 +38,7 @@
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
     set aspnetCompositeUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetCompositeVersionDir, "/aspnetcore-runtime-composite-", aspnetCompositeVersionFile,
-        filePlatform, "-", fileArch, ".", fileExt, ARGS["url-suffix"]) ^
+        filePlatform, "-", fileArch, ".", fileExt) ^
     set localVersionVar to when(ARGS["is-composite-runtime"],
         VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
         VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]) ^
@@ -47,19 +46,19 @@
     set rpms to [
         [
             "filename": "dotnet-host.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersionFile, "-", rpmFileArch, ".rpm"),
             "sha": VARIABLES[join(["runtime-host", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ],
         [
             "filename": "dotnet-hostfxr.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersionFile, "-", rpmFileArch, ".rpm"),
             "sha": VARIABLES[join(["runtime-hostfxr", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ],
         [
             "filename": "dotnet-runtime.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", rpmFileArch, ".rpm", ARGS["url-suffix"]),
+            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", rpmFileArch, ".rpm"),
             "sha": VARIABLES[join(["runtime", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "dotnet_sha512"
         ]
@@ -76,8 +75,7 @@
         [
             [
                 "filename": "dotnet.tar.gz",
-                "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz",
-                    ARGS["url-suffix"]),
+                "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz"),
                 "sha": VARIABLES[join(["runtime", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
                 "sha-var-name": "dotnet_sha512"
             ]

@@ -10,7 +10,7 @@
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "msrc") >= 0 || find(baseUrl, "internal") >= 0 ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isRpmInstall to isFullAzureLinux && dotnetVersion = "6.0" ^
     set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
@@ -41,7 +41,7 @@ _ SINGLE STAGE
 {{if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 # Install .NET Runtime
 {{InsertTemplate("Dockerfile.linux.install-runtime",
@@ -60,7 +60,7 @@ _ MULTI STAGE
 # Installer image
 FROM {{installerImageTag}} AS installer
 {{if isInternal:
-ARG SAS_QUERY_STRING
+ARG ACCESSTOKEN
 }}{{ if isDistrolessAzureLinux:
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 ^elif isFullAzureLinux && !isRpmInstall:
@@ -76,7 +76,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
         "use-local-version-var": "true",
         "is-internal": isInternal,
-        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
         "is-rpm-install": isRpmInstall
     ])}}{{ if isDistroless:
 
@@ -87,14 +86,13 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 {{ if isInternal && isRpmInstall:
 {{InsertTemplate("Dockerfile.linux.install-runtime",
     [
         "install-method": "copy-and-install",
         "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
         "is-internal": isInternal,
-        "url-suffix": when(isInternal, "$SAS_QUERY_STRING", ""),
         "installer-stage": "installer",
         "is-rpm-install": isRpmInstall
     ])}}}}{{ if isDistroless:
