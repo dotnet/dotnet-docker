@@ -74,10 +74,10 @@ In other repos:
   - [ ] <https://github.com/microsoft/dotnet-framework-docker/blob/58a18cf958883c6a67ae888854bd9bb09f085e83/eng/dockerfile-templates/sdk/Dockerfile.ltsc2016#L80-L81>
 
 Create announcement:
-  - [ ] Post a new announcement on the [GitHub Discussions page](https://github.com/dotnet/dotnet-docker/discussions/new?category=announcements) page and pin the announcement
-    - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
-    - [Example announcement](https://github.com/dotnet/dotnet-docker/discussions/4995)
 
+- [ ] Post a new announcement on the [GitHub Discussions page](https://github.com/dotnet/dotnet-docker/discussions/new?category=announcements) page and pin the announcement
+  - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
+  - [Example announcement](https://github.com/dotnet/dotnet-docker/discussions/4995)
 
 ## EOL
 
