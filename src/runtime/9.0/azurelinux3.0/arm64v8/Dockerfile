@@ -8,9 +8,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.0-rtm.24516.10 \
-    && curl -fSL --output dotnet.tar.gz https://dotnetbuilds.azureedge.net/public/Runtime/$dotnet_version/dotnet-runtime-9.0.0-linux-arm64.tar.gz \
-    && dotnet_sha512='688169a1384ba39d6a6fec2b03cf9c9a03c691dc5588f918bcaebadf496d6f5d19b53fcbe9e739d0c8950ba7b022ebc0026b0a2c1c2a527b9a3ee7d904f5dbbf' \
+RUN dotnet_version=9.0.0 \
+    && curl -fSL --output dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+    && dotnet_sha512='4f9c2dd544af0b8540c16352b9f01f75f828b8e4e084057a300a4dec652fb3d6532906cdd4246399cc13f16b571b17575812ec2f9c297e27bbed678baf4b2fde' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -21,7 +21,7 @@ RUN dotnet_version=9.0.0-rtm.24516.10 \
 FROM $REPO:9.0.0-azurelinux3.0-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.0-rtm.24516.10
+ENV DOTNET_VERSION=9.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

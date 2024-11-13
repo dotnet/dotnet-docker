@@ -1,0 +1,91 @@
+name: 🐞 Bug report
+description: Create a report about something that is not working
+labels: ["untriaged"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please keep in mind that the GitHub issue tracker is not intended as a general support forum, but for reporting **non-security** bugs and feature requests.
+
+        If you're reporting the presence of a disclosed security vulnerability, such as a CVE reported in one of our container images, please follow our [vulnerability reporting guidelines](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md).
+
+        If you believe you have an issue that affects the security of .NET, please do NOT create an issue and instead email your issue details to secure@microsoft.com.
+        Your report may be eligible for our [bug bounty](https://www.microsoft.com/en-us/msrc/bounty-dot-net-core) but ONLY if it is reported through email.
+
+        For other types of questions, consider posting to [Discussions](https://github.com/dotnet/dotnet-docker/discussions) or [Stack Overflow](https://stackoverflow.com).
+
+        ---
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Description
+
+        Please provide a clear and concise description of the bug.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: Describe the bug
+    validations:
+      required: true
+
+  - type: input
+    id: image
+    attributes:
+      label: Which .NET image(s) are you using?
+      description: Please specify the exact digest if possible; otherwise, provide the tag name
+      placeholder: mcr.microsoft.com/dotnet/sdk:8.0@sha256:00ab6163f4c8fdf8ea427b1fa9d9d2312ff623d5810577ad73605a07ba67397a
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Steps to reproduce the bug
+
+        Include minimal steps to reproduce the problem or point us to a simple repro project hosted in a GitHub repo.
+        We may close this issue if:
+
+        * We are not able to repro the behavior you're reporting
+        * The repro project you share with us is too complex
+        * The repro is in a file attachment such as a zip file
+
+  - type: textarea
+    id: steps-to-reproduce
+    attributes:
+      label: Steps to reproduce
+
+  - type: markdown
+    attributes:
+      value: |
+        ## Other Information
+
+        Please include any other information that you think is helpful.
+
+        * What other issues did you find before opening this one?
+        * What error messages do you see?
+        * When does this issue occur? Does it occur consistently?
+        * Do you know of any workarounds?
+        * What is the container host OS and version?
+
+  - type: textarea
+    id: other-information
+    attributes:
+      label: Other information
+
+  - type: textarea
+    id: docker-version
+    attributes:
+      label: Output of `docker version`
+      description: Paste the output of `docker version` here.
+      render: console
+
+  - type: textarea
+    id: docker-info
+    attributes:
+      label: Output of `docker info`
+      description: Paste the output of `docker info` here.
+      render: console
+
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to report this!

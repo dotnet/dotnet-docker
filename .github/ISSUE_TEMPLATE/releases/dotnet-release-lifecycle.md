@@ -23,7 +23,7 @@ Add due dates to each of the issues so that we don't lose track of them.
     - Adjust existing templates or add new templates in `eng/dockerfile-templates/` if necessary
     - If there are no major changes between .NET versions, the new images can share `runtime-deps` layers with the previous .NET version
     - Include only the latest/LTS version of each operating system according to our [supported operating systems documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md#operating-systems).
-      - If adding a new OS version, follow the guidelines in [new-distro-release.md](../new-distro-release.md)
+      - If adding a new OS version, follow the guidelines in [new-distro-release.md](./new-distro-release.md)
     - If PowerShell is not yet supported or functional on the new .NET version, file an issue at [PowerShell/PowerShell](https://github.com/PowerShell/PowerShell/issues) or link to an existing issue, exclude PowerShell from the new SDK images, and [file an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose) to re-enable PowerShell in .NET Docker images
   - [ ] Update tests
     - [ ] Add new version info to [ImageVersion.cs](https://github.com/dotnet/dotnet-docker/blob/nightly/tests/Microsoft.DotNet.Docker.Tests/ImageVersion.cs)
@@ -60,17 +60,24 @@ Add due dates to each of the issues so that we don't lose track of them.
 
 ## GA
 
-- [ ] New .NET version GA tasks (one issue)
-  - [ ] Move `latest` tags in `manifest.json` to the new version
-    - [Relevant issue](https://github.com/dotnet/dotnet-docker/issues/2316)
-  - [ ] Add the new .NET version to the .NET Framework SDK image
-    - [ ] <https://github.com/microsoft/dotnet-framework-docker/blob/6a3c9d048f75c1e69c0e1059564cd56a90bf9e3c/eng/dockerfile-templates/sdk/Dockerfile#L56-L59>
-    - [ ] <https://github.com/microsoft/dotnet-framework-docker/blob/58a18cf958883c6a67ae888854bd9bb09f085e83/eng/dockerfile-templates/sdk/Dockerfile.ltsc2016#L80-L81>
-  - [ ] Post a new announcement on the [GitHub Discussions page](https://github.com/dotnet/dotnet-docker/discussions/new?category=announcements) page and pin the announcement
-    - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
-    - [Example announcement](https://github.com/dotnet/dotnet-docker/discussions/4995)
-  - [ ] Update documentation as necessary to reference the new .NET version
-  - [ ] Update IIS sample URL to final version of `dotnet-hosting-win.exe` (remove "preview" from the URL): <https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19>.
+In this repo:
+
+- [ ] Move `latest` tags in `manifest.json` to the new version
+- [ ] Update documentation as necessary to reference the new .NET version
+- [ ] Update IIS sample URL to final version of `dotnet-hosting-win.exe` (remove "preview" from the URL): <https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile.windowsservercore-iis#L19>.
+- [ ] Remove suffix "(Release Candidate)" from Featured Tags and replace with "(Long-Term Support)" or "(Standard Support)"
+
+In other repos:
+
+- [ ] Add the new .NET version to the .NET Framework SDK image
+  - [ ] <https://github.com/microsoft/dotnet-framework-docker/blob/6a3c9d048f75c1e69c0e1059564cd56a90bf9e3c/eng/dockerfile-templates/sdk/Dockerfile#L56-L59>
+  - [ ] <https://github.com/microsoft/dotnet-framework-docker/blob/58a18cf958883c6a67ae888854bd9bb09f085e83/eng/dockerfile-templates/sdk/Dockerfile.ltsc2016#L80-L81>
+
+Create announcement:
+
+- [ ] Post a new announcement on the [GitHub Discussions page](https://github.com/dotnet/dotnet-docker/discussions/new?category=announcements) page and pin the announcement
+  - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
+  - [Example announcement](https://github.com/dotnet/dotnet-docker/discussions/4995)
 
 ## EOL
 

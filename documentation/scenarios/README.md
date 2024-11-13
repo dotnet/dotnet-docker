@@ -12,4 +12,4 @@ These scenarios contain tips and tricks, best practices, and samples of commonly
 
 You are invited to contribute new scenarios, large or small; we are always thrilled to receive pull requests, and do our best to process them as fast as we can.
 
-Before you start to code, please read the [.NET contribution guidelines](https://github.com/dotnet/coreclr/blob/master/CONTRIBUTING.md).
+Before you start to code, please read the [.NET contribution guidelines](../../CONTRIBUTING.md).

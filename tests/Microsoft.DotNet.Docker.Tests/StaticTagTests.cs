@@ -564,9 +564,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         // Use the latest GA major version on the main branch
                         // Assumes that non-GA versions have a hyphen in them
-                        // e.g. non GA: 5.0.0-preview.1, GA: 5.0.0
-                        // If there are no GA versions, use the latest preview version
-                        var gaVersions = group.Where(version => !version.Contains('-'));
+                        // e.g. non-GA: 5.0.0-preview.1, GA: 5.0.0
+                        // RTM versions are also accepted as GA versions for internal testing purposes
+                        // If there are no GA versions, use the latest preview version.
+                        IEnumerable<string> gaVersions = group.Where(version =>
+                            !version.Contains('-') || version.Contains("rtm"));
                         return gaVersions.Any() ? gaVersions : group;
                     }
                     // Use the latest major version on the nightly branch
