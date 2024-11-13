@@ -21,8 +21,10 @@ param(
 
     # Categories of tests to run
     [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard")
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard")
 )
+
+[System.Collections.ArrayList]$TestCategories = $TestCategories
 
 if ($Version -notmatch '^\d+\.\d+(\.[\d*])?|\*$') {
     Write-Error "Error: Input version '$Version' is not in the expected format of X.Y or X.Y.*"
@@ -36,6 +38,7 @@ if ($Version -notmatch '^\d+\.\d+(\.[\d*])?|\*$') {
 
 if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test") -and $TestCategories.Contains("pre-build")) {
     & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*"
+    $TestCategories.Remove("pre-build")
 }
 
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
@@ -54,15 +57,24 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
         $OS = "nanoserver-$windowsReleaseId"
     }
 
-    # Build the sample images
-    & ./eng/common/build.ps1 `
-        -Version $Version `
-        -OS @($OS) `
-        -Architecture $Architecture `
-        -Paths $Paths `
-        -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
-        -Manifest manifest.samples.json
+    $buildSamples = $Paths -match "samples"
+    if ($buildSamples)
+    {
+        # Build the sample images
+        & ./eng/common/build.ps1 `
+            -Version $Version `
+            -OS @($OS) `
+            -Architecture $Architecture `
+            -Paths $Paths `
+            -OptionalImageBuilderArgs $OptionalImageBuilderArgs `
+            -Manifest manifest.samples.json
+    }
+    else
+    {
+        Write-Host "Skipping samples builds since no input paths contained samples"
+    }
 }
+
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
 
     $VersionParts = $Version.Split('.')
@@ -75,9 +87,17 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
         Write-Warning "Skipping sample image testing since Version was set"
     }
 
-    & ./tests/run-tests.ps1 `
-        -Version $TestVersion `
-        -OSVersions @($OS) `
-        -Architecture $Architecture `
-        -TestCategories $localTestCategories
+
+    if ($Paths -ne $null -and $Paths.Count -gt 0) {
+        & ./tests/run-tests.ps1 `
+            -Architecture $Architecture `
+            -Paths $Paths `
+            -TestCategories $localTestCategories
+    } else {
+        & ./tests/run-tests.ps1 `
+            -Version $TestVersion `
+            -OSVersions @($OS) `
+            -Architecture $Architecture `
+            -TestCategories @localTestCategories
+    }
 }
