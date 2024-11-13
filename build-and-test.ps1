@@ -20,8 +20,8 @@ param(
     [string]$Mode = "BuildAndTest",
 
     # Categories of tests to run
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor")
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard")
 )
 
 if ($Version -notmatch '^\d+\.\d+(\.[\d*])?|\*$') {

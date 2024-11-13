@@ -596,9 +596,14 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string tagRegex = versionType switch
             {
-                VersionType.Major => majorMinor != null ? GetVersion(majorMinor).Major.ToString() : MajorVersionRegex,
-                VersionType.MajorMinor => @$"{majorMinor ?? MajorMinorVersionRegex}(-preview)?",
-                VersionType.MajorMinorPatch => @$"{majorMinor ?? MajorMinorVersionRegex}\.{SingleNumberRegex}(-{SingleNumberRegex})?(?:-(alpha|beta|preview|rc)\.{SingleNumberRegex})?",
+                VersionType.Major =>
+                    majorMinor == null
+                        ? MajorVersionRegex
+                        : @$"{GetVersion(majorMinor).Major}(-preview)?",
+                VersionType.MajorMinor =>
+                    @$"{majorMinor ?? MajorMinorVersionRegex}(-preview)?",
+                VersionType.MajorMinorPatch =>
+                    @$"{majorMinor ?? MajorMinorVersionRegex}\.{SingleNumberRegex}(-{SingleNumberRegex})?(?:-(alpha|beta|preview|rc)\.{SingleNumberRegex})?",
                 _ => throw new ArgumentException("Invalid version type", nameof(versionType)),
             };
 
