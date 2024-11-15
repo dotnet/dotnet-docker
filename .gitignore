@@ -13,7 +13,9 @@ artifacts/
 .vs/
 
 # Visual Studio Code cache/options directory
-.vscode/
+.vscode/*
+!.vscode/tasks.json
+!.vscode/launch.json
 
 # Test files
 *.trx
