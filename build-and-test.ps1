@@ -36,9 +36,20 @@ if ($Version -notmatch '^\d+\.\d+(\.[\d*])?|\*$') {
     }
 }
 
-if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test") -and $TestCategories.Contains("pre-build")) {
-    & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*"
-    $TestCategories.Remove("pre-build")
+if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test")) {
+
+    Write-Host "`nTests will run with TestCategories: $TestCategories"
+
+    if ($TestCategories.Contains("pre-build"))
+    {
+        & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*"
+        $TestCategories.Remove("pre-build")
+    }
+    else
+    {
+        Write-Host "Skipping pre-build validation tests."
+        Write-Host "To run pre-build tests, use the 'pre-build' test category.`n"
+    }
 }
 
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
