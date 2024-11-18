@@ -54,18 +54,12 @@ public abstract class ConsoleAppScenario : ProjectTemplateTestScenario
             TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.SelfContained);
     }
 
-    public class Aot(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
-        : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
-    {
-        protected override TestDockerfile Dockerfile =>
-            TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.Aot);
-    }
-
     public class TestProject(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
         : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
     {
         protected override bool NonRootUserSupported => false;
-        protected override TestDockerfile Dockerfile { get; } =
+
+        protected override TestDockerfile Dockerfile =>
             TestDockerfileBuilder.GetTestProjectDockerfile();
     }
 }
