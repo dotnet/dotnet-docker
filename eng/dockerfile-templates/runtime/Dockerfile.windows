@@ -13,17 +13,6 @@
 
     set fromImageTag to cat(OS_VERSION_NUMBER, "-amd64") ^
 
-    set installerStageRepo to when(isServer2025,
-        cat(installerStageRepo, "/insider"),
-        installerStageRepo) ^
-    set runtimeStageRepo to when(isServer2025,
-        cat(runtimeStageRepo, "/insider"),
-        runtimeStageRepo) ^
-
-    set fromImageTag to when(isServer2025,
-        VARIABLES[cat("windowsservercore|", OS_VERSION_NUMBER, "|insider|tag")],
-        fromImageTag) ^
-
     set installerStageFromImage to cat(installerStageRepo, ":", fromImageTag) ^
     set runtimeStageFromImage to cat(runtimeStageRepo, ":", fromImageTag)
 
