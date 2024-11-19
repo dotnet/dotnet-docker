@@ -58,8 +58,7 @@ public abstract class ConsoleAppScenario : ProjectTemplateTestScenario
         : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
     {
         protected override bool NonRootUserSupported => false;
-
-        protected override TestDockerfile Dockerfile =>
+        protected override TestDockerfile Dockerfile { get; } =
             TestDockerfileBuilder.GetTestProjectDockerfile();
     }
 }
