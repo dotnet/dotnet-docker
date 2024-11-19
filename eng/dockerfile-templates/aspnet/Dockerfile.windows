@@ -1,7 +1,6 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
-    set isServer2025 to find(OS_VERSION_NUMBER, "2025") >= 0 ^
 
     set dotnetBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
@@ -10,13 +9,6 @@
     set repoBaseUrl to "mcr.microsoft.com/windows" ^
     set installerStageRepo to cat(repoBaseUrl, "/servercore") ^
     set installerStageTag to cat(OS_VERSION_NUMBER, "-amd64") ^
-
-    set installerStageRepo to when(isServer2025,
-        cat(installerStageRepo, "/insider"),
-        installerStageRepo) ^
-    set installerStageTag to when(isServer2025,
-        VARIABLES[cat("windowsservercore|", OS_VERSION_NUMBER, "|insider|tag")],
-        installerStageTag) ^
 
     set installerStageFromImage to cat(installerStageRepo, ":", installerStageTag) ^
 
