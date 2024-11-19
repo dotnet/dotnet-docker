@@ -159,7 +159,7 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
             TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.SelfContained);
     }
 
-    public new class Aot(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
+    public class Aot(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
         : WebScenario(imageData, dockerHelper, outputHelper)
     {
         protected override string? Endpoint { get; } = "todos";

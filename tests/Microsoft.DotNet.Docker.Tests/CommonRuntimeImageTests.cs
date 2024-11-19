@@ -19,9 +19,11 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        public static IEnumerable<object[]> GetImageData(DotNetImageRepo imageRepo)
+        public static IEnumerable<object[]> GetImageData(
+            DotNetImageRepo imageRepo,
+            DotNetImageVariant variant = DotNetImageVariant.None)
         {
-            return TestData.GetImageData(imageRepo)
+            return TestData.GetImageData(imageRepo, variant)
                 .Select(imageData => new object[] { imageData });
         }
 
