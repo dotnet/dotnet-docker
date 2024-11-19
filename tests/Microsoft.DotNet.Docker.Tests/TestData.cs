@@ -299,10 +299,13 @@ namespace Microsoft.DotNet.Docker.Tests
             },
         };
 
-        public static IEnumerable<ProductImageData> GetImageData(DotNetImageRepo imageRepo)
+        public static IEnumerable<ProductImageData> GetImageData(
+            DotNetImageRepo imageRepo,
+            DotNetImageVariant variant = DotNetImageVariant.None)
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxTestData : s_windowsTestData)
                 .FilterImagesBySupportedRepo(imageRepo)
+                .FilterImagesByVariant(variant)
                 .FilterImagesByPath(imageRepo)
                 .FilterImagesByArch()
                 .FilterImagesByOs()
@@ -379,9 +382,21 @@ namespace Microsoft.DotNet.Docker.Tests
             return filteredImageData;
         }
 
-        public static IEnumerable<ProductImageData> FilterImagesBySupportedRepo(this IEnumerable<ProductImageData> imageData, DotNetImageRepo imageRepo)
+        public static IEnumerable<ProductImageData> FilterImagesBySupportedRepo(
+            this IEnumerable<ProductImageData> imageData,
+            DotNetImageRepo imageRepo)
         {
-            var images = imageData.Where(imageData => imageData.ImageRepoIsSupported(imageRepo));
+            IEnumerable<ProductImageData> images = imageData.Where(imageData =>
+                imageData.ImageRepoIsSupported(imageRepo));
+            return images;
+        }
+
+        public static IEnumerable<ProductImageData> FilterImagesByVariant(
+            this IEnumerable<ProductImageData> imageData,
+            DotNetImageVariant variant)
+        {
+            IEnumerable<ProductImageData> images = imageData.Where(imageData =>
+                imageData.ImageVariant.HasFlag(variant));
             return images;
         }
 

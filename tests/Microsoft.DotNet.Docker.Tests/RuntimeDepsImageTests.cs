@@ -20,12 +20,23 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Runtime_Deps;
 
-        public static IEnumerable<object[]> GetImageData() => GetImageData(DotNetImageRepo.Runtime_Deps);
+        public static IEnumerable<object[]> GetImageData() =>
+            GetImageData(DotNetImageRepo.Runtime_Deps);
+
+        public static IEnumerable<object[]> GetAotImageData() =>
+            GetImageData(DotNetImageRepo.Runtime_Deps, DotNetImageVariant.AOT);
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifySelfContainedConsoleScenario(ProductImageData imageData)
         {
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT))
+            {
+                OutputHelper.WriteLine(
+                    $"Test is not applicable to AOT images. See {nameof(VerifyAotWebScenario)} instead.");
+                return;
+            }
+
             using ConsoleAppScenario testScenario =
                 new ConsoleAppScenario.SelfContained(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
@@ -35,21 +46,22 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifySelfContainedWebScenario(ProductImageData imageData)
         {
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT))
+            {
+                OutputHelper.WriteLine(
+                    $"Test is not applicable to AOT images. See {nameof(VerifyAotWebScenario)} instead.");
+                return;
+            }
+
             using WebScenario testScenario =
                 new WebScenario.SelfContained(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
         }
 
         [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public async Task VerifyAotAppScenario(ProductImageData imageData)
+        [MemberData(nameof(GetAotImageData))]
+        public async Task VerifyAotWebScenario(ProductImageData imageData)
         {
-            if (!imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT))
-            {
-                OutputHelper.WriteLine("Test is only relevant to AOT images.");
-                return;
-            }
-
             if (imageData.Arch == Arch.Arm)
             {
                 OutputHelper.WriteLine("Skipping test due to https://github.com/dotnet/docker-tools/issues/1177. "

@@ -17,7 +17,6 @@ namespace Microsoft.DotNet.Docker.Tests
     public class DockerHelper
     {
         public static string DockerOS => GetDockerOS();
-        public static string DockerArchitecture => GetDockerArch();
         public static string ContainerWorkDir => IsLinuxContainerModeEnabled ? "/sandbox" : "c:\\sandbox";
         public static bool IsLinuxContainerModeEnabled => string.Equals(DockerOS, "linux", StringComparison.OrdinalIgnoreCase);
         public static string TestArtifactsDir { get; } = Path.Combine(Directory.GetCurrentDirectory(), "TestAppArtifacts");
@@ -233,7 +232,6 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         private static string GetDockerOS() => Execute("version -f \"{{ .Server.Os }}\"");
-        private static string GetDockerArch() => Execute("version -f \"{{ .Server.Arch }}\"");
 
         public string GetImageUser(string image) => ExecuteWithLogging($"inspect -f \"{{{{ .Config.User }}}}\" {image}");
 
