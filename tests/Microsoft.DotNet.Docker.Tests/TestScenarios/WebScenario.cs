@@ -71,7 +71,7 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
         const int RetryAttempts = 4;
         const int RetryDelaySeconds = 3;
 
-        if (!string.IsNullOrEmpty(pathAndQuery))
+        if (!string.IsNullOrEmpty(pathAndQuery) && !pathAndQuery.StartsWith('/'))
         {
             pathAndQuery = "/" + pathAndQuery;
         }
