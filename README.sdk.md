@@ -146,14 +146,14 @@ Tags | Dockerfile | OS Version
 Tag | Dockerfile
 ---------| ---------------
 9.0.100-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
-8.0.403-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
+8.0.404-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
 
 ### Windows Server Core 2025 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
 9.0.100-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-8.0.403-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+8.0.404-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 
 ### Nano Server 2022 amd64 Tags
 
