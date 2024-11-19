@@ -71,10 +71,15 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
         const int RetryAttempts = 4;
         const int RetryDelaySeconds = 3;
 
+        if (!string.IsNullOrEmpty(pathAndQuery) && !pathAndQuery.StartsWith('/'))
+        {
+            pathAndQuery = "/" + pathAndQuery;
+        }
+
         // Can't use localhost when running inside containers or Windows.
         string url = !Config.IsRunningInContainer && DockerHelper.IsLinuxContainerModeEnabled
-            ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName, containerPort)}/{pathAndQuery}"
-            : $"http://{dockerHelper.GetContainerAddress(containerName)}:{containerPort}/{pathAndQuery}";
+            ? $"http://localhost:{dockerHelper.GetContainerHostPort(containerName, containerPort)}{pathAndQuery}"
+            : $"http://{dockerHelper.GetContainerAddress(containerName)}:{containerPort}{pathAndQuery}";
 
         ResiliencePipeline pipeline = new ResiliencePipelineBuilder()
             .AddRetry(new RetryStrategyOptions()
@@ -84,10 +89,10 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
                     Delay = TimeSpan.FromSeconds(RetryDelaySeconds),
 
                     // If the container is still starting up, it will refuse connections until it's ready.
-                    // Otherwise, stop retrying immediately.
+                    // If it crashed, stop retrying immediately.
                     ShouldHandle = new PredicateBuilder()
                         .Handle<HttpRequestException>(exception =>
-                            DockerHelper.ContainerIsRunning(containerName) && exception.Message.Contains("Connection refused")),
+                            DockerHelper.ContainerIsRunning(containerName)),
                 })
             .Build();
 
@@ -101,8 +106,15 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
         try
         {
             result = await pipeline.ExecuteAsync(async cancellationToken =>
-                await client.GetAsync(url, cancellationToken));
-            outputHelper.WriteLine($"HTTP {result.StatusCode}\n{await result.Content.ReadAsStringAsync()}");
+                {
+                    outputHelper.WriteLine($"Sending request: GET {url}");
+                    return await client.GetAsync(url, cancellationToken);
+                });
+
+            outputHelper.WriteLine($"""
+                Response: HTTP {result.StatusCode}
+                Content: {await result.Content.ReadAsStringAsync()}
+                """);
 
             // Store response in local that will not be disposed
             HttpResponseMessage returnResult = result;
