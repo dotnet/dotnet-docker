@@ -18,9 +18,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public bool HasCustomSdk => _sdkOS != null;
 
-        public bool GlobalizationInvariantMode => (!ImageVariant.HasFlag(DotNetImageVariant.Extra)
-                    || Version.Major == 6)
-                && (IsDistroless || OS.Contains(Tests.OS.Alpine));
+        public bool GlobalizationInvariantMode => !SupportsGlobalization;
 
         public string SdkOS
         {
@@ -64,14 +62,23 @@ namespace Microsoft.DotNet.Docker.Tests
         public override int? NonRootUID =>
             OS == Tests.OS.Mariner20Distroless && Version.Major == 6 ? 101 : base.NonRootUID;
 
+        private bool SupportsGlobalization
+        {
+            get
+            {
+                bool isSizeFocusedImage = IsDistroless || OS.Contains(Tests.OS.Alpine);
+                return ImageVariant.HasFlag(DotNetImageVariant.Extra) || !isSizeFocusedImage;
+            }
+        }
+
         public string GetDockerfilePath(DotNetImageRepo imageRepo)
         {
             IEnumerable<string> pathComponents =
             [
                 "src",
-                GetImageRepoName(imageRepo) + GetVariantSuffix(),
+                GetImageRepoName(imageRepo),
                 Version.ToString(),
-                OSDir,
+                OSDir + GetVariantSuffix(),
                 GetArchLabel()
             ];
 

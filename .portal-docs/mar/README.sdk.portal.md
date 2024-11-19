@@ -16,7 +16,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `9.0` (Release Candidate)
+* `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:8.0`

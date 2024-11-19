@@ -380,12 +380,15 @@ namespace Dotnet.Docker
             [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
+
                 ..minGitUpdaters,
+
+                // Disable additional updaters due to https://github.com/dotnet/dotnet-docker/issues/5990
                 // Chisel updaters must be listed before runtime version
                 // updaters because they check the manifest for whether the
                 // runtime versions are being updated or not
-                ..chiselUpdaters,
-                syftUpdater
+                // ..chiselUpdaters,
+                // syftUpdater
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)

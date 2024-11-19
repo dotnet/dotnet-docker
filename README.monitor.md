@@ -6,7 +6,7 @@
 
 ## Featured Tags
 
-* `9` (Release Candidate)
+* `9` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:9`
 * `8` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:8`
@@ -15,28 +15,19 @@
 
 ## About
 
-This image contains the .NET Monitor tool.
-
-Use this image as a sidecar container to collect diagnostic information from other containers running .NET Core 3.1 or later processes.
+This image contains .NET Monitor, a diagnostic tool for capturing diagnostic artifacts (such as dumps and traces) in an operator-driven or automated manner. This tool is an ASP.NET application that hosts a web API for inspecting .NET processes and collecting diagnostic artifacts. This image also contains .NET Monitor extensions for egressing artifacts to Azure Blob Storage and Amazon S3.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
-
-### New: Ubuntu Chiseled Images
-
-Ubuntu Chiseled .NET images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
-These images offer dramatically smaller deployment sizes and attack surface by including only the minimal set of packages required to run .NET applications.
-
-Please see the [Ubuntu Chiseled + .NET](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) documentation page for more info.
 
 ## Usage
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-### Container sample: Run the tool
+You can run this image as a sidecar container to collect diagnostic information and artifacts from other containers running .NET Core 3.1 or .NET 5 and later.
 
-You can run a container with a pre-built [.NET Docker Image](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md), based on the dotnet-monitor global tool.
+See [Running in Kubernetes](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/kubernetes.md) or [Running in Docker Compose](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/docker-compose.md) for examples of how to run this image in orchestration environments.
 
-See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to configure the image to be run in a Docker or Kubernetes environment, including how to configure authentication and certificates for https bindings.
+See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to configure the image and documentation for the web API.
 
 ## Related Repositories
 
@@ -64,12 +55,12 @@ See the [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
-8.0.5-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.5, 8.0 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.0.5-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
-6.3.9-alpine, 6.3-alpine, 6-alpine, 6.3.9, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.20
-6.3.9-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](src/monitor/6.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-6.3.9-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](src/monitor/6.3/cbl-mariner/amd64/Dockerfile) | CBL-Mariner 2.0
-6.3.9-cbl-mariner-distroless, 6.3-cbl-mariner-distroless, 6-cbl-mariner-distroless | [Dockerfile](src/monitor/6.3/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.0.6-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.6, 8.0 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.6-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+6.3.10-alpine, 6.3-alpine, 6-alpine, 6.3.10, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.20
+6.3.10-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](src/monitor/6.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+6.3.10-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](src/monitor/6.3/cbl-mariner/amd64/Dockerfile) | CBL-Mariner 2.0
+6.3.10-cbl-mariner-distroless, 6.3-cbl-mariner-distroless, 6-cbl-mariner-distroless | [Dockerfile](src/monitor/6.3/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 #### .NET Monitor Preview Tags
 
@@ -83,12 +74,12 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.0, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.5-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.5, 8.0 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.5-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.3.9-alpine, 6.3-alpine, 6-alpine, 6.3.9, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.20
-6.3.9-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](src/monitor/6.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-6.3.9-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](src/monitor/6.3/cbl-mariner/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.3.9-cbl-mariner-distroless, 6.3-cbl-mariner-distroless, 6-cbl-mariner-distroless | [Dockerfile](src/monitor/6.3/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.0.6-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.6, 8.0 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.6-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+6.3.10-alpine, 6.3-alpine, 6-alpine, 6.3.10, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.20
+6.3.10-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](src/monitor/6.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+6.3.10-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](src/monitor/6.3/cbl-mariner/arm64v8/Dockerfile) | CBL-Mariner 2.0
+6.3.10-cbl-mariner-distroless, 6.3-cbl-mariner-distroless, 6-cbl-mariner-distroless | [Dockerfile](src/monitor/6.3/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
 #### .NET Monitor Preview Tags
 

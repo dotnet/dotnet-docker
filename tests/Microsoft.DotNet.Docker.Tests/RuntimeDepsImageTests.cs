@@ -26,6 +26,15 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifySelfContainedConsoleScenario(ProductImageData imageData)
         {
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT))
+            {
+                OutputHelper.WriteLine("""
+                Temporarily disable test due to https://github.com/dotnet/dotnet-docker/issues/6049
+                Re-enable once the issue is resolved.
+                """);
+                return;
+            }
+
             using ConsoleAppScenario testScenario =
                 new ConsoleAppScenario.SelfContained(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
@@ -35,6 +44,15 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifySelfContainedWebScenario(ProductImageData imageData)
         {
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT))
+            {
+                OutputHelper.WriteLine("""
+                Temporarily disable test due to https://github.com/dotnet/dotnet-docker/issues/6049
+                Re-enable once the issue is resolved.
+                """);
+                return;
+            }
+
             using WebScenario testScenario =
                 new WebScenario.SelfContained(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
@@ -57,6 +75,12 @@ namespace Microsoft.DotNet.Docker.Tests
                         + "Re-enable once fixed.");
                 return;
             }
+
+            OutputHelper.WriteLine("""
+            Temporarily disable test due to https://github.com/dotnet/dotnet-docker/issues/6049
+            Re-enable once the issue is resolved.
+            """);
+            return;
 
             using WebScenario scenario = new WebScenario.Aot(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();

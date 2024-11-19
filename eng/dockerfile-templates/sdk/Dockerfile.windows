@@ -39,7 +39,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 }}FROM {{aspnetBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 {{InsertTemplate("Dockerfile.windows.install-components")}}
 
@@ -64,7 +64,7 @@ ARG ACCESSTOKEN
 # SDK image
 FROM {{aspnetBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": paths ])}}
 

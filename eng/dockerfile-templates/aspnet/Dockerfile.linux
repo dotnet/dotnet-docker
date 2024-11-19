@@ -43,7 +43,7 @@
 {{if isAlpine:
 {{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
 }}
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
 # Install ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
@@ -81,7 +81,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # ASP.NET Core image
 FROM {{runtimeBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs")}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 {{if isInternal && isRpmInstall:
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [

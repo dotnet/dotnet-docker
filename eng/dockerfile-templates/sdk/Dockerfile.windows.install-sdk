@@ -15,16 +15,14 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("sdk|", dotnetVersion, "|build-version")],
             "$Env:DOTNET_SDK_VERSION")) ^
-    set isInternalStableBranding to ARGS["is-internal"] &&
-        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+    set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
         find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
-    set sdkVersionFile to when(isInternalStableBranding,
+    set sdkVersionFile to when(isStableBranding,
         VARIABLES[cat("sdk|", dotnetVersion, "|product-version")],
         sdkVersionDir) ^
     set url to cat(
         VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-win-x64.zip") ^
-    
     _ The sdk-extract-groups arg is an array of maps. We want to reduce that to just a single array of formatted
         paths. The "for" keyword doesn't work here because we don't want to echo any output. Instead, we'll call
         the map function to enumerate the array. For each group in the array, it'll format the paths of the groups

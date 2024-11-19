@@ -22,10 +22,9 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
             "$ASPNET_VERSION")) ^
-    set isInternalStableBranding to ARGS["is-internal"] &&
-        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+    set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
         find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
-    set aspnetVersionFile to when(isInternalStableBranding,
+    set aspnetVersionFile to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetVersionDir) ^
     set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^

@@ -23,13 +23,12 @@
         when(ARGS["is-internal"],
             VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
             "$ASPNET_VERSION")) ^
-    set isInternalStableBranding to ARGS["is-internal"] &&
-        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
+    set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
         find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
-    set runtimeVersionFile to when(isInternalStableBranding,
+    set runtimeVersionFile to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         runtimeVersionDir) ^
-    set aspnetCompositeVersionFile to when(isInternalStableBranding,
+    set aspnetCompositeVersionFile to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetCompositeVersionDir) ^
     set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
@@ -39,9 +38,6 @@
     set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
     set aspnetCompositeUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetCompositeVersionDir, "/aspnetcore-runtime-composite-", aspnetCompositeVersionFile,
         filePlatform, "-", fileArch, ".", fileExt) ^
-    set localVersionVar to when(ARGS["is-composite-runtime"],
-        VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
-        VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]) ^
     set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
     set rpms to [
         [

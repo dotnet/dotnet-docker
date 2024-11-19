@@ -48,6 +48,8 @@ public abstract class ConsoleAppScenario : ProjectTemplateTestScenario
     public class SelfContained(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
         : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
     {
+        protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime_Deps;
+
         protected override TestDockerfile Dockerfile =>
             TestDockerfileBuilder.GetDefaultDockerfile(PublishConfig.SelfContained);
     }

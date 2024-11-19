@@ -21,7 +21,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public Arch Arch { get; set; }
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
         public string OS { get; set; }
-        public bool IsDistroless => OS.Contains("distroless") || OS.Contains("chiseled");
+        public bool IsDistroless => OS.Contains(Tests.OS.DistrolessSuffix) || OS.Contains(Tests.OS.ChiseledSuffix);
         public virtual int DefaultPort => 8080;
         public virtual int? NonRootUID => IsWindows ? null : 1654;
 
