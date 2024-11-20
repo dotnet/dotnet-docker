@@ -13,9 +13,10 @@ parameters:
 
 jobs:
 - job: ${{ parameters.name }}
-  condition: and(${{ parameters.matrix }}, not(canceled()), in(dependencies.PreBuildValidation.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))
+  condition: and(${{ parameters.matrix }}, not(canceled()), or(in(dependencies.PreBuildValidation.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'), eq(${{ parameters.isInternalServicingValidation }}, 'true')))
   dependsOn:
-  - PreBuildValidation
+  - ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
+    - PreBuildValidation
   - CopyBaseImages
   - GenerateBuildMatrix
   pool: ${{ parameters.pool }}
