@@ -344,7 +344,6 @@ stages:
     condition: "
       and(
         not(canceled()),
-        ne(stageDependencies.Post_Build.outputs['Build.MergeImageInfoFiles.noImageInfos'], 'true'),
         and(
           contains(variables['stages'], 'publish'),
           or(
