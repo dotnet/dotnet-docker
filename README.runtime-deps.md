@@ -10,8 +10,6 @@
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:8.0`
-* `6.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:6.0`
 
 ## About
 
