@@ -7,9 +7,8 @@
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
 
-    set repoBaseUrl to "mcr.microsoft.com/windows" ^
-    set installerStageRepo to cat(repoBaseUrl, "/servercore") ^
-    set runtimeStageRepo to cat(repoBaseUrl, when(isServerCore, "/servercore", "/nanoserver")) ^
+    set installerStageRepo to cat("mcr.microsoft.com/windows/", "servercore") ^
+    set runtimeStageRepo to cat("mcr.microsoft.com/windows/", when(isServerCore, "servercore", "nanoserver")) ^
 
     set fromImageTag to cat(OS_VERSION_NUMBER, "-amd64") ^
 

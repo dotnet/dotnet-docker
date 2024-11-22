@@ -6,11 +6,7 @@
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
 
-    set repoBaseUrl to "mcr.microsoft.com/windows" ^
-    set installerStageRepo to cat(repoBaseUrl, "/servercore") ^
-    set installerStageTag to cat(OS_VERSION_NUMBER, "-amd64") ^
-
-    set installerStageFromImage to cat(installerStageRepo, ":", installerStageTag) ^
+    set installerStageFromImage to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
 
     set runtimeStageTag to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
     set runtimeStageFromImage to cat("$REPO:", runtimeStageTag, "-", OS_VERSION)
