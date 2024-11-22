@@ -18,10 +18,9 @@
     set zlibPkg to when(isUbuntu || isDebian, "zlib1g", "zlib") ^
     set caCertsPkg to when(isDistrolessAzureLinux,
         "prebuilt-ca-certificates",
-        when(isAlpine && dotnetVersion != "6.0",
+        when(isAlpine,
             "ca-certificates-bundle",
-            "ca-certificates"
-        )) ^
+            "ca-certificates")) ^
 
     set basePkgs to when(isAzureLinux,
         [
@@ -40,7 +39,7 @@
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)])
             ]
         )) ^
-    set basePkgs to when(dotnetVersion = "6.0" || dotnetVersion = "8.0", cat(basePkgs, [zlibPkg]), basePkgs) ^
+    set basePkgs to when(dotnetVersion = "8.0", cat(basePkgs, [zlibPkg]), basePkgs) ^
 
     set standardPkgs to sort(cat(basePkgs,
         when(isAzureLinux || isAlpine,
@@ -70,51 +69,12 @@
                 ]
             )))) ^
 
-    set net6Pkgs to when(isAlpine,
-        [
-            "krb5-libs",
-            "libgcc",
-            "libintl",
-            cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-            "libstdc++",
-            "zlib"
-        ],
-        when(isAzureLinux,
-            when(isDistrolessAzureLinux,
-                [
-                    "glibc",
-                    "krb5",
-                    "libgcc",
-                    "libstdc++",
-                    "openssl-libs",
-                    "zlib"
-                ],
-                [
-                    "glibc",
-                    "icu",
-                    "krb5",
-                    "libgcc",
-                    "libstdc++",
-                    "openssl-libs",
-                    "zlib"
-                ]),
-            [
-                "libc6",
-                "libgcc1",
-                "libgssapi-krb5-2",
-                cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
-                cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)]),
-                "libstdc++6",
-                "zlib1g"
-            ])) ^
-
-    set pkgs to when(dotnetVersion = "6.0",
-        net6Pkgs,
+    set pkgs to
         when(ARGS["is-aot"],
             basePkgs,
             when(ARGS["is-extra"] || isDebian || isUbuntu || isFullAzureLinux,
                 extraPkgs,
-                standardPkgs))) ^
+                standardPkgs)) ^
 
     set prefixPkgs to [
             caCertsPkg,
