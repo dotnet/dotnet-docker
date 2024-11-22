@@ -6,7 +6,7 @@
         uid (optional): ID of the user to be created
         no-create-home (optional): Indicates whether a home directory should be created for the user
         no-shell (optional): Indicates whether the shell should be set to /bin/false ^
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
@@ -14,25 +14,46 @@
     set isAzureLinux3 to isAzureLinux && find(OS_VERSION_NUMBER, "3.0") >= 0 ^
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+-distroless$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
     set isChiseledUbuntu to find(OS_VERSION, "chiseled") >= 0 ^
-    set addUserCommand to when(isDebian || isUbuntu || isAzureLinux, "useradd -l", "adduser") ^
+
+    set name to ARGS["name"] ^
     set uid to when(len(ARGS["uid"]) > 0, ARGS["uid"], "$APP_UID") ^
     set gid to when(len(ARGS["gid"]) > 0, ARGS["gid"], "$APP_UID") ^
+
+    set addGroupCommand to when(isAlpine,
+        "addgroup",
+        "groupadd") ^
+
+    set addUserCommand to when(isAlpine,
+        "adduser",
+        "useradd -l") ^
+    set addUserGroupArg to when(isAlpine,
+        cat("--ingroup=", name),
+        cat("--gid=", gid)) ^
+
+    set explicitlyCreateHome to !isAlpine && !isChiseledUbuntu ^
+    set createHomeArg to
+        when(ARGS["no-create-home"],
+            "--no-create-home",
+        when(explicitlyCreateHome,
+            "--create-home",
+            "")) ^
+
     set utilPkgs to when(isAzureLinux3 && !isDistrolessAzureLinux, ["shadow-utils"], [])
+
 }}{{if len(utilPkgs) > 0:{{InsertTemplate("../Dockerfile.linux.install-pkgs", [
         "pkgs": utilPkgs,
         "no-clean": "true"
     ])}}
-    && }}{{if isAlpine:addgroup^else:groupadd}} \
+    && }}{{addGroupCommand}} \
         --gid={{gid}} \
-        {{ARGS["name"]}} \
+        {{name}} \
     && {{addUserCommand}} \
         --uid={{uid}} \
-        {{if isAlpine:--ingroup={{ARGS["name"]}}^else:--gid={{gid}}}} \{{if ARGS["no-shell"]:
-        --shell /bin/false \}}{{if ARGS["no-create-home"]:
-        --no-create-home \^elif find(addUserCommand, "useradd") >= 0 && !isChiseledUbuntu:
-        --create-home \}}{{if isAlpine:
+        {{addUserGroupArg}} \{{if ARGS["no-shell"]:
+        --shell /bin/false \}}{{if createHomeArg != "":
+        {{createHomeArg}} \}}{{if isAlpine:
         --disabled-password \}}
-        {{ARGS["name"]}}{{if len(utilPkgs) > 0: \
+        {{name}}{{if len(utilPkgs) > 0: \
     && {{InsertTemplate("../Dockerfile.linux.remove-pkgs", [
         "pkgs": utilPkgs
         ], "    ")}}}}
