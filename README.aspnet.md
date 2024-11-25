@@ -191,6 +191,20 @@ Tags | Dockerfile | OS Version
 8.0.12-jammy-chiseled-composite-arm32v7, 8.0-jammy-chiseled-composite-arm32v7, 8.0.12-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.12-jammy-chiseled-composite-extra-arm32v7, 8.0-jammy-chiseled-composite-extra-arm32v7, 8.0.12-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 
+### Nano Server 2025 amd64 Tags
+
+Tag | Dockerfile
+---------| ---------------
+9.0.1-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
+8.0.12-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
+
+### Windows Server Core 2025 amd64 Tags
+
+Tag | Dockerfile
+---------| ---------------
+9.0.1-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+8.0.12-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+
 ### Nano Server 2022 amd64 Tags
 
 Tag | Dockerfile

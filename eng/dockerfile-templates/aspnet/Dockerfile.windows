@@ -1,12 +1,16 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
+    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
+
+    set dotnetBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
-    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
-        VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
-    set runtimeBaseTag to cat("$REPO:", tagVersion, "-", OS_VERSION)
+
+    set installerStageFromImage to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
+
+    set runtimeStageTag to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
+    set runtimeStageFromImage to cat("$REPO:", runtimeStageTag, "-", OS_VERSION)
+
 }}# escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
@@ -14,7 +18,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 
     _ SINGLE STAGE
 
-}}FROM {{runtimeBaseTag}}
+}}FROM {{runtimeStageFromImage}}
 
 {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
@@ -24,7 +28,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
     _ MULTI STAGE
 
 }}# Installer image
-FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
+FROM {{installerStageFromImage}} AS installer
 {{if isInternal:
 ARG ACCESSTOKEN
 }}
@@ -36,7 +40,7 @@ ARG ACCESSTOKEN
 
 
 # ASP.NET Core image
-FROM {{runtimeBaseTag}}
+FROM {{runtimeStageFromImage}}
 
 {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
