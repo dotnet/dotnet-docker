@@ -44,6 +44,8 @@ jobs:
     parameters:
       targetPath: $(imageInfoHostDir)
       artifactName: image-info
+      # This can fail in scenarios where no build jobs have run to produce any artifacts
+      continueOnError: true
   - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
     parameters:
       publicSourceBranch: $(publicSourceBranch)
