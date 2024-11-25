@@ -245,14 +245,20 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V6_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V6_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
+
             new ProductImageData { Version = V8_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V8_0, OS = OS.ServerCoreLtsc2025, Arch = Arch.Amd64 },
+
             new ProductImageData { Version = V9_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V9_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V9_0, OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64 },
             new ProductImageData { Version = V9_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V9_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
+            new ProductImageData { Version = V9_0, OS = OS.ServerCoreLtsc2025, Arch = Arch.Amd64 },
         };
 
         private static readonly SampleImageData[] s_linuxSampleTestData =
