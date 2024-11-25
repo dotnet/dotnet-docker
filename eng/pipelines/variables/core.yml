@@ -6,3 +6,5 @@ variables:
 
 - name: manifest
   value: manifest.json
+- name: publishEolAnnotations
+  value: true
