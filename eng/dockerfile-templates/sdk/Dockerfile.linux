@@ -5,9 +5,7 @@
     set isAzureLinux to isMariner || find(OS_VERSION, "azurelinux") >= 0 ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
-    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
-        VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
+    set tagVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
