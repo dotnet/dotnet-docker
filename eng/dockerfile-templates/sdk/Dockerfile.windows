@@ -28,7 +28,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 {{InsertTemplate("Dockerfile.windows.install-components")}}
 
-{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": paths ])}}
+RUN setx /M PATH "%PATH%;C:\Program Files\powershell;C:\Program Files\MinGit\cmd"
 
 {{InsertTemplate("Dockerfile.windows.first-run")}}^else:
 {{
