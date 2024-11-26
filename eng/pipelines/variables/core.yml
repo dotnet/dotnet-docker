@@ -8,4 +8,6 @@ variables:
   value: manifest.json
 
 - name: generateEolAnnotationDataExtraOptions
-  value: "--annotate-eol-products"
+  value: ""
+  # TODO: Temporary workaround: see https://github.com/dotnet/docker-tools/issues/1507
+  #value: "--annotate-eol-products"
