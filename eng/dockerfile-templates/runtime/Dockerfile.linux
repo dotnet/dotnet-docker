@@ -84,10 +84,10 @@ FROM {{runtimeDepsBaseTag}}
 {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 {{ if isDistroless:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
-COPY --from=installer ["/dotnet-symlink", "/usr/bin"]{{ if !isAzureLinux || dotnetVersion != "6.0":
+COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 
 ENTRYPOINT ["/usr/bin/dotnet"]
-CMD ["--info"]}}^
+CMD ["--info"]^
 elif !isInternal:
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
