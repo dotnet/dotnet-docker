@@ -75,7 +75,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "install-method": "download-and-install",
         "use-local-version-var": "true",
         "is-internal": isInternal,
-        "is-rpm-install": false
         "is-composite-runtime": "true",
     ])}}
 {{ if isDistroless:
