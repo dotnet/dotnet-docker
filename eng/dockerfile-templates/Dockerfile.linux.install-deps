@@ -94,7 +94,6 @@
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,
-        "noninteractive": (OS_VERSION = "focal"),
         "pkg-mgr": when(isDistrolessAzureLinux, "tdnf", ""),
         "pkg-mgr-opts": pkgMgrOpts
     ])}}
