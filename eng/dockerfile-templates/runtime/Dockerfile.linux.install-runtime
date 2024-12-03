@@ -30,13 +30,11 @@
     set aspnetCompositeVersionFile to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetCompositeVersionDir) ^
-    set fileArch to ARCH_SHORT ^
-    set fileExt to "tar.gz" ^
     set filePlatform to when(isAlpine, "-linux-musl", "-linux") ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
     set aspnetCompositeUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetCompositeVersionDir, "/aspnetcore-runtime-composite-", aspnetCompositeVersionFile,
-        filePlatform, "-", fileArch, ".", fileExt) ^
+        filePlatform, "-", ARCH_SHORT, ".tar.gz") ^
     set files to when(ARGS["is-composite-runtime"],
         [
             [
