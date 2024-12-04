@@ -13,6 +13,7 @@
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,
@@ -20,39 +21,26 @@
             when(isUbuntu,
                 "ubuntu.azurecr.io/ubuntu",
                 when(isAzureLinux,
-                    when(find(OS_VERSION_NUMBER, "3.0") >= 0, 
+                    when(find(OS_VERSION_NUMBER, "3.0") >= 0,
                         "mcr.microsoft.com/azurelinux/base/core",
                         "mcr.microsoft.com/cbl-mariner/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isAzureLinux, OS_VERSION_NUMBER, OS_VERSION) ^
-    set isRpmInstall to isAzureLinux && dotnetVersion = "6.0" ^
-    set nonRootUserSupported to dotnetVersion != "6.0" ^
-    set isMultiStage to (isRpmInstall && isInternal) || (isCblMariner && nonRootUserSupported) ^
-    set firstStageName to when(isRpmInstall, "installer", "base") ^
-    set secondStageName to when(isMultiStage && nonRootUserSupported, "installer") ^
+    set baseImage to cat(baseImageRepo, ":", baseImageTag) ^
+
+    set isMultiStage to isInternal || isCblMariner ^
+    set firstStageName to "base" ^
+    set secondStageName to when(isMultiStage, "installer") ^
+
     set stagingDir to "/staging" ^
-    set createUserHome to is ^
-    set rpmFilename to "dotnet-runtime-deps.rpm" ^
-    set utilPkgs to when(isAzureLinux && nonRootUserSupported, ["shadow-utils"], []) ^
+
+    set utilPkgs to when(isAzureLinux, ["shadow-utils"], []) ^
     set useGlobalizationInvariantMode to !ARGS["is-extra"] && (isDistroless || isAlpine) ^
     set username to "app" ^
     set uid to 1654 ^
     set gid to uid ^
     set nonRootUserComment to "# Create a non-root user and group"
-}}FROM {{baseImageRepo}}:{{baseImageTag}}{{if isMultiStage: AS {{firstStageName}}}}{{if isRpmInstall && isInternal:
-
-ARG ACCESSTOKEN
-
-RUN {{InsertTemplate("Dockerfile.download-runtime-deps-pkg",
-    [
-        "filename": rpmFilename,
-        "is-internal": isInternal
-    ],
-    "    "
-)}}
-
-
-FROM {{baseImageRepo}}:{{baseImageTag}}}}
+}}FROM {{baseImage}}{{if isMultiStage: AS base}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs",
     [
@@ -66,25 +54,10 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
         "is-aot": ARGS["is-aot"],
         "is-extra": ARGS["is-extra"]
     ]
-)}}{{if isRpmInstall:{{if isMultiStage:
-
-{{InsertTemplate("../Dockerfile.linux.copy-files",
-    [
-        "files": [[ "filename": rpmFilename ]],
-        "srcStage": firstStageName,
-        "destination": ""
-    ]
-)}}}}
-
-{{InsertTemplate("Dockerfile.install-runtime-deps-pkg",
-    [
-        "skip-download": isInternal
-        "filename": rpmFilename
-    ]
-)}}}}{{if isMultiStage && nonRootUserSupported:
+)}}{{if isMultiStage:
 
 
-FROM {{firstStageName}} AS {{secondStageName}}
+FROM base AS installer
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs", [ "pkgs": utilPkgs ])}}
 
@@ -100,11 +73,11 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
 
 
 # Final image
-FROM {{firstStageName}}
+FROM base
 
-COPY --from={{secondStageName}} {{stagingDir}}/ /
+COPY --from=installer {{stagingDir}}/ /
 
-RUN install -d -m 0755 -o $APP_UID -g $APP_UID "/home/{{username}}"^else:{{if nonRootUserSupported:
+RUN install -d -m 0755 -o $APP_UID -g $APP_UID "/home/{{username}}"^else:
 
 {{nonRootUserComment}}
-RUN {{InsertTemplate("Dockerfile.linux.non-root-user", [ "name": username ])}}}}}}
+RUN {{InsertTemplate("Dockerfile.linux.non-root-user", [ "name": username ])}}}}

@@ -7,7 +7,6 @@
             instead of referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        is-rpm-install (optional): Whether to install RPM versus tarball
         is-composite-runtime (optional): Whether to install aspnetcore composite version ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
@@ -31,35 +30,12 @@
     set aspnetCompositeVersionFile to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         aspnetCompositeVersionDir) ^
-    set fileArch to when(ARGS["is-rpm-install"] && ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
-    set fileExt to when(ARGS["is-rpm-install"], "rpm", "tar.gz") ^
-    set filePlatform to when(ARGS["is-rpm-install"], "", when(isAlpine, "-linux-musl", "-linux")) ^
+    set filePlatform to when(isAlpine, "-linux-musl", "-linux") ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
     set aspnetCompositeUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetCompositeVersionDir, "/aspnetcore-runtime-composite-", aspnetCompositeVersionFile,
-        filePlatform, "-", fileArch, ".", fileExt) ^
-    set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
-    set rpms to [
-        [
-            "filename": "dotnet-host.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-host-", runtimeVersionFile, "-", rpmFileArch, ".rpm"),
-            "sha": VARIABLES[join(["runtime-host", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
-        ],
-        [
-            "filename": "dotnet-hostfxr.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-hostfxr-", runtimeVersionFile, "-", rpmFileArch, ".rpm"),
-            "sha": VARIABLES[join(["runtime-hostfxr", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
-        ],
-        [
-            "filename": "dotnet-runtime.rpm",
-            "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", rpmFileArch, ".rpm"),
-            "sha": VARIABLES[join(["runtime", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_sha512"
-        ]
-    ] ^
-    set tarballs to when(ARGS["is-composite-runtime"],
+        filePlatform, "-", ARCH_SHORT, ".tar.gz") ^
+    set files to when(ARGS["is-composite-runtime"],
         [
             [
                 "filename": "dotnet.tar.gz",
@@ -76,7 +52,6 @@
                 "sha-var-name": "dotnet_sha512"
             ]
         ]) ^
-    set files to when(ARGS["is-rpm-install"], rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -96,6 +71,6 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
             "skip-download": !downloadEnabled,
             "skip-install": !installEnabled,
             "install-dir": ARGS["dest-dir"],
-            "create-install-dir": !ARGS["is-rpm-install"] || ARGS["is-internal"]
+            "create-install-dir": "true"
         ], "    ")}}{{if ARGS["add-symlink"]: \
     && {{InsertTemplate("Dockerfile.linux.symlink")}}}}

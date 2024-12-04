@@ -10,8 +10,6 @@
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:8.0`
-* `6.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:6.0`
 
 ## About
 
@@ -122,15 +120,6 @@ Tags | Dockerfile | OS Version
 8.0.11-cbl-mariner2.0-distroless-extra-amd64, 8.0-cbl-mariner2.0-distroless-extra-amd64, 8.0.11-cbl-mariner2.0-distroless-extra, 8.0-cbl-mariner2.0-distroless-extra | [Dockerfile](src/aspnet/8.0/cbl-mariner2.0-distroless-extra/amd64/Dockerfile) | CBL-Mariner 2.0
 8.0.11-cbl-mariner2.0-distroless-composite-amd64, 8.0-cbl-mariner2.0-distroless-composite-amd64, 8.0.11-cbl-mariner2.0-distroless-composite, 8.0-cbl-mariner2.0-distroless-composite | [Dockerfile](src/aspnet/8.0/cbl-mariner2.0-distroless-composite/amd64/Dockerfile) | CBL-Mariner 2.0
 8.0.11-cbl-mariner2.0-distroless-composite-extra-amd64, 8.0-cbl-mariner2.0-distroless-composite-extra-amd64, 8.0.11-cbl-mariner2.0-distroless-composite-extra, 8.0-cbl-mariner2.0-distroless-composite-extra | [Dockerfile](src/aspnet/8.0/cbl-mariner2.0-distroless-composite-extra/amd64/Dockerfile) | CBL-Mariner 2.0
-6.0.36-bookworm-slim-amd64, 6.0-bookworm-slim-amd64, 6.0.36-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](src/aspnet/6.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-6.0.36-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.36-bullseye-slim, 6.0-bullseye-slim, 6.0.36, 6.0 | [Dockerfile](src/aspnet/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.36-alpine3.20-amd64, 6.0-alpine3.20-amd64, 6.0-alpine-amd64, 6.0.36-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](src/aspnet/6.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-6.0.36-jammy-amd64, 6.0-jammy-amd64, 6.0.36-jammy, 6.0-jammy | [Dockerfile](src/aspnet/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-6.0.36-jammy-chiseled-amd64, 6.0-jammy-chiseled-amd64, 6.0.36-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](src/aspnet/6.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-6.0.36-jammy-chiseled-extra-amd64, 6.0-jammy-chiseled-extra-amd64, 6.0.36-jammy-chiseled-extra, 6.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/6.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
-6.0.36-focal-amd64, 6.0-focal-amd64, 6.0.36-focal, 6.0-focal | [Dockerfile](src/aspnet/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
-6.0.36-cbl-mariner2.0-amd64, 6.0-cbl-mariner2.0-amd64, 6.0.36-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](src/aspnet/6.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
-6.0.36-cbl-mariner2.0-distroless-amd64, 6.0-cbl-mariner2.0-distroless-amd64, 6.0.36-cbl-mariner2.0-distroless, 6.0-cbl-mariner2.0-distroless | [Dockerfile](src/aspnet/6.0/cbl-mariner2.0-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ### Linux arm64 Tags
 
@@ -172,15 +161,6 @@ Tags | Dockerfile | OS Version
 8.0.11-cbl-mariner2.0-distroless-extra-arm64v8, 8.0-cbl-mariner2.0-distroless-extra-arm64v8, 8.0.11-cbl-mariner2.0-distroless-extra, 8.0-cbl-mariner2.0-distroless-extra | [Dockerfile](src/aspnet/8.0/cbl-mariner2.0-distroless-extra/arm64v8/Dockerfile) | CBL-Mariner 2.0
 8.0.11-cbl-mariner2.0-distroless-composite-arm64v8, 8.0-cbl-mariner2.0-distroless-composite-arm64v8, 8.0.11-cbl-mariner2.0-distroless-composite, 8.0-cbl-mariner2.0-distroless-composite | [Dockerfile](src/aspnet/8.0/cbl-mariner2.0-distroless-composite/arm64v8/Dockerfile) | CBL-Mariner 2.0
 8.0.11-cbl-mariner2.0-distroless-composite-extra-arm64v8, 8.0-cbl-mariner2.0-distroless-composite-extra-arm64v8, 8.0.11-cbl-mariner2.0-distroless-composite-extra, 8.0-cbl-mariner2.0-distroless-composite-extra | [Dockerfile](src/aspnet/8.0/cbl-mariner2.0-distroless-composite-extra/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.0.36-bookworm-slim-arm64v8, 6.0-bookworm-slim-arm64v8, 6.0.36-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](src/aspnet/6.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-6.0.36-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.36-bullseye-slim, 6.0-bullseye-slim, 6.0.36, 6.0 | [Dockerfile](src/aspnet/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.36-alpine3.20-arm64v8, 6.0-alpine3.20-arm64v8, 6.0-alpine-arm64v8, 6.0.36-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](src/aspnet/6.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-6.0.36-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.36-jammy, 6.0-jammy | [Dockerfile](src/aspnet/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.36-jammy-chiseled-arm64v8, 6.0-jammy-chiseled-arm64v8, 6.0.36-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](src/aspnet/6.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.36-jammy-chiseled-extra-arm64v8, 6.0-jammy-chiseled-extra-arm64v8, 6.0.36-jammy-chiseled-extra, 6.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/6.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.36-focal-arm64v8, 6.0-focal-arm64v8, 6.0.36-focal, 6.0-focal | [Dockerfile](src/aspnet/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
-6.0.36-cbl-mariner2.0-arm64v8, 6.0-cbl-mariner2.0-arm64v8, 6.0.36-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](src/aspnet/6.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.0.36-cbl-mariner2.0-distroless-arm64v8, 6.0-cbl-mariner2.0-distroless-arm64v8, 6.0.36-cbl-mariner2.0-distroless, 6.0-cbl-mariner2.0-distroless | [Dockerfile](src/aspnet/6.0/cbl-mariner2.0-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
 ### Linux arm32 Tags
 
@@ -202,13 +182,6 @@ Tags | Dockerfile | OS Version
 8.0.11-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.11-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.11-jammy-chiseled-composite-arm32v7, 8.0-jammy-chiseled-composite-arm32v7, 8.0.11-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.11-jammy-chiseled-composite-extra-arm32v7, 8.0-jammy-chiseled-composite-extra-arm32v7, 8.0.11-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.36-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.36-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](src/aspnet/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-6.0.36-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.36-bullseye-slim, 6.0-bullseye-slim, 6.0.36, 6.0 | [Dockerfile](src/aspnet/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.36-alpine3.20-arm32v7, 6.0-alpine3.20-arm32v7, 6.0-alpine-arm32v7, 6.0.36-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](src/aspnet/6.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-6.0.36-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.36-jammy, 6.0-jammy | [Dockerfile](src/aspnet/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.36-jammy-chiseled-arm32v7, 6.0-jammy-chiseled-arm32v7, 6.0.36-jammy-chiseled, 6.0-jammy-chiseled | [Dockerfile](src/aspnet/6.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.36-jammy-chiseled-extra-arm32v7, 6.0-jammy-chiseled-extra-arm32v7, 6.0.36-jammy-chiseled-extra, 6.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/6.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.36-focal-arm32v7, 6.0-focal-arm32v7, 6.0.36-focal, 6.0-focal | [Dockerfile](src/aspnet/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ### Nano Server 2025 amd64 Tags
 
@@ -230,7 +203,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.0-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 8.0.11-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
-6.0.36-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.36, 6.0 | [Dockerfile](src/aspnet/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ### Windows Server Core 2022 amd64 Tags
 
@@ -238,7 +210,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.0-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 8.0.11-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-6.0.36-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ### Nano Server, version 1809 amd64 Tags
 
@@ -246,7 +217,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.0-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile)
 8.0.11-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile)
-6.0.36-nanoserver-1809, 6.0-nanoserver-1809, 6.0.36, 6.0 | [Dockerfile](src/aspnet/6.0/nanoserver-1809/amd64/Dockerfile)
 
 ### Windows Server Core 2019 amd64 Tags
 
@@ -254,7 +224,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.0-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 8.0.11-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-6.0.36-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list) for all supported and unsupported tags.*

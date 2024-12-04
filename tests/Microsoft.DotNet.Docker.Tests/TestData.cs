@@ -14,38 +14,6 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private static readonly ProductImageData[] s_linuxTestData =
         {
-            new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.BookwormSlim,        Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy },
-            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy,
-                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine320,           Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Mariner20,           Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.Mariner20Distroless, Arch = Arch.Amd64,   SdkOS = OS.Mariner20 },
-
-            new ProductImageData { Version = V6_0, OS = OS.Mariner20,           Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.Mariner20Distroless, Arch = Arch.Arm64,   SdkOS = OS.Mariner20 },
-            new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.BookwormSlim,        Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm64 },
-            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy },
-            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Jammy,
-                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine320,           Arch = Arch.Arm64 },
-
-            new ProductImageData { Version = V6_0, OS = OS.BullseyeSlim,        Arch = Arch.Arm },
-            new ProductImageData { Version = V6_0, OS = OS.BookwormSlim,        Arch = Arch.Arm },
-            new ProductImageData { Version = V6_0, OS = OS.Focal,               Arch = Arch.Arm },
-            new ProductImageData { Version = V6_0, OS = OS.Jammy,               Arch = Arch.Arm },
-            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy },
-            new ProductImageData { Version = V6_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy,
-                    ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
-            new ProductImageData { Version = V6_0, OS = OS.Alpine320,           Arch = Arch.Arm },
-
-
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Jammy },
@@ -241,11 +209,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly ProductImageData[] s_windowsTestData =
         {
-            new ProductImageData { Version = V6_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V6_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
-
             new ProductImageData { Version = V8_0, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V8_0, OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64 },
@@ -305,14 +268,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly ProductImageData[] s_linuxMonitorTestData =
         {
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Alpine320,              OSTag = OS.Alpine,            Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Alpine320,              OSTag = OS.Alpine,            Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Mariner20,              OSTag = OS.Mariner,           Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Mariner20,              OSTag = OS.Mariner,           Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V6_3, VersionFamily = V6_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
             new ProductImageData { Version = V8_0, VersionFamily = V8_0, OS = OS.Mariner20Distroless,    OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },

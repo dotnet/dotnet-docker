@@ -31,7 +31,7 @@
         return cat("'", path, "'")
     }} ^
     set mingitDir to when(isSingleStage, "$Env:ProgramFiles\MinGit", "MinGit")
-}}{{ if dotnetVersion != "6.0":# Download MinGit
+}}# Download MinGit
 RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
@@ -51,7 +51,7 @@ RUN powershell -Command " `
                 "dest-dir": mingitDir
             ], "        ")}}"
 
-}}{{if ARGS["dotnet-is-internal"]:SHELL ["powershell", "-command"]
+{{if ARGS["dotnet-is-internal"]:SHELL ["powershell", "-command"]
 RUN `^else:RUN powershell -Command " `}}
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `

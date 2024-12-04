@@ -13,9 +13,7 @@
 elif match(SHORT_REPO, "monitor"):* `9` (Standard Support)
   * `docker pull {{FULL_REPO}}:9`
 * `8` (Long-Term Support)
-  * `docker pull {{FULL_REPO}}:8`
-* `6` (Long-Term Support)
-  * `docker pull {{FULL_REPO}}:6`^
+  * `docker pull {{FULL_REPO}}:8`^
 elif match(REPO, "monitor/base"):* `9` (Standard Support)
   * `docker pull {{FULL_REPO}}:9`
 * `8` (Long-Term Support)
@@ -25,6 +23,4 @@ elif match(REPO, "aspire-dashboard"):* `9.0`
 else:* `9.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:9.0`
 * `8.0` (Long-Term Support)
-  * `docker pull {{FULL_REPO}}:8.0`
-* `6.0` (Long-Term Support)
-  * `docker pull {{FULL_REPO}}:6.0`}}
+  * `docker pull {{FULL_REPO}}:8.0`}}

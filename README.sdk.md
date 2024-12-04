@@ -10,8 +10,6 @@
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:8.0`
-* `6.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:6.0`
 
 ## About
 
@@ -89,12 +87,6 @@ Tags | Dockerfile | OS Version
 8.0.404-azurelinux3.0-aot-amd64, 8.0-azurelinux3.0-aot-amd64, 8.0.404-azurelinux3.0-aot, 8.0-azurelinux3.0-aot | [Dockerfile](src/sdk/8.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
 8.0.404-cbl-mariner2.0-amd64, 8.0-cbl-mariner2.0-amd64, 8.0.404-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 8.0.404-cbl-mariner2.0-aot-amd64, 8.0-cbl-mariner2.0-aot-amd64, 8.0.404-cbl-mariner2.0-aot, 8.0-cbl-mariner2.0-aot | [Dockerfile](src/sdk/8.0/cbl-mariner2.0-aot/amd64/Dockerfile) | CBL-Mariner 2.0
-6.0.428-1-bookworm-slim-amd64, 6.0-bookworm-slim-amd64, 6.0.428-1-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](src/sdk/6.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-6.0.428-1-bullseye-slim-amd64, 6.0-bullseye-slim-amd64, 6.0.428-1-bullseye-slim, 6.0-bullseye-slim, 6.0.428-1, 6.0 | [Dockerfile](src/sdk/6.0/bullseye-slim/amd64/Dockerfile) | Debian 11
-6.0.428-1-alpine3.20-amd64, 6.0-alpine3.20-amd64, 6.0-alpine-amd64, 6.0.428-1-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](src/sdk/6.0/alpine3.20/amd64/Dockerfile) | Alpine 3.20
-6.0.428-1-jammy-amd64, 6.0-jammy-amd64, 6.0.428-1-jammy, 6.0-jammy | [Dockerfile](src/sdk/6.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-6.0.428-1-cbl-mariner2.0-amd64, 6.0-cbl-mariner2.0-amd64, 6.0.428-1-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](src/sdk/6.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
-6.0.428-1-focal-amd64, 6.0-focal-amd64, 6.0.428-1-focal, 6.0-focal | [Dockerfile](src/sdk/6.0/focal/amd64/Dockerfile) | Ubuntu 20.04
 
 ### Linux arm64 Tags
 
@@ -118,12 +110,6 @@ Tags | Dockerfile | OS Version
 8.0.404-azurelinux3.0-aot-arm64v8, 8.0-azurelinux3.0-aot-arm64v8, 8.0.404-azurelinux3.0-aot, 8.0-azurelinux3.0-aot | [Dockerfile](src/sdk/8.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.404-cbl-mariner2.0-arm64v8, 8.0-cbl-mariner2.0-arm64v8, 8.0.404-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
 8.0.404-cbl-mariner2.0-aot-arm64v8, 8.0-cbl-mariner2.0-aot-arm64v8, 8.0.404-cbl-mariner2.0-aot, 8.0-cbl-mariner2.0-aot | [Dockerfile](src/sdk/8.0/cbl-mariner2.0-aot/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.0.428-1-bookworm-slim-arm64v8, 6.0-bookworm-slim-arm64v8, 6.0.428-1-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](src/sdk/6.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-6.0.428-1-bullseye-slim-arm64v8, 6.0-bullseye-slim-arm64v8, 6.0.428-1-bullseye-slim, 6.0-bullseye-slim, 6.0.428-1, 6.0 | [Dockerfile](src/sdk/6.0/bullseye-slim/arm64v8/Dockerfile) | Debian 11
-6.0.428-1-alpine3.20-arm64v8, 6.0-alpine3.20-arm64v8, 6.0-alpine-arm64v8, 6.0.428-1-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](src/sdk/6.0/alpine3.20/arm64v8/Dockerfile) | Alpine 3.20
-6.0.428-1-jammy-arm64v8, 6.0-jammy-arm64v8, 6.0.428-1-jammy, 6.0-jammy | [Dockerfile](src/sdk/6.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-6.0.428-1-cbl-mariner2.0-arm64v8, 6.0-cbl-mariner2.0-arm64v8, 6.0.428-1-cbl-mariner2.0, 6.0-cbl-mariner2.0 | [Dockerfile](src/sdk/6.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.0.428-1-focal-arm64v8, 6.0-focal-arm64v8, 6.0.428-1-focal, 6.0-focal | [Dockerfile](src/sdk/6.0/focal/arm64v8/Dockerfile) | Ubuntu 20.04
 
 ### Linux arm32 Tags
 
@@ -135,11 +121,6 @@ Tags | Dockerfile | OS Version
 8.0.404-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.404-bookworm-slim, 8.0-bookworm-slim, 8.0.404, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 8.0.404-alpine3.20-arm32v7, 8.0-alpine3.20-arm32v7, 8.0-alpine-arm32v7, 8.0.404-alpine3.20, 8.0-alpine3.20, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
 8.0.404-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.404-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.428-1-bookworm-slim-arm32v7, 6.0-bookworm-slim-arm32v7, 6.0.428-1-bookworm-slim, 6.0-bookworm-slim | [Dockerfile](src/sdk/6.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-6.0.428-1-bullseye-slim-arm32v7, 6.0-bullseye-slim-arm32v7, 6.0.428-1-bullseye-slim, 6.0-bullseye-slim, 6.0.428-1, 6.0 | [Dockerfile](src/sdk/6.0/bullseye-slim/arm32v7/Dockerfile) | Debian 11
-6.0.428-1-alpine3.20-arm32v7, 6.0-alpine3.20-arm32v7, 6.0-alpine-arm32v7, 6.0.428-1-alpine3.20, 6.0-alpine3.20, 6.0-alpine | [Dockerfile](src/sdk/6.0/alpine3.20/arm32v7/Dockerfile) | Alpine 3.20
-6.0.428-1-jammy-arm32v7, 6.0-jammy-arm32v7, 6.0.428-1-jammy, 6.0-jammy | [Dockerfile](src/sdk/6.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-6.0.428-1-focal-arm32v7, 6.0-focal-arm32v7, 6.0.428-1-focal, 6.0-focal | [Dockerfile](src/sdk/6.0/focal/arm32v7/Dockerfile) | Ubuntu 20.04
 
 ### Nano Server 2025 amd64 Tags
 
@@ -161,7 +142,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.100-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 8.0.404-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
-6.0.428-1-nanoserver-ltsc2022, 6.0-nanoserver-ltsc2022, 6.0.428-1, 6.0 | [Dockerfile](src/sdk/6.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ### Windows Server Core 2022 amd64 Tags
 
@@ -169,7 +149,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.100-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 8.0.404-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-6.0.428-1-windowsservercore-ltsc2022, 6.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/6.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ### Nano Server, version 1809 amd64 Tags
 
@@ -177,7 +156,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.100-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
 8.0.404-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
-6.0.428-1-nanoserver-1809, 6.0-nanoserver-1809, 6.0.428-1, 6.0 | [Dockerfile](src/sdk/6.0/nanoserver-1809/amd64/Dockerfile)
 
 ### Windows Server Core 2019 amd64 Tags
 
@@ -185,7 +163,6 @@ Tag | Dockerfile
 ---------| ---------------
 9.0.100-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 8.0.404-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-6.0.428-1-windowsservercore-ltsc2019, 6.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/6.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/sdk/tags/list) for all supported and unsupported tags.*
