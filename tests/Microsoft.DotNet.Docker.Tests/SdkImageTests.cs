@@ -96,8 +96,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageName = imageData.GetImage(ImageRepo, DockerHelper);
             string version = imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper);
 
-            List<EnvironmentVariableInfo> variables = new()
-            {
+            List<EnvironmentVariableInfo> variables =
+            [
                 new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
                 new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
                 new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"),
@@ -108,9 +108,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 },
                 AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
                 RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
-                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true")
-            };
-            variables.AddRange(GetCommonEnvironmentVariables());
+                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"),
+                ..GetCommonEnvironmentVariables(),
+            ];
 
             if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
@@ -160,23 +160,6 @@ namespace Microsoft.DotNet.Docker.Tests
             bool filesMatch = FileHelper.CompareFiles(expectedFilesContext.Path, actualFilesContext.Path, OutputHelper);
 
             Assert.True(filesMatch, "Differences found in the dotnet folder contents.");
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInstalledRpmPackages(ProductImageData imageData)
-        {
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                new string[]
-                {
-                    $"dotnet-sdk-{imageData.VersionString}",
-                    $"dotnet-targeting-pack-{imageData.VersionString}",
-                    $"aspnetcore-targeting-pack-{imageData.VersionString}",
-                    $"dotnet-apphost-pack-{imageData.VersionString}",
-                    $"netstandard-targeting-pack-2.1"
-                }
-                .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
         [LinuxImageTheory]

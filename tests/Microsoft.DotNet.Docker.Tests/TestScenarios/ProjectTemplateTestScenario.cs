@@ -15,7 +15,6 @@ namespace Microsoft.DotNet.Docker.Tests;
 public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
 {
     private bool _disposed;
-    private bool _nonRootUserSupported;
 
     protected static string OSDockerfileSuffix { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "windows";
     protected static string? AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : null;
@@ -26,7 +25,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
     protected ITestOutputHelper OutputHelper { get; }
     protected TestSolution TestSolution { get; }
 
-    protected virtual bool NonRootUserSupported => _nonRootUserSupported;
+    protected virtual bool NonRootUserSupported => DockerHelper.IsLinuxContainerModeEnabled;
 
     protected virtual bool InjectCustomTestCode { get; } = false;
     protected virtual bool OutputIsStatic { get; } = false;
@@ -45,7 +44,6 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         DockerHelper = dockerHelper;
         ImageData = imageData;
         OutputHelper = outputHelper;
-        _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled;
 
         TestSolution = new(imageData, SampleName, dockerHelper, injectCustomTestCode: InjectCustomTestCode);
     }

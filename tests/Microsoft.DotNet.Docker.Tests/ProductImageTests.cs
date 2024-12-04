@@ -421,15 +421,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3t64",
                         "openssl",
                     ],
-                { OS: OS.Focal } =>
-                    [
-                        "ca-certificates",
-                        "libc6",
-                        "libgcc-s1",
-                        "libgssapi-krb5-2",
-                        "libicu66",
-                        "libssl1.1",
-                    ],
                 { OS: string os } when os.Contains(OS.Alpine) =>
                     [
                         "ca-certificates-bundle",
@@ -444,15 +435,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libicu72",
                         "libssl3",
                         "tzdata",
-                    ],
-                { OS: OS.BullseyeSlim } =>
-                    [
-                        "ca-certificates",
-                        "libc6",
-                        "libgcc-s1", // Listed as libgcc1 in the Dockerfile
-                        "libgssapi-krb5-2",
-                        "libicu67",
-                        "libssl1.1",
                     ],
                 _ => throw new NotSupportedException()
             };
