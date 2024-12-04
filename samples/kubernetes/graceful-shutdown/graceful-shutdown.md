@@ -49,8 +49,8 @@ app.Use((httpContext, next) =>
 {
     var hostLifetime = httpContext.RequestServices.GetRequiredService<IHostApplicationLifetime>();
     var originalCt = httpContext.RequestAborted;
-    var combinedCt = CancellationTokenSource.CreateLinkedTokenSource(originalCt, hostLifetime.ApplicationStopping).Token;
-    httpContext.RequestAborted = combinedCt;
+    using var combinedCts = CancellationTokenSource.CreateLinkedTokenSource(originalCt, hostLifetime.ApplicationStopping);
+    httpContext.RequestAborted = combinedCts.Token;
     return next(httpContext);
 });
 ```

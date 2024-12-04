@@ -287,8 +287,8 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly ProductImageData[] s_AspireDashboardTestData =
         {
             new() {
-                Version = V8_2,
-                VersionFamily = V8_0,
+                Version = V9_0,
+                VersionFamily = V9_0,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
                 OSDir = OS.MarinerDistroless,
@@ -296,8 +296,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
             },
             new() {
-                Version = V8_2,
-                VersionFamily = V8_0,
+                Version = V9_0,
+                VersionFamily = V9_0,
                 OS = OS.Mariner20Distroless,
                 OSTag = "",
                 OSDir = OS.MarinerDistroless,
