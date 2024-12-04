@@ -159,11 +159,6 @@ public class TestSolution : IDisposable
 
     private string GetUserDirectoryWriteAccessValidationCode()
     {
-        if (_imageData.IsDistroless && _imageData.Version.Major == 6 && _imageData.OS.StartsWith(OS.Mariner))
-        {
-            return string.Empty;
-        }
-
         string userDirEnvVarName = DockerHelper.IsLinuxContainerModeEnabled ? "HOME" : "USERPROFILE";
         return
             "System.Console.WriteLine(\"Verifying write access to user directory\");" +

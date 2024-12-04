@@ -19,8 +19,6 @@ namespace Microsoft.DotNet.Docker.Tests
         // Debian
         public const string Bookworm = "bookworm";
         public const string BookwormSlim = $"{Bookworm}{SlimSuffix}";
-        public const string Bullseye = "bullseye";
-        public const string BullseyeSlim = $"{Bullseye}{SlimSuffix}";
 
         // Mariner
         public const string Mariner = "cbl-mariner";
@@ -29,8 +27,6 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string Mariner20Distroless = $"{Mariner20}-distroless";
 
         // Ubuntu
-        public const string Bionic = "bionic";
-        public const string Focal = "focal";
         public const string Jammy = "jammy";
         public const string JammyChiseled = $"{Jammy}{ChiseledSuffix}";
         public const string Noble = "noble";

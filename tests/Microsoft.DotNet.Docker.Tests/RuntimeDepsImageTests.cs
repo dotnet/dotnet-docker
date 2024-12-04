@@ -83,15 +83,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyPackageInstallation(ProductImageData imageData)
-        {
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                GetExpectedRpmPackagesInstalled(imageData));
-        }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
         public void VerifyInsecureFiles(ProductImageData imageData)
         {
             base.VerifyCommonInsecureFiles(imageData);
@@ -147,8 +138,5 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
         }
-
-        internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
-            [ $"dotnet-runtime-deps-{imageData.VersionString}" ];
     }
 }

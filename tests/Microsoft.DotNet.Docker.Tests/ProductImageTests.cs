@@ -134,10 +134,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected void VerifyNonRootUID(ProductImageData imageData)
         {
-            if ((imageData.Version.Major == 6 && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
-                || imageData.IsWindows)
+            if (imageData.IsWindows)
             {
-                OutputHelper.WriteLine("UID check is only relevant for Linux images running .NET versions >= 8.0 and distroless images besides CBL Mariner.");
+                OutputHelper.WriteLine("UID check is only relevant for Linux images");
                 return;
             }
 
@@ -165,53 +164,6 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.True(uid >= 1000);
             // Debian has a UID_MAX of 60000
             Assert.True(uid <= 60000);
-        }
-
-        private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
-        {
-            string rootPath = imageData.IsDistroless ? "/rootfs" : "/";
-            // Get list of installed RPM packages
-            string command = $"-c \"rpm -qa -r {rootPath} | sort\"";
-
-            string imageTag;
-            if (imageData.IsDistroless)
-            {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, rootPath);
-            }
-            else
-            {
-                imageTag = imageData.GetImage(ImageRepo, DockerHelper);
-            }
-
-            string installedPackages = DockerHelper.Run(
-                image: imageTag,
-                command: command,
-                name: imageData.GetIdentifier("PackageInstallation"),
-                optionalRunArgs: "--entrypoint /bin/sh");
-
-            return installedPackages.Split(Environment.NewLine);
-        }
-
-        protected void VerifyExpectedInstalledRpmPackages(
-            ProductImageData imageData, IEnumerable<string> expectedPackages)
-        {
-            if ((!imageData.OS.StartsWith(OS.Mariner) && !imageData.OS.StartsWith(OS.AzureLinux))
-                || imageData.IsDistroless || imageData.Version.Major > 6)
-            {
-                return;
-            }
-
-            if (imageData.Arch == Arch.Arm64)
-            {
-                OutputHelper.WriteLine("Skip test until Arm64 Dockerfiles install packages instead of tarballs");
-                return;
-            }
-
-            foreach (string expectedPackage in expectedPackages)
-            {
-                bool installed = GetInstalledRpmPackages(imageData).Any(pkg => pkg.StartsWith(expectedPackage));
-                Assert.True(installed, $"Package '{expectedPackage}' is not installed.");
-            }
         }
 
         public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
@@ -349,8 +301,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 expectedPackages = [..expectedPackages, ..GetDistrolessBasePackages(imageData)];
             }
 
-            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
-                || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6))
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra) || imageRepo == DotNetImageRepo.SDK)
             {
                 expectedPackages = [..expectedPackages, ..GetExtraPackages(imageData)];
             }
@@ -387,28 +338,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             IEnumerable<string> packages = imageData switch
             {
-                { OS: OS.Mariner20Distroless, Version: ImageVersion version }
-                        when version.Major == 6 =>
-                    [
-                        "e2fsprogs",
-                        "e2fsprogs-libs",
-                        "glibc",
-                        "krb5",
-                        "libgcc",
-                        "openssl",
-                        "openssl-libs",
-                        "prebuilt-ca-certificates",
-                    ],
-                { OS: OS.Mariner20, Version: ImageVersion version }
-                        when version.Major == 6 =>
-                    [
-                        "glibc",
-                        "icu",
-                        "krb5",
-                        "libgcc",
-                        "openssl",
-                        "openssl-libs",
-                    ],
                 { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
                     [
                         "glibc",
@@ -444,15 +373,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3t64",
                         "openssl",
                     ],
-                { OS: OS.Focal } =>
-                    [
-                        "ca-certificates",
-                        "libc6",
-                        "libgcc-s1",
-                        "libgssapi-krb5-2",
-                        "libicu66",
-                        "libssl1.1",
-                    ],
                 { OS: string os } when os.Contains(OS.Alpine) =>
                     [
                         "ca-certificates-bundle",
@@ -468,21 +388,12 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3",
                         "tzdata",
                     ],
-                { OS: OS.BullseyeSlim } =>
-                    [
-                        "ca-certificates",
-                        "libc6",
-                        "libgcc-s1", // Listed as libgcc1 in the Dockerfile
-                        "libgssapi-krb5-2",
-                        "libicu67",
-                        "libssl1.1",
-                    ],
                 _ => throw new NotSupportedException()
             };
 
             // zlib is not required for .NET 9+
             // https://github.com/dotnet/dotnet-docker/issues/5687
-            if (imageData.Version.Major <= 8)
+            if (imageData.Version.Major == 8)
             {
                 packages = [..packages, GetZLibPackage(imageData.OS)];
             }

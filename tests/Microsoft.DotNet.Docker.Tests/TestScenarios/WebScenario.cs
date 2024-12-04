@@ -30,7 +30,7 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
 
         int port = PortOverride ?? ImageData.DefaultPort;
 
-        if (PortOverride != null || ImageData.Version.Major == 6)
+        if (PortOverride != null)
         {
             command += $" --urls http://*:{port}";
         }
