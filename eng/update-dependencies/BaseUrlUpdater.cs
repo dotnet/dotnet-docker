@@ -62,4 +62,3 @@ internal class BaseUrlUpdater : FileRegexUpdater
         return unresolvedBaseUrl;
     }
 }
-#nullable disable

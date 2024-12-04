@@ -15,9 +15,6 @@ using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
-using Microsoft.TeamFoundation.SourceControl.WebApi;
-using Microsoft.VisualStudio.Services.Common;
-using Microsoft.VisualStudio.Services.WebApi;
 
 #nullable enable
 namespace Dotnet.Docker
@@ -143,7 +140,7 @@ namespace Dotnet.Docker
 
             if (Options.IsInternal)
             {
-                await PushToAzdoBranch(commitMessage, prOptions);
+                PushToAzdoBranch(commitMessage, prOptions);
             }
             else
             {
@@ -151,7 +148,7 @@ namespace Dotnet.Docker
             }
         }
 
-        private static async Task PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
+        private static void PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
         {
             using Repository repo = new(RepoRoot);
 

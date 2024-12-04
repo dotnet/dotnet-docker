@@ -105,4 +105,3 @@ namespace Dotnet.Docker
                 $"(?<{s_versionGroupName}>[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)*)?)");
     }
 }
-#nullable disable

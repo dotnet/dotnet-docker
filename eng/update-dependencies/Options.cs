@@ -103,4 +103,3 @@ namespace Dotnet.Docker
         Release
     }
 }
-#nullable disable
