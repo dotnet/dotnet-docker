@@ -28,7 +28,7 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         _repoRoot = repoRoot;
         _options = options;
 
-        string configSuffix = (_options.IsInternal ? ".internal" : _options.SourceBranch == "nightly" ? ".nightly" : string.Empty);
+        string configSuffix = _options.IsInternal ? ".internal" : _options.SourceBranch == "nightly" ? ".nightly" : string.Empty;
         _configPath = Path.Combine(_repoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
     }
 
@@ -106,7 +106,7 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     }
 
     private void UpdatePackageSources(string sdkVersion, string pkgSrcName, XElement configuration)
-    {      
+    {
         XElement? pkgSources = configuration.Element("packageSources");
         if (_options.IsInternal)
         {
@@ -189,4 +189,3 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         public override Encoding Encoding => Encoding.UTF8;
     }
 }
-#nullable disable

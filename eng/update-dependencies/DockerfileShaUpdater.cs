@@ -464,4 +464,3 @@ namespace Dotnet.Docker
         }
     }
 }
-#nullable disable
