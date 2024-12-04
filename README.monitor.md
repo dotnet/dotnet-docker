@@ -51,10 +51,6 @@ Tags | Dockerfile | OS Version
 9.0.0, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.0.6-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.6, 8.0, 8 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.0.6-cbl-mariner-distroless, 8.0-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
-6.3.10-alpine, 6.3-alpine, 6-alpine, 6.3.10, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/amd64/Dockerfile) | Alpine 3.20
-6.3.10-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](src/monitor/6.3/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-6.3.10-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](src/monitor/6.3/cbl-mariner/amd64/Dockerfile) | CBL-Mariner 2.0
-6.3.10-cbl-mariner-distroless, 6.3-cbl-mariner-distroless, 6-cbl-mariner-distroless | [Dockerfile](src/monitor/6.3/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ### Linux arm64 Tags
 
@@ -63,10 +59,6 @@ Tags | Dockerfile | OS Version
 9.0.0, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.6-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8-ubuntu-chiseled, 8.0.6, 8.0, 8 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.6-cbl-mariner-distroless, 8.0-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.3.10-alpine, 6.3-alpine, 6-alpine, 6.3.10, 6.3, 6 | [Dockerfile](src/monitor/6.3/alpine/arm64v8/Dockerfile) | Alpine 3.20
-6.3.10-ubuntu-chiseled, 6.3-ubuntu-chiseled, 6-ubuntu-chiseled | [Dockerfile](src/monitor/6.3/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-6.3.10-cbl-mariner, 6.3-cbl-mariner, 6-cbl-mariner | [Dockerfile](src/monitor/6.3/cbl-mariner/arm64v8/Dockerfile) | CBL-Mariner 2.0
-6.3.10-cbl-mariner-distroless, 6.3-cbl-mariner-distroless, 6-cbl-mariner-distroless | [Dockerfile](src/monitor/6.3/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/monitor/tags/list) for all supported and unsupported tags.*
