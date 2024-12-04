@@ -166,53 +166,6 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.True(uid <= 60000);
         }
 
-        private IEnumerable<string> GetInstalledRpmPackages(ProductImageData imageData)
-        {
-            string rootPath = imageData.IsDistroless ? "/rootfs" : "/";
-            // Get list of installed RPM packages
-            string command = $"-c \"rpm -qa -r {rootPath} | sort\"";
-
-            string imageTag;
-            if (imageData.IsDistroless)
-            {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, rootPath);
-            }
-            else
-            {
-                imageTag = imageData.GetImage(ImageRepo, DockerHelper);
-            }
-
-            string installedPackages = DockerHelper.Run(
-                image: imageTag,
-                command: command,
-                name: imageData.GetIdentifier("PackageInstallation"),
-                optionalRunArgs: "--entrypoint /bin/sh");
-
-            return installedPackages.Split(Environment.NewLine);
-        }
-
-        protected void VerifyExpectedInstalledRpmPackages(
-            ProductImageData imageData, IEnumerable<string> expectedPackages)
-        {
-            if ((!imageData.OS.StartsWith(OS.Mariner) && !imageData.OS.StartsWith(OS.AzureLinux))
-                || imageData.IsDistroless || imageData.Version.Major > 6)
-            {
-                return;
-            }
-
-            if (imageData.Arch == Arch.Arm64)
-            {
-                OutputHelper.WriteLine("Skip test until Arm64 Dockerfiles install packages instead of tarballs");
-                return;
-            }
-
-            foreach (string expectedPackage in expectedPackages)
-            {
-                bool installed = GetInstalledRpmPackages(imageData).Any(pkg => pkg.StartsWith(expectedPackage));
-                Assert.True(installed, $"Package '{expectedPackage}' is not installed.");
-            }
-        }
-
         public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
         {
             yield return new EnvironmentVariableInfo("DOTNET_RUNNING_IN_CONTAINER", "true");

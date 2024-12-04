@@ -57,16 +57,6 @@ namespace Microsoft.DotNet.Docker.Tests
             base.VerifyCommonEnvironmentVariables(imageData, variables);
         }
 
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyPackageInstallation(ProductImageData imageData)
-        {
-            VerifyExpectedInstalledRpmPackages(
-                    imageData,
-                    GetExpectedRpmPackagesInstalled(imageData)
-                        .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
-        }
-
         [LinuxImageTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyInstalledPackages(ProductImageData imageData)
@@ -112,11 +102,5 @@ namespace Microsoft.DotNet.Docker.Tests
                 IsProductVersion = true
             };
         }
-
-        internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
-            new string[]
-                {
-                    $"aspnetcore-runtime-{imageData.VersionString}"
-                };
     }
 }
