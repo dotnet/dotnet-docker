@@ -143,7 +143,7 @@ namespace Dotnet.Docker
 
             if (Options.IsInternal)
             {
-                await PushToAzdoBranch(commitMessage, prOptions);
+                PushToAzdoBranch(commitMessage, prOptions);
             }
             else
             {
@@ -151,7 +151,7 @@ namespace Dotnet.Docker
             }
         }
 
-        private static async Task PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
+        private static void PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
         {
             using Repository repo = new(RepoRoot);
 
