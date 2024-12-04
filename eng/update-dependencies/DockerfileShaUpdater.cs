@@ -42,7 +42,7 @@ namespace Dotnet.Docker
         private readonly string _os;
         private readonly Options _options;
         private readonly string _versions;
-        private readonly Dictionary<string, string[]> _urls;
+        private readonly Dictionary<string, string> _urls;
         private readonly Lazy<JObject> _manifestVariables;
 
         public DockerfileShaUpdater(
@@ -60,16 +60,16 @@ namespace Dotnet.Docker
             // should be in priority order with each subsequent URL being the fallback.
             _urls = new()
             {
-                { "aspire-dashboard",               [ $"$DOTNET_BASE_URL/aspire/$VERSION_DIR/aspire-dashboard-$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "aspnet-composite",               [ $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "aspnet",                         [ $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "monitor-base",                   [ $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "monitor-ext-azureblobstorage",   [ $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "monitor-ext-s3storage",          [ $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "monitor",                        [ $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "powershell",                     [ "https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" ] },
-                { "runtime",                        [ $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" ] },
-                { "sdk",                            [ $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" ] },
+                { "aspire-dashboard",               "$DOTNET_BASE_URL/aspire/$VERSION_DIR/aspire-dashboard-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "aspnet-composite",               "$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" },
+                { "aspnet",                         "$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor-base",                   "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor-ext-azureblobstorage",   "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor-ext-s3storage",          "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor",                        "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "powershell",                     "https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" },
+                { "runtime",                        "$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" },
+                { "sdk",                            "$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE$OS-$ARCH.$ARCHIVE_EXT" },
             };
 
             _manifestVariables = new Lazy<JObject>(
@@ -147,9 +147,7 @@ namespace Dotnet.Docker
         protected override string? TryGetDesiredValue(
             IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
         {
-            IDependencyInfo productInfo = dependencyBuildInfos.First(info => info.SimpleName == _productName);
-
-            usedBuildInfos = new IDependencyInfo[] { productInfo };
+            usedBuildInfos = [ dependencyBuildInfos.First(info => info.SimpleName == _productName) ];
 
             string versionDir = _buildVersion ?? "";
             string versionFile = UpdateDependencies.ResolveProductVersion(versionDir, _options);
@@ -159,34 +157,19 @@ namespace Dotnet.Docker
                 ? "zip"
                 : "tar.gz";
 
-            // Each product name has one or more candidate URLs from which to retrieve the artifact. Multiple candidate URLs
-            // should be listed in priority order. Each subsequent URL listed is treated as a fallback.
-            string[] candidateUrls = _urls[_productName];
+            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
 
-            for (int candidateUrlIndex = 0; candidateUrlIndex < candidateUrls.Length; candidateUrlIndex++)
-            {
-                string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
-                string downloadUrl = candidateUrls[candidateUrlIndex]
-                    .Replace("$DOTNET_BASE_URL", baseUrl)
-                    .Replace("$ARCHIVE_EXT", archiveExt)
-                    .Replace("$VERSION_DIR", versionDir)
-                    .Replace("$VERSION_FILE", versionFile)
-                    .Replace("$OS", _os)
-                    .Replace("$ARCH", _arch)
-                    .Replace("$DF_VERSION", _options.DockerfileVersion)
-                    .Replace("..", ".");
+            string downloadUrl = _urls[_productName]
+                .Replace("$DOTNET_BASE_URL", baseUrl)
+                .Replace("$ARCHIVE_EXT", archiveExt)
+                .Replace("$VERSION_DIR", versionDir)
+                .Replace("$VERSION_FILE", versionFile)
+                .Replace("$OS", _os)
+                .Replace("$ARCH", _arch)
+                .Replace("$DF_VERSION", _options.DockerfileVersion)
+                .Replace("..", ".");
 
-                bool isLastUrlToCheck =
-                    candidateUrlIndex == candidateUrls.Length - 1;
-
-                string? result = GetArtifactShaAsync(downloadUrl, errorOnNotFound: isLastUrlToCheck).Result;
-                if (result is not null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            return GetArtifactShaAsync(downloadUrl).Result;
         }
 
         private static string GetOs(string[] variableParts)
@@ -209,7 +192,7 @@ namespace Dotnet.Docker
             return string.Empty;
         }
 
-        private async Task<string?> GetArtifactShaAsync(string downloadUrl, bool errorOnNotFound)
+        private async Task<string?> GetArtifactShaAsync(string downloadUrl)
         {
             if (!s_shaCache.TryGetValue(downloadUrl, out string? sha))
             {
@@ -229,14 +212,7 @@ namespace Dotnet.Docker
                 else
                 {
                     string notFoundMsg = $"Unable to retrieve sha for '{downloadUrl}'.";
-                    if (errorOnNotFound)
-                    {
-                        Trace.TraceError(notFoundMsg);
-                    }
-                    else
-                    {
-                        Trace.TraceWarning(notFoundMsg);
-                    }
+                    Trace.TraceError(notFoundMsg);
                 }
             }
 
