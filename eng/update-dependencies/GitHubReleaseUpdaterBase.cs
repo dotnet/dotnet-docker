@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Text.RegularExpressions;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Octokit;
 
