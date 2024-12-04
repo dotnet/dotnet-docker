@@ -311,16 +311,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "dotnetapp-8.0": {},
-            "dotnetapp": {
-              "syndication": {
-                "repo": "dotnet/core/samples"
-              }
-            },
-            "latest": {
-              "syndication": {
-                "repo": "dotnet/core/samples"
-              }
-            }
+            "dotnetapp": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -375,11 +367,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "dotnetapp-8.0-nanoserver-1809": {},
-                "dotnetapp-nanoserver-1809": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "dotnetapp-nanoserver-1809": {}
               }
             },
             {
@@ -452,11 +440,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "aspnetapp-8.0": {},
-            "aspnetapp": {
-              "syndication": {
-                "repo": "dotnet/core/samples"
-              }
-            }
+            "aspnetapp": {}
           },
           "platforms": [
             {
@@ -538,11 +522,7 @@
               "osVersion": "nanoserver-1809",
               "tags": {
                 "aspnetapp-8.0-nanoserver-1809": {},
-                "aspnetapp-nanoserver-1809": {
-                  "syndication": {
-                    "repo": "dotnet/core/samples"
-                  }
-                }
+                "aspnetapp-nanoserver-1809": {}
               },
               "customBuildLegGroups": [
                 {

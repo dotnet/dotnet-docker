@@ -6,3 +6,5 @@ variables:
   value: sample
 - name: imageInfoVariant
   value: "-samples"
+- name: publishEolAnnotations
+  value: true
