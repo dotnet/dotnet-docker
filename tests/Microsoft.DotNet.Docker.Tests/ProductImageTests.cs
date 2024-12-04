@@ -301,8 +301,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 expectedPackages = [..expectedPackages, ..GetDistrolessBasePackages(imageData)];
             }
 
-            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra)
-                || (imageRepo == DotNetImageRepo.SDK && imageData.Version.Major != 6))
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Extra) || imageRepo == DotNetImageRepo.SDK)
             {
                 expectedPackages = [..expectedPackages, ..GetExtraPackages(imageData)];
             }
@@ -394,7 +393,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             // zlib is not required for .NET 9+
             // https://github.com/dotnet/dotnet-docker/issues/5687
-            if (imageData.Version.Major <= 8)
+            if (imageData.Version.Major == 8)
             {
                 packages = [..packages, GetZLibPackage(imageData.OS)];
             }
