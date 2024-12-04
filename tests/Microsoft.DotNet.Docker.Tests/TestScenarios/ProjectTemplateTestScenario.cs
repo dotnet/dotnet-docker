@@ -45,7 +45,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         DockerHelper = dockerHelper;
         ImageData = imageData;
         OutputHelper = outputHelper;
-        _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled && ImageData.Version.Major > 6;
+        _nonRootUserSupported = DockerHelper.IsLinuxContainerModeEnabled;
 
         TestSolution = new(imageData, SampleName, dockerHelper, injectCustomTestCode: InjectCustomTestCode);
     }

@@ -214,9 +214,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VersionTag_SameOsAndVersion(Repo repo, VersionType versionType)
         {
             // Group tags -> dockerfiles
-            // Skip .NET 6 dockerfiles because they include linux and windows OSes for the tags
             Dictionary<string, List<ManifestHelper.DockerfileInfo>> tagsToDockerfiles = ManifestHelper.GetDockerfileTags(repo)
-                .Where(pair => !IsDotNet6(pair.Key))
                 .SelectMany(pair => pair.Value
                     .Where(tag => IsTagOfFormat(
                         tag,
@@ -546,9 +544,6 @@ namespace Microsoft.DotNet.Docker.Tests
         // <cref="IsApplianceVersionUsingOldSchema"/>
         private static bool IsApplianceVersionUsingNewSchema(ManifestHelper.DockerfileInfo dockerfileInfo) =>
             !IsApplianceVersionUsingOldSchema(dockerfileInfo);
-
-        private static bool IsDotNet6(ManifestHelper.DockerfileInfo dockerfileInfo) =>
-            dockerfileInfo.MajorMinor.StartsWith("6");
 
         private static bool IsExpectedMajorMinorVersion(Repo repo, string version)
         {

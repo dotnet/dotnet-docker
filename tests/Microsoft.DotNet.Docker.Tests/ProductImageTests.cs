@@ -134,10 +134,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected void VerifyNonRootUID(ProductImageData imageData)
         {
-            if ((imageData.Version.Major == 6 && (!imageData.IsDistroless || imageData.OS.StartsWith(OS.Mariner)))
-                || imageData.IsWindows)
+            if (imageData.IsWindows)
             {
-                OutputHelper.WriteLine("UID check is only relevant for Linux images running .NET versions >= 8.0 and distroless images besides CBL Mariner.");
+                OutputHelper.WriteLine("UID check is only relevant for Linux images");
                 return;
             }
 
@@ -387,28 +386,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             IEnumerable<string> packages = imageData switch
             {
-                { OS: OS.Mariner20Distroless, Version: ImageVersion version }
-                        when version.Major == 6 =>
-                    [
-                        "e2fsprogs",
-                        "e2fsprogs-libs",
-                        "glibc",
-                        "krb5",
-                        "libgcc",
-                        "openssl",
-                        "openssl-libs",
-                        "prebuilt-ca-certificates",
-                    ],
-                { OS: OS.Mariner20, Version: ImageVersion version }
-                        when version.Major == 6 =>
-                    [
-                        "glibc",
-                        "icu",
-                        "krb5",
-                        "libgcc",
-                        "openssl",
-                        "openssl-libs",
-                    ],
                 { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
                     [
                         "glibc",

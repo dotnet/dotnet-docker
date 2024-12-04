@@ -57,11 +57,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string VersionString => Version.ToString();
 
-        public override int DefaultPort => (IsDistroless || Version.Major != 6) ? 8080 : 80;
-
-        public override int? NonRootUID =>
-            OS == Tests.OS.Mariner20Distroless && Version.Major == 6 ? 101 : base.NonRootUID;
-
         private bool SupportsGlobalization
         {
             get
@@ -166,10 +161,12 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             // For distroless, dotnet will be the default entrypoint so we don't need to specify "dotnet" in the command.
             // See https://github.com/dotnet/dotnet-docker/issues/3866
-            string executable = !IsDistroless || (OS.Contains(Tests.OS.Mariner) && Version.Major == 6)
-                ? "dotnet "
-                : string.Empty;
-            return executable + command;
+            if (IsDistroless)
+            {
+                return command;
+            }
+
+            return $"dotnet {command}";
         }
 
         private string GetTagName(DotNetImageRepo imageRepo)
