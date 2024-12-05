@@ -48,25 +48,25 @@ The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/bui
 - Build and test all of the .NET 9.0 images for the Docker platform your machine is targeting (e.g. linux/x64, linux/arm, linux/arm64, windows/x64).
 
     ``` console
-    > ./build-and-test.ps1 -Version 9.0
+    > ./build-and-test.ps1 -Paths '*9.0*'
     ```
 
 - Build the 9.0 Nano Server 1809 images
 
     ``` console
-    > ./build-and-test.ps1 -Version 9.0 -OS nanoserver-1809 -Mode Build
+    > ./build-and-test.ps1 -Paths '*9.0*nanoserver-1809*' -Mode Build
     ```
 
 - Build and test the samples
 
     ``` console
-    > ./build-and-test.ps1 -Path *samples* -TestCategories sample
+    > ./build-and-test.ps1 -Paths '*samples*' -TestCategories sample
     ```
 
 - Test the 9.0 Ubuntu Noble images for the current architecture (e.g. x64, arm, arm64).
 
     ``` console
-    > ./build-and-test.ps1 -Version 9.0 -OS noble -Mode Test
+    > ./build-and-test.ps1 -Paths '*9.0*noble*' -Mode Test
     ```
 
 #### Editing Dockerfiles
