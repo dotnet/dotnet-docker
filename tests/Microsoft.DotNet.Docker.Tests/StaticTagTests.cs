@@ -12,7 +12,6 @@ using FluentAssertions.Execution;
 using Xunit;
 
 using static Microsoft.DotNet.Docker.Tests.ManifestHelper;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 #nullable enable
 
