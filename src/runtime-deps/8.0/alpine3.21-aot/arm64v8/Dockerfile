@@ -15,7 +15,7 @@ RUN apk add --upgrade --no-cache \
         \
         # .NET dependencies
         libgcc \
-        libssl \
+        libssl3 \
         zlib
 
 # Create a non-root user and group
