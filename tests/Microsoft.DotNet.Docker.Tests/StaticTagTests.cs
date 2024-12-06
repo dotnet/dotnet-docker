@@ -8,7 +8,10 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using FluentAssertions;
+using FluentAssertions.Execution;
 using Xunit;
+
+using static Microsoft.DotNet.Docker.Tests.ManifestHelper;
 
 #nullable enable
 
@@ -24,7 +27,6 @@ namespace Microsoft.DotNet.Docker.Tests
             MajorMinorPatch = 3
         }
 
-        private const string AlpineOs = "alpine";
         private const string LatestTagValue = "latest";
         private const string SingleNumberRegex = @"\d+";
         private const string MajorVersionRegex = SingleNumberRegex;
@@ -161,49 +163,49 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetTagTestObjects), TestType.FloatingAlpine)]
         public void FloatingAlpineTag_OnLatestVersion(Repo repo, VersionType versionType, bool checkArchitecture)
         {
-            Dictionary<ManifestHelper.DockerfileInfo, List<string>> dockerfileTags = ManifestHelper.GetDockerfileTags(repo);
+            Dictionary<DockerfileInfo, List<string>> dockerfileTags = GetDockerfileTags(repo);
 
-            IEnumerable<ManifestHelper.DockerfileInfo> alpineDockerfiles = dockerfileTags.Keys
-                .Where(dockerfileInfo => dockerfileInfo.Os.Contains(AlpineOs));
+            IEnumerable<KeyValuePair<DockerfileInfo, List<string>>> alpineDockerfileTags =
+                dockerfileTags.Where(p => p.Key.Os.Contains(OS.Alpine));
 
-            if (!alpineDockerfiles.Any())
+            Version? latestAlpineVersion = alpineDockerfileTags
+                .Select(kvp => kvp.Key)
+                .Select(GetAlpineVersion)
+                .OrderByDescending(version => version)
+                .FirstOrDefault();
+
+            if (latestAlpineVersion is null)
             {
                 // The repo doesn't have any alpine dockerfiles
                 return;
             }
 
-            // It's possible that we don't specify the alpine version if
-            // there's only a single alpine dockerfile in the repo.
-            // In this is the case, a null string for the version will be used
-            Version? latestAlpineVersion = alpineDockerfiles
-                .Select(GetAlpineVersion)
-                .Where(version => version != null)
-                .OrderByDescending(version => version)
-                .FirstOrDefault();
+            string latestAlpineOsVersion = OS.Alpine + latestAlpineVersion;
 
-            foreach (ManifestHelper.DockerfileInfo dockerfileInfo in alpineDockerfiles)
+            using (new AssertionScope())
             {
-                IEnumerable<string> alpineFloatingTags = dockerfileTags[dockerfileInfo]
-                    .Where(tag => IsTagOfFormat(
-                        tag,
-                        versionType,
-                        majorMinor: dockerfileInfo.MajorMinor,
-                        os: AlpineOs,
-                        architecture: checkArchitecture ? dockerfileInfo.Architecture : null));
-
-                if(!alpineFloatingTags.Any())
+                foreach ((DockerfileInfo dockerfileInfo, List<string> tags) in alpineDockerfileTags)
                 {
-                    dockerfileInfo.Os.Should().NotBeEquivalentTo(AlpineOs + latestAlpineVersion,
-                        $"{dockerfileInfo} does not have an alpine floating tag. " +
-                        "This dockerfile should have a floating tag because it uses the latest alpine version");
-                }
-                else
-                {
-                    alpineFloatingTags.Should().ContainSingle("expected exactly one alpine floating tag for " + dockerfileInfo);
-                    dockerfileInfo.Os.Should().BeEquivalentTo(AlpineOs + latestAlpineVersion, $"{dockerfileInfo} has an alpine floating tag." +
-                        "This dockerfile not have a floating tag because it doesn't use the latest alpine version");
+                    Regex pattern = GetFloatingTagRegex(dockerfileInfo);
+                    if (dockerfileInfo.Os == latestAlpineOsVersion)
+                    {
+                        tags.Should().ContainSingle(tag => pattern.IsMatch(tag),
+                            because: $"image {dockerfileInfo} should have an {OS.Alpine} floating tag");
+                    }
+                    else
+                    {
+                        tags.Should().NotContain(tag => pattern.IsMatch(tag),
+                            because: $"image {dockerfileInfo} should not have an {OS.Alpine} floating tag");
+                    }
                 }
             }
+
+            Regex GetFloatingTagRegex(DockerfileInfo info) =>
+                GetTagRegex(
+                    versionType,
+                    majorMinor: info.MajorMinor,
+                    os: OS.Alpine,
+                    architecture: checkArchitecture ? info.Architecture : null);
         }
 
         // - <Major.Minor.Patch>
@@ -589,6 +591,12 @@ namespace Microsoft.DotNet.Docker.Tests
             string? os = null,
             string? architecture = null)
         {
+            Regex pattern = GetTagRegex(versionType, majorMinor, os, architecture);
+            return pattern.IsMatch(tag);
+        }
+
+        private static Regex GetTagRegex(VersionType versionType, string? majorMinor, string? os, string? architecture)
+        {
             string tagRegex = versionType switch
             {
                 VersionType.Major =>
@@ -602,18 +610,14 @@ namespace Microsoft.DotNet.Docker.Tests
                 _ => throw new ArgumentException("Invalid version type", nameof(versionType)),
             };
 
-            string patternRegex = $"^{tagRegex}" + (os != null ? $"-{os}" : string.Empty) + (architecture != null ? $"-{architecture}" : string.Empty) + "$";
-            return Regex.IsMatch(tag, patternRegex);
+            return new Regex($"^{tagRegex}" + (os != null ? $"-{os}" : string.Empty) + (architecture != null ? $"-{architecture}" : string.Empty) + "$");
         }
 
-        private static Version? GetAlpineVersion(ManifestHelper.DockerfileInfo dockerfileInfo)
+        private static Version GetAlpineVersion(ManifestHelper.DockerfileInfo dockerfileInfo)
         {
-            string? parsedOs = dockerfileInfo.Os.Replace(AlpineOs, string.Empty);
-            if (string.IsNullOrEmpty(parsedOs))
-            {
-                // No version specified
-                return null;
-            }
+            string parsedOs = dockerfileInfo.Os.Replace(OS.Alpine, string.Empty);
+            parsedOs.Should().NotBeNullOrWhiteSpace(
+                because: $"{dockerfileInfo} should have a specific Alpine version for osVersion");
             return GetVersion(parsedOs);
         }
 
