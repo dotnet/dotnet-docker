@@ -12,6 +12,7 @@ using FluentAssertions.Execution;
 using Xunit;
 
 using static Microsoft.DotNet.Docker.Tests.ManifestHelper;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 #nullable enable
 
@@ -163,31 +164,17 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetTagTestObjects), TestType.FloatingAlpine)]
         public void FloatingAlpineTag_OnLatestVersion(Repo repo, VersionType versionType, bool checkArchitecture)
         {
-            Dictionary<DockerfileInfo, List<string>> dockerfileTags = GetDockerfileTags(repo);
-
             IEnumerable<KeyValuePair<DockerfileInfo, List<string>>> alpineDockerfileTags =
-                dockerfileTags.Where(p => p.Key.Os.Contains(OS.Alpine));
-
-            Version? latestAlpineVersion = alpineDockerfileTags
-                .Select(kvp => kvp.Key)
-                .Select(GetAlpineVersion)
-                .OrderByDescending(version => version)
-                .FirstOrDefault();
-
-            if (latestAlpineVersion is null)
-            {
-                // The repo doesn't have any alpine dockerfiles
-                return;
-            }
-
-            string latestAlpineOsVersion = OS.Alpine + latestAlpineVersion;
+                GetDockerfileTags(repo)
+                    .Where(p => p.Key.Os.Contains(OS.Alpine));
 
             using (new AssertionScope())
             {
                 foreach ((DockerfileInfo dockerfileInfo, List<string> tags) in alpineDockerfileTags)
                 {
+                    string alpineFloatingTagVersion = GetAlpineFloatingTagVersion(dockerfileInfo);
                     Regex pattern = GetFloatingTagRegex(dockerfileInfo);
-                    if (dockerfileInfo.Os == latestAlpineOsVersion)
+                    if (dockerfileInfo.Os == alpineFloatingTagVersion)
                     {
                         tags.Should().ContainSingle(tag => pattern.IsMatch(tag),
                             because: $"image {dockerfileInfo} should have an {OS.Alpine} floating tag");
@@ -199,6 +186,9 @@ namespace Microsoft.DotNet.Docker.Tests
                     }
                 }
             }
+
+            string GetAlpineFloatingTagVersion(DockerfileInfo info) =>
+                Config.GetVariableValue($"alpine|{info.MajorMinor}|floating-tag-version");
 
             Regex GetFloatingTagRegex(DockerfileInfo info) =>
                 GetTagRegex(
