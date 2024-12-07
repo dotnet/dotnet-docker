@@ -5,8 +5,9 @@
     "base-url|public|preview|main": "$(base-url|public|maintenance|main)",
     "base-url|public|preview|nightly": "https://dotnetbuilds.azureedge.net/public",
 
-    "alpine|9.0|floating-tag-version": "alpine3.20",
-    "alpine|8.0|floating-tag-version": "alpine3.20",
+    "alpine|floating-tag-version": "alpine3.20",
+    "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
+    "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
     "aspire-dashboard|9.0|build-version": "9.0.1-preview.1.24557.2",
     "aspire-dashboard|9.0|product-version": "9.0.1-preview.1",
