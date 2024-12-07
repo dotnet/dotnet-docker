@@ -5,6 +5,10 @@
     "base-url|public|preview|main": "$(base-url|public|maintenance|main)",
     "base-url|public|preview|nightly": "https://dotnetbuilds.azureedge.net/public",
 
+    "alpine|floating-tag-version": "alpine3.20",
+    "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
+    "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
+
     "aspire-dashboard|9.0|build-version": "9.0.1-preview.1.24557.2",
     "aspire-dashboard|9.0|product-version": "9.0.1-preview.1",
     "aspire-dashboard|9.0|fixed-tag": "$(aspire-dashboard|9.0|product-version)",
@@ -86,6 +90,7 @@
     "libicu|noble": 74,
 
     "libssl|alpine3.20": "3",
+    "libssl|alpine3.21": "3",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
     "libssl|focal": "1.1",
