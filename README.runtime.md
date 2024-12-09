@@ -6,8 +6,6 @@
   * `docker pull mcr.microsoft.com/dotnet/runtime:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:8.0`
-* `6.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/runtime:6.0`
 
 ## About
 
