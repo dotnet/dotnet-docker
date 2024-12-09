@@ -124,7 +124,7 @@ $ docker run --rm distroless-wrapper /bin/sh -c "find ./usr/share/dotnet | grep 
 
 ### .NET Monitor
 
-The [.NET Monitor image](../README.monitor.md) includes .NET Monitor in addition to ASP.NET Core, with associated licenses and third party notice files. The .NET Monitor images are based on distroless ASP.NET Core images. As such, using the instructions from [Distroless Images](#distroless-images) is necessary to gather the licence and notice file paths.
+The [.NET Monitor image](../README.monitor.md) includes .NET Monitor in addition to ASP.NET Core, with associated licenses and third party notice files. The .NET Monitor images are based on distroless ASP.NET Core images. As such, using the instructions from [Distroless Images](#distroless-images) is necessary to gather the license and notice file paths.
 
 First, build the wrapper Dockerfile, specifying the image tag you wish to inspect:
 
