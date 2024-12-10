@@ -6,17 +6,10 @@ You can use the referenced images and tags with the docker CLI, for example with
 
 ## .NET Docker repos
 
-There are multiple [.NET Docker repos](../README.md) that expose various layers of the .NET platform.
-
-* [dotnet/runtime-deps](../README.runtime-deps.md) -- Linux-only images that contains the native dependencies of .NET. Best used for self-contained applications.
-* [dotnet/runtime](../README.runtime.md) -- Images that contains the .NET runtime. Best used for console applications. On Linux, depends on the `runtime-deps` image.
-* [dotnet/aspnet](../README.aspnet.md) -- Images that contains the ASP.NET Core runtime. Best used for web applications and services. Depends on the `runtime` image.
-* [dotnet/sdk](../README.sdk.md) -- An image that contains the .NET SDK (which includes tools and all runtimes). Best used for building and testing applications. Depends on [buildpack-deps](https://hub.docker.com/_/buildpack-deps) for Debian and Ubuntu, on [dotnet/aspnet](../README.aspnet.md) for Alpine and on [windows/nanoserver](https://mcr.microsoft.com/en-us/product/windows/nanoserver/about) for Windows.
-
-The repos above are commonly used on the command line and in Dockerfiles. There are two more repos that may be useful to you:
-
-* [dotnet/nightly](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) -- A duplicate structure of repos which contain the latest pre-released versions of .NET. (which are not supported in production).
-* [dotnet/samples](../README.samples.md) -- A set of samples that demonstrate .NET being used in console and web scenarios.
+There are multiple [.NET Docker repos](../README.md) that expose various layers
+of the .NET platform. They can be found under [Featured Repos](/README.md#featured-repos).
+Other repos, including preview (nightly) .NET images, can be found under
+[Related Repos](/README.md#related-repositories).
 
 ## Targeting a specific operating system
 
