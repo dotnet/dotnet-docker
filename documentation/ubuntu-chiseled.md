@@ -2,7 +2,7 @@
 
 ## What is Ubuntu Chiseled?
 
-.NET's Ubuntu Chiseled images are a type of "distroless" container image that contain only the minimal set of packages .NET needs, with everything else removed.
+.NET's Ubuntu Chiseled images are a type of [distroless container image](./distroless.md) that contain only the minimal set of packages .NET needs, with everything else removed.
 These images offer dramatically smaller deployment sizes and attack surface compared to our "full" Ubuntu images that are based on the Ubuntu base images. This is achieved through the following features:
 
 * Minimal set of packages required to run a .NET application
