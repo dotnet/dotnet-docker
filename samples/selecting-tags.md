@@ -11,6 +11,27 @@ of the .NET platform. They can be found under [Featured Repos](/README.md#featur
 Other repos, including preview (nightly) .NET images, can be found under
 [Related Repos](/README.md#related-repositories).
 
+## Default Linux tags
+
+The `runtime-deps`, `runtime`, `aspnet`, and `sdk` repos provide version-only
+manifest list tags. These tags can sometimes be referred to as "convenience
+tags".
+
+* `9.0`
+* `9.0.X`
+* `latest`
+
+For .NET 8 and .NET 9, these tags refer to Debian 12 (Bookworm). All three
+of the above tags will provide a Debian image.
+
+> [!CAUTION]
+> For .NET 10 and subsequent releases, [these tags will refer to Ubuntu 24.04
+> ("Noble")](https://github.com/dotnet/dotnet-docker/discussions/5709).
+
+These convenience tags don't support Windows. See the [Multi-Platform
+Tags](/documentation/supported-tags.md#multi-platform-tags) documentation for
+more info.
+
 ## Targeting a specific operating system
 
 If you want a specific operating system image, you should use a specific operating system tag. We publish images for [Alpine](#alpine), [Debian](#debian), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core).
