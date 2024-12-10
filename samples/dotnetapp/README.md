@@ -20,7 +20,7 @@ docker run --rm dotnetapp
 ```
 
 Add the argument `-f <Dockerfile>` to build the sample in a different configuration.
-For example, build an [Ubuntu Chiseled](https://devblogs.microsoft.com/dotnet/dotnet-6-is-now-in-ubuntu-2204/#net-in-chiseled-ubuntu-containers) image using [Dockerfile.chiseled](Dockerfile.chiseled):
+For example, build an [Ubuntu Chiseled](../../documentation/ubuntu-chiseled.md) image using [Dockerfile.chiseled](Dockerfile.chiseled):
 
 ```console
 docker build --pull -t dotnetapp -f Dockerfile.chiseled 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp'
