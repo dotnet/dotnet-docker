@@ -118,7 +118,7 @@ By having the version of .NET you're installing explicitly defined in the Docker
 * .NET download URL (e.g. `ENV DOTNET_URL=https://download.visualstudio.microsoft.com/...`)
 * SHA value (e.g. `dotnet_sha512='d4d67df5ff5f6dde0d865a6e87559955bd57429df396cf7d05fe77f09e6220c67dc5e66439b1801ca4d301a62f81f666122bf4b623b31a46b861677dcafc62a4'`)
 
-You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://dotnetcli.azureedge.net/dotnet/release-metadata/6.0/releases.json) for 6.0 contains all the metadata for the 6.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.
+You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://dotnetcli.azureedge.net/dotnet/release-metadata/9.0/releases.json) for 9.0 contains all the metadata for the 9.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/master/release-notes/README.md) page.
 
 ### Installing from a Linux Package Manager
 
@@ -188,7 +188,7 @@ RUN apt-get update \
 
 ### Installing from dotnet-install script
 
-A set of [installation scripts](https://learn.microsoft.com/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 6.0.0, the latest of a release channel such as the latest 6.0 patch, etc.
+A set of [installation scripts](https://learn.microsoft.com/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 9.0.0, the latest of a release channel such as the latest 9.0 patch, etc.
 
 In addition to installing .NET, you'll also need to ensure that the [prerequisites](https://github.com/dotnet/core/blob/main/linux.md#dependencies) are installed. The [.NET Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
 

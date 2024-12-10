@@ -46,17 +46,19 @@ d79edc6bfcb6   mcr.microsoft.com/dotnet/samples:aspnetapp   "./aspnetapp"   35 s
 
 ## Change port
 
-You can change the port ASP.NET Core uses with one of the following environment variables. However, port `8080` (set by default) is recommended.
+You can change the port ASP.NET Core uses with one of the following environment variables.
+However, the default port `8080` is recommended.
 
-The following examples change the port to port `80`.
+Note that ports 1 to 1023 are restricted to root users only, and will not work when running as the non-root root user provided in .NET images.
 
-- Supported with .NET 8+: `ASPNETCORE_HTTP_PORTS=80`
-- Supported with .NET Core 1.0+: `ASPNETCORE_URLS=http://+:80`
+The following evnironment variables will change the port to port `80`.
 
-> [!NOTE]
-> `ASPNETCORE_URLS` overwrites `ASPNETCORE_HTTP_PORTS` if set.
+- `ASPNETCORE_HTTP_PORTS=80`
+- `ASPNETCORE_URLS=http://+:80`
 
-These environment variables are used in [.NET 8](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7C5-L7C31) and [.NET 6](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/6.0/bookworm-slim/amd64/Dockerfile#L5) Dockerfiles, respectively.
+`ASPNETCORE_URLS` overrides `ASPNETCORE_HTTP_PORTS` if set.
+The `ASPNETCORE_HTTP_PORTS` envrionment variable is used in the [ASP.NET Core](https://github.com/dotnet/dotnet-docker/blob/d90e7bd1d10c8781f0008f5ab1327ca3481e78de/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7C5-L7C31)
+images to set the default port.
 
 ## Enable HTTPS
 
