@@ -69,6 +69,7 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Releases        | [Every 6 months](https://alpinelinux.org/releases/)                |
 | Security        | [Alpine Linux Security Tracker](https://security.alpinelinux.org/) |
 | Support         | [Alpine Linux Community](https://alpinelinux.org/community/)       |
+| Package format  | `.apk`                                                             |
 | Package manager | `apk`                                                              |
 
 #### [Azure Linux](https://github.com/microsoft/azurelinux)
@@ -82,6 +83,7 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Releases        | Approximately every 2 years                                                                |
 | Security        | [Azure Linux Vulnerability Data](https://github.com/microsoft/AzureLinuxVulnerabilityData) |
 | Support         | [Azure Linux GitHub repo](https://github.com/microsoft/azurelinux/issues)                  |
+| Package format  | `.rpm`                                                                                     |
 | Package manager | `tdnf`                                                                                     |
 
 #### [Debian](https://www.debian.org/)
@@ -94,7 +96,8 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Releases        | [Approximately every 2 years](https://www.debian.org/releases/) |
 | Security        | [Debian Security Information](https://www.debian.org/security/) |
 | Support         | [Debian User Support](https://www.debian.org/support)           |
-| Package manager | `apt`                                                           |
+| Package format  | `.deb`                                                          |
+| Package manager | `apt`/ `dpkg`                                                   |
 
 #### [Ubuntu](https://ubuntu.com/)
 
@@ -107,7 +110,8 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Releases        | [LTS releases every 2 years](https://ubuntu.com/about/release-cycle) |
 | Security        | [Ubuntu Security Information](https://ubuntu.com/security/cves)      |
 | Support         | [Ubuntu support](https://ubuntu.com/support)<br> [Launchpad](https://bugs.launchpad.net/ubuntu)<br> [Discourse](https://discourse.ubuntu.com/) |
-| Package manager | `apt`                                                                |
+| Package format  | `.deb`                                                               |
+| Package manager | `apt`/ `dpkg`                                                        |
 
 ### Windows
 
