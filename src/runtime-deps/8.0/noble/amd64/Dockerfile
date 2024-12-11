@@ -19,6 +19,7 @@ RUN apt-get update \
         libssl3t64 \
         libstdc++6 \
         tzdata \
+        tzdata-legacy \
         zlib1g \
     && rm -rf /var/lib/apt/lists/*
 
