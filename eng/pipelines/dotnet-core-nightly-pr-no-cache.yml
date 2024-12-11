@@ -17,8 +17,6 @@ resources:
 
 variables:
 - template: variables/core.yml
-- name: publishEolAnnotations
-  value: true
 
 stages:
 - template: stages/build-test-publish-repo.yml
