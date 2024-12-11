@@ -57,13 +57,6 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 
 #### [Alpine Linux](https://alpinelinux.org/)
 
-* The smallest .NET images that still contain a package manager and shell.
-* Security-oriented, lightweight distro based on [musl
-  libc](https://wiki.musl-libc.org/functional-differences-from-glibc.html) and
-  busybox.
-* Does not support globalization by default. See [enabling globalization
-  functionality](./enable-globalization.md) for more info.
-
 |                 |                                                                    |
 |-----------------|--------------------------------------------------------------------|
 | Releases        | [Every 6 months](https://alpinelinux.org/releases/)                |
@@ -72,11 +65,12 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Package format  | `.apk`                                                             |
 | Package manager | `apk`                                                              |
 
-#### [Azure Linux](https://github.com/microsoft/azurelinux)
+| Supported .NET Features |                            |
+|-------------------------|----------------------------|
+| [Globalization]         | Invariant mode by default.<br>Globalization supported with `-extra` image variant. |
+| [Distroless Images]     | Yes                        |
 
-* Supported by Microsoft.
-* Azure Linux .NET images are full-featured by default, but with the option for
-  [distroless images](/documentation/distroless.md).
+#### [Azure Linux](https://github.com/microsoft/azurelinux)
 
 |                 |                                                                                            |
 |-----------------|--------------------------------------------------------------------------------------------|
@@ -85,6 +79,11 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Support         | [Azure Linux GitHub repo](https://github.com/microsoft/azurelinux/issues)                  |
 | Package format  | `.rpm`                                                                                     |
 | Package manager | `tdnf`                                                                                     |
+
+| Supported .NET Features |                                 |
+|-------------------------|---------------------------------|
+| [Globalization]         | Yes, for non-distroless images.<br>Globalization supported in distroless images with `-extra` image variant. |
+| [Distroless Images]     | No                              |
 
 #### [Debian](https://www.debian.org/)
 
@@ -99,11 +98,12 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Package format  | `.deb`                                                          |
 | Package manager | `apt`/ `dpkg`                                                   |
 
-#### [Ubuntu](https://ubuntu.com/)
+| Supported .NET Features |     |
+|-------------------------|-----|
+| [Globalization]         | Yes |
+| [Distroless Images]     | No  |
 
-* User-friendly, extensive documentation, strong community.
-* Full featured .NET images including many packages, with the option for
-  [Ubuntu Chiseled (distroless)](/documentation/ubuntu-chiseled.md) images.
+#### [Ubuntu](https://ubuntu.com/)
 
 |                 |                                                                      |
 |-----------------|----------------------------------------------------------------------|
@@ -112,6 +112,14 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Support         | [Ubuntu support](https://ubuntu.com/support)<br> [Launchpad](https://bugs.launchpad.net/ubuntu)<br> [Discourse](https://discourse.ubuntu.com/) |
 | Package format  | `.deb`                                                               |
 | Package manager | `apt`/ `dpkg`                                                        |
+
+| Supported .NET Features |                                                            |
+|-------------------------|------------------------------------------------------------|
+| [Globalization]           | Yes, for non-Chiseled images.<br>Globalization supported in Chiseled images with `-extra` image variant. |
+| [Distroless Images]     | Yes - [Ubuntu Chiseled](/documentation/ubuntu-chiseled.md) |
+
+[Globalization]: ./enable-globalization.md
+[Distroless Images]: /documentation/distroless.md
 
 ### Windows
 
