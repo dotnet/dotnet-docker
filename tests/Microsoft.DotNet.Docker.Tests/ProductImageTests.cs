@@ -424,6 +424,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 { OS: OS.NobleChiseled } => new[]
                     {
                         "libicu74",
+                        "tzdata-legacy",
                         "tzdata"
                     },
                 { OS: OS.JammyChiseled } => new[]
