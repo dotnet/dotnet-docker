@@ -71,7 +71,7 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 | Support         | [Alpine Linux Community](https://alpinelinux.org/community/)       |
 | Package manager | `apk`                                                              |
 
-#### [Azure Linux](https://azure.microsoft.com/en-us/services/linux/)
+#### [Azure Linux](https://github.com/microsoft/azurelinux)
 
 * Supported by Microsoft.
 * Azure Linux .NET images are full-featured by default, but with the option for
