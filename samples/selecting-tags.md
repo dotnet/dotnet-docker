@@ -34,13 +34,14 @@ more info.
 
 ## Targeting a specific operating system
 
-If you want a specific operating system image, you should use a specific operating system tag. We publish images for [Alpine](#alpine), [Debian](#debian), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core).
+If you want a specific operating system image, you should use a specific operating system tag. We publish images for [Alpine](#alpine-linux), [Azure Linux](#azure-linux), [Debian](#debian), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core).
 
 The following tags demonstrate the pattern used to describe each operating system (using .NET 9.0 as the example):
 
 * `9.0-alpine` (Latest Alpine)
-* `9.0-noble` (Ubuntu 24.04)
+* `9.0-azurelinux3.0` (Azure Linux 3.0)
 * `9.0-bookworm-slim` (Debian 12)
+* `9.0-noble` (Ubuntu 24.04)
 * `9.0-nanoserver-ltsc2022` (Nano Server LTSC 2022)
 * `9.0-nanoserver-1809` (Nano Server, version 1809)
 * `9.0-windowsservercore-ltsc2022` (Windows Server Core LTSC 2022)
@@ -54,25 +55,59 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 
 ### Linux
 
-#### [Debian](https://www.debian.org)
+#### [Alpine Linux](https://alpinelinux.org/)
 
-* When targeting Linux containers, Debian is the default Linux distro for all tags that do not specify an OS. For example, `latest`, `9.0`, and `9.0.0` will all provide a Debian image.
-* Very stable.
+* The smallest .NET images that still contain a package manager and shell.
+* Security-oriented, lightweight distro based on [musl
+  libc](https://wiki.musl-libc.org/functional-differences-from-glibc.html) and
+  busybox.
+* Does not support globalization by default. See [enabling globalization
+  functionality](./enable-globalization.md) for more info.
 
-#### [Ubuntu](https://ubuntu.com)
+|                 |                                                                    |
+|-----------------|--------------------------------------------------------------------|
+| Releases        | [Every 6 months](https://alpinelinux.org/releases/)                |
+| Security        | [Alpine Linux Security Tracker](https://security.alpinelinux.org/) |
+| Support         | [Alpine Linux Community](https://alpinelinux.org/community/)       |
+| Package manager | `apk`                                                              |
 
-* Shares Debian's codebase.
-* Feature-rich.
-* Less stable compared to Debian.
+#### [Azure Linux](https://azure.microsoft.com/en-us/services/linux/)
 
-#### [Alpine](https://www.alpinelinux.org)
+* Supported by Microsoft.
+* Azure Linux .NET images are full-featured by default, but with the option for
+  [distroless images](/documentation/distroless.md).
 
-* Security-oriented and lightweight.
-* Uses [musl instead of glibc](https://wiki.musl-libc.org/functional-differences-from-glibc.html) which may have incompatibility with your software.
+|                 |                                                                                            |
+|-----------------|--------------------------------------------------------------------------------------------|
+| Releases        | Approximately every 2 years                                                                |
+| Security        | [Azure Linux Vulnerability Data](https://github.com/microsoft/AzureLinuxVulnerabilityData) |
+| Support         | [Azure Linux GitHub repo](https://github.com/microsoft/azurelinux/issues)                  |
+| Package manager | `tdnf`                                                                                     |
 
-<a name="alpine-globalization">Globalization Support</a>:
+#### [Debian](https://www.debian.org/)
 
-By default, the `icu-libs` package is not included and the [globalization invariant mode](https://github.com/dotnet/runtime/blob/main/docs/design/features/globalization-invariant-mode.md) is enabled. You can opt into globalization support by [following the pattern shown in the sample Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile.alpine-icu).
+* Stability-focused, extensive package repository.
+* Full featured .NET images including many packages.
+
+|                 |                                                                 |
+|-----------------|-----------------------------------------------------------------|
+| Releases        | [Approximately every 2 years](https://www.debian.org/releases/) |
+| Security        | [Debian Security Information](https://www.debian.org/security/) |
+| Support         | [Debian User Support](https://www.debian.org/support)           |
+| Package manager | `apt`                                                           |
+
+#### [Ubuntu](https://ubuntu.com/)
+
+* User-friendly, extensive documentation, strong community.
+* Full featured .NET images including many packages, with the option for
+  [Ubuntu Chiseled (distroless)](/documentation/ubuntu-chiseled.md) images.
+
+|                 |                                                                      |
+|-----------------|----------------------------------------------------------------------|
+| Releases        | [LTS releases every 2 years](https://ubuntu.com/about/release-cycle) |
+| Security        | [Ubuntu Security Information](https://ubuntu.com/security/cves)      |
+| Support         | [Ubuntu support](https://ubuntu.com/support)<br> [Launchpad](https://bugs.launchpad.net/ubuntu)<br> [Discourse](https://discourse.ubuntu.com/) |
+| Package manager | `apt`                                                                |
 
 ### Windows
 
