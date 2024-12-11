@@ -34,6 +34,7 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
             libicu74_libs \
             libssl3t64_libs \
             libstdc++6_libs \
+            tzdata-legacy_zoneinfo \
             tzdata_zoneinfo
 
 

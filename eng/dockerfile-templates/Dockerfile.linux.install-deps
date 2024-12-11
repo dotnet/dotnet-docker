@@ -51,23 +51,26 @@
             ]
         ))) ^
 
-    set extraPkgs to sort(cat(standardPkgs,
-        when (isAzureLinux,
+    set extraPkgs to
+        sort(cat(standardPkgs,
+            when (isAzureLinux,
             [
                 "icu",
                 "tzdata"
             ],
             when(isAlpine,
-                [
-                    "icu-data-full",
-                    "icu-libs",
-                    "tzdata"
-                ],
-                [
-                    cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
-                    "tzdata"
-                ]
-            )))) ^
+            [
+                "icu-data-full",
+                "icu-libs",
+                "tzdata"
+            ],
+            cat(
+            [
+                cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
+                "tzdata"
+            ],
+            when(OS_VERSION_BASE = "noble", [ "tzdata-legacy" ], []))
+        )))) ^
 
     set pkgs to
         when(ARGS["is-aot"],

@@ -41,7 +41,8 @@
             "tzdata_zoneinfo-icu"
         ],
         [
-            "tzdata_zoneinfo"
+            "tzdata_zoneinfo",
+            "tzdata-legacy_zoneinfo"
         ]) ^
     set icuPkgs to [ cat("libicu", VARIABLES[cat("libicu|", osVersionBase)], "_libs") ] ^
     set extraPkgs to cat(sort(cat(standardPkgs, tzdataPkgs, icuPkgs))) ^
