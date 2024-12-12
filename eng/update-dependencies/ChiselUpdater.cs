@@ -11,6 +11,8 @@ namespace Dotnet.Docker;
 #nullable enable
 internal static class ChiselUpdater
 {
+    public static readonly string[] ToolNames = [ "chisel", "rocks-toolbox" ];
+
     private static readonly string[] s_chiselArchitectures = ["amd64", "arm", "arm64"];
 
     private const string DependencyInfoToUse = "runtime";
