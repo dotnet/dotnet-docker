@@ -7,7 +7,7 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker;
 
-public static class Tools
+internal static class Tools
 {
     public static readonly string[] SupportedTools =
     [
@@ -16,7 +16,7 @@ public static class Tools
         MinGitUpdater.ToolName
     ];
 
-    public static async Task<IDependencyInfo> GetToolBuildInfoAsync(string tool) =>
+    public static async Task<ToolBuildInfo> GetToolBuildInfoAsync(string tool) =>
         tool switch
         {
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
