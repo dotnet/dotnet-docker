@@ -69,7 +69,11 @@ namespace Dotnet.Docker
                         kvp.Key,
                         kvp.Value))
                     .ToArray();
-                DependencyUpdateResults updateResults = await UpdateFilesAsync(buildInfos);
+
+                IEnumerable<IDependencyInfo> toolBuildInfos =
+                    await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
+
+                DependencyUpdateResults updateResults = await UpdateFilesAsync([..buildInfos, ..toolBuildInfos]);
 
                 if (errorTraceListener.Errors.Any())
                 {
