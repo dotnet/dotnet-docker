@@ -399,13 +399,6 @@ namespace Dotnet.Docker
                 }
             }
 
-            updaters =
-            [
-                ..updaters,
-                ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-                ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
-            ];
-
             return updaters;
         }
     }
