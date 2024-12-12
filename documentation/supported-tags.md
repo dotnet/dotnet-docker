@@ -56,6 +56,7 @@ They include:
 > These multi-platform tags **specifically exclude all Windows versions** due
 > to `containerd`'s platform matching algorithm for Windows hosts. See
 > [containerd/containerd#6508](https://github.com/containerd/containerd/issues/6508)
+> and [dotnet/dotnet-docker#4492](https://github.com/dotnet/dotnet-docker/issues/4492)
 > for more context.
 >
 > If you are using Windows, you will need to explicitly specify an OS Version
