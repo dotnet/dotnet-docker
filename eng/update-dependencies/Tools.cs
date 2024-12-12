@@ -19,6 +19,7 @@ internal static class Tools
     public static async Task<ToolBuildInfo> GetToolBuildInfoAsync(string tool) =>
         tool switch
         {
+            MinGitUpdater.ToolName => await MinGitUpdater.GetBuildInfoAsync(),
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 }

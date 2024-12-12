@@ -1,4 +1,4 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
+﻿// Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
@@ -73,7 +73,7 @@ namespace Dotnet.Docker
                 IEnumerable<IDependencyInfo> toolBuildInfos =
                     await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
 
-                DependencyUpdateResults updateResults = await UpdateFilesAsync([..buildInfos, ..toolBuildInfos]);
+                DependencyUpdateResults[] updateResults = UpdateFiles(buildInfos, toolBuildInfos);
 
                 if (errorTraceListener.Errors.Any())
                 {
@@ -85,7 +85,7 @@ namespace Dotnet.Docker
                     Environment.Exit(1);
                 }
 
-                if (updateResults.ChangesDetected())
+                if (updateResults.Any(result => result.ChangesDetected()))
                 {
                     if (Options.UpdateOnly)
                     {
@@ -106,11 +106,20 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static async Task<DependencyUpdateResults> UpdateFilesAsync(IEnumerable<IDependencyInfo> buildInfos)
+        private static DependencyUpdateResults[] UpdateFiles(
+            IEnumerable<IDependencyInfo> buildInfos,
+            IEnumerable<IDependencyInfo> toolBuildInfos)
         {
-            IEnumerable<IDependencyUpdater> updaters = await GetUpdatersAsync();
+            IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdatersAsync();
+            IEnumerable<IDependencyUpdater> toolUpdaters = [];
 
-            return DependencyUpdateUtils.Update(updaters, buildInfos);
+            DependencyUpdateResults productResults = DependencyUpdateUtils.Update(productUpdaters, buildInfos);
+            Console.WriteLine(productResults.GetSuggestedCommitMessage());
+
+            DependencyUpdateResults toolResults = DependencyUpdateUtils.Update(toolUpdaters, buildInfos);
+            Console.WriteLine(productResults.GetSuggestedCommitMessage());
+
+            return [productResults, toolResults];
         }
 
         private static IDependencyInfo CreateDependencyBuildInfo(string name, string? version)
@@ -368,14 +377,10 @@ namespace Dotnet.Docker
             }
         }
 
-        private static async Task<IEnumerable<IDependencyUpdater>> GetUpdatersAsync()
+        private static IEnumerable<IDependencyUpdater> GetProductUpdatersAsync()
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
-
-            IEnumerable<IDependencyUpdater> minGitUpdaters = await MinGitUpdater.GetMinGitUpdatersAsync(RepoRoot);
-            IEnumerable<IDependencyUpdater> chiselUpdaters = await ChiselUpdater.GetChiselUpdatersAsync(RepoRoot, Options.DockerfileVersion);
-            IDependencyUpdater syftUpdater = await SyftUpdater.GetSyftUpdaterAsync(RepoRoot);
 
             List<IDependencyUpdater> updaters =
             [
