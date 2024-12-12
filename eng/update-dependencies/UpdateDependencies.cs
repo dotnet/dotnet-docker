@@ -24,13 +24,6 @@ namespace Dotnet.Docker
         public const string ManifestFilename = "manifest.json";
         public const string VersionsFilename = "manifest.versions.json";
 
-        public static readonly string[] SupportedTools =
-        [
-            SyftUpdater.ToolName,
-            ..ChiselUpdater.ToolNames,
-            MinGitUpdater.ToolName
-        ];
-
         private static Options? s_options;
 
         private static Options Options {
@@ -384,15 +377,6 @@ namespace Dotnet.Docker
             [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
-
-                ..minGitUpdaters,
-
-                // Disable additional updaters due to https://github.com/dotnet/dotnet-docker/issues/5990
-                // Chisel updaters must be listed before runtime version
-                // updaters because they check the manifest for whether the
-                // runtime versions are being updated or not
-                // ..chiselUpdaters,
-                // syftUpdater
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
