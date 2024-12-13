@@ -14,6 +14,7 @@ internal static class Tools
     [
         SyftUpdater.ToolName,
         ChiselUpdater.ToolName,
+        RocksToolboxUpdater.ToolName,
         MinGitUpdater.ToolName
     ];
 
@@ -23,6 +24,7 @@ internal static class Tools
             MinGitUpdater.ToolName => await MinGitUpdater.GetBuildInfoAsync(),
             SyftUpdater.ToolName => await SyftUpdater.GetBuildInfoAsync(),
             ChiselUpdater.ToolName => await ChiselUpdater.GetBuildInfoAsync(),
+            RocksToolboxUpdater.ToolName => await RocksToolboxUpdater.GetBuildInfoAsync(),
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 
@@ -30,6 +32,7 @@ internal static class Tools
     [
         ..MinGitUpdater.GetUpdaters(repoRoot),
         ..ChiselUpdater.GetUpdaters(repoRoot),
+        RocksToolboxUpdater.GetUpdater(repoRoot),
         SyftUpdater.GetUpdater(repoRoot),
     ];
 }
