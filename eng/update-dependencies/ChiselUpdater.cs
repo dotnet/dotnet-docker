@@ -1,5 +1,9 @@
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
@@ -17,9 +21,8 @@ internal static class ChiselUpdater
 
     private static readonly string[] s_supportedArchitectures = ["amd64", "arm", "arm64"];
 
-    public static IEnumerable<IDependencyUpdater> GetUpdaters(string repoRoot)
-    {
-        return s_supportedArchitectures
+    public static IEnumerable<IDependencyUpdater> GetUpdaters(string repoRoot) =>
+        s_supportedArchitectures
             .SelectMany<string, IDependencyUpdater>(arch =>
                 [
                     new GitHubReleaseUrlUpdater(
@@ -29,8 +32,10 @@ internal static class ChiselUpdater
                         owner: Owner,
                         repo: Repo,
                         assetRegex: GetAssetRegex(arch)),
+                    new ChiselReleaseShaUpdater(
+                        repoRoot,
+                        arch),
                 ]);
-    }
 
     public static async Task<GitHubReleaseInfo> GetBuildInfoAsync() =>
         new GitHubReleaseInfo(
@@ -46,4 +51,32 @@ internal static class ChiselUpdater
     private static Regex GetAssetRegex(string arch) => new(@"chisel_v\d+\.\d+\.\d+_linux_" + arch + @"\.tar\.gz");
 
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
+
+    private class ChiselReleaseShaUpdater(
+        string repoRoot,
+        string arch)
+        : GitHubReleaseUrlUpdater(
+            repoRoot,
+            ChiselUpdater.ToolName,
+            GetChiselManifestVariable("chisel", arch, ShaFucntion, "latest"),
+            ChiselUpdater.Owner,
+            ChiselUpdater.Repo,
+            GetAssetRegex(arch))
+    {
+        private const string ShaFucntion = "sha384";
+
+        private static readonly HttpClient s_httpClient = new();
+
+        protected override string? GetValue(GitHubReleaseInfo dependencyInfo)
+        {
+            string? downloadUrl = base.GetValue(dependencyInfo);
+            if (downloadUrl is null)
+            {
+                return null;
+            }
+
+            downloadUrl = $"{downloadUrl}.{ShaFucntion}";
+            return ChecksumHelper.ComputeChecksumShaAsync(s_httpClient, downloadUrl).Result;
+        }
+    }
 }

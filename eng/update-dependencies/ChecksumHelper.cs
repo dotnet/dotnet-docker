@@ -39,4 +39,16 @@ internal static class ChecksumHelper
 
         return sha?.ToLowerInvariant();
     }
+
+    public static async Task<string?> GetChecksumFromFile(HttpClient httpClient, string downloadUrl)
+    {
+        using HttpResponseMessage response = await httpClient.GetAsync(downloadUrl);
+        if (!response.IsSuccessStatusCode)
+        {
+            Trace.TraceInformation($"Failed to download {downloadUrl}.");
+            return null;
+        }
+
+        return (await response.Content.ReadAsStringAsync()).ToLowerInvariant();
+    }
 }
