@@ -29,9 +29,8 @@ internal class GitHubReleaseUrlUpdater(
 
     private readonly Regex _assetRegex = assetRegex;
 
-    protected override string? GetValue(GitHubReleaseInfo dependencyInfo)
-    {
-        return dependencyInfo.Release.Assets.FirstOrDefault(asset => _assetRegex.IsMatch(asset.Name))?.BrowserDownloadUrl
-            ?? throw new Exception($"Could not find release asset for {_variableName} matching regex {_assetRegex}");
-    }
+    protected override string? GetValue(GitHubReleaseInfo dependencyInfo) =>
+        dependencyInfo.Release.Assets.FirstOrDefault(asset => _assetRegex.IsMatch(asset.Name))?.BrowserDownloadUrl
+            ?? throw new Exception(
+                $"Could not find release asset for {_variableName} matching regex {_assetRegex}");
 }
