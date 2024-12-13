@@ -90,7 +90,7 @@ namespace Dotnet.Docker
 
                 IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters();
                 IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
-                updateResults.Add(UpdateFiles(allBuildInfos, generatedContentUpdaters));
+                UpdateFiles(allBuildInfos, generatedContentUpdaters);
 
                 if (errorTraceListener.Errors.Any())
                 {
