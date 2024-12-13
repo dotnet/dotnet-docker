@@ -24,15 +24,16 @@ internal static class ChiselUpdater
 
         IEnumerable<IDependencyUpdater> chiselUpdaters = s_chiselArchitectures.SelectMany<string, IDependencyUpdater>(arch =>
             [
-                new ChiselReleaseShaUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "sha", "latest"), chiselRelease, arch),
-                new ChiselReleaseShaUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "sha", dockerfileVersion), chiselRelease, arch),
-                new GitHubReleaseUrlUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "url", "latest"), chiselRelease, DependencyInfoToUse, GetAssetRegex(arch)),
-                new GitHubReleaseUrlUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "url", dockerfileVersion), chiselRelease, DependencyInfoToUse, GetAssetRegex(arch))
+                // new ChiselReleaseShaUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "sha", "latest"), chiselRelease, arch),
+                // new ChiselReleaseShaUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "sha", dockerfileVersion), chiselRelease, arch),
+                // // new GitHubReleaseUrlUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "url", "latest"), chiselRelease, DependencyInfoToUse, GetAssetRegex(arch)),
+                // // new GitHubReleaseUrlUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "url", dockerfileVersion), chiselRelease, DependencyInfoToUse, GetAssetRegex(arch))
             ]);
 
-        GitHubReleaseVersionUpdater rocksToolboxUpdater = new(repoRoot, "rocks-toolbox|latest|version", rocksToolboxRelease, DependencyInfoToUse);
+        // GitHubReleaseVersionUpdater rocksToolboxUpdater = new(repoRoot, "rocks-toolbox|latest|version", rocksToolboxRelease, DependencyInfoToUse);
 
-        return [ ..chiselUpdaters, rocksToolboxUpdater ];
+        // return [ ..chiselUpdaters, rocksToolboxUpdater ];
+        return [];
     }
 
     public static string GetChiselManifestVariable(string product, string arch, string type, string dockerfileVersion = "latest")
@@ -46,13 +47,13 @@ internal static class ChiselUpdater
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
 
     private sealed class ChiselReleaseShaUpdater(string repoRoot, string variableName, Release release, string arch)
-        : GitHubReleaseUrlUpdater(repoRoot, variableName, release, DependencyInfoToUse, GetAssetRegex(arch))
     {
         private static readonly HttpClient s_httpClient = new();
 
-        protected override string? GetValue()
+        protected string? GetValue()
         {
-            string? downloadUrl = base.GetValue();
+            // string? downloadUrl = base.GetValue();
+            string? downloadUrl = null;
             if (downloadUrl is null)
             {
                 return null;

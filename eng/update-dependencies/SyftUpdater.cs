@@ -12,9 +12,7 @@ internal static class SyftUpdater
 {
     public const string ToolName = "syft";
 
-    public static async Task<IDependencyUpdater> GetSyftUpdaterAsync(string repoRoot)
-    {
-        Release syftRelease = await GitHubHelper.GetLatestRelease("anchore", "syft");
-        return new GitHubReleaseVersionUpdater(repoRoot, "syft|tag", syftRelease, "dotnet");
-    }
+    public static Task<Release> GetRelease() => GitHubHelper.GetLatestRelease("anchore", "syft");
+
+    public const string VariableName = "syft|tag";
 }
