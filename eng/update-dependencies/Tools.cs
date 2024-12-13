@@ -13,7 +13,7 @@ internal static class Tools
     public static readonly string[] SupportedTools =
     [
         SyftUpdater.ToolName,
-        ..ChiselUpdater.ToolNames,
+        ChiselUpdater.ToolName,
         MinGitUpdater.ToolName
     ];
 
@@ -22,12 +22,14 @@ internal static class Tools
         {
             MinGitUpdater.ToolName => await MinGitUpdater.GetBuildInfoAsync(),
             SyftUpdater.ToolName => await SyftUpdater.GetBuildInfoAsync(),
+            ChiselUpdater.ToolName => await ChiselUpdater.GetBuildInfoAsync(),
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 
     public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string repoRoot) =>
     [
         ..MinGitUpdater.GetUpdaters(repoRoot),
+        ..ChiselUpdater.GetUpdaters(repoRoot),
         SyftUpdater.GetUpdater(repoRoot),
     ];
 }
