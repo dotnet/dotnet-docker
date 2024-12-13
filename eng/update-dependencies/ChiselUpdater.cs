@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
@@ -76,7 +77,23 @@ internal static class ChiselUpdater
             }
 
             downloadUrl = $"{downloadUrl}.{ShaFucntion}";
-            return ChecksumHelper.ComputeChecksumShaAsync(s_httpClient, downloadUrl).Result;
+            return GetChecksumFromUrlAsync(downloadUrl).Result;
+        }
+
+        private static async Task<string?> GetChecksumFromUrlAsync(string downloadUrl)
+        {
+            using HttpResponseMessage response = await s_httpClient.GetAsync(downloadUrl);
+            if (!response.IsSuccessStatusCode)
+            {
+                Trace.TraceInformation($"Failed to download {downloadUrl}.");
+                return null;
+            }
+
+            // Expected format:
+            // abcdef1234567890  chisel_v1.0.0_linux_amd64.tar.gz
+            string content = await response.Content.ReadAsStringAsync();
+            string sha = content.Split("  ")[0];
+            return sha.ToLowerInvariant();
         }
     }
 }
