@@ -88,6 +88,10 @@ namespace Dotnet.Docker
                     updateResults.Add(toolUpdateResults);
                 }
 
+                IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters();
+                IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
+                updateResults.Add(UpdateFiles(allBuildInfos, generatedContentUpdaters));
+
                 if (errorTraceListener.Errors.Any())
                 {
                     string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
@@ -405,14 +409,13 @@ namespace Dotnet.Docker
                 }
             }
 
-            updaters =
-            [
-                ..updaters,
-                ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-                ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
-            ];
-
             return updaters;
         }
+
+        private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
+        [
+            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
+            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+        ];
     }
 }
