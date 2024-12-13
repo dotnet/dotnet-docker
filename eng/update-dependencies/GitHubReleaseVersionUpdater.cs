@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.DotNet.VersionTools.Dependencies;
-using Octokit;
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 #nullable enable
 namespace Dotnet.Docker;
@@ -9,18 +7,18 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates to the latest release tag name when runtime dependencies are being updated.
 /// </summary>
-internal class GitHubReleaseVersionUpdater(string repoRoot, string variableName, Release release, string dependencyInfoToUse)
-    : GitHubReleaseUpdaterBase(repoRoot, variableName, release)
+internal abstract class GitHubReleaseVersionUpdater(
+    string toolName,
+    string repoRoot,
+    string variableName,
+    string owner,
+    string repo)
+    : GitHubReleaseUpdaterBase(
+        toolName,
+        repoRoot,
+        variableName,
+        owner,
+        repo)
 {
-    private readonly string _dependencyInfoToUse = dependencyInfoToUse;
-
-    protected override string? GetValue()
-    {
-        return Release.TagName;
-    }
-
-    protected sealed override IDependencyInfo? GetDependencyInfoToUse(IEnumerable<IDependencyInfo> dependencyInfos)
-    {
-        return dependencyInfos.FirstOrDefault(info => info.SimpleName == _dependencyInfoToUse);
-    }
+    protected override string? GetValue(GitHubReleaseInfo dependencyInfo) => dependencyInfo.Release.TagName;
 }

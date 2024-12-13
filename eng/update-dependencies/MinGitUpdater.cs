@@ -1,7 +1,10 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Octokit;
@@ -9,23 +12,58 @@ using Octokit;
 #nullable enable
 namespace Dotnet.Docker;
 
-internal static class MinGitUpdater
+internal static partial class MinGitUpdater
 {
     public const string ToolName = "mingit";
 
-    public static async Task<IEnumerable<IDependencyUpdater>> GetMinGitUpdatersAsync(string repoRoot)
-    {
-        Release minGitRelease = await GitHubHelper.GetLatestRelease("git-for-windows", "git");
+    private const string Owner = "git-for-windows";
 
-        return [
-            new MinGitUrlUpdater(repoRoot, minGitRelease),
-            new MinGitShaUpdater(repoRoot, minGitRelease),
-        ];
+    private const string Repo = "git";
+
+    public static IEnumerable<IDependencyUpdater> GetUpdaters(string repoRoot) =>
+    [
+        new GitHubReleaseUrlUpdater(
+            repoRoot: repoRoot,
+            toolName: ToolName,
+            variableName: GetManifestVariableName("url"),
+            owner: Owner,
+            repo: Repo,
+            assetRegex: UrlRegex),
+        new MinGitShaUpdater(repoRoot)
+    ];
+
+    public static async Task<GitHubReleaseInfo> GetBuildInfoAsync()
+    {
+        Release minGitRelease = await GitHubHelper.GetLatestRelease(Owner, Repo);
+        return new GitHubReleaseInfo(ToolName, minGitRelease);
     }
 
-    public static async Task<ToolBuildInfo> GetBuildInfoAsync()
+    [GeneratedRegex(@"^MinGit.*64-bit.*\.zip$")]
+    private static partial Regex UrlRegex { get; }
+
+    private static string GetManifestVariableName(string type) => "mingit|latest|x64|" + type;
+
+    private class MinGitShaUpdater(string repoRoot)
+        : GitHubReleaseUpdaterBase(
+            repoRoot,
+            MinGitUpdater.ToolName,
+            GetManifestVariableName("sha"),
+            MinGitUpdater.Owner,
+            MinGitUpdater.Repo)
     {
-        Release minGitRelease = await GitHubHelper.GetLatestRelease("git-for-windows", "git");
-        return new ToolBuildInfo(ToolName, minGitRelease.TagName);
+        protected override string? GetValue(GitHubReleaseInfo dependencyInfo)
+        {
+            ReleaseAsset asset = dependencyInfo.Release.Assets
+                .First(asset => UrlRegex.IsMatch(asset.Name))
+                    ?? throw new Exception(
+                        $"Could not find release asset for {GetManifestVariableName("sha")} matching regex {UrlRegex}");
+
+            string body = dependencyInfo.Release.Body;
+            const string ShaGroupName = "sha";
+            Regex shaRegex = new(@$"{Regex.Escape(asset.Name)}\s\|\s(?<{ShaGroupName}>[0-9|a-f]+)");
+            string sha = shaRegex.Match(body).Groups[ShaGroupName].Value;
+            return sha;
+        }
     }
+
 }

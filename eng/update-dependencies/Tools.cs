@@ -2,6 +2,7 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
@@ -16,10 +17,15 @@ internal static class Tools
         MinGitUpdater.ToolName
     ];
 
-    public static async Task<ToolBuildInfo> GetToolBuildInfoAsync(string tool) =>
+    public static async Task<GitHubReleaseInfo> GetToolBuildInfoAsync(string tool) =>
         tool switch
         {
             MinGitUpdater.ToolName => await MinGitUpdater.GetBuildInfoAsync(),
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
+
+    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string repoRoot) =>
+    [
+        ..MinGitUpdater.GetUpdaters(repoRoot),
+    ];
 }

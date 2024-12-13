@@ -1,7 +1,6 @@
 using System;
 using System.Linq;
 using System.Text.RegularExpressions;
-using Octokit;
 
 #nullable enable
 namespace Dotnet.Docker;
@@ -9,17 +8,27 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates to the latest download URL when runtime dependencies are being updated.
 /// </summary>
-internal class GitHubReleaseUrlUpdater(string repoRoot, string variableName, Release release, string DependencyInfoToUse, Regex assetRegex)
-    : GitHubReleaseVersionUpdater(repoRoot, variableName, release, DependencyInfoToUse)
+internal class GitHubReleaseUrlUpdater(
+    string repoRoot,
+    string toolName,
+    string variableName,
+    string owner,
+    string repo,
+    Regex assetRegex)
+    : GitHubReleaseUpdaterBase(
+        repoRoot,
+        toolName,
+        variableName,
+        owner,
+        repo)
 {
     private readonly string _variableName = variableName;
+
     private readonly Regex _assetRegex = assetRegex;
 
-    protected override string? GetValue() => GetReleaseAsset().BrowserDownloadUrl;
-
-    protected ReleaseAsset GetReleaseAsset()
+    protected override string? GetValue(GitHubReleaseInfo dependencyInfo)
     {
-        return Release.Assets.FirstOrDefault(asset => _assetRegex.IsMatch(asset.Name))
+        return dependencyInfo.Release.Assets.FirstOrDefault(asset => _assetRegex.IsMatch(asset.Name))?.BrowserDownloadUrl
             ?? throw new Exception($"Could not find release asset for {_variableName} matching regex {_assetRegex}");
     }
 }

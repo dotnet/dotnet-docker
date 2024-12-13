@@ -64,16 +64,29 @@ namespace Dotnet.Docker
                 Trace.Listeners.Add(errorTraceListener);
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
-                IEnumerable<IDependencyInfo> buildInfos = Options.ProductVersions
+                IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(
                         kvp.Key,
                         kvp.Value))
                     .ToArray();
-
-                IEnumerable<IDependencyInfo> toolBuildInfos =
+                IDependencyInfo[] toolBuildInfos =
                     await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
 
-                DependencyUpdateResults[] updateResults = UpdateFiles(buildInfos, toolBuildInfos);
+                List<DependencyUpdateResults> updateResults = [];
+
+                if (productBuildInfos.Length != 0)
+                {
+                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters();
+                    DependencyUpdateResults productUpdateResults = UpdateFiles(productBuildInfos, productUpdaters);
+                    updateResults.Add(productUpdateResults);
+                }
+
+                if (toolBuildInfos.Length != 0)
+                {
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(RepoRoot);
+                    DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
+                    updateResults.Add(toolUpdateResults);
+                }
 
                 if (errorTraceListener.Errors.Any())
                 {
@@ -106,20 +119,13 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static DependencyUpdateResults[] UpdateFiles(
+        private static DependencyUpdateResults UpdateFiles(
             IEnumerable<IDependencyInfo> buildInfos,
-            IEnumerable<IDependencyInfo> toolBuildInfos)
+            IEnumerable<IDependencyUpdater> updaters)
         {
-            IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdatersAsync();
-            IEnumerable<IDependencyUpdater> toolUpdaters = [];
-
-            DependencyUpdateResults productResults = DependencyUpdateUtils.Update(productUpdaters, buildInfos);
-            Console.WriteLine(productResults.GetSuggestedCommitMessage());
-
-            DependencyUpdateResults toolResults = DependencyUpdateUtils.Update(toolUpdaters, buildInfos);
-            Console.WriteLine(productResults.GetSuggestedCommitMessage());
-
-            return [productResults, toolResults];
+            DependencyUpdateResults results = DependencyUpdateUtils.Update(updaters, buildInfos);
+            Console.WriteLine(results.GetSuggestedCommitMessage());
+            return results;
         }
 
         private static IDependencyInfo CreateDependencyBuildInfo(string name, string? version)
@@ -377,7 +383,7 @@ namespace Dotnet.Docker
             }
         }
 
-        private static IEnumerable<IDependencyUpdater> GetProductUpdatersAsync()
+        private static IEnumerable<IDependencyUpdater> GetProductUpdaters()
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
