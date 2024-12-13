@@ -5,17 +5,17 @@
 namespace Dotnet.Docker;
 
 /// <summary>
-/// Updates to the latest release tag name when runtime dependencies are being updated.
+/// Updates a variable to the latest GitHub Release tag
 /// </summary>
-internal abstract class GitHubReleaseVersionUpdater(
-    string toolName,
+internal class GitHubReleaseVersionUpdater(
     string repoRoot,
+    string toolName,
     string variableName,
     string owner,
     string repo)
     : GitHubReleaseUpdaterBase(
-        toolName,
         repoRoot,
+        toolName,
         variableName,
         owner,
         repo)

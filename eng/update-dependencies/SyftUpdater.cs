@@ -3,16 +3,25 @@
 
 using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
-using Octokit;
 
 namespace Dotnet.Docker;
 
 #nullable enable
 internal static class SyftUpdater
 {
-    public const string ToolName = "syft";
+    public const string Owner = "anchore";
 
-    public static Task<Release> GetRelease() => GitHubHelper.GetLatestRelease("anchore", "syft");
+    public const string Repo = "syft";
+
+    public const string ToolName = Repo;
 
     public const string VariableName = "syft|tag";
+
+    public static async Task<GitHubReleaseInfo> GetBuildInfoAsync() =>
+         new GitHubReleaseInfo(
+            SimpleName: ToolName,
+            Release: await GitHubHelper.GetLatestRelease(Owner, Repo));
+
+    public static IDependencyUpdater GetUpdater(string repoRoot) =>
+        new GitHubReleaseVersionUpdater(repoRoot, ToolName, VariableName, Owner, Repo);
 }

@@ -21,11 +21,13 @@ internal static class Tools
         tool switch
         {
             MinGitUpdater.ToolName => await MinGitUpdater.GetBuildInfoAsync(),
+            SyftUpdater.ToolName => await SyftUpdater.GetBuildInfoAsync(),
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 
     public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string repoRoot) =>
     [
         ..MinGitUpdater.GetUpdaters(repoRoot),
+        SyftUpdater.GetUpdater(repoRoot),
     ];
 }
