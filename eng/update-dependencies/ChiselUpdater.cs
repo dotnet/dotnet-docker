@@ -1,37 +1,47 @@
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
-using Octokit;
 
 namespace Dotnet.Docker;
 
 #nullable enable
 internal static class ChiselUpdater
 {
-    private static readonly string[] s_chiselArchitectures = ["amd64", "arm", "arm64"];
+    public const string ToolName = Repo;
 
-    private const string DependencyInfoToUse = "runtime";
+    private const string Owner = "canonical";
 
-    public static async Task<IEnumerable<IDependencyUpdater>> GetChiselUpdatersAsync(string repoRoot, string dockerfileVersion)
-    {
-        Release chiselRelease = await GitHubHelper.GetLatestRelease("canonical", "chisel");
-        Release rocksToolboxRelease = await GitHubHelper.GetLatestRelease("canonical", "rocks-toolbox");
+    private const string Repo = "chisel";
 
-        IEnumerable<IDependencyUpdater> chiselUpdaters = s_chiselArchitectures.SelectMany<string, IDependencyUpdater>(arch =>
-            [
-                new ChiselReleaseShaUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "sha", "latest"), chiselRelease, arch),
-                new ChiselReleaseShaUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "sha", dockerfileVersion), chiselRelease, arch),
-                new GitHubReleaseUrlUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "url", "latest"), chiselRelease, DependencyInfoToUse, GetAssetRegex(arch)),
-                new GitHubReleaseUrlUpdater(repoRoot, GetChiselManifestVariable("chisel", arch, "url", dockerfileVersion), chiselRelease, DependencyInfoToUse, GetAssetRegex(arch))
-            ]);
+    private static readonly string[] s_supportedArchitectures = ["amd64", "arm", "arm64"];
 
-        GitHubReleaseVersionUpdater rocksToolboxUpdater = new(repoRoot, "rocks-toolbox|latest|version", rocksToolboxRelease, DependencyInfoToUse);
+    public static IEnumerable<IDependencyUpdater> GetUpdaters(string repoRoot) =>
+        s_supportedArchitectures
+            .SelectMany<string, IDependencyUpdater>(arch =>
+                [
+                    new GitHubReleaseUrlUpdater(
+                        repoRoot: repoRoot,
+                        toolName: ToolName,
+                        variableName: GetChiselManifestVariable(ToolName, arch, "url", "latest"),
+                        owner: Owner,
+                        repo: Repo,
+                        assetRegex: GetAssetRegex(arch)),
+                    new ChiselReleaseShaUpdater(
+                        repoRoot,
+                        arch),
+                ]);
 
-        return [ ..chiselUpdaters, rocksToolboxUpdater ];
-    }
+    public static async Task<GitHubReleaseInfo> GetBuildInfoAsync() =>
+        new GitHubReleaseInfo(
+            SimpleName: ToolName,
+            Release: await GitHubHelper.GetLatestRelease(Owner, Repo));
 
     public static string GetChiselManifestVariable(string product, string arch, string type, string dockerfileVersion = "latest")
     {
@@ -43,20 +53,47 @@ internal static class ChiselUpdater
 
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
 
-    private sealed class ChiselReleaseShaUpdater(string repoRoot, string variableName, Release release, string arch)
-        : GitHubReleaseUrlUpdater(repoRoot, variableName, release, DependencyInfoToUse, GetAssetRegex(arch))
+    private class ChiselReleaseShaUpdater(
+        string repoRoot,
+        string arch)
+        : GitHubReleaseUrlUpdater(
+            repoRoot,
+            ChiselUpdater.ToolName,
+            GetChiselManifestVariable("chisel", arch, ShaFunction, "latest"),
+            ChiselUpdater.Owner,
+            ChiselUpdater.Repo,
+            GetAssetRegex(arch))
     {
+        private const string ShaFunction = "sha384";
+
         private static readonly HttpClient s_httpClient = new();
 
-        protected override string? GetValue()
+        protected override string? GetValue(GitHubReleaseInfo dependencyInfo)
         {
-            string? downloadUrl = base.GetValue();
+            string? downloadUrl = base.GetValue(dependencyInfo);
             if (downloadUrl is null)
             {
                 return null;
             }
 
-            return ChecksumHelper.ComputeChecksumShaAsync(s_httpClient, downloadUrl).Result;
+            downloadUrl = $"{downloadUrl}.{ShaFunction}";
+            return GetChecksumFromUrlAsync(downloadUrl).Result;
+        }
+
+        private static async Task<string?> GetChecksumFromUrlAsync(string downloadUrl)
+        {
+            using HttpResponseMessage response = await s_httpClient.GetAsync(downloadUrl);
+            if (!response.IsSuccessStatusCode)
+            {
+                Trace.TraceInformation($"Failed to download {downloadUrl}.");
+                return null;
+            }
+
+            // Expected format:
+            // abcdef1234567890  chisel_v1.0.0_linux_amd64.tar.gz
+            string content = await response.Content.ReadAsStringAsync();
+            string sha = content.Split("  ")[0];
+            return sha.ToLowerInvariant();
         }
     }
 }
