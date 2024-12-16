@@ -22,7 +22,6 @@ Alternatively, you can build the sample image locally:
 docker build --pull -t mcr.microsoft.com/dotnet/samples:aspnetapp 'https://github.com/dotnet/dotnet-docker.git#:samples/aspnetapp'
 ```
 
-
 ## Certificates
 
 You need a certificate from a [certificate authority](https://en.wikipedia.org/wiki/Certificate_authority)
