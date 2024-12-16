@@ -64,12 +64,33 @@ namespace Dotnet.Docker
                 Trace.Listeners.Add(errorTraceListener);
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
-                IEnumerable<IDependencyInfo> buildInfos = Options.ProductVersions
+                IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(
                         kvp.Key,
                         kvp.Value))
                     .ToArray();
-                DependencyUpdateResults updateResults = await UpdateFilesAsync(buildInfos);
+                IDependencyInfo[] toolBuildInfos =
+                    await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
+
+                List<DependencyUpdateResults> updateResults = [];
+
+                if (productBuildInfos.Length != 0)
+                {
+                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters();
+                    DependencyUpdateResults productUpdateResults = UpdateFiles(productBuildInfos, productUpdaters);
+                    updateResults.Add(productUpdateResults);
+                }
+
+                if (toolBuildInfos.Length != 0)
+                {
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(RepoRoot);
+                    DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
+                    updateResults.Add(toolUpdateResults);
+                }
+
+                IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters();
+                IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
+                UpdateFiles(allBuildInfos, generatedContentUpdaters);
 
                 if (errorTraceListener.Errors.Any())
                 {
@@ -81,7 +102,7 @@ namespace Dotnet.Docker
                     Environment.Exit(1);
                 }
 
-                if (updateResults.ChangesDetected())
+                if (updateResults.Any(result => result.ChangesDetected()))
                 {
                     if (Options.UpdateOnly)
                     {
@@ -102,11 +123,13 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static async Task<DependencyUpdateResults> UpdateFilesAsync(IEnumerable<IDependencyInfo> buildInfos)
+        private static DependencyUpdateResults UpdateFiles(
+            IEnumerable<IDependencyInfo> buildInfos,
+            IEnumerable<IDependencyUpdater> updaters)
         {
-            IEnumerable<IDependencyUpdater> updaters = await GetUpdatersAsync();
-
-            return DependencyUpdateUtils.Update(updaters, buildInfos);
+            DependencyUpdateResults results = DependencyUpdateUtils.Update(updaters, buildInfos);
+            Console.WriteLine(results.GetSuggestedCommitMessage());
+            return results;
         }
 
         private static IDependencyInfo CreateDependencyBuildInfo(string name, string? version)
@@ -364,28 +387,15 @@ namespace Dotnet.Docker
             }
         }
 
-        private static async Task<IEnumerable<IDependencyUpdater>> GetUpdatersAsync()
+        private static IEnumerable<IDependencyUpdater> GetProductUpdaters()
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
-
-            IEnumerable<IDependencyUpdater> minGitUpdaters = await MinGitUpdater.GetMinGitUpdatersAsync(RepoRoot);
-            IEnumerable<IDependencyUpdater> chiselUpdaters = await ChiselUpdater.GetChiselUpdatersAsync(RepoRoot, Options.DockerfileVersion);
-            IDependencyUpdater syftUpdater = await SyftUpdater.GetSyftUpdaterAsync(RepoRoot);
 
             List<IDependencyUpdater> updaters =
             [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
-
-                ..minGitUpdaters,
-
-                // Disable additional updaters due to https://github.com/dotnet/dotnet-docker/issues/5990
-                // Chisel updaters must be listed before runtime version
-                // updaters because they check the manifest for whether the
-                // runtime versions are being updated or not
-                // ..chiselUpdaters,
-                // syftUpdater
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
@@ -399,14 +409,13 @@ namespace Dotnet.Docker
                 }
             }
 
-            updaters =
-            [
-                ..updaters,
-                ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-                ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
-            ];
-
             return updaters;
         }
+
+        private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
+        [
+            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
+            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+        ];
     }
 }
