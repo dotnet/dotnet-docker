@@ -2,9 +2,9 @@ FROM arm64v8/buildpack-deps:jammy-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_arm64.tar.gz \
-    && chisel_sha512='0793124925000cc0103bce1b0f689520866565ba6d0841a3f5dcf4c1c6ffd753d059d9aa068d901f9422b4742fa51c9aa8e848f0751257329a35d99435d5cc1b' \
-    && echo "$chisel_sha512  chisel.tar.gz" | sha512sum -c - \
+RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.0.0/chisel_v1.0.0_linux_arm64.tar.gz \
+    && chisel_sha384='95bfcff1c4cc27a4649bd8945fe493c9409a3d054100b15dd5d80edc59c0c76c3c57ce153087a4a6411b7b02f9053cab' \
+    && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
     && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
