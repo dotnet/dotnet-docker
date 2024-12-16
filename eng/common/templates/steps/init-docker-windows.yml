@@ -51,7 +51,7 @@ steps:
         $authedImageBuilderCmds = @(
           '$env:AZURE_TENANT_ID = $env:tenantId'
           '$env:AZURE_CLIENT_ID = $env:servicePrincipalId'
-          '$env:AZURE_FEDERATED_TOKEN_FILE' + " = $tokenHostFilePath"
+          '$env:AZURE_FEDERATED_TOKEN_FILE = ' + "'" + "$tokenHostFilePath" + "'"
           $runImageBuilderCmd
         )
 
