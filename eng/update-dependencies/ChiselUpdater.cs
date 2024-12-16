@@ -59,7 +59,7 @@ internal static class ChiselUpdater
         : GitHubReleaseUrlUpdater(
             repoRoot,
             ChiselUpdater.ToolName,
-            GetChiselManifestVariable("chisel", arch, ShaFucntion, "latest"),
+            GetChiselManifestVariable("chisel", arch, ShaFunction, "latest"),
             ChiselUpdater.Owner,
             ChiselUpdater.Repo,
             GetAssetRegex(arch))
@@ -76,7 +76,7 @@ internal static class ChiselUpdater
                 return null;
             }
 
-            downloadUrl = $"{downloadUrl}.{ShaFucntion}";
+            downloadUrl = $"{downloadUrl}.{ShaFunction}";
             return GetChecksumFromUrlAsync(downloadUrl).Result;
         }
 
