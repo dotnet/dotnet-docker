@@ -64,7 +64,7 @@ internal static class ChiselUpdater
             ChiselUpdater.Repo,
             GetAssetRegex(arch))
     {
-        private const string ShaFucntion = "sha384";
+        private const string ShaFunction = "sha384";
 
         private static readonly HttpClient s_httpClient = new();
 
