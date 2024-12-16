@@ -39,7 +39,9 @@ docker build --pull -t mcr.microsoft.com/dotnet/samples:aspnetapp 'https://githu
 
 ## Create and trust a development certificate
 
-ASP.NET Core uses [self-signed development certificates](https://learn.microsoft.com/aspnet/core/security/enforcing-ssl#trust-the-aspnet-core-https-development-certificate) for development.
+ASP.NET Core uses [self-signed development
+certificates](https://learn.microsoft.com/aspnet/core/security/enforcing-ssl#trust-the-aspnet-core-https-development-certificate)
+for development.
 
 The following instructions create a .NET development certificate (if one doesn't
 already exist), export it to a `.pfx` file, and trust the certificate locally.
@@ -81,89 +83,17 @@ Generate, export, and trust the certificate:
 dotnet dev-certs https -ep ${HOME}/.aspnet/https/aspnetapp.pfx -p <CREDENTIAL_PLACEHOLDER> --trust
 ```
 
-## Building and running the sample with HTTPS
+## Enable HTTPS using environment variables
 
-The instructions [bind mount](https://docs.docker.com/engine/storage/bind-mounts/)
-certificates into containers. While you could add certificates into container
-images with a `COPY` command in a Dockerfile, we don't recommend that approach.
-It makes it harder to use the same image for testing with dev certificates and
-hosting with production certificates. There is also a risk of certificate
-disclosure if certificates are made part of container images.
+See [Enable HTTPS using environment variables](./host-aspnetcore-https.md#enable-https-using-environment-variables).
+If you don't want to use environment variables to store your development
+certificate password, continue reading.
 
-Use the following instructions for your operating system configuration. The
-commands assume that you are in the root of the repository.
+## Using user secrets for certificate password
 
-### Using environment variables
-
-ASP.NET Core looks for certificates in `~/.aspnet/https/` by default. This
-directory is different depending on whether you are running the container image
-as a non-root user or the `root` user. Since our images come with a non-root
-user (`app`) by default, we'll use that user's home directory for the following
-commands.
-
-ASP.NET Core will also look in that directory for a certificate file that
-matches the assembly name of your app. If you want to put your certificate in a
-different location, or if you want to use a certificate name that doesn't match
-the assembly name of your app, set the
-`ASPNETCORE_Kestrel__Certificates__Default__Path` variable to your
-certificate's path in the container image.
-
-On Linux, ASP.NET Core looks for certificates in `~/.aspnet/https/`. This
-directory is different depending on whether you are running the container image
-as a non-root user or the `root` user. Since our images come with a non-root
-user (`app`) by default, we'll use that user's home directory for the following
-commands. If you are running your container as the `root` user, replace
-`/home/app/` with the `root` user's home directory, `/root/`.
-
-For Linux containers on Windows:
-
-```pwsh
-docker run --rm -it `
-    -p 8001:8001 `
-    -e ASPNETCORE_HTTPS_PORTS=8001 `
-    -e ASPNETCORE_ENVIRONMENT=Development `
-    # This should be the same password that you used when exporting the certificate
-    -e ASPNETCORE_Kestrel__Certificates__Default__Password="<CREDENTIAL_PLACEHOLDER>" `
-    # Bind mount the location of your exported certificate
-    -v ${env:USERPROFILE}/.aspnet/https:/home/app/.aspnet/https/ `
-    # Uncomment if you are putting your cert somewhere besides ~/.aspnet/https/
-    # -e ASPNETCORE_Kestrel__Certificates__Default__Path=/path/to/your/cert.pfx `
-    mcr.microsoft.com/dotnet/samples:aspnetapp
-```
-
-Linux containers on macOS or Linux:
-
-```bash
-docker run --rm -it \
-    -p 8001:8001 \
-    -e ASPNETCORE_HTTPS_PORTS=8001 \
-    -e ASPNETCORE_ENVIRONMENT=Development \
-    # This should be the same password that you used when exporting the certificate
-    -e ASPNETCORE_Kestrel__Certificates__Default__Password="<CREDENTIAL_PLACEHOLDER>" \
-    # Bind mount the location of your exported certificate
-    -v ${HOME}/.aspnet/https/:/home/app/.aspnet/https/ \
-    mcr.microsoft.com/dotnet/samples:aspnetapp
-```
-
-Windows containers on Windows:
-
-```pwsh
-docker run --rm -it `
-    -p 8001:8001 `
-    -e ASPNETCORE_HTTPS_PORTS=8001 `
-    -e ASPNETCORE_ENVIRONMENT=Development `
-    # This should be the same password that you used when exporting the certificate
-    -e ASPNETCORE_Kestrel__Certificates__Default__Password="<CREDENTIAL_PLACEHOLDER>" \
-    # Bind mount the location of your exported certificate
-    -v ${env:USERPROFILE}\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https `
-    mcr.microsoft.com/dotnet/samples:aspnetapp
-```
-
-### Using user secrets for certificate password
-
-Instead of using the `ASPNETCORE_Kestrel__Certificates__Default__Password`, you
-can use [.NET user secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-9.0&tabs=linux)
-to store the certificate password on your machine.
+If you don't want to use environment variables to store your development
+certificate password, you can use [.NET user secrets](https://learn.microsoft.com/en-us/aspnet/core/security/app-secrets?view=aspnetcore-9.0&tabs=linux)
+instead to store the certificate password on your machine.
 
 This will require modifications to the sample app, so make sure you've cloned
 this repo or [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/main.zip).
@@ -177,7 +107,7 @@ First, initialize user secrets for your app, and set the certificate password.
 ```console
 cd samples/aspnetapp
 dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
-dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Development:Password" "<CREDENTIAL_PLACEHOLDER>"
+dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Default:Password" "<CREDENTIAL_PLACEHOLDER>"
 ```
 
 Initializing user-secrets for the first time on a project will modify the
@@ -188,15 +118,11 @@ docker build --pull -t aspnetapp .
 ```
 
 In Linux containers, .NET looks under the `~/.microsoft/usersecrets/` directory
-for user secrets data. All you need to do is bind-mount your host machine's user
-secrets directory to the container's filesystem in the correct location, similar
-to what we did with the certificate above.
-
-> [!NOTE]
->
-> Similar to with certificates above, if you are running your container as the
-> `root` user, replace `/home/app/` with the `root` user's home directory:
-> `/root/`.
+for user secrets data. All you need to do is bind-mount your host machine's
+user secrets directory to the container's filesystem in the correct location,
+similar to what we did with the certificate above. if you are running your
+container as the `root` user, replace `/home/app/` with the `root` user's home
+directory, `/root/`.
 
 For Linux containers on Windows:
 
@@ -208,7 +134,8 @@ docker run --rm -it `
     # Use user secrets instead of certificate password environment variable
     -v ${env:APPDATA}/microsoft/UserSecrets/:/home/app/.microsoft/usersecrets `
     # Bind mount the location of your exported certificate
-    -v ${env:USERPROFILE}/.aspnet/https/:/home/app/.aspnet/https/ `
+    -v ${env:USERPROFILE}/.aspnet/https/:/https/ `
+    -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx `
     aspnetapp
 ```
 
@@ -222,7 +149,8 @@ docker run --rm -it \
     # Use user secrets instead of certificate password environment variable
     -v ${HOME}/.microsoft/usersecrets/:/home/app/.microsoft/usersecrets \
     # Bind mount the location of your exported certificate
-    -v ${HOME}/.aspnet/https/:/home/app/.aspnet/https/ \
+    -v ${HOME}/.aspnet/https/:/https/ \
+    -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx \
     aspnetapp
 ```
 
@@ -236,7 +164,7 @@ docker run --rm -it `
     # Use user secrets instead of certificate password environment variable
     -v ${env:APPDATA}\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets `
     # Bind mount the location of your exported certificate
-    -v ${env:USERPROFILE}\.aspnet\https:C:\Users\ContainerUser\AppData\Roaming\ASP.NET\Https `
+    -v ${env:USERPROFILE}\.aspnet\https:C:\https `
     aspnetapp
 ```
 
@@ -245,11 +173,4 @@ browser.
 
 ## Troubleshooting
 
-Be sure to check that the certificate you're using is trusted on the host, and
-that it is not expired. You can start with navigating to
-`https://localhost:8001` in the browser. If you're looking to test https with a
-domain name (e.g. `https://contoso.com:8001`), the certificate would also need
-the appropiate Subject Alternative Name included, and the DNS settings on the
-host would need to be updated. In the case of using the generated dev
-certificate, the trusted certificate will be issued from localhost and will not
-have the SAN added.
+See [Troubleshooting](./host-aspnetcore-https.md#troubleshooting).
