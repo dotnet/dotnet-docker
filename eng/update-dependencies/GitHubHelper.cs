@@ -4,7 +4,6 @@
 using System.Threading.Tasks;
 using Octokit;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 public static class GitHubHelper

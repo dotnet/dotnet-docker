@@ -15,7 +15,6 @@ using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Newtonsoft.Json.Linq;
 
-#nullable enable
 namespace Dotnet.Docker
 {
     /// <summary>

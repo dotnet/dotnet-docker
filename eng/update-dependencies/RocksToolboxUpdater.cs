@@ -6,7 +6,6 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker;
 
-#nullable enable
 internal static class RocksToolboxUpdater
 {
     public const string ToolName = Repo;
