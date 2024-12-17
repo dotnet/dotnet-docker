@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.CommandLine;
 using System.Linq;
 
-#nullable enable
 namespace Dotnet.Docker
 {
     public class Options

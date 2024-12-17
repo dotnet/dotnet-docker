@@ -12,21 +12,21 @@ namespace Dotnet.Docker
 
         public IEnumerable<string> Errors => _errors;
 
-        public override void TraceEvent(TraceEventCache eventCache, string source, TraceEventType eventType, int id, string message)
+        public override void TraceEvent(TraceEventCache? eventCache, string source, TraceEventType eventType, int id, string? message)
         {
             if (eventType == TraceEventType.Error)
             {
-                _errors.Add(message);
+                _errors.Add(message ?? "Error message was null");
             }
 
             base.TraceEvent(eventCache, source, eventType, id, message);
         }
 
-        public override void Write(string message)
+        public override void Write(string? message)
         {
         }
 
-        public override void WriteLine(string message)
+        public override void WriteLine(string? message)
         {
         }
     }

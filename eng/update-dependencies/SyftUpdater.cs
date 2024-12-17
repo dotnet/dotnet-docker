@@ -6,7 +6,6 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker;
 
-#nullable enable
 internal static class SyftUpdater
 {
     public const string Owner = "anchore";

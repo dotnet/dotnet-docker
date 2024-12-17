@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 internal abstract partial class GitHubReleaseUpdaterBase(

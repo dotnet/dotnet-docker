@@ -16,7 +16,6 @@ using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 
-#nullable enable
 namespace Dotnet.Docker
 {
     public static class UpdateDependencies
@@ -414,8 +413,8 @@ namespace Dotnet.Docker
 
         private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
         [
-            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+            // ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
+            // ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
         ];
     }
 }

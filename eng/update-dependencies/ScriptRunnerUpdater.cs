@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker
@@ -16,7 +15,7 @@ namespace Dotnet.Docker
     /// </summary>
     public class ScriptRunnerUpdater : IDependencyUpdater
     {
-        private string _scriptPath;
+        public required string ScriptPath { get; init; }
 
         private ScriptRunnerUpdater()
         {
@@ -26,7 +25,7 @@ namespace Dotnet.Docker
         {
             return new ScriptRunnerUpdater()
             {
-                _scriptPath = Path.Combine(repoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1")
+                ScriptPath = Path.Combine(repoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1")
             };
         }
 
@@ -34,41 +33,38 @@ namespace Dotnet.Docker
         {
             return new ScriptRunnerUpdater()
             {
-                _scriptPath = Path.Combine(repoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1")
+                ScriptPath = Path.Combine(repoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1")
             };
         }
 
-        public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
-        {
-            return new DependencyUpdateTask[] {
-                new DependencyUpdateTask(
-                    () => ExecuteScript(),
-                    Enumerable.Empty<IDependencyInfo>(),
-                    Enumerable.Empty<string>()
-                )
-            };
-        }
+        public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos) =>
+        [
+            new DependencyUpdateTask(
+                ExecuteScript,
+                usedInfos: [],
+                readableDescriptionLines: []),
+        ];
 
         private void ExecuteScript()
         {
-            Trace.TraceInformation($"Executing '{_scriptPath}'");
+            Trace.TraceInformation($"Executing '{ScriptPath}'");
 
             // Support both execution within Windows 10, Nano Server and Linux environments.
             Process process;
             try
             {
-                process = Process.Start("pwsh", _scriptPath);
+                process = Process.Start("pwsh", ScriptPath);
                 process.WaitForExit();
             }
             catch (Win32Exception)
             {
-                process = Process.Start("powershell", _scriptPath);
+                process = Process.Start("powershell", ScriptPath);
                 process.WaitForExit();
             }
 
             if (process.ExitCode != 0)
             {
-                throw new InvalidOperationException($"Unable to successfully execute '{_scriptPath}'");
+                throw new InvalidOperationException($"Unable to successfully execute '{ScriptPath}'");
             }
         }
     }

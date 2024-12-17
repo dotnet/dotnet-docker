@@ -11,7 +11,6 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker;
 
-#nullable enable
 internal static class ChiselUpdater
 {
     public const string ToolName = Repo;
