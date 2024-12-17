@@ -413,8 +413,8 @@ namespace Dotnet.Docker
 
         private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
         [
-            // ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-            // ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
+            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
         ];
     }
 }
