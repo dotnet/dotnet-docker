@@ -4,7 +4,6 @@
 using System;
 using Newtonsoft.Json.Linq;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 public static class JsonHelper

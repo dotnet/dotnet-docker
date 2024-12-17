@@ -5,7 +5,6 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 internal static class ChecksumHelper

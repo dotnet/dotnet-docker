@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Octokit;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 internal static partial class MinGitUpdater

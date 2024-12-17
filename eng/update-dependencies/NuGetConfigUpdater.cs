@@ -10,7 +10,6 @@ using System.Text;
 using System.Xml.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 /// <summary>
