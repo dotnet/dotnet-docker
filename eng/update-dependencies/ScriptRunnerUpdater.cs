@@ -15,26 +15,23 @@ namespace Dotnet.Docker
     /// </summary>
     public class ScriptRunnerUpdater : IDependencyUpdater
     {
-        public required string ScriptPath { get; init; }
+        private readonly string _scriptPath;
 
-        private ScriptRunnerUpdater()
+        private ScriptRunnerUpdater(string scriptPath)
         {
+            _scriptPath = scriptPath;
         }
 
         public static IDependencyUpdater GetDockerfileUpdater(string repoRoot)
         {
-            return new ScriptRunnerUpdater()
-            {
-                ScriptPath = Path.Combine(repoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1")
-            };
+            string scriptPath = Path.Combine(repoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1");
+            return new ScriptRunnerUpdater(scriptPath);
         }
 
         public static IDependencyUpdater GetReadMeUpdater(string repoRoot)
         {
-            return new ScriptRunnerUpdater()
-            {
-                ScriptPath = Path.Combine(repoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1")
-            };
+            string scriptPath = Path.Combine(repoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
+            return new ScriptRunnerUpdater(scriptPath);
         }
 
         public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos) =>
@@ -47,24 +44,24 @@ namespace Dotnet.Docker
 
         private void ExecuteScript()
         {
-            Trace.TraceInformation($"Executing '{ScriptPath}'");
+            Trace.TraceInformation($"Executing '{_scriptPath}'");
 
             // Support both execution within Windows 10, Nano Server and Linux environments.
             Process process;
             try
             {
-                process = Process.Start("pwsh", ScriptPath);
+                process = Process.Start("pwsh", _scriptPath);
                 process.WaitForExit();
             }
             catch (Win32Exception)
             {
-                process = Process.Start("powershell", ScriptPath);
+                process = Process.Start("powershell", _scriptPath);
                 process.WaitForExit();
             }
 
             if (process.ExitCode != 0)
             {
-                throw new InvalidOperationException($"Unable to successfully execute '{ScriptPath}'");
+                throw new InvalidOperationException($"Unable to successfully execute '{_scriptPath}'");
             }
         }
     }
