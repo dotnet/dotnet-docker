@@ -1,0 +1,10 @@
+parameters:
+  tools: []
+
+jobs:
+- ${{ each tool in parameters.tools }}:
+  - job: UpdateDependencies_${{tool}}
+    pool:
+      vmImage: $(defaultLinuxAmd64PoolImage)
+    steps:
+    - powershell: echo "Updating ${{tool}}"
