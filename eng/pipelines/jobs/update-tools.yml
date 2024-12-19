@@ -3,8 +3,8 @@ parameters:
 
 jobs:
 - ${{ each tool in parameters.tools }}:
-  - job: UpdateDependencies_${{tool}}
+  - job: UpdateDependencies_${{ replace(tool, '-', '_') }}
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - powershell: echo "Updating ${{tool}}"
+    - powershell: echo "Updating ${{ tool }}"
