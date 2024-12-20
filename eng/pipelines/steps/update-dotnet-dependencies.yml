@@ -7,4 +7,83 @@ parameters:
   buildId: ""
 
 steps:
-- powershell: echo "Updating .NET"
+- powershell: |
+    if ("${{ parameters.sdkVersions }}" -ne "") {
+      $args = @{
+        SdkVersions = "${{ parameters.sdkVersions }}" -split ","
+      }
+    }
+    elseif ("${{ parameters.useInternalBuild }}" -eq "false") {
+      $args = @{
+        Channel = "$(channel)"
+      }
+    }
+    else {
+      $args = @{
+        BuildId = "${{ parameters.buildId }}"
+      }
+    }
+
+    if ("${{ parameters.useInternalBuild }}" -eq "true") {
+      $args["UseInternalBuild"] = $true
+      $args["InternalAccessToken"] = '$(System.AccessToken)'
+      $args["AzdoVersionsRepoInfoAccessToken"] = "$(dn-bot-devdiv-dnceng-rw-code-pat)"
+    }
+
+    $(engPath)/Get-DropVersions.ps1 @args
+  displayName: Get Versions
+- powershell: |
+    Import-Module -force $(engPath)/DependencyManagement.psm1
+
+    $versionInfos = '$(versionInfos)' | ConvertFrom-Json
+
+    $index=0
+    foreach ($versionInfo in $versionInfos) {
+      $args = @{
+        ProductVersion = $versionInfo.DockerfileVersion
+        RuntimeVersion = $versionInfo.RuntimeVersion
+        AspnetVersion = $versionInfo.AspnetVersion
+        SdkVersion = $versionInfo.SdkVersion
+        ComputeShas = $true
+        AzdoVariableName = "updateDepsArgs-$index"
+        UseStableBranding = $versionInfo.StableBranding
+      }
+
+      if ("${{ parameters.useInternalBuild }}" -eq "true") {
+        $args["InternalAccessToken"] = '$(System.AccessToken)'
+        $args["InternalBaseUrl"] = '"$(internalBaseUrl)"'
+      } else {
+        $args["ReleaseState"] = $(Get-ProductReleaseState)
+      }
+
+      Write-Host "Executing Set-DotnetVersions.ps1 for $($versionInfo.DockerfileVersion)"
+      $(engPath)/Set-DotnetVersions.ps1 @args
+      $index++
+    }
+  displayName: Get update-dependencies args
+- powershell: |
+    Import-Module -force $(engPath)/DependencyManagement.psm1
+
+    $targetBranch = $(Get-Branch)
+    if ("${{ parameters.useInternalBuild }}" -eq "true") {
+      $targetBranch = "staging-${{ parameters.buildId }}-pipeline-$(Build.BuildId)"
+    }
+
+    $customArgsArray = @()
+    $index=0
+
+    # Grab the variables that were set by the multiple calls to Set-DotnetVersions.ps1 and
+    # add them to an array. This allows us to pass args for multiple Dockerfile versions.
+    while ([Environment]::GetEnvironmentVariable("UPDATEDEPSARGS-$index") -ne $null) {
+      $updateDepsArgs = [Environment]::GetEnvironmentVariable("UPDATEDEPSARGS-$index")
+      $updateDepsArgs = "$updateDepsArgs --org dnceng --project $(System.TeamProject) --repo $(Build.Repository.Name) --target-branch $targetBranch"
+      $customArgsArray += $updateDepsArgs
+      $index++
+    }
+
+    echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
+  displayName: Set Custom Args
+- template: update-dependencies.yml
+  parameters:
+    customArgsArray: "$(customArgsArray)"
+    useInternalBuild: ${{ parameters.useInternalBuild }}
