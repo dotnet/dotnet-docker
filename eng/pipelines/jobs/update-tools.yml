@@ -7,7 +7,7 @@ jobs:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - template: update-dependencies.yml
+    - template: /eng/pipelines/steps/update-dependencies.yml
       parameters:
         customArgsArray: >
           ["
