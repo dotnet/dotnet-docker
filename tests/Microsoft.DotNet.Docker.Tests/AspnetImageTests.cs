@@ -35,6 +35,11 @@ namespace Microsoft.DotNet.Docker.Tests
         public async Task VerifyGlobalizationScenario(ProductImageData imageData) =>
             await VerifyGlobalizationScenarioBase(imageData);
 
+        [WindowsImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyNLSScenario(ProductImageData imageData) =>
+            await VerifyNLSScenarioBase(imageData);
+
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)

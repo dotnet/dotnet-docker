@@ -26,8 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="TestAppArtifacts\GlobalizationTest.cs" />
-    <Compile Remove="TestAppArtifacts\UnitTests.cs" />
+    <Compile Remove="TestAppArtifacts/*.cs" />
   </ItemGroup>
 
 </Project>
