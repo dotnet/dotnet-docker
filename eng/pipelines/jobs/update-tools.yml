@@ -7,16 +7,20 @@ jobs:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
+    - powershell: |
+        Import-Module -force $(engPath)/DependencyManagement.psm1
+
+        $args=("9.0" + `
+            " --tool ${{ tool }}" + `
+            " --version-source-name ${{ tool }}" + `
+            " --source-branch nightly" + `
+            " --org dnceng" + `
+            " --project $(System.TeamProject)" + `
+            " --repo $(Build.Repository.Name)" + `
+            " --target-branch $(Get-Branch)")
+
+        echo "##vso[task.setvariable variable=customArgsArray]$($args | ConvertTo-Json -Compress -AsArray)"
+      displayName: Set up args
     - template: /eng/pipelines/steps/update-dependencies.yml
       parameters:
-        customArgsArray: >
-          ["
-          9.0
-          --tool ${{ tool }}
-          --version-source-name=${{ tool }}
-          --source-branch=nightly
-          --org dnceng
-          --project $(System.TeamProject)
-          --repo $(Build.Repository.Name)
-          --target-branch $(Get-Branch)
-          "]
+        customArgsArray: "$(customArgsArray)"
