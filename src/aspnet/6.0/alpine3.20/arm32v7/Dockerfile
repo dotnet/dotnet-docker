@@ -8,7 +8,7 @@ FROM $REPO:6.0.36-alpine3.20-arm32v7
 ENV ASPNET_VERSION=6.0.36
 
 # Install ASP.NET Core
-RUN wget -O aspnetcore.tar.gz https://dotnetcli.azureedge.net/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm.tar.gz \
+RUN wget -O aspnetcore.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-$ASPNET_VERSION-linux-musl-arm.tar.gz \
     && aspnetcore_sha512='0f772735acac7258c2af4a67c881d5afac2f841f9ab691a06ba1e34abd81d5831d09fe8886e025f7d1fbe84a1e93415fb8e35511c4bb988dd94cb823c18d0078' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz -C /usr/share/dotnet ./shared/Microsoft.AspNetCore.App \

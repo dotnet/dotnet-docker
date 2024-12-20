@@ -1,9 +1,9 @@
 {
   "variables": {
-    "base-url|public|maintenance|main": "https://dotnetcli.azureedge.net/dotnet",
-    "base-url|public|maintenance|nightly": "https://dotnetcli.azureedge.net/dotnet",
+    "base-url|public|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|main": "$(base-url|public|maintenance|main)",
-    "base-url|public|preview|nightly": "https://dotnetbuilds.azureedge.net/public",
+    "base-url|public|preview|nightly": "https://ci.dot.net/public",
 
     "aspire-dashboard|9.0|build-version": "9.0.0-preview.5.24551.3",
     "aspire-dashboard|9.0|product-version": "9.0.0",
