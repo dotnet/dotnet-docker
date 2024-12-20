@@ -7,4 +7,16 @@ jobs:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - powershell: echo "Updating ${{ tool }}"
+    - template: update-dependencies.yml
+      parameters:
+        customArgsArray: >
+          ["
+          9.0
+          --tool ${{ tool }}
+          --version-source-name=${{ tool }}
+          --source-branch=nightly
+          --org dnceng
+          --project $(System.TeamProject)
+          --repo $(Build.Repository.Name)
+          --target-branch $(Get-Branch)
+          "]
