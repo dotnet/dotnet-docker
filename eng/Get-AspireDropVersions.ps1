@@ -24,7 +24,7 @@ if ($Channel) {
     $versionSpecificUrl = Resolve-DotnetProductUrl $akaMsUrl
 
     # Assume the versionSpecificUrl is a string like
-    # https://dotnetbuilds.azureedge.net/public/aspire/8.0.0-preview.X.YYYYY.Z/aspire-dashboard-linux-x64.zip
+    # https://ci.dot.net/public/aspire/8.0.0-preview.X.YYYYY.Z/aspire-dashboard-linux-x64.zip
     $aspireVersion = $versionSpecificUrl -replace '^.*/aspire/([^/]+)/.*$', '$1'
 
     if (Get-IsStableBranding $aspireVersion) {

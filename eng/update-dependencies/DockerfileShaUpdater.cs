@@ -24,7 +24,7 @@ namespace Dotnet.Docker
     public class DockerfileShaUpdater : FileRegexUpdater
     {
         private const string ReleaseDotnetBaseUrl = $"https://dotnetcli.blob.core.windows.net/dotnet";
-        private const string ReleaseDotnetBaseCdnUrl = $"https://dotnetcli.azureedge.net/dotnet";
+        private const string ReleaseDotnetBaseCdnUrl = $"https://builds.dotnet.microsoft.com/dotnet";
 
         private const string ShaVariableGroupName = "shaVariable";
         private const string ShaValueGroupName = "shaValue";
