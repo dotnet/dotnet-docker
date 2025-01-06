@@ -66,9 +66,7 @@ docker run --rm -it `
     -p 8001:8001 `
     -e ASPNETCORE_HTTPS_PORTS=8001 `
     -e ASPNETCORE_ENVIRONMENT=Development `
-    # Use user secrets instead of certificate password environment variable
     -v ${env:APPDATA}/microsoft/UserSecrets/:/home/app/.microsoft/usersecrets `
-    # Bind mount the location of your exported certificate
     -v ${env:USERPROFILE}/.aspnet/https/:/https/ `
     -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx `
     aspnetapp
@@ -81,9 +79,7 @@ docker run --rm -it \
     -p 8001:8001 \
     -e ASPNETCORE_HTTPS_PORTS=8001 \
     -e ASPNETCORE_ENVIRONMENT=Development \
-    # Use user secrets instead of certificate password environment variable
     -v ${HOME}/.microsoft/usersecrets/:/home/app/.microsoft/usersecrets \
-    # Bind mount the location of your exported certificate
     -v ${HOME}/.aspnet/https/:/https/ \
     -e ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx \
     aspnetapp
@@ -96,9 +92,7 @@ docker run --rm -it `
     -p 8001:8001 `
     -e ASPNETCORE_HTTPS_PORTS=8001 `
     -e ASPNETCORE_ENVIRONMENT=Development `
-    # Use user secrets instead of certificate password environment variable
     -v ${env:APPDATA}\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets `
-    # Bind mount the location of your exported certificate
     -v ${env:USERPROFILE}\.aspnet\https:C:\https `
     aspnetapp
 ```
