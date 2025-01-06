@@ -1,7 +1,7 @@
 {
   "variables": {
-    "base-url|public|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public|maintenance|main": "https://builds-int.dotnet.microsoft.com/dotnet",
+    "base-url|public|maintenance|nightly": "https://builds-int.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|main": "$(base-url|public|maintenance|main)",
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
 

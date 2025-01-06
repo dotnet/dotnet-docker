@@ -8,7 +8,7 @@ FROM $REPO:8.0.11-alpine3.20-arm64v8
 ENV DOTNET_VERSION=8.0.11
 
 # Install .NET Runtime
-RUN wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \
+RUN wget -O dotnet.tar.gz https://builds-int.dotnet.microsoft.com/dotnet/Runtime/$DOTNET_VERSION/dotnet-runtime-$DOTNET_VERSION-linux-musl-arm64.tar.gz \
     && dotnet_sha512='6a94ce888eb060f63a0ec9554985198c48c5c5612577db7c10204b58b2ef36ef96a597067d75574abdca61a87472914b5df3312be74773ac32fa7043d60370d8' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
