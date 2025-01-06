@@ -50,7 +50,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [WindowsImageTheory]
         [MemberData(nameof(GetImageData))]
         public async Task VerifyNLSScenario(ProductImageData imageData) =>
-            await VerifyNLSScenarioBase(imageData);
+            await VerifyNlsScenarioBase(imageData);
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]

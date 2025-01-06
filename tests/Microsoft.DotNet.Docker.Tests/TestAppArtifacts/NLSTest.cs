@@ -7,7 +7,7 @@ const string icuVar = "ICU_EXPECTED";
 GetEnvironmentVariableValue(nlsVar);
 bool icuExpected = GetEnvironmentVariableValue(icuVar);
 
-bool icuMode = ICUMode();
+bool icuMode = IsIcuMode();
 WriteLine($"Detected ICU mode: {icuMode}");
 
 if (icuMode != icuExpected)
@@ -60,7 +60,7 @@ Assert(
 WriteLine("All assertions passed!");
 
 // https://learn.microsoft.com/en-us/dotnet/core/extensions/globalization-icu#determine-if-your-app-is-using-icu
-bool ICUMode()
+bool IsIcuMode()
 {
     SortVersion sortVersion = CultureInfo.InvariantCulture.CompareInfo.Version;
     byte[] bytes = sortVersion.SortId.ToByteArray();

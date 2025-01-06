@@ -35,7 +35,7 @@ public sealed class NLSScenario : ITestScenario, IDisposable
     }
 
     // ICU is not supported on Nano Server
-    private bool ICUSupported => _imageData.OS.Contains(OS.ServerCore);
+    private bool IsIcuSupported => _imageData.OS.Contains(OS.ServerCore);
 
     public async Task ExecuteAsync()
     {
@@ -56,9 +56,9 @@ public sealed class NLSScenario : ITestScenario, IDisposable
             $"runtime_image={runtimeImage}",
         ];
 
-        if (ICUSupported)
+        if (IsIcuSupported)
         {
-            buildArgs = [..buildArgs, $"icu_expected={ICUSupported}"];
+            buildArgs = [..buildArgs, $"icu_expected={IsIcuSupported}"];
         }
 
         string tag = nameof(NLSScenario).ToLowerInvariant();
@@ -72,7 +72,7 @@ public sealed class NLSScenario : ITestScenario, IDisposable
         string containerName = ImageData.GenerateContainerName(nameof(NLSScenario));
         Func<string> runImage = () => _dockerHelper.Run(tag, containerName);
 
-        string justification = $"image {runtimeImage} should{(ICUSupported ? "" : " not")} support ICU";
+        string justification = $"image {runtimeImage} should{(IsIcuSupported ? "" : " not")} support ICU";
         runImage.Should().NotThrow(because: justification)
             .Which.Should().NotBeNullOrWhiteSpace()
             .And.ContainEquivalentOf("All assertions passed", Exactly.Once());

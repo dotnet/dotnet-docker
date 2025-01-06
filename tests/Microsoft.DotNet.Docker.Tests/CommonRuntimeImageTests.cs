@@ -83,7 +83,7 @@ namespace Microsoft.DotNet.Docker.Tests
             await testScenario.ExecuteAsync();
         }
 
-        protected async Task VerifyNLSScenarioBase(ProductImageData imageData)
+        protected async Task VerifyNlsScenarioBase(ProductImageData imageData)
         {
             using var testScenario = new NLSScenario(imageData, ImageRepo, DockerHelper);
             await testScenario.ExecuteAsync();
