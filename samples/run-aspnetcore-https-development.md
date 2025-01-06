@@ -6,7 +6,7 @@ This document demonstrates how to develop ASP.NET Core applications with HTTPS i
 
 See [Hosting ASP.NET Core images with Docker over HTTPS](https://learn.microsoft.com/en-us/aspnet/core/security/docker-https) for production scenarios.
 
-The Windows examples below are written for PowerShell. CMD users will need to change the format of the environment variables in the instructions from `$env:USERPROFILE` to `%USERPROFILE%`.
+Windows instructions are written for PowerShell. If you are using CMD, change the format of environment variables from `${env:USERPROFILE}` to `%USERPROFILE%`.
 
 This example requires [Docker Desktop](https://www.docker.com/products/docker-desktop/). We recommend the latest version.
 
@@ -37,8 +37,7 @@ certificate password.
 
 Rather than using environment variable to specify the development certificate password,  use [.NET user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) to store the password.
 
-Using User Secrets requires modifications to the `aspnetapp` sample. Clone
-this repo or [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/main.zip).
+Initializing user-secrets for the first time on a project modifies the project file, so you will need a local copy of the `aspnetapp` sample. Clone this repo or [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/main.zip).
 
 ```console
 git clone https://github.com/dotnet/dotnet-docker/
@@ -52,14 +51,15 @@ dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
 dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Default:Password" "<`"CREDENTIAL" "PLACEHOLDER`>"
 ```
 
-Initializing user-secrets for the first time on a project modifies the project file, which requires re-building the sample image:
+Since initializing user-secrets modified the project file, re-build the sample image:
 
 ```pwsh
 docker build --pull -t aspnetapp .
 ```
 
-In Linux containers, .NET looks under the `~/.microsoft/usersecrets/` directory for user secrets data. Bind-mount your host machine's user secrets directory to the container's filesystem. This is similar to the preceding certificate instructions. f you are running your container as the `root` user, replace `/home/app/` with the `root` user's home directory, `/root/`.
-For Linux containers on Windows:
+In Linux containers, .NET looks under the `~/.microsoft/usersecrets/` directory for user secrets data. Bind-mount your host machine's user secrets directory to the container's filesystem. If you are running your container as the `root` user, replace `/home/app/` with the `root` user's home directory, `/root/`.
+
+**Linux containers on Windows:**
 
 ```pwsh
 docker run --rm -it `
@@ -74,7 +74,7 @@ docker run --rm -it `
     aspnetapp
 ```
 
-Linux containers on macOS or Linux:
+**Linux containers on macOS or Linux:**
 
 ```bash
 docker run --rm -it \
@@ -89,7 +89,7 @@ docker run --rm -it \
     aspnetapp
 ```
 
-Windows containers on Windows:
+**Windows containers on Windows:**
 
 ```pwsh
 docker run --rm -it `
