@@ -82,5 +82,11 @@ namespace Microsoft.DotNet.Docker.Tests
             using var testScenario = new GlobalizationScenario(imageData, ImageRepo, DockerHelper);
             await testScenario.ExecuteAsync();
         }
+
+        protected async Task VerifyNlsScenarioBase(ProductImageData imageData)
+        {
+            using var testScenario = new NlsScenario(imageData, ImageRepo, DockerHelper);
+            await testScenario.ExecuteAsync();
+        }
     }
 }
