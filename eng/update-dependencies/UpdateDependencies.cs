@@ -64,9 +64,7 @@ namespace Dotnet.Docker
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
                 IDependencyInfo[] productBuildInfos = Options.ProductVersions
-                    .Select(kvp => CreateDependencyBuildInfo(
-                        kvp.Key,
-                        kvp.Value))
+                    .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
                 IDependencyInfo[] toolBuildInfos =
                     await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
@@ -243,6 +241,7 @@ namespace Dotnet.Docker
 
                 if (pullRequestToUpdate == null || pullRequestToUpdate.Head.Ref != $"{upstreamBranch.Name}-{branchSuffix}")
                 {
+                    Trace.WriteLine("Didn't find a PR to update. Submitting a new one.");
                     await prCreator.CreateOrUpdateAsync(
                         commitMessage,
                         commitMessage,
@@ -272,6 +271,8 @@ namespace Dotnet.Docker
             // update-dependencies were made and copying it into the temp repo, and committing and pushing
             // those changes in the temp repo back to the PR's branch.
 
+            Trace.WriteLine($"Updating existing pull request for branch {upstreamBranch.Name}.");
+
             string tempRepoPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
 
             try
@@ -297,6 +298,8 @@ namespace Dotnet.Docker
                 // If there are any changes from what exists in the PR
                 if (status.IsDirty)
                 {
+                    Trace.WriteLine($"Detected changes that don't currently exist in the PR.");
+
                     Commands.Stage(repo, "*");
 
                     Signature signature = new(Options.User, Options.Email, DateTimeOffset.Now);
@@ -317,6 +320,10 @@ namespace Dotnet.Docker
                     string pushRefSpec = $@"refs/heads/{branchName}";
 
                     repo.Network.Push(remote, pushRefSpec, pushOptions);
+                }
+                else
+                {
+                    Trace.WriteLine($"No new changes were detected - skipping PR update.");
                 }
             }
             finally
