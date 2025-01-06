@@ -10,7 +10,7 @@ using FluentAssertions;
 namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 #nullable enable
-public sealed class NLSScenario : ITestScenario, IDisposable
+public sealed class NlsScenario : ITestScenario, IDisposable
 {
     private const string DockerfileName = "NLSTest.Dockerfile";
 
@@ -24,7 +24,7 @@ public sealed class NLSScenario : ITestScenario, IDisposable
 
     private readonly DockerHelper _dockerHelper;
 
-    public NLSScenario(
+    public NlsScenario(
         ProductImageData imageData,
         DotNetImageRepo repo,
         DockerHelper dockerHelper)
@@ -61,7 +61,7 @@ public sealed class NLSScenario : ITestScenario, IDisposable
             buildArgs = [..buildArgs, $"icu_expected={IsIcuSupported}"];
         }
 
-        string tag = nameof(NLSScenario).ToLowerInvariant();
+        string tag = nameof(NlsScenario).ToLowerInvariant();
         _dockerHelper.Build(
             tag: tag,
             dockerfile: dockerfilePath,
@@ -69,7 +69,7 @@ public sealed class NLSScenario : ITestScenario, IDisposable
             pull: Config.PullImages,
             buildArgs: buildArgs);
 
-        string containerName = ImageData.GenerateContainerName(nameof(NLSScenario));
+        string containerName = ImageData.GenerateContainerName(nameof(NlsScenario));
         Func<string> runImage = () => _dockerHelper.Run(tag, containerName);
 
         string justification = $"image {runtimeImage} should{(IsIcuSupported ? "" : " not")} support ICU";
