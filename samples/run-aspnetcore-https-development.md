@@ -48,7 +48,7 @@ Initialize user secrets for your app, and set the certificate password:
 ```console
 cd samples/aspnetapp
 dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
-dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Default:Password" "<`"CREDENTIAL" "PLACEHOLDER`>"
+dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Default:Password" $CREDENTIAL_PLACEHOLDER
 ```
 
 Since initializing user-secrets modified the project file, re-build the sample image:
