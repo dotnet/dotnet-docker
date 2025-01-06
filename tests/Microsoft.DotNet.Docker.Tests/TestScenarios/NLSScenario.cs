@@ -74,8 +74,7 @@ public sealed class NLSScenario : ITestScenario, IDisposable
 
         string justification = $"image {runtimeImage} should{(IsIcuSupported ? "" : " not")} support ICU";
         runImage.Should().NotThrow(because: justification)
-            .Which.Should().NotBeNullOrWhiteSpace()
-            .And.ContainEquivalentOf("All assertions passed", Exactly.Once());
+            .Which.Should().ContainEquivalentOf("All assertions passed", Exactly.Once());
     }
 
     public void Dispose() => _tempFolderContext.Dispose();
