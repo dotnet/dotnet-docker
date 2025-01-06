@@ -37,7 +37,7 @@ public sealed class NLSScenario : ITestScenario, IDisposable
     // ICU is not supported on Nano Server
     private bool IsIcuSupported => _imageData.OS.Contains(OS.ServerCore);
 
-    public async Task ExecuteAsync()
+    public Task ExecuteAsync()
     {
         // Setup project in temp dir
         string dockerfilePath = Path.Combine(_tempFolderContext.Path, "Dockerfile");
@@ -75,6 +75,8 @@ public sealed class NLSScenario : ITestScenario, IDisposable
         string justification = $"image {runtimeImage} should{(IsIcuSupported ? "" : " not")} support ICU";
         runImage.Should().NotThrow(because: justification)
             .Which.Should().ContainEquivalentOf("All assertions passed", Exactly.Once());
+
+        return Task.CompletedTask;
     }
 
     public void Dispose() => _tempFolderContext.Dispose();
