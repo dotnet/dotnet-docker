@@ -26,7 +26,7 @@ RUN apk add --upgrade --no-cache \
         icu-libs
 
 # Install .NET SDK
-RUN wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm64.tar.gz \
+RUN wget -O dotnet.tar.gz https://dotnetcli.azureedge.net/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm64.tar.gz \
     && dotnet_sha512='56ae5480b10886649aac4bb9ef1ee4a5701638483f366b7d4f43108838dd9df8e0199232196dae1dd500c7be3e175ce6de2641a1d2e078de2d106ccb44342c27' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
