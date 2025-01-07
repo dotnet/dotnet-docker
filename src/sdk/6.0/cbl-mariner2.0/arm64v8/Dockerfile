@@ -23,19 +23,19 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.rpm https://builds-int.dotnet.microsoft.com/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-aarch64.rpm \
+RUN curl -fSL --output dotnet.rpm https://builds.dotnet.microsoft.com/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-aarch64.rpm \
     && dotnet_sha512='11009a5ab5068f77c375f9d3d311587561d3e45c684ed724c814ddc00c6344ddb8af296165edd31190f2168c6cbb336811f5d766391c82affda33a4d3d5574f6' \
     && echo "$dotnet_sha512  dotnet.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output apphost.rpm https://builds-int.dotnet.microsoft.com/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-aarch64.rpm \
+    && curl -fSL --output apphost.rpm https://builds.dotnet.microsoft.com/dotnet/Runtime/$DOTNET_VERSION/dotnet-apphost-pack-$DOTNET_VERSION-aarch64.rpm \
     && dotnet_sha512='429ae3a6432697c99d3791693e182120dfaf29d3366809a72f8d66f2836d4be1d620d4899a9019e3d9c1fa1fa0b1eaa3bcf52492ba25cdd8a61e836f15fd4c67' \
     && echo "$dotnet_sha512  apphost.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output targeting-pack.rpm https://builds-int.dotnet.microsoft.com/dotnet/Runtime/6.0.36/dotnet-targeting-pack-6.0.36-aarch64.rpm \
+    && curl -fSL --output targeting-pack.rpm https://builds.dotnet.microsoft.com/dotnet/Runtime/6.0.36/dotnet-targeting-pack-6.0.36-aarch64.rpm \
     && dotnet_sha512='884b95d92f39d10205fa534b8381d24ee7c54126137e4f00a65508f4f27e6feee835fd470ad8c5d36af2e27668c411988f93a3eb9030e1128afed0aa04b43c11' \
     && echo "$dotnet_sha512  targeting-pack.rpm" | sha512sum -c - \
     \
-    && curl -fSL --output aspnetcore-targeting-pack.rpm https://builds-int.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/6.0.36/aspnetcore-targeting-pack-6.0.36-aarch64.rpm \
+    && curl -fSL --output aspnetcore-targeting-pack.rpm https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/6.0.36/aspnetcore-targeting-pack-6.0.36-aarch64.rpm \
     && dotnet_sha512='b86144ff6fffa5e5e3d035b379d0aafb2ad28bf3134cd3770c21824a7dbdbf8b8abaea5b9004b517c1786aaea6933043f540be3cf489f8dfbe77f255a887db58' \
     && echo "$dotnet_sha512  aspnetcore-targeting-pack.rpm" | sha512sum -c - \
     \
