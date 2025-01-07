@@ -97,8 +97,8 @@
     "libssl|jammy": "3",
     "libssl|noble": "3t64",
 
-    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.47.0.windows.2/MinGit-2.47.0.2-64-bit.zip",
-    "mingit|latest|x64|sha": "c4a5d3a2adda98b25fe59349733fca56b3843360b962dba5535282a9d8120b31",
+    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.47.1.windows.1/MinGit-2.47.1-64-bit.zip",
+    "mingit|latest|x64|sha": "50b04b55425b5c465d076cdb184f63a0cd0f86f6ec8bb4d5860114a713d2c29a",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
