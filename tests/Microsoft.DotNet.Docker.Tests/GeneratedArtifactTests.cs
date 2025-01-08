@@ -13,6 +13,10 @@ namespace Microsoft.DotNet.Docker.Tests
     [Trait("Category", "pre-build")]
     public class GeneratedArtifactTests
     {
+        private static readonly string s_generateDockerfilesScript =
+            Path.Combine(Config.SourceRepoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1");
+        private static readonly string s_generateTagsDocumentationScript =
+            Path.Combine(Config.SourceRepoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
         private ITestOutputHelper OutputHelper { get; }
 
         public GeneratedArtifactTests(ITestOutputHelper outputHelper)
@@ -23,24 +27,42 @@ namespace Microsoft.DotNet.Docker.Tests
         [Fact]
         public void VerifyDockerfileTemplates()
         {
-            string generateDockerfilesScript = Path.Combine(Config.SourceRepoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1");
-            ValidateGeneratedArtifacts(
-                generateDockerfilesScript,
-                $"The Dockerfiles are out of sync with the templates.  Update the Dockerfiles by running `{generateDockerfilesScript}`.");
+            ValidateGeneratedArtifacts(s_generateDockerfilesScript,
+                $"The Dockerfiles are out of sync with the templates." +
+                $"Update the Dockerfiles by running `{s_generateDockerfilesScript}`.");
         }
 
         [Fact]
         public void VerifyReadmeTemplates()
         {
-            string generateTagsDocumentationScript = Path.Combine(Config.SourceRepoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
-            ValidateGeneratedArtifacts(
-                generateTagsDocumentationScript,
-                $"The Readmes are out of sync with the templates.  Update the Readmes by running `{generateTagsDocumentationScript}`.");
+            ValidateGeneratedArtifacts(s_generateTagsDocumentationScript,
+                $"The Readmes are out of sync with the templates." +
+                $"Update the Readmes by running `{s_generateTagsDocumentationScript}`.");
+        }
+
+        [Fact]
+        public async Task VerifyGeneratedDockerfilesOutput()
+        {
+            using TempFolderContext outputDirectory = FileHelper.UseTempFolder();
+
+            GenerateArtifacts(s_generateDockerfilesScript, outputDirectory.Path);
+            await VerifyDirectory(outputDirectory.Path);
         }
 
         private void ValidateGeneratedArtifacts(string generateScriptPath, string errorMessage)
         {
-            string powershellArgs = $"-File {generateScriptPath} -Validate";
+            ExecuteScript(generateScriptPath, "-Validate", errorMessage);
+        }
+
+        private void GenerateArtifacts(string generateScriptPath, string outputDirectory)
+        {
+            ExecuteScript(generateScriptPath, $"-Output {outputDirectory}",
+                $"Failed to generate artifacts using `{generateScriptPath}`.");
+        }
+
+        private void ExecuteScript(string generateScriptPath, string arguments, string errorMessage)
+        {
+            string powershellArgs = $"-File {generateScriptPath} {arguments}";
             (Process Process, string StdOut, string StdErr) executeResult;
 
             // Support both execution within Windows 10, Nano Server and Linux environments.
