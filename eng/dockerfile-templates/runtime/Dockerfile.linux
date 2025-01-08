@@ -88,7 +88,7 @@ COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 
 ENTRYPOINT ["/usr/bin/dotnet"]
 CMD ["--info"]^
-elif !isInternal:
+elif !isSingleStage:
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}}}
