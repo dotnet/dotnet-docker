@@ -28,7 +28,7 @@
     set baseImageTag to when(isAlpine || isAzureLinux, OS_VERSION_NUMBER, OS_VERSION) ^
     set baseImage to cat(baseImageRepo, ":", baseImageTag) ^
 
-    set isMultiStage to isInternal || isCblMariner ^
+    set isMultiStage to isCblMariner ^
     set firstStageName to "base" ^
     set secondStageName to when(isMultiStage, "installer") ^
 
