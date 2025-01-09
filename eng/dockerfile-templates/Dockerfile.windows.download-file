@@ -8,7 +8,7 @@
         sha-var-name: Name of variable that stores the checksum
         hash-algorithm: Algorithm type to use to get the checksum. Defaults to sha512 ^
 
-    set isInternal to find(ARGS["url"], "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to VARIABLES["IsInternal"] || find(ARGS["url"], "artifacts.visualstudio.com") >= 0 ^
     set hashAlgorithm to when(ARGS["hash-algorithm"], ARGS["hash-algorithm"], "sha512")
 }}{{if isInternal:`
 $Base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\":$($Env:ACCESSTOKEN)\")); `

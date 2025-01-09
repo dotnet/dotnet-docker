@@ -1,7 +1,7 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to VARIABLES["IsInternal"] || find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
 
     set installerStageFromImage to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^

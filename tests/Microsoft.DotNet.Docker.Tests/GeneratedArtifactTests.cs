@@ -4,8 +4,6 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
-using System.IO;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -15,8 +13,10 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private static readonly string s_generateDockerfilesScript =
             Path.Combine(Config.SourceRepoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1");
+
         private static readonly string s_generateTagsDocumentationScript =
             Path.Combine(Config.SourceRepoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
+
         private ITestOutputHelper OutputHelper { get; }
 
         public GeneratedArtifactTests(ITestOutputHelper outputHelper)
@@ -41,23 +41,24 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         [Fact]
-        public async Task VerifyGeneratedDockerfilesOutput()
+        public async Task VerifyInternalDockerfilesOutput()
         {
             using TempFolderContext outputDirectory = FileHelper.UseTempFolder();
+            string dockerfilesPath = Path.Combine(outputDirectory.Path, "src");
 
-            GenerateArtifacts(s_generateDockerfilesScript, outputDirectory.Path);
-            await VerifyDirectory(outputDirectory.Path);
+            string errorMessage = $"Failed to generate Dockerfiles using `{s_generateDockerfilesScript}`.";
+            ExecuteScript(
+                s_generateDockerfilesScript,
+                $"-Output {outputDirectory.Path} -IsInternalOverride",
+                errorMessage);
+
+            await DockerfileHelper.ScrubDockerfilesAsync(dockerfilesPath);
+            await VerifyDirectory(dockerfilesPath).UseDirectory("Baselines");
         }
 
         private void ValidateGeneratedArtifacts(string generateScriptPath, string errorMessage)
         {
             ExecuteScript(generateScriptPath, "-Validate", errorMessage);
-        }
-
-        private void GenerateArtifacts(string generateScriptPath, string outputDirectory)
-        {
-            ExecuteScript(generateScriptPath, $"-Output {outputDirectory}",
-                $"Failed to generate artifacts using `{generateScriptPath}`.");
         }
 
         private void ExecuteScript(string generateScriptPath, string arguments, string errorMessage)

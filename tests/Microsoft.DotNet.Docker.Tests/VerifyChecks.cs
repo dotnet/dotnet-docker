@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Runtime.CompilerServices;
+using VerifyTests.DiffPlex;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
@@ -19,5 +20,5 @@ public static class ModuleInitializer
 {
     [ModuleInitializer]
     public static void Initialize() =>
-        VerifyDiffPlex.Initialize();
+        VerifyDiffPlex.Initialize(OutputType.Compact);
 }

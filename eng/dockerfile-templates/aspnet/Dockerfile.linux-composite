@@ -6,7 +6,7 @@
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to VARIABLES["IsInternal"] || find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to isAlpine && !isInternal ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
     set tagVersion to when(dotnetVersion = "8.0",

@@ -2,13 +2,20 @@
 param(
     [switch]$Validate,
     [string]$Branch,
-    [string]$OutputDirectory
+    [string]$OutputDirectory,
+    [switch]$IsInternalOverride
 )
 
 Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
 
+$customImageBuilderArgs = ""
+
 if ($Validate) {
-    $customImageBuilderArgs = " --validate"
+    $customImageBuilderArgs += " --validate"
+}
+
+if ($IsInternalOverride) {
+    $customImageBuilderArgs += " --var IsInternal=true"
 }
 
 if (-Not $OutputDirectory) {
