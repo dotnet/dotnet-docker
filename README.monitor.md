@@ -52,7 +52,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.0.1, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.0.6-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.6, 8.0 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.0.6-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
@@ -67,7 +67,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.0.0, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.1, 9.0, 9, latest | [Dockerfile](src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.6-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.6, 8.0 | [Dockerfile](src/monitor/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.6-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
