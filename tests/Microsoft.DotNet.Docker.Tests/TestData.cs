@@ -348,6 +348,28 @@ namespace Microsoft.DotNet.Docker.Tests
             },
         };
 
+        private static readonly ProductImageData[] s_ReverseProxyTestData =
+{
+            new() {
+                Version = new ImageVersion(new Version(2,3), isPreview: true),
+                VersionFamily = V9_0,
+                OS = OS.AzureLinux30Distroless,
+                OSTag = "",
+                OSDir = OS.AzureLinux30Distroless,
+                Arch = Arch.Amd64,
+                SupportedImageRepos = DotNetImageRepo.Reverse_Proxy,
+            },
+            new() {
+                Version = new ImageVersion(new Version(2,3), isPreview: true),
+                VersionFamily = V9_0,
+                OS = OS.AzureLinux30Distroless,
+                OSTag = "",
+                OSDir = OS.AzureLinux30Distroless,
+                Arch = Arch.Arm64,
+                SupportedImageRepos = DotNetImageRepo.Reverse_Proxy
+            },
+        };
+
         public static IEnumerable<ProductImageData> GetImageData(
             DotNetImageRepo imageRepo,
             DotNetImageVariant variant = DotNetImageVariant.None)
@@ -390,6 +412,20 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             return (DockerHelper.IsLinuxContainerModeEnabled ? s_linuxMonitorTestData : s_windowsMonitorTestData)
                 .FilterImagesByPath(DotNetImageRepo.Monitor)
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<ProductImageData>();
+        }
+
+        public static IEnumerable<ProductImageData> GetReverseProxyImageData()
+        {
+            if (!DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return [];
+            }
+
+            return s_ReverseProxyTestData
+                .FilterImagesByPath(DotNetImageRepo.Reverse_Proxy)
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
