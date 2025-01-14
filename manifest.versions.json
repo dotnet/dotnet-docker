@@ -51,13 +51,6 @@
     "aspnet-composite|9.0|linux-musl|arm|sha": "46deba46b4458a3546da4db8118798d8baf5a230f1691c9a9745771a80f48a50c93a0ea56d0348fdbbdd9952eb397f8e1153274e0aeccb8e1d91f68f700f30cf",
     "aspnet-composite|9.0|linux-musl|arm64|sha": "5de05d1c2a12a4276d788295a78484360f2a65a99dab935469696bc8588d8a23a10ccdbc777df9dc9445dda7541e33f4f583ef7b00d06cfbcdfd43339cffa809",
 
-    "aspnet-composite|9.0|linux|x64|sha": "7771734dd826ee714a65f7d0963f81ec061992c9848c02d335e8423a676c7d9fa7b6e2fdac72280d8e9c8df712a3f7723d3113f37d9e052f7314b06b661e4dac",
-    "aspnet-composite|9.0|linux|arm|sha": "49360cb623d848f32520a18f3943271b2970c5b81eb8f7f7f04986795bcf0400e224957bcbb8d4a9e92e75a9f60b222818bfd748442d95257d93ec65cc6d546b",
-    "aspnet-composite|9.0|linux|arm64|sha": "e7bd3d2a51957d9174bde49ed5be141534261cddd5908881e86d56c2f8ac2c207f29d91af2df387b2c6daa9091436a7c998564ea36c3f2d29e74de0b552e1339",
-    "aspnet-composite|9.0|linux-musl|x64|sha": "d2f370d46fd24909015353c9488c68c526b931e3fbe5f34385a092a59ef21ebbf123ee491a896e65b3127bdd3e03349feb9c7f54e2ecf9c827d5d86da52e64d4",
-    "aspnet-composite|9.0|linux-musl|arm|sha": "106457de6f34a2996923a77589e841815239a760382ee525c3b714f9e6f65039d8555a5e371aaad0e89c02f9dfa5bb267cac22fbc1cd383f696facebe5b34a97",
-    "aspnet-composite|9.0|linux-musl|arm64|sha": "24354dcba020e0bdbf0da867e1a3cb3c45ce214cf7dcab4d1be966c0bcba8d1701605e7681e9adf093c5d23f96574d077ca8fef9ea3d4071b7a275ab5901f86c",
-
     "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/v1.1.0/chisel_v1.1.0_linux_amd64.tar.gz",
     "chisel|latest|arm|url": "https://github.com/canonical/chisel/releases/download/v1.1.0/chisel_v1.1.0_linux_arm.tar.gz",
     "chisel|latest|arm64|url": "https://github.com/canonical/chisel/releases/download/v1.1.0/chisel_v1.1.0_linux_arm64.tar.gz",

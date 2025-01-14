@@ -6,7 +6,7 @@ FROM arm64v8/buildpack-deps:noble-curl AS installer
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=9.0.1  \
     && curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
-    && dotnet_sha512='e7bd3d2a51957d9174bde49ed5be141534261cddd5908881e86d56c2f8ac2c207f29d91af2df387b2c6daa9091436a7c998564ea36c3f2d29e74de0b552e1339' \
+    && dotnet_sha512='28cafe4ca6061397a1eafb21ee0ce5fee850c4368633ca16773208620ac47a6b94f35a0890740112118743b92e6652e46e27eff0b8d6a8a053ae4fd9af62f226' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
