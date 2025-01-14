@@ -52,18 +52,22 @@ They include:
 - Debian, unless specified (like `8.0-alpine`).
 - All [supported architectures](supported-platforms.md#architectures).
 
-> [!NOTE]
-> Since .NET 8, these multi-platform tags **specifically exclude all Windows versions** due to `containerd`'s platform matching algorithm for Windows hosts.
-
-Please see [#4492 (Switch multi-platform tags to Linux only)](https://github.com/dotnet/dotnet-docker/issues/4492) for more context.
-If you are using Windows, you will need to explicitly specify an OS Version with a single-platform tag like so:
-
-```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022
-FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809
-FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019
-FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
-```
+> [!WARNING]
+> These multi-platform tags **specifically exclude all Windows versions** due
+> to `containerd`'s platform matching algorithm for Windows hosts. See
+> [containerd/containerd#6508](https://github.com/containerd/containerd/issues/6508)
+> and [dotnet/dotnet-docker#4492](https://github.com/dotnet/dotnet-docker/issues/4492)
+> for more context.
+>
+> If you are using Windows, you will need to explicitly specify an OS Version
+> with a single-platform tag like so:
+>
+> ```Dockerfile
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019
+> FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
+> ```
 
 ### `<Major.Minor.Patch .NET Version>-<OS version>`
 
