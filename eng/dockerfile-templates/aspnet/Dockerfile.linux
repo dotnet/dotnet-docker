@@ -11,10 +11,9 @@
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
-    set isRpmInstall to isFullAzureLinux && dotnetVersion = "6.0" ^
-    set isSingleStage to (isAlpine || isRpmInstall) && !isInternal ^
+    set isSingleStage to isAlpine && !isInternal ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
-    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
+    set tagVersion to when(dotnetVersion = "8.0",
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
         VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
     set runtimeBaseTag to cat("$REPO:", tagVersion, "-", OS_VERSION, runtimeDepsVariant, ARCH_TAG_SUFFIX) ^
@@ -48,8 +47,7 @@
 # Install ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [
-        "install-method": "download-and-install",
-        "is-rpm-install": isRpmInstall
+        "install-method": "download-and-install"
     ])}}^else:
 {{
 
@@ -62,7 +60,7 @@ FROM {{installerImageTag}} AS installer
 ARG ACCESSTOKEN
 }}{{if isDistrolessAzureLinux:
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
-^elif isFullAzureLinux && !isRpmInstall:
+^elif isFullAzureLinux:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "pkgs": ["tar"]
@@ -71,10 +69,9 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # Retrieve ASP.NET Core
 {{InsertTemplate("Dockerfile.linux.install-aspnet",
     [
-        "install-method": when(isInternal && isRpmInstall, "download", "download-and-install"),
+        "install-method": "download-and-install",
         "use-local-version-var": "true",
-        "is-internal": isInternal,
-        "is-rpm-install": isRpmInstall
+        "is-internal": isInternal
     ])}}
 
 
@@ -82,12 +79,5 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 FROM {{runtimeBaseTag}}
 
 {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
-{{if isInternal && isRpmInstall:
-{{InsertTemplate("Dockerfile.linux.install-aspnet",
-    [
-        "install-method": "copy-and-install",
-        "is-internal": isInternal,
-        "installer-stage": "installer",
-        "is-rpm-install": isRpmInstall
-    ])}}^else:
-COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}}}
+
+COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]}}

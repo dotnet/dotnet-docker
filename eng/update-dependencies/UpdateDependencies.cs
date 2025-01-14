@@ -15,11 +15,7 @@ using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
-using Microsoft.TeamFoundation.SourceControl.WebApi;
-using Microsoft.VisualStudio.Services.Common;
-using Microsoft.VisualStudio.Services.WebApi;
 
-#nullable enable
 namespace Dotnet.Docker
 {
     public static class UpdateDependencies
@@ -67,12 +63,31 @@ namespace Dotnet.Docker
                 Trace.Listeners.Add(errorTraceListener);
                 Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
-                IEnumerable<IDependencyInfo> buildInfos = Options.ProductVersions
-                    .Select(kvp => CreateDependencyBuildInfo(
-                        kvp.Key,
-                        kvp.Value))
+                IDependencyInfo[] productBuildInfos = Options.ProductVersions
+                    .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
-                DependencyUpdateResults updateResults = await UpdateFilesAsync(buildInfos);
+                IDependencyInfo[] toolBuildInfos =
+                    await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
+
+                List<DependencyUpdateResults> updateResults = [];
+
+                if (productBuildInfos.Length != 0)
+                {
+                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters();
+                    DependencyUpdateResults productUpdateResults = UpdateFiles(productBuildInfos, productUpdaters);
+                    updateResults.Add(productUpdateResults);
+                }
+
+                if (toolBuildInfos.Length != 0)
+                {
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(RepoRoot);
+                    DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
+                    updateResults.Add(toolUpdateResults);
+                }
+
+                IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters();
+                IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
+                UpdateFiles(allBuildInfos, generatedContentUpdaters);
 
                 if (errorTraceListener.Errors.Any())
                 {
@@ -84,7 +99,7 @@ namespace Dotnet.Docker
                     Environment.Exit(1);
                 }
 
-                if (updateResults.ChangesDetected())
+                if (updateResults.Any(result => result.ChangesDetected()))
                 {
                     if (Options.UpdateOnly)
                     {
@@ -105,11 +120,13 @@ namespace Dotnet.Docker
             Environment.Exit(0);
         }
 
-        private static async Task<DependencyUpdateResults> UpdateFilesAsync(IEnumerable<IDependencyInfo> buildInfos)
+        private static DependencyUpdateResults UpdateFiles(
+            IEnumerable<IDependencyInfo> buildInfos,
+            IEnumerable<IDependencyUpdater> updaters)
         {
-            IEnumerable<IDependencyUpdater> updaters = await GetUpdatersAsync();
-
-            return DependencyUpdateUtils.Update(updaters, buildInfos);
+            DependencyUpdateResults results = DependencyUpdateUtils.Update(updaters, buildInfos);
+            Console.WriteLine(results.GetSuggestedCommitMessage());
+            return results;
         }
 
         private static IDependencyInfo CreateDependencyBuildInfo(string name, string? version)
@@ -143,7 +160,7 @@ namespace Dotnet.Docker
 
             if (Options.IsInternal)
             {
-                await PushToAzdoBranch(commitMessage, prOptions);
+                PushToAzdoBranch(commitMessage, prOptions);
             }
             else
             {
@@ -151,7 +168,7 @@ namespace Dotnet.Docker
             }
         }
 
-        private static async Task PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
+        private static void PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
         {
             using Repository repo = new(RepoRoot);
 
@@ -224,6 +241,7 @@ namespace Dotnet.Docker
 
                 if (pullRequestToUpdate == null || pullRequestToUpdate.Head.Ref != $"{upstreamBranch.Name}-{branchSuffix}")
                 {
+                    Trace.WriteLine("Didn't find a PR to update. Submitting a new one.");
                     await prCreator.CreateOrUpdateAsync(
                         commitMessage,
                         commitMessage,
@@ -253,6 +271,8 @@ namespace Dotnet.Docker
             // update-dependencies were made and copying it into the temp repo, and committing and pushing
             // those changes in the temp repo back to the PR's branch.
 
+            Trace.WriteLine($"Updating existing pull request for branch {upstreamBranch.Name}.");
+
             string tempRepoPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString("N"));
 
             try
@@ -278,6 +298,8 @@ namespace Dotnet.Docker
                 // If there are any changes from what exists in the PR
                 if (status.IsDirty)
                 {
+                    Trace.WriteLine($"Detected changes that don't currently exist in the PR.");
+
                     Commands.Stage(repo, "*");
 
                     Signature signature = new(Options.User, Options.Email, DateTimeOffset.Now);
@@ -298,6 +320,10 @@ namespace Dotnet.Docker
                     string pushRefSpec = $@"refs/heads/{branchName}";
 
                     repo.Network.Push(remote, pushRefSpec, pushOptions);
+                }
+                else
+                {
+                    Trace.WriteLine($"No new changes were detected - skipping PR update.");
                 }
             }
             finally
@@ -367,28 +393,15 @@ namespace Dotnet.Docker
             }
         }
 
-        private static async Task<IEnumerable<IDependencyUpdater>> GetUpdatersAsync()
+        private static IEnumerable<IDependencyUpdater> GetProductUpdaters()
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
-
-            IEnumerable<IDependencyUpdater> minGitUpdaters = await MinGitUpdater.GetMinGitUpdatersAsync(RepoRoot);
-            IEnumerable<IDependencyUpdater> chiselUpdaters = await ChiselUpdater.GetChiselUpdatersAsync(RepoRoot, Options.DockerfileVersion);
-            IDependencyUpdater syftUpdater = await SyftUpdater.GetSyftUpdaterAsync(RepoRoot);
 
             List<IDependencyUpdater> updaters =
             [
                 new NuGetConfigUpdater(RepoRoot, Options),
                 new BaseUrlUpdater(RepoRoot, Options),
-
-                ..minGitUpdaters,
-
-                // Disable additional updaters due to https://github.com/dotnet/dotnet-docker/issues/5990
-                // Chisel updaters must be listed before runtime version
-                // updaters because they check the manifest for whether the
-                // runtime versions are being updated or not
-                // ..chiselUpdaters,
-                // syftUpdater
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
@@ -402,14 +415,13 @@ namespace Dotnet.Docker
                 }
             }
 
-            updaters =
-            [
-                ..updaters,
-                ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-                ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
-            ];
-
             return updaters;
         }
+
+        private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
+        [
+            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
+            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+        ];
     }
 }

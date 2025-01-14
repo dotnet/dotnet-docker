@@ -31,6 +31,8 @@ param(
     [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard")]
     [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard"),
 
+    [string]$CustomTestFilter,
+
     [string]$InternalAccessToken
 )
 
@@ -143,9 +145,15 @@ Try {
             exit;
         }
 
-        $testFilter = "--filter `"$testFilter`""
+        if ($CustomTestFilter)
+        {
+            $testFilter = "$CustomTestFilter&($testFilter)"
+        }
+
+        $testFilter = "--filter '$testFilter'"
     }
 
+    Write-Host "`nRunning tests with $testFilter`n"
     Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
 
     if ($TestCategories.Contains('image-size')) {

@@ -7,14 +7,19 @@ schedules:
     include:
     - nightly
   always: true
+
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
+
 stages:
 - stage: DotNet
   jobs:
-  - job: UpdateDependencies
-    displayName: Update Dependencies (dotnet/sdk)
+  - job: UpdateDotNet
+    displayName: Update .NET (dotnet/sdk)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
     - template: steps/update-dotnet-dependencies.yml
+  - template: jobs/update-tools.yml
+    parameters:
+      tools: ["chisel", "rocks-toolbox", "syft", "mingit"]

@@ -1,3 +1,0 @@
-{{
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".")
-}}RUN setx /M PATH "%PATH%;C:\Program Files\powershell{{ if dotnetVersion != "6.0":;C:\Program Files\MinGit\cmd}}"

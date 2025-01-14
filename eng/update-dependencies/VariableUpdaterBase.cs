@@ -5,7 +5,6 @@ using System;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Newtonsoft.Json.Linq;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 internal abstract class VariableUpdaterBase : FileRegexUpdater

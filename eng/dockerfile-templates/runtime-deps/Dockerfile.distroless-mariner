@@ -4,16 +4,14 @@
         is-extra (optional): Whether to include extra packages that are not needed for every app,
             for example globalization support ^
 
-    set isAzureLinux3 to find(OS_VERSION_NUMBER, "3.0") >= 0 ^ 
+    set isAzureLinux3 to find(OS_VERSION_NUMBER, "3.0") >= 0 ^
     set distrolessStagingDir to "/staging" ^
     set marinerRepo to when(isAzureLinux3, "mcr.microsoft.com/azurelinux", "mcr.microsoft.com/cbl-mariner") ^
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set baseImage to cat(marinerRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
     set username to "app" ^
     set nonRootUser to when(isAzureLinux3, "$APP_UID", username) ^
-    set uid to when(dotnetVersion = "6.0", 101, 1654) ^
-    set gid to uid ^
-    set createUserHome to dotnetVersion != "6.0"
+    set uid to 1654 ^
+    set gid to uid
 }}# Installer image
 FROM {{marinerRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
 
@@ -44,11 +42,10 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         [
             "staging-dir": distrolessStagingDir,
-            "exclusive": dotnetVersion != "6.0",
+            "exclusive": "true",
             "name": username,
             "uid": uid,
-            "gid": gid,
-            "no-create-home": !createUserHome
+            "gid": gid
         ])}}
 
 # Clean up staging
@@ -71,9 +68,9 @@ FROM {{baseImage}}
     ]
 )}}
 
-COPY --from=installer {{distrolessStagingDir}}/ /{{if createUserHome:
+COPY --from=installer {{distrolessStagingDir}}/ /
 
 # Workaround for https://github.com/moby/moby/issues/38710
-COPY --from=installer --chown={{uid}}:{{gid}} {{distrolessStagingDir}}/home/{{username}} /home/{{username}}}}
+COPY --from=installer --chown={{uid}}:{{gid}} {{distrolessStagingDir}}/home/{{username}} /home/{{username}}
 
 USER {{nonRootUser}}
