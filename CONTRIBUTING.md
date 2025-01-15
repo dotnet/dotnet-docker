@@ -91,7 +91,7 @@ There are several types of [tests](https://github.com/dotnet/dotnet-docker/tree/
     * Scenario tests that run images to validate basic user scenarios.
       For example, use the SDK image to create, build and run a .NET app.
 1. `"pre-build"` tests
-    * Validate that tags adhere to a specific set of rules ([`StaticTagTests.cs`](tests\Microsoft.DotNet.Docker.Tests\StaticTagTests.cs))
+    * Validate that tags adhere to a specific set of rules ([`StaticTagTests.cs`](tests/Microsoft.DotNet.Docker.Tests/StaticTagTests.cs))
     * Verify the state of generated Dockerfile templates (public and internal versions)
 
 When editing Dockerfiles, please ensure the appropriate test changes are also made.
