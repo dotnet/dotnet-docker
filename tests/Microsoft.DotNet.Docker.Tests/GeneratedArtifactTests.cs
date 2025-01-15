@@ -4,6 +4,7 @@
 
 using System.ComponentModel;
 using System.Diagnostics;
+using DiffEngine;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
@@ -43,6 +44,10 @@ namespace Microsoft.DotNet.Docker.Tests
         [Fact]
         public async Task VerifyInternalDockerfilesOutput()
         {
+            // Disable automatic diff editor launching due to quantity of files being compared.
+            // https://github.com/VerifyTests/DiffEngine/blob/main/readme.md#disable-in-code
+            DiffRunner.Disabled = true;
+
             using TempFolderContext outputDirectory = FileHelper.UseTempFolder();
             string dockerfilesPath = Path.Combine(outputDirectory.Path, "src");
 
