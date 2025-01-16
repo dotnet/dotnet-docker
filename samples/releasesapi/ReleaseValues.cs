@@ -4,5 +4,5 @@ namespace ReleaseValues;
 
 public static class Values
 {
-    public const string RELEASE_INDEX_URL = "https://dotnetcli.blob.core.windows.net/dotnet/release-metadata/releases-index.json";
+    public const string RELEASE_INDEX_URL = "https://builds.dotnet.microsoft.com/dotnet/release-metadata/releases-index.json";
 }
