@@ -23,7 +23,6 @@ namespace Dotnet.Docker
     /// </summary>
     public class DockerfileShaUpdater : FileRegexUpdater
     {
-        private const string ReleaseDotnetBaseUrl = $"https://dotnetcli.blob.core.windows.net/dotnet";
         private const string ReleaseDotnetBaseCdnUrl = $"https://builds.dotnet.microsoft.com/dotnet";
 
         private const string ShaVariableGroupName = "shaVariable";
@@ -146,7 +145,7 @@ namespace Dotnet.Docker
         protected override string? TryGetDesiredValue(
             IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
         {
-            usedBuildInfos = [ dependencyBuildInfos.First(info => info.SimpleName == _productName) ];
+            usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
 
             string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
             // Remove Aspire Dashboard case once https://github.com/dotnet/aspire/issues/2035 is fixed.
@@ -289,7 +288,7 @@ namespace Dotnet.Docker
             // the daily build location, we wouldn't use the release checksums file and instead use the other means of
             // retrieving the checksums.
             string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
-            if (baseUrl != ReleaseDotnetBaseUrl && baseUrl != ReleaseDotnetBaseCdnUrl)
+            if (baseUrl != ReleaseDotnetBaseCdnUrl)
             {
                 return null;
             }
@@ -350,7 +349,7 @@ namespace Dotnet.Docker
 
         private async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version)
         {
-            string uri = $"{ReleaseDotnetBaseUrl}/checksums/{version}-sha.txt";
+            string uri = $"{ReleaseDotnetBaseCdnUrl}/checksums/{version}-sha.txt";
 
             return await GetChecksums(
                 uri,
