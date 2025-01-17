@@ -236,7 +236,7 @@ For Windows, `amd64` is the only architecture supported and is excluded from the
 Each tag will be supported for the lifetime of the .NET and OS version referenced by the tag, unless further restricted according to [platform support policy](supported-platforms.md).
 
 When a .NET version or an OS version reaches End-of-Life (EOL), its tags will no longer be supported.
-Unsupported tags and images will continue to exist in MAR, but they will no longer recieve updates for any reason.
+Unsupported tags and images will continue to exist in MAR, but they will no longer receive updates for any reason.
 
 ## Policy Changes
 
