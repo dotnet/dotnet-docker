@@ -3,18 +3,17 @@
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
     set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
-    set tagVersion to when(dotnetVersion = "6.0" || dotnetVersion = "8.0",
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
-        VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
-    set aspnetBaseTag to cat("$REPO:", tagVersion, "-", OS_VERSION) ^
-    set paths to when(dotnetVersion = "6.0",
-        [
-            "C:\Program Files\powershell",
-        ],
+
+    set installerStageFromImage to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
+
+    set aspnetTagVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
+    set aspnetBaseTag to cat("$REPO:", aspnetTagVersion, "-", OS_VERSION) ^
+
+    set paths to
         [
             "C:\Program Files\powershell",
             "C:\Program Files\MinGit\cmd"
-        ]) ^
+        ] ^
     set paths to join(paths, ";")
 }}# escape=`
 
@@ -55,7 +54,7 @@ FROM {{aspnetBaseTag}}
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": paths ])}}
 
 COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
-COPY --from=installer ["/powershell", "/Program Files/powershell"]{{ if dotnetVersion != "6.0":
-COPY --from=installer ["/MinGit", "/Program Files/MinGit"]}}
+COPY --from=installer ["/powershell", "/Program Files/powershell"]
+COPY --from=installer ["/MinGit", "/Program Files/MinGit"]
 
 {{InsertTemplate("Dockerfile.windows.first-run")}}}}

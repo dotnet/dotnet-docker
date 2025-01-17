@@ -9,7 +9,8 @@
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
 
     set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|url")] ^
-    set chiselSha to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|sha")] ^
+    set shaFunction to "384" ^
+    set chiselSha to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|sha", shaFunction)] ^
     set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|version")] ^
 
@@ -26,7 +27,7 @@
             cat(opensslPkg, "_libs")
         ] ^
 
-    set basePkgs to when (dotnetVersion = "6.0" || dotnetVersion = "8.0", cat(basePkgs, ["zlib1g_libs"]), basePkgs) ^
+    set basePkgs to when (dotnetVersion = "8.0", cat(basePkgs, ["zlib1g_libs"]), basePkgs) ^
 
     _ Arrays in cottle are actually key-value maps. Sorting the array sorts by value
         but does not change the key value. In order to have the right index in the
@@ -41,7 +42,8 @@
             "tzdata_zoneinfo-icu"
         ],
         [
-            "tzdata_zoneinfo"
+            "tzdata_zoneinfo",
+            "tzdata-legacy_zoneinfo"
         ]) ^
     set icuPkgs to [ cat("libicu", VARIABLES[cat("libicu|", osVersionBase)], "_libs") ] ^
     set extraPkgs to cat(sort(cat(standardPkgs, tzdataPkgs, icuPkgs))) ^
@@ -64,7 +66,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.download-file",
         "out-file": "chisel.tar.gz",
         "url": chiselUrl,
         "sha": chiselSha,
-        "sha-var-name": "chisel_sha512"
+        "sha-var-name": cat("chisel_sha", shaFunction),
+        "sha-function": shaFunction,
     ], "    ")}} \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
     && {{InsertTemplate("../Dockerfile.linux.download-file",

@@ -9,14 +9,12 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Newtonsoft.Json.Linq;
 
-#nullable enable
 namespace Dotnet.Docker
 {
     /// <summary>
@@ -26,7 +24,7 @@ namespace Dotnet.Docker
     public class DockerfileShaUpdater : FileRegexUpdater
     {
         private const string ReleaseDotnetBaseUrl = $"https://dotnetcli.blob.core.windows.net/dotnet";
-        private const string ReleaseDotnetBaseCdnUrl = $"https://dotnetcli.azureedge.net/dotnet";
+        private const string ReleaseDotnetBaseCdnUrl = $"https://builds.dotnet.microsoft.com/dotnet";
 
         private const string ShaVariableGroupName = "shaVariable";
         private const string ShaValueGroupName = "shaValue";
@@ -43,7 +41,7 @@ namespace Dotnet.Docker
         private readonly string _os;
         private readonly Options _options;
         private readonly string _versions;
-        private readonly Dictionary<string, string[]> _urls;
+        private readonly Dictionary<string, string> _urls;
         private readonly Lazy<JObject> _manifestVariables;
 
         public DockerfileShaUpdater(
@@ -58,50 +56,19 @@ namespace Dotnet.Docker
             _options = options;
 
             // Maps a product name to a set of one or more candidate URLs referencing the associated artifact. The order of the URLs
-            // should be in priority order with each subsequent URL being the fallback. This is primarily intended to support targeting
-            // pack RPMs because they only ship once for a given major/minor release and never again for servicing releases. However, during
-            // preview releases, they ship with each build. By making use of fallback URLs it allows support for either scenario, first checking
-            // for the build-specific location and then falling back to the overall major/minor release location.
+            // should be in priority order with each subsequent URL being the fallback.
             _urls = new()
             {
-                { "powershell", new string[] { "https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" } },
-
-                { "monitor", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-                { "monitor-base", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-                { "monitor-ext-azureblobstorage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-                { "monitor-ext-s3storage", new string[] { $"$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" } },
-
-                { "aspire-dashboard", [ $"$DOTNET_BASE_URL/aspire/$VERSION_DIR/aspire-dashboard-$OS-$ARCH.$ARCHIVE_EXT" ] },
-
-                { "runtime", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
-                { "runtime-host", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-host-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
-                { "runtime-hostfxr", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-hostfxr-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
-                {
-                    "runtime-targeting-pack",
-                    new string[]
-                    {
-                        $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-targeting-pack-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT",
-                        $"$DOTNET_BASE_URL/Runtime/$DF_VERSION.0/dotnet-targeting-pack-$DF_VERSION.0-{GetRpmArchFormat()}.$ARCHIVE_EXT"
-                    }
-                },
-                { "runtime-apphost-pack", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-apphost-pack-$VERSION_FILE-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
-                { NetStandard21TargetingPack, new string[] { $"{ReleaseDotnetBaseUrl}/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-$ARCH.$ARCHIVE_EXT" } },
-                { "runtime-deps-cm.1", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.1-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
-                { "runtime-deps-cm.2", new string[] { $"$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-deps-$VERSION_FILE-cm.2-{GetRpmArchFormat()}.$ARCHIVE_EXT" } },
-
-                { "aspnet", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
-                { "aspnet-composite", new string[] { $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
-                {
-                    "aspnet-runtime-targeting-pack",
-                    new string[]
-                    {
-                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-targeting-pack-$VERSION_FILE{GetAspnetTargetingPackArchFormat()}.$ARCHIVE_EXT",
-                        $"$DOTNET_BASE_URL/aspnetcore/Runtime/$DF_VERSION.0/aspnetcore-targeting-pack-$DF_VERSION.0{GetAspnetTargetingPackArchFormat()}.$ARCHIVE_EXT"
-                    }
-                },
-
-                { "sdk", new string[] { $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE$OPTIONAL_OS-{GetRuntimeSdkArchFormat()}.$ARCHIVE_EXT" } },
-                { "lzma", new string[] { $"$DOTNET_BASE_URL/Sdk/$VERSION_DIR/nuGetPackagesArchive.lzma" } }
+                { "aspire-dashboard",               "$DOTNET_BASE_URL/aspire/$VERSION_DIR/aspire-dashboard-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "aspnet-composite",               "$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "aspnet",                         "$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor-base",                   "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor-ext-azureblobstorage",   "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor-ext-s3storage",          "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "monitor",                        "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "powershell",                     "https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$VERSION_DIR/PowerShell.$OS.$ARCH.$VERSION_FILE.nupkg" },
+                { "runtime",                        "$DOTNET_BASE_URL/Runtime/$VERSION_DIR/dotnet-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                { "sdk",                            "$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
             };
 
             _manifestVariables = new Lazy<JObject>(
@@ -124,12 +91,6 @@ namespace Dotnet.Docker
                         _options.InternalAccessToken))));
             }
         }
-
-        private string GetRpmArchFormat() => _arch == "arm64" ? "aarch64" : "$ARCH";
-
-        private string GetAspnetTargetingPackArchFormat() => $"-{GetRpmArchFormat()}";
-
-        private string GetRuntimeSdkArchFormat() => _os.Contains("rpm") ? GetRpmArchFormat() : "$ARCH";
 
         public static IEnumerable<IDependencyUpdater> CreateUpdaters(
             string productName, string dockerfileVersion, string repoRoot, Options options)
@@ -185,75 +146,30 @@ namespace Dotnet.Docker
         protected override string? TryGetDesiredValue(
             IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
         {
-            IDependencyInfo productInfo = dependencyBuildInfos.First(info => info.SimpleName == _productName);
+            usedBuildInfos = [ dependencyBuildInfos.First(info => info.SimpleName == _productName) ];
 
-            usedBuildInfos = new IDependencyInfo[] { productInfo };
-
+            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
+            // Remove Aspire Dashboard case once https://github.com/dotnet/aspire/issues/2035 is fixed.
+            string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
             string versionFile = UpdateDependencies.ResolveProductVersion(versionDir, _options);
 
-            string archiveExt;
-            if (_os.Contains("win"))
-            {
-                archiveExt = "zip";
-            }
-            else if (_os.Contains("rpm"))
-            {
-                archiveExt = "rpm";
-            }
-            else
-            {
-                archiveExt = "tar.gz";
-            }
+            string downloadUrl = _urls[_productName]
+                .Replace("$DOTNET_BASE_URL", baseUrl)
+                .Replace("$ARCHIVE_EXT", archiveExt)
+                .Replace("$VERSION_DIR", versionDir)
+                .Replace("$VERSION_FILE", versionFile)
+                .Replace("$OS", _os)
+                .Replace("$ARCH", _arch)
+                .Replace("$DF_VERSION", _options.DockerfileVersion)
+                .Replace("..", ".");
 
-            // Special case for Aspire Dashboard
-            // Remove once https://github.com/dotnet/aspire/issues/2035 is fixed.
-            if (_productName.Contains("aspire-dashboard"))
-            {
-                archiveExt = "zip";
-            }
-
-            string optionalOs = _os.Contains("rpm") ? string.Empty : $"-{_os}";
-
-            // Each product name has one or more candidate URLs from which to retrieve the artifact. Multiple candidate URLs
-            // should be listed in priority order. Each subsequent URL listed is treated as a fallback.
-            string[] candidateUrls = _urls[_productName];
-
-            for (int candidateUrlIndex = 0; candidateUrlIndex < candidateUrls.Length; candidateUrlIndex++)
-            {
-                string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
-                string downloadUrl = candidateUrls[candidateUrlIndex]
-                    .Replace("$DOTNET_BASE_URL", baseUrl)
-                    .Replace("$ARCHIVE_EXT", archiveExt)
-                    .Replace("$VERSION_DIR", versionDir)
-                    .Replace("$VERSION_FILE", versionFile)
-                    .Replace("$OS", _os)
-                    .Replace("$OPTIONAL_OS", optionalOs)
-                    .Replace("$ARCH", _arch)
-                    .Replace("$DF_VERSION", _options.DockerfileVersion)
-                    .Replace("..", ".");
-
-                bool isLastUrlToCheck =
-                    candidateUrlIndex == candidateUrls.Length - 1;
-
-                string? result = GetArtifactShaAsync(downloadUrl, errorOnNotFound: isLastUrlToCheck).Result;
-                if (result is not null)
-                {
-                    return result;
-                }
-            }
-
-            return null;
+            return GetArtifactShaAsync(downloadUrl).Result;
         }
 
         private static string GetOs(string[] variableParts)
         {
-            if (variableParts.Length == 4 && !Version.TryParse(variableParts[1], out _))
-            {
-                // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
-                return variableParts[1];
-            }
-            else if (variableParts.Length >= 4)
+            if (variableParts.Length >= 4)
             {
                 return variableParts[2];
             }
@@ -263,12 +179,7 @@ namespace Dotnet.Docker
 
         private static string GetArch(string[] variableParts)
         {
-            if (variableParts.Length == 4 && !Version.TryParse(variableParts[1], out _))
-            {
-                // Handles the case of "netstandard-targeting-pack-2.1.0|linux-rpm|x64|sha".
-                return variableParts[2];
-            }
-            else if (variableParts.Length >= 5)
+            if (variableParts.Length >= 5)
             {
                 return variableParts[3];
             }
@@ -276,7 +187,7 @@ namespace Dotnet.Docker
             return string.Empty;
         }
 
-        private async Task<string?> GetArtifactShaAsync(string downloadUrl, bool errorOnNotFound)
+        private async Task<string?> GetArtifactShaAsync(string downloadUrl)
         {
             if (!s_shaCache.TryGetValue(downloadUrl, out string? sha))
             {
@@ -296,14 +207,7 @@ namespace Dotnet.Docker
                 else
                 {
                     string notFoundMsg = $"Unable to retrieve sha for '{downloadUrl}'.";
-                    if (errorOnNotFound)
-                    {
-                        Trace.TraceError(notFoundMsg);
-                    }
-                    else
-                    {
-                        Trace.TraceWarning(notFoundMsg);
-                    }
+                    Trace.TraceError(notFoundMsg);
                 }
             }
 
@@ -531,4 +435,3 @@ namespace Dotnet.Docker
         }
     }
 }
-#nullable disable

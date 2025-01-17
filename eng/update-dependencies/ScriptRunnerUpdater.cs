@@ -6,7 +6,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker
@@ -16,38 +15,32 @@ namespace Dotnet.Docker
     /// </summary>
     public class ScriptRunnerUpdater : IDependencyUpdater
     {
-        private string _scriptPath;
+        private readonly string _scriptPath;
 
-        private ScriptRunnerUpdater()
+        private ScriptRunnerUpdater(string scriptPath)
         {
+            _scriptPath = scriptPath;
         }
 
         public static IDependencyUpdater GetDockerfileUpdater(string repoRoot)
         {
-            return new ScriptRunnerUpdater()
-            {
-                _scriptPath = Path.Combine(repoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1")
-            };
+            string scriptPath = Path.Combine(repoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1");
+            return new ScriptRunnerUpdater(scriptPath);
         }
 
         public static IDependencyUpdater GetReadMeUpdater(string repoRoot)
         {
-            return new ScriptRunnerUpdater()
-            {
-                _scriptPath = Path.Combine(repoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1")
-            };
+            string scriptPath = Path.Combine(repoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
+            return new ScriptRunnerUpdater(scriptPath);
         }
 
-        public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
-        {
-            return new DependencyUpdateTask[] {
-                new DependencyUpdateTask(
-                    () => ExecuteScript(),
-                    Enumerable.Empty<IDependencyInfo>(),
-                    Enumerable.Empty<string>()
-                )
-            };
-        }
+        public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos) =>
+        [
+            new DependencyUpdateTask(
+                ExecuteScript,
+                usedInfos: [],
+                readableDescriptionLines: []),
+        ];
 
         private void ExecuteScript()
         {

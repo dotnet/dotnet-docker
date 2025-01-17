@@ -4,7 +4,6 @@
 using System;
 using Newtonsoft.Json.Linq;
 
-#nullable enable
 namespace Dotnet.Docker;
 
 public static class JsonHelper
@@ -13,4 +12,3 @@ public static class JsonHelper
         where T : JToken =>
         (T)(token[name] ?? throw new InvalidOperationException($"Missing '{name}' property"));
 }
-#nullable disable

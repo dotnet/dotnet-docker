@@ -117,31 +117,29 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetMonitorImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
-            variables.AddRange(ProductImageTests.GetCommonEnvironmentVariables());
+            List<EnvironmentVariableInfo> variables =
+            [
+                ..GetCommonEnvironmentVariables(),
+                new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty),
 
-            if (imageData.Version.Major == 6) {
-                // ASPNETCORE_URLS has been unset to allow the default URL binding to occur.
-                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", string.Empty));
-            } else {
-                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty));
-            }
-            // Diagnostics should be disabled
-            variables.Add(new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"));
-            // DefaultProcess filter should select a process with a process ID of 1
-            variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Key", "ProcessId"));
-            variables.Add(new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"));
-            // Existing (orphaned) diagnostic port should be delete before starting server
-            variables.Add(new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"));
-            if (imageData.Version.Major != 6)
-            {
+                // Diagnostics should be disabled
+                new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"),
+
+                // DefaultProcess filter should select a process with a process ID of 1
+                new EnvironmentVariableInfo("DefaultProcess__Filters__0__Key", "ProcessId"),
+                new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"),
+
+                // Existing (orphaned) diagnostic port should be delete before starting server
+                new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"),
+
                 // GC mode should be set to Server
-                variables.Add(new EnvironmentVariableInfo("DOTNET_gcServer", "1"));
-            }
-            // Console logger format should be JSON and output UTC timestamps without timezone information
-            variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterName", "json"));
-            variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"));
-            variables.Add(new EnvironmentVariableInfo("Logging__Console__FormatterOptions__UseUtcTimestamp", "true"));
+                new EnvironmentVariableInfo("DOTNET_gcServer", "1"),
+
+                // Console logger format should be JSON and output UTC timestamps without timezone information
+                new EnvironmentVariableInfo("Logging__Console__FormatterName", "json"),
+                new EnvironmentVariableInfo("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"),
+                new EnvironmentVariableInfo("Logging__Console__FormatterOptions__UseUtcTimestamp", "true"),
+            ];
 
             EnvironmentVariableInfo.Validate(
                 variables,
@@ -605,19 +603,15 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             const char spaceChar = ' ';
 
-            // This determines if we are going to add the default args that are included in the entrypoint in 6.0 images
-            // This flag should be thought of as "We want to add anything to the commandline and are > 6.0".
-            // This is required for > 6.0 images when command line arguments are being appended because docker
-            // will treat the presence of any commandline args as overriding the entire CMD block in the DockerFile.
-            bool addDefaultArgs =
-                // We are > 6.0
-                imageData.Version.Major > 6 &&
-                // We are adding anything to the command line. When additional flags are added to this method, `noAuthentication`
-                // should be replaced something like `(noAuthentication || myNewFlag || mySetting != Setting.Default)`
-                noAuthentication;
+            // This flag should be set when we are adding args to the command line.
+            // The CMD block defined in the Dockerfile already contains the default args, but if we pass any args via
+            // the commandline args, then Docker overrides the entire CMD instruction from the DockerFile. When this
+            // happens, we need to add the args back. If additional flags are added to this method, `noAuthentication`
+            // should be replaced with something like: `(noAuthentication || myNewFlag || mySetting != Setting.Default)`
+            bool addDefaultArgs = noAuthentication;
 
             // Standard here is to have the built command line always end with a space, so it needs to start with one
-            StringBuilder builtCommandline = new StringBuilder(spaceChar);
+            StringBuilder builtCommandline = new(spaceChar);
 
             if (addDefaultArgs)
             {

@@ -58,11 +58,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyAspnetSample(SampleImageData imageData)
         {
-            if (imageData.OS == OS.Bionic && imageData.DockerfileSuffix != "ubuntu-x64")
-            {
-                return;
-            }
-
             await VerifySampleAsync(imageData, SampleImageType.Aspnetapp, async (image, containerName) =>
             {
                 int port = imageData.DockerfileSuffix == "windowsservercore-iis" ? 80 : imageData.DefaultPort;

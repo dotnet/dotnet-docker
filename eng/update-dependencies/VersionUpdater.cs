@@ -8,7 +8,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-#nullable enable
 namespace Dotnet.Docker
 {
     /// <summary>
@@ -105,4 +104,3 @@ namespace Dotnet.Docker
                 $"(?<{s_versionGroupName}>[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)*)?)");
     }
 }
-#nullable disable

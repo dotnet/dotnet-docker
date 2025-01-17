@@ -2,9 +2,9 @@ FROM amd64/buildpack-deps:noble-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v0.10.0/chisel_v0.10.0_linux_amd64.tar.gz \
-    && chisel_sha512='5c863d41e9b0829a3af57de444bdb7d1638612e5caa0a289511b5f46ec5728795152381257d30bbff012bcb5c533b6cfbc17b17b93569fd5c0e194ce2c6e0fc5' \
-    && echo "$chisel_sha512  chisel.tar.gz" | sha512sum -c - \
+RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.0.0/chisel_v1.0.0_linux_amd64.tar.gz \
+    && chisel_sha384='655ca8f45e6f052ab60a4acfeca5017c7d992035e0e4a01f78881c0fe45f2103ce2f18a352ddc8f5fb88bfdd1ed8cc6b' \
+    && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
     && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
@@ -34,6 +34,7 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
             libicu74_libs \
             libssl3t64_libs \
             libstdc++6_libs \
+            tzdata-legacy_zoneinfo \
             tzdata_zoneinfo \
             zlib1g_libs
 

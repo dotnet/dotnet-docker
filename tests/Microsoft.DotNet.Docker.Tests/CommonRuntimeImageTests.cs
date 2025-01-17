@@ -19,9 +19,11 @@ namespace Microsoft.DotNet.Docker.Tests
         {
         }
 
-        public static IEnumerable<object[]> GetImageData(DotNetImageRepo imageRepo)
+        public static IEnumerable<object[]> GetImageData(
+            DotNetImageRepo imageRepo,
+            DotNetImageVariant variant = DotNetImageVariant.None)
         {
-            return TestData.GetImageData(imageRepo)
+            return TestData.GetImageData(imageRepo, variant)
                 .Select(imageData => new object[] { imageData });
         }
 
@@ -31,19 +33,12 @@ namespace Microsoft.DotNet.Docker.Tests
             List<EnvironmentVariableInfo> variables = new List<EnvironmentVariableInfo>();
             variables.AddRange(GetCommonEnvironmentVariables());
 
-            if (!imageData.IsWindows && imageData.Version.Major != 6)
+            if (!imageData.IsWindows)
             {
                 variables.Add(new EnvironmentVariableInfo("APP_UID", imageData.NonRootUID?.ToString()));
             }
 
-            if (imageData.VersionFamily.Major == 6)
-            {
-                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_URLS", $"http://+:{imageData.DefaultPort}"));
-            }
-            else
-            {
-                variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
-            }
+            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
 
             if (customVariables != null)
             {
@@ -84,17 +79,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected async Task VerifyGlobalizationScenarioBase(ProductImageData imageData)
         {
-            // Inclusion of tzdata and icu together was not consistent in .NET 6, so skip the test.
-            // Remove once .NET 6 is EOL.
-            if (imageData.Version.Major == 6)
-            {
-                return;
-            }
+            using var testScenario = new GlobalizationScenario(imageData, ImageRepo, DockerHelper);
+            await testScenario.ExecuteAsync();
+        }
 
-            using (GlobalizationScenario testScenario = new(imageData, ImageRepo, DockerHelper))
-            {
-                await testScenario.ExecuteAsync();
-            }
+        protected async Task VerifyNlsScenarioBase(ProductImageData imageData)
+        {
+            using var testScenario = new NlsScenario(imageData, ImageRepo, DockerHelper);
+            await testScenario.ExecuteAsync();
         }
     }
 }

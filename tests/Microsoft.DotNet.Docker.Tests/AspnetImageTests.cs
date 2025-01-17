@@ -35,6 +35,11 @@ namespace Microsoft.DotNet.Docker.Tests
         public async Task VerifyGlobalizationScenario(ProductImageData imageData) =>
             await VerifyGlobalizationScenarioBase(imageData);
 
+        [WindowsImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public async Task VerifyNLSScenario(ProductImageData imageData) =>
+            await VerifyNlsScenarioBase(imageData);
+
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
@@ -55,16 +60,6 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             base.VerifyCommonEnvironmentVariables(imageData, variables);
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyPackageInstallation(ProductImageData imageData)
-        {
-            VerifyExpectedInstalledRpmPackages(
-                    imageData,
-                    GetExpectedRpmPackagesInstalled(imageData)
-                        .Concat(RuntimeImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
         [LinuxImageTheory]
@@ -112,11 +107,5 @@ namespace Microsoft.DotNet.Docker.Tests
                 IsProductVersion = true
             };
         }
-
-        internal static string[] GetExpectedRpmPackagesInstalled(ProductImageData imageData) =>
-            new string[]
-                {
-                    $"aspnetcore-runtime-{imageData.VersionString}"
-                };
     }
 }

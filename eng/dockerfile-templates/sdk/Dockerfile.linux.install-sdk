@@ -5,7 +5,6 @@
             referencing the environment variable.
         is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
         installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        is-rpm-install (optional): Whether to install RPM versus tarball
 
         Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed.
         disable-first-run-experience (optional): Force skipping the first-run experience regardless of other conditions
@@ -42,46 +41,7 @@
         VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")]) ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set commonShaVarName to "dotnet_sha512" ^
-    set rpmFileArch to when(ARCH_SHORT = "arm64", "aarch64", ARCH_SHORT) ^
-    set rpms to [
-        [
-            "filename": "dotnet.rpm",
-            "url": cat(baseUrl, "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-", rpmFileArch, ".rpm"),
-            "sha": VARIABLES[join(["sdk", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": commonShaVarName
-        ],
-        [
-            "filename": "apphost.rpm",
-            "url": cat(baseUrl, "/Runtime/", runtimeVersionDir, "/dotnet-apphost-pack-", runtimeVersionFile, "-",
-                rpmFileArch, ".rpm"),
-            "sha": VARIABLES[join(["runtime-apphost-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": commonShaVarName
-        ],
-        [
-            "filename": "targeting-pack.rpm",
-            "url": cat(baseUrl, "/Runtime/", VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")],
-                "/dotnet-targeting-pack-", runtimeTargetingPackVersionFile,
-                "-", rpmFileArch, ".rpm"),
-            "sha": VARIABLES[join(["runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": commonShaVarName
-        ],
-        [
-            "filename": "aspnetcore-targeting-pack.rpm",
-            "url": cat(baseUrl, "/aspnetcore/Runtime/", VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")],
-                "/aspnetcore-targeting-pack-", aspnetTargetingPackVersionFile, "-", rpmFileArch, ".rpm"),
-            "sha": VARIABLES[join(["aspnet-runtime-targeting-pack", dotnetVersion, "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": commonShaVarName
-        ]
-    ] ^
-    set rpms to when(ARCH_SHORT != "arm64",
-        cat(rpms, [[
-            "filename": "netstandard-targeting-pack.rpm",
-            "url": cat("https://dotnetcli.azureedge.net/dotnet/Runtime/3.1.0/netstandard-targeting-pack-2.1.0-", ARCH_SHORT, ".rpm"),
-            "sha": VARIABLES[join(["netstandard-targeting-pack-2.1.0", "linux-rpm", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": commonShaVarName
-        ]]),
-        rpms) ^
-    set tarballs to [
+    set files to [
         [
             "filename": "dotnet.tar.gz",
             "url": cat(baseUrl, "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-", platform, "-", ARCH_SHORT, ".tar.gz"),
@@ -97,7 +57,6 @@
             ]
         ]
     ] ^
-    set files to when(ARGS["is-rpm-install"], rpms, tarballs) ^
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -121,5 +80,5 @@ if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion
         "skip-install": !installEnabled,
         "install-dir": installDir,
         "create-install-dir": !isFullAzureLinux
-    ], "    ")}}{{if !ARGS["disable-first-run-experience"] && (!ARGS["is-internal"] || (ARGS["is-rpm-install"] && installEnabled)): \
+    ], "    ")}}{{if !ARGS["disable-first-run-experience"] && !ARGS["is-internal"]: \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}

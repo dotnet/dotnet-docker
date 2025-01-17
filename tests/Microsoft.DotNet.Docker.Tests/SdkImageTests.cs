@@ -59,13 +59,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             bool useWasmTools = true;
 
-            // `wasm-tools` workload does not work on .NET 6 with CBL Mariner 2.0.
-            // Re-enable when issue is resolved: https://github.com/dotnet/aspnetcore/issues/53469
-            if (imageData.OS.Contains(OS.Mariner) && imageData.Version.Major == 6)
-            {
-                useWasmTools = false;
-            }
-
             // `wasm-tools` workload does not work on ARM
             if (imageData.IsArm)
             {
@@ -73,7 +66,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-            if (imageData.OS.StartsWith(OS.Alpine) && (imageData.Version.Major == 6 || imageData.Version.Major == 8))
+            if (imageData.OS.StartsWith(OS.Alpine) && imageData.Version.Major == 8)
             {
                 useWasmTools = false;
             }
@@ -103,8 +96,8 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageName = imageData.GetImage(ImageRepo, DockerHelper);
             string version = imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper);
 
-            List<EnvironmentVariableInfo> variables = new()
-            {
+            List<EnvironmentVariableInfo> variables =
+            [
                 new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
                 new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
                 new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"),
@@ -115,9 +108,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 },
                 AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
                 RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
-                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true")
-            };
-            variables.AddRange(GetCommonEnvironmentVariables());
+                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"),
+                ..GetCommonEnvironmentVariables(),
+            ];
 
             if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
@@ -155,13 +148,6 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
-            // Skip test on CBL-Mariner with .NET 6.0. Since installation is done via RPM package, we just need to verify the package installation
-            // was done (handled by VerifyPackageInstallation test). There's no need to check the actual contents of the package.
-            if (imageData.OS.StartsWith(OS.Mariner) && imageData.Version.Major == 6)
-            {
-                return;
-            }
-
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
@@ -174,23 +160,6 @@ namespace Microsoft.DotNet.Docker.Tests
             bool filesMatch = FileHelper.CompareFiles(expectedFilesContext.Path, actualFilesContext.Path, OutputHelper);
 
             Assert.True(filesMatch, "Differences found in the dotnet folder contents.");
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInstalledRpmPackages(ProductImageData imageData)
-        {
-            VerifyExpectedInstalledRpmPackages(
-                imageData,
-                new string[]
-                {
-                    $"dotnet-sdk-{imageData.VersionString}",
-                    $"dotnet-targeting-pack-{imageData.VersionString}",
-                    $"aspnetcore-targeting-pack-{imageData.VersionString}",
-                    $"dotnet-apphost-pack-{imageData.VersionString}",
-                    $"netstandard-targeting-pack-2.1"
-                }
-                .Concat(AspnetImageTests.GetExpectedRpmPackagesInstalled(imageData)));
         }
 
         [LinuxImageTheory]
@@ -214,17 +183,10 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyGitInstallation(ProductImageData imageData)
         {
-            if (!DockerHelper.IsLinuxContainerModeEnabled && imageData.Version.Major == 6)
-            {
-                OutputHelper.WriteLine("Git is not installed on Windows containers older than .NET 6");
-                return;
-            }
-
             DockerHelper.Run(
                 image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
                 name: imageData.GetIdentifier($"git"),
-                command: "git version"
-            );
+                command: "git version");
         }
 
         /// <summary>

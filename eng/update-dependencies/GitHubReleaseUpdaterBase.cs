@@ -1,21 +1,31 @@
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-using Microsoft.DotNet.VersionTools.Dependencies;
-using Octokit;
+// Copyright (c) .NET Foundation and contributors. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-#nullable enable
+using System.Collections.Generic;
+using System.Linq;
+using Microsoft.DotNet.VersionTools.Dependencies;
+
 namespace Dotnet.Docker;
 
-internal abstract partial class GitHubReleaseUpdaterBase(string repoRoot, string variableName, Release release)
-    : VariableUpdaterBase(repoRoot, variableName)
+internal abstract partial class GitHubReleaseUpdaterBase(
+    string repoRoot,
+    string toolName,
+    string variableName,
+    string owner,
+    string repo)
+    : VariableUpdaterBase(
+        repoRoot,
+        variableName)
 {
-    protected abstract IDependencyInfo? GetDependencyInfoToUse(IEnumerable<IDependencyInfo> dependencyInfos);
+    protected string ToolName { get; } = toolName;
 
-    protected abstract string? GetValue();
+    protected string Owner { get; } = owner;
 
-    protected Release Release { get; } = release;
+    protected string Repo { get; } = repo;
 
-    protected sealed override string? TryGetDesiredValue(
+    protected abstract string? GetValue(GitHubReleaseInfo dependencyInfo);
+
+    protected override string? TryGetDesiredValue(
         IEnumerable<IDependencyInfo> dependencyInfos,
         out IEnumerable<IDependencyInfo> usedDependencyInfos)
     {
@@ -26,20 +36,23 @@ internal abstract partial class GitHubReleaseUpdaterBase(string repoRoot, string
         {
             return "";
         }
+        else if (ManifestHelper.IsManifestVariable(currentVersion))
+        {
+            // Don't overwrite versions that are set to other variables
+            return currentVersion;
+        }
 
-        IDependencyInfo? usedDependencyInfo = GetDependencyInfoToUse(dependencyInfos);
+        GitHubReleaseInfo? usedDependencyInfo =
+            dependencyInfos
+                .OfType<GitHubReleaseInfo>()
+                .FirstOrDefault(info => info.SimpleName == ToolName);
+
         if (usedDependencyInfo is null)
         {
             return currentVersion;
         }
 
-        // Don't overwrite versions that are set to other variables
-        if (ManifestHelper.IsManifestVariable(currentVersion))
-        {
-            return currentVersion;
-        }
-
         usedDependencyInfos = [ usedDependencyInfo ];
-        return GetValue();
+        return GetValue(usedDependencyInfo);
     }
 }
