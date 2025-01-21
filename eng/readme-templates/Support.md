@@ -5,11 +5,14 @@
     set isRuntimeDeps to match(SHORT_REPO, "runtime-deps") ^
     set isSamples to match(SHORT_REPO, "samples") ^
     set isMonitor to match(SHORT_REPO, "monitor") || match(SHORT_REPO, "base") ^
-    set isAspireDashboard to match(SHORT_REPO, "aspire-dashboard")
+    set isAspireDashboard to match(SHORT_REPO, "aspire-dashboard") ^
+    set isReverseProxy to match(SHORT_REPO, "reverse-proxy")
 
 }}{{ARGS["top-header"]}} Support
 
 {{if isSamples:These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment.
+
+}}{{if isReverseProxy:The support policy can be found [here](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md).
 
 }}{{ARGS["top-header"]}}# Lifecycle
 

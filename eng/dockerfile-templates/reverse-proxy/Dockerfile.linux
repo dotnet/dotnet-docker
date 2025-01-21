@@ -9,13 +9,14 @@
 
 # Installer image
 FROM {{installerImageTag}} AS installer
+
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
 
 # Retrieve YARP
 {{InsertTemplate("Dockerfile.linux.install-reverse-proxy")}}
 
 
-# YARP Base image
+# YARP image
 FROM {{aspnetBaseTag}}
 
 WORKDIR /app

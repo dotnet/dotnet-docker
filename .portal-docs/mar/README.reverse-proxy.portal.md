@@ -39,7 +39,7 @@ You can run this image to launch a YARP instance.
 
 See [Basic YARP Sample](https://github.com/microsoft/reverse-proxy/tree/main/samples/BasicYarpSample) for a sample config to use with this container.
 
-YARP expect the config file to be in `/etc/reverse-proxy.config`, and listen by default on port 5000.
+YARP expects the config file to be in `/etc/reverse-proxy.config`, and listens by default on port 5000.
 
 It can be run with this command:
 
@@ -48,8 +48,6 @@ docker run -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 mcr
 ```
 
 See [documentation](https://microsoft.github.io/reverse-proxy/articles/index.html) for how to configure the image and documentation for the reverse proxy configuration.
-
-The support policy can be found [here](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md).
 
 ## Image Variants
 
@@ -70,6 +68,8 @@ They contain the following features:
 .NET offers distroless images for [Azure Linux](https://github.com/dotnet/dotnet-docker/blob/main/documentation/azurelinux.md) and [Ubuntu (Chiseled)](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md).
 
 ## Support
+
+The support policy can be found [here](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md).
 
 ### Lifecycle
 
