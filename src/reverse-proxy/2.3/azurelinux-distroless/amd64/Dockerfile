@@ -2,6 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
+
 RUN tdnf install -y \
         ca-certificates \
         unzip \
@@ -17,7 +18,7 @@ RUN yarp_version=2.3.0-preview.1.25060.1 \
     && rm reverse-proxy.zip
 
 
-# YARP Base image
+# YARP image
 FROM $REPO:9.0.1-azurelinux3.0-distroless-amd64
 
 WORKDIR /app
