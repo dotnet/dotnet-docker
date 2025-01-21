@@ -1316,8 +1316,7 @@
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
             "$(dotnet|9.0|minor-tag)-bookworm-slim": {},
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -2186,10 +2185,7 @@
           "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
             "$(dotnet|10.0|fixed-tag)-bookworm-slim": {},
-            "$(dotnet|10.0|minor-tag)-bookworm-slim": {},
-            "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|10.0|minor-tag)-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -2353,7 +2349,10 @@
           "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
             "$(dotnet|10.0|fixed-tag)-noble": {},
-            "$(dotnet|10.0|minor-tag)-noble": {}
+            "$(dotnet|10.0|minor-tag)-noble": {},
+            "$(dotnet|10.0|fixed-tag)": {},
+            "$(dotnet|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -3658,8 +3657,7 @@
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
             "$(dotnet|9.0|minor-tag)-bookworm-slim": {},
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -4301,10 +4299,7 @@
           "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
             "$(dotnet|10.0|fixed-tag)-bookworm-slim": {},
-            "$(dotnet|10.0|minor-tag)-bookworm-slim": {},
-            "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|10.0|minor-tag)-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -4412,7 +4407,10 @@
           "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
             "$(dotnet|10.0|fixed-tag)-noble": {},
-            "$(dotnet|10.0|minor-tag)-noble": {}
+            "$(dotnet|10.0|minor-tag)-noble": {},
+            "$(dotnet|10.0|fixed-tag)": {},
+            "$(dotnet|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -6415,8 +6413,7 @@
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
             "$(dotnet|9.0|minor-tag)-bookworm-slim": {},
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -7440,10 +7437,7 @@
           "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
             "$(dotnet|10.0|fixed-tag)-bookworm-slim": {},
-            "$(dotnet|10.0|minor-tag)-bookworm-slim": {},
-            "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|10.0|minor-tag)-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -7607,7 +7601,10 @@
           "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
             "$(dotnet|10.0|fixed-tag)-noble": {},
-            "$(dotnet|10.0|minor-tag)-noble": {}
+            "$(dotnet|10.0|minor-tag)-noble": {},
+            "$(dotnet|10.0|fixed-tag)": {},
+            "$(dotnet|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -9098,8 +9095,7 @@
             "$(sdk|9.0|fixed-tag)-bookworm-slim": {},
             "$(sdk|9.0|minor-tag)-bookworm-slim": {},
             "$(sdk|9.0|fixed-tag)": {},
-            "$(sdk|9.0|minor-tag)": {},
-            "latest": {}
+            "$(sdk|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -9643,10 +9639,7 @@
           "productVersion": "$(sdk|10.0|product-version)",
           "sharedTags": {
             "$(sdk|10.0|fixed-tag)-bookworm-slim": {},
-            "$(sdk|10.0|minor-tag)-bookworm-slim": {},
-            "$(sdk|10.0|fixed-tag)": {},
-            "$(sdk|10.0|minor-tag)": {},
-            "latest": {}
+            "$(sdk|10.0|minor-tag)-bookworm-slim": {}
           },
           "platforms": [
             {
@@ -9754,7 +9747,10 @@
           "productVersion": "$(sdk|10.0|product-version)",
           "sharedTags": {
             "$(sdk|10.0|fixed-tag)-noble": {},
-            "$(sdk|10.0|minor-tag)-noble": {}
+            "$(sdk|10.0|minor-tag)-noble": {},
+            "$(sdk|10.0|fixed-tag)": {},
+            "$(sdk|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
