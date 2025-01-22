@@ -224,6 +224,7 @@ namespace Dotnet.Docker
         {
             string? sha = null;
             string shaExt = _options.IsInternal || !_productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ? ".sha512" : ".sha";
+            shaExt = ".sha512";
 
             string shaUrl = productDownloadUrl
                 .Replace("/dotnetcli", "/dotnetclichecksums")
