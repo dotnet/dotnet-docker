@@ -4,18 +4,18 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=9.0.1 \
-    && curl -fSL --output aspnetcore.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
-    && aspnetcore_sha512='fa75d8d5ae99ade0d1ab90018839fe3f5ddc4e7b7461715caf2b0bf7a88c8e86e1d4f10ab69703d2318b289c0700846e2155746d7bb1ace3d2d12e175ab18be1' \
+RUN aspnetcore_version=10.0.0-alpha.2.25070.3 \
+    && curl -fSL --output aspnetcore.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
+    && aspnetcore_sha512='33b48387b71f0e7fac26956893e4bb0c860709527922c3db226e17fc1105c76b0516b8e0c75e7f8795a8c5e64ce8facfa739868c32d67e10221585b6817f8c59' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && tar -oxzf aspnetcore.tar.gz ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.1-bookworm-slim-arm32v7
+FROM $REPO:10.0.0-alpha.1-bookworm-slim-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.1
+ENV ASPNET_VERSION=10.0.0-alpha.2.25070.3
 
 COPY --from=installer ["/shared/Microsoft.AspNetCore.App", "/usr/share/dotnet/shared/Microsoft.AspNetCore.App"]

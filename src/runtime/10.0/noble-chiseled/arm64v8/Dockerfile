@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.1 \
-    && curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-    && dotnet_sha512='38399b6139f72ef1d836e418455494a80428bf41f3aaf2351749ff144311766487533d5a3c9bd359c189b9373f24377ae886827f45272c4019e22b594773b87b' \
+RUN dotnet_version=10.0.0-alpha.1.25071.14 \
+    && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+    && dotnet_sha512='e1b7c75712b5cbbf918cf5d04ca7b17247e431b2713c9e14ce8404a7fb7b9e930050546c7075553ebcfa1a70f86af2794d09bb411ac42f0671cbaeb283181f13' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -17,10 +17,10 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:9.0.1-noble-chiseled-arm64v8
+FROM $REPO:10.0.0-alpha.1-noble-chiseled-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.1
+ENV DOTNET_VERSION=10.0.0-alpha.1.25071.14
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
