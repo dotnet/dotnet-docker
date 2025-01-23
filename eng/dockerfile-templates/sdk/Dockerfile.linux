@@ -16,6 +16,9 @@
         baseImageTag,
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
 
+    set isPowerShellSupported to !(isAlpine && ARCH_SHORT != "x64") ^
+    set includePowerShellVars to isPowerShellSupported || dotnetVersion = "8.0" || dotnetVersion = "9.0" ^
+
     set pkgs to filter(
         when(isAlpine,
             when(dotnetVersion = "8.0",
@@ -76,7 +79,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 # .NET SDK image
 }}FROM {{baseImageTag}}
 
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
+{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal, "include-powershell-vars": includePowerShellVars])}}
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 [
@@ -89,6 +92,6 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     InsertTemplate("Dockerfile.linux.install-sdk",
     [
         "install-method": "download-and-install",
-    ])}}}}{{if !(isAlpine && ARCH_SHORT != "x64"):
+    ])}}}}{{if isPowerShellSupported:
 
 {{InsertTemplate("Dockerfile.linux.install-powershell")}}}}

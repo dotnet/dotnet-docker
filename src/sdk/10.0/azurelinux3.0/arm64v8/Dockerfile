@@ -13,7 +13,9 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Azure-Linux-3.0-arm64
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Azure-Linux-3.0-arm64 \
+    # Workaround for https://github.com/PowerShell/PowerShell/issues/20685
+    DOTNET_ROLL_FORWARD=Major
 
 RUN tdnf install -y \
         git \
