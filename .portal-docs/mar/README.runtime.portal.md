@@ -26,6 +26,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
 * [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/nightly/aspire-dashboard/about): .NET Aspire Dashboard (Preview)
+* [dotnet/nightly/reverse-proxy](https://mcr.microsoft.com/product/dotnet/nightly/reverse-proxy/about): .NET Reverse Proxy (YARP) (Preview)
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 
 .NET Framework:
@@ -46,24 +47,6 @@ Type the following command to run a sample console application:
 ```console
 docker run --rm mcr.microsoft.com/dotnet/samples
 ```
-
-## Image Variants
-
-.NET container images have several variants that offer different combinations of flexibility and deployment size.
-The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
-
-### Distroless images
-
-.NET [distroless container images](https://github.com/dotnet/dotnet-docker/blob/main/documentation/distroless.md) contain only the minimal set of packages .NET needs, with everything else removed.
-Due to their limited set of packages, distroless containers have a minimized security attack surface, smaller deployment sizes, and faster start-up time compared to their non-distroless counterparts.
-They contain the following features:
-
-* Minimal set of packages required for .NET applications
-* Non-root user by default
-* No package manager
-* No shell
-
-.NET offers distroless images for [Azure Linux](https://github.com/dotnet/dotnet-docker/blob/main/documentation/azurelinux.md) and [Ubuntu (Chiseled)](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md).
 
 ## Support
 

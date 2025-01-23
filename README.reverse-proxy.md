@@ -1,4 +1,4 @@
-# 
+# .NET Reverse Proxy (YARP)
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
@@ -6,8 +6,8 @@
 
 ## Featured Tags
 
-* `2.3-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/reverse-proxy:2.3-preview`
+* `2.3`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/reverse-proxy:2.3`
 
 ## About
 
@@ -28,34 +28,17 @@ YARP expects the config file to be in `/etc/reverse-proxy.config`, and listens b
 It can be run with this command:
 
 ```console
-docker run --rm -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 mcr.microsoft.com/dotnet/reverse-proxy:latest
+docker run -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 mcr.microsoft.com/dotnet/reverse-proxy:latest
 ```
 
 See [documentation](https://microsoft.github.io/reverse-proxy/articles/index.html) for how to configure the image and documentation for the reverse proxy configuration.
-
-## Image Variants
-
-.NET container images have several variants that offer different combinations of flexibility and deployment size.
-The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
-
-### Distroless images
-
-.NET [distroless container images](https://github.com/dotnet/dotnet-docker/blob/main/documentation/distroless.md) contain only the minimal set of packages .NET needs, with everything else removed.
-Due to their limited set of packages, distroless containers have a minimized security attack surface, smaller deployment sizes, and faster start-up time compared to their non-distroless counterparts.
-They contain the following features:
-
-* Minimal set of packages required for .NET applications
-* Non-root user by default
-* No package manager
-* No shell
-
-.NET offers distroless images for [Azure Linux](https://github.com/dotnet/dotnet-docker/blob/main/documentation/azurelinux.md) and [Ubuntu (Chiseled)](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md).
 
 ## Related Repositories
 
 .NET:
 
 * [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
+* [dotnet/reverse-proxy](https://github.com/dotnet/dotnet-docker/blob/main/README.reverse-proxy.md): .NET Reverse Proxy (YARP)
 * [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)
@@ -88,13 +71,12 @@ Tags | Dockerfile | OS Version
 
 ## Support
 
-The support policy can be found [here](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md).
-
 ### Lifecycle
 
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
+* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)
 
 ### Image Update Policy
 

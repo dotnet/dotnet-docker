@@ -32,6 +32,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
 * [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/nightly/aspire-dashboard/about): .NET Aspire Dashboard (Preview)
+* [dotnet/nightly/reverse-proxy](https://mcr.microsoft.com/product/dotnet/nightly/reverse-proxy/about): .NET Reverse Proxy (YARP) (Preview)
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 
 .NET Framework:
@@ -55,11 +56,6 @@ The following samples show how to develop, build and test .NET applications with
 * [Build .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/build-in-sdk-container.md)
 * [Test .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-tests-in-sdk-container.md)
 * [Run .NET Applications with SDK Container](https://github.com/dotnet/dotnet-docker/blob/main/samples/run-in-sdk-container.md)
-
-## Image Variants
-
-.NET container images have several variants that offer different combinations of flexibility and deployment size.
-The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
 
 ## Support
 

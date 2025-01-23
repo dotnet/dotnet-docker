@@ -18,7 +18,7 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 }}
 {{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0):
+{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0 && find(REPO, "reverse-proxy") < 0):
 
 {{InsertTemplate("About.variants.md", commonArgs)}}}}
 

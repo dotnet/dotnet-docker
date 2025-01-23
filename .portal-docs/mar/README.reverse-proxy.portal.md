@@ -18,6 +18,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
+* [dotnet/reverse-proxy](https://mcr.microsoft.com/product/dotnet/reverse-proxy/about): .NET Reverse Proxy (YARP)
 * [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
@@ -49,33 +50,14 @@ docker run -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 mcr
 
 See [documentation](https://microsoft.github.io/reverse-proxy/articles/index.html) for how to configure the image and documentation for the reverse proxy configuration.
 
-## Image Variants
-
-.NET container images have several variants that offer different combinations of flexibility and deployment size.
-The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
-
-### Distroless images
-
-.NET [distroless container images](https://github.com/dotnet/dotnet-docker/blob/main/documentation/distroless.md) contain only the minimal set of packages .NET needs, with everything else removed.
-Due to their limited set of packages, distroless containers have a minimized security attack surface, smaller deployment sizes, and faster start-up time compared to their non-distroless counterparts.
-They contain the following features:
-
-* Minimal set of packages required for .NET applications
-* Non-root user by default
-* No package manager
-* No shell
-
-.NET offers distroless images for [Azure Linux](https://github.com/dotnet/dotnet-docker/blob/main/documentation/azurelinux.md) and [Ubuntu (Chiseled)](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md).
-
 ## Support
-
-The support policy can be found [here](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md).
 
 ### Lifecycle
 
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
+* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)
 
 ### Image Update Policy
 
