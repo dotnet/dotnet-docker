@@ -27,7 +27,7 @@ public class ReverseProxyImageTests(ITestOutputHelper outputHelper) : CommonRunt
 
     [DotNetTheory]
     [MemberData(nameof(GetImageData))]
-    public async Task VerifyDashboardEndpoint(ProductImageData imageData)
+    public async Task VerifyBasicScenario(ProductImageData imageData)
     {
         ReverseProxyBasicScenario testScenario = new(YarpWebPort, imageData, DockerHelper, OutputHelper);
         await testScenario.ExecuteAsync();
@@ -43,6 +43,7 @@ public class ReverseProxyImageTests(ITestOutputHelper outputHelper) : CommonRunt
         [
             // Unset ASPNETCORE_HTTP_PORTS from base image
             new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty),
+            new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:5000"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);

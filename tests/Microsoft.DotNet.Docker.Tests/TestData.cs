@@ -349,7 +349,7 @@ namespace Microsoft.DotNet.Docker.Tests
         };
 
         private static readonly ProductImageData[] s_ReverseProxyTestData =
-{
+        [
             new() {
                 Version = new ImageVersion(new Version(2,3), isPreview: true),
                 VersionFamily = V9_0,
@@ -368,7 +368,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 Arch = Arch.Arm64,
                 SupportedImageRepos = DotNetImageRepo.Reverse_Proxy
             },
-        };
+        ];
 
         public static IEnumerable<ProductImageData> GetImageData(
             DotNetImageRepo imageRepo,

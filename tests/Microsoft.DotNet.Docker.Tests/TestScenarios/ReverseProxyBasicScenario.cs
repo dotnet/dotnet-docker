@@ -60,35 +60,35 @@ public class ReverseProxyBasicScenario : ITestScenario
         }
     }
 
-    private const string ConfigFileContent = @"
-{
- ""Logging"": {
-   ""LogLevel"": {
-     ""Default"": ""Information"",
-     ""Microsoft"": ""Warning"",
-     ""Microsoft.Hosting.Lifetime"": ""Information""
-   }
- },
- ""AllowedHosts"": ""*"",
- ""ReverseProxy"": {
-   ""Routes"": {
-     ""route1"" : {
-       ""ClusterId"": ""cluster1"",
-       ""Match"": {
-         ""Path"": ""/bing/{**catch-all}""
-       }
-     }
-   },
-   ""Clusters"": {
-     ""cluster1"": {
-       ""Destinations"": {
-         ""destination1"": {
-           ""Address"": ""https://bing.com/""
-         }
-       }
-     }
-   }
- }
-}
-";
+    private const string ConfigFileContent = """
+    {
+      "Logging": {
+        "LogLevel": {
+          "Default": "Information",
+          "Microsoft": "Warning",
+          "Microsoft.Hosting.Lifetime": "Information"
+        }
+      },
+      "AllowedHosts": "*",
+      "ReverseProxy": {
+        "Routes": {
+          "route1": {
+            "ClusterId": "cluster1",
+            "Match": {
+              "Path": "/bing/{**catch-all}"
+            }
+          }
+        },
+        "Clusters": {
+          "cluster1": {
+            "Destinations": {
+              "destination1": {
+                "Address": "https://bing.com/"
+              }
+            }
+          }
+        }
+      }
+    }
+    """;
 }

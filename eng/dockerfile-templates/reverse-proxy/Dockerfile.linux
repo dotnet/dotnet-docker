@@ -19,8 +19,7 @@ FROM {{installerImageTag}} AS installer
 # YARP image
 FROM {{aspnetBaseTag}}
 
-WORKDIR /app
-COPY --from=installer /app .
+COPY --from=installer ["/app", "/app"]
 
 {{InsertTemplate("Dockerfile.envs")}}
 
