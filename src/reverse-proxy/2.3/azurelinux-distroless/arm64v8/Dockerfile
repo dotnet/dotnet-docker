@@ -21,8 +21,7 @@ RUN yarp_version=2.3.0-preview.1.25060.1 \
 # YARP image
 FROM $REPO:9.0.1-azurelinux3.0-distroless-arm64v8
 
-WORKDIR /app
-COPY --from=installer /app .
+COPY --from=installer ["/app", "/app"]
 
 ENV \
     # Unset ASPNETCORE_HTTP_PORTS from base image
