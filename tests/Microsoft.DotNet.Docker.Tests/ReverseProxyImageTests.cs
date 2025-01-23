@@ -37,8 +37,6 @@ public class ReverseProxyImageTests(ITestOutputHelper outputHelper) : CommonRunt
     [MemberData(nameof(GetImageData))]
     public void VerifyEnvironmentVariables(ProductImageData imageData)
     {
-        string baseUrl = "http://+";
-
         IEnumerable<EnvironmentVariableInfo> expectedVariables =
         [
             // Unset ASPNETCORE_HTTP_PORTS from base image
