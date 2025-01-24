@@ -4,21 +4,21 @@
         "readme-host": ARGS["readme-host"]
     ] ^
 
-    set insertReposListTemplate(template) to:{{
-        return InsertTemplate("ReposProvider.md", union([ "template": template ], commonArgs))
+    set insertReposListTemplate(template, args) to:{{
+        return InsertTemplate("ReposProvider.md", union([ "template": template ], commonArgs, args))
     }} ^
 
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
     set readmeRepoName to when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)
 
-}}{{InsertTemplate("Announcement.md", union(commonArgs, [ "trailing-line-break": "true" ]))}}{{
+}}{{insertReposListTemplate("Announcement.md", [ "trailing-line-break": "true" ])}}{{
 if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 }}{{if IS_PRODUCT_FAMILY:{{
     insertReposListTemplate("FeaturedRepos.md")}}
 }}
 {{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0):
+{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0 && find(REPO, "reverse-proxy") < 0):
 
 {{InsertTemplate("About.variants.md", commonArgs)}}}}
 

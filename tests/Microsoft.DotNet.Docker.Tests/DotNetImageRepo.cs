@@ -15,4 +15,5 @@ public enum DotNetImageRepo
     Aspnet           = 1 << 3,
     Monitor          = 1 << 4,
     Aspire_Dashboard = 1 << 5,
+    Reverse_Proxy    = 1 << 6,
 }

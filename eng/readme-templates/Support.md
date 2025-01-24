@@ -5,7 +5,8 @@
     set isRuntimeDeps to match(SHORT_REPO, "runtime-deps") ^
     set isSamples to match(SHORT_REPO, "samples") ^
     set isMonitor to match(SHORT_REPO, "monitor") || match(SHORT_REPO, "base") ^
-    set isAspireDashboard to match(SHORT_REPO, "aspire-dashboard")
+    set isAspireDashboard to match(SHORT_REPO, "aspire-dashboard") ^
+    set isReverseProxy to match(SHORT_REPO, "reverse-proxy")
 
 }}{{ARGS["top-header"]}} Support
 
@@ -13,7 +14,8 @@
 
 }}{{ARGS["top-header"]}}# Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
+{{if isReverseProxy:* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)
+}}* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 

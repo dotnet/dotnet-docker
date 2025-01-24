@@ -8167,6 +8167,80 @@
           ]
         }
       ]
+    },
+    {
+      "id": "reverse-proxy",
+      "name": "dotnet/nightly/reverse-proxy",
+      "readmes": [
+        {
+          "path": "README.reverse-proxy.md",
+          "templatePath": "eng/readme-templates/README.github.md"
+        },
+        {
+          "path": ".portal-docs/docker-hub/README.reverse-proxy.md",
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
+        },
+        {
+          "path": ".portal-docs/mar/README.reverse-proxy.portal.md",
+          "templatePath": "eng/readme-templates/README.mcr.md"
+        }
+      ],
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/reverse-proxy-tags.yml",
+      "images": [
+        {
+          "productVersion": "$(reverse-proxy|2.3|product-version)",
+          "sharedTags": {
+            "$(reverse-proxy|2.3|fixed-tag)": {},
+            "$(reverse-proxy|2.3|minor-tag)": {},
+            "$(reverse-proxy|2|major-tag)": {},
+            "latest": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/reverse-proxy/2.3/azurelinux-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/reverse-proxy/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(reverse-proxy|2.3|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(reverse-proxy|2.3|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(reverse-proxy|2|major-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/reverse-proxy/2.3/azurelinux-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/reverse-proxy/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(reverse-proxy|2.3|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(reverse-proxy|2.3|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(reverse-proxy|2|major-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
