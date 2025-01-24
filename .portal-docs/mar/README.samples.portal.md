@@ -24,7 +24,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
 * [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
 * [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): .NET Aspire Dashboard
-* [dotnet/reverse-proxy](https://mcr.microsoft.com/product/dotnet/reverse-proxy/about): .NET Reverse Proxy (YARP)
 
 .NET Framework:
 

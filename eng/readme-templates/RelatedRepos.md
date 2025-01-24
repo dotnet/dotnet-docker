@@ -45,12 +45,24 @@
         return when(SHORT_REPO != "monitor", find(repo[0], "base") < 0, 1)
     }} ^
 
+    set filterReverseProxyRepo(repo) to:{{
+        set repoNameParts to split(repo[0], "/") ^
+        set shortRepo to repoNameParts[len(repoNameParts) - 1] ^
+        return shortRepo != "reverse-proxy"
+    }} ^
+
     _ Create final set of repos to display ^
 
     set currentRepo to cat(filter(repos, isCurrentRepo)) ^
 
     _ Exclude monitor/base from repos besides monitor ^
     set repos to filter(repos, filterMonitorRepo) ^
+
+    _ Only include YARP in the nightly list for now ^
+    set repos to 
+        when(isNightlyRepo,
+            repos,
+            filter(repos, filterReverseProxyRepo)) ^
 
     _ Exclude this repo from its own readme ^
     set repos to filter(repos, isNotCurrentRepo) ^
