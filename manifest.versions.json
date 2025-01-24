@@ -145,12 +145,12 @@
     "monitor-ext-s3storage|9.0|linux|x64|sha": "d048d8828ddd8b7a9faca8ddb713cb252ad56f713be78465a51d2ede30135257df6bc7db9a5014809a960243807f91a9cd8eca4e20bdd5fd87aa53daecf2773a",
     "monitor-ext-s3storage|9.0|linux|arm64|sha": "2b57d6908e828e8316d8a3aa6c21037954cf4e9a606ed2d9b16e19bdb5e0c74b69b87c2e9539d47b810a0967a75bbec1269264d7799f47a174f54018afa2fe1d",
 
-    "powershell|8.0|build-version": "7.4.6",
-    "powershell|8.0|Linux.Alpine|sha": "d994832c889774de7f8b8d894b20a050e3375a48e148f09d7ed9a80db05336e48549fa13d7ec83589e9347b78929c7852f4ed3e26f42400943fd367a48efde75",
-    "powershell|8.0|Linux|arm32|sha": "94c71ff6a680c4141c3e92812c4a52a2debe9106e4deb2f7f6b375c7c4086859d783b4c0687a912c85f24a3d442d121c31a51b45d871679e657781d6bcc09e45",
-    "powershell|8.0|Linux|arm64|sha": "b510d8f6d237bbffdb8f4c945bea97f6182adf65f072852d12bc495f908db9b2ed6740da62ae7be209610fceb80d511245c6befc3361bcd341bcce1bc6dff8e1",
-    "powershell|8.0|Linux|x64|sha": "676a69c7a0b03c6a2397a253ce54cb76857d4ddd252f9da7d9fc3d1cb7a62386316b73bd87519061f799fee60cbc39831060b263ebe0f200879c1524e8aea00d",
-    "powershell|8.0|Windows|x64|sha": "29c3eb019caf85688b5aa1c706eef3a7eef14381047a5ee59cc79f3aeab91c8610ec505df4528fc24c8e287606ed486d28a0388e8cc69fefc8e37d47eb30db90",
+    "powershell|8.0|build-version": "7.4.7",
+    "powershell|8.0|Linux.Alpine|sha": "9c5fbb87edf9f1b3da05beeeacd69ae361cb60b0eb16079c26a5c6b477a17e4ed1deef31cdb23de43c959eae2a2731cf16188b491db2ad5d398276ca0e71faaf",
+    "powershell|8.0|Linux|arm32|sha": "727c67c3d29e3f3216366b5e2487b14baf926ab36da58833aecb84d663e4a6f61d2c073d7a99f7b05294cea71f3d37c90bbd237cd4cad6491dd8031544c16841",
+    "powershell|8.0|Linux|arm64|sha": "6c72dfc5bcbac7b135e5152d0ec599e9f639255ff3be2c28eb64015e6df948b2a9c216fc2bd9b26b876a11e32182adad249b88551dd650a4342f5ac2fbed56d6",
+    "powershell|8.0|Linux|x64|sha": "3f4ff718b982b5cbcbc3ceef2602f681af8029e716aa00a65e60edd81c94fcea3d2e4d6c6f18b5f3cadfba2558f70dbe810397c6bf73757d132ec7bec77dfdba",
+    "powershell|8.0|Windows|x64|sha": "fb23e5cdaf53790e66b6b9767f8e112aa60a37f0a2b49109ba8e495ead862e058ffd90b16ad5c60c0ea5d4f03ea49566f1aa7e2ab1803afd2bdf4a37e0cd258c",
 
     "powershell|9.0|build-version": "7.5.0",
     "powershell|9.0|Linux.Alpine|sha": "89dcede870db724ec96e0ddc1386b687c25022fdcecf76dced2f6aec34586a91600df59c2f99c0bd056fb91ea6dfae8e6c372639f37b3f7e5b1d49c41fe77840",
