@@ -58,19 +58,15 @@
     _ Exclude monitor/base from repos besides monitor ^
     set repos to filter(repos, filterMonitorRepo) ^
 
-    _ Exclude this repo from its own readme ^
-    set repos to filter(repos, isNotCurrentRepo) ^
-    set samplesRepos to filter(samplesRepos, isNotCurrentRepo) ^
-
     _ Only include YARP in the nightly list for now ^
     set repos to 
         when(isNightlyRepo,
             repos,
             filter(repos, filterReverseProxyRepo)) ^
-    set currentRepo to
-        when (SHORT_REPO = "reverse-proxy",
-            map(currentRepo, insertNightly),
-            currentRepo) ^
+
+    _ Exclude this repo from its own readme ^
+    set repos to filter(repos, isNotCurrentRepo) ^
+    set samplesRepos to filter(samplesRepos, isNotCurrentRepo) ^
 
     set repos to
         when(isNightlyRepo,
