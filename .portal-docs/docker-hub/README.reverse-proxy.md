@@ -61,8 +61,8 @@ Example of configuration:
 It can then be used with the following command (where `my-config.config` is a file containing this configuration):
 
 ```bash
-docker run --name myaspnetapp -d -t  mcr.microsoft.com/dotnet/samples:aspnetapp 
-docker run -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/reverse-proxy:latest
+docker run --rm --name myaspnetapp -d -t  mcr.microsoft.com/dotnet/samples:aspnetapp 
+docker run --rm -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/reverse-proxy:latest
 ```
 
 This example will proxy every requests from `http://localhost:5000/aspnetapp` to the `mcr.microsoft.com/dotnet/samples:aspnetapp` container deployed.
