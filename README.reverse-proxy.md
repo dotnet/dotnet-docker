@@ -78,7 +78,7 @@ For more details, see the [documentation](https://microsoft.github.io/reverse-pr
 .NET:
 
 * [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
-* [dotnet/reverse-proxy](https://github.com/dotnet/dotnet-docker/blob/main/README.reverse-proxy.md): .NET Reverse Proxy (YARP)
+* [dotnet/nightly/reverse-proxy](https://github.com/dotnet/dotnet-docker/blob/nightly/README.reverse-proxy.md): .NET Reverse Proxy (YARP) (Preview)
 * [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)
