@@ -162,49 +162,79 @@ Tags | Dockerfile | OS Version
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-alpha.1-nanoserver-ltsc2025, 10.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
 9.0.102-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
 8.0.405-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
+
+#### .NET 10 Preview Tags
+
+Tag | Dockerfile
+---------| ---------------
+10.0.100-alpha.1-nanoserver-ltsc2025, 10.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
 
 ### Windows Server Core 2025 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-alpha.1-windowsservercore-ltsc2025, 10.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 9.0.102-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 8.0.405-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+
+#### .NET 10 Preview Tags
+
+Tag | Dockerfile
+---------| ---------------
+10.0.100-alpha.1-windowsservercore-ltsc2025, 10.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 
 ### Nano Server 2022 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-alpha.1-nanoserver-ltsc2022, 10.0-preview-nanoserver-ltsc2022 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
 9.0.102-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 8.0.405-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
+
+#### .NET 10 Preview Tags
+
+Tag | Dockerfile
+---------| ---------------
+10.0.100-alpha.1-nanoserver-ltsc2022, 10.0-preview-nanoserver-ltsc2022 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ### Windows Server Core 2022 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-alpha.1-windowsservercore-ltsc2022, 10.0-preview-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 9.0.102-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 8.0.405-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+
+#### .NET 10 Preview Tags
+
+Tag | Dockerfile
+---------| ---------------
+10.0.100-alpha.1-windowsservercore-ltsc2022, 10.0-preview-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ### Nano Server, version 1809 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-alpha.1-nanoserver-1809, 10.0-preview-nanoserver-1809 | [Dockerfile](src/sdk/10.0/nanoserver-1809/amd64/Dockerfile)
 9.0.102-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
 8.0.405-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
+
+#### .NET 10 Preview Tags
+
+Tag | Dockerfile
+---------| ---------------
+10.0.100-alpha.1-nanoserver-1809, 10.0-preview-nanoserver-1809 | [Dockerfile](src/sdk/10.0/nanoserver-1809/amd64/Dockerfile)
 
 ### Windows Server Core 2019 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-alpha.1-windowsservercore-ltsc2019, 10.0-preview-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 9.0.102-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 8.0.405-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+
+#### .NET 10 Preview Tags
+
+Tag | Dockerfile
+---------| ---------------
+10.0.100-alpha.1-windowsservercore-ltsc2019, 10.0-preview-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/sdk/tags/list) for all supported and unsupported tags.*
