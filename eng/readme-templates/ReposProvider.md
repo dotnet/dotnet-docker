@@ -2,9 +2,10 @@
     _ Wrapper template for providing the list of repos to other templates.
 
     _ ARGS:
-      top-header: The string to use as the top-level header.
-      readme-host: Moniker of the site that will host the readme
-      template: Template to pass the repo lists to ^
+      template: Template to pass the repo lists to.
+        All other args will be passed to the template. ^
+
+    set argsToForward to except(ARGS, [ "template": ARGS["template"] ]) ^
 
     set productRepos to [
         ["dotnet/sdk", ".NET SDK"],
@@ -13,11 +14,13 @@
         ["dotnet/runtime-deps", ".NET Runtime Dependencies"],
         ["dotnet/monitor", ".NET Monitor Tool"],
         ["dotnet/monitor/base", ".NET Monitor Base"],
-        ["dotnet/aspire-dashboard", ".NET Aspire Dashboard"],
+        ["dotnet/aspire-dashboard", ".NET Aspire Dashboard"]
+    ] ^
+    set nightlyOnlyRepos to [
         ["dotnet/reverse-proxy", ".NET Reverse Proxy (YARP)"]
     ] ^
     set productFamilyRepos to [
-        ["dotnet", ".NET", 1],
+        ["dotnet", ".NET", 1]
     ] ^
     set samplesRepos to [
         ["dotnet/samples", ".NET Samples"]
@@ -27,11 +30,10 @@
         ["dotnet/framework/samples", ".NET Framework, ASP.NET and WCF Samples"]
     ]
 
-}}{{InsertTemplate(ARGS["template"], [
-    "top-header": ARGS["top-header"],
-    "readme-host": ARGS["readme-host"],
+}}{{InsertTemplate(ARGS["template"], union(argsToForward, [
     "product-repos": productRepos,
+    "nightly-only-repos": nightlyOnlyRepos,
     "product-family-repos": productFamilyRepos,
     "samples-repos": samplesRepos,
     "framework-repos": frameworkRepos
-])}}
+]))}}

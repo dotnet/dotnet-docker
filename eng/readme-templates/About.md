@@ -6,8 +6,9 @@
         "product-family",
         when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO))
 }}{{ARGS["top-header"]}} About
-{{if ARGS["readme-host"] = "mar":{{InsertTemplate("Announcement.md",
+{{if ARGS["readme-host"] = "mar":{{InsertTemplate("ReposProvider.md",
   [
+    "template": "Announcement.md",
     "leading-line-break": "true",
     "readme-host": ARGS["readme-host"]
   ])}}}}

@@ -2,7 +2,7 @@
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.reverse-proxy.md) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 ## Featured Tags
 
@@ -78,7 +78,6 @@ For more details, see the [documentation](https://microsoft.github.io/reverse-pr
 .NET:
 
 * [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
-* [dotnet/reverse-proxy](https://github.com/dotnet/dotnet-docker/blob/main/README.reverse-proxy.md): .NET Reverse Proxy (YARP)
 * [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)

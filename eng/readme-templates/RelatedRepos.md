@@ -3,11 +3,13 @@
       top-header: The string to use as the top-level header.
       readme-host: Moniker of the site that will host the readmes
       product-repos: List of .NET product repos
+      nightly-only-repos: List of nightly-only .NET product repos
       product-family-repos: List of .NET product family repos
       samples-repos: List of .NET samples repos
       framework-repos: List of .NET Framework repos ^
 
     set repos to ARGS["product-repos"] ^
+    set nightlyOnlyRepos to ARGS["nightly-only-repos"] ^
     set productFamilyRepos to ARGS["product-family-repos"] ^
     set samplesRepos to ARGS["samples-repos"] ^
     set frameworkRepos to ARGS["framework-repos"] ^
@@ -45,12 +47,6 @@
         return when(SHORT_REPO != "monitor", find(repo[0], "base") < 0, 1)
     }} ^
 
-    set filterReverseProxyRepo(repo) to:{{
-        set repoNameParts to split(repo[0], "/") ^
-        set shortRepo to repoNameParts[len(repoNameParts) - 1] ^
-        return shortRepo != "reverse-proxy"
-    }} ^
-
     _ Create final set of repos to display ^
 
     set currentRepo to cat(filter(repos, isCurrentRepo)) ^
@@ -58,21 +54,16 @@
     _ Exclude monitor/base from repos besides monitor ^
     set repos to filter(repos, filterMonitorRepo) ^
 
-    _ Only include YARP in the nightly list for now ^
-    set repos to 
-        when(isNightlyRepo,
-            repos,
-            filter(repos, filterReverseProxyRepo)) ^
-
     _ Exclude this repo from its own readme ^
     set repos to filter(repos, isNotCurrentRepo) ^
+    set nightlyOnlyRepos to filter(nightlyOnlyRepos, isNotCurrentRepo) ^
     set samplesRepos to filter(samplesRepos, isNotCurrentRepo) ^
 
     set repos to
         when(isNightlyRepo,
             when(IS_PRODUCT_FAMILY,
                 cat(productFamilyRepos, repos, samplesRepos),
-                cat(productFamilyRepos, currentRepo, map(repos, insertNightly), samplesRepos)),
+                cat(productFamilyRepos, currentRepo, map(cat(repos, nightlyOnlyRepos), insertNightly), samplesRepos)),
             when(IS_PRODUCT_FAMILY,
                 cat(map(repos, insertNightly)),
                 cat(productFamilyRepos, repos, map(currentRepo, insertNightly), samplesRepos)))
