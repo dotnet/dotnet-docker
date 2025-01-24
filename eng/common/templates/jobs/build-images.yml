@@ -75,6 +75,7 @@ jobs:
         $(osVersions)
         --os-type $(osType)
         --architecture $(architecture)
+        --version $(productVersion)
         --retry
         --digests-out-var 'builtImages'
         --acr-subscription '$(acr-staging.subscription)'
