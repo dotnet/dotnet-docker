@@ -26,14 +26,28 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyFxDependentAppScenario(ProductImageData imageData)
         {
+            if (imageData.ImageVariant == DotNetImageVariant.Composite)
+            {
+                OutputHelper.WriteLine("Skip test due to https://github.com/dotnet/dotnet-docker/issues/4834");
+                return;
+            }
+
             using WebScenario scenario = new WebScenario.FxDependent(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();
         }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public async Task VerifyGlobalizationScenario(ProductImageData imageData) =>
+        public async Task VerifyGlobalizationScenario(ProductImageData imageData)
+        {
+            if (imageData.ImageVariant == DotNetImageVariant.Composite)
+            {
+                OutputHelper.WriteLine("Skip test due to https://github.com/dotnet/dotnet-docker/issues/4834");
+                return;
+            }
+
             await VerifyGlobalizationScenarioBase(imageData);
+        }
 
         [WindowsImageTheory]
         [MemberData(nameof(GetImageData))]
