@@ -14,10 +14,10 @@
 
 }}{{ARGS["top-header"]}}# Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
+{{if isReverseProxy:* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)
+}}* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
-* [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md){{if isReverseProxy:
-* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)}}
+* [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
 {{ARGS["top-header"]}}# Image Update Policy
 

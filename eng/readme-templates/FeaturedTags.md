@@ -20,8 +20,8 @@ elif match(REPO, "monitor/base"):* `9` (Standard Support)
   * `docker pull {{FULL_REPO}}:8`^
 elif match(REPO, "aspire-dashboard"):* `9.0`
   * `docker pull {{FULL_REPO}}:9.0`^
-elif match(REPO, "reverse-proxy"):* `2.3`
-  * `docker pull {{FULL_REPO}}:2.3`^
+elif match(REPO, "reverse-proxy"):* `2.3-preview`
+  * `docker pull {{FULL_REPO}}:2.3-preview`^
 else:* `9.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:9.0`
 * `8.0` (Long-Term Support)
