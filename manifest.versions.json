@@ -197,6 +197,17 @@
     "powershell|10.0|Linux|x64|sha": "$(powershell|9.0|Linux|x64|sha)",
     "powershell|10.0|Windows|x64|sha": "$(powershell|9.0|Windows|x64|sha)",
 
+    "reverse-proxy|2.3|build-version": "2.3.0-preview.1.25060.1",
+    "reverse-proxy|2.3|product-version": "2.3.0-preview.1",
+    "reverse-proxy|2.3|fixed-tag": "$(reverse-proxy|2.3|product-version)",
+    "reverse-proxy|2.3|minor-tag": "2.3-preview",
+    "reverse-proxy|2|major-tag": "2-preview",
+    "reverse-proxy|2.3|linux|x64|sha": "24bc79fb64105f7a910e3deb176abdd55ffda05e4885d66309d62912159cd153c5d140b5bfb05d84141282fd13e7f6559402c8c3046b3c6c4f2039b52ee1aa7b",
+    "reverse-proxy|2.3|linux|arm64|sha": "5ade6d5e05328328f50137d5c796e45ff7018ec60b783ddf03ae5ff0fa7577bfd9458201ce22eb01709d2ff98e35bbf522e3075487e4ec859844ae10880079a2",
+    "reverse-proxy|2.3|base-url|main": "$(base-url|public|preview|nightly)",
+    "reverse-proxy|2.3|base-url|nightly": "$(base-url|public|preview|nightly)",
+    "reverse-proxy|2.3|dotnet-version": "9.0",
+
     "rocks-toolbox|latest|url": "https://raw.githubusercontent.com/canonical/rocks-toolbox",
     "rocks-toolbox|8.0|url": "$(rocks-toolbox|latest|url)",
     "rocks-toolbox|9.0|url": "$(rocks-toolbox|latest|url)",

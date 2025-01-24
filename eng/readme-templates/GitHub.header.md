@@ -1,10 +1,11 @@
 {{
     _ ARGS:
       product-repos: List of .NET product repos
+      nightly-only-repos: List of nightly-only .NET product repos
       product-family-repos: List of .NET product family repos
       samples-repos: List of .NET samples repos ^
 
-    set repos to cat(ARGS["product-repos"], ARGS["samples-repos"]) ^
+    set repos to cat(ARGS["product-repos"], ARGS["nightly-only-repos"], ARGS["samples-repos"]) ^
 
     set isCurrentRepo(repo) to:{{
         set repoNameParts to split(repo[0], "/") ^

@@ -31,7 +31,13 @@ namespace Microsoft.DotNet.Docker.Tests
         private const string SingleNumberRegex = @"\d+";
         private const string MajorVersionRegex = SingleNumberRegex;
         private const string MajorMinorVersionRegex = @$"{SingleNumberRegex}\.{SingleNumberRegex}";
-        private static readonly string[] ApplianceRepos = { "monitor", "monitor-base", "aspire-dashboard" };
+        private static readonly string[] ApplianceRepos =
+        [
+            "monitor",
+            "monitor-base",
+            "aspire-dashboard",
+            "reverse-proxy"
+        ];
 
         private enum TestType
         {

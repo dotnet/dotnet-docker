@@ -1,17 +1,15 @@
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://hub.docker.com/r/microsoft/dotnet-monitor/) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [dotnet](https://hub.docker.com/r/microsoft/dotnet/) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 # Featured Tags
 
-* `9` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:9`
-* `8` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:8`
+* `2.3-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/reverse-proxy:2.3-preview`
 
 # About
 
-This image contains .NET Monitor, a diagnostic tool for capturing diagnostic artifacts (such as dumps and traces) in an operator-driven or automated manner. This tool is an ASP.NET application that hosts a web API for inspecting .NET processes and collecting diagnostic artifacts. This image also contains .NET Monitor extensions for egressing artifacts to Azure Blob Storage and Amazon S3.
+This image contains an implementation of YARP, a reverse proxy framework in .NET.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
@@ -19,25 +17,71 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
 
-You can run this image as a sidecar container to collect diagnostic information and artifacts from other containers running .NET Core 3.1 or .NET 5 and later.
+You can run this image to launch a YARP instance.
 
-See [Running in Kubernetes](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/kubernetes.md) or [Running in Docker Compose](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/docker-compose.md) for examples of how to run this image in orchestration environments.
+YARP expects the config file to be in `/etc/reverse-proxy.config`, and listens by default on port 5000.
 
-See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to configure the image and documentation for the web API.
+Example of configuration:
+
+```json
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "ReverseProxy": {
+    "Routes": {
+      "route1": {
+        "ClusterId": "cluster1",
+        "Match": {
+          "Path": "/aspnetapp/{**catch-all}"
+        },
+        "Transforms": [
+            { "PathRemovePrefix": "/aspnetapp" }
+        ]
+      }
+    },
+    "Clusters": {
+      "cluster1": {
+        "Destinations": {
+          "destination1": {
+            "Address": "http://aspnetapp1:8080"
+          }
+        }
+      }
+    }
+  }
+}
+```
+
+It can then be used with the following command (where `my-config.config` is a file containing this configuration):
+
+```bash
+docker run --rm --name myaspnetapp -d -t  mcr.microsoft.com/dotnet/samples:aspnetapp 
+docker run --rm -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/reverse-proxy:latest
+```
+
+This example will proxy every requests from `http://localhost:5000/aspnetapp` to the `mcr.microsoft.com/dotnet/samples:aspnetapp` container deployed.
+
+The [YARP GitHub repository](https://github.com/microsoft/reverse-proxy/tree/main/samples/) contains more configuration samples.
+
+For more details, see the [documentation](https://microsoft.github.io/reverse-proxy/articles/index.html) for how to configure the image and documentation for the reverse proxy configuration.
 
 # Related Repositories
 
 .NET:
 
 * [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
-* [dotnet/monitor](https://hub.docker.com/r/microsoft/dotnet-monitor/): .NET Monitor Tool
 * [dotnet/nightly/sdk](https://hub.docker.com/r/microsoft/dotnet-nightly-sdk/): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime/): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor/base](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor-base/): .NET Monitor Base (Preview)
+* [dotnet/nightly/monitor](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 * [dotnet/nightly/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-nightly-aspire-dashboard/): .NET Aspire Dashboard (Preview)
-* [dotnet/nightly/reverse-proxy](https://hub.docker.com/r/microsoft/dotnet-nightly-reverse-proxy/): .NET Reverse Proxy (YARP) (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
 .NET Framework:
@@ -47,12 +91,13 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/monitor/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/reverse-proxy/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.reverse-proxy.md#full-tag-listing).
 
 # Support
 
 ## Lifecycle
 
+* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
@@ -85,3 +130,5 @@ Please refer to the [Security Policy](https://github.com/dotnet/dotnet-docker/bl
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md)
+* [Windows base image license](https://docs.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
+* [Pricing and licensing for Windows Server](https://www.microsoft.com/cloud-platform/windows-server-pricing)

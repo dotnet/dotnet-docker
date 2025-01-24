@@ -104,6 +104,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 * [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor.md): .NET Monitor Tool (Preview)
+* [dotnet/nightly/reverse-proxy](https://github.com/dotnet/dotnet-docker/blob/nightly/README.reverse-proxy.md): .NET Reverse Proxy (YARP) (Preview)
 * [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
