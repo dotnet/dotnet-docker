@@ -20,6 +20,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public bool GlobalizationInvariantMode => !SupportsGlobalization;
 
+        public bool SupportsPowerShell => !(OS.Contains("alpine") && IsArm);
+
         public string SdkOS
         {
             get => HasCustomSdk ? _sdkOS : OS;
