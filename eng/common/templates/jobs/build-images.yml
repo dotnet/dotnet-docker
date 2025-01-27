@@ -58,6 +58,11 @@ jobs:
         $imageBuilderBuildArgs = "$imageBuilderBuildArgs --image-info-source-path $(versionsBasePath)$(imageInfoVersionsPath)"
       }
 
+      # If productVersion is set, filter the build to only that version
+      if ($env:PRODUCTVERSION -ne "") {
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --version `"${env:PRODUCTVERSION}`""
+      }
+
       echo "imageBuilderBuildArgs: $imageBuilderBuildArgs"
       echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
     displayName: Set Image Builder Build Args
@@ -75,7 +80,6 @@ jobs:
         $(osVersions)
         --os-type $(osType)
         --architecture $(architecture)
-        --version $(productVersion)
         --retry
         --digests-out-var 'builtImages'
         --acr-subscription '$(acr-staging.subscription)'
