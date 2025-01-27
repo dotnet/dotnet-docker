@@ -58,16 +58,22 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyEnvironmentVariables(ProductImageData imageData)
         {
-            List<EnvironmentVariableInfo> variables = new();
+            List<EnvironmentVariableInfo> variables = [];
+
+            EnvironmentVariableInfo runtimeVersionInfo =
+                RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper);
 
             // Skip runtime version check due to https://github.com/dotnet/dotnet-docker/issues/4834.
             // Re-enable when fixed.
-            if (imageData.ImageVariant != DotNetImageVariant.Composite)
+            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
             {
-                variables.Add(RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper));
+                runtimeVersionInfo = runtimeVersionInfo with { AllowAnyValue = true};
             }
 
-            EnvironmentVariableInfo aspnetVersionVariableInfo = GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper);
+            variables.Add(runtimeVersionInfo);
+
+            EnvironmentVariableInfo aspnetVersionVariableInfo =
+                GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper);
             if (aspnetVersionVariableInfo != null)
             {
                 variables.Add(aspnetVersionVariableInfo);
