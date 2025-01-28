@@ -10,7 +10,7 @@ RUN dotnet restore -a $TARGETARCH
 
 # Copy source code and publish app
 COPY --link aspnetapp/. .
-RUN dotnet publish -a $TARGETARCH --no-restore -o /app
+RUN dotnet publish -a $TARGETARCH --no-restore --property:PublishDir=/app
 
 
 # Runtime stage
