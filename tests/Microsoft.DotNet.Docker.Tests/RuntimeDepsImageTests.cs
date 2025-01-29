@@ -150,7 +150,9 @@ namespace Microsoft.DotNet.Docker.Tests
             string actualOutput = DockerHelper.Run(
                 image: distrolessHelperImageTag,
                 name: imageData.GetIdentifier(nameof(VerifyChiselManifest)),
-                command: $"ls {ChiselManifestDir}");
+                // The `ls` command will return a non-zero exit code if the directory does not exist.
+                // Ignore the error since we still need to check the output.
+                command: $"ls {ChiselManifestDir} || true");
 
             if (shouldContainManifest)
             {
