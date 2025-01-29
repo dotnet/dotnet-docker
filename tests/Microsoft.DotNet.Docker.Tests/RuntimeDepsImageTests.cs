@@ -139,8 +139,7 @@ namespace Microsoft.DotNet.Docker.Tests
             bool shouldContainManifest = imageData.Version.Major != 8 && imageData.Version.Major != 9;
 
             const string RootFs = "/rootfs";
-            const string ChiselManifestDir = $"{RootFs}/var/lib/chisel/";
-            const string ChiselManifestFileName = "manifest.wall";
+            const string ChiselManifestFileName = "/var/lib/chisel/manifest.wall";
 
             // Setup a distroless helper image to inspect the filesystem of the Chiseled image
             string distrolessHelperImageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, RootFs);
@@ -150,9 +149,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string actualOutput = DockerHelper.Run(
                 image: distrolessHelperImageTag,
                 name: imageData.GetIdentifier(nameof(VerifyChiselManifest)),
-                // The `ls` command will return a non-zero exit code if the directory does not exist.
-                // Ignore the error since we still need to check the output.
-                command: $"ls {ChiselManifestDir} || true");
+                command: $"find {RootFs}/var/lib/ -path *chisel* -type f");
 
             if (shouldContainManifest)
             {
