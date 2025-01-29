@@ -110,7 +110,7 @@ Tags | Dockerfile | OS Version
 10.0.0-alpha.1-azurelinux3.0-amd64, 10.0-preview-azurelinux3.0-amd64, 10.0.0-alpha.1-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 10.0.0-alpha.1-azurelinux3.0-distroless-amd64, 10.0-preview-azurelinux3.0-distroless-amd64, 10.0.0-alpha.1-azurelinux3.0-distroless, 10.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
 10.0.0-alpha.1-azurelinux3.0-distroless-extra-amd64, 10.0-preview-azurelinux3.0-distroless-extra-amd64, 10.0.0-alpha.1-azurelinux3.0-distroless-extra, 10.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-10.0.0-alpha.1-bookworm-slim-amd64, 10.0-preview-bookworm-slim-amd64, 10.0.0-alpha.1-bookworm-slim, 10.0-preview-bookworm-slim | [Dockerfile](src/runtime/10.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+10.0.0-alpha.1-trixie-slim-amd64, 10.0-preview-trixie-slim-amd64, 10.0.0-alpha.1-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/runtime/10.0/trixie-slim/amd64/Dockerfile) | Debian 13
 
 ### Linux arm64 Tags
 
@@ -152,7 +152,7 @@ Tags | Dockerfile | OS Version
 10.0.0-alpha.1-azurelinux3.0-arm64v8, 10.0-preview-azurelinux3.0-arm64v8, 10.0.0-alpha.1-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.0-alpha.1-azurelinux3.0-distroless-arm64v8, 10.0-preview-azurelinux3.0-distroless-arm64v8, 10.0.0-alpha.1-azurelinux3.0-distroless, 10.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.0-alpha.1-azurelinux3.0-distroless-extra-arm64v8, 10.0-preview-azurelinux3.0-distroless-extra-arm64v8, 10.0.0-alpha.1-azurelinux3.0-distroless-extra, 10.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.0-alpha.1-bookworm-slim-arm64v8, 10.0-preview-bookworm-slim-arm64v8, 10.0.0-alpha.1-bookworm-slim, 10.0-preview-bookworm-slim | [Dockerfile](src/runtime/10.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+10.0.0-alpha.1-trixie-slim-arm64v8, 10.0-preview-trixie-slim-arm64v8, 10.0.0-alpha.1-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/runtime/10.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
 
 ### Linux arm32 Tags
 
@@ -179,7 +179,7 @@ Tags | Dockerfile | OS Version
 10.0.0-alpha.1-noble-chiseled-arm32v7, 10.0-preview-noble-chiseled-arm32v7, 10.0.0-alpha.1-noble-chiseled, 10.0-preview-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.0-alpha.1-noble-chiseled-extra-arm32v7, 10.0-preview-noble-chiseled-extra-arm32v7, 10.0.0-alpha.1-noble-chiseled-extra, 10.0-preview-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.0-alpha.1-alpine3.21-arm32v7, 10.0-preview-alpine3.21-arm32v7, 10.0-preview-alpine-arm32v7, 10.0.0-alpha.1-alpine3.21, 10.0-preview-alpine3.21, 10.0-preview-alpine | [Dockerfile](src/runtime/10.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
-10.0.0-alpha.1-bookworm-slim-arm32v7, 10.0-preview-bookworm-slim-arm32v7, 10.0.0-alpha.1-bookworm-slim, 10.0-preview-bookworm-slim | [Dockerfile](src/runtime/10.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+10.0.0-alpha.1-trixie-slim-arm32v7, 10.0-preview-trixie-slim-arm32v7, 10.0.0-alpha.1-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/runtime/10.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 
 ### Nano Server 2025 amd64 Tags
 
