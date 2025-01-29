@@ -121,6 +121,47 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.NotEmpty(GetOSReleaseInfo(imageData, ImageRepo, DockerHelper));
         }
 
+        /// <summary>
+        /// Verifies the presence of the Chisel manifest in Ubuntu Chiseled images. Chisel manifest documentation:
+        /// https://discourse.ubuntu.com/t/chisel-manifest-is-supported-in-newly-released-v1-0-0/48944
+        /// </summary>
+        [LinuxImageTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyChiselManifest(ProductImageData imageData)
+        {
+            if (!imageData.OS.Contains(OS.ChiseledSuffix))
+            {
+                OutputHelper.WriteLine("Test is only relevant to Ubuntu Chiseled images");
+                return;
+            }
+
+            // https://github.com/dotnet/dotnet-docker/issues/5973#issuecomment-2501510550
+            bool shouldContainManifest = imageData.Version.Major != 8 && imageData.Version.Major != 9;
+
+            const string RootFs = "/rootfs";
+            const string ChiselManifestDir = $"{RootFs}/var/lib/chisel/";
+            const string ChiselManifestFileName = "manifest.wall";
+
+            // Setup a distroless helper image to inspect the filesystem of the Chiseled image
+            string distrolessHelperImageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, RootFs);
+
+            // Check for the presence of the Chisel manifest by listing the files in the directory
+            // and then verifying the output.
+            string actualOutput = DockerHelper.Run(
+                image: distrolessHelperImageTag,
+                name: imageData.GetIdentifier(nameof(VerifyChiselManifest)),
+                command: $"ls {ChiselManifestDir}");
+
+            if (shouldContainManifest)
+            {
+                Assert.Contains(ChiselManifestFileName, actualOutput);
+            }
+            else
+            {
+                Assert.DoesNotContain(ChiselManifestFileName, actualOutput);
+            }
+        }
+
         private static string GetOSReleaseInfo(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
