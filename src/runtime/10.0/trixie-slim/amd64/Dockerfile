@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM amd64/buildpack-deps:bookworm-curl AS installer
+FROM amd64/buildpack-deps:trixie-curl AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0-alpha.1.25073.13 \
@@ -14,7 +14,7 @@ RUN dotnet_version=10.0.0-alpha.1.25073.13 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-alpha.1-bookworm-slim-amd64
+FROM $REPO:10.0.0-alpha.1-trixie-slim-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=10.0.0-alpha.1.25073.13

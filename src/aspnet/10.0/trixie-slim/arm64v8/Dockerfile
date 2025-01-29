@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM arm64v8/buildpack-deps:bookworm-curl AS installer
+FROM arm64v8/buildpack-deps:trixie-curl AS installer
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=10.0.0-alpha.2.25073.4 \
@@ -13,7 +13,7 @@ RUN aspnetcore_version=10.0.0-alpha.2.25073.4 \
 
 
 # ASP.NET Core image
-FROM $REPO:10.0.0-alpha.1-bookworm-slim-arm64v8
+FROM $REPO:10.0.0-alpha.1-trixie-slim-arm64v8
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=10.0.0-alpha.2.25073.4
