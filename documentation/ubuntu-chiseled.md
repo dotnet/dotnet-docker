@@ -31,3 +31,54 @@ Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NE
 * [releasesapp](../samples/releasesapp/Dockerfile.chiseled)
 
 If your app's Dockerfile doesn't install any additional Linux packages or depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
+
+## How do I install additional packages on Chiseled images?
+
+> [!IMPORTANT]
+> Installing additional packages requires the presence of the [Chisel manifest](https://github.com/dotnet/dotnet-docker/issues/6135), which is currently only available in .NET 10+ images.
+
+[Chisel](https://github.com/canonical/chisel) is built on the idea of package slices.
+Slices are basically subsets of packages, with their own content and set of dependencies to other internal and external slices.
+Chisel relies on a [database of slices](https://github.com/canonical/chisel-releases) that are indexed per Ubuntu release.
+You can only install packages that are available as slices.
+
+First, acquire `chisel` and `chisel-wrapper`.
+`chisel-wrapper` (from [rocks-toolbox](https://github.com/canonical/rocks-toolbox/)) is used to generate a dpkg status file documenting which packages are installed, which is used by many vulnerability scanning tools.
+
+```Dockerfile
+FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview-noble AS chisel
+ARG CHISEL_VERSION
+
+RUN apt-get update && apt-get install -y file
+RUN chisel_url=https://github.com/canonical/chisel/releases/download/v${CHISEL_VERSION}/chisel_v${CHISEL_VERSION}_linux_amd64.tar.gz \
+    && curl -fSLOJ ${chisel_url} \
+    && curl -fSL ${chisel_url}.sha384 | sha384sum -c - \
+    && tar -xzf chisel_v${CHISEL_VERSION}_linux_amd64.tar.gz -C /usr/bin/ chisel \
+    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
+    && chmod 755 /usr/bin/chisel-wrapper
+```
+
+Then, copy over the filesystem from your desired base image and use `chisel` and `chisel-wrapper` to install additional slices.
+See [canonical/chisel-releases](https://github.com/canonical/chisel-releases) for available slices.
+
+```Dockerfile
+COPY --from=mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled / /rootfs/
+
+RUN chisel-wrapper --generate-dpkg-status /new-dpkg-status -- \
+    --release ubuntu-24.04 --root /rootfs/ \
+        libicu74_libs \
+        tzdata-legacy_zoneinfo \
+        tzdata_zoneinfo \
+    && cat /new-dpkg-status >> /rootfs/var/lib/dpkg/status
+```
+
+Finally, copy the new root filesystem into a scratch base image for your final (runtime) layer.
+
+```Dockerfile
+FROM scratch AS final
+COPY --link --from=chisel /rootfs /
+WORKDIR /app
+COPY --link --from=build /app .
+USER $APP_UID
+ENTRYPOINT ["./app"]
+```
