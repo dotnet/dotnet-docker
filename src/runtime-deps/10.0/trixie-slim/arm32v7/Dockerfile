@@ -1,4 +1,4 @@
-FROM arm32v7/debian:bookworm-slim
+FROM arm32v7/debian:trixie-slim
 
 ENV \
     # UID of the non-root user 'app'
@@ -16,7 +16,7 @@ RUN apt-get update \
         libc6 \
         libgcc-s1 \
         libicu72 \
-        libssl3 \
+        libssl3t64 \
         libstdc++6 \
         tzdata \
     && rm -rf /var/lib/apt/lists/*

@@ -14,7 +14,7 @@ RUN dotnet_version=10.0.0-alpha.1.25073.13 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-alpha.1-bookworm-slim-arm32v7
+FROM $REPO:10.0.0-alpha.1-trixie-slim-arm32v7
 
 # .NET Runtime version
 ENV DOTNET_VERSION=10.0.0-alpha.1.25073.13
