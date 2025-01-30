@@ -19,7 +19,11 @@
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
-    set osVersionBase to when(osVersionBase = "noble" && ARCH_VERSIONED = "arm32v7", "jammy", osVersionBase) ^
+    set osVersionBase to
+        when(ARCH_VERSIONED = "arm32v7",
+            when(osVersionBase = "noble", "jammy",
+            when(osVersionBase = "trixie", "bookworm", osVersionBase)),
+            osVersionBase) ^
 
     set installerImageTag to when(isDistrolessAzureLinux,
         cat("mcr.microsoft.com/"
