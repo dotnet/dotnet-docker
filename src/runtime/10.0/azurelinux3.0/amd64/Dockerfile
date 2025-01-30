@@ -1,16 +1,16 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:10.0.0-alpha.1-azurelinux3.0-amd64 AS installer
+FROM $REPO:10.0.0-preview.1-azurelinux3.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-alpha.1.25073.13 \
+RUN dotnet_version=10.0.0-preview.1.25078.5 \
     && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='eac7395d0cca7ab6f4a0a181dec706103401b77b53be44f0aba30f696ab9554e5762216a039e9133d5601b6e4dfc245dc4a83c53726eb0dbfe3f9467e3645777' \
+    && dotnet_sha512='38459ae6b6bca926c6cd410063b9f67d85fdba175c0d0a2ab6f56ffc84510234e6df69f96fa1bc1e32be6ed6289171f26eaee8acd462d978c7d01d5337c4caab' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -18,10 +18,10 @@ RUN dotnet_version=10.0.0-alpha.1.25073.13 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-alpha.1-azurelinux3.0-amd64
+FROM $REPO:10.0.0-preview.1-azurelinux3.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-alpha.1.25073.13
+ENV DOTNET_VERSION=10.0.0-preview.1.25078.5
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
