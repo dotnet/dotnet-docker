@@ -30,12 +30,12 @@ Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NE
 * [releasesapi](../samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](../samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))
 * [releasesapp](../samples/releasesapp/Dockerfile.chiseled)
 
-If your app's Dockerfile doesn't install any additional Linux packages or depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
+If your app's Dockerfile doesn't depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
 
 ## How do I install additional packages on Chiseled images?
 
 > [!IMPORTANT]
-> Installing additional packages requires the presence of the [Chisel manifest](https://github.com/dotnet/dotnet-docker/issues/6135), which is currently only available in .NET 10+ images.
+> Installing additional packages requires the presence of the [Chisel manifest](https://github.com/dotnet/dotnet-docker/issues/6135), which is currently only available in **.NET 10+** images.
 
 [Chisel](https://github.com/canonical/chisel) is built on the idea of package slices.
 Slices are basically subsets of packages, with their own content and set of dependencies to other internal and external slices.
