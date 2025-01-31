@@ -65,10 +65,10 @@ See [canonical/chisel-releases](https://github.com/canonical/chisel-releases) fo
 COPY --from=mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled / /rootfs/
 
 RUN chisel-wrapper --generate-dpkg-status /new-dpkg-status -- \
-    --release ubuntu-24.04 --root /rootfs/ \
-        libicu74_libs \
-        tzdata-legacy_zoneinfo \
-        tzdata_zoneinfo \
+        --release ubuntu-24.04 --root /rootfs/ \
+            libicu74_libs \
+            tzdata-legacy_zoneinfo \
+            tzdata_zoneinfo \
     && cat /new-dpkg-status >> /rootfs/var/lib/dpkg/status
 ```
 
