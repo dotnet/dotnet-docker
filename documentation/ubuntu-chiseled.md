@@ -47,14 +47,24 @@ First, acquire `chisel` and `chisel-wrapper`.
 
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview-noble AS chisel
-ARG CHISEL_VERSION
 
-RUN apt-get update && apt-get install -y file
+# Find the latest chisel releases: https://github.com/canonical/chisel/releases
+ARG CHISEL_VERSION=""
+# Find the latest chisel-wrapper releases: https://github.com/canonical/rocks-toolbox/releases
+ARG CHISEL_WRAPPER_VERSION=""
+
+# Install chisel's dependencies
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        file \
+    && rm -rf /var/lib/apt/lists/*
+
+# Install chisel and chisel-wrapper
 RUN chisel_url=https://github.com/canonical/chisel/releases/download/v${CHISEL_VERSION}/chisel_v${CHISEL_VERSION}_linux_amd64.tar.gz \
     && curl -fSLOJ ${chisel_url} \
     && curl -fSL ${chisel_url}.sha384 | sha384sum -c - \
     && tar -xzf chisel_v${CHISEL_VERSION}_linux_amd64.tar.gz -C /usr/bin/ chisel \
-    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
+    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/${CHISEL_WRAPPER_VERSION}/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 ```
 
