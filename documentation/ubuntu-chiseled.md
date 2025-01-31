@@ -48,6 +48,7 @@ First, acquire `chisel` and `chisel-wrapper`.
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview-noble AS chisel
 
+ARG BASE_IMAGE="mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled"
 # Find the latest chisel releases: https://github.com/canonical/chisel/releases
 ARG CHISEL_VERSION=""
 # Find the latest chisel-wrapper releases: https://github.com/canonical/rocks-toolbox/releases
@@ -72,7 +73,7 @@ Then, copy over the filesystem from your desired base image and use `chisel` and
 See [canonical/chisel-releases](https://github.com/canonical/chisel-releases) for available slices.
 
 ```Dockerfile
-COPY --from=mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled / /rootfs/
+COPY --from=$BASE_IMAGE / /rootfs/
 
 RUN chisel-wrapper --generate-dpkg-status /new-dpkg-status -- \
         --release ubuntu-24.04 --root /rootfs/ \
