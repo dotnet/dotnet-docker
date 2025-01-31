@@ -48,11 +48,12 @@ First, acquire `chisel` and `chisel-wrapper`.
 ```Dockerfile
 FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview-noble AS chisel
 
+# Docker build arg documentation: https://docs.docker.com/build/building/variables/
 ARG BASE_IMAGE="mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled"
 # Find the latest chisel releases: https://github.com/canonical/chisel/releases
-ARG CHISEL_VERSION=""
+ARG CHISEL_VERSION="v1.X.X"
 # Find the latest chisel-wrapper releases: https://github.com/canonical/rocks-toolbox/releases
-ARG CHISEL_WRAPPER_VERSION=""
+ARG CHISEL_WRAPPER_VERSION="v1.X.X"
 
 # Install chisel's dependencies
 RUN apt-get update \
