@@ -27,6 +27,7 @@ RUN mkdir -p /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
         --release ubuntu-24.04 --root /rootfs \
             base-files_base \
+            base-files_chisel \
             base-files_release-info \
             ca-certificates_data \
             libc6_libs \

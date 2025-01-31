@@ -388,6 +388,15 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3",
                         "tzdata",
                     ],
+                { OS: OS.TrixieSlim } =>
+                    [
+                        "ca-certificates",
+                        "libc6",
+                        "libgcc-s1",
+                        "libicu72",
+                        "libssl3t64",
+                        "tzdata",
+                    ],
                 _ => throw new NotSupportedException()
             };
 

@@ -9,8 +9,13 @@
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
-    set useNobleArm32Workaround to OS_VERSION_BASE = "noble" && ARCH_SHORT = "arm" ^
-    set osVersionBase to when(useNobleArm32Workaround, "jammy", OS_VERSION_BASE) ^
+    set useJammyArm32Workaround to (OS_VERSION_BASE = "noble" || OS_VERSION_BASE = "trixie") && ARCH_SHORT = "arm" ^
+    set osVersionBase to
+        when(useJammyArm32Workaround,
+            when(OS_VERSION_BASE = "noble",
+                "jammy",
+                "bookworm"),
+            OS_VERSION_BASE) ^
 
     set internalInstallerBase to when(isAlpine || isAzureLinux,
         baseImageTag,
@@ -57,7 +62,7 @@
             ]
         )), len)
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
-{{if isInternal || useNobleArm32Workaround:# Installer image
+{{if isInternal || useJammyArm32Workaround:# Installer image
 FROM {{internalInstallerBase}} AS installer{{if isInternal:
 
 ARG ACCESSTOKEN}}
@@ -71,8 +76,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": "download-and-install",
         "is-internal": isInternal,
-        "disable-first-run-experience": useNobleArm32Workaround,
-        "no-version-env-var": useNobleArm32Workaround
+        "disable-first-run-experience": useJammyArm32Workaround,
+        "no-version-env-var": useJammyArm32Workaround
     ])}}
 
 
@@ -86,7 +91,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     "pkgs": pkgs
 ])}}
 
-{{if isInternal || useNobleArm32Workaround:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+{{if isInternal || useJammyArm32Workaround:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 
 {{InsertTemplate("Dockerfile.linux.first-run")}}^else:{{
     InsertTemplate("Dockerfile.linux.install-sdk",
