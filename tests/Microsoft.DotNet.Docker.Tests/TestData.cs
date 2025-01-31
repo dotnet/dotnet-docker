@@ -249,7 +249,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     ImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
 
 
-            new ProductImageData { Version = V10_0_Preview, OS = OS.BookwormSlim,        Arch = Arch.Amd64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.Noble,               Arch = Arch.Amd64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.NobleChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Noble },
             new ProductImageData { Version = V10_0_Preview, OS = OS.NobleChiseled,       Arch = Arch.Amd64,   SdkOS = OS.Noble },
@@ -272,6 +271,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V10_0_Preview, OS = OS.AzureLinux30Distroless, Arch = Arch.Amd64,   SdkOS = OS.AzureLinux30,
                     ImageVariant = DotNetImageVariant.Composite | DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Aspnet },
+            new ProductImageData { Version = V10_0_Preview, OS = OS.TrixieSlim,        Arch = Arch.Amd64 },
 
             new ProductImageData { Version = V10_0_Preview, OS = OS.AzureLinux30,           Arch = Arch.Arm64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.AzureLinux30Distroless, Arch = Arch.Arm64,   SdkOS = OS.AzureLinux30 },
@@ -281,7 +281,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V10_0_Preview, OS = OS.AzureLinux30Distroless, Arch = Arch.Arm64,   SdkOS = OS.AzureLinux30,
                     ImageVariant = DotNetImageVariant.Composite | DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Aspnet },
-            new ProductImageData { Version = V10_0_Preview, OS = OS.BookwormSlim,        Arch = Arch.Arm64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.Noble,               Arch = Arch.Arm64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.NobleChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Noble },
             new ProductImageData { Version = V10_0_Preview, OS = OS.NobleChiseled,       Arch = Arch.Arm64,   SdkOS = OS.Noble,
@@ -295,8 +294,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V10_0_Preview, OS = OS.Alpine321,           Arch = Arch.Arm64,   SdkOS = OS.Alpine321,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
+            new ProductImageData { Version = V10_0_Preview, OS = OS.TrixieSlim,        Arch = Arch.Arm64 },
 
-            new ProductImageData { Version = V10_0_Preview, OS = OS.BookwormSlim,        Arch = Arch.Arm },
             new ProductImageData { Version = V10_0_Preview, OS = OS.Alpine321,           Arch = Arch.Arm },
             new ProductImageData { Version = V10_0_Preview, OS = OS.Alpine321,           Arch = Arch.Arm,     SdkOS = OS.Alpine321,
                     ImageVariant = DotNetImageVariant.Composite, SupportedImageRepos = DotNetImageRepo.Aspnet },
@@ -310,6 +309,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     ImageVariant = DotNetImageVariant.Composite | DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V10_0_Preview, OS = OS.NobleChiseled,       Arch = Arch.Arm,     SdkOS = OS.Noble,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
+            new ProductImageData { Version = V10_0_Preview, OS = OS.TrixieSlim,        Arch = Arch.Arm },
         };
 
         private static readonly ProductImageData[] s_windowsTestData =
