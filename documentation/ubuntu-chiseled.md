@@ -92,3 +92,7 @@ COPY --link --from=build /app .
 USER $APP_UID
 ENTRYPOINT ["./app"]
 ```
+
+Copying the entire filesystem into the final `FROM scratch` layer results in a perfectly space- and layer-efficient installation of the additional slices.
+However, it's important to note that this pattern does not allow any layer sharing with your chosen .NET base image - the first `COPY` instruction in the final stage is essentially creating a completely new base image layer.
+Keep this in mind when creating your Dockerfiles - for example, you may find it beneficial to share layers between multiple .NET images running in the same Kubernetes cluster.
