@@ -3,15 +3,17 @@ param(
     [switch]$Validate,
     [string]$Branch,
     [string]$OutputDirectory,
-    [switch]$IsInternalOverride
+    [string]$CustomImageBuilderArgs
 )
 
 Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
 
-$customImageBuilderArgs = ""
+if (-Not $CustomImageBuilderArgs) {
+    $CustomImageBuilderArgs = ""
+}
 
 if ($Validate) {
-    $customImageBuilderArgs += " --validate"
+    $CustomImageBuilderArgs += " --validate"
 }
 
 if (-Not $OutputDirectory) {
@@ -32,5 +34,5 @@ if (!$Branch) {
 }
 
 & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
-    -ImageBuilderArgs "generateDockerfiles $customImageBuilderArgs --var branch=$Branch" `
+    -ImageBuilderArgs "generateDockerfiles $CustomImageBuilderArgs --var branch=$Branch" `
     -OnCommandExecuted $onDockerfilesGenerated

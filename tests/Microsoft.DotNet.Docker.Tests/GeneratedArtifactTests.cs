@@ -55,10 +55,17 @@ namespace Microsoft.DotNet.Docker.Tests
             string dockerfilesOutputDirectory = Path.Combine(outputDirectory.Path, "src");
             string errorMessage = $"Failed to generate Dockerfiles using `{s_generateDockerfilesScript}`.";
 
+            const string InternalBaseUrl = "https://artifacts.visualstudio.com";
+            string customImageBuilderArgs =
+                $" --var 'base-url|public|maintenance|main={InternalBaseUrl}'" +
+                $" --var 'base-url|public|maintenance|nightly={InternalBaseUrl}'" +
+                $" --var 'base-url|public|preview|main={InternalBaseUrl}'" +
+                $" --var 'base-url|public|preview|nightly={InternalBaseUrl}'";
+
             // Generate internal Dockerfiles
             ExecuteScript(
                 s_generateDockerfilesScript,
-                $"-Output {outputDirectory.Path} -IsInternalOverride",
+                $"-Output {outputDirectory.Path} -CustomImageBuilderArgs \"{customImageBuilderArgs}\"",
                 errorMessage);
 
             string[] dockerfilePaths = DockerfileHelper.GetAllDockerfilesInDirectory(dockerfilesOutputDirectory);
