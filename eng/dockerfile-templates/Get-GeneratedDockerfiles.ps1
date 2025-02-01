@@ -1,22 +1,29 @@
 #!/usr/bin/env pwsh
 param(
     [switch]$Validate,
-    [string]$Branch
+    [string]$Branch,
+    [string]$OutputDirectory,
+    [switch]$IsInternalOverride
 )
 
 Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
 
+$customImageBuilderArgs = ""
+
 if ($Validate) {
-    $customImageBuilderArgs = " --validate"
+    $customImageBuilderArgs += " --validate"
 }
 
-$repoRoot = (Get-Item "$PSScriptRoot").Parent.Parent.FullName
+if (-Not $OutputDirectory) {
+    $repoRoot = (Get-Item "$PSScriptRoot").Parent.Parent.FullName
+    $OutputDirectory = $repoRoot
+}
 
 $onDockerfilesGenerated = {
     param($ContainerName)
 
     if (-Not $Validate) {
-        Exec "docker cp ${ContainerName}:/repo/src $repoRoot"
+        Exec "docker cp ${ContainerName}:/repo/src $OutputDirectory"
     }
 }
 
