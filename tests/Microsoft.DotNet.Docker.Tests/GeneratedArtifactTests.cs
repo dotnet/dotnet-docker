@@ -3,16 +3,16 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Text.RegularExpressions;
+using Microsoft.DotNet.Docker.Tests.Extensions;
 using Shouldly;
 using Shouldly.Configuration;
 using Xunit;
 using Xunit.Abstractions;
-using Microsoft.DotNet.Docker.Tests.Extensions;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
