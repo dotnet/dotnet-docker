@@ -74,6 +74,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string GetDiscriminator(string dockerfilePath) =>
                 dockerfilePath
                     .Remove(0, dockerfilesOutputDirectory.Length + 1)
+                    .Replace('/', '-')
                     .Replace('\\', '-');
 
             Action<ShouldMatchConfigurationBuilder> Configure(string dockerfilePath) =>
