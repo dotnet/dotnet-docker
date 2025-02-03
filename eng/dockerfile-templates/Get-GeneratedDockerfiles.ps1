@@ -1,22 +1,31 @@
 #!/usr/bin/env pwsh
 param(
     [switch]$Validate,
-    [string]$Branch
+    [string]$Branch,
+    [string]$OutputDirectory,
+    [string]$CustomImageBuilderArgs
 )
 
 Import-Module -force $PSScriptRoot/../DependencyManagement.psm1
 
-if ($Validate) {
-    $customImageBuilderArgs = " --validate"
+if (-Not $CustomImageBuilderArgs) {
+    $CustomImageBuilderArgs = ""
 }
 
-$repoRoot = (Get-Item "$PSScriptRoot").Parent.Parent.FullName
+if ($Validate) {
+    $CustomImageBuilderArgs += " --validate"
+}
+
+if (-Not $OutputDirectory) {
+    $repoRoot = (Get-Item "$PSScriptRoot").Parent.Parent.FullName
+    $OutputDirectory = $repoRoot
+}
 
 $onDockerfilesGenerated = {
     param($ContainerName)
 
     if (-Not $Validate) {
-        Exec "docker cp ${ContainerName}:/repo/src $repoRoot"
+        Exec "docker cp ${ContainerName}:/repo/src $OutputDirectory"
     }
 }
 
@@ -25,5 +34,5 @@ if (!$Branch) {
 }
 
 & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
-    -ImageBuilderArgs "generateDockerfiles $customImageBuilderArgs --var branch=$Branch" `
+    -ImageBuilderArgs "generateDockerfiles $CustomImageBuilderArgs --var branch=$Branch" `
     -OnCommandExecuted $onDockerfilesGenerated

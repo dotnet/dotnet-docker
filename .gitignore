@@ -26,3 +26,6 @@ artifacts/
 
 # ImageBuilder directory
 .Microsoft.DotNet.ImageBuilder
+
+# Snapshots for acceptance testing (Shouldly)
+*.received.*
