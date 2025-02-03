@@ -21,7 +21,7 @@ FROM $REPO:10.0.0-preview.1-noble-chiseled-extra-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-preview.1.25078.5 \
+    DOTNET_VERSION=10.0.0-preview.1.25080.5 \
     # ASP.NET Core version
     ASPNET_VERSION=10.0.0-preview.1.25079.4
 
