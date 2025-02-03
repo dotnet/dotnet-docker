@@ -14,7 +14,7 @@ Add due dates to each of the issues so that we don't lose track of them.
 ## Alpha
 
 - [ ] Create a new Milestone in this repo for the new .NET version
-  - [ ] Update the `https://aka.ms/netcontainers-roadmap` short link to the new milestone. You can do this from https://aka.ms/. It is linked to from [dotnet/core/roadmap.md](https://github.com/dotnet/core/blob/main/roadmap.md).
+  - [ ] Update the `https://aka.ms/netcontainers-roadmap` short link to the new milestone. You can do this from [aka.ms](https://aka.ms/). It is linked to from [dotnet/core/roadmap.md](https://github.com/dotnet/core/blob/main/roadmap.md).
 - [ ] Add new .NET version images to `nightly` branch
   - [ ] Create new images
     - [ ] Add entries for the new .NET versions in `manifest.versions.json`
