@@ -83,10 +83,16 @@ The [READMEs](https://github.com/search?q=repo%3Adotnet%2Fdotnet-docker+path%3A*
 
 ### Tests
 
-There are two basic types of [tests](https://github.com/dotnet/dotnet-docker/tree/main/tests) for each of the images produced from this repo.
+There are several types of [tests](https://github.com/dotnet/dotnet-docker/tree/main/tests) in this repo.
 
-1. Unit tests that validate the static state of images.  This includes things like verifing which environment variables are defined.
-1. Scenario tests that validate basic usage scenarios.  For example the SDK image is used to create, build and run a new console app.
+1. Image tests
+    - Unit tests that validate the static state of images, based on their filesystem contents or manifest/image config.
+      This includes things like verifying which environment variables are defined and which packages are installed.
+    - Scenario tests that run images to validate basic user scenarios.
+      For example, use the SDK image to create, build and run a .NET app.
+1. `"pre-build"` tests
+    - Validate that tags adhere to a specific set of rules ([`StaticTagTests.cs`](tests/Microsoft.DotNet.Docker.Tests/StaticTagTests.cs))
+    - Verify the state of generated Dockerfile templates (public and internal versions)
 
 When editing Dockerfiles, please ensure the appropriate test changes are also made.
 
@@ -113,7 +119,18 @@ From the "Run and Debug" sidebar panel, run the "Attach .NET Debugger" launch co
 VS Code will prompt you for a process ID to attach to.
 Type in the PID that was printed to the terminal earlier.
 Now, VS Code is attached to the .NET Debugger.
-You can press F5 (Continue) to start test execution.
+Press F5 (Continue) to start test execution.
+
+#### Verifying Internal Dockerfiles
+
+Internal Dockerfiles are validated using "snapshot" testing, which uses tooling to record and test the accepted state of the Dockerfiles.
+If your changes fail tests due to changes in the internal Dockerfiles, you will need to review the changes before the tests can pass.
+You can use a local dotnet tool to accept or reject the changes.
+
+1. Run the failing test(s). For example: `./tests/run-tests.ps1 -Paths "*" -TestCategories "pre-build" -CustomTestFilter "VerifyInternalDockerfilesOutput"`
+1. The failing test will output updated baseline files in the `tests/Microsoft.DotNet.Docker.Tests/Baselines/` directory, ending in `*.received.txt`.
+1. Accept or discard the changes: `./tests/accept-changes.ps1 [-Discard]`. This script will either rename all of the `.received.txt` files to `.approved.txt` or remove them.
+1. If the git diff of the changes look acceptable, then commit the changes.
 
 ### Metadata Changes
 
