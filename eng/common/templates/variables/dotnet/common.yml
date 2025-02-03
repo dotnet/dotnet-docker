@@ -54,6 +54,6 @@ variables:
 - name: windowsServer2025PoolName
   value: Docker-2025-${{ variables['System.TeamProject'] }}
 
-- group: DotNet-Docker-Common
+- group: DotNet-Docker-Common-2
 - ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - group: DotNet-Docker-Secrets-WIF
+  - group: DotNet-Docker-Secrets
