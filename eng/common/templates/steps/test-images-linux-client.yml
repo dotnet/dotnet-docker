@@ -59,17 +59,9 @@ steps:
         artifactName: image-info
         condition: ${{ parameters.condition }}
 - template: /eng/common/templates/steps/parse-test-arg-arrays.yml@self
-- powershell: >
-    $(test.init);
-    docker exec
-    $(testRunner.options)
-    $(testRunner.container)
-    pwsh
-    -Command "$(testScriptPath)
-    -Paths $(imageBuilderPathsArrayInitStr)
-    -OSVersions $(osVersionsArrayInitStr)
-    -Architecture '$(architecture)'
-    $(additionalTestArgs)"
+- powershell: |
+    echo "$(test.init); docker exec $(testRunner.options) $(testRunner.container) pwsh -Command ""$(testScriptPath) -Paths $(imageBuilderPathsArrayInitStr) -OSVersions $(osVersionsArrayInitStr) -Architecture '$(architecture)' $(additionalTestArgs)"""
+    $(test.init); docker exec $(testRunner.options) $(testRunner.container) pwsh -Command "$(testScriptPath) -Paths $(imageBuilderPathsArrayInitStr) -OSVersions $(osVersionsArrayInitStr) -Architecture '$(architecture)' $(additionalTestArgs)"
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
