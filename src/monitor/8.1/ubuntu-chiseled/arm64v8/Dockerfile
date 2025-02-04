@@ -4,13 +4,13 @@ ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor extensions
-RUN dotnet_monitor_extension_version=8.1.0-alpha.1.25078.1 \
-    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://ci.dot.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='cd58b483ec08a014b5727a8f24a181bc6267165509060b132fdee1e84cc9cc345023dce2a0733d831f2a0d3329edcea4bf76cc18d4910e80c17098874f48aa5d' \
+RUN dotnet_monitor_extension_version=8.1.0 \
+    && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://ci.dot.net/public/diagnostics/monitor/8.1.0-rtm.25104.2/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
+    && dotnet_monitor_extension_sha512='77f2ba22b6e412020296b9d28b3dde20dba514902a584fbe8f6eef04cdd23a9fb3a56bea4808aec6be8cc86b02c6c7f2925102b201cd7413e99d370715e4fbba' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
-    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://ci.dot.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='83374f76eaa2e3063721f21808b93c4938f5f118f95468acabd66b0cc51fc0249b5a9e3803e5c059e988f2556efd80e37828e469973ca99f560ecf02175a437e' \
+    && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://ci.dot.net/public/diagnostics/monitor/8.1.0-rtm.25104.2/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
+    && dotnet_monitor_extension_sha512='5142d86c818aa9de4e84b71e7571bfd8bc61607bb8d5863413ef4a5e15eff88f0ef44e27464062bf31c4e7704c256ad272d8151b79392cfee93a265775966202' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
@@ -21,6 +21,6 @@ RUN dotnet_monitor_extension_version=8.1.0-alpha.1.25078.1 \
 
 
 # .NET Monitor image
-FROM $REPO:8.1.0-alpha.1-ubuntu-chiseled-arm64v8
+FROM $REPO:8.1.0-ubuntu-chiseled-arm64v8
 
 COPY --from=installer ["/app", "/app"]

@@ -62,8 +62,8 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.1.0-alpha.1-ubuntu-chiseled-amd64, 8.1-preview-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.1.0-alpha.1-cbl-mariner-distroless-amd64, 8.1-preview-cbl-mariner-distroless-amd64, 8-cbl-mariner-distroless-amd64, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor-base/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
+8.1.0-ubuntu-chiseled-amd64, 8.1-preview-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.0-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0, 8.1-preview, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.1.0-cbl-mariner-distroless-amd64, 8.1-preview-cbl-mariner-distroless-amd64, 8-cbl-mariner-distroless-amd64, 8.1.0-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor-base/8.1/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
 ### Linux arm64 Tags
 
@@ -77,8 +77,8 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-8.1.0-alpha.1-ubuntu-chiseled-arm64v8, 8.1-preview-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.0-alpha.1-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0-alpha.1, 8.1-preview, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.1.0-alpha.1-cbl-mariner-distroless-arm64v8, 8.1-preview-cbl-mariner-distroless-arm64v8, 8-cbl-mariner-distroless-arm64v8, 8.1.0-alpha.1-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor-base/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.1.0-ubuntu-chiseled-arm64v8, 8.1-preview-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.0-ubuntu-chiseled, 8.1-preview-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0, 8.1-preview, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.1.0-cbl-mariner-distroless-arm64v8, 8.1-preview-cbl-mariner-distroless-arm64v8, 8-cbl-mariner-distroless-arm64v8, 8.1.0-cbl-mariner-distroless, 8.1-preview-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor-base/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/monitor/base/tags/list) for all supported and unsupported tags.*
