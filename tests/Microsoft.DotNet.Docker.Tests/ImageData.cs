@@ -188,7 +188,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             }
 
-            return imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
+            string registry = imageExistsInStaging ? $"{Config.Registry}/{Config.RepoPrefix}" : "mcr.microsoft.com/";
+            Console.WriteLine($"imageExistsInStaging: {imageExistsInStaging}");
+            Console.WriteLine($"Registry: {registry}");
+            return registry;
         }
 
         public override string ToString()
