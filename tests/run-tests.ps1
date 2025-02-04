@@ -153,6 +153,9 @@ Try {
         $testFilter = "--filter '$testFilter'"
     }
 
+    Write-Host "Environment Variables:"
+    Get-ChildItem env:
+
     Write-Host "`nRunning tests with $testFilter`n"
     Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
 
