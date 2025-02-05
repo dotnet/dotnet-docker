@@ -9,7 +9,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve Aspire Dashboard
-RUN dotnet_aspire_version=0.0.0-preview.0.0.0 \
+RUN dotnet_aspire_version=0.0.0 \
     && curl -u :$ACCESSTOKEN --basic -fSL --output aspire_dashboard.zip "https://artifacts.visualstudio.com/aspire/$dotnet_aspire_version/aspire-dashboard-linux-x64.zip" \
     && aspire_dashboard_sha512='{sha512_placeholder}' \
     && echo "$aspire_dashboard_sha512  aspire_dashboard.zip" | sha512sum -c - \
