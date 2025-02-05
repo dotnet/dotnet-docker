@@ -79,7 +79,7 @@ public class GeneratedArtifactTests
             (DockerfileHelper.Sha512Regex, "{sha512_placeholder}"),
             (DockerfileHelper.Sha386Regex, "{sha386_placeholder}"),
             (DockerfileHelper.Sha256Regex, "{sha256_placeholder}"),
-            (DockerfileHelper.SemanticVersionRegex, "0.0.0"),
+            (DockerfileHelper.VersionRegex, "0.0.0"),
             (DockerfileHelper.MinGitVersionRegex, "v0.0.0.windows.0"),
             (DockerfileHelper.AlpineVersionRegex, "alpine3.XX"),
         ];
@@ -88,7 +88,7 @@ public class GeneratedArtifactTests
         {
             foreach ((Regex pattern, string replacement) in replacePatterns)
             {
-                content = pattern.Replace(content, replacement);
+                content = pattern.Replace(content, replacement, count: 99);
             }
 
             return content;
