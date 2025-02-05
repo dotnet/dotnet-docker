@@ -5,7 +5,7 @@ FROM $REPO:0.0.0-preview.1-alpine3.XX-arm32v7 AS installer
 ARG ACCESSTOKEN
 
 # Install .NET SDK
-RUN wget --header="Authorization: Basic `echo $ACCESSTOKEN:$ACCESSTOKEN | base64 -w 0`" -O dotnet.tar.gz "https://artifacts.visualstudio.com/Sdk/0.0.0-preview.0.0.0/dotnet-sdk-0.0.0-preview.0.0.0-linux-musl-arm.tar.gz" \
+RUN wget --header="Authorization: Basic `echo $ACCESSTOKEN:$ACCESSTOKEN | base64 -w 0`" -O dotnet.tar.gz "https://artifacts.visualstudio.com/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-musl-arm.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
@@ -22,7 +22,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=0.0.0-preview.0.0.0 \
+    DOTNET_SDK_VERSION=0.0.0 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
