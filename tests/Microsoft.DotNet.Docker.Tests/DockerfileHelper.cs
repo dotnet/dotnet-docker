@@ -19,12 +19,9 @@ public static partial class DockerfileHelper
     [GeneratedRegex("[A-Fa-f0-9]{64}")]
     public static partial Regex Sha256Regex { get; }
 
-    // Match 1.2.3-servicing.45678.9
-    [GeneratedRegex(@"\d+\.\d+\.\d+-servicing\.\d+.\d+")]
-    public static partial Regex ServicingVersionRegex { get; }
-
-    [GeneratedRegex(@"\d+\.\d+\.\d+")]
-    public static partial Regex SemanticVersionRegex { get; }
+    // Match versions like `1.2.3`, `1.2.3-foo.45678.9`, and `1.2.3-preview.4.56789.0`
+    [GeneratedRegex(@"\d+\.\d+\.\d+ (-\w+(\.\d+){2,})?", RegexOptions.IgnorePatternWhitespace)]
+    public static partial Regex VersionRegex { get; }
 
     [GeneratedRegex(@"v\d+\.\d+\.\d+\.windows\.\d+")]
     public static partial Regex MinGitVersionRegex { get; }
