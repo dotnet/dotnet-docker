@@ -12,7 +12,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '0.0.0-preview.0.0.0'; `
+        $aspnetcore_version = '0.0.0'; `
         `
         $Base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\":$($Env:ACCESSTOKEN)\")); `
         $Headers = @{Authorization = \"Basic $Base64AuthInfo\"}; `
@@ -33,6 +33,6 @@ RUN powershell -Command `
 FROM $REPO:0.0.0-preview.1-windowsservercore-ltsc2019
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=0.0.0-preview.0.0.0
+ENV ASPNET_VERSION=0.0.0
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

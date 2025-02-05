@@ -11,7 +11,7 @@ RUN tdnf install -y \
 
 # Retrieve .NET Monitor Base
 RUN dotnet_monitor_version=0.0.0 \
-    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-base.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/0.0.0-servicing.00000.0/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz" \
+    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-base.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/0.0.0/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz" \
     && dotnet_monitor_base_sha512='{sha512_placeholder}' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir -p /app \

@@ -10,7 +10,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '0.0.0-preview.0.0.0'; `
+        $dotnet_version = '0.0.0'; `
         `
         $Base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\":$($Env:ACCESSTOKEN)\")); `
         $Headers = @{Authorization = \"Basic $Base64AuthInfo\"}; `
@@ -36,7 +36,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=0.0.0-preview.0.0.0
+    DOTNET_VERSION=0.0.0
 
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
 
