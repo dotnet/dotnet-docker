@@ -81,7 +81,7 @@ Create announcement:
 
 ## EOL
 
-- [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue)
+- [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue) on the EOL date (or the day after, if necessary)
   - [ ] Remove all entries for the EOL .NET version in:
     - [ ] `manifest.json`
     - [ ] `manifest.versions.json`
