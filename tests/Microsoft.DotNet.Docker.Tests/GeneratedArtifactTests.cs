@@ -79,6 +79,7 @@ public class GeneratedArtifactTests
             (DockerfileHelper.Sha512Regex, "{sha512_placeholder}"),
             (DockerfileHelper.Sha386Regex, "{sha386_placeholder}"),
             (DockerfileHelper.Sha256Regex, "{sha256_placeholder}"),
+            (DockerfileHelper.ServicingVersionRegex, "0.0.0-servicing.00000.0"),
             (DockerfileHelper.SemanticVersionRegex, "0.0.0"),
             (DockerfileHelper.MinGitVersionRegex, "v0.0.0.windows.0"),
             (DockerfileHelper.AlpineVersionRegex, "alpine3.XX"),

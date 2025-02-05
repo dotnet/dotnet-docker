@@ -19,7 +19,11 @@ public static partial class DockerfileHelper
     [GeneratedRegex("[A-Fa-f0-9]{64}")]
     public static partial Regex Sha256Regex { get; }
 
-    [GeneratedRegex(@"\d+\.\d+\.\d+(?!\.windows)")]
+    // Match 1.2.3-servicing.45678.9
+    [GeneratedRegex(@"\d+\.\d+\.\d+-servicing\.\d+.\d+")]
+    public static partial Regex ServicingVersionRegex { get; }
+
+    [GeneratedRegex(@"\d+\.\d+\.\d+")]
     public static partial Regex SemanticVersionRegex { get; }
 
     [GeneratedRegex(@"v\d+\.\d+\.\d+\.windows\.\d+")]

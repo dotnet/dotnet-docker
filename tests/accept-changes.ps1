@@ -36,5 +36,5 @@ $files = Get-ChildItem `
 if ($Discard) {
     $files | Remove-Item
 } else {
-    $files | Rename-Item -NewName { $_.Name -replace '\.received\.txt$', '.approved.txt' }
+    $files | Move-Item -Force -Destination { $_.DirectoryName + "/" + ($_.Name -replace '\.received\.txt$', '.approved.txt') }
 }
