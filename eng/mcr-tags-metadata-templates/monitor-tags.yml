@@ -1,6 +1,6 @@
 $(McrTagsYmlRepo:monitor)
 $(McrTagsYmlTagGroup:9.0)
-$(McrTagsYmlTagGroup:8.1-preview-ubuntu-chiseled|.NET Monitor Preview Tags)
-$(McrTagsYmlTagGroup:8.1-preview-cbl-mariner-distroless|.NET Monitor Preview Tags)
+$(McrTagsYmlTagGroup:8.1-ubuntu-chiseled)
+$(McrTagsYmlTagGroup:8.1-cbl-mariner-distroless)
 $(McrTagsYmlTagGroup:8.0-ubuntu-chiseled)
 $(McrTagsYmlTagGroup:8.0-cbl-mariner-distroless)
