@@ -142,10 +142,8 @@ namespace Microsoft.DotNet.Docker.Tests
             return $"{registry}{repo}:{tag}";
         }
 
-        public static string GetRepoName(string repoName, string repoNameModifier = null)
-        {
-            return $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
-        }
+        public static string GetRepoName(string repoName, string repoNameModifier = null) =>
+            $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
 
         protected string GetTagName(string tagPrefix, string os, string tagPostfix = null)
         {
