@@ -12,11 +12,8 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public record DockerfileInfo(string Repo, string MajorMinor, string Os, string Architecture);
-
     public static class ManifestHelper
     {
-
         public static Manifest GetManifest() =>
             JsonConvert.DeserializeObject<Manifest>(Config.Manifest.Value.ToString()) ??
             throw new Exception("Failed to deserialize manifest");
@@ -33,8 +30,6 @@ namespace Microsoft.DotNet.Docker.Tests
         public static List<string> GetResolvedTags(this Platform platform) =>
             platform.Tags.Keys.Select(GetVariableValue).ToList();
 
-        private static readonly string DockerfileRegex = @"src/(?<repo>.+)/(?<major_minor>\d+\.\d+)/(?<os>.+)/(?<architecture>.+)";
-
         public static Dictionary<DockerfileInfo, List<string>> GetDockerfileTags(Repo repo)
         {
             Dictionary<DockerfileInfo, List<string>> dockerfileTags = new Dictionary<DockerfileInfo, List<string>>();
@@ -42,7 +37,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 foreach (Platform platform in image.Platforms)
                 {
-                    DockerfileInfo dockerfileInfo = GetDockerfileInfo(platform.Dockerfile);
+                    DockerfileInfo dockerfileInfo = DockerfileInfo.Create(platform.Dockerfile);
                     if (!dockerfileTags.TryGetValue(dockerfileInfo, out List<string>? value))
                     {
                         value = [];
@@ -54,16 +49,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
             }
             return dockerfileTags;
-        }
-
-        public static DockerfileInfo GetDockerfileInfo(string dockerfile)
-        {
-            var match = Regex.Match(dockerfile, DockerfileRegex);
-            if (!match.Success)
-            {
-                throw new Exception($"Failed to parse dockerfile: {dockerfile}");
-            }
-            return new DockerfileInfo(match.Groups["repo"].Value, match.Groups["major_minor"].Value, match.Groups["os"].Value, match.Groups["architecture"].Value);
         }
 
         private static string GetVariableValue(string input)
