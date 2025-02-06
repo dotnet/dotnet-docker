@@ -35,11 +35,6 @@ public class TestDataTests(ITestOutputHelper outputHelper)
     {
         string repoName = ImageData.GetRepoName(ProductImageData.GetDotNetImageRepoName(imageRepo));
 
-        if (repoName.Contains("base"))
-        {
-            return;
-        }
-
         Repo manifestRepo = _manifest.Repos.First(r => r.Name == repoName);
 
         List<string> testDataTags =
