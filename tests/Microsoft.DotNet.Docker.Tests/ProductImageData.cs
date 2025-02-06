@@ -76,7 +76,7 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> pathComponents =
             [
                 "src",
-                GetImageRepoName(imageRepo),
+                GetDotNetImageRepoName(imageRepo),
                 Version.ToString(),
                 OSDir + GetVariantSuffix(),
                 GetArchLabel()
@@ -91,7 +91,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
-        public static string GetImageRepoName(DotNetImageRepo imageRepo) =>
+        public static string GetDotNetImageRepoName(DotNetImageRepo imageRepo) =>
             Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
 
         public static string GetImageVariantName(DotNetImageVariant imageVariant)
@@ -122,7 +122,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             string tag = GetTagName(imageRepo);
-            string imageName = GetImageName(tag, GetImageRepoName(imageRepo));
+            string imageName = GetImageName(tag, GetDotNetImageRepoName(imageRepo));
 
             if (!skipPull)
             {
