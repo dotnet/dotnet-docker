@@ -12,9 +12,10 @@ using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
+public record DockerfileInfo(string Repo, string MajorMinor, string Os, string Architecture);
+
 public static class ManifestHelper
 {
-    public record DockerfileInfo(string Repo, string MajorMinor, string Os, string Architecture);
 
     public static Manifest GetManifest() =>
         JsonConvert.DeserializeObject<Manifest>(Config.Manifest.Value.ToString()) ??
@@ -29,7 +30,7 @@ public static class ManifestHelper
     public static List<string> GetResolvedSharedTags(Image image) =>
         image.SharedTags.Keys.Select(GetVariableValue).ToList();
 
-    public static List<string> GetResolvedTags(Platform platform) =>
+    public static List<string> GetResolvedTags(this Platform platform) =>
         platform.Tags.Keys.Select(GetVariableValue).ToList();
 
     private static readonly string DockerfileRegex = @"src/(?<repo>.+)/(?<major_minor>\d+\.\d+)/(?<os>.+)/(?<architecture>.+)";
@@ -42,12 +43,14 @@ public static class ManifestHelper
             foreach (Platform platform in image.Platforms)
             {
                 DockerfileInfo dockerfileInfo = GetDockerfileInfo(platform.Dockerfile);
-                if (!dockerfileTags.ContainsKey(dockerfileInfo))
+                if (!dockerfileTags.TryGetValue(dockerfileInfo, out List<string>? value))
                 {
-                    dockerfileTags[dockerfileInfo] = new List<string>();
+                    value = [];
+                    dockerfileTags[dockerfileInfo] = value;
                 }
-                dockerfileTags[dockerfileInfo].AddRange(GetResolvedTags(platform));
-                dockerfileTags[dockerfileInfo].AddRange(GetResolvedSharedTags(image));
+
+                value.AddRange(GetResolvedTags(platform));
+                value.AddRange(GetResolvedSharedTags(image));
             }
         }
         return dockerfileTags;

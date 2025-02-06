@@ -136,10 +136,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static string GetImageName(string tag, string repoName, string repoNameModifier = null)
         {
-            string repo = $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
+            string repo = GetRepoName(repoName, repoNameModifier);
             string registry = GetRegistryName(repo, tag);
 
             return $"{registry}{repo}:{tag}";
+        }
+
+        public static string GetRepoName(string repoName, string repoNameModifier = null)
+        {
+            return $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
         }
 
         protected string GetTagName(string tagPrefix, string os, string tagPostfix = null)
@@ -149,9 +154,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return string.Join('-', tagParts);
         }
 
-        protected virtual string GetArchTagSuffix() => (Arch == Arch.Amd64 && !DockerHelper.IsLinuxContainerModeEnabled)
-            ? string.Empty
-            : GetArchLabel();
+        protected virtual string GetArchTagSuffix() => (Arch == Arch.Amd64 && IsWindows)
+                ? string.Empty
+                : GetArchLabel();
 
         protected string GetArchLabel() =>
             Arch switch
