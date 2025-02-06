@@ -153,8 +153,8 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         protected virtual string GetArchTagSuffix() => (Arch == Arch.Amd64 && IsWindows)
-                ? string.Empty
-                : GetArchLabel();
+            ? string.Empty
+            : GetArchLabel();
 
         protected string GetArchLabel() =>
             Arch switch
