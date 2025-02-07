@@ -112,7 +112,7 @@ Tags | Dockerfile | OS Version
 
 ### Lifecycle
 
-* [Microsoft Support for YARP](https://github.com/microsoft/yarp/blob/main/docs/roadmap.md)
+* [Microsoft Support for YARP](https://github.com/dotnet/yarp/blob/main/docs/roadmap.md)
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
