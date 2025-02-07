@@ -10,16 +10,16 @@ RUN tdnf install -y \
 
 # Retrieve YARP
 RUN yarp_version=0.0.0 \
-    && curl -u :$ACCESSTOKEN --basic -fSL --output reverse-proxy.zip "https://artifacts.visualstudio.com/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.zip" \
+    && curl -u :$ACCESSTOKEN --basic -fSL --output yarp.zip "https://artifacts.visualstudio.com/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.zip" \
     && yarp_sha512='{sha512_placeholder}' \
-    && echo "$yarp_sha512  reverse-proxy.zip" | sha512sum -c - \
+    && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
     && mkdir -p /app \
-    && unzip reverse-proxy.zip -d /app \
-    && rm reverse-proxy.zip
+    && unzip yarp.zip -d /app \
+    && rm yarp.zip
 
 
 # YARP image
-FROM $REPO:0.0.0-azurelinux3.0-distroless-amd64
+FROM $REPO:0.0.0-azurelinux3.0-distroless-arm64v8
 
 COPY --from=installer ["/app", "/app"]
 
@@ -29,4 +29,4 @@ ENV \
     # reverse-proxy environment variables
     ASPNETCORE_URLS=http://+:5000
 
-ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/reverse-proxy.config" ]
+ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/yarp.config" ]
