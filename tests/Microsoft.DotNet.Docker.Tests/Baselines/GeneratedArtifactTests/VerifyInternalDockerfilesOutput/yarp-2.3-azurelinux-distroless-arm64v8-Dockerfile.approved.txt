@@ -26,7 +26,7 @@ COPY --from=installer ["/app", "/app"]
 ENV \
     # Unset ASPNETCORE_HTTP_PORTS from base image
     ASPNETCORE_HTTP_PORTS= \
-    # reverse-proxy environment variables
+    # yarp environment variables
     ASPNETCORE_URLS=http://+:5000
 
 ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/yarp.config" ]
