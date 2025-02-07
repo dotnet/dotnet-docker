@@ -24,7 +24,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
-* [dotnet/nightly/reverse-proxy](https://mcr.microsoft.com/product/dotnet/nightly/reverse-proxy/about): .NET Reverse Proxy (YARP) (Preview)
+* [dotnet/nightly/yarp](https://mcr.microsoft.com/product/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 
 .NET Framework:

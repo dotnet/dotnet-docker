@@ -9,7 +9,7 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public class ReverseProxyBasicScenario : ITestScenario
+public class YarpBasicScenario : ITestScenario
 {
     private readonly DockerHelper _dockerHelper;
 
@@ -21,7 +21,7 @@ public class ReverseProxyBasicScenario : ITestScenario
 
     private readonly int _webPort;
 
-    public ReverseProxyBasicScenario(
+    public YarpBasicScenario(
         int webPort,
         ProductImageData imageData,
         DockerHelper dockerHelper,
@@ -32,12 +32,12 @@ public class ReverseProxyBasicScenario : ITestScenario
         _outputHelper = outputHelper;
         _webPort = webPort;
 
-        _imageTag = _imageData.GetImage(DotNetImageRepo.Reverse_Proxy, _dockerHelper);
+        _imageTag = _imageData.GetImage(DotNetImageRepo.Yarp, _dockerHelper);
     }
 
     public async Task ExecuteAsync()
     {
-        string containerName = _imageData.GetIdentifier(nameof(ReverseProxyBasicScenario));
+        string containerName = _imageData.GetIdentifier(nameof(YarpBasicScenario));
         using TempFileContext configFile = FileHelper.UseTempFile();
         string sampleContainer = $"{containerName}_aspnetapp";
 
@@ -57,7 +57,7 @@ public class ReverseProxyBasicScenario : ITestScenario
                 image: _imageTag,
                 name: containerName,
                 detach: true,
-                optionalRunArgs: $"-p {_webPort} -v {configFile.Path}:/etc/reverse-proxy.config --link {sampleContainer}:aspnetapp1",
+                optionalRunArgs: $"-p {_webPort} -v {configFile.Path}:/etc/yarp.config --link {sampleContainer}:aspnetapp1",
                 skipAutoCleanup: true);
 
             // base uri should return 404
@@ -92,7 +92,7 @@ public class ReverseProxyBasicScenario : ITestScenario
       "Logging": {
         "LogLevel": {
           "Default": "Information",
-          "Microsoft": "Warning",
+          "Microsoft": "Information",
           "Microsoft.Hosting.Lifetime": "Information"
         }
       },

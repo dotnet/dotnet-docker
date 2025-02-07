@@ -1,7 +1,7 @@
 {{
     set yarpMajor to split(PRODUCT_VERSION, ".")[0] ^
     set yarpMajorMinor to cat(yarpMajor, ".0") ^
-    set dotnetMajorMinor to VARIABLES[cat("reverse-proxy|", yarpMajorMinor, "|dotnet-version")] ^
+    set dotnetMajorMinor to VARIABLES[cat("yarp|", yarpMajorMinor, "|dotnet-version")] ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|9.0|fixed-tag")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set installerImageTag to cat("mcr.microsoft.com/azurelinux", "/base/core:", OS_VERSION_NUMBER)
@@ -13,7 +13,7 @@ FROM {{installerImageTag}} AS installer
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
 
 # Retrieve YARP
-{{InsertTemplate("Dockerfile.linux.install-reverse-proxy")}}
+{{InsertTemplate("Dockerfile.linux.install-yarp")}}
 
 
 # YARP image
@@ -23,4 +23,4 @@ COPY --from=installer ["/app", "/app"]
 
 {{InsertTemplate("Dockerfile.envs")}}
 
-ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/reverse-proxy.config" ]
+ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/yarp.config" ]

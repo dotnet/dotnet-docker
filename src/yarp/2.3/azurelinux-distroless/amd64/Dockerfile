@@ -10,12 +10,12 @@ RUN tdnf install -y \
 
 # Retrieve YARP
 RUN yarp_version=2.3.0-preview.1.25060.1 \
-    && curl -fSL --output reverse-proxy.zip https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.zip \
+    && curl -fSL --output yarp.zip https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.zip \
     && yarp_sha512='24bc79fb64105f7a910e3deb176abdd55ffda05e4885d66309d62912159cd153c5d140b5bfb05d84141282fd13e7f6559402c8c3046b3c6c4f2039b52ee1aa7b' \
-    && echo "$yarp_sha512  reverse-proxy.zip" | sha512sum -c - \
+    && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
     && mkdir -p /app \
-    && unzip reverse-proxy.zip -d /app \
-    && rm reverse-proxy.zip
+    && unzip yarp.zip -d /app \
+    && rm yarp.zip
 
 
 # YARP image
@@ -26,7 +26,7 @@ COPY --from=installer ["/app", "/app"]
 ENV \
     # Unset ASPNETCORE_HTTP_PORTS from base image
     ASPNETCORE_HTTP_PORTS= \
-    # reverse-proxy environment variables
+    # yarp environment variables
     ASPNETCORE_URLS=http://+:5000
 
-ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/reverse-proxy.config" ]
+ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/yarp.config" ]

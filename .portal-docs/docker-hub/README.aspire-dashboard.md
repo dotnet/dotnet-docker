@@ -102,7 +102,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 * [dotnet/nightly/runtime](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime/): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
-* [dotnet/nightly/reverse-proxy](https://hub.docker.com/r/microsoft/dotnet-nightly-reverse-proxy/): .NET Reverse Proxy (YARP) (Preview)
+* [dotnet/nightly/yarp](https://hub.docker.com/r/microsoft/dotnet-nightly-yarp/): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
 .NET Framework:
