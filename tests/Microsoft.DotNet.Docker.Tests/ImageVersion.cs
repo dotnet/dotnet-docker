@@ -14,6 +14,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static readonly ImageVersion V8_1 = new(new Version(8, 1), isPreview: false);
         public static readonly ImageVersion V9_0 = new(new Version(9, 0), isPreview: false);
         public static readonly ImageVersion V9_0_Preview = new(new Version(9, 0), isPreview: true);
+        public static readonly ImageVersion V9_1_Preview = new(new Version(9, 1), isPreview: false);
         public static readonly ImageVersion V10_0_Preview = new(new Version(10, 0), isPreview: true);
 
         public ImageVersion(Version version, bool isPreview)
