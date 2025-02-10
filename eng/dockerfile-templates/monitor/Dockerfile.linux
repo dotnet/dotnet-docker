@@ -1,59 +1,33 @@
 {{
-    _ .NET major version matches the major version of dotnet-monitor ^
-    set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
-    set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
-    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
-    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
-    set isSingleStage to isAlpine ^
-    set aspnetBaseTag to
-        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
-    set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
+    set monitorBaseTagOs to when(isAzureLinux,
+        cat(when(find(OS_VERSION, "3.0") >= 0, "azurelinux-distroless", "cbl-mariner-distroless")),
+        "ubuntu-chiseled") ^
+    set monitorBaseTagHasOs to monitorMajor = "8" ^
+    set monitorBaseTagOsSuffix to when(monitorBaseTagHasOs, cat("-", monitorBaseTagOs), "") ^
+    set monitorBaseTag to
+        cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], monitorBaseTagOsSuffix, ARCH_TAG_SUFFIX) ^
+    set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
-        cat("mcr.microsoft.com/",
-            when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinux", "cbl-mariner"),
+        cat("mcr.microsoft.com/"
+            when(find(OS_VERSION, "3.0") >= 0, "azurelinux", "cbl-mariner"),
             "/base/core:",
             OS_VERSION_NUMBER),
-        when(isAlpine,
-            aspnetBaseTag,
-            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
-}}ARG REPO=mcr.microsoft.com/dotnet/aspnet{{if isSingleStage:
-{{
+        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))
+}}ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
-    _ SINGLE STAGE
-
-}}FROM {{aspnetBaseTag}}
-
-WORKDIR /app
-
-{{InsertTemplate("Dockerfile.envs")}}
-
-# Install .NET Monitor
-{{InsertTemplate("Dockerfile.linux.install-monitor")}}
-
-{{InsertTemplate(cat("Dockerfile.entrypoint.monitorV", monitorMajor))}}^else:
-{{
-
-    _ MULTI STAGE
-
-}}
 # Installer image
 FROM {{installerImageTag}} AS installer
 {{if isAzureLinux:
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 }}
-# Retrieve .NET Monitor
-{{InsertTemplate("Dockerfile.linux.install-monitor")}}
+# Retrieve .NET Monitor extensions
+{{InsertTemplate("Dockerfile.linux.install-extensions")}}
 
 
 # .NET Monitor image
-FROM {{aspnetBaseTag}}
+FROM {{monitorBaseTag}}
 
 COPY --from=installer ["/app", "/app"]
-
-WORKDIR /app
-
-{{InsertTemplate("Dockerfile.envs")}}
-
-{{InsertTemplate(cat("Dockerfile.entrypoint.monitorV", monitorMajor))}}}}
