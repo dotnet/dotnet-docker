@@ -36,7 +36,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
     _ MULTI STAGE
 
 }}# Installer image
-FROM mcr.microsoft.com/windows/servercore:{{OS_VERSION_NUMBER}}-amd64 AS installer
+FROM {{installerStageFromImage}} AS installer
 {{if isInternal:
 ARG ACCESSTOKEN
 }}

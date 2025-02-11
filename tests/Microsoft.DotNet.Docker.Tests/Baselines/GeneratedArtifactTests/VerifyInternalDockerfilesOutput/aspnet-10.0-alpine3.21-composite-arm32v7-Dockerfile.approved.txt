@@ -1,0 +1,28 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+
+# Installer image
+FROM $REPO:0.0.0-preview.1-alpine3.XX-arm32v7 AS installer
+
+ARG ACCESSTOKEN
+
+# Retrieve ASP.NET Composite Runtime
+RUN aspnetcore_version=0.0.0  \
+    && wget --header="Authorization: Basic `echo $ACCESSTOKEN:$ACCESSTOKEN | base64 -w 0`" -O dotnet.tar.gz "https://artifacts.visualstudio.com/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz" \
+    && dotnet_sha512='{sha512_placeholder}' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /dotnet \
+    && tar -oxzf dotnet.tar.gz -C /dotnet \
+    && rm dotnet.tar.gz
+
+
+# ASP.NET Composite Image
+FROM $REPO:0.0.0-preview.1-alpine3.XX-arm32v7
+
+ENV \
+    # .NET Runtime version
+    DOTNET_VERSION=0.0.0 \
+    # ASP.NET Core version
+    ASPNET_VERSION=0.0.0
+
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

@@ -1,0 +1,23 @@
+# syntax=docker/dockerfile:1
+ARG REPO=mcr.microsoft.com/dotnet/sdk
+FROM $REPO:0.0.0-noble-amd64
+
+COPY <<EOF /etc/apt/sources.list.d/arm64.sources
+Types: deb
+URIs: http://ports.ubuntu.com/ubuntu-ports/
+Suites: noble noble-updates
+Components: main restricted
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+Architectures: arm64
+EOF
+
+RUN sed -i '/Signed-By/ a Architectures: amd64' /etc/apt/sources.list.d/ubuntu.sources \
+    && dpkg --add-architecture arm64 \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends \
+        clang \
+        gcc-aarch64-linux-gnu \
+        llvm \
+        zlib1g-dev \
+        zlib1g-dev:arm64 \
+    && rm -rf /var/lib/apt/lists/*

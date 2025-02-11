@@ -1,4 +1,6 @@
 $(McrTagsYmlRepo:monitor)
 $(McrTagsYmlTagGroup:9.0)
+$(McrTagsYmlTagGroup:8.1-ubuntu-chiseled)
+$(McrTagsYmlTagGroup:8.1-cbl-mariner-distroless)
 $(McrTagsYmlTagGroup:8.0-ubuntu-chiseled)
 $(McrTagsYmlTagGroup:8.0-cbl-mariner-distroless)

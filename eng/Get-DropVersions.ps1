@@ -348,5 +348,7 @@ if ($UpdateDependencies)
     }
 } else {
     Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
-    Write-Output "##vso[task.setvariable variable=internalBaseUrl]$internalBaseUrl"
+    if ($UseInternalBuild) {
+        Write-Output "##vso[task.setvariable variable=internalBaseUrl]$internalBaseUrl"
+    }
 }
