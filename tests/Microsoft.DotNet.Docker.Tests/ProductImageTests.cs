@@ -313,6 +313,8 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 { OS: string os } when os.Contains(OS.AzureLinux) => new[]
                     {
+                        "SymCrypt",
+                        "SymCrypt-OpenSSL",
                         "azurelinux-release",
                         "distroless-packages-minimal",
                         "filesystem",
