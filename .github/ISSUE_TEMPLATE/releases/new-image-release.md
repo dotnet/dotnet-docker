@@ -21,7 +21,7 @@ title: "Add image for ___"
             - See the [supported tags policy](https://github.com/dotnet/dotnet-docker/blob/nightly/documentation/supported-tags.md)
           to see which tagging patterns to follow.
     1. - [ ] Run the commands to generate the Dockerfiles and READMEs based on templates:
-        1. - [ ] `pwsh .\eng\readme-templates\Get-GeneratedDockerfiles.ps1`
+        1. - [ ] `pwsh .\eng\dockerfile-templates\Get-GeneratedDockerfiles.ps1`
         1. - [ ] `pwsh .\eng\readme-templates\Get-GeneratedReadmes.ps1`
         1. - [ ] Inspect generated changes for correctness
 1. - [ ] Update tests
