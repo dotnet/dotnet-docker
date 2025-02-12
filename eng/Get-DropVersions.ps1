@@ -110,7 +110,7 @@ function ResolveSdkUrl([string]$sdkVersion, [bool]$useStableBranding) {
         $sdkUrl = "https://dotnetstage.blob.core.windows.net/$containerVersion-internal/Sdk/$sdkVersion/$zipFile"
     }
     else {
-        $sdkUrl = "https://dotnetbuilds.blob.core.windows.net/public/Sdk/$sdkVersion/$zipFile"
+        $sdkUrl = "https://ci.dot.net/public/Sdk/$sdkVersion/$zipFile"
     }
     return $sdkUrl
 }
@@ -348,7 +348,6 @@ if ($UpdateDependencies)
     }
 } else {
     Write-Output "##vso[task.setvariable variable=versionInfos]$($versionInfos | ConvertTo-Json -Compress -AsArray)"
-
     if ($UseInternalBuild) {
         Write-Output "##vso[task.setvariable variable=internalBaseUrl]$internalBaseUrl"
     }
