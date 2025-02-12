@@ -7,7 +7,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.1.25110.21 \
+    DOTNET_SDK_VERSION=10.0.100-preview.1.25110.2 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -25,7 +25,7 @@ RUN apk add --upgrade --no-cache \
 
 # Install .NET SDK
 RUN wget -O dotnet.tar.gz https://ci.dot.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='955244630f8c2b34cd3045a8d89f4193133cea910a555cd79c480fee4d8ab4fe301dead01c9958a26606da92b34cb0d15ef1aeed398de90c49de64f214d1ae50' \
+    && dotnet_sha512='4aea96dcd6e48c3ed8619b48f9611e948c65b1ac63b43259d246272f9b7cb97b442fb57d27cbee574d237f9a0e041c3f518ce9941a2724c594966ca0a54b0cd0' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
