@@ -36,7 +36,7 @@ namespace Microsoft.DotNet.Docker.Tests
             "monitor",
             "monitor-base",
             "aspire-dashboard",
-            "reverse-proxy"
+            "yarp"
         ];
 
         private enum TestType

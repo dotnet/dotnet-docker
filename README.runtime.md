@@ -60,7 +60,7 @@ They contain the following features:
 * [dotnet/nightly/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor.md): .NET Monitor Tool (Preview)
 * [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): .NET Aspire Dashboard (Preview)
-* [dotnet/nightly/reverse-proxy](https://github.com/dotnet/dotnet-docker/blob/nightly/README.reverse-proxy.md): .NET Reverse Proxy (YARP) (Preview)
+* [dotnet/nightly/yarp](https://github.com/dotnet/dotnet-docker/blob/nightly/README.yarp.md): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:

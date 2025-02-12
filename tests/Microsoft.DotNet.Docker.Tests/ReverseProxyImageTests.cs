@@ -11,25 +11,25 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-[Trait("Category", "reverse-proxy")]
-public class ReverseProxyImageTests(ITestOutputHelper outputHelper) : CommonRuntimeImageTests(outputHelper)
+[Trait("Category", "yarp")]
+public class YarpImageTests(ITestOutputHelper outputHelper) : CommonRuntimeImageTests(outputHelper)
 {
     private const string AppPath = "/app";
 
     private const int YarpWebPort = 5000;
 
 
-    protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Reverse_Proxy;
+    protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Yarp;
 
     public static IEnumerable<object[]> GetImageData() =>
-        TestData.GetReverseProxyImageData()
+        TestData.GetYarpImageData()
             .Select(imageData => new object[] { imageData });
 
     [DotNetTheory]
     [MemberData(nameof(GetImageData))]
     public async Task VerifyBasicScenario(ProductImageData imageData)
     {
-        ReverseProxyBasicScenario testScenario = new(YarpWebPort, imageData, DockerHelper, OutputHelper);
+        YarpBasicScenario testScenario = new(YarpWebPort, imageData, DockerHelper, OutputHelper);
         await testScenario.ExecuteAsync();
     }
 

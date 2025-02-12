@@ -1,35 +1,19 @@
-## About
+# YARP (Yet Another Reverse Proxy)
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://mcr.microsoft.com/catalog?search=dotnet) for images with official releases of [.NET](https://github.com/dotnet/core).
-
-This image contains an implementation of YARP, a reverse proxy framework in .NET.
-
-Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
+> See [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 ## Featured Tags
 
 * `2.3-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/reverse-proxy:2.3-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:2.3-preview`
 
-## Related Repositories
+## About
 
-.NET:
+This image contains an implementation of YARP, a reverse proxy framework in .NET.
 
-* [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
-* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/nightly/aspire-dashboard/about): .NET Aspire Dashboard (Preview)
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
-
-.NET Framework:
-
-* [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
+Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 ## Usage
 
@@ -37,7 +21,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 You can run this image to launch a YARP instance.
 
-YARP expects the config file to be in `/etc/reverse-proxy.config`, and listens by default on port 5000.
+YARP expects the config file to be in `/etc/yarp.config`, and listens by default on port 5000.
 
 Example of configuration:
 
@@ -80,20 +64,55 @@ It can then be used with the following command (where `my-config.config` is a fi
 
 ```bash
 docker run --rm --name myaspnetapp -d -t  mcr.microsoft.com/dotnet/samples:aspnetapp 
-docker run --rm -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/reverse-proxy:latest
+docker run --rm -v $(pwd)/my-config.config:/etc/yarp.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/yarp:latest
 ```
 
 This example will proxy every requests from `http://localhost:5000/aspnetapp` to the `mcr.microsoft.com/dotnet/samples:aspnetapp` container deployed.
 
-The [YARP GitHub repository](https://github.com/microsoft/reverse-proxy/tree/main/samples/) contains more configuration samples.
+The [YARP GitHub repository](https://github.com/dotnet/yarp/tree/main/samples/) contains more configuration samples.
 
-For more details, see the [documentation](https://microsoft.github.io/reverse-proxy/articles/index.html) for how to configure the image and documentation for the reverse proxy configuration.
+For more details, see the [documentation](https://aka.ms/YarpDocumentation) for how to configure the image and documentation for the reverse proxy configuration.
+
+## Related Repositories
+
+.NET:
+
+* [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
+* [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor.md): .NET Monitor Tool (Preview)
+* [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): .NET Aspire Dashboard (Preview)
+* [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
+
+.NET Framework:
+
+* [dotnet/framework](https://github.com/microsoft/dotnet-framework-docker/blob/main/README.md): .NET Framework, ASP.NET and WCF
+* [dotnet/framework/samples](https://github.com/microsoft/dotnet-framework-docker/blob/main/README.samples.md): .NET Framework, ASP.NET and WCF Samples
+
+## Full Tag Listing
+
+### Linux amd64 Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+2.3.0-preview.1, 2.3-preview, 2-preview, latest | [Dockerfile](src/yarp/2.3/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+
+### Linux arm64 Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+2.3.0-preview.1, 2.3-preview, 2-preview, latest | [Dockerfile](src/yarp/2.3/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+<!--End of generated tags-->
+
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/yarp/tags/list) for all supported and unsupported tags.*
 
 ## Support
 
 ### Lifecycle
 
-* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)
+* [Microsoft Support for YARP](https://github.com/dotnet/yarp/blob/main/docs/roadmap.md)
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)

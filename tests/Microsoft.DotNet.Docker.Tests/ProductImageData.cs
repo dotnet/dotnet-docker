@@ -189,7 +189,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 case DotNetImageRepo.Runtime_Deps:
                 case DotNetImageRepo.Monitor:
                 case DotNetImageRepo.Aspire_Dashboard:
-                case DotNetImageRepo.Reverse_Proxy:
+                case DotNetImageRepo.Yarp:
                     imageVersion = Version;
                     os = OSTag;
                     break;

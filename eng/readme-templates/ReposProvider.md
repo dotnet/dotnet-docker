@@ -17,7 +17,7 @@
         ["dotnet/aspire-dashboard", ".NET Aspire Dashboard"]
     ] ^
     set nightlyOnlyRepos to [
-        ["dotnet/reverse-proxy", ".NET Reverse Proxy (YARP)"]
+        ["dotnet/yarp", "YARP (Yet Another Reverse Proxy)"]
     ] ^
     set productFamilyRepos to [
         ["dotnet", ".NET", 1]

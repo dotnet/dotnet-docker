@@ -37,7 +37,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 * [dotnet/nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor/base](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor-base/): .NET Monitor Base (Preview)
 * [dotnet/nightly/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-nightly-aspire-dashboard/): .NET Aspire Dashboard (Preview)
-* [dotnet/nightly/reverse-proxy](https://hub.docker.com/r/microsoft/dotnet-nightly-reverse-proxy/): .NET Reverse Proxy (YARP) (Preview)
+* [dotnet/nightly/yarp](https://hub.docker.com/r/microsoft/dotnet-nightly-yarp/): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
 .NET Framework:
