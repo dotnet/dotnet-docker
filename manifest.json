@@ -9101,7 +9101,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.0/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9119,7 +9119,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.0/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9146,7 +9146,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.0/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -9164,7 +9164,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.0/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -9195,7 +9195,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.1/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9216,7 +9216,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.1/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9247,7 +9247,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -9268,7 +9268,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
@@ -9300,7 +9300,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/9.0/azurelinux-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
@@ -9318,7 +9318,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/9.0/azurelinux-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
