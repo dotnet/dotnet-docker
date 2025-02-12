@@ -137,11 +137,12 @@
     "mingit|10.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|10.0|x64|sha": "$(mingit|latest|x64|sha)",
 
+    "monitor|8|major-tag": "8",
+
     "monitor|8.0|build-version": "8.0.8",
     "monitor|8.0|product-version": "8.0.8",
     "monitor|8.0|fixed-tag": "$(monitor|8.0|product-version)",
     "monitor|8.0|minor-tag": "8.0",
-    "monitor|8|major-tag": "8",
     "monitor|8.0|base-url|main": "$(base-url|public|maintenance|main)",
     "monitor|8.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
     "monitor-base|8.0|linux|x64|sha": "1761d0754ed60014cca4e5c76d2c0abb2e2aaea91f22800c3411397fbde012120610abb5c46398f841031b2bfeb16d59ef0ab81d49dccc1a9648d6a6c06a6c15",
@@ -164,11 +165,12 @@
     "monitor-ext-s3storage|8.1|linux|x64|sha": "750b86927b6f0d9e87d184552c244158302b231e87ca3ea84452eb035287602c666396a4fab8e337090c9cf036f6bc58551236f71a2eecdeac12cfce702cdee0",
     "monitor-ext-s3storage|8.1|linux|arm64|sha": "5142d86c818aa9de4e84b71e7571bfd8bc61607bb8d5863413ef4a5e15eff88f0ef44e27464062bf31c4e7704c256ad272d8151b79392cfee93a265775966202",
 
+    "monitor|9|major-tag": "9",
+
     "monitor|9.0|build-version": "9.0.2",
     "monitor|9.0|product-version": "9.0.2",
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
     "monitor|9.0|minor-tag": "9.0",
-    "monitor|9|major-tag": "9",
     "monitor|9.0|base-url|main": "$(base-url|public|maintenance|main)",
     "monitor|9.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
     "monitor-base|9.0|linux|x64|sha": "6b2c21a5bccf45d1fd1e0646b35c91c4655ef1d3711c1e5a68681cb56f2994b5a8b6f3fbf132b0668a0a6a904ed16a32c98983d2dc18d618acb201bb0d12ca78",
