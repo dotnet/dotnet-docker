@@ -228,7 +228,6 @@ namespace Dotnet.Docker
                 .Replace("/dotnetcli", "/dotnetclichecksums")
                 .Replace("/internal/", "/internal-checksums/")
                 .Replace("/public/", "/public-checksums/")
-                .Replace("azureedge.net", "blob.core.windows.net")
                 + ".sha512";
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");

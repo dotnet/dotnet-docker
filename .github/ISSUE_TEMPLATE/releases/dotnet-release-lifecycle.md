@@ -13,6 +13,8 @@ Add due dates to each of the issues so that we don't lose track of them.
 
 ## Alpha
 
+- [ ] Create a new Milestone in this repo for the new .NET version
+  - [ ] Update the `https://aka.ms/netcontainers-roadmap` short link to the new milestone. You can do this from [aka.ms](https://aka.ms/). It is linked to from [dotnet/core/roadmap.md](https://github.com/dotnet/core/blob/main/roadmap.md).
 - [ ] Add new .NET version images to `nightly` branch
   - [ ] Create new images
     - [ ] Add entries for the new .NET versions in `manifest.versions.json`
@@ -81,7 +83,7 @@ Create announcement:
 
 ## EOL
 
-- [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue)
+- [ ] Remove EOL .NET version from `main` and `nightly` branches (one issue) on the EOL date (or the day after, if necessary)
   - [ ] Remove all entries for the EOL .NET version in:
     - [ ] `manifest.json`
     - [ ] `manifest.versions.json`

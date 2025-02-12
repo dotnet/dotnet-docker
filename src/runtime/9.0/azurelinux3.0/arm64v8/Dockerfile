@@ -1,16 +1,16 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:9.0.1-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:9.0.2-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.1 \
+RUN dotnet_version=9.0.2 \
     && curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-    && dotnet_sha512='38399b6139f72ef1d836e418455494a80428bf41f3aaf2351749ff144311766487533d5a3c9bd359c189b9373f24377ae886827f45272c4019e22b594773b87b' \
+    && dotnet_sha512='460133ddc2582a209bd80673721e7b9add2b9b2967ef1503a7dc29be2777870870990ee7549351e8207c3e3e84dabeca6d5bdbbdea75e5e3e749eb16bd13e7ef' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -18,10 +18,10 @@ RUN dotnet_version=9.0.1 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.1-azurelinux3.0-arm64v8
+FROM $REPO:9.0.2-azurelinux3.0-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.1
+ENV DOTNET_VERSION=9.0.2
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
