@@ -60,6 +60,12 @@ Tags | Dockerfile | OS Version
 8.0.8-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.8-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.8, 8.0 | [Dockerfile](src/monitor-base/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.0.8-cbl-mariner-distroless-amd64, 8.0-cbl-mariner-distroless-amd64, 8.0.8-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor-base/8.0/cbl-mariner-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 
+#### .NET Monitor Preview Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+9.1.0-alpha.1-amd64, 9.1-preview-amd64, 9.1.0-alpha.1, 9.1-preview | [Dockerfile](src/monitor-base/9.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
@@ -69,6 +75,12 @@ Tags | Dockerfile | OS Version
 8.1.0-cbl-mariner-distroless-arm64v8, 8.1-cbl-mariner-distroless-arm64v8, 8-cbl-mariner-distroless-arm64v8, 8.1.0-cbl-mariner-distroless, 8.1-cbl-mariner-distroless, 8-cbl-mariner-distroless | [Dockerfile](src/monitor-base/8.1/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 8.0.8-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.8-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.8, 8.0 | [Dockerfile](src/monitor-base/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.8-cbl-mariner-distroless-arm64v8, 8.0-cbl-mariner-distroless-arm64v8, 8.0.8-cbl-mariner-distroless, 8.0-cbl-mariner-distroless | [Dockerfile](src/monitor-base/8.0/cbl-mariner-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
+
+#### .NET Monitor Preview Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+9.1.0-alpha.1-arm64v8, 9.1-preview-arm64v8, 9.1.0-alpha.1, 9.1-preview | [Dockerfile](src/monitor-base/9.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/monitor/base/tags/list) for all supported and unsupported tags.*
