@@ -5,7 +5,7 @@
 # Featured Tags
 
 * `2.3-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/reverse-proxy:2.3-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:2.3-preview`
 
 # About
 
@@ -19,7 +19,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 You can run this image to launch a YARP instance.
 
-YARP expects the config file to be in `/etc/reverse-proxy.config`, and listens by default on port 5000.
+YARP expects the config file to be in `/etc/yarp.config`, and listens by default on port 5000.
 
 Example of configuration:
 
@@ -62,14 +62,14 @@ It can then be used with the following command (where `my-config.config` is a fi
 
 ```bash
 docker run --rm --name myaspnetapp -d -t  mcr.microsoft.com/dotnet/samples:aspnetapp 
-docker run --rm -v $(pwd)/my-config.config:/etc/reverse-proxy.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/reverse-proxy:latest
+docker run --rm -v $(pwd)/my-config.config:/etc/yarp.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/yarp:latest
 ```
 
 This example will proxy every requests from `http://localhost:5000/aspnetapp` to the `mcr.microsoft.com/dotnet/samples:aspnetapp` container deployed.
 
-The [YARP GitHub repository](https://github.com/microsoft/reverse-proxy/tree/main/samples/) contains more configuration samples.
+The [YARP GitHub repository](https://github.com/dotnet/yarp/tree/main/samples/) contains more configuration samples.
 
-For more details, see the [documentation](https://microsoft.github.io/reverse-proxy/articles/index.html) for how to configure the image and documentation for the reverse proxy configuration.
+For more details, see the [documentation](https://aka.ms/YarpDocumentation) for how to configure the image and documentation for the reverse proxy configuration.
 
 # Related Repositories
 
@@ -91,13 +91,13 @@ For more details, see the [documentation](https://microsoft.github.io/reverse-pr
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/reverse-proxy/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.reverse-proxy.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/yarp/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.yarp.md#full-tag-listing).
 
 # Support
 
 ## Lifecycle
 
-* [Microsoft Support for YARP](https://github.com/microsoft/reverse-proxy/blob/main/docs/roadmap.md)
+* [Microsoft Support for YARP](https://github.com/dotnet/yarp/blob/main/docs/roadmap.md)
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)

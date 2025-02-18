@@ -20,8 +20,8 @@ param(
     [string]$Mode = "BuildAndTest",
 
     # Categories of tests to run
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard", "reverse-proxy")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard", "reverse-proxy")
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard", "yarp")]
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard", "yarp")
 )
 
 [System.Collections.ArrayList]$TestCategories = $TestCategories

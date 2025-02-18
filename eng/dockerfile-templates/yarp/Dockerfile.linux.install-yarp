@@ -1,15 +1,15 @@
 {{
     set yarpMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set buildVersion to VARIABLES[cat("reverse-proxy|", yarpMajorMinor, "|build-version")] ^
+    set buildVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|build-version")] ^
     set yarpVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
-    set yarpVersion to VARIABLES[cat("reverse-proxy|", yarpMajorMinor, "|", yarpVersionVariable)] ^
+    set yarpVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|", yarpVersionVariable)] ^
     set versionFolder to when(buildVersion != yarpVersion, buildVersion, '$yarp_version') ^
-    set yarpBaseUrl to cat(VARIABLES[cat("reverse-proxy|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])], "/reverse-proxy/", versionFolder, "/") ^
+    set yarpBaseUrl to cat(VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])], "/reverse-proxy/", versionFolder, "/") ^
     set files to [
         [
-            "filename": "reverse-proxy.zip",
+            "filename": "yarp.zip",
             "url": cat(yarpBaseUrl, "reverse-proxy-linux-", ARCH_SHORT, ".zip"),
-            "sha": VARIABLES[join(["reverse-proxy", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
+            "sha": VARIABLES[join(["yarp", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
             "sha-var-name": "yarp_sha512"
         ]
     ]

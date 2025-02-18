@@ -4,6 +4,8 @@
 
 # Featured Tags
 
+* `10.0-preview` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview`
 * `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:9.0`
 * `8.0` (Long-Term Support)
@@ -54,7 +56,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 * [dotnet/nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 * [dotnet/nightly/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-nightly-aspire-dashboard/): .NET Aspire Dashboard (Preview)
-* [dotnet/nightly/reverse-proxy](https://hub.docker.com/r/microsoft/dotnet-nightly-reverse-proxy/): .NET Reverse Proxy (YARP) (Preview)
+* [dotnet/nightly/yarp](https://hub.docker.com/r/microsoft/dotnet-nightly-yarp/): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
 .NET Framework:

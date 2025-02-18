@@ -426,7 +426,7 @@ namespace Microsoft.DotNet.Docker.Tests
             },
         };
 
-        private static readonly ProductImageData[] s_ReverseProxyTestData =
+        private static readonly ProductImageData[] s_YarpTestData =
         [
             new() {
                 Version = new ImageVersion(new Version(2,3), isPreview: true),
@@ -435,7 +435,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 OSTag = "",
                 OSDir = OS.AzureLinux30Distroless,
                 Arch = Arch.Amd64,
-                SupportedImageRepos = DotNetImageRepo.Reverse_Proxy,
+                SupportedImageRepos = DotNetImageRepo.Yarp,
             },
             new() {
                 Version = new ImageVersion(new Version(2,3), isPreview: true),
@@ -444,7 +444,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 OSTag = "",
                 OSDir = OS.AzureLinux30Distroless,
                 Arch = Arch.Arm64,
-                SupportedImageRepos = DotNetImageRepo.Reverse_Proxy
+                SupportedImageRepos = DotNetImageRepo.Yarp
             },
         ];
 
@@ -455,7 +455,7 @@ namespace Microsoft.DotNet.Docker.Tests
             ..s_AspireDashboardTestData,
             ..s_linuxMonitorTestData,
             ..s_windowsMonitorTestData,
-            ..s_ReverseProxyTestData,
+            ..s_YarpTestData,
         ];
 
         public static IEnumerable<ProductImageData> GetImageData(
@@ -505,15 +505,15 @@ namespace Microsoft.DotNet.Docker.Tests
                 .Cast<ProductImageData>();
         }
 
-        public static IEnumerable<ProductImageData> GetReverseProxyImageData()
+        public static IEnumerable<ProductImageData> GetYarpImageData()
         {
             if (!DockerHelper.IsLinuxContainerModeEnabled)
             {
                 return [];
             }
 
-            return s_ReverseProxyTestData
-                .FilterImagesByPath(DotNetImageRepo.Reverse_Proxy)
+            return s_YarpTestData
+                .FilterImagesByPath(DotNetImageRepo.Yarp)
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();
