@@ -10,6 +10,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
+* `10.0-preview` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:10.0-preview`
 * `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:9.0`
 * `8.0` (Long-Term Support)
