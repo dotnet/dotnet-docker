@@ -1,0 +1,9 @@
+{
+    "build": {
+        "dockerfile": "Dockerfile"
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "postCreateCommand": "docker pull mcr.microsoft.com/dotnet-buildtools/image-builder:latest"
+}
