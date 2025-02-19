@@ -166,6 +166,7 @@
     "monitor-ext-s3storage|8.1|linux|arm64|sha": "5142d86c818aa9de4e84b71e7571bfd8bc61607bb8d5863413ef4a5e15eff88f0ef44e27464062bf31c4e7704c256ad272d8151b79392cfee93a265775966202",
 
     "monitor|9|major-tag": "9",
+    "monitor|9|major-preview-tag": "9-preview",
 
     "monitor|9.0|build-version": "9.0.2",
     "monitor|9.0|product-version": "9.0.2",

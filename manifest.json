@@ -10128,8 +10128,7 @@
           "sharedTags": {
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
-            "$(monitor|9|major-tag)": {},
-            "latest": {}
+            "$(monitor|9|major-tag)": {}
           },
           "platforms": [
             {
@@ -10166,7 +10165,9 @@
           "productVersion": "$(monitor|9.1|product-version)",
           "sharedTags": {
             "$(monitor|9.1|fixed-tag)": {},
-            "$(monitor|9.1|minor-tag)": {}
+            "$(monitor|9.1|minor-tag)": {},
+            "$(monitor|9|major-preview-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -10400,8 +10401,7 @@
           "sharedTags": {
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
-            "$(monitor|9|major-tag)": {},
-            "latest": {}
+            "$(monitor|9|major-tag)": {}
           },
           "platforms": [
             {
@@ -10446,7 +10446,9 @@
           "productVersion": "$(monitor|9.1|product-version)",
           "sharedTags": {
             "$(monitor|9.1|fixed-tag)": {},
-            "$(monitor|9.1|minor-tag)": {}
+            "$(monitor|9.1|minor-tag)": {},
+            "$(monitor|9|major-preview-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
