@@ -1,4 +1,17 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
+# Installer image
+FROM $REPO:9.0.2-alpine3.20-arm32v7 AS installer
+
+# Install .NET SDK
+RUN wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.200/dotnet-sdk-9.0.200-linux-musl-arm.tar.gz \
+    && dotnet_sha512='4297ed3b4f112e1d64a6617cb96191bfb4ebf6a5fbd01c75de6c0592897173f011aef3d9be7e61738e0c8ce8ba1815b06f28e0c251c840f2e0de2630d36616ca' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /usr/share/dotnet \
+    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm dotnet.tar.gz
+
+
+# .NET SDK image
 FROM $REPO:9.0.2-alpine3.20-arm32v7
 
 ENV \
@@ -25,12 +38,7 @@ RUN apk add --upgrade --no-cache \
         libatomic \
         tzdata
 
-# Install .NET SDK
-RUN wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-arm.tar.gz \
-    && dotnet_sha512='4297ed3b4f112e1d64a6617cb96191bfb4ebf6a5fbd01c75de6c0592897173f011aef3d9be7e61738e0c8ce8ba1815b06f28e0c251c840f2e0de2630d36616ca' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz \
-    # Trigger first run experience by running arbitrary cmd
-    && dotnet help
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+
+# Trigger first run experience by running arbitrary cmd
+RUN dotnet help

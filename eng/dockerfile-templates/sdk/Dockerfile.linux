@@ -62,7 +62,7 @@
             ]
         )), len)
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
-{{if isInternal || useJammyArm32Workaround:# Installer image
+# Installer image
 FROM {{internalInstallerBase}} AS installer{{if isInternal:
 
 ARG ACCESSTOKEN}}
@@ -76,13 +76,13 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
         "install-method": "download-and-install",
         "is-internal": isInternal,
-        "disable-first-run-experience": useJammyArm32Workaround,
-        "no-version-env-var": useJammyArm32Workaround
+        "disable-first-run-experience": "true",
+        "no-version-env-var": "true"
     ])}}
 
 
 # .NET SDK image
-}}FROM {{baseImageTag}}
+FROM {{baseImageTag}}
 
 {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal, "include-powershell-vars": includePowerShellVars])}}
 
@@ -91,12 +91,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     "pkgs": pkgs
 ])}}
 
-{{if isInternal || useJammyArm32Workaround:COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 
-{{InsertTemplate("Dockerfile.linux.first-run")}}^else:{{
-    InsertTemplate("Dockerfile.linux.install-sdk",
-    [
-        "install-method": "download-and-install",
-    ])}}}}{{if isPowerShellSupported:
+{{InsertTemplate("Dockerfile.linux.first-run")}}{{if isPowerShellSupported:
 
 {{InsertTemplate("Dockerfile.linux.install-powershell")}}}}
