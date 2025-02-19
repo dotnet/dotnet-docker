@@ -4,22 +4,22 @@
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "customizations": {
-		"vscode": {
-			"extensions": [
-				"ms-dotnettools.csdevkit",
-				"GitHub.copilot"
-			],
-			"settings": {
-				"remote.autoForwardPorts": true,
-				"remote.autoForwardPortsSource": "hybrid",
-				"remote.otherPortsAttributes": {
-					"onAutoForward": "ignore"
-				},
+        "vscode": {
+            "extensions": [
+                "ms-dotnettools.csdevkit",
+                "GitHub.copilot"
+            ],
+            "settings": {
+                "remote.autoForwardPorts": true,
+                "remote.autoForwardPortsSource": "hybrid",
+                "remote.otherPortsAttributes": {
+                    "onAutoForward": "ignore"
+                },
                 "terminal.integrated.defaultProfile.linux": "bash",
-				"dotnet.defaultSolution": "tests/Microsoft.DotNet.Docker.Tests/Microsoft.DotNet.Docker.Tests.csproj"
-			}
-		}
-	},
+                "dotnet.defaultSolution": "tests/Microsoft.DotNet.Docker.Tests/Microsoft.DotNet.Docker.Tests.csproj"
+            }
+        }
+    },
     "remoteUser": "app",
     "updateContentCommand": "docker pull mcr.microsoft.com/dotnet-buildtools/image-builder:latest"
 }
