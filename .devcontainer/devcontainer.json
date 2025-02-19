@@ -15,8 +15,7 @@
                 "remote.otherPortsAttributes": {
                     "onAutoForward": "ignore"
                 },
-                "terminal.integrated.defaultProfile.linux": "bash",
-                "dotnet.defaultSolution": "tests/Microsoft.DotNet.Docker.Tests/Microsoft.DotNet.Docker.Tests.csproj"
+                "terminal.integrated.defaultProfile.linux": "bash"
             }
         }
     },
