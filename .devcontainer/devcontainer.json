@@ -1,0 +1,24 @@
+{
+    "image": "mcr.microsoft.com/dotnet/sdk:9.0-noble",
+    "features": {
+        "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+    },
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-dotnettools.csdevkit",
+                "GitHub.copilot"
+            ],
+            "settings": {
+                "remote.autoForwardPorts": true,
+                "remote.autoForwardPortsSource": "hybrid",
+                "remote.otherPortsAttributes": {
+                    "onAutoForward": "ignore"
+                },
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    },
+    "remoteUser": "app",
+    "updateContentCommand": "docker pull mcr.microsoft.com/dotnet-buildtools/image-builder:latest"
+}
