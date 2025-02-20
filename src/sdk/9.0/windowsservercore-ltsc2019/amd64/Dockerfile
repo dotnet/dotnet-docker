@@ -1,21 +1,9 @@
 # escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-FROM $REPO:9.0.2-windowsservercore-ltsc2019
 
-ENV `
-    # Do not generate certificate
-    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
-    # Do not show first run text
-    DOTNET_NOLOGO=true `
-    # SDK version
-    DOTNET_SDK_VERSION=9.0.200 `
-    # Enable correct mode for dotnet watch (only mode supported in a container)
-    DOTNET_USE_POLLING_FILE_WATCHER=true `
-    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip `
-    # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-WindowsServerCore-ltsc2019
+# Installer image
+FROM mcr.microsoft.com/windows/servercore:ltsc2019-amd64 AS installer
 
 # Download MinGit
 RUN powershell -Command " `
@@ -37,13 +25,15 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        Invoke-WebRequest -OutFile dotnet.zip https://builds.dotnet.microsoft.com/dotnet/Sdk/$Env:DOTNET_SDK_VERSION/dotnet-sdk-$Env:DOTNET_SDK_VERSION-win-x64.zip; `
+        $sdk_version = '9.0.200'; `
+        Invoke-WebRequest -OutFile dotnet.zip https://builds.dotnet.microsoft.com/dotnet/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
         $dotnet_sha512 = 'e274e0e8a0d926c58a2199e020fc5b2c2867689772f51673f655ee853a50a9ca0e435ae5682bb4ae146d1fbc9a40f6d4a7ecff14d5fea24db8a3f67d0dcbf2a9'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
-        tar -oxzf dotnet.zip -C $Env:ProgramFiles\dotnet ./LICENSE.txt ./ThirdPartyNotices.txt ./packs ./sdk ./sdk-manifests ./templates ./shared/Microsoft.WindowsDesktop.App; `
+        mkdir dotnet; `
+        tar -oxzf dotnet.zip -C dotnet ./LICENSE.txt ./ThirdPartyNotices.txt ./packs ./sdk ./sdk-manifests ./templates ./shared/Microsoft.WindowsDesktop.App; `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
@@ -59,7 +49,28 @@ RUN powershell -Command " `
         Remove-Item -Force PowerShell.Windows.x64.$powershell_version.nupkg; `
         Remove-Item -Path $Env:ProgramFiles\powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force;"
 
+# SDK image
+FROM $REPO:9.0.2-windowsservercore-ltsc2019
+
+ENV `
+    # Do not generate certificate
+    DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
+    # Do not show first run text
+    DOTNET_NOLOGO=true `
+    # SDK version
+    DOTNET_SDK_VERSION=9.0.200 `
+    # Enable correct mode for dotnet watch (only mode supported in a container)
+    DOTNET_USE_POLLING_FILE_WATCHER=true `
+    # Skip extraction of XML docs - generally not useful within an image/container - helps performance
+    NUGET_XMLDOC_MODE=skip `
+    # PowerShell telemetry for docker image usage
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-WindowsServerCore-ltsc2019
+
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell;C:\Program Files\MinGit\cmd"
+
+COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
+COPY --from=installer ["/powershell", "/Program Files/powershell"]
+COPY --from=installer ["/MinGit", "/Program Files/MinGit"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
