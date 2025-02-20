@@ -11,9 +11,7 @@
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
-    set destDir to when(isAlpine && !ARGS["is-internal"],
-        "/usr/share/dotnet",
-        when(isDistroless, "/dotnet", "")) ^
+    set destDir to "/dotnet" ^
     set aspnetVersionDir to when(ARGS["use-local-version-var"],
         "$aspnetcore_version",
         when(ARGS["is-internal"],
