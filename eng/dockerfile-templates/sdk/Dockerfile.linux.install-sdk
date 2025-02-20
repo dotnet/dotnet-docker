@@ -78,6 +78,6 @@ if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion
         "skip-download": !downloadEnabled,
         "skip-install": !installEnabled,
         "install-dir": installDir,
-        "create-install-dir": !isFullAzureLinux
+        "create-install-dir": "true"
     ], "    ")}}{{if !ARGS["disable-first-run-experience"] && !ARGS["is-internal"]: \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}

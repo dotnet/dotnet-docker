@@ -53,5 +53,5 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
             "skip-download": !downloadEnabled,
             "skip-install": !installEnabled,
             "install-dir": destDir
-            "create-install-dir": isDistroless
+            "create-install-dir": "true"
         ], "    ")}}
