@@ -19,6 +19,7 @@
 - To build Dockerfiles, run `pwsh ./build-and-test.ps1 -mode 'Build' -paths '*glob*pattern*'`. For example, to build all .NET 9.0 Ubuntu Noble images, run `./build-and-test.ps1 -paths '*9.0*noble*'`.
 - To run image tests, run `pwsh ./tests/run-tests.ps1 -paths '*glob*pattern*'`.
 - To run only the pre-build validation tests, run `pwsh ./tests/run-tests.ps1 -paths '*glob*pattern*'` script with the `pre-build` test category.
+
 ## Other
 
 - Do not edit files in `eng/common/`.
