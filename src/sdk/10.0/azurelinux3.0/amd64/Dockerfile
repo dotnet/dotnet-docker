@@ -10,7 +10,7 @@ RUN tdnf install -y \
 RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.1.25112.18/dotnet-sdk-10.0.100-preview.1.25112.18-linux-x64.tar.gz \
     && dotnet_sha512='7d577beb8f0f35f67303366021316273aad8ebeb1b2e0c5554db6c705d96e2b0975a18616bff47c467f7327594fae5a86ca6011bebfc389a570185c893311036' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 
@@ -39,7 +39,7 @@ RUN tdnf install -y \
         tar \
     && tdnf clean all
 
-COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help

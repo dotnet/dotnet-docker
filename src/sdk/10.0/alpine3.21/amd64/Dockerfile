@@ -6,8 +6,8 @@ FROM $REPO:10.0.0-preview.1-alpine3.21-amd64 AS installer
 RUN wget -O dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.1.25112.18/dotnet-sdk-10.0.100-preview.1.25112.18-linux-musl-x64.tar.gz \
     && dotnet_sha512='157659be65d88a23f2c6ab799e7e448871fb8c12ac8cb4822f243c616caae02430ac08b117deb761dde67944f74aa79ad4c529a58e771317a43c31274ca38669' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && mkdir -p /dotnet \
+    && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 
@@ -40,7 +40,7 @@ RUN apk add --upgrade --no-cache \
         libatomic \
         tzdata
 
-COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help

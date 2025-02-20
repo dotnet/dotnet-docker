@@ -14,7 +14,7 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
-    set installDir to "/usr/share/dotnet" ^
+    set installDir to "/dotnet" ^
     set url to cat(
         VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-", platform, "-", ARCH_SHORT, ".tar.gz") ^

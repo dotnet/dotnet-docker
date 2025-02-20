@@ -91,7 +91,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     "pkgs": pkgs
 ])}}
 
-COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 {{InsertTemplate("Dockerfile.linux.first-run")}}{{if isPowerShellSupported:
 

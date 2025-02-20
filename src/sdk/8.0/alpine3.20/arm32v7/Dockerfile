@@ -6,8 +6,8 @@ FROM $REPO:8.0.13-alpine3.20-arm32v7 AS installer
 RUN wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.406/dotnet-sdk-8.0.406-linux-musl-arm.tar.gz \
     && dotnet_sha512='c4338ad18ae2e0425c4e9d6d51dd266217f33e7b64754483a6eb33b81b96f6e8086314010730166211cb96cc87c9a47fb76aefc3431b03f285cdcae2119a7cbd' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && mkdir -p /dotnet \
+    && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 
@@ -37,7 +37,7 @@ RUN apk add --upgrade --no-cache \
         icu-libs \
         tzdata
 
-COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
