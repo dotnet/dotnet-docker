@@ -24,5 +24,6 @@
         }
     },
     "remoteUser": "app",
-    "onCreateCommand": "sudo chsh -s /bin/bash app"
+    "onCreateCommand": "sudo chsh -s /bin/bash app",
+    "updateContentCommand": "docker pull mcr.microsoft.com/dotnet-buildtools/image-builder:latest"
 }
