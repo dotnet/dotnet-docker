@@ -32,29 +32,7 @@
         when(isAlpine || isFullAzureLinux,
             runtimeDepsBaseTag,
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
-}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{if isSingleStage:
-{{
-
-_ SINGLE STAGE
-
-}}FROM {{runtimeDepsBaseTag}}
-{{if isAlpine:
-{{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
-}}
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
-
-# Install .NET Runtime
-{{InsertTemplate("Dockerfile.linux.install-runtime",
-    [
-        "install-method": "download-and-install",
-        "dest-dir": "/usr/share/dotnet",
-        "add-symlink": "true"
-    ])}}^
-else:{{
-
-_ MULTI STAGE
-
-}}
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
 FROM {{installerImageTag}} AS installer
@@ -91,7 +69,7 @@ COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 
 ENTRYPOINT ["/usr/bin/dotnet"]
 CMD ["--info"]^
-elif !isSingleStage:
+else:
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}}}
+RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}
