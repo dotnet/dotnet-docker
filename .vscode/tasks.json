@@ -55,6 +55,12 @@
             ]
         },
         {
+            "label": "Verify internal Dockerfiles",
+            "type": "shell",
+            "command": "pwsh ./tests/run-tests.ps1 -paths '*' -TestCategories @('pre-build') -CustomTestFilter 'VerifyInternalDockerfiles'",
+            "group": "test"
+        },
+        {
             "label": "Test with debugger",
             "type": "process",
             "isBackground": true,
