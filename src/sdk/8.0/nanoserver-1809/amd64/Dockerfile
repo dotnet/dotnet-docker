@@ -55,6 +55,7 @@ RUN powershell -Command " `
         Get-ChildItem -Exclude 'Microsoft.WindowsDesktop.App' -Path dotnet\shared `
             | Remove-Item -Force -Recurse"
 
+
 # SDK image
 FROM $REPO:8.0.13-nanoserver-1809
 
