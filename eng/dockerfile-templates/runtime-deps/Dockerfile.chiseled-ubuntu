@@ -28,6 +28,7 @@
         ] ^
 
     set basePkgs to when (dotnetVersion = "8.0", cat(basePkgs, ["zlib1g_libs"]), basePkgs) ^
+    set basePkgs to when (dotnetVersion != "8.0" && dotnetVersion != "9.0", cat(basePkgs, ["base-files_chisel"]), basePkgs) ^
 
     _ Arrays in cottle are actually key-value maps. Sorting the array sorts by value
         but does not change the key value. In order to have the right index in the

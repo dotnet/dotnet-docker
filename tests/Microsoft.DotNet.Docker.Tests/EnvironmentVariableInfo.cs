@@ -6,14 +6,15 @@ using System.Collections.Generic;
 using FluentAssertions;
 using FluentAssertions.Execution;
 
+#nullable enable
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public class EnvironmentVariableInfo
+    public record EnvironmentVariableInfo
     {
-        public bool AllowAnyValue { get; private set; }
-        public string ExpectedValue { get; private set; }
-        public string Name { get; private set; }
-        public bool IsProductVersion { get; set; }
+        public bool AllowAnyValue { get; init; } = false;
+        public string? ExpectedValue { get; init; } = null;
+        public string Name { get; init; }
+        public bool IsProductVersion { get; init; } = false;
 
         public EnvironmentVariableInfo(string name, string expectedValue)
         {

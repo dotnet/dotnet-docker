@@ -90,6 +90,20 @@ Tags | Dockerfile | OS Version
 8.0.13-cbl-mariner2.0-distroless-amd64, 8.0-cbl-mariner2.0-distroless-amd64, 8.0.13-cbl-mariner2.0-distroless, 8.0-cbl-mariner2.0-distroless | [Dockerfile](src/runtime-deps/8.0/cbl-mariner2.0-distroless/amd64/Dockerfile) | CBL-Mariner 2.0
 8.0.13-cbl-mariner2.0-distroless-extra-amd64, 8.0-cbl-mariner2.0-distroless-extra-amd64, 8.0.13-cbl-mariner2.0-distroless-extra, 8.0-cbl-mariner2.0-distroless-extra | [Dockerfile](src/runtime-deps/8.0/cbl-mariner2.0-distroless-extra/amd64/Dockerfile) | CBL-Mariner 2.0
 
+#### .NET 10 Preview Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+10.0.0-preview.1-noble-amd64, 10.0-preview-noble-amd64, 10.0.0-preview.1-noble, 10.0-preview-noble, 10.0.0-preview.1, 10.0-preview | [Dockerfile](src/runtime-deps/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-noble-chiseled-amd64, 10.0-preview-noble-chiseled-amd64, 10.0.0-preview.1-noble-chiseled, 10.0-preview-noble-chiseled | [Dockerfile](src/runtime-deps/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-noble-chiseled-extra-amd64, 10.0-preview-noble-chiseled-extra-amd64, 10.0.0-preview.1-noble-chiseled-extra, 10.0-preview-noble-chiseled-extra | [Dockerfile](src/runtime-deps/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-alpine3.21-amd64, 10.0-preview-alpine3.21-amd64, 10.0-preview-alpine-amd64, 10.0.0-preview.1-alpine3.21, 10.0-preview-alpine3.21, 10.0-preview-alpine | [Dockerfile](src/runtime-deps/10.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
+10.0.0-preview.1-alpine3.21-extra-amd64, 10.0-preview-alpine3.21-extra-amd64, 10.0-preview-alpine-extra-amd64, 10.0.0-preview.1-alpine3.21-extra, 10.0-preview-alpine3.21-extra, 10.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/10.0/alpine3.21-extra/amd64/Dockerfile) | Alpine 3.21
+10.0.0-preview.1-azurelinux3.0-amd64, 10.0-preview-azurelinux3.0-amd64, 10.0.0-preview.1-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+10.0.0-preview.1-azurelinux3.0-distroless-amd64, 10.0-preview-azurelinux3.0-distroless-amd64, 10.0.0-preview.1-azurelinux3.0-distroless, 10.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+10.0.0-preview.1-azurelinux3.0-distroless-extra-amd64, 10.0-preview-azurelinux3.0-distroless-extra-amd64, 10.0.0-preview.1-azurelinux3.0-distroless-extra, 10.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+10.0.0-preview.1-trixie-slim-amd64, 10.0-preview-trixie-slim-amd64, 10.0.0-preview.1-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/runtime-deps/10.0/trixie-slim/amd64/Dockerfile) | Debian 13
+
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
@@ -123,6 +137,20 @@ Tags | Dockerfile | OS Version
 8.0.13-cbl-mariner2.0-distroless-arm64v8, 8.0-cbl-mariner2.0-distroless-arm64v8, 8.0.13-cbl-mariner2.0-distroless, 8.0-cbl-mariner2.0-distroless | [Dockerfile](src/runtime-deps/8.0/cbl-mariner2.0-distroless/arm64v8/Dockerfile) | CBL-Mariner 2.0
 8.0.13-cbl-mariner2.0-distroless-extra-arm64v8, 8.0-cbl-mariner2.0-distroless-extra-arm64v8, 8.0.13-cbl-mariner2.0-distroless-extra, 8.0-cbl-mariner2.0-distroless-extra | [Dockerfile](src/runtime-deps/8.0/cbl-mariner2.0-distroless-extra/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
+#### .NET 10 Preview Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+10.0.0-preview.1-noble-arm64v8, 10.0-preview-noble-arm64v8, 10.0.0-preview.1-noble, 10.0-preview-noble, 10.0.0-preview.1, 10.0-preview | [Dockerfile](src/runtime-deps/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-noble-chiseled-arm64v8, 10.0-preview-noble-chiseled-arm64v8, 10.0.0-preview.1-noble-chiseled, 10.0-preview-noble-chiseled | [Dockerfile](src/runtime-deps/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-noble-chiseled-extra-arm64v8, 10.0-preview-noble-chiseled-extra-arm64v8, 10.0.0-preview.1-noble-chiseled-extra, 10.0-preview-noble-chiseled-extra | [Dockerfile](src/runtime-deps/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-alpine3.21-arm64v8, 10.0-preview-alpine3.21-arm64v8, 10.0-preview-alpine-arm64v8, 10.0.0-preview.1-alpine3.21, 10.0-preview-alpine3.21, 10.0-preview-alpine | [Dockerfile](src/runtime-deps/10.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
+10.0.0-preview.1-alpine3.21-extra-arm64v8, 10.0-preview-alpine3.21-extra-arm64v8, 10.0-preview-alpine-extra-arm64v8, 10.0.0-preview.1-alpine3.21-extra, 10.0-preview-alpine3.21-extra, 10.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/10.0/alpine3.21-extra/arm64v8/Dockerfile) | Alpine 3.21
+10.0.0-preview.1-azurelinux3.0-arm64v8, 10.0-preview-azurelinux3.0-arm64v8, 10.0.0-preview.1-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.0-preview.1-azurelinux3.0-distroless-arm64v8, 10.0-preview-azurelinux3.0-distroless-arm64v8, 10.0.0-preview.1-azurelinux3.0-distroless, 10.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.0-preview.1-azurelinux3.0-distroless-extra-arm64v8, 10.0-preview-azurelinux3.0-distroless-extra-arm64v8, 10.0.0-preview.1-azurelinux3.0-distroless-extra, 10.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.0-preview.1-trixie-slim-arm64v8, 10.0-preview-trixie-slim-arm64v8, 10.0.0-preview.1-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/runtime-deps/10.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
+
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
@@ -143,6 +171,17 @@ Tags | Dockerfile | OS Version
 8.0.13-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.13-jammy, 8.0-jammy | [Dockerfile](src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.13-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.13-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/runtime-deps/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.13-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.13-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/runtime-deps/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
+
+#### .NET 10 Preview Tags
+
+Tags | Dockerfile | OS Version
+-----------| -------------| -------------
+10.0.0-preview.1-noble-arm32v7, 10.0-preview-noble-arm32v7, 10.0.0-preview.1-noble, 10.0-preview-noble, 10.0.0-preview.1, 10.0-preview | [Dockerfile](src/runtime-deps/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-noble-chiseled-arm32v7, 10.0-preview-noble-chiseled-arm32v7, 10.0.0-preview.1-noble-chiseled, 10.0-preview-noble-chiseled | [Dockerfile](src/runtime-deps/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-noble-chiseled-extra-arm32v7, 10.0-preview-noble-chiseled-extra-arm32v7, 10.0.0-preview.1-noble-chiseled-extra, 10.0-preview-noble-chiseled-extra | [Dockerfile](src/runtime-deps/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.0-preview.1-alpine3.21-arm32v7, 10.0-preview-alpine3.21-arm32v7, 10.0-preview-alpine-arm32v7, 10.0.0-preview.1-alpine3.21, 10.0-preview-alpine3.21, 10.0-preview-alpine | [Dockerfile](src/runtime-deps/10.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
+10.0.0-preview.1-alpine3.21-extra-arm32v7, 10.0-preview-alpine3.21-extra-arm32v7, 10.0-preview-alpine-extra-arm32v7, 10.0.0-preview.1-alpine3.21-extra, 10.0-preview-alpine3.21-extra, 10.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/10.0/alpine3.21-extra/arm32v7/Dockerfile) | Alpine 3.21
+10.0.0-preview.1-trixie-slim-arm32v7, 10.0-preview-trixie-slim-arm32v7, 10.0.0-preview.1-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/runtime-deps/10.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list) for all supported and unsupported tags.*

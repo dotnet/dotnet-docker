@@ -1,6 +1,7 @@
 {{
     _ ARGS:
-        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product ^
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product
+        include-powershell-vars (optional): Whether PowerShell will be installed in the image ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
@@ -10,7 +11,9 @@
         VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]) ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
-    set lineContinuation to when(isWindows, "`", "\")
+    set lineContinuation to when(isWindows, "`", "\") ^
+
+    set includePowerShellRollForward to dotnetVersion != "8.0" && dotnetVersion != "9.0"
 }}ENV {{lineContinuation}}
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false {{lineContinuation}}
@@ -23,6 +26,8 @@
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true {{lineContinuation}}
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
-    NUGET_XMLDOC_MODE=skip {{lineContinuation}}
+    NUGET_XMLDOC_MODE=skip {{if ARGS["include-powershell-vars"]:{{lineContinuation}}
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-{{OS_ARCH_HYPHENATED}}
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-{{OS_ARCH_HYPHENATED}}{{if includePowerShellRollForward: {{lineContinuation}}
+    # Workaround for https://github.com/PowerShell/PowerShell/issues/20685
+    DOTNET_ROLL_FORWARD=Major}}}}

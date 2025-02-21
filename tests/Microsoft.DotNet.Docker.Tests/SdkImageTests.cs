@@ -32,18 +32,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         protected override DotNetImageRepo ImageRepo => DotNetImageRepo.SDK;
 
-        private static bool IsPowerShellSupported(ProductImageData imageData, out string reason)
-        {
-            if (imageData.OS.Contains("alpine") && imageData.IsArm)
-            {
-                reason = "PowerShell does not support Arm-based Alpine, skip testing (https://github.com/PowerShell/PowerShell/issues/14667, https://github.com/PowerShell/PowerShell/issues/12937)";
-                return false;
-            }
-
-            reason = "";
-            return true;
-        }
-
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData(DotNetImageRepo.SDK)
@@ -101,7 +89,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
                 new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
                 new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"),
-                new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true),
                 new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version)
                 {
                     IsProductVersion = true
@@ -111,6 +98,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"),
                 ..GetCommonEnvironmentVariables(),
             ];
+
+            if (imageData.SupportsPowerShell
+                || imageData.Version == ImageVersion.V8_0
+                || imageData.Version == ImageVersion.V9_0)
+            {
+                variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
+            }
 
             if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
@@ -355,15 +349,17 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-            if (!IsPowerShellSupported(imageData, out string powershellReason))
+            string image = imageData.GetImage(DotNetImageRepo.SDK, DockerHelper);
+
+            if (!imageData.SupportsPowerShell)
             {
-                OutputHelper.WriteLine(powershellReason);
+                OutputHelper.WriteLine($"PowerShell is not supproted on {image}");
                 return;
             }
 
             // A basic test which executes an arbitrary command to validate PS is functional
             string output = DockerHelper.Run(
-                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
+                image: image,
                 name: imageData.GetIdentifier($"pwsh"),
                 optionalRunArgs: optionalArgs,
                 command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"

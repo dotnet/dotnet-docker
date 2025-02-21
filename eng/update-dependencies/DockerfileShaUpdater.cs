@@ -223,13 +223,12 @@ namespace Dotnet.Docker
         private async Task<string?> GetDotNetBinaryStorageChecksumsShaAsync(string productDownloadUrl)
         {
             string? sha = null;
-            string shaExt = _options.IsInternal || !_productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ? ".sha512" : ".sha";
 
             string shaUrl = productDownloadUrl
                 .Replace("/dotnetcli", "/dotnetclichecksums")
                 .Replace("/internal/", "/internal-checksums/")
                 .Replace("/public/", "/public-checksums/")
-                + shaExt;
+                + ".sha512";
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
             using (HttpResponseMessage response = await s_httpClient.GetAsync(shaUrl))
