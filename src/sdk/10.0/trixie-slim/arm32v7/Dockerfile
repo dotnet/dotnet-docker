@@ -6,8 +6,8 @@ FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.1.25112.18/dotnet-sdk-10.0.100-preview.1.25112.18-linux-arm.tar.gz \
     && dotnet_sha512='1402b0ace5eaeb112268ab386b83b669a982d9c7f4f457348cbfa2c1809f796a9766be764c777e679e9f6a3c27b3fcddfdb50ea585f7a140988322cc14f3f083' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && mkdir -p /dotnet \
+    && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 
@@ -38,7 +38,7 @@ RUN apt-get update \
         wget \
     && rm -rf /var/lib/apt/lists/*
 
-COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help

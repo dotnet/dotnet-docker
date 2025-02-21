@@ -14,7 +14,7 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
-    set installDir to "/usr/share/dotnet" ^
+    set installDir to "/dotnet" ^
     set url to cat(
         VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
         "/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-", platform, "-", ARCH_SHORT, ".tar.gz") ^
@@ -78,6 +78,6 @@ if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion
         "skip-download": !downloadEnabled,
         "skip-install": !installEnabled,
         "install-dir": installDir,
-        "create-install-dir": !isFullAzureLinux
+        "create-install-dir": "true"
     ], "    ")}}{{if !ARGS["disable-first-run-experience"] && !ARGS["is-internal"]: \
     {{InsertTemplate("Dockerfile.linux.first-run", ["append-cmd": "true"], "    ")}}}}
