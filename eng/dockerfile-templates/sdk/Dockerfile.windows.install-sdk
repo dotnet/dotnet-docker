@@ -8,8 +8,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
     set dotnetZipFile to "dotnet.zip" ^
-    set useProgramFilesDir to (isServerCore && !ARGS["is-internal"]) ^
-    set dotnetDir to when(useProgramFilesDir, "$Env:ProgramFiles\dotnet", "dotnet") ^
+    set dotnetDir to "dotnet" ^
     set sdkVersionDir to when(ARGS["use-local-version-var"],
         "$sdk_version",
         when(ARGS["is-internal"],
@@ -48,8 +47,8 @@
         "url": url,
         "sha": VARIABLES[cat("sdk|", dotnetVersion, "|win|x64|sha")],
         "sha-var-name": "dotnet_sha512"
-    ])}}; `{{if !useProgramFilesDir:
-mkdir {{dotnetDir}}; `}}
+    ])}}; `
+mkdir {{dotnetDir}}; `
 {{InsertTemplate("../Dockerfile.windows.extract-zip",
     [
         "file": dotnetZipFile,

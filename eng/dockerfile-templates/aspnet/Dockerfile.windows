@@ -4,7 +4,6 @@
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
-    set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
 
     set installerStageFromImage to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
 
@@ -14,20 +13,8 @@
 }}# escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/runtime
-{{if isSingleStage:{{
 
-    _ SINGLE STAGE
-
-}}FROM {{runtimeStageFromImage}}
-
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
-
-{{InsertTemplate("Dockerfile.windows.install-aspnet")}}^else:
-{{
-
-    _ MULTI STAGE
-
-}}# Installer image
+# Installer image
 FROM {{installerStageFromImage}} AS installer
 {{if isInternal:
 ARG ACCESSTOKEN
@@ -44,4 +31,4 @@ FROM {{runtimeStageFromImage}}
 
 {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
 
-COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]}}
+COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
