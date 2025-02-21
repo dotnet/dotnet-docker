@@ -30,6 +30,7 @@ ARG ACCESSTOKEN
         "dotnet-is-internal": isInternal,
     ])}}
 
+
 # SDK image
 FROM {{aspnetBaseTag}}
 
