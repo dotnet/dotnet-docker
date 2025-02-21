@@ -82,8 +82,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.20": {},
-            "$(dotnet|8.0|minor-tag)-alpine": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -93,8 +92,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -105,8 +103,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -118,8 +115,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -129,8 +125,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.20-extra": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.20-extra": {},
-            "$(dotnet|8.0|minor-tag)-alpine-extra": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.20-extra": {}
           },
           "platforms": [
             {
@@ -140,8 +135,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-extra-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-extra-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine-extra-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -161,8 +155,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-extra-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-extra-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine-extra-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-extra-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -183,8 +176,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-extra-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-extra-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine-extra-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -203,7 +195,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.21": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.21": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.21": {},
+            "$(dotnet|8.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -213,7 +206,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-amd64": {},
+                "$(dotnet|8.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -224,7 +218,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -236,7 +231,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -246,7 +242,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.21-extra": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.21-extra": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.21-extra": {},
+            "$(dotnet|8.0|minor-tag)-alpine-extra": {}
           },
           "platforms": [
             {
@@ -256,7 +253,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-extra-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-extra-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-extra-amd64": {},
+                "$(dotnet|8.0|minor-tag)-alpine-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -276,7 +274,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-extra-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-extra-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-extra-arm32v7": {},
+                "$(dotnet|8.0|minor-tag)-alpine-extra-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -297,7 +296,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-extra-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-extra-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-extra-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-alpine-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -987,8 +987,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.20": {},
-            "$(dotnet|9.0|minor-tag)-alpine": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -998,8 +997,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -1010,8 +1008,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -1023,8 +1020,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1034,8 +1030,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.20-extra": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.20-extra": {},
-            "$(dotnet|9.0|minor-tag)-alpine-extra": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.20-extra": {}
           },
           "platforms": [
             {
@@ -1045,8 +1040,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-extra-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-extra-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -1066,8 +1060,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-extra-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-extra-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine-extra-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-extra-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -1088,8 +1081,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-extra-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-extra-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1108,7 +1100,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.21": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.21": {},
+            "$(dotnet|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -1118,7 +1111,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -1129,7 +1123,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -1141,7 +1136,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1151,7 +1147,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21-extra": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.21-extra": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.21-extra": {},
+            "$(dotnet|9.0|minor-tag)-alpine-extra": {}
           },
           "platforms": [
             {
@@ -1161,7 +1158,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-extra-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-extra-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-extra-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-extra-amd64": {}
               },
               "customBuildLegGroups": [
                 {
@@ -1181,7 +1179,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-extra-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-extra-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-extra-arm32v7": {},
+                "$(dotnet|9.0|minor-tag)-alpine-extra-arm32v7": {}
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -1202,7 +1201,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-extra-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-extra-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-extra-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-extra-arm64v8": {}
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1622,8 +1622,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.20": {},
-            "$(dotnet|8.0|minor-tag)-alpine": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -1636,8 +1635,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -1651,8 +1649,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -1667,8 +1664,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -1678,7 +1674,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.21": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.21": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.21": {},
+            "$(dotnet|8.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -1691,7 +1688,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-amd64": {},
+                "$(dotnet|8.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -1705,7 +1703,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -1720,7 +1719,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2464,6 +2464,21 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "platforms": [
             {
+              "dockerfile": "src/runtime/8.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
               "dockerfile": "src/runtime/8.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
               "os": "windows",
@@ -2486,6 +2501,21 @@
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/8.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -2549,8 +2579,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.20": {},
-            "$(dotnet|9.0|minor-tag)-alpine": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -2563,8 +2592,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -2578,8 +2606,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2594,8 +2621,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -2605,7 +2631,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.21": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.21": {},
+            "$(dotnet|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -2618,7 +2645,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -2632,7 +2660,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -2647,7 +2676,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3079,6 +3109,21 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "platforms": [
             {
+              "dockerfile": "src/runtime/9.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
               "dockerfile": "src/runtime/9.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
               "os": "windows",
@@ -3101,6 +3146,21 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "dockerfile": "src/runtime/9.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -3184,8 +3244,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.20": {},
-            "$(dotnet|8.0|minor-tag)-alpine": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -3198,8 +3257,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -3213,8 +3271,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3229,8 +3286,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3240,8 +3296,7 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.20-composite": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.20-composite": {},
-            "$(dotnet|8.0|minor-tag)-alpine-composite": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.20-composite": {}
           },
           "platforms": [
             {
@@ -3254,8 +3309,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-composite-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-composite-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine-composite-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-composite-amd64": {}
               }
             },
             {
@@ -3269,8 +3323,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-composite-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-composite-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine-composite-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-composite-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3285,8 +3338,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-composite-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-composite-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine-composite-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3296,7 +3348,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.21": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.21": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.21": {},
+            "$(dotnet|8.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -3309,7 +3362,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-amd64": {},
+                "$(dotnet|8.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -3323,7 +3377,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3338,7 +3393,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -3348,7 +3404,8 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.21-composite": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.21-composite": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.21-composite": {},
+            "$(dotnet|8.0|minor-tag)-alpine-composite": {}
           },
           "platforms": [
             {
@@ -3361,7 +3418,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-composite-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-composite-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-composite-amd64": {},
+                "$(dotnet|8.0|minor-tag)-alpine-composite-amd64": {}
               }
             },
             {
@@ -3375,7 +3433,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-composite-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-composite-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-composite-arm32v7": {},
+                "$(dotnet|8.0|minor-tag)-alpine-composite-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -3390,7 +3449,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-composite-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-composite-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.21-composite-arm64v8": {},
+                "$(dotnet|8.0|minor-tag)-alpine-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4559,6 +4619,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
+              "dockerfile": "src/aspnet/8.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "src/aspnet/8.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
               "os": "windows",
@@ -4584,6 +4662,24 @@
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/8.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|8.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|8.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -4647,8 +4743,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.20": {},
-            "$(dotnet|9.0|minor-tag)-alpine": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -4661,8 +4756,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -4676,8 +4770,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4692,8 +4785,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4703,8 +4795,7 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.20-composite": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.20-composite": {},
-            "$(dotnet|9.0|minor-tag)-alpine-composite": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.20-composite": {}
           },
           "platforms": [
             {
@@ -4717,8 +4808,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-composite-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-composite-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine-composite-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-composite-amd64": {}
               }
             },
             {
@@ -4732,8 +4822,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-composite-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-composite-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine-composite-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-composite-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4748,8 +4837,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-composite-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-composite-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine-composite-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4759,7 +4847,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.21": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.21": {},
+            "$(dotnet|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -4772,7 +4861,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -4786,7 +4876,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4801,7 +4892,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -4811,7 +4903,8 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21-composite": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.21-composite": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.21-composite": {},
+            "$(dotnet|9.0|minor-tag)-alpine-composite": {}
           },
           "platforms": [
             {
@@ -4824,7 +4917,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-composite-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-composite-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-composite-amd64": {},
+                "$(dotnet|9.0|minor-tag)-alpine-composite-amd64": {}
               }
             },
             {
@@ -4838,7 +4932,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-composite-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-composite-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-composite-arm32v7": {},
+                "$(dotnet|9.0|minor-tag)-alpine-composite-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -4853,7 +4948,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-composite-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-composite-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.21-composite-arm64v8": {},
+                "$(dotnet|9.0|minor-tag)-alpine-composite-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5550,6 +5646,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:runtime)"
               },
+              "dockerfile": "src/aspnet/9.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
               "dockerfile": "src/aspnet/9.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
               "os": "windows",
@@ -5575,6 +5689,24 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(dotnet|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:runtime)"
+              },
+              "dockerfile": "src/aspnet/9.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(dotnet|9.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(dotnet|9.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -5658,8 +5790,7 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|fixed-tag)-alpine3.20": {},
-            "$(sdk|8.0|minor-tag)-alpine3.20": {},
-            "$(sdk|8.0|minor-tag)-alpine": {}
+            "$(sdk|8.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -5672,8 +5803,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine-amd64": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -5687,8 +5817,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(sdk|8.0|minor-tag)-alpine-arm32v7": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5703,8 +5832,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine-arm64v8": {}
+                "$(sdk|8.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5714,7 +5842,8 @@
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
             "$(sdk|8.0|fixed-tag)-alpine3.21": {},
-            "$(sdk|8.0|minor-tag)-alpine3.21": {}
+            "$(sdk|8.0|minor-tag)-alpine3.21": {},
+            "$(sdk|8.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -5727,7 +5856,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.21-amd64": {}
+                "$(sdk|8.0|minor-tag)-alpine3.21-amd64": {},
+                "$(sdk|8.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -5741,7 +5871,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(sdk|8.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(sdk|8.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(sdk|8.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -5756,7 +5887,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(sdk|8.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(sdk|8.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(sdk|8.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -5977,6 +6109,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
+              "dockerfile": "src/sdk/8.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(sdk|8.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(sdk|8.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "src/sdk/8.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
               "os": "windows",
@@ -6002,6 +6152,24 @@
               "tags": {
                 "$(sdk|8.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(sdk|8.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|8.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/8.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(sdk|8.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(sdk|8.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -6065,8 +6233,7 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-alpine3.20": {},
-            "$(sdk|9.0|minor-tag)-alpine3.20": {},
-            "$(sdk|9.0|minor-tag)-alpine": {}
+            "$(sdk|9.0|minor-tag)-alpine3.20": {}
           },
           "platforms": [
             {
@@ -6079,8 +6246,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(sdk|9.0|minor-tag)-alpine3.20-amd64": {},
-                "$(sdk|9.0|minor-tag)-alpine-amd64": {}
+                "$(sdk|9.0|minor-tag)-alpine3.20-amd64": {}
               }
             },
             {
@@ -6094,8 +6260,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(sdk|9.0|minor-tag)-alpine3.20-arm32v7": {},
-                "$(sdk|9.0|minor-tag)-alpine-arm32v7": {}
+                "$(sdk|9.0|minor-tag)-alpine3.20-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -6110,8 +6275,7 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-alpine3.20-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-alpine-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-alpine3.20-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6121,7 +6285,8 @@
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
             "$(sdk|9.0|fixed-tag)-alpine3.21": {},
-            "$(sdk|9.0|minor-tag)-alpine3.21": {}
+            "$(sdk|9.0|minor-tag)-alpine3.21": {},
+            "$(sdk|9.0|minor-tag)-alpine": {}
           },
           "platforms": [
             {
@@ -6134,7 +6299,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.21-amd64": {},
-                "$(sdk|9.0|minor-tag)-alpine3.21-amd64": {}
+                "$(sdk|9.0|minor-tag)-alpine3.21-amd64": {},
+                "$(sdk|9.0|minor-tag)-alpine-amd64": {}
               }
             },
             {
@@ -6148,7 +6314,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.21-arm32v7": {},
-                "$(sdk|9.0|minor-tag)-alpine3.21-arm32v7": {}
+                "$(sdk|9.0|minor-tag)-alpine3.21-arm32v7": {},
+                "$(sdk|9.0|minor-tag)-alpine-arm32v7": {}
               },
               "variant": "v7"
             },
@@ -6163,7 +6330,8 @@
               "osVersion": "alpine3.21",
               "tags": {
                 "$(sdk|9.0|fixed-tag)-alpine3.21-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-alpine3.21-arm64v8": {}
+                "$(sdk|9.0|minor-tag)-alpine3.21-arm64v8": {},
+                "$(sdk|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6301,6 +6469,24 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
+              "dockerfile": "src/sdk/9.0/nanoserver-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "$(sdk|9.0|fixed-tag)-nanoserver-ltsc2025": {},
+                "$(sdk|9.0|minor-tag)-nanoserver-ltsc2025": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
               "dockerfile": "src/sdk/9.0/windowsservercore-ltsc2019/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
               "os": "windows",
@@ -6326,6 +6512,24 @@
               "tags": {
                 "$(sdk|9.0|fixed-tag)-windowsservercore-ltsc2022": {},
                 "$(sdk|9.0|minor-tag)-windowsservercore-ltsc2022": {}
+              }
+            }
+          ]
+        },
+        {
+          "productVersion": "$(sdk|9.0|product-version)",
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/sdk/9.0/windowsservercore-ltsc2025/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.windows",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "$(sdk|9.0|fixed-tag)-windowsservercore-ltsc2025": {},
+                "$(sdk|9.0|minor-tag)-windowsservercore-ltsc2025": {}
               }
             }
           ]
@@ -6356,10 +6560,8 @@
           "sharedTags": {
             "$(monitor|8.0|fixed-tag)-ubuntu-chiseled": {},
             "$(monitor|8.0|minor-tag)-ubuntu-chiseled": {},
-            "$(monitor|8|major-tag)-ubuntu-chiseled": {},
             "$(monitor|8.0|fixed-tag)": {},
-            "$(monitor|8.0|minor-tag)": {},
-            "$(monitor|8|major-tag)": {}
+            "$(monitor|8.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -6372,8 +6574,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|fixed-tag)-ubuntu-chiseled-amd64": {},
-                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-amd64": {},
-                "$(monitor|8|major-tag)-ubuntu-chiseled-amd64": {}
+                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-amd64": {}
               }
             },
             {
@@ -6387,8 +6588,7 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(monitor|8.0|fixed-tag)-ubuntu-chiseled-arm64v8": {},
-                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-arm64v8": {},
-                "$(monitor|8|major-tag)-ubuntu-chiseled-arm64v8": {}
+                "$(monitor|8.0|minor-tag)-ubuntu-chiseled-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6398,8 +6598,7 @@
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
             "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8|major-tag)-cbl-mariner-distroless": {}
+            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {}
           },
           "platforms": [
             {
@@ -6412,8 +6611,7 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {}
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {}
               }
             },
             {
@@ -6427,7 +6625,89 @@
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
                 "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {},
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|fixed-tag)-ubuntu-chiseled": {},
+            "$(monitor|8.1|minor-tag)-ubuntu-chiseled": {},
+            "$(monitor|8|major-tag)-ubuntu-chiseled": {},
+            "$(monitor|8.1|fixed-tag)": {},
+            "$(monitor|8.1|minor-tag)": {},
+            "$(monitor|8|major-tag)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/ubuntu-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-ubuntu-chiseled-amd64": {},
+                "$(monitor|8.1|minor-tag)-ubuntu-chiseled-amd64": {},
+                "$(monitor|8|major-tag)-ubuntu-chiseled-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/ubuntu-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-ubuntu-chiseled-arm64v8": {},
+                "$(monitor|8.1|minor-tag)-ubuntu-chiseled-arm64v8": {},
+                "$(monitor|8|major-tag)-ubuntu-chiseled-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": {},
+            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": {},
+            "$(monitor|8|major-tag)-cbl-mariner-distroless": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-amd64": {},
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-amd64": {},
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/8.1/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-arm64v8": {},
                 "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": {}
               },
               "variant": "v8"
@@ -6499,10 +6779,8 @@
           "sharedTags": {
             "$(monitor|8.0|fixed-tag)-ubuntu-chiseled": {},
             "$(monitor|8.0|minor-tag)-ubuntu-chiseled": {},
-            "$(monitor|8|major-tag)-ubuntu-chiseled": {},
             "$(monitor|8.0|fixed-tag)": {},
-            "$(monitor|8.0|minor-tag)": {},
-            "$(monitor|8|major-tag)": {}
+            "$(monitor|8.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -6518,9 +6796,6 @@
                   "docType": "Undocumented"
                 },
                 "$(monitor|8.0|minor-tag)-ubuntu-chiseled-amd64": {
-                  "docType": "Undocumented"
-                },
-                "$(monitor|8|major-tag)-ubuntu-chiseled-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6540,9 +6815,6 @@
                 },
                 "$(monitor|8.0|minor-tag)-ubuntu-chiseled-arm64v8": {
                   "docType": "Undocumented"
-                },
-                "$(monitor|8|major-tag)-ubuntu-chiseled-arm64v8": {
-                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
@@ -6553,8 +6825,7 @@
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
             "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8|major-tag)-cbl-mariner-distroless": {}
+            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {}
           },
           "platforms": [
             {
@@ -6570,9 +6841,6 @@
                   "docType": "Undocumented"
                 },
                 "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
-                  "docType": "Undocumented"
-                },
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -6591,6 +6859,110 @@
                   "docType": "Undocumented"
                 },
                 "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|fixed-tag)-ubuntu-chiseled": {},
+            "$(monitor|8.1|minor-tag)-ubuntu-chiseled": {},
+            "$(monitor|8|major-tag)-ubuntu-chiseled": {},
+            "$(monitor|8.1|fixed-tag)": {},
+            "$(monitor|8.1|minor-tag)": {},
+            "$(monitor|8|major-tag)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/ubuntu-chiseled/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8|major-tag)-ubuntu-chiseled-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/ubuntu-chiseled/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "jammy-chiseled",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8|major-tag)-ubuntu-chiseled-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|8.1|product-version)",
+          "sharedTags": {
+            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": {},
+            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": {},
+            "$(monitor|8|major-tag)-cbl-mariner-distroless": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "os": "linux",
+              "osVersion": "cbl-mariner2.0-distroless",
+              "tags": {
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": {

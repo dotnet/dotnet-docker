@@ -113,7 +113,7 @@ namespace Microsoft.DotNet.Docker.Tests
             VersionType versionType,
             bool checkOs,
             bool checkArchitecture,
-            Func<ManifestHelper.DockerfileInfo, bool> skipDockerFileOn)
+            Func<DockerfileInfo, bool> skipDockerFileOn)
         {
 
             if (!checkOs && !checkArchitecture)
@@ -122,10 +122,10 @@ namespace Microsoft.DotNet.Docker.Tests
                     "Please use the VersionTag tests for this scenario.");
             }
 
-            Dictionary<ManifestHelper.DockerfileInfo, List<string>> dockerfileTags = ManifestHelper.GetDockerfileTags(repo);
-            foreach (KeyValuePair<ManifestHelper.DockerfileInfo, List<string>> dockerfileTag in dockerfileTags)
+            Dictionary<DockerfileInfo, List<string>> dockerfileTags = ManifestHelper.GetDockerfileTags(repo);
+            foreach (KeyValuePair<DockerfileInfo, List<string>> dockerfileTag in dockerfileTags)
             {
-                ManifestHelper.DockerfileInfo dockerfileInfo = dockerfileTag.Key;
+                DockerfileInfo dockerfileInfo = dockerfileTag.Key;
                 if (skipDockerFileOn(dockerfileInfo))
                 {
                     continue;
@@ -205,7 +205,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VersionTag_SameOsAndVersion(Repo repo, VersionType versionType)
         {
             // Group tags -> dockerfiles
-            Dictionary<string, List<ManifestHelper.DockerfileInfo>> tagsToDockerfiles = ManifestHelper.GetDockerfileTags(repo)
+            Dictionary<string, List<DockerfileInfo>> tagsToDockerfiles = ManifestHelper.GetDockerfileTags(repo)
                 .SelectMany(pair => pair.Value
                     .Where(tag => IsTagOfFormat(
                         tag,
@@ -217,10 +217,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 .GroupBy(pair => pair.tag, pair => pair.Key)
                 .ToDictionary(group => group.Key, group => group.ToList());
 
-            foreach (KeyValuePair<string, List<ManifestHelper.DockerfileInfo>> tagToDockerfiles in tagsToDockerfiles)
+            foreach (KeyValuePair<string, List<DockerfileInfo>> tagToDockerfiles in tagsToDockerfiles)
             {
                 string tag = tagToDockerfiles.Key;
-                List<ManifestHelper.DockerfileInfo> dockerfiles = tagToDockerfiles.Value;
+                List<DockerfileInfo> dockerfiles = tagToDockerfiles.Value;
 
                 List<string> dockerfileVersions = dockerfiles
                     .Select(dockerfile => dockerfile.MajorMinor)
@@ -489,7 +489,7 @@ namespace Microsoft.DotNet.Docker.Tests
             VersionType? versionType = null,
             bool? checkOs = false,
             bool? checkArchitecture = false,
-            Func<ManifestHelper.DockerfileInfo, bool>? skipDockerfileOn = null)
+            Func<DockerfileInfo, bool>? skipDockerfileOn = null)
         {
             switch (testType)
             {
@@ -522,18 +522,18 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private static bool IsWindows(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+        private static bool IsWindows(DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.Os.Contains("windowsservercore") || dockerfileInfo.Os.Contains("nanoserver");
 
         // Certain versions of appliance repos use a new tag schema.
         // This new schema excludes the OS from all tags.
         // The aspire-dashboard repo uses this schema for all versions.
         // The monitor and monitor-base repos use this schema for versions 9 and above.
-        private static bool IsApplianceVersionUsingOldSchema(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+        private static bool IsApplianceVersionUsingOldSchema(DockerfileInfo dockerfileInfo) =>
             dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8;
 
         // <cref="IsApplianceVersionUsingOldSchema"/>
-        private static bool IsApplianceVersionUsingNewSchema(ManifestHelper.DockerfileInfo dockerfileInfo) =>
+        private static bool IsApplianceVersionUsingNewSchema(DockerfileInfo dockerfileInfo) =>
             !IsApplianceVersionUsingOldSchema(dockerfileInfo);
 
         private static bool IsExpectedMajorMinorVersion(Repo repo, string version)
@@ -602,7 +602,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return new Regex($"^{tagRegex}" + (os != null ? $"-{os}" : string.Empty) + (architecture != null ? $"-{architecture}" : string.Empty) + "$");
         }
 
-        private static Version GetAlpineVersion(ManifestHelper.DockerfileInfo dockerfileInfo)
+        private static Version GetAlpineVersion(DockerfileInfo dockerfileInfo)
         {
             string parsedOs = dockerfileInfo.Os.Replace(OS.Alpine, string.Empty);
             parsedOs.Should().NotBeNullOrWhiteSpace(
