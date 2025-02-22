@@ -1,0 +1,11 @@
+trigger: none
+pr: none
+
+extends:
+  template: /eng/common/templates/1es-official.yml@self
+  stages:
+  - stage: release-staging
+    jobs:
+    - job: release-staging
+      steps:
+      - script: echo "Hello world"
