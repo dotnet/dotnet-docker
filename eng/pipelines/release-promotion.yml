@@ -4,8 +4,8 @@ pr: none
 extends:
   template: /eng/common/templates/1es-official.yml@self
   stages:
-  - stage: release-staging
+  - stage: release-promotion
     jobs:
-    - job: release-staging
+    - job: release-promotion
       steps:
       - script: echo "Hello world"
