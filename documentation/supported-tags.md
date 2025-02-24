@@ -238,6 +238,8 @@ Each tag will be supported for the lifetime of the .NET and OS version reference
 When a .NET version or an OS version reaches End-of-Life (EOL), its tags will no longer be supported.
 Unsupported tags and images can still be pulled, but they will no longer receive updates for any reason.
 
+See ["Is your image built from a supported .NET tag?"](vulnerability-reporting.md#c-is-your-image-built-from-a-supported-net-tag) for details on how to tell if a specific tag is supported.
+
 ## Policy Changes
 
 In the event that a change is needed to the tagging patterns used, all tags for the previous pattern will continue to be supported for their original lifetime. They will however be removed from the documentation. [Announcements](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) will be posted when any tagging policy changes are made.
