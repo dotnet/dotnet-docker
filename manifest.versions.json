@@ -209,11 +209,11 @@
     "powershell|9.0|Windows|x64|sha": "44a7a9af838aa6138517024771903464ab6eabf46b1eadd6b0d7e4c2d1bbbda375c21af3e7d60a6805b0c03d2a45bd17c96f688049f03fab3877d4c73e20c278",
 
     "powershell|10.0|build-version": "$(powershell|9.0|build-version)",
-    "powershell|10.0|Linux.Alpine|sha": "$(powershell|9.0|Linux.Alpine|sha)",
-    "powershell|10.0|Linux|arm32|sha": "$(powershell|9.0|Linux|arm32|sha)",
-    "powershell|10.0|Linux|arm64|sha": "$(powershell|9.0|Linux|arm64|sha)",
-    "powershell|10.0|Linux|x64|sha": "$(powershell|9.0|Linux|x64|sha)",
-    "powershell|10.0|Windows|x64|sha": "$(powershell|9.0|Windows|x64|sha)",
+    "powershell|10.0|Linux.Alpine|sha": "31694321fc30490d8f29e58c2b36df1a38442bcd9ca8e105c27765004a963c3331d185d8bba6631e6cebde4c3a120e354dab9fd7c9446064ae5b297fc7d6e950",
+    "powershell|10.0|Linux|arm32|sha": "a47c0d6e8c79576ff70df4524f00b94484320ff6d8821aaf93866f82c7951a3d95e7fa88c3c4f7b88a5252584ef61d72af47049cb3148e15d1de92966b9d3700",
+    "powershell|10.0|Linux|arm64|sha": "3818a8dff822db30072e61c9cac6f3bdaf7e6ca0efc8473c89f7547e47ce9c422841541b3ec08b5a9b1b346e465c8b81667b564c0ca5144e4f928609a9ec9ecb",
+    "powershell|10.0|Linux|x64|sha": "ac4eb5cb83e130aa7cc9c856245635d3f4e624b8d4e12933f5cd534f02545e2f4c61b7f63bc899d7ad797a70ec5c2d7bca33e57ea6eb7da0a410808d3ad2cf94",
+    "powershell|10.0|Windows|x64|sha": "6f4518a04d9fd3ade4c7fa76574b29f6abb7e8a37793fd2c14a123700dfd8fa69ff4a200287ac909942bd687209ead999f53fbb2727ae96200d669564e1935eb",
 
     "yarp|2.3|build-version": "2.3.0-preview.1.25060.1",
     "yarp|2.3|product-version": "2.3.0-preview.1",
