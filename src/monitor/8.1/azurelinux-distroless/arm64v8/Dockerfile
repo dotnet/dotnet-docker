@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
+FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates \
@@ -10,13 +10,13 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor extensions
-RUN dotnet_monitor_extension_version=8.0.8 \
+RUN dotnet_monitor_extension_version=8.1.0 \
     && curl -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='d42e7bbf900f5432e76dae983f28f3bfbd0cb1eab0433197379edaee1fe013ad8d2f78df7502476f589a234521e8b1c8fd873de048a0d92eaa87f4f8b4cfc357' \
+    && dotnet_monitor_extension_sha512='77f2ba22b6e412020296b9d28b3dde20dba514902a584fbe8f6eef04cdd23a9fb3a56bea4808aec6be8cc86b02c6c7f2925102b201cd7413e99d370715e4fbba' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
     && curl -fSL --output dotnet-monitor-egress-s3storage.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
-    && dotnet_monitor_extension_sha512='0fcd310d795938c96d2c8b30fc4b705207b9e00f6463914d9d55e8640796861d719f71359b2b09d92fc1fe103307ed6fb4a3fe261e22b17df39ccee6607d42dc' \
+    && dotnet_monitor_extension_sha512='5142d86c818aa9de4e84b71e7571bfd8bc61607bb8d5863413ef4a5e15eff88f0ef44e27464062bf31c4e7704c256ad272d8151b79392cfee93a265775966202' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
     && mkdir -p /app \
@@ -27,6 +27,6 @@ RUN dotnet_monitor_extension_version=8.0.8 \
 
 
 # .NET Monitor image
-FROM $REPO:8.0.8-cbl-mariner-distroless-arm64v8
+FROM $REPO:8.1.0-azurelinux-distroless-arm64v8
 
 COPY --from=installer ["/app", "/app"]
