@@ -64,7 +64,7 @@ RUN `
 
 
 # SDK image
-FROM $REPO:0.0.0-preview.1-nanoserver-1809
+FROM $REPO:0.0.0-nanoserver-1809
 
 ENV `
     # Do not generate certificate

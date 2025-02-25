@@ -1,6 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:0.0.0-preview.1-alpine3.XX-amd64 AS installer
+FROM $REPO:0.0.0-alpine3.XX-amd64 AS installer
 
 ARG ACCESSTOKEN
 
@@ -14,7 +14,7 @@ RUN wget --header="Authorization: Basic `echo $ACCESSTOKEN:$ACCESSTOKEN | base64
 
 
 # .NET SDK image
-FROM $REPO:0.0.0-preview.1-alpine3.XX-amd64
+FROM $REPO:0.0.0-alpine3.XX-amd64
 
 ENV \
     # Do not generate certificate

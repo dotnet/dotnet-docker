@@ -19,7 +19,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:0.0.0-preview.1-noble-chiseled-arm32v7
+FROM $REPO:0.0.0-noble-chiseled-arm32v7
 
 # .NET Runtime version
 ENV DOTNET_VERSION=0.0.0

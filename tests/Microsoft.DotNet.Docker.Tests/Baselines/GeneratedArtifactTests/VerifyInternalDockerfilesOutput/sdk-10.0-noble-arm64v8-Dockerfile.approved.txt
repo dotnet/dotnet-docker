@@ -14,7 +14,7 @@ RUN curl -u :$ACCESSTOKEN --basic -fSL --output dotnet.tar.gz "https://artifacts
 
 
 # .NET SDK image
-FROM $REPO:0.0.0-preview.1-noble-arm64v8
+FROM $REPO:0.0.0-noble-arm64v8
 
 ENV \
     # Do not generate certificate

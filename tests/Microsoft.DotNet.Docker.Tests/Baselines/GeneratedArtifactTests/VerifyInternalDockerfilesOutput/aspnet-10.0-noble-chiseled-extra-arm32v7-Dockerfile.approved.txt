@@ -16,7 +16,7 @@ RUN aspnetcore_version=0.0.0 \
 
 
 # ASP.NET Core image
-FROM $REPO:0.0.0-preview.1-noble-chiseled-extra-arm32v7
+FROM $REPO:0.0.0-noble-chiseled-extra-arm32v7
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=0.0.0
