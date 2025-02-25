@@ -25,7 +25,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:0.0.0-preview.1-azurelinux3.0-distroless-amd64
+FROM $REPO:0.0.0-azurelinux3.0-distroless-amd64
 
 ENV \
     # .NET Runtime version

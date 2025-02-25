@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:0.0.0-preview.1-azurelinux3.0-amd64 AS installer
+FROM $REPO:0.0.0-azurelinux3.0-amd64 AS installer
 
 ARG ACCESSTOKEN
 
@@ -20,7 +20,7 @@ RUN dotnet_version=0.0.0 \
 
 
 # .NET runtime image
-FROM $REPO:0.0.0-preview.1-azurelinux3.0-amd64
+FROM $REPO:0.0.0-azurelinux3.0-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=0.0.0
