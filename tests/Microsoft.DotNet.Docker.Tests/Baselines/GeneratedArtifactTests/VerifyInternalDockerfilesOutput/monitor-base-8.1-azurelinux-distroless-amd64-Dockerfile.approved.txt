@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
+FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates \
@@ -10,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor Base
-RUN dotnet_monitor_version=8.0.8 \
-    && curl -fSL --output dotnet-monitor-base.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_base_sha512='1761d0754ed60014cca4e5c76d2c0abb2e2aaea91f22800c3411397fbde012120610abb5c46398f841031b2bfeb16d59ef0ab81d49dccc1a9648d6a6c06a6c15' \
+RUN dotnet_monitor_version=0.0.0 \
+    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-base.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz" \
+    && dotnet_monitor_base_sha512='{sha512_placeholder}' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir -p /app \
     && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
@@ -20,7 +20,7 @@ RUN dotnet_monitor_version=8.0.8 \
 
 
 # .NET Monitor Base image
-FROM $REPO:8.0.13-cbl-mariner2.0-distroless-amd64
+FROM $REPO:0.0.0-azurelinux3.0-distroless-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
