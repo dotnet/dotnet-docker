@@ -63,7 +63,7 @@ RUN `
             | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:0.0.0-preview.1-windowsservercore-ltsc2019
+FROM $REPO:0.0.0-windowsservercore-ltsc2019
 
 ENV `
     # Do not generate certificate

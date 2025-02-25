@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:0.0.0-preview.1-alpine3.XX-arm32v7 AS installer
+FROM $REPO:0.0.0-alpine3.XX-arm32v7 AS installer
 
 ARG ACCESSTOKEN
 
@@ -15,7 +15,7 @@ RUN aspnetcore_version=0.0.0 \
 
 
 # ASP.NET Core image
-FROM $REPO:0.0.0-preview.1-alpine3.XX-arm32v7
+FROM $REPO:0.0.0-alpine3.XX-arm32v7
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=0.0.0
