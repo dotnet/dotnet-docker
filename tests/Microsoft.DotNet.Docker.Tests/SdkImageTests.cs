@@ -349,7 +349,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
         {
-
             string image = imageData.GetImage(DotNetImageRepo.SDK, DockerHelper);
 
             if (!imageData.SupportsPowerShell)

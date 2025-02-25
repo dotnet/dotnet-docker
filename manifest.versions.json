@@ -2,8 +2,8 @@
   "variables": {
     "base-url|public|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public|preview|main": "$(base-url|public|maintenance|main)",
-    "base-url|public|preview|nightly": "https://ci.dot.net/public",
+    "base-url|public|preview|main": "https://ci.dot.net/public",
+    "base-url|public|preview|nightly": "$(base-url|public|preview|main)",
 
     "alpine|floating-tag-version": "alpine3.21",
     "alpine|10.0|floating-tag-version": "$(alpine|floating-tag-version)",
