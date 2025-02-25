@@ -12,7 +12,7 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v0.0.0.windows.0/MinGit-0.0.0.2-64-bit.zip; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v0.0.0.windows.0/MinGit-0.0.0-64-bit.zip; `
         $mingit_sha256 = '{sha256_placeholder}'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -63,7 +63,7 @@ RUN `
             | Remove-Item -Force -Recurse
 
 # SDK image
-FROM $REPO:0.0.0-preview.1-windowsservercore-ltsc2025
+FROM $REPO:0.0.0-windowsservercore-ltsc2025
 
 ENV `
     # Do not generate certificate

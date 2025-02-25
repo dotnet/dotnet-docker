@@ -131,6 +131,10 @@ namespace Microsoft.DotNet.Docker.Tests
                     continue;
                 }
 
+                Version dockerfileVersion = GetVersion(dockerfileInfo.MajorMinor);
+
+                bool hasPreviewInMajorVersionGroup = HasPreviewProductVersion(repo, dockerfileVersion.Major);
+
                 IEnumerable<string> tags = dockerfileTag.Value
                     .Where(tag => IsTagOfFormat(
                         tag,
@@ -139,12 +143,12 @@ namespace Microsoft.DotNet.Docker.Tests
                         checkOs ? dockerfileInfo.Os : null,
                         checkArchitecture ? dockerfileInfo.Architecture : null));
 
-                if (versionType == VersionType.Major && !IsExpectedMajorMinorVersion(repo, dockerfileInfo.MajorMinor))
+                if (versionType == VersionType.Major && !IsLatestInMajorVersionGroup(repo, dockerfileInfo.MajorMinor, hasPreviewInMajorVersionGroup))
                 {
                     // Special case for major version tags
-                    // These tags should be on the most up-to-date Major.Minor version for the respective major version
+                    // These tags should be on the latest Major.Minor GA version for the respective major version
                     tags.Should().BeEmpty("expected tag to be on latest Major.Minor version for version " +
-                        GetVersion(dockerfileInfo.MajorMinor).Major + ", but found the tag on " + dockerfileInfo);
+                        dockerfileVersion.Major + ", but found the tag on " + dockerfileInfo);
                 }
                 else
                 {
@@ -236,8 +240,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
                     // Special case for major version tags
                     // These tags should be on the most up-to-date Major.Minor version for the respective major version
-                    IsExpectedMajorMinorVersion(repo, dockerfileVersion).Should().BeTrue(
-                        "expected tag to be on the latest Major.Minor version for the major version " +
+                    IsLatestInMajorVersionGroup(repo, dockerfileVersion, tag.Contains("-preview")).Should().BeTrue(
+                        "expected tag to be on the latest Major.Minor GA version for the major version " +
                         GetVersion(dockerfileVersion).Major + ", but found the tag on " + dockerfileVersion);
                 }
 
@@ -536,7 +540,14 @@ namespace Microsoft.DotNet.Docker.Tests
         private static bool IsApplianceVersionUsingNewSchema(DockerfileInfo dockerfileInfo) =>
             !IsApplianceVersionUsingOldSchema(dockerfileInfo);
 
-        private static bool IsExpectedMajorMinorVersion(Repo repo, string version)
+        /// <summary>
+        /// Determines if the <paramref name="majorMinorVersion"/> is the latest in its major version group.
+        /// </summary>
+        /// <remarks>
+        /// By default, this will only consider GA versions within the major version group (unless there are no GA versions).
+        /// The <paramref name="includePreviewVersions"/> parameter can be set to include preview versions in the check.
+        /// </remarks>
+        private static bool IsLatestInMajorVersionGroup(Repo repo, string majorMinorVersion, bool includePreviewVersions)
         {
             IEnumerable<string> productVersions = ManifestHelper.GetResolvedProductVersions(repo);
 
@@ -546,19 +557,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 .GroupBy(version => GetVersion(version).Major)
                 .Select(group =>
                 {
-                    if (!Config.IsNightlyRepo)
+                    if (includePreviewVersions)
                     {
-                        // Use the latest GA major version on the main branch
-                        // Assumes that non-GA versions have a hyphen in them
-                        // e.g. non-GA: 5.0.0-preview.1, GA: 5.0.0
-                        // RTM versions are also accepted as GA versions for internal testing purposes
+                        return group;
+                    }
+                    else
+                    {
+                        // Use the latest GA major version.
                         // If there are no GA versions, use the latest preview version.
-                        IEnumerable<string> gaVersions = group.Where(version =>
-                            !version.Contains('-') || version.Contains("rtm"));
+                        IEnumerable<string> gaVersions = group.Where(version => IsGAVersion(version));
                         return gaVersions.Any() ? gaVersions : group;
                     }
-                    // Use the latest major version on the nightly branch
-                    return group;
                 })
                 .Select(group => group.Select(version =>
                 {
@@ -569,8 +578,38 @@ namespace Microsoft.DotNet.Docker.Tests
                 }).OrderByDescending(version => version).First())
                 .ToList();
 
-            Version inputVersion = GetVersion(version);
+            Version inputVersion = GetVersion(majorMinorVersion);
             return majorMinorVersions.Contains(new Version(inputVersion.Major, inputVersion.Minor));
+        }
+
+        /// <summary>
+        /// Determines if a major product version has a preview version.
+        /// </summary>
+        private static bool HasPreviewProductVersion(Repo repo, int majorVersion)
+        {
+            IEnumerable<string> productVersions = ManifestHelper.GetResolvedProductVersions(repo);
+
+            IGrouping<int, string>? matchingMajorVersionGroup = productVersions
+                .GroupBy(version => GetVersion(version).Major)
+                .SingleOrDefault(group => group.Key == majorVersion);
+
+            if (null == matchingMajorVersionGroup)
+                return false;
+
+            return matchingMajorVersionGroup.Any(version => !IsGAVersion(version));
+        }
+
+        /// <summary>
+        /// Determines if the version is considered a GA version.
+        /// </summary>
+        /// <remarks>
+        /// Assumes that non-GA versions have a hyphen in them
+        /// e.g. non-GA: 5.0.0-preview.1, GA: 5.0.0
+        /// RTM versions are also accepted as GA versions.
+        /// </remarks>
+        private static bool IsGAVersion(string version)
+        {
+            return !version.Contains('-') || version.Contains("rtm");
         }
 
         private static bool IsTagOfFormat(
