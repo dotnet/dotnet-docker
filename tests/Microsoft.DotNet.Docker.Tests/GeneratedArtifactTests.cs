@@ -51,6 +51,14 @@ public class GeneratedArtifactTests
     [Fact]
     public void VerifyInternalDockerfilesOutput()
     {
+        if (Config.IsInternal)
+        {
+            OutputHelper.WriteLine(
+                "Skipping test since it is not useful for internal build scenarios. " +
+                "If there are issues with internal Dockerfiles, then internal builds will fail.");
+            return;
+        }
+
         const string InternalDockerfilesSubfolder = "Baselines";
 
         using TempFolderContext outputDirectory = FileHelper.UseTempFolder();
