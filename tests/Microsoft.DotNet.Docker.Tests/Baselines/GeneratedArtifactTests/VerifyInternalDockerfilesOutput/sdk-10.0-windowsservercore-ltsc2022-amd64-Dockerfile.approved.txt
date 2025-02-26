@@ -64,7 +64,7 @@ RUN `
 
 
 # SDK image
-FROM $REPO:0.0.0-preview.1-windowsservercore-ltsc2022
+FROM $REPO:0.0.0-windowsservercore-ltsc2022
 
 ENV `
     # Do not generate certificate
