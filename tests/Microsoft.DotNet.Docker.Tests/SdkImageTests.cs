@@ -54,8 +54,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             return TestData.GetImageData(DotNetImageRepo.SDK)
                 .Where(imageData => !imageData.IsDistroless)
-                // Filter the image data down to the distinct SDK OSes
-                .Distinct(new SdkImageDataEqualityComparer())
                 .Select(imageData => new object[] { imageData });
         }
 
@@ -136,7 +134,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
-            PowerShellScenario_Execute(imageData, null);
+            PowerShellScenario_Execute(imageData, string.Empty);
         }
 
         [DotNetTheory]
@@ -358,7 +356,7 @@ namespace Microsoft.DotNet.Docker.Tests
             return url;
         }
 
-        private void PowerShellScenario_Execute(ProductImageData imageData, string optionalArgs)
+        private void PowerShellScenario_Execute(ProductImageData imageData, string? optionalArgs = null)
         {
             string image = imageData.GetImage(DotNetImageRepo.SDK, DockerHelper);
 
@@ -379,50 +377,15 @@ namespace Microsoft.DotNet.Docker.Tests
             Assert.Equal(output, bool.TrueString, ignoreCase: true);
         }
 
-        private class SdkImageDataEqualityComparer : IEqualityComparer<ProductImageData>
+        private record SdkContentFileInfo
         {
-            public bool Equals([AllowNull] ProductImageData x, [AllowNull] ProductImageData y)
-            {
-                if (x is null && y is null)
-                {
-                    return true;
-                }
+            public string Path { get; init; }
+            public string Sha512 { get; init; }
 
-                if (x is null && !(y is null))
-                {
-                    return false;
-                }
-
-                if (!(x is null) && y is null)
-                {
-                    return false;
-                }
-
-                return x.VersionString == y.VersionString &&
-                    x.SdkOS == y.SdkOS &&
-                    x.Arch == y.Arch;
-            }
-
-            public int GetHashCode([DisallowNull] ProductImageData obj)
-            {
-                return $"{obj.VersionString}-{obj.SdkOS}-{obj.Arch}".GetHashCode();
-            }
-        }
-
-        private class SdkContentFileInfo : IComparable<SdkContentFileInfo>
-        {
             public SdkContentFileInfo(string path, string sha512)
             {
                 Path = NormalizePath(path);
                 Sha512 = sha512.ToLower();
-            }
-
-            public string Path { get; }
-            public string Sha512 { get; }
-
-            public int CompareTo([AllowNull] SdkContentFileInfo other)
-            {
-                return (Path + Sha512).CompareTo(other.Path + other.Sha512);
             }
 
             private static string NormalizePath(string path)
