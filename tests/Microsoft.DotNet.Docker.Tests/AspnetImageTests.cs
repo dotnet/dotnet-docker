@@ -26,7 +26,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyFxDependentAppScenario(ProductImageData imageData)
         {
-            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
+            if (Config.IsNightlyRepo && imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
             {
                 OutputHelper.WriteLine("Skip test due to https://github.com/dotnet/dotnet-docker/issues/4834");
                 return;
@@ -40,7 +40,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyGlobalizationScenario(ProductImageData imageData)
         {
-            if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
+            if (Config.IsNightlyRepo && imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
             {
                 OutputHelper.WriteLine("Skip test due to https://github.com/dotnet/dotnet-docker/issues/4834");
                 return;
@@ -67,7 +67,7 @@ namespace Microsoft.DotNet.Docker.Tests
             // Re-enable when fixed.
             if (imageData.ImageVariant.HasFlag(DotNetImageVariant.Composite))
             {
-                runtimeVersionInfo = runtimeVersionInfo with { AllowAnyValue = true};
+                runtimeVersionInfo = runtimeVersionInfo with { AllowAnyValue = true };
             }
 
             variables.Add(runtimeVersionInfo);
