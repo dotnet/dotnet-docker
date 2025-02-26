@@ -28,7 +28,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly Dictionary<string, IEnumerable<SdkContentFileInfo>> s_sdkContentsCache =
             new Dictionary<string, IEnumerable<SdkContentFileInfo>>();
 
-        private static readonly RetryStrategyOptions s_downloadRetryStrategy =
+        private static readonly RetryStrategyOptions s_sdkDownloadRetryStrategy =
             new()
             {
                 BackoffType = DelayBackoffType.Exponential,
@@ -38,7 +38,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly ResiliencePipeline s_sdkDownloadPipeline =
             new ResiliencePipelineBuilder()
-                .AddRetry(s_downloadRetryStrategy)
+                .AddRetry(s_sdkDownloadRetryStrategy)
                 .Build();
 
         private static readonly HttpClient s_httpClient = CreateHttpClient();
