@@ -413,18 +413,18 @@ namespace Microsoft.DotNet.Docker.Tests
             new() {
                 Version = V9_1_Preview,
                 VersionFamily = V9_0,
-                OS = OS.Mariner20Distroless,
+                OS = OS.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.MarinerDistroless,
+                OSDir = OS.AzureLinuxDistroless,
                 Arch = Arch.Amd64,
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
             },
             new() {
                 Version = V9_1_Preview,
                 VersionFamily = V9_0,
-                OS = OS.Mariner20Distroless,
+                OS = OS.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.MarinerDistroless,
+                OSDir = OS.AzureLinuxDistroless,
                 Arch = Arch.Arm64,
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard
             },
