@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:trixie-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-preview.1.25080.5 \
+RUN dotnet_version=10.0.0-preview.2.25125.14 \
     && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-    && dotnet_sha512='840d229fc19322093ed5a18c123b5a322e92cad26926bdb709ee382076864a9e89a4dd0ecc13e5e48542b1732ebd19ba65cad1c1b63b94268d38e78bbe6b6b75' \
+    && dotnet_sha512='6f7cbf8942f8ff5c1045b6f612769d3fb15f5d47a33106e760bbbe694477f45a97a9c5975c6174d34e77c2d6e24bbda7213c247a622d7da99599c1d59cf16f5a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -14,10 +14,10 @@ RUN dotnet_version=10.0.0-preview.1.25080.5 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-preview.1-trixie-slim-arm64v8
+FROM $REPO:10.0.0-preview.2-trixie-slim-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-preview.1.25080.5
+ENV DOTNET_VERSION=10.0.0-preview.2.25125.14
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
