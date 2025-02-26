@@ -12,11 +12,14 @@ using System.Net.Http.Headers;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using Polly;
+using Polly.Retry;
 using SharpCompress.Common;
 using SharpCompress.Readers;
 using Xunit;
 using Xunit.Abstractions;
 
+#nullable enable
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Trait("Category", "sdk")]
@@ -24,6 +27,21 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         private static readonly Dictionary<string, IEnumerable<SdkContentFileInfo>> s_sdkContentsCache =
             new Dictionary<string, IEnumerable<SdkContentFileInfo>>();
+
+        private static readonly RetryStrategyOptions s_downloadRetryStrategy =
+            new()
+            {
+                BackoffType = DelayBackoffType.Exponential,
+                MaxRetryAttempts = 4,
+                Delay = TimeSpan.FromSeconds(3),
+            };
+
+        private static readonly ResiliencePipeline s_sdkDownloadPipeline =
+            new ResiliencePipelineBuilder()
+                .AddRetry(s_downloadRetryStrategy)
+                .Build();
+
+        private static readonly HttpClient s_httpClient = CreateHttpClient();
 
         public SdkImageTests(ITestOutputHelper outputHelper)
             : base(outputHelper)
@@ -276,21 +294,14 @@ namespace Microsoft.DotNet.Docker.Tests
             string sdkUrl = GetSdkUrl(imageData);
             OutputHelper.WriteLine("Downloading SDK archive: " + sdkUrl);
 
-            if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo> files))
+            if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo>? files))
             {
                 string sdkFile = Path.GetTempFileName();
 
-                using HttpClient httpClient = new();
-
-                if (Config.IsInternal)
+                await s_sdkDownloadPipeline.ExecuteAsync(async cancellationToken =>
                 {
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                        "Basic",
-                        Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
-                            Config.InternalAccessToken))));
-                }
-
-                await httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
+                    await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
+                });
 
                 files = EnumerateArchiveContents(sdkFile)
                     .OrderBy(file => file.Path)
@@ -423,6 +434,21 @@ namespace Microsoft.DotNet.Docker.Tests
                     .TrimStart('/')
                     .ToLower();
             }
+        }
+
+        private static HttpClient CreateHttpClient()
+        {
+            var client = new HttpClient();
+
+            if (Config.IsInternal)
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Basic",
+                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
+                        Config.InternalAccessToken))));
+            };
+
+            return client;
         }
     }
 }
