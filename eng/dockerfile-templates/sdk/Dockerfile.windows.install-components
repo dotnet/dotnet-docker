@@ -26,11 +26,10 @@
             ]
         ]
     ] ^
-    set isSingleStage to (isServerCore && !ARGS["dotnet-is-internal"]) ^
     set getFormattedPath(path) to:{{
         return cat("'", path, "'")
     }} ^
-    set mingitDir to when(isSingleStage, "$Env:ProgramFiles\MinGit", "MinGit")
+    set mingitDir to "MinGit"
 }}# Download MinGit
 RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
@@ -60,7 +59,7 @@ RUN `^else:RUN powershell -Command " `}}
         {{InsertTemplate("Dockerfile.windows.install-sdk",
             [
                 "use-local-version-var": ARGS["use-local-version-var"],
-                "sdk-extract-groups": when(isSingleStage, sdkExtractGroups, []),
+                "sdk-extract-groups": [],
                 "is-internal": ARGS["dotnet-is-internal"]
             ], "        ")}} `
         `

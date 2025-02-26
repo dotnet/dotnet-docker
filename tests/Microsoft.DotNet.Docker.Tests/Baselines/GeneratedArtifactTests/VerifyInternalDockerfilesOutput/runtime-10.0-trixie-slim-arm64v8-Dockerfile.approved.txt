@@ -16,7 +16,7 @@ RUN dotnet_version=0.0.0 \
 
 
 # .NET runtime image
-FROM $REPO:0.0.0-preview.1-trixie-slim-arm64v8
+FROM $REPO:0.0.0-trixie-slim-arm64v8
 
 # .NET Runtime version
 ENV DOTNET_VERSION=0.0.0

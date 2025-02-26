@@ -22,7 +22,7 @@ RUN aspnetcore_version=0.0.0 \
 
 
 # ASP.NET Core image
-FROM $REPO:0.0.0-preview.1-azurelinux3.0-distroless-amd64
+FROM $REPO:0.0.0-azurelinux3.0-distroless-amd64
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=0.0.0
