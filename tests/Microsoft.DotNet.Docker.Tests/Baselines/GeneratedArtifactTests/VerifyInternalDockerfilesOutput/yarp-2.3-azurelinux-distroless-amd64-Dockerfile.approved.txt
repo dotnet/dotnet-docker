@@ -2,6 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
+ARG ACCESSTOKEN
 
 RUN tdnf install -y \
         ca-certificates \
@@ -10,7 +11,7 @@ RUN tdnf install -y \
 
 # Retrieve YARP
 RUN yarp_version=0.0.0 \
-    && curl -u :$ACCESSTOKEN --basic -fSL --output yarp.zip "https://artifacts.visualstudio.com/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.zip" \
+    && curl -u :$ACCESSTOKEN --basic -fSL --output yarp.zip "https://artifacts.visualstudio.com/reverse-proxy/0.0.0/reverse-proxy-linux-x64.zip" \
     && yarp_sha512='{sha512_placeholder}' \
     && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
     && mkdir -p /app \
