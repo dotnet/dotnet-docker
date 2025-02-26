@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-preview.1.25080.5 \
+RUN dotnet_version=10.0.0-preview.2.25125.14 \
     && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
-    && dotnet_sha512='8e91e965eace3ac1b472f8d9d2cba51537606cb0ae9b2245dde7f2f9d95f8660800cb609a7152b3efeb1e01663070c80454e6180890ccb81d6533fcc891d124e' \
+    && dotnet_sha512='94d7fbeabce91b1de8c2431fa725b6ee4f519b99ed82842883b82e04129ed657cec6d9ed5fa1acb4d729b074e6e538d7fb7b02ad7de2a0afe529b73522481182' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -14,10 +14,10 @@ RUN dotnet_version=10.0.0-preview.1.25080.5 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-preview.1-trixie-slim-arm32v7
+FROM $REPO:10.0.0-preview.2-trixie-slim-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-preview.1.25080.5
+ENV DOTNET_VERSION=10.0.0-preview.2.25125.14
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
