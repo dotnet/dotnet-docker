@@ -6,14 +6,7 @@
     set buildVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|build-version")] ^
     set yarpVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
     set yarpVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|", yarpVersionVariable)] ^
-
-    set versionFolder to
-        when(ARGS["is-internal"],
-            buildVersion,
-            when(buildVersion != yarpVersion,
-                buildVersion,
-                '$yarp_version')) ^
-
+    set versionFolder to when(buildVersion != yarpVersion, buildVersion, '$yarp_version') ^
     set yarpBaseUrl to cat(VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])], "/reverse-proxy/", versionFolder, "/") ^
     set files to [
         [
