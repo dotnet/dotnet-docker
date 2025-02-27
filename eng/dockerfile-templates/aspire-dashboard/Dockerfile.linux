@@ -1,6 +1,7 @@
 {{
-    set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
-    set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
+    set aspireVersionParts to split(PRODUCT_VERSION, ".") ^
+    set aspireMajorMinor to cat(aspireVersionParts[0], ".", aspireVersionParts[1]) ^
+
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >= 0 ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|8.0|product-version")], "-", OS_VERSION, "-extra", ARCH_TAG_SUFFIX) ^
@@ -10,8 +11,12 @@
             when(find(OS_VERSION, "3.0") >= 0, "azurelinux", "cbl-mariner"),
             "/base/core:",
             OS_VERSION_NUMBER),
-        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))
-}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
+        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
+
+    set baseUrl to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|base-url|", VARIABLES["branch"])] ^
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0
+}}ARG REPO=mcr.microsoft.com/dotnet/aspnet{{if isInternal:
+ARG ACCESSTOKEN}}
 
 # Installer image
 FROM {{installerImageTag}} AS installer
@@ -19,7 +24,11 @@ FROM {{installerImageTag}} AS installer
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
 }}
 # Retrieve Aspire Dashboard
-{{InsertTemplate("Dockerfile.linux.install-aspire-dashboard", [ "is-zip": "true" ])}}
+{{InsertTemplate("Dockerfile.linux.install-aspire-dashboard",
+    [
+        "is-zip": "true",
+        "is-internal": isInternal
+    ])}}
 
 
 # Aspire Dashboard image
