@@ -15,11 +15,11 @@
 
     set baseUrl to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0
-}}ARG REPO=mcr.microsoft.com/dotnet/aspnet{{if isInternal:
-ARG ACCESSTOKEN}}
+}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
-FROM {{installerImageTag}} AS installer
+FROM {{installerImageTag}} AS installer{{if isInternal:
+ARG ACCESSTOKEN}}
 {{if isAzureLinux:
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
 }}
