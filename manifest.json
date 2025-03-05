@@ -9694,7 +9694,9 @@
           "productVersion": "$(sdk|10.0|product-version)",
           "sharedTags": {
             "$(sdk|10.0|fixed-tag)-noble-aot": {},
-            "$(sdk|10.0|minor-tag)-noble-aot": {}
+            "$(sdk|10.0|minor-tag)-noble-aot": {},
+            "$(sdk|10.0|fixed-tag)-aot": {},
+            "$(sdk|10.0|minor-tag)-aot": {}
           },
           "platforms": [
             {
