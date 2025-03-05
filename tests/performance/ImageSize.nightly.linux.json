@@ -405,7 +405,15 @@
     "src/sdk/10.0/trixie-slim/arm64v8": 952784503,
     "src/sdk/10.0/noble/amd64": 874884561,
     "src/sdk/10.0/noble/arm32v7": 758582419,
-    "src/sdk/10.0/noble/arm64v8": 896400197
+    "src/sdk/10.0/noble/arm64v8": 896400197,
+    "src/sdk/10.0/alpine3.21-aot/amd64": 720060909,
+    "src/sdk/10.0/alpine3.21-aot/arm64v8": 738892101,
+    "src/sdk/10.0/azurelinux3.0-aot/amd64": 1192447426,
+    "src/sdk/10.0/azurelinux3.0-aot/arm64v8": 1201391993,
+    "src/sdk/10.0/trixie-slim-aot/amd64": 896392658,
+    "src/sdk/10.0/trixie-slim-aot/arm64v8": 952784503,
+    "src/sdk/10.0/noble-aot/amd64": 874884561,
+    "src/sdk/10.0/noble-aot/arm64v8": 896400197
   },
   "dotnet/nightly/monitor": {
     "src/monitor/8.0/ubuntu-chiseled/amd64": 127821834,
