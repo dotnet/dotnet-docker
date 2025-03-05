@@ -33,3 +33,7 @@ function Get-ProductReleaseState() {
         return 'Prerelease'
     }
 }
+
+function Get-DockerOs() {
+    return docker version -f "{{ .Server.Os }}"
+}
