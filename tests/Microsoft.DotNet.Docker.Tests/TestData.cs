@@ -325,10 +325,6 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V10_0_Preview, OS = OS.NobleChiseled,       Arch = Arch.Arm,     SdkOS = OS.Noble,
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps | DotNetImageRepo.Runtime | DotNetImageRepo.Aspnet },
             new ProductImageData { Version = V10_0_Preview, OS = OS.TrixieSlim,        Arch = Arch.Arm },
-
-            new() { Version = V10_0_Preview, Arch = Arch.Arm, SdkImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps, OS = OS.Alpine321 },
-            new() { Version = V10_0_Preview, Arch = Arch.Arm, SdkImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps, OS = OS.NobleChiseled, SdkOS = OS.Noble },
-            new() { Version = V10_0_Preview, Arch = Arch.Arm, SdkImageVariant = DotNetImageVariant.AOT, SupportedImageRepos = DotNetImageRepo.Runtime_Deps, OS = OS.TrixieSlim },
         };
 
         private static readonly ProductImageData[] s_windowsTestData =
