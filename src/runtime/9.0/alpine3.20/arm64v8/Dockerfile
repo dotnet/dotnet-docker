@@ -1,12 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:9.0.2-alpine3.20-arm64v8 AS installer
+FROM $REPO:9.0.3-alpine3.20-arm64v8 AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.2 \
+RUN dotnet_version=9.0.3 \
     && wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='0bb0dc7a4388c5b95d4fec9fe7ca1273f9afa502021c73eb946ed2928d6d6d0836414400f667eff30da97b83b04f66d3032c2344bb2587007b4001d75b696a16' \
+    && dotnet_sha512='2385114169e32b29b3a13b275a441af1edbb4c14ebed52ff8f45f11ac8a571efa2984be2ef91e38e670038c8e29db8c585ff12d1e05502f4120e4dd05e98b72c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -14,10 +14,10 @@ RUN dotnet_version=9.0.2 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.2-alpine3.20-arm64v8
+FROM $REPO:9.0.3-alpine3.20-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.2
+ENV DOTNET_VERSION=9.0.3
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
