@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.13 \
+RUN dotnet_version=8.0.14 \
     && curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='8649eda14e8bc993f8cb3d421d44a4abb218acf29996ac1ec939686bf657e75b60f2b690180a4654ee15ebb7b95386eabc969ea98209e31e2801620ff90fce43' \
+    && dotnet_sha512='5b7c7300dd30084650a2265b6618f366f099dff2b292482e5e05f14f3a0b0850c658ecf383683e1dce4e753a616fd2e3c169c1734a679afcc4c0cad488b9f8a0' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -14,10 +14,10 @@ RUN dotnet_version=8.0.13 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.13-noble-amd64
+FROM $REPO:8.0.14-noble-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.13
+ENV DOTNET_VERSION=8.0.14
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

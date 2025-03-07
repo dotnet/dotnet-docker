@@ -5,7 +5,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Polly;
-using Polly.CircuitBreaker;
 using Polly.Retry;
 using Xunit.Abstractions;
 

@@ -1,4 +1,17 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
+# Installer image
+FROM $REPO:10.0.0-preview.1-alpine3.21-amd64 AS installer
+
+# Install .NET SDK
+RUN wget -O dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.1.25120.13/dotnet-sdk-10.0.100-preview.1.25120.13-linux-musl-x64.tar.gz \
+    && dotnet_sha512='35a2ce93ba7f39a08fd177118aa0ccfe8c90055b8df98d3e1340644a91c3ea90afc0201bffb0ceb54882313fdd9d3ab01ac23d6f8ccb3ef0670a1af825cd3257' \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && mkdir -p /dotnet \
+    && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm dotnet.tar.gz
+
+
+# .NET SDK image
 FROM $REPO:10.0.0-preview.1-alpine3.21-amd64
 
 ENV \
@@ -27,15 +40,10 @@ RUN apk add --upgrade --no-cache \
         libatomic \
         tzdata
 
-# Install .NET SDK
-RUN wget -O dotnet.tar.gz https://ci.dot.net/public/Sdk/$DOTNET_SDK_VERSION/dotnet-sdk-$DOTNET_SDK_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='35a2ce93ba7f39a08fd177118aa0ccfe8c90055b8df98d3e1340644a91c3ea90afc0201bffb0ceb54882313fdd9d3ab01ac23d6f8ccb3ef0670a1af825cd3257' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz \
-    # Trigger first run experience by running arbitrary cmd
-    && dotnet help
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+
+# Trigger first run experience by running arbitrary cmd
+RUN dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.5.0 \

@@ -405,35 +405,47 @@
     "src/sdk/10.0/trixie-slim/arm64v8": 952784503,
     "src/sdk/10.0/noble/amd64": 874884561,
     "src/sdk/10.0/noble/arm32v7": 758582419,
-    "src/sdk/10.0/noble/arm64v8": 896400197
+    "src/sdk/10.0/noble/arm64v8": 896400197,
+    "src/sdk/10.0/alpine3.21-aot/amd64": 720060909,
+    "src/sdk/10.0/alpine3.21-aot/arm64v8": 738892101,
+    "src/sdk/10.0/azurelinux3.0-aot/amd64": 1192447426,
+    "src/sdk/10.0/azurelinux3.0-aot/arm64v8": 1201391993,
+    "src/sdk/10.0/trixie-slim-aot/amd64": 896392658,
+    "src/sdk/10.0/trixie-slim-aot/arm64v8": 952784503,
+    "src/sdk/10.0/noble-aot/amd64": 874884561,
+    "src/sdk/10.0/noble-aot/arm64v8": 896400197
   },
   "dotnet/nightly/monitor": {
     "src/monitor/8.0/ubuntu-chiseled/amd64": 127821834,
     "src/monitor/8.0/ubuntu-chiseled/arm64v8": 134958622,
-    "src/monitor/8.0/cbl-mariner-distroless/amd64": 141200979,
-    "src/monitor/8.0/cbl-mariner-distroless/arm64v8": 148117492,
+    "src/monitor/8.0/azurelinux-distroless/amd64": 141200979,
+    "src/monitor/8.0/azurelinux-distroless/arm64v8": 148117492,
     "src/monitor/8.1/ubuntu-chiseled/amd64": 127821834,
     "src/monitor/8.1/ubuntu-chiseled/arm64v8": 134958622,
-    "src/monitor/8.1/cbl-mariner-distroless/amd64": 141200979,
-    "src/monitor/8.1/cbl-mariner-distroless/arm64v8": 148117492,
+    "src/monitor/8.1/azurelinux-distroless/amd64": 141200979,
+    "src/monitor/8.1/azurelinux-distroless/arm64v8": 148117492,
     "src/monitor/9.0/azurelinux-distroless/amd64": 143287803,
-    "src/monitor/9.0/azurelinux-distroless/arm64v8": 149490964
+    "src/monitor/9.0/azurelinux-distroless/arm64v8": 149490964,
+    "src/monitor/9.1/azurelinux-distroless/amd64": 143287803,
+    "src/monitor/9.1/azurelinux-distroless/arm64v8": 149490964
   },
   "dotnet/nightly/monitor/base": {
     "src/monitor-base/8.0/ubuntu-chiseled/amd64": 119965752,
     "src/monitor-base/8.0/ubuntu-chiseled/arm64v8": 127102540,
-    "src/monitor-base/8.0/cbl-mariner-distroless/amd64": 133344897,
-    "src/monitor-base/8.0/cbl-mariner-distroless/arm64v8": 140261410,
+    "src/monitor-base/8.0/azurelinux-distroless/amd64": 133344897,
+    "src/monitor-base/8.0/azurelinux-distroless/arm64v8": 140261410,
     "src/monitor-base/8.1/ubuntu-chiseled/amd64": 119965752,
     "src/monitor-base/8.1/ubuntu-chiseled/arm64v8": 127102540,
-    "src/monitor-base/8.1/cbl-mariner-distroless/amd64": 133344897,
-    "src/monitor-base/8.1/cbl-mariner-distroless/arm64v8": 140261410,
+    "src/monitor-base/8.1/azurelinux-distroless/amd64": 133344897,
+    "src/monitor-base/8.1/azurelinux-distroless/arm64v8": 140261410,
     "src/monitor-base/9.0/azurelinux-distroless/amd64": 135186884,
-    "src/monitor-base/9.0/azurelinux-distroless/arm64v8": 141390045
+    "src/monitor-base/9.0/azurelinux-distroless/arm64v8": 141390045,
+    "src/monitor-base/9.1/azurelinux-distroless/amd64": 135186884,
+    "src/monitor-base/9.1/azurelinux-distroless/arm64v8": 141390045
   },
   "dotnet/nightly/aspire-dashboard": {
-    "src/aspire-dashboard/9.0/cbl-mariner-distroless/amd64": 142036038,
-    "src/aspire-dashboard/9.0/cbl-mariner-distroless/arm64v8": 148315271
+    "src/aspire-dashboard/9.1/azurelinux-distroless/amd64": 142036038,
+    "src/aspire-dashboard/9.1/azurelinux-distroless/arm64v8": 148315271
   },
   "dotnet/nightly/yarp": {
     "src/yarp/2.3/azurelinux-distroless/amd64": 141557760,

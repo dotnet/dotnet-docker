@@ -15,4 +15,5 @@ public enum DotNetImageRepo
     Aspnet           = 1 << 3,
     Monitor          = 1 << 4,
     Aspire_Dashboard = 1 << 5,
+    Yarp             = 1 << 6,
 }
