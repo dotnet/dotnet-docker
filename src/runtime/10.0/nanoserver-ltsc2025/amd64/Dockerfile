@@ -8,9 +8,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '10.0.0-preview.2.25125.14'; `
+        $dotnet_version = '10.0.0-preview.2.25156.1'; `
         Invoke-WebRequest -OutFile dotnet.zip https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
-        $dotnet_sha512 = '3db77b5c588ff0bab6915a47d2239479a8ceb231e6947b2500557ffddc426d18abe5f1426dd571d3769302d80257f81afd986e1eddd34246b5383356cf4cf6a4'; `
+        $dotnet_sha512 = '14dd2266c1ba30893a99648763275655dfa92fcbfbb7dcef62e3fcd7d4fe19effe82eac126e2174e318eeccf04562c47eff1be404a94503aea1bfe8ed9c83062'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -30,7 +30,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-preview.2.25125.14
+    DOTNET_VERSION=10.0.0-preview.2.25156.1
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
