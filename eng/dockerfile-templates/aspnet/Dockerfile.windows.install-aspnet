@@ -7,8 +7,7 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
     set isNanoServer to find(OS_VERSION, "nanoserver") >= 0 ^
-    set useProgramFilesDir to (isServerCore && !ARGS["is-internal"]) ^
-    set dotnetDir to when(useProgramFilesDir, "$Env:ProgramFiles\dotnet", "dotnet") ^
+    set dotnetDir to "dotnet" ^
     set aspnetCoreZipFile to "aspnetcore.zip" ^
     set aspnetVersion to when(ARGS["use-local-version-var"], "$aspnetcore_version", "$Env:ASPNET_VERSION") ^
     set isInternalStableBranding to ARGS["is-internal"] &&
@@ -34,8 +33,8 @@ RUN powershell -Command `
             "sha-var-name": "aspnetcore_sha512"
         ], "        ")}}; `
         `
-        {{if !useProgramFilesDir:mkdir {{dotnetDir}}/shared/Microsoft.AspNetCore.App; `
-        }}{{InsertTemplate("../Dockerfile.windows.extract-zip",
+        mkdir {{dotnetDir}}/shared/Microsoft.AspNetCore.App; `
+        {{InsertTemplate("../Dockerfile.windows.extract-zip",
             [
                 "file": aspnetCoreZipFile,
                 "dest-dir": dotnetDir,

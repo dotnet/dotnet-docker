@@ -18,24 +18,8 @@
 }}# escape=`
 
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
-{{if isSingleStage:{{
 
-    _ SINGLE STAGE
-
-}}FROM {{aspnetBaseTag}}
-
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal, "include-powershell-vars": "true"])}}
-
-{{InsertTemplate("Dockerfile.windows.install-components")}}
-
-{{InsertTemplate("../Dockerfile.windows.set-path", [ "path": paths ])}}
-
-{{InsertTemplate("Dockerfile.windows.first-run")}}^else:
-{{
-
-    _ MULTI STAGE
-
-}}# Installer image
+# Installer image
 FROM {{installerStageFromImage}} AS installer
 {{if isInternal:
 ARG ACCESSTOKEN
@@ -45,6 +29,7 @@ ARG ACCESSTOKEN
         "use-local-version-var": "true",
         "dotnet-is-internal": isInternal,
     ])}}
+
 
 # SDK image
 FROM {{aspnetBaseTag}}
@@ -57,4 +42,4 @@ COPY --from=installer ["/dotnet", "/Program Files/dotnet"]
 COPY --from=installer ["/powershell", "/Program Files/powershell"]
 COPY --from=installer ["/MinGit", "/Program Files/MinGit"]
 
-{{InsertTemplate("Dockerfile.windows.first-run")}}}}
+{{InsertTemplate("Dockerfile.windows.first-run")}}

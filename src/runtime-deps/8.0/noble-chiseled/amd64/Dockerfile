@@ -2,8 +2,8 @@ FROM amd64/buildpack-deps:noble-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.0.0/chisel_v1.0.0_linux_amd64.tar.gz \
-    && chisel_sha384='655ca8f45e6f052ab60a4acfeca5017c7d992035e0e4a01f78881c0fe45f2103ce2f18a352ddc8f5fb88bfdd1ed8cc6b' \
+RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.1.0/chisel_v1.1.0_linux_amd64.tar.gz \
+    && chisel_sha384='f53b6e4e9bf43f234201353487684c7d6e04e4f9a2ee766debbfc92f824b717fbd5d585a9147fb5652e0724473ae2959' \
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
     && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \

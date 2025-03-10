@@ -21,7 +21,9 @@ function CopyReadme([string]$containerName, [string]$readmeRelativePath) {
 $onDockerfilesGenerated = {
     param($ContainerName)
 
-    if (-Not $Validate) {
+    # On Windows, ImageBuilder is run locally due to limitations with running Docker client within a container.
+    # Remove linux condition when https://github.com/dotnet/docker-tools/issues/159 is resolved.
+    if ($(Get-DockerOs) -eq "linux" -and -not $Validate) {
         CopyReadme $ContainerName "README.aspire-dashboard.md"
         CopyReadme $ContainerName "README.aspnet.md"
         CopyReadme $ContainerName "README.md"

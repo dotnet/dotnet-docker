@@ -1,6 +1,11 @@
 {
     "image": "mcr.microsoft.com/dotnet/sdk:9.0-noble",
     "features": {
+        "ghcr.io/devcontainers/features/common-utils": {
+            "username": "app",
+            "userUid": 1654,
+            "userGid": 1654
+        },
         "ghcr.io/devcontainers/features/docker-in-docker:2": {}
     },
     "customizations": {
@@ -14,11 +19,11 @@
                 "remote.autoForwardPortsSource": "hybrid",
                 "remote.otherPortsAttributes": {
                     "onAutoForward": "ignore"
-                },
-                "terminal.integrated.defaultProfile.linux": "bash"
+                }
             }
         }
     },
     "remoteUser": "app",
+    "onCreateCommand": "sudo chsh -s /bin/bash app",
     "updateContentCommand": "docker pull mcr.microsoft.com/dotnet-buildtools/image-builder:latest"
 }

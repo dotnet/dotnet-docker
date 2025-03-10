@@ -31,12 +31,19 @@ public class TestDataTests(ITestOutputHelper outputHelper)
     [MemberData(nameof(ImageRepos))]
     public void VerifyTestData(DotNetImageRepo imageRepo)
     {
-        string repoName = ImageData.GetRepoName(ProductImageData.GetDotNetImageRepoName(imageRepo));
+        var testData = GetTestData(imageRepo);
 
-        Repo manifestRepo = _manifest.Repos.First(r => r.Name == repoName);
+        string repoName = ImageData.GetRepoName(ProductImageData.GetDotNetImageRepoName(imageRepo));
+        Repo? manifestRepo = _manifest.Repos.FirstOrDefault(r => r.Name == repoName);
+
+        if (manifestRepo == null)
+        {
+            testData.ShouldBeEmpty($"Expected TestData to be empty because repo {repoName} is not in the manifest.");
+            return;
+        }
 
         List<string> testDataTags =
-            GetTestData(imageRepo)
+            testData
                 .Select(productImageData =>
                     productImageData
                         .GetImage(imageRepo, _dockerHelper, skipPull: true)
