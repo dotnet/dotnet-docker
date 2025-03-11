@@ -6,7 +6,7 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
-    set dotnetDir to when(isServerCore && !ARGS["is-internal"], "$Env:ProgramFiles\dotnet", "dotnet") ^
+    set dotnetDir to "dotnet" ^
     set dotnetZipFile to "dotnet.zip" ^
     set runtimeVersionDir to when(ARGS["use-local-version-var"],
         "$dotnet_version",

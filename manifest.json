@@ -8910,21 +8910,33 @@
         {
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
-            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {}
+            "$(monitor|8.0|fixed-tag)-azurelinux-distroless": {},
+            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8.0|minor-tag)-azurelinux-distroless": {},
+            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/monitor-base/8.0/cbl-mariner-distroless/amd64",
+              "dockerfile": "src/monitor-base/8.0/azurelinux-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {}
+                "$(monitor|8.0|fixed-tag)-azurelinux-distroless-amd64": {},
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-azurelinux-distroless-amd64": {},
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -8932,13 +8944,19 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/monitor-base/8.0/cbl-mariner-distroless/arm64v8",
+              "dockerfile": "src/monitor-base/8.0/azurelinux-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {}
+                "$(monitor|8.0|fixed-tag)-azurelinux-distroless-arm64v8": {},
+                "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.0|minor-tag)-azurelinux-distroless-arm64v8": {},
+                "$(monitor|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -8990,23 +9008,41 @@
         {
           "productVersion": "$(monitor|8.1|product-version)",
           "sharedTags": {
-            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8|major-tag)-cbl-mariner-distroless": {}
+            "$(monitor|8.1|fixed-tag)-azurelinux-distroless": {},
+            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8.1|minor-tag)-azurelinux-distroless": {},
+            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8|major-tag)-azurelinux-distroless": {},
+            "$(monitor|8|major-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/monitor-base/8.1/cbl-mariner-distroless/amd64",
+              "dockerfile": "src/monitor-base/8.1/azurelinux-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-amd64": {},
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {}
+                "$(monitor|8.1|fixed-tag)-azurelinux-distroless-amd64": {},
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-azurelinux-distroless-amd64": {},
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8|major-tag)-azurelinux-distroless-amd64": {},
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -9014,14 +9050,23 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/monitor-base/8.1/cbl-mariner-distroless/arm64v8",
+              "dockerfile": "src/monitor-base/8.1/azurelinux-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-arm64v8": {},
-                "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": {}
+                "$(monitor|8.1|fixed-tag)-azurelinux-distroless-arm64v8": {},
+                "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8.1|minor-tag)-azurelinux-distroless-arm64v8": {},
+                "$(monitor|8.1|minor-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|8|major-tag)-azurelinux-distroless-arm64v8": {},
+                "$(monitor|8|major-tag)-cbl-mariner-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
             }
@@ -9065,6 +9110,44 @@
               "variant": "v8"
             }
           ]
+        },
+        {
+          "productVersion": "$(monitor|9.1|product-version)",
+          "sharedTags": {
+            "$(monitor|9.1|fixed-tag)": {},
+            "$(monitor|9.1|minor-tag)": {},
+            "$(monitor|9|major-preview-tag)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/9.1/azurelinux-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|9.1|fixed-tag)-amd64": {},
+                "$(monitor|9.1|minor-tag)-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/9.1/azurelinux-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|9.1|fixed-tag)-arm64v8": {},
+                "$(monitor|9.1|minor-tag)-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
         }
       ]
     },
@@ -9101,7 +9184,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.0/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9119,7 +9202,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.0/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9137,18 +9220,24 @@
         {
           "productVersion": "$(monitor|8.0|product-version)",
           "sharedTags": {
-            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {}
+            "$(monitor|8.0|fixed-tag)-azurelinux-distroless": {},
+            "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8.0|minor-tag)-azurelinux-distroless": {},
+            "$(monitor|8.0|minor-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:monitor-base)"
               },
-              "dockerfile": "src/monitor/8.0/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfile": "src/monitor/8.0/azurelinux-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
@@ -9163,10 +9252,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:monitor-base)"
               },
-              "dockerfile": "src/monitor/8.0/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfile": "src/monitor/8.0/azurelinux-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(monitor|8.0|fixed-tag)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
@@ -9195,7 +9284,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.1/ubuntu-chiseled/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9216,7 +9305,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/8.1/ubuntu-chiseled/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "jammy-chiseled",
               "tags": {
@@ -9237,19 +9326,28 @@
         {
           "productVersion": "$(monitor|8.1|product-version)",
           "sharedTags": {
-            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": {},
-            "$(monitor|8|major-tag)-cbl-mariner-distroless": {}
+            "$(monitor|8.1|fixed-tag)-azurelinux-distroless": {},
+            "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8.1|minor-tag)-azurelinux-distroless": {},
+            "$(monitor|8.1|minor-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(monitor|8|major-tag)-azurelinux-distroless": {},
+            "$(monitor|8|major-tag)-cbl-mariner-distroless": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
               "buildArgs": {
                 "REPO": "$(Repo:monitor-base)"
               },
-              "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfile": "src/monitor/8.1/azurelinux-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
@@ -9267,10 +9365,10 @@
               "buildArgs": {
                 "REPO": "$(Repo:monitor-base)"
               },
-              "dockerfile": "src/monitor/8.1/cbl-mariner-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfile": "src/monitor/8.1/azurelinux-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(monitor|8.1|fixed-tag)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
@@ -9300,7 +9398,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/9.0/azurelinux-distroless/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
@@ -9318,7 +9416,7 @@
                 "REPO": "$(Repo:monitor-base)"
               },
               "dockerfile": "src/monitor/9.0/azurelinux-distroless/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux.extensions",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
@@ -9326,6 +9424,52 @@
                   "docType": "Undocumented"
                 },
                 "$(monitor|9.0|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|9.1|product-version)",
+          "sharedTags": {
+            "$(monitor|9.1|fixed-tag)": {},
+            "$(monitor|9.1|minor-tag)": {},
+            "$(monitor|9|major-preview-tag)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/9.1/azurelinux-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|9.1|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|9.1|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/9.1/azurelinux-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|9.1|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|9.1|minor-tag)-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -9355,10 +9499,10 @@
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspire-dashboard-tags.yml",
       "images": [
         {
-          "productVersion": "$(aspire-dashboard|9.0|product-version)",
+          "productVersion": "$(aspire-dashboard|9.1|product-version)",
           "sharedTags": {
-            "$(aspire-dashboard|9.0|fixed-tag)": {},
-            "$(aspire-dashboard|9.0|minor-tag)": {},
+            "$(aspire-dashboard|9.1|fixed-tag)": {},
+            "$(aspire-dashboard|9.1|minor-tag)": {},
             "$(aspire-dashboard|9|major-tag)": {},
             "latest": {}
           },
@@ -9367,15 +9511,15 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/aspire-dashboard/9.0/cbl-mariner-distroless/amd64",
+              "dockerfile": "src/aspire-dashboard/9.1/azurelinux-distroless/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(aspire-dashboard|9.0|fixed-tag)-amd64": {
+                "$(aspire-dashboard|9.1|fixed-tag)-amd64": {
                   "docType": "Undocumented"
                 },
-                "$(aspire-dashboard|9.0|minor-tag)-amd64": {
+                "$(aspire-dashboard|9.1|minor-tag)-amd64": {
                   "docType": "Undocumented"
                 },
                 "$(aspire-dashboard|9|major-tag)-amd64": {
@@ -9388,15 +9532,15 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/aspire-dashboard/9.0/cbl-mariner-distroless/arm64v8",
+              "dockerfile": "src/aspire-dashboard/9.1/azurelinux-distroless/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
               "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
+              "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(aspire-dashboard|9.0|fixed-tag)-arm64v8": {
+                "$(aspire-dashboard|9.1|fixed-tag)-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "$(aspire-dashboard|9.0|minor-tag)-arm64v8": {
+                "$(aspire-dashboard|9.1|minor-tag)-arm64v8": {
                   "docType": "Undocumented"
                 },
                 "$(aspire-dashboard|9|major-tag)-arm64v8": {

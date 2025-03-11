@@ -24,7 +24,9 @@ if (-Not $OutputDirectory) {
 $onDockerfilesGenerated = {
     param($ContainerName)
 
-    if (-Not $Validate) {
+    # On Windows, ImageBuilder is run locally due to limitations with running Docker client within a container.
+    # Remove linux condition when https://github.com/dotnet/docker-tools/issues/159 is resolved
+    if ($(Get-DockerOs) -eq "linux" -and -not $Validate) {
         Exec "docker cp ${ContainerName}:/repo/src $OutputDirectory"
     }
 }

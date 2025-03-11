@@ -31,7 +31,13 @@ namespace Microsoft.DotNet.Docker.Tests
         private const string SingleNumberRegex = @"\d+";
         private const string MajorVersionRegex = SingleNumberRegex;
         private const string MajorMinorVersionRegex = @$"{SingleNumberRegex}\.{SingleNumberRegex}";
-        private static readonly string[] ApplianceRepos = { "monitor", "monitor-base", "aspire-dashboard" };
+        private static readonly string[] ApplianceRepos =
+        [
+            "monitor",
+            "monitor-base",
+            "aspire-dashboard",
+            "yarp"
+        ];
 
         private enum TestType
         {
@@ -135,12 +141,27 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 bool hasPreviewInMajorVersionGroup = HasPreviewProductVersion(repo, dockerfileVersion.Major);
 
+                // .NET Monitor 8 Azure Linux images do not have Azure Linux platform
+                //  (e.g. *-amd64) tags but do have undocumented CBL-Mariner tags. The tag
+                // pattern test assumes that a dockerfile will produce platform tags for the
+                // underlying OS, which is true for most cases, but not for .NET Monitor 8
+                // due to combination of undocumenting platform tags for appliance images
+                // (which only .NET Monitor had at the time) and the update from CBL-Mariner
+                // to Azure Linux. Rewrite the OS to match CBL-Mariner in this instance.
+                string os = dockerfileInfo.Os;
+                if (repo.Name.EndsWith("monitor") &&
+                    dockerfileInfo.MajorMinor.StartsWith("8.") &&
+                    OS.AzureLinuxDistroless.Equals(os))
+                {
+                    os = OS.MarinerDistroless;
+                }
+
                 IEnumerable<string> tags = dockerfileTag.Value
                     .Where(tag => IsTagOfFormat(
                         tag,
                         versionType,
                         dockerfileInfo.MajorMinor,
-                        checkOs ? dockerfileInfo.Os : null,
+                        checkOs ? os : null,
                         checkArchitecture ? dockerfileInfo.Architecture : null));
 
                 if (versionType == VersionType.Major && !IsLatestInMajorVersionGroup(repo, dockerfileInfo.MajorMinor, hasPreviewInMajorVersionGroup))

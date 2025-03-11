@@ -18,9 +18,13 @@ elif match(REPO, "monitor/base"):* `9` (Standard Support)
   * `docker pull {{FULL_REPO}}:9`
 * `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`^
-elif match(REPO, "aspire-dashboard"):* `9.0`
-  * `docker pull {{FULL_REPO}}:9.0`^
-else:* `9.0` (Standard Support)
+elif match(REPO, "aspire-dashboard"):* `9.1`
+  * `docker pull {{FULL_REPO}}:9.1`^
+elif match(REPO, "yarp"):* `2.3-preview`
+  * `docker pull {{FULL_REPO}}:2.3-preview`^
+else:{{if VARIABLES["branch"] = "nightly":* `10.0-preview` (Preview)
+  * `docker pull {{FULL_REPO}}:10.0-preview`
+}}* `9.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:9.0`
 * `8.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8.0`}}

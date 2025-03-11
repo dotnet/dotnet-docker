@@ -1,4 +1,7 @@
 {{
+    _ ARGS:
+        is-internal (optional): whether the Dockerfile is targeting an internal build of Aspire Dashboard ^
+
     set aspireMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|build-version")] ^
     set aspireVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
