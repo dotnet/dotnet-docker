@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:9.0.200-alpine3.21-amd64
+FROM $REPO:9.0.201-alpine3.21-amd64
 
 RUN apk add --upgrade --no-cache \
         build-base \
