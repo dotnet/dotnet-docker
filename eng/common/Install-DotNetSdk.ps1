@@ -45,11 +45,11 @@ $DotnetChannel = "9.0"
 $InstallFailed = $false
 if ($IsRunningOnUnix) {
     & chmod +x $DotnetInstallScriptPath
-    & $DotnetInstallScriptPath --channel $DotnetChannel --install-dir $InstallPath
+    & "$PSScriptRoot/Invoke-WithRetry.ps1" "$DotnetInstallScriptPath --channel $DotnetChannel --install-dir $InstallPath" -Retries 5
     $InstallFailed = ($LASTEXITCODE -ne 0)
 }
 else {
-    & $DotnetInstallScriptPath -Channel $DotnetChannel -InstallDir $InstallPath
+    & "$PSScriptRoot/Invoke-WithRetry.ps1" "$DotnetInstallScriptPath -Channel $DotnetChannel -InstallDir $InstallPath" -Retries 5
     $InstallFailed = (-not $?)
 }
 
