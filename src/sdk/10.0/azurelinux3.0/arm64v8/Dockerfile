@@ -7,8 +7,8 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.2.25160.21/dotnet-sdk-10.0.100-preview.2.25160.21-linux-arm64.tar.gz \
-    && dotnet_sha512='3afcd738038189b96f71b3cdc9486daf9b4347ebf271965ac852dea1f3d833353db6ae135b7ddae461b5d3969c7b3a1029e5ba80cfa440c5ad58d9e39f121641' \
+RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.2.25162.12/dotnet-sdk-10.0.100-preview.2.25162.12-linux-arm64.tar.gz \
+    && dotnet_sha512='9351195d158731440011c78c8aa2b252febd6a3d81ee1eb99bb2bb5e408a54c25ee2d50e4cf826170680612b1d29ac1e0b2c261379cb261e7b4a185ae1131446' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -24,7 +24,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.2.25160.21 \
+    DOTNET_SDK_VERSION=10.0.100-preview.2.25162.12 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
