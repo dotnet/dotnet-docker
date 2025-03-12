@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.2.25160.21/dotnet-sdk-10.0.100-preview.2.25160.21-linux-arm.tar.gz \
-    && dotnet_sha512='2a488a1a1fb62dfb171e78a59aee2434933e8c57d50e34f095c973134f1d633a6a23772585af0232b42847433300e38b9f7f6123dc9f4b58c4e3411d15a7d711' \
+RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.2.25162.12/dotnet-sdk-10.0.100-preview.2.25162.12-linux-arm.tar.gz \
+    && dotnet_sha512='33e71e9c413a367db03082f64629daf5b40f291b61cfb395426616fca1773a80dc8a0e567ef7e15eb16920d673caf8fc7e08aefb2ac0c66faca7b8fe0e648318' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -20,7 +20,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.2.25160.21 \
+    DOTNET_SDK_VERSION=10.0.100-preview.2.25162.12 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
