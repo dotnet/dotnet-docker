@@ -27,7 +27,7 @@ FROM $REPO:10.0.0-preview.2-azurelinux3.0-distroless-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-preview.2.25160.1 \
+    DOTNET_VERSION=10.0.0-preview.2.25163.2 \
     # ASP.NET Core version
     ASPNET_VERSION=10.0.0-preview.2.25161.17
 

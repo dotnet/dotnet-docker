@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:10.0.0-preview.2-alpine3.21-amd64 AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-preview.2.25160.1 \
+RUN dotnet_version=10.0.0-preview.2.25163.2 \
     && wget -O dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='227110080ec03aab886b0764bc96d6322c031c0758be1e092b2074d5ddcdf543c6d98d75d9dcbd460cfef051137fc5a1733a89867391121a677bd460383f9508' \
+    && dotnet_sha512='d91bfb5839b30377d09849511c8668230be51fae0d05e07d761297da40c994d800de5ce6fc5f7307cbdf5cf6e7fa7dd720ecab8354ec9436c662cd4fe14851dd' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -17,7 +17,7 @@ RUN dotnet_version=10.0.0-preview.2.25160.1 \
 FROM $REPO:10.0.0-preview.2-alpine3.21-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-preview.2.25160.1
+ENV DOTNET_VERSION=10.0.0-preview.2.25163.2
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
