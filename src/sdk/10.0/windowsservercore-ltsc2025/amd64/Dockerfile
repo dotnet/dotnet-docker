@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.48.1.windows.1/MinGit-2.48.1-64-bit.zip; `
-        $mingit_sha256 = '11e8f462726827acccc7ecdad541f2544cbe5506d70fef4fa1ffac7c16288709'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/MinGit-2.49.0-64-bit.zip; `
+        $mingit_sha256 = '971cdee7c0feaa1e41369c46da88d1000a24e79a6f50191c820100338fb7eca5'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -25,9 +25,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '10.0.100-preview.1.25120.13'; `
+        $sdk_version = '10.0.100-preview.2.25164.34'; `
         Invoke-WebRequest -OutFile dotnet.zip https://ci.dot.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = 'f574e68dbb4214679a123f2527fe0478c7a7d2ca6900c81e2cfec03984421a894d8e1304a5683f077185b71b4491ed12d449636620f96b640156aa251f4a6a53'; `
+        $dotnet_sha512 = 'a8aa6371149103c3fda2cb29972aa9343b2d6a3e3ecdbbb7e8b123c1aab1c9ed25f12408a59db3d7661316bb0f13261b1a353140f420e366bc61c5b7aaaabc1d'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -57,7 +57,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:10.0.0-preview.1-windowsservercore-ltsc2025
+FROM $REPO:10.0.0-preview.2-windowsservercore-ltsc2025
 
 ENV `
     # Do not generate certificate
@@ -65,7 +65,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.1.25120.13 `
+    DOTNET_SDK_VERSION=10.0.100-preview.2.25164.34 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

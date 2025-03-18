@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.1.25120.13/dotnet-sdk-10.0.100-preview.1.25120.13-linux-arm64.tar.gz \
-    && dotnet_sha512='645b618ab7fbcce38f82b2ca9a5fab6b11742dc9ca53f4bb65654dbe8385e1789aed034162436af998c59e418b5031607e71856dc38848717a74f8f3292e0c4b' \
+RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.2.25164.34/dotnet-sdk-10.0.100-preview.2.25164.34-linux-arm64.tar.gz \
+    && dotnet_sha512='0491381366f50d6a2211f925f5c5b2e1364f3b3a45076c706dacd3afa6856dd95efb6bacccc8874718bde37439e77614ff2bfd580c3c2e97737d42db311db5e6' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -12,7 +12,7 @@ RUN curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-prev
 
 
 # .NET SDK image
-FROM $REPO:10.0.0-preview.1-noble-arm64v8
+FROM $REPO:10.0.0-preview.2-noble-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -20,7 +20,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.1.25120.13 \
+    DOTNET_SDK_VERSION=10.0.100-preview.2.25164.34 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
