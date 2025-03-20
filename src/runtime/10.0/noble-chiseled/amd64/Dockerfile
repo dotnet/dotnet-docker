@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-preview.2.25163.2 \
+RUN dotnet_version=10.0.0-preview.3.25169.5 \
     && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='a64cccc9809fa5b2f4ccb178964bffa92b849c43dd2b2c3981d753e73f2b05a2b6e189a8c2a50fc67652badf66963313444c08ea22e4cd18fe8797049571341e' \
+    && dotnet_sha512='f4ae07aa24c7b98cdb7d24f6de59f073fe3fa8bf43c40ca54b6df9248a8629967d3a7bb56d6bbd8cbc37befa5837d2b19d8ae8e8b0caab4c9f32a2efc3671072' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
     && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
@@ -17,10 +17,10 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-preview.2-noble-chiseled-amd64
+FROM $REPO:10.0.0-preview.3-noble-chiseled-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-preview.2.25163.2
+ENV DOTNET_VERSION=10.0.0-preview.3.25169.5
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
