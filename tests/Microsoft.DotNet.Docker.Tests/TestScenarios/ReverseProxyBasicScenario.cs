@@ -1,11 +1,18 @@
 #nullable enable
 
+using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
+using System.Runtime.ExceptionServices;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using FluentAssertions.Execution;
 using Xunit;
 using Xunit.Abstractions;
+using Xunit.Sdk;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
@@ -20,6 +27,13 @@ public class YarpBasicScenario : ITestScenario
     private readonly string _imageTag;
 
     private readonly int _webPort;
+
+    private static readonly string s_samplesPath = @"C:\src\dotnet-docker\samples";
+    //private static readonly string s_samplesPath = Path.Combine(Config.SourceRepoRoot, "samples");
+
+    private const int OtelHttpPort = 8080;
+    private const int OtelGrpcPort = 4317;
+    private const int OtelTimeout = 1000;
 
     public YarpBasicScenario(
         int webPort,
@@ -40,9 +54,24 @@ public class YarpBasicScenario : ITestScenario
         string containerName = _imageData.GetIdentifier(nameof(YarpBasicScenario));
         using TempFileContext configFile = FileHelper.UseTempFile();
         string sampleContainer = $"{containerName}_aspnetapp";
+        string otelContainerTag = $"local-otlptestlistener";
+        string otelContainer = $"{containerName}_otel";
 
         try
         {
+            // Deploy opentelemetry endpoint
+            string otelAppTag = "otlptestlistener";
+            string sampleFolder = Path.Combine(s_samplesPath, "otlptestlistener");
+            string dockerfilePath = $"{sampleFolder}/Dockerfile";
+            _dockerHelper.Build(otelContainerTag, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
+            _dockerHelper.Run(
+                image: otelContainerTag,
+                name: otelContainer,
+                detach: true,
+                optionalRunArgs: "-P",
+                skipAutoCleanup: true);
+            string otelHostPort = _dockerHelper.GetContainerHostPort(otelContainer, OtelGrpcPort);
+
             // Deploy the aspnet sample app
             _dockerHelper.Run(
                 image: "mcr.microsoft.com/dotnet/samples:aspnetapp",
@@ -51,13 +80,22 @@ public class YarpBasicScenario : ITestScenario
                 optionalRunArgs: "",
                 skipAutoCleanup: true);
 
+            // Check that otel endpoint report is empty
+            HttpResponseMessage emptyTelemetryResponse = await WebScenario.GetHttpResponseFromContainerAsync(
+                otelContainer,
+                _dockerHelper,
+                _outputHelper,
+                OtelHttpPort,
+                pathAndQuery: "/report");
+            await CheckTelemetryResponse(emptyTelemetryResponse, 0, 0, 0, 0);
+
             File.WriteAllText(configFile.Path, ConfigFileContent);
 
             _dockerHelper.Run(
                 image: _imageTag,
                 name: containerName,
                 detach: true,
-                optionalRunArgs: $"-p {_webPort} -v {configFile.Path}:/etc/yarp.config --link {sampleContainer}:aspnetapp1",
+                optionalRunArgs: $"-e OTEL_EXPORTER_OTLP_ENDPOINT=http://host.docker.internal:{otelHostPort} -e OTEL_EXPORTER_OTLP_TIMEOUT={OtelTimeout}  -p {_webPort} -v {configFile.Path}:/etc/yarp.config --link {sampleContainer}:aspnetapp1",
                 skipAutoCleanup: true);
 
             // base uri should return 404
@@ -77,13 +115,64 @@ public class YarpBasicScenario : ITestScenario
                 _outputHelper,
                 _webPort,
                 pathAndQuery: "/aspnetapp");
-
             Assert.Equal(HttpStatusCode.OK, okResponse.StatusCode);
+
+            // Wait a bit for telemetry to arrive
+            await Task.Delay(OtelTimeout * 10);
+
+            // Some messages and some metrics should have been received
+            HttpResponseMessage nonEmptyTelemetryResponse = await WebScenario.GetHttpResponseFromContainerAsync(
+                otelContainer,
+                _dockerHelper,
+                _outputHelper,
+                OtelHttpPort,
+                pathAndQuery: "/report");
+            await CheckTelemetryResponse(nonEmptyTelemetryResponse, minlogMessageCount: 10);
         }
         finally
         {
             _dockerHelper.DeleteContainer(containerName);
             _dockerHelper.DeleteContainer(sampleContainer);
+            _dockerHelper.DeleteContainer(otelContainer);
+            _dockerHelper.DeleteImage(otelContainerTag);
+        }
+    }
+
+    private async Task CheckTelemetryResponse(
+        HttpResponseMessage telemetryResponse,
+        int? minlogMessageCount = null,
+        int? minMetricNameCount = null,
+        int? maxlogMessageCount = null,
+        int? maxMetricNameCount = null)
+    {
+        Assert.Equal(HttpStatusCode.OK, telemetryResponse.StatusCode);
+        TelemetryResults? response = await JsonSerializer.DeserializeAsync<TelemetryResults>(telemetryResponse.Content.ReadAsStream());
+
+        Assert.NotNull(response);
+
+        if (minlogMessageCount.HasValue)
+        {
+            Assert.True(
+                minlogMessageCount.Value <= response!.LogMessageCount,
+                $"Not enough messages received: expected minimum: {minlogMessageCount.Value}, actual: {response!.LogMessageCount}");
+        }
+        if (maxlogMessageCount.HasValue)
+        {
+            Assert.True(
+                maxlogMessageCount.Value >= response!.LogMessageCount,
+                $"Too many messages received: expected maximum: {maxlogMessageCount.Value}, actual: {response!.LogMessageCount}");
+        }
+        if (minMetricNameCount.HasValue)
+        {
+            Assert.True(
+                minMetricNameCount.Value <= response!.MetricNameCount,
+                $"Not enough metrics received: expected minimum: {minMetricNameCount.Value}, actual: {response!.MetricNameCount}");
+        }
+        if (maxMetricNameCount.HasValue)
+        {
+            Assert.True(
+                maxMetricNameCount.Value >= response!.MetricNameCount,
+                $"Too many metrics received: expected maximum: {maxMetricNameCount.Value}, actual: {response!.MetricNameCount}");
         }
     }
 
@@ -121,4 +210,17 @@ public class YarpBasicScenario : ITestScenario
       }
     }
     """;
+
+    private class TelemetryResults
+    {
+        public int SpanIdCount { get; set; }
+        public int LogMessageCount { get; set; }
+        public List<string> MetricNames { get; init; } = [];
+        public List<string> ResourceNames { get; init; } = [];
+        public List<string> TraceIds { get; init; } = [];
+        [JsonIgnore]
+        public int MetricNameCount => MetricNames.Count;
+        [JsonIgnore]
+        public int TraceIdCount => TraceIds.Count;
+    }
 }
