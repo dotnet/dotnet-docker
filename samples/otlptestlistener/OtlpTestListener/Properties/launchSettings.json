@@ -1,0 +1,12 @@
+{
+  "profiles": {
+    "OtlpTestListener": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "applicationUrl": "https://localhost:50897;http://localhost:50898"
+    }
+  }
+}
