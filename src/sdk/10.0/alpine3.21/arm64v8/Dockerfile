@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:10.0.0-preview.3-alpine3.21-arm64v8 AS installer
 
 # Install .NET SDK
-RUN wget -O dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.3.25171.5/dotnet-sdk-10.0.100-preview.3.25171.5-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='4ea620fa7b0ecada4eb8412e414d0295b15c12f6c94d2c3a4348dc13ee14c6ecc0eb3f2ebf71411095c10fea0772aa9cca5d8323f0c2541728b7aebfe4fa242a' \
+RUN wget -O dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.3.25174.5/dotnet-sdk-10.0.100-preview.3.25174.5-linux-musl-arm64.tar.gz \
+    && dotnet_sha512='b21a592c37fcffc2099a84de692b43623b42f8625c15e993a31fb2d8904de99d0f82216ad9301d2bc1d32d8a86f152ffe84f7f6ef12aaa9732e191ec810e035e' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -20,7 +20,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.3.25171.5 \
+    DOTNET_SDK_VERSION=10.0.100-preview.3.25174.5 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
