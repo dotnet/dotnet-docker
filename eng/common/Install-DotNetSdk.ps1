@@ -37,7 +37,7 @@ $DotnetInstallScriptPath = Join-Path -Path $InstallPath -ChildPath $DotnetInstal
 
 if (!(Test-Path $DotnetInstallScriptPath)) {
     [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12;
-    & "$PSScriptRoot/Invoke-WithRetry.ps1" "Invoke-WebRequest 'https://dot.net/v1/$DotnetInstallScript' -OutFile $DotnetInstallScriptPath"
+    & "$PSScriptRoot/Invoke-WithRetry.ps1" "Invoke-WebRequest 'https://builds.dotnet.microsoft.com/dotnet/scripts/v1/$DotnetInstallScript' -OutFile $DotnetInstallScriptPath"
 }
 
 $DotnetChannel = "9.0"
