@@ -28,9 +28,6 @@ public class YarpBasicScenario : ITestScenario
 
     private readonly int _webPort;
 
-    private static readonly string s_samplesPath = @"C:\src\dotnet-docker\samples";
-    //private static readonly string s_samplesPath = Path.Combine(Config.SourceRepoRoot, "samples");
-
     private const int OtelHttpPort = 8080;
     private const int OtelGrpcPort = 4317;
     private const int OtelTimeout = 1000;
@@ -61,7 +58,7 @@ public class YarpBasicScenario : ITestScenario
         {
             // Deploy opentelemetry endpoint
             string otelAppTag = "otlptestlistener";
-            string sampleFolder = Path.Combine(s_samplesPath, "otlptestlistener");
+            string sampleFolder = Path.Combine(DockerHelper.TestArtifactsDir, "otlptestlistener");
             string dockerfilePath = $"{sampleFolder}/Dockerfile";
             _dockerHelper.Build(otelContainerTag, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
             _dockerHelper.Run(
