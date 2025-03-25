@@ -42,6 +42,8 @@ extends:
   parameters:
     pool: ${{ parameters.pool }}
     sdl:
+      binskim:
+        enabled: true
       componentgovernance:
         ignoreDirectories: $(Build.SourcesDirectory)/versions
         whatIf: ${{ parameters.cgDryRun }}
