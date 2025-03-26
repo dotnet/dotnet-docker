@@ -66,6 +66,6 @@ This image supports OpenTelemetry. It can be configured by passing environment v
 docker run --rm -v $(pwd)/my-config.config:/etc/yarp.config -p 5000:5000 -e OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-endpoint.internal:4317 mcr.microsoft.com/dotnet/yarp:latest
 ```
 
-See the [OTLP Exporter Configuration](https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/) for all available variables.
+See the [OTLP Exporter Configuration](https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/) for all supported environment variables.
 
-You can skip https validation for the OTLP endpoint only by passing the environment variable `YARP_UNSAFE_OLTP_CERT_ACCEPT_ANY_SERVER_CERTIFICATE`.
+You can skip HTTPS validation for the OTLP endpoint only by passing the environment variable `YARP_UNSAFE_OLTP_CERT_ACCEPT_ANY_SERVER_CERTIFICATE`.

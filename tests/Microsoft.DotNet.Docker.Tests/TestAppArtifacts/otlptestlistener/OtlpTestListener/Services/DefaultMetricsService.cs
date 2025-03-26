@@ -15,8 +15,8 @@ public class DefaultMetricsService : MetricsService.MetricsServiceBase
         foreach (var resource in request.ResourceMetrics)
         {
             var resourceName = resource.Resource?.Attributes.FirstOrDefault(a => a.Key == OtlpApplication.SERVICE_NAME)?.Value.ValueString();
-            _logger.LogDebug("Received {count} scope metrics for resource {resourceName}", resource.ScopeMetrics.Count, resourceName  );
-           _telemetryResults.AddResourceName(resourceName);
+            _logger.LogDebug("Received {count} scope metrics for resource {resourceName}", resource.ScopeMetrics.Count, resourceName);
+            _telemetryResults.AddResourceName(resourceName);
             foreach (var scope in resource.ScopeMetrics)
             {
                 _logger.LogDebug($"Received {scope.Metrics.Count} metrics for scope {scope.Scope?.Name}");
