@@ -220,10 +220,10 @@
     "rocks-toolbox|9.0|url": "$(rocks-toolbox|latest|url)",
     "rocks-toolbox|10.0|url": "$(rocks-toolbox|latest|url)",
 
-    "rocks-toolbox|latest|version": "v1.1.2",
+    "rocks-toolbox|latest|version": "v1.2.0",
     "rocks-toolbox|8.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|version)",
-    "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
+    "rocks-toolbox|10.0|version": "v1.1.2",
 
     "runtime|8.0|build-version": "8.0.14",
     "runtime|8.0|linux-musl|x64|sha": "f9ddf59984ea9692a624ca1e7af2783693c564979eaf460dd4fbb3b72070faada1ee36a20895c492c886f061abf0dbb8327b1f8e0581cbe4991666f092b09789",
