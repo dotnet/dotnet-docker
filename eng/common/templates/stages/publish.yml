@@ -1,0 +1,58 @@
+parameters:
+  customPublishInitSteps: []
+  customPublishVariables: []
+
+  internalProjectName: null
+  publicProjectName: null
+
+  isInternalServicingValidation: false
+
+  pool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
+
+################################################################################
+# Publish Images
+################################################################################
+stages:
+- ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
+  - stage: Publish
+    ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+      dependsOn: Test
+    ${{ else }}:
+      dependsOn: Post_Build
+    condition: "
+      and(
+        not(canceled()),
+        and(
+          contains(variables['stages'], 'publish'),
+          or(
+            or(
+              and(
+                and(
+                  contains(variables['stages'], 'build'),
+                  succeeded('Post_Build')),
+                and(
+                  contains(variables['stages'], 'test'),
+                  in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
+              or(
+                and(
+                  not(contains(variables['stages'], 'build')),
+                  and(
+                    contains(variables['stages'], 'test'),
+                    in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
+                and(
+                  not(contains(variables['stages'], 'test')),
+                  and(
+                    contains(variables['stages'], 'build'),
+                    succeeded('Post_Build'))))),
+            not(
+              or(
+                contains(variables['stages'], 'build'),
+                contains(variables['stages'], 'test'))))))"
+    jobs:
+    - template: /eng/common/templates/jobs/publish.yml@self
+      parameters:
+        pool: ${{ parameters.pool }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        customPublishVariables: ${{ parameters.customPublishVariables }}
+        customInitSteps: ${{ parameters.customPublishInitSteps }}
