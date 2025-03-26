@@ -1,3 +1,5 @@
+using OtlpTestListener.DataModel;
+
 namespace OtlpTestListener.Services;
 
 public class DefaultMetricsService : MetricsService.MetricsServiceBase

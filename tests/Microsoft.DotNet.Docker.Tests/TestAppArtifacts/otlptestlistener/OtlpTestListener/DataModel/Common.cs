@@ -1,4 +1,4 @@
-namespace OtlpTestListener;
+namespace OtlpTestListener.DataModel;
 
 public class OtlpApplication
 {

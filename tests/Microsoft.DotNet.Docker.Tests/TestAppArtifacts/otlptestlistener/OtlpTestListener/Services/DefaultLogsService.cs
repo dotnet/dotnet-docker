@@ -1,5 +1,3 @@
-namespace OtlpTestListener.Services;
-
 public class DefaultLogsService : LogsService.LogsServiceBase
 {
     private readonly ILogger<DefaultLogsService> _logger;

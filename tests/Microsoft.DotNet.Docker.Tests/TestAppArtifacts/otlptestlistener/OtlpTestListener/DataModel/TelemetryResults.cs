@@ -1,7 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace OtlpTestListener;
+namespace OtlpTestListener.DataModel;
 
 public class TelemetryResults
 {

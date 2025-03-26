@@ -4,9 +4,8 @@ FROM mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0 AS build
 WORKDIR /source
 
 # Copy project file and restore as distinct layers
-COPY --link *.sln .
 COPY --link OtlpTestListener/*.csproj ./OtlpTestListener/
-RUN dotnet restore
+RUN dotnet restore OtlpTestListener/*.csproj
 
 # Copy source code and publish app
 COPY --link OtlpTestListener/. ./OtlpTestListener/

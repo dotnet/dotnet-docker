@@ -1,4 +1,5 @@
-﻿using OtlpTestListener.Services;
+﻿using OtlpTestListener.DataModel;
+using OtlpTestListener.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 

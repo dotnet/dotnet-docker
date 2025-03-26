@@ -21,23 +21,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="TestAppArtifacts/*">
+    <Content Include="TestAppArtifacts/**/*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Remove="TestAppArtifacts/*.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Include="TestAppArtifacts/otlptestlistener/**/*">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="TestAppArtifacts/otlptestlistener/**/*.cs" />
+    <Compile Remove="TestAppArtifacts/**/*.cs" />
   </ItemGroup>
 
 </Project>

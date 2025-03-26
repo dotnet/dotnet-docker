@@ -17,6 +17,7 @@ global using OpenTelemetry.Proto.Metrics.V1;
 global using OpenTelemetry.Proto.Resource.V1;
 
 global using OtlpTestListener;
+global using OtlpTestListener.DataModel;
 global using OtlpTestListener.Extensions;
 
 global using Otel = OpenTelemetry.Proto.Trace.V1;
