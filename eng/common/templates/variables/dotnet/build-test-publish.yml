@@ -15,7 +15,7 @@ variables:
   value: public/,internal/private/,unlisted/
 
 - name: mcrDocsRepoInfo.accessToken
-  value: $(BotAccount-dotnet-docker-bot-PAT-fine-grained-all-repositories-contents-rw)
+  value: $(BotAccount-dotnet-docker-bot-PAT)
 - name: mcrDocsRepoInfo.userName
   value: $(dotnetDockerBot.userName)
 - name: mcrDocsRepoInfo.email
