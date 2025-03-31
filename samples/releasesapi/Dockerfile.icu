@@ -4,6 +4,7 @@
 FROM mcr.microsoft.com/dotnet/sdk:10.0-preview-noble-aot AS build
 WORKDIR /source
 
+# Build the app
 COPY --link . .
 RUN --mount=type=cache,target=/root/.nuget \
     --mount=type=cache,target=/source/bin \
