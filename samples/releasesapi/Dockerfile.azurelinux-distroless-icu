@@ -15,5 +15,6 @@ RUN --mount=type=cache,target=/root/.nuget \
 FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-preview-azurelinux3.0-distroless-extra
 WORKDIR /app
 COPY --link --from=build /app .
+ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false
 USER $APP_UID
 ENTRYPOINT ["./releasesapi"]
