@@ -1,0 +1,29 @@
+# syntax=docker/dockerfile:1
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-preview-trixie-slim-aot-amd64 AS build
+ARG TARGETARCH
+WORKDIR /source
+
+# Add packages necessary for cross-build support
+RUN dpkg --add-architecture arm64 \
+    && apt-get update \
+    && apt-get install -y \
+        gcc-aarch64-linux-gnu \
+        zlib1g-dev:arm64 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Build the app
+COPY --link . .
+RUN --mount=type=cache,target=/root/.nuget \
+    --mount=type=cache,target=/source/bin \
+    --mount=type=cache,target=/source/obj \
+    dotnet publish -a $TARGETARCH -o /app releasesapi.csproj \
+        && rm /app/*.dbg /app/*.Development.json
+
+# Final stage/image
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-preview-trixie-slim-arm64v8
+WORKDIR /app
+COPY --link --from=build /app .
+USER $APP_UID
+ENTRYPOINT ["./releasesapi"]
