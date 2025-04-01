@@ -46,11 +46,11 @@ The following Dockerfiles demonstrate how to add cross-compilation support for n
 This means you can build ARM64 images using an AMD64 machine and vice-versa.
 
 - Build on AMD64 targeting ARM64
-    - [Ubuntu](Dockerfile.ubuntu-cross-x64-arm64)
-    - [Debian](Dockerfile.debian-cross-x64-arm64)
+  - [Ubuntu](Dockerfile.ubuntu-cross-x64-arm64)
+  - [Debian](Dockerfile.debian-cross-x64-arm64)
 - Build on ARM64 targeting AMD64
-    - [Ubuntu](Dockerfile.ubuntu-cross-arm64-x64)
-    - [Debian](Dockerfile.debian-cross-arm64-x64)
+  - [Ubuntu](Dockerfile.ubuntu-cross-arm64-x64)
+  - [Debian](Dockerfile.debian-cross-arm64-x64)
 
 For example, to build an Ubuntu ARM64 native AOT .NET image on an AMD64 machine, you can run the following command:
 
