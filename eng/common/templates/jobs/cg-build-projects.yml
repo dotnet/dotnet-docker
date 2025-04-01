@@ -7,6 +7,11 @@ parameters:
   type: boolean
   default: false
   displayName: CG Dry Run
+# See https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options for possible Channel values
+- name: dotnetVersionChannel
+  type: string
+  default: '9.0'
+  displayName: .NET Version
 
 jobs:
 - job: BuildProjects
@@ -17,7 +22,7 @@ jobs:
     os: linux
   steps:
   - powershell: >
-      ./eng/common/Install-DotNetSdk.ps1 /usr/share/.dotnet
+      ./eng/common/Install-DotNetSdk.ps1 -Channel ${{ parameters.dotnetVersionChannel }} -InstallPath "/usr/share/.dotnet"
     displayName: Run Dotnet Install Script
   - script: >
       find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 /usr/share/.dotnet/dotnet build
@@ -29,7 +34,7 @@ jobs:
     - powershell: |
         Write-Host "##vso[build.updatebuildnumber]$env:BUILD_BUILDNUMBER (Dry run)"
         Write-Host "##vso[build.addbuildtag]dry-run"
-        
+
         if ("$(officialBranches)".Split(',').Contains("$(Build.SourceBranch)"))
         {
           Write-Host "##vso[task.logissue type=error]Cannot run a CG dry-run build from an official branch ($(officialBranches))."
