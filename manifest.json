@@ -82,7 +82,13 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.20": {}
+            "$(dotnet|8.0|minor-tag)-alpine3.20": {},
+            "$(dotnet|8.0|fixed-tag)-alpine3.20-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-alpine3.20-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -92,7 +98,13 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-alpine3.20-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine3.20-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -103,7 +115,13 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm32v7": {},
+                "$(dotnet|8.0|fixed-tag)-alpine3.20-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine3.20-aot-arm32v7": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v7"
             },
@@ -115,80 +133,15 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine3.20-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-alpine3.20-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine3.20-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-alpine3.20-aot": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.20-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-alpine3.20-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.20-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-alpine3.20-aot-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-aot-arm32v7": {}
-              },
-              "variant": "v7",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.20-arm32v7",
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.20-aot-arm64v8"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.20-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-alpine3.20-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.20-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.20-aot-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -267,7 +220,16 @@
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-alpine3.21": {},
             "$(dotnet|8.0|minor-tag)-alpine3.21": {},
-            "$(dotnet|8.0|minor-tag)-alpine": {}
+            "$(dotnet|8.0|minor-tag)-alpine": {},
+            "$(dotnet|8.0|fixed-tag)-alpine3.21-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-alpine3.21-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-alpine-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -278,7 +240,16 @@
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-amd64": {},
                 "$(dotnet|8.0|minor-tag)-alpine3.21-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|8.0|minor-tag)-alpine-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-alpine3.21-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine3.21-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -290,7 +261,16 @@
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm32v7": {},
                 "$(dotnet|8.0|minor-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-alpine-arm32v7": {},
+                "$(dotnet|8.0|fixed-tag)-alpine3.21-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine3.21-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine-aot-arm32v7": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v7"
             },
@@ -303,84 +283,18 @@
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-alpine3.21-arm64v8": {},
                 "$(dotnet|8.0|minor-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-alpine-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-alpine3.21-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine3.21-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-alpine3.21-aot": {},
-            "$(dotnet|8.0|minor-tag)-alpine3.21-aot": {},
-            "$(dotnet|8.0|minor-tag)-alpine-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/8.0/alpine3.21-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-alpine3.21-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-alpine-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.21-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.21-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-alpine3.21-aot-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-aot-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-alpine-aot-arm32v7": {}
-              },
-              "variant": "v7",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.21-arm32v7",
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.21-aot-arm64v8"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/alpine3.21-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-alpine3.21-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine3.21-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-alpine-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.21-aot-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -493,7 +407,13 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-noble-chiseled": {},
-            "$(dotnet|8.0|minor-tag)-noble-chiseled": {}
+            "$(dotnet|8.0|minor-tag)-noble-chiseled": {},
+            "$(dotnet|8.0|fixed-tag)-noble-chiseled-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-noble-chiseled-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -503,7 +423,13 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-noble-chiseled-amd64": {},
-                "$(dotnet|8.0|minor-tag)-noble-chiseled-amd64": {}
+                "$(dotnet|8.0|minor-tag)-noble-chiseled-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-noble-chiseled-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-noble-chiseled-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
@@ -523,7 +449,13 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-noble-chiseled-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-noble-chiseled-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-noble-chiseled-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-noble-chiseled-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-noble-chiseled-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -532,55 +464,6 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|8.0|minor-tag)-noble-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-noble-chiseled-aot": {},
-            "$(dotnet|8.0|minor-tag)-noble-chiseled-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/8.0/noble-chiseled-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-noble-chiseled-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-noble-chiseled-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-noble-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/noble-chiseled-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-noble-chiseled-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-noble-chiseled-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-noble-aot-arm64v8"
                   ]
                 }
               ]
@@ -683,7 +566,13 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-jammy-chiseled": {},
-            "$(dotnet|8.0|minor-tag)-jammy-chiseled": {}
+            "$(dotnet|8.0|minor-tag)-jammy-chiseled": {},
+            "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -693,7 +582,13 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-jammy-chiseled-amd64": {},
-                "$(dotnet|8.0|minor-tag)-jammy-chiseled-amd64": {}
+                "$(dotnet|8.0|minor-tag)-jammy-chiseled-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
@@ -713,7 +608,13 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-jammy-chiseled-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-jammy-chiseled-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-jammy-chiseled-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -734,7 +635,13 @@
               "osVersion": "jammy-chiseled",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-jammy-chiseled-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-jammy-chiseled-arm32v7": {}
+                "$(dotnet|8.0|minor-tag)-jammy-chiseled-arm32v7": {},
+                "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot-arm32v7": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -743,77 +650,6 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|8.0|minor-tag)-jammy-arm32v7"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot": {},
-            "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/8.0/jammy-chiseled-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "jammy-chiseled",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-jammy-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/jammy-chiseled-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "jammy-chiseled",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-jammy-aot-arm64v8"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/8.0/jammy-chiseled-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "jammy-chiseled",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-jammy-chiseled-aot-arm32v7": {},
-                "$(dotnet|8.0|minor-tag)-jammy-chiseled-aot-arm32v7": {}
-              },
-              "variant": "v7",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-jammy-arm32v7",
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-jammy-aot-arm64v8"
                   ]
                 }
               ]
@@ -937,6 +773,15 @@
             "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless": {},
             "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless": {
               "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-aot": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -949,6 +794,15 @@
                 "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {},
                 "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {},
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-aot-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -980,6 +834,15 @@
                 "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {},
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-aot-arm64v8": {
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8",
@@ -996,64 +859,6 @@
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|8.0|minor-tag)-cbl-mariner2.0-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-aot": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-aot": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-aot": {
-              "docType": "Undocumented"
-            }
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.aot",
-              "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-aot-amd64": {
-                  "docType": "Undocumented"
-                }
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-cbl-mariner2.0-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/cbl-mariner2.0-distroless-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.aot",
-              "os": "linux",
-              "osVersion": "cbl-mariner2.0-distroless",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-aot-arm64v8": {
-                  "docType": "Undocumented"
-                }
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-cbl-mariner2.0-aot-arm64v8"
                   ]
                 }
               ]
@@ -1153,7 +958,13 @@
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
             "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless": {},
-            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless": {}
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -1163,7 +974,13 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
-                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
@@ -1190,7 +1007,13 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1206,55 +1029,6 @@
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|8.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-aot": {},
-            "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0-distroless-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0-distroless",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-aot-amd64": {},
-                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/8.0/azurelinux3.0-distroless-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0-distroless",
-              "tags": {
-                "$(dotnet|8.0|fixed-tag)-azurelinux3.0-distroless-aot-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-azurelinux3.0-distroless-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-azurelinux3.0-aot-arm64v8"
                   ]
                 }
               ]
@@ -1359,7 +1133,13 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.20": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.20": {}
+            "$(dotnet|9.0|minor-tag)-alpine3.20": {},
+            "$(dotnet|9.0|fixed-tag)-alpine3.20-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|9.0|minor-tag)-alpine3.20-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -1369,7 +1149,13 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-amd64": {},
+                "$(dotnet|9.0|fixed-tag)-alpine3.20-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine3.20-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -1380,7 +1166,13 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm32v7": {},
+                "$(dotnet|9.0|fixed-tag)-alpine3.20-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine3.20-aot-arm32v7": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v7"
             },
@@ -1392,80 +1184,15 @@
               "osVersion": "alpine3.20",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.20-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine3.20-arm64v8": {},
+                "$(dotnet|9.0|fixed-tag)-alpine3.20-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine3.20-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|9.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-alpine3.20-aot": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.20-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/9.0/alpine3.20-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-alpine3.20-aot-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.20-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/9.0/alpine3.20-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-alpine3.20-aot-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-aot-arm32v7": {}
-              },
-              "variant": "v7",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.20-arm32v7",
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.20-aot-arm64v8"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/9.0/alpine3.20-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-alpine3.20-aot-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.20-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.20-aot-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -1544,7 +1271,16 @@
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21": {},
             "$(dotnet|9.0|minor-tag)-alpine3.21": {},
-            "$(dotnet|9.0|minor-tag)-alpine": {}
+            "$(dotnet|9.0|minor-tag)-alpine": {},
+            "$(dotnet|9.0|fixed-tag)-alpine3.21-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|9.0|minor-tag)-alpine3.21-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|9.0|minor-tag)-alpine-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -1555,7 +1291,16 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-amd64": {},
                 "$(dotnet|9.0|minor-tag)-alpine3.21-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine-amd64": {}
+                "$(dotnet|9.0|minor-tag)-alpine-amd64": {},
+                "$(dotnet|9.0|fixed-tag)-alpine3.21-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine3.21-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               }
             },
             {
@@ -1567,7 +1312,16 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm32v7": {},
                 "$(dotnet|9.0|minor-tag)-alpine3.21-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-alpine-arm32v7": {},
+                "$(dotnet|9.0|fixed-tag)-alpine3.21-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine3.21-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine-aot-arm32v7": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v7"
             },
@@ -1580,84 +1334,18 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-alpine3.21-arm64v8": {},
                 "$(dotnet|9.0|minor-tag)-alpine3.21-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-alpine-arm64v8": {},
+                "$(dotnet|9.0|fixed-tag)-alpine3.21-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine3.21-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|9.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-alpine3.21-aot": {},
-            "$(dotnet|9.0|minor-tag)-alpine3.21-aot": {},
-            "$(dotnet|9.0|minor-tag)-alpine-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/9.0/alpine3.21-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-alpine3.21-aot-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-aot-amd64": {},
-                "$(dotnet|9.0|minor-tag)-alpine-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.21-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/9.0/alpine3.21-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-alpine3.21-aot-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-aot-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-alpine-aot-arm32v7": {}
-              },
-              "variant": "v7",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.21-arm32v7",
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.21-aot-arm64v8"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/9.0/alpine3.21-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-alpine3.21-aot-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine3.21-aot-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-alpine-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.21-aot-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -1782,7 +1470,13 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-noble-chiseled": {},
-            "$(dotnet|9.0|minor-tag)-noble-chiseled": {}
+            "$(dotnet|9.0|minor-tag)-noble-chiseled": {},
+            "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|9.0|minor-tag)-noble-chiseled-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -1792,7 +1486,13 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-amd64": {},
-                "$(dotnet|9.0|minor-tag)-noble-chiseled-amd64": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-amd64": {},
+                "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
@@ -1819,7 +1519,13 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-noble-chiseled-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-arm64v8": {},
+                "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -1847,7 +1553,13 @@
               "osVersion": "noble-chiseled",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-noble-chiseled-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-noble-chiseled-arm32v7": {}
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-arm32v7": {},
+                "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-arm32v7": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-arm32v7": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v7",
               "customBuildLegGroups": [
@@ -1856,77 +1568,6 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm32v7"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|9.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot": {},
-            "$(dotnet|9.0|minor-tag)-noble-chiseled-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/9.0/noble-chiseled-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-amd64": {},
-                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/9.0/noble-chiseled-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-aot-arm64v8"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/9.0/noble-chiseled-aot/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.chiseled-ubuntu.aot",
-              "os": "linux",
-              "osVersion": "noble-chiseled",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-noble-chiseled-aot-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-noble-chiseled-aot-arm32v7": {}
-              },
-              "variant": "v7",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-arm32v7",
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-noble-aot-arm64v8"
                   ]
                 }
               ]
@@ -2038,7 +1679,13 @@
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless": {},
-            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {}
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless": {},
+            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -2048,7 +1695,13 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-amd64": {},
-                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-amd64": {},
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot-amd64": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
@@ -2068,7 +1721,13 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {}
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-arm64v8": {},
+                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -2077,55 +1736,6 @@
                   "type": "Supplemental",
                   "dependencies": [
                     "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|9.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot": {},
-            "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0-distroless-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0-distroless",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot-amd64": {},
-                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-aot-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/9.0/azurelinux3.0-distroless-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile.distroless-mariner.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0-distroless",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-azurelinux3.0-distroless-aot-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-azurelinux3.0-distroless-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-azurelinux3.0-aot-arm64v8"
                   ]
                 }
               ]
