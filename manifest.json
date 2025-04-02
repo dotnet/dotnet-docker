@@ -8096,61 +8096,6 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|fixed-tag)-alpine3.20-aot": {},
-            "$(sdk|8.0|minor-tag)-alpine3.20-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/alpine3.20-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-alpine3.20-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.20-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/8.0/alpine3.20-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-alpine3.20-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.20-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.20-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|8.0|product-version)",
-          "sharedTags": {
             "$(sdk|8.0|fixed-tag)-alpine3.21": {},
             "$(sdk|8.0|minor-tag)-alpine3.21": {},
             "$(sdk|8.0|minor-tag)-alpine": {}
@@ -8207,64 +8152,6 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|fixed-tag)-alpine3.21-aot": {},
-            "$(sdk|8.0|minor-tag)-alpine3.21-aot": {},
-            "$(sdk|8.0|minor-tag)-alpine-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/alpine3.21-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-alpine3.21-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine3.21-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-alpine-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.21-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/8.0/alpine3.21-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-alpine3.21-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine3.21-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-alpine-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|8.0|minor-tag)-alpine3.21-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|8.0|product-version)",
-          "sharedTags": {
             "$(sdk|8.0|fixed-tag)-noble": {},
             "$(sdk|8.0|minor-tag)-noble": {}
           },
@@ -8294,43 +8181,6 @@
               "tags": {
                 "$(sdk|8.0|fixed-tag)-noble-arm64v8": {},
                 "$(sdk|8.0|minor-tag)-noble-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|8.0|product-version)",
-          "sharedTags": {
-            "$(sdk|8.0|fixed-tag)-noble-aot": {},
-            "$(sdk|8.0|minor-tag)-noble-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/noble-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot-cross",
-              "os": "linux",
-              "osVersion": "noble",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-noble-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-noble-aot-amd64": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/8.0/noble-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot-cross",
-              "os": "linux",
-              "osVersion": "noble",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-noble-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-noble-aot-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8391,43 +8241,6 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|fixed-tag)-jammy-aot": {},
-            "$(sdk|8.0|minor-tag)-jammy-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/jammy-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot-cross",
-              "os": "linux",
-              "osVersion": "jammy",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-jammy-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-jammy-aot-amd64": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/8.0/jammy-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot-cross",
-              "os": "linux",
-              "osVersion": "jammy",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-jammy-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-jammy-aot-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|8.0|product-version)",
-          "sharedTags": {
             "$(sdk|8.0|fixed-tag)-cbl-mariner2.0": {},
             "$(sdk|8.0|minor-tag)-cbl-mariner2.0": {},
             "$(sdk|8.0|minor-tag)-cbl-mariner": {
@@ -8474,52 +8287,6 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|fixed-tag)-cbl-mariner2.0-aot": {},
-            "$(sdk|8.0|minor-tag)-cbl-mariner2.0-aot": {},
-            "$(sdk|8.0|minor-tag)-cbl-mariner-aot": {
-              "docType": "Undocumented"
-            }
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/cbl-mariner2.0-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "cbl-mariner2.0",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-cbl-mariner2.0-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-cbl-mariner2.0-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-cbl-mariner-aot-amd64": {
-                  "docType": "Undocumented"
-                }
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/cbl-mariner2.0-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "cbl-mariner2.0",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-cbl-mariner2.0-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-cbl-mariner2.0-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-cbl-mariner-aot-arm64v8": {
-                  "docType": "Undocumented"
-                }
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|8.0|product-version)",
-          "sharedTags": {
             "$(sdk|8.0|fixed-tag)-azurelinux3.0": {},
             "$(sdk|8.0|minor-tag)-azurelinux3.0": {}
           },
@@ -8549,43 +8316,6 @@
               "tags": {
                 "$(sdk|8.0|fixed-tag)-azurelinux3.0-arm64v8": {},
                 "$(sdk|8.0|minor-tag)-azurelinux3.0-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|8.0|product-version)",
-          "sharedTags": {
-            "$(sdk|8.0|fixed-tag)-azurelinux3.0-aot": {},
-            "$(sdk|8.0|minor-tag)-azurelinux3.0-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/azurelinux3.0-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-azurelinux3.0-aot-amd64": {},
-                "$(sdk|8.0|minor-tag)-azurelinux3.0-aot-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/8.0/azurelinux3.0-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0",
-              "tags": {
-                "$(sdk|8.0|fixed-tag)-azurelinux3.0-aot-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-azurelinux3.0-aot-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -8808,61 +8538,6 @@
         {
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
-            "$(sdk|9.0|fixed-tag)-alpine3.20-aot": {},
-            "$(sdk|9.0|minor-tag)-alpine3.20-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/9.0/alpine3.20-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-alpine3.20-aot-amd64": {},
-                "$(sdk|9.0|minor-tag)-alpine3.20-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.20-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/9.0/alpine3.20-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.20",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-alpine3.20-aot-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-alpine3.20-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.20-arm64v8"
-                  ]
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|9.0|product-version)",
-          "sharedTags": {
             "$(sdk|9.0|fixed-tag)-alpine3.21": {},
             "$(sdk|9.0|minor-tag)-alpine3.21": {},
             "$(sdk|9.0|minor-tag)-alpine": {}
@@ -8913,64 +8588,6 @@
                 "$(sdk|9.0|minor-tag)-alpine-arm64v8": {}
               },
               "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|9.0|product-version)",
-          "sharedTags": {
-            "$(sdk|9.0|fixed-tag)-alpine3.21-aot": {},
-            "$(sdk|9.0|minor-tag)-alpine3.21-aot": {},
-            "$(sdk|9.0|minor-tag)-alpine-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/9.0/alpine3.21-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-alpine3.21-aot-amd64": {},
-                "$(sdk|9.0|minor-tag)-alpine3.21-aot-amd64": {},
-                "$(sdk|9.0|minor-tag)-alpine-aot-amd64": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.21-amd64"
-                  ]
-                }
-              ]
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/9.0/alpine3.21-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "alpine3.21",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-alpine3.21-aot-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-alpine3.21-aot-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-alpine-aot-arm64v8": {}
-              },
-              "variant": "v8",
-              "customBuildLegGroups": [
-                {
-                  "name": "pr-build",
-                  "type": "Supplemental",
-                  "dependencies": [
-                    "$(Repo:sdk):$(sdk|9.0|minor-tag)-alpine3.21-arm64v8"
-                  ]
-                }
-              ]
             }
           ]
         },
@@ -9029,43 +8646,6 @@
         {
           "productVersion": "$(sdk|9.0|product-version)",
           "sharedTags": {
-            "$(sdk|9.0|fixed-tag)-noble-aot": {},
-            "$(sdk|9.0|minor-tag)-noble-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/9.0/noble-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot-cross",
-              "os": "linux",
-              "osVersion": "noble",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-noble-aot-amd64": {},
-                "$(sdk|9.0|minor-tag)-noble-aot-amd64": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/9.0/noble-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot-cross",
-              "os": "linux",
-              "osVersion": "noble",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-noble-aot-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-noble-aot-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|9.0|product-version)",
-          "sharedTags": {
             "$(sdk|9.0|fixed-tag)-azurelinux3.0": {},
             "$(sdk|9.0|minor-tag)-azurelinux3.0": {}
           },
@@ -9095,43 +8675,6 @@
               "tags": {
                 "$(sdk|9.0|fixed-tag)-azurelinux3.0-arm64v8": {},
                 "$(sdk|9.0|minor-tag)-azurelinux3.0-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|9.0|product-version)",
-          "sharedTags": {
-            "$(sdk|9.0|fixed-tag)-azurelinux3.0-aot": {},
-            "$(sdk|9.0|minor-tag)-azurelinux3.0-aot": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/9.0/azurelinux3.0-aot/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-azurelinux3.0-aot-amd64": {},
-                "$(sdk|9.0|minor-tag)-azurelinux3.0-aot-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:sdk)"
-              },
-              "dockerfile": "src/sdk/9.0/azurelinux3.0-aot/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux.aot",
-              "os": "linux",
-              "osVersion": "azurelinux3.0",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-azurelinux3.0-aot-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-azurelinux3.0-aot-arm64v8": {}
               },
               "variant": "v8"
             }
