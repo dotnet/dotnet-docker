@@ -19,6 +19,8 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 You can run this image to launch a YARP instance.
 
+## Configuration
+
 YARP expects the config file to be in `/etc/yarp.config`, and listens by default on port 5000.
 
 Example of configuration:
@@ -70,6 +72,18 @@ This example will proxy every requests from `http://localhost:5000/aspnetapp` to
 The [YARP GitHub repository](https://github.com/dotnet/yarp/tree/main/samples/) contains more configuration samples.
 
 For more details, see the [documentation](https://aka.ms/YarpDocumentation) for how to configure the image and documentation for the reverse proxy configuration.
+
+## OpenTelemetry support
+
+This image supports OpenTelemetry. It can be configured by passing environment variables to the container:
+
+```bash
+docker run --rm -v $(pwd)/my-config.config:/etc/yarp.config -p 5000:5000 -e OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-endpoint.internal:4317 mcr.microsoft.com/dotnet/yarp:latest
+```
+
+See the [OTLP Exporter Configuration](https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/) for all supported environment variables.
+
+You can skip HTTPS validation for the OTLP endpoint only by passing the environment variable `YARP_UNSAFE_OLTP_CERT_ACCEPT_ANY_SERVER_CERTIFICATE`.
 
 # Related Repositories
 
