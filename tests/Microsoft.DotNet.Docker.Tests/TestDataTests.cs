@@ -50,18 +50,6 @@ public class TestDataTests(ITestOutputHelper outputHelper)
                         .Split(':')[1])
                 .ToList();
 
-        static bool IsDeprecatedAotImage(DockerfileInfo dockerfile)
-        {
-            return
-                dockerfile.Repo == "sdk" &&
-                (dockerfile.MajorMinor == "8.0" || dockerfile.MajorMinor == "9.0") &&
-                dockerfile.Os.Contains("aot");
-        }
-
-        IEnumerable<KeyValuePair<DockerfileInfo, List<string>>> dockerfileTags = ManifestHelper.GetDockerfileTags(manifestRepo)
-            // Temporary workaround: 8.0 and 9.0 SDK AOT images should not be tested
-            .Where(kvp => !IsDeprecatedAotImage(kvp.Key));
-
         // Account for SDK AOT images. They are tested based on the runtime-deps images.
         if (imageRepo == DotNetImageRepo.SDK)
         {
@@ -77,7 +65,7 @@ public class TestDataTests(ITestOutputHelper outputHelper)
             ];
         }
 
-        IEnumerable<List<string>> manifestTagsByPlatform = dockerfileTags.Select(kvp => kvp.Value);
+        IEnumerable<List<string>> manifestTagsByPlatform = ManifestHelper.GetDockerfileTags(manifestRepo).Values;
 
         Action[] conditions = manifestTagsByPlatform
             .Select<List<string>, Action>(imageTags => () =>
