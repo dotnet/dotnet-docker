@@ -6,7 +6,7 @@ RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/release
     && chisel_sha384='980f53722642429478eba402f720ced634c032445d993e2165e9fd29c6054cf3c15c32b6a570938bb86f8218d3f92d15' \
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
-    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.1.2/chisel-wrapper \
+    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
 RUN groupadd \

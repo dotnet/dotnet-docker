@@ -1,21 +1,19 @@
-# syntax=docker/dockerfile:1.6
+# syntax=docker/dockerfile:1
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/nightly/sdk:9.0-noble-aot AS build
-ARG TARGETARCH
+FROM mcr.microsoft.com/dotnet/sdk:10.0-preview-noble-aot AS build
 WORKDIR /source
 
-# Copy source code and publish app
+# Build the app
 COPY --link . .
 RUN --mount=type=cache,target=/root/.nuget \
     --mount=type=cache,target=/source/bin \
     --mount=type=cache,target=/source/obj \
-    dotnet publish -r linux-$TARGETARCH -o /app releasesapi.csproj
-RUN rm /app/*.dbg /app/*.Development.json
-
+    dotnet publish -o /app releasesapi.csproj \
+        && rm /app/*.dbg /app/*.Development.json
 
 # Final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-noble-chiseled-extra
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-preview-noble-chiseled-extra
 WORKDIR /app
 COPY --link --from=build /app .
 ENV DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false

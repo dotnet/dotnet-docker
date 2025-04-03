@@ -1,27 +1,19 @@
 # syntax=docker/dockerfile:1
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
-ARG TARGETARCH
-RUN apt-get update \
-    && apt-get install -y \
-        clang \
-        zlib1g-dev \
-    && rm -rf /var/lib/apt/lists/*
+FROM mcr.microsoft.com/dotnet/sdk:10.0-preview-trixie-slim-aot AS build
 WORKDIR /source
 
-# Copy project file and restore as distinct layers
-COPY --link *.csproj NuGet.config .
-RUN dotnet restore -r linux-$TARGETARCH
-
-# Copy source code and publish app
+# Build the app
 COPY --link . .
-RUN dotnet publish --no-restore -o /app releasesapi.csproj
-RUN rm /app/*.dbg /app/*.Development.json
-
+RUN --mount=type=cache,target=/root/.nuget \
+    --mount=type=cache,target=/source/bin \
+    --mount=type=cache,target=/source/obj \
+    dotnet publish -o /app releasesapi.csproj \
+        && rm /app/*.dbg /app/*.Development.json
 
 # Final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:9.0
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-preview-trixie-slim
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID

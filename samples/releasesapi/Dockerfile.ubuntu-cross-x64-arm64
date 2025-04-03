@@ -1,12 +1,23 @@
 # syntax=docker/dockerfile:1
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-preview-trixie-slim-aot-amd64 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-preview-noble-aot-amd64 AS build
 ARG TARGETARCH
 WORKDIR /source
 
+# Add the Ubuntu sources list for the target architecture
+COPY <<EOF /etc/apt/sources.list.d/arm64.sources
+Types: deb
+URIs: http://ports.ubuntu.com/ubuntu-ports/
+Suites: noble noble-updates
+Components: main restricted
+Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
+Architectures: arm64
+EOF
+
 # Add packages necessary for cross-build support
-RUN dpkg --add-architecture arm64 \
+RUN sed -i '/Signed-By/ a Architectures: amd64' /etc/apt/sources.list.d/ubuntu.sources \
+    && dpkg --add-architecture arm64 \
     && apt-get update \
     && apt-get install -y \
         gcc-aarch64-linux-gnu \
@@ -22,7 +33,7 @@ RUN --mount=type=cache,target=/root/.nuget \
         && rm /app/*.dbg /app/*.Development.json
 
 # Final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-preview-trixie-slim-arm64v8
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-preview-noble-chiseled-arm64v8
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID

@@ -27,7 +27,7 @@ Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NE
 
 * [aspnetapp](../samples/aspnetapp/Dockerfile.chiseled)
 * [dotnetapp](../samples/dotnetapp/Dockerfile.chiseled)
-* [releasesapi](../samples/releasesapi/Dockerfile.ubuntu-chiseled) (and [icu version](../samples/releasesapi/Dockerfile.ubuntu-chiseled-icu))
+* [releasesapi](../samples/releasesapi/Dockerfile) (and [icu version](../samples/releasesapi/Dockerfile.icu))
 * [releasesapp](../samples/releasesapp/Dockerfile.chiseled)
 
 If your app's Dockerfile doesn't depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
