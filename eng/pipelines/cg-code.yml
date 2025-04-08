@@ -29,4 +29,7 @@ extends:
       jobs:
       - template: /eng/common/templates/jobs/cg-build-projects.yml@self
         parameters:
+          # This should match the latest .NET version used across all projects in the repo, including samples.
+          # Otherwise, the pipeline will fail to build projects.
+          dotnetVersionChannel: '10.0'
           cgDryRun: ${{ parameters.cgDryRun }}

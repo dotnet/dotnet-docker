@@ -3,7 +3,6 @@ pr: none
 
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
-- group: DncEng-Partners-Tokens
 - group: DotNet-AllOrgs-Darc-Pats
 stages:
 - stage: DotNet

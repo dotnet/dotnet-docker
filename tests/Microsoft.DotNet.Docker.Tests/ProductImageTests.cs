@@ -292,9 +292,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         internal static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
         {
-            IEnumerable<string> expectedPackages = imageData.ImageVariant.HasFlag(DotNetImageVariant.AOT)
-                ? GetAotDepsPackages(imageData)
-                : GetRuntimeDepsPackages(imageData);
+            IEnumerable<string> expectedPackages = GetRuntimeDepsPackages(imageData);
 
             if (imageData.IsDistroless)
             {
@@ -336,8 +334,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 _ => throw new NotSupportedException()
             };
 
-        private static IEnumerable<string> GetAotDepsPackages(ProductImageData imageData)
-        {
+        private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
             IEnumerable<string> packages = imageData switch
             {
                 { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
@@ -346,6 +343,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libgcc",
                         "openssl",
                         "openssl-libs",
+                        "libstdc++"
                     ],
                 { OS: string os } when os.Contains(OS.Jammy) =>
                     [
@@ -355,6 +353,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libgcc-s1",
                         "libssl3",
                         "openssl",
+                        "libstdc++6"
                     ],
                 { OS: OS.NobleChiseled } =>
                     [
@@ -365,6 +364,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libgcc-s1",
                         "libssl3t64",
                         "openssl",
+                        "libstdc++6"
                     ],
                 { OS: string os } when os.Contains(OS.Noble) =>
                     [
@@ -374,12 +374,14 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libgcc-s1",
                         "libssl3t64",
                         "openssl",
+                        "libstdc++6"
                     ],
                 { OS: string os } when os.Contains(OS.Alpine) =>
                     [
                         "ca-certificates-bundle",
                         "libgcc",
                         "libssl3",
+                        "libstdc++"
                     ],
                 { OS: OS.BookwormSlim } =>
                     [
@@ -389,15 +391,17 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libicu72",
                         "libssl3",
                         "tzdata",
+                        "libstdc++6"
                     ],
                 { OS: OS.TrixieSlim } =>
                     [
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1",
-                        "libicu72",
+                        "libicu76",
                         "libssl3t64",
                         "tzdata",
+                        "libstdc++6"
                     ],
                 _ => throw new NotSupportedException()
             };
@@ -416,13 +420,6 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string[] unversionedZLibOSes = [OS.Alpine, OS.AzureLinux, OS.Mariner];
             return unversionedZLibOSes.Where(os.Contains).Any() ? "zlib" : "zlib1g";
-        }
-
-        private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
-            string libstdcppPkgName = imageData.OS.Contains(OS.Mariner) || imageData.OS.Contains(OS.AzureLinux) || imageData.OS.Contains(OS.Alpine)
-                ? "libstdc++"
-                : "libstdc++6";
-            return GetAotDepsPackages(imageData).Append(libstdcppPkgName);
         }
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
