@@ -15,7 +15,7 @@ RUN apt-get update \
         # .NET dependencies
         libc6 \
         libgcc-s1 \
-        libicu72 \
+        libicu76 \
         libssl3t64 \
         libstdc++6 \
         tzdata \
