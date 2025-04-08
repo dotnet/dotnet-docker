@@ -398,7 +398,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "ca-certificates",
                         "libc6",
                         "libgcc-s1",
-                        "libicu72",
+                        "libicu76",
                         "libssl3t64",
                         "tzdata",
                         "libstdc++6"
