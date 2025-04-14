@@ -398,8 +398,8 @@
     "src/monitor-base/9.1/azurelinux-distroless/arm64v8": 141390045
   },
   "dotnet/nightly/aspire-dashboard": {
-    "src/aspire-dashboard/9.1/azurelinux-distroless/amd64": 142036038,
-    "src/aspire-dashboard/9.1/azurelinux-distroless/arm64v8": 148315271
+    "src/aspire-dashboard/9.2/azurelinux-distroless/amd64": 142036038,
+    "src/aspire-dashboard/9.2/azurelinux-distroless/arm64v8": 148315271
   },
   "dotnet/nightly/yarp": {
     "src/yarp/2.3/azurelinux-distroless/amd64": 141557760,
