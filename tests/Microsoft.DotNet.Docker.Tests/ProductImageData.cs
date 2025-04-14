@@ -20,9 +20,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public bool GlobalizationInvariantMode => !SupportsGlobalization;
 
-        // PowerShell does not support Arm-based Alpine, skip testing
-        // https://github.com/PowerShell/PowerShell/issues/14667
-        // https://github.com/PowerShell/PowerShell/issues/12937
+        // PowerShell does not support Arm-based Alpine
         public bool SupportsPowerShell => !(OS.Contains("alpine") && IsArm);
 
         public string SdkOS
