@@ -42,5 +42,3 @@ For more information on .NET image variants and AOT images, please see the follo
 Watch the [announcements page](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for the latest information on new features and changes in .NET contanier images.
 
 [^1]: Percentage of size savings is based on compressed image size.
-
-[^2]: Native AOT is fully supported for .NET 8, but our AOT-specific container images are in preview and thus only available in the `mcr.microsoft.com/dotnet/nightly/` repos. Please try them out!
