@@ -1,4 +1,4 @@
-# .NET 8.0 Container Image Size Report
+# .NET Container Image Size Report
 
 .NET offers a variety of deployment options for applications, which pair with container images that we offer. It's possible to produce very small container images. This document summarizes the available options to help you make the best choice for your apps and environment.
 
@@ -32,9 +32,14 @@ And [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-
 | [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | 146 MB | 57.9 MB | 36% |
 | [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) + [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 39.3 MB | 16.4 MB | 82% |
 | [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 27.7 MB | 12.4 MB | 86% |
-| [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) (preview image)[^2] | [`runtime-deps:8.0-jammy-chiseled-aot`](https://github.com/dotnet/dotnet-docker/blob/nightly/src/runtime-deps/8.0/jammy-chiseled-aot/amd64/Dockerfile) | 25.4 MB | 11.6 MB | 87% |
 
-For more information about new images for .NET 8, please see the [.NET image variants documentation (temporary link to PR)](https://github.com/dotnet/dotnet-docker/pull/4979) and ["Announcement: New approach for differentiating .NET 8+ images"](https://github.com/dotnet/dotnet-docker/discussions/4821).
+For more information on .NET image variants and AOT images, please see the following documentation:
+
+- [.NET Image Variants](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md)
+- [Announcement: .NET 10 AOT container images](https://github.com/dotnet/dotnet-docker/discussions/6312)
+- [Announcement: New approach for differentiating .NET 8+ images](https://github.com/dotnet/dotnet-docker/discussions/4821)
+
+Watch the [announcements page](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for the latest information on new features and changes in .NET contanier images.
 
 [^1]: Percentage of size savings is based on compressed image size.
 
