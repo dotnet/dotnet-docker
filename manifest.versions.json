@@ -208,12 +208,12 @@
     "powershell|9.0|Linux|x64|sha": "997a634bf50a3e742d00badcc2ce0a4fd1e65e430c371fc276ead7634193f029e5670118c099bd2b3e6d2e06c6eb3cb00b4352c734ab3fd360dd7b79428ecb46",
     "powershell|9.0|Windows|x64|sha": "44a7a9af838aa6138517024771903464ab6eabf46b1eadd6b0d7e4c2d1bbbda375c21af3e7d60a6805b0c03d2a45bd17c96f688049f03fab3877d4c73e20c278",
 
-    "powershell|10.0|build-version": "$(powershell|9.0|build-version)",
-    "powershell|10.0|Linux.Alpine|sha": "$(powershell|9.0|Linux.Alpine|sha)",
-    "powershell|10.0|Linux|arm32|sha": "$(powershell|9.0|Linux|arm32|sha)",
-    "powershell|10.0|Linux|arm64|sha": "$(powershell|9.0|Linux|arm64|sha)",
-    "powershell|10.0|Linux|x64|sha": "$(powershell|9.0|Linux|x64|sha)",
-    "powershell|10.0|Windows|x64|sha": "$(powershell|9.0|Windows|x64|sha)",
+    "powershell|10.0|build-version": "7.6.0-preview.4",
+    "powershell|10.0|Linux.Alpine|sha": "d0b0e5822a49371f632605a087aed11e71943899c7e910ba510dd848270e56b449b02d425f23333139054ae37f298241c071ca15a77c945af7d4d39c15ac74a6",
+    "powershell|10.0|Linux|arm32|sha": "32e410abb44dcd6ba943fa8c7367a88a6c0c4e3ac0a67756fb5919139c980f1a3d66a3b055e6b2292a154c9eede22003b0b85605c101e3e6fa89fd71b7d44a7f",
+    "powershell|10.0|Linux|arm64|sha": "265519a89209f8c0c6c736f3a0d92d97468ee5ddfc245c9ed24ec8ebe13826f15b6d3a879ce6e4274c17091d38811c91b2e5acf8ec4d2202d9b0d1176a28c710",
+    "powershell|10.0|Linux|x64|sha": "92ba2a8344f13d1c640f73d61488a582bae3ea82e4d00aad02efece3475f852855fb6f8ac37f72b4a14cdc1975af9f253d59ce72e36f3653e6b1ee87dc273f8f",
+    "powershell|10.0|Windows|x64|sha": "a529408a93ca2be753d84137bff8ed95dc9301faf2da62fbd9d7bfb29fe502bfca9427736b1004884e839e3f2585ac613349f0fbbb97ea6f979b115dcf06aa0c",
 
     "rocks-toolbox|latest|url": "https://raw.githubusercontent.com/canonical/rocks-toolbox",
     "rocks-toolbox|8.0|url": "$(rocks-toolbox|latest|url)",
