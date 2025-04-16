@@ -7,7 +7,8 @@ ARG ACCESSTOKEN
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=0.0.0  \
-    && wget --header="Authorization: Basic `echo $ACCESSTOKEN:$ACCESSTOKEN | base64 -w 0`" -O dotnet.tar.gz "https://artifacts.visualstudio.com/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz" \
+    && token=$(echo "${ACCESSTOKEN}:${ACCESSTOKEN}" | base64 -w 0) \
+    && wget --header="Authorization: Basic $token" -O dotnet.tar.gz "https://artifacts.visualstudio.com/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
