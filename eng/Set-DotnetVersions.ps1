@@ -149,5 +149,5 @@ if ($AzdoVariableName) {
     Write-Host "##vso[task.setvariable variable=$AzdoVariableName]$updateDepsArgs"
 }
 else {
-    & dotnet run --project $PSScriptRoot/update-dependencies/update-dependencies.csproj @updateDepsArgs
+    & dotnet run --project $PSScriptRoot/update-dependencies/update-dependencies.csproj specific @updateDepsArgs
 }

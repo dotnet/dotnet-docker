@@ -3,8 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.CommandLine;
-using System.CommandLine.Invocation;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -18,30 +16,23 @@ using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 
 namespace Dotnet.Docker
 {
-    public static class UpdateDependencies
+    public class SpecificCommand : BaseCommand<SpecificCommandOptions>
     {
         public const string ManifestFilename = "manifest.json";
         public const string VersionsFilename = "manifest.versions.json";
 
-        private static Options? s_options;
+        private static SpecificCommandOptions? s_options;
 
-        private static Options Options {
+        private static SpecificCommandOptions Options {
             get => s_options ?? throw new InvalidOperationException($"{nameof(Options)} has not been set.");
             set => s_options = value;
         }
 
         public static string RepoRoot { get; } = Directory.GetCurrentDirectory();
 
-        public static Task Main(string[] args)
+        internal static string ResolveProductVersion(string version, SpecificCommandOptions options)
         {
-            RootCommand command = [.. Options.GetCliSymbols()];
-            command.Handler = CommandHandler.Create<Options>(ExecuteAsync);
-            return command.InvokeAsync(args);
-        }
-
-        internal static string ResolveProductVersion(string version, Options options)
-        {
-            if (!string.IsNullOrEmpty(version) && options.UseStableBranding)
+            if (!string.IsNullOrEmpty(version) && options.StableBranding)
             {
                 int monikerSeparatorIndex = version.IndexOf('-');
                 if (monikerSeparatorIndex >= 0)
@@ -53,7 +44,7 @@ namespace Dotnet.Docker
             return version;
         }
 
-        private static async Task ExecuteAsync(Options options)
+        public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
             Options = options;
 
@@ -117,7 +108,7 @@ namespace Dotnet.Docker
                 Environment.Exit(1);
             }
 
-            Environment.Exit(0);
+            return 0;
         }
 
         private static DependencyUpdateResults UpdateFiles(
@@ -420,8 +411,8 @@ namespace Dotnet.Docker
 
         private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
         [
-            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+            // ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
+            // ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
         ];
     }
 }
