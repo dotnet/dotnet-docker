@@ -368,7 +368,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static readonly ProductImageData[] s_AspireDashboardTestData =
         {
             new() {
-                Version = V9_2_Preview,
+                Version = V9_2,
                 VersionFamily = V9_0,
                 OS = OS.AzureLinux30Distroless,
                 OSTag = "",
@@ -377,7 +377,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
             },
             new() {
-                Version = V9_2_Preview,
+                Version = V9_2,
                 VersionFamily = V9_0,
                 OS = OS.AzureLinux30Distroless,
                 OSTag = "",

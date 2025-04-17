@@ -11,10 +11,10 @@
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
     "aspire-dashboard|9.2|build-version": "9.2.0-preview.1.25209.2",
-    "aspire-dashboard|9.2|product-version": "9.2.0-preview.1",
+    "aspire-dashboard|9.2|product-version": "9.2.0",
     "aspire-dashboard|9.2|fixed-tag": "$(aspire-dashboard|9.2|product-version)",
-    "aspire-dashboard|9.2|minor-tag": "9.2-preview",
-    "aspire-dashboard|9|major-tag": "9-preview",
+    "aspire-dashboard|9.2|minor-tag": "9.2",
+    "aspire-dashboard|9|major-tag": "9",
     "aspire-dashboard|9.2|linux|x64|sha": "e65595b852cdb6f48e98088776891969fd1d5a411ab1a693618cf71ad4d6d600dbf627466141a932f8de7c24ab3e414353ab8870b826b0680b676ea22d1671cb",
     "aspire-dashboard|9.2|linux|arm64|sha": "61760dfb33302b4886d8132d94b04df762e18db4bdb4097024328430f25595dcffd696df91ace2924bbf49561fa28bba1dc83e508b172e09eb76165b0227d5b2",
     "aspire-dashboard|9.2|base-url|main": "$(base-url|public|preview|nightly)",
