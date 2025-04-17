@@ -36,7 +36,7 @@ public abstract class BaseCommand<TOptions>() where TOptions : IOptions
         return command;
     }
 
-    protected static BindingHandler Handler =>
+    private static BindingHandler Handler =>
         CommandHandler.Create<TOptions, IHost>(async (options, host) =>
             {
                 var thisCommand = host.Services.GetRequiredService<BaseCommand<TOptions>>();
