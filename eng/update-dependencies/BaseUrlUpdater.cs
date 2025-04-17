@@ -15,20 +15,20 @@ namespace Dotnet.Docker;
 internal class BaseUrlUpdater : FileRegexUpdater
 {
     private const string BaseUrlGroupName = "BaseUrlValue";
-    private readonly Options _options;
+    private readonly SpecificCommandOptions _options;
     private readonly JObject _manifestVariables;
 
-    public BaseUrlUpdater(string repoRoot, Options options)
+    public BaseUrlUpdater(string repoRoot, SpecificCommandOptions options)
     {
-        Path = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
+        Path = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
         VersionGroupName = BaseUrlGroupName;
         Regex = ManifestHelper.GetManifestVariableRegex(
             ManifestHelper.GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName),
             $"(?<{BaseUrlGroupName}>.+)");
         _options = options;
 
-        _manifestVariables = (JObject?)ManifestHelper.LoadManifest(UpdateDependencies.VersionsFilename)["variables"] ??
-            throw new InvalidOperationException($"'{UpdateDependencies.VersionsFilename}' property missing in '{UpdateDependencies.VersionsFilename}'"); ;
+        _manifestVariables = (JObject?)ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename)["variables"] ??
+            throw new InvalidOperationException($"'{SpecificCommand.VersionsFilename}' property missing in '{SpecificCommand.VersionsFilename}'"); ;
     }
 
     protected override string TryGetDesiredValue(IEnumerable<IDependencyInfo> dependencyInfos, out IEnumerable<IDependencyInfo> usedDependencyInfos)
