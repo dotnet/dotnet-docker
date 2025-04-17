@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:10.0.100-preview.3-trixie-slim-arm64v8
+FROM $REPO:10.0.100-preview.4-trixie-slim-arm64v8
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
