@@ -59,13 +59,13 @@ namespace Dotnet.Docker
 
         private static List<Option> GetOptions()
         {
-            var toolOption = new Option<IEnumerable<string>>("--tool", "--tools")
+            var toolsOption = new Option<IEnumerable<string>>("--tools", "--tool")
             {
-                Description = "Tool to update.",
+                Description = "Image tools or Dockerfile components to update",
                 Arity = ArgumentArity.ZeroOrMore,
                 DefaultValueFactory = _ => [],
             };
-            toolOption.AcceptOnlyFromAmong(Docker.Tools.SupportedTools);
+            toolsOption.AcceptOnlyFromAmong(Docker.Tools.SupportedTools);
 
             List<Option> options =
             [
@@ -96,22 +96,24 @@ namespace Dotnet.Docker
                         return productVersions;
                     },
                 },
-                toolOption,
-                new Option<string>("--version-source-name") { Description = "The name of the source from which the version information was acquired." },
+
+                new Option<ReleaseState?>("--release-state") { Description = "The release state of the product assets" },
+                new Option<bool>("--stable-branding") { Description = "Use stable branding version numbers to compute paths" },
+                new Option<string>("--checksums-file") { Description = "File containing a list of checksums for each product asset" },
+                toolsOption,
+
+                new Option<string>("--user") { Description = "GitHub or AzDO user used to make PR (if not specified, a PR will not be created)" },
                 new Option<string>("--email") { Description = "GitHub or AzDO email used to make PR (if not specified, a PR will not be created)" },
                 new Option<string>("--password") { Description = "GitHub or AzDO password used to make PR (if not specified, a PR will not be created)" },
-                new Option<string>("--user") { Description = "GitHub or AzDO user used to make PR (if not specified, a PR will not be created)" },
-                new Option<bool>("--compute-shas") { Description = "Compute the checksum if a published checksum cannot be found" },
-                new Option<bool>("--stable-branding") { Description = "Use stable branding version numbers to compute paths" },
-                new Option<string>("--source-branch") { Description = "Branch where the Dockerfiles are hosted" },
-                new Option<string>("--target-branch") { Description = "Target branch of the generated PR (defaults to value of source-branch)" },
                 new Option<string>("--azdo-organization", "--org") { Description = "Name of the AzDO organization" },
                 new Option<string>("--azdo-project", "--project") { Description = "Name of the AzDO project" },
                 new Option<string>("--azdo-repo", "--repo") { Description = "Name of the AzDO repo" },
-                new Option<string>("--checksums-file") { Description = "File containing a list of checksums for each product asset" },
-                new Option<ReleaseState?>("--release-state") { Description = "The release state of the product assets" },
+                new Option<string>("--version-source-name") { Description = "The name of the source from which the version information was acquired." },
+                new Option<string>("--source-branch") { Description = "Branch where the Dockerfiles are hosted" },
+                new Option<string>("--target-branch") { Description = "Target branch of the generated PR (defaults to value of source-branch)" },
+
                 new Option<string>("--internal-base-url") { Description = "Base Url for internal build artifacts" },
-                new Option<string>("--internal-access-token") { Description = "PAT for accessing internal build artifacts" }
+                new Option<string>("--internal-access-token") { Description = "PAT for accessing internal build artifacts" },
             ];
 
             return options;
