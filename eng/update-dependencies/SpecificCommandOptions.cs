@@ -3,13 +3,14 @@
 
 using System.Collections.Generic;
 using System.CommandLine;
-using System.CommandLine.Parsing;
 using System.Linq;
 
 namespace Dotnet.Docker
 {
     public class SpecificCommandOptions : IOptions
     {
+        private string? _targetBranch = null;
+
         public string GitHubProject { get; } = "dotnet-docker";
         public string GitHubUpstreamOwner { get; } = "dotnet";
 
@@ -20,7 +21,11 @@ namespace Dotnet.Docker
         public required string Email { get; init; }
         public required string Password { get; init; }
         public string SourceBranch { get; init; } = "nightly";
-        public required string TargetBranch { get; init; }
+        public string TargetBranch
+        {
+            get => _targetBranch ?? SourceBranch;
+            init => _targetBranch = value;
+        }
         public required string User { get; init; }
         public required string AzdoOrganization { get; init; }
         public required string AzdoProject { get; init; }
@@ -89,27 +94,7 @@ namespace Dotnet.Docker
                 new Option<bool>("--compute-shas") { Description = "Compute the checksum if a published checksum cannot be found" },
                 new Option<bool>("--stable-branding") { Description = "Use stable branding version numbers to compute paths" },
                 new Option<string>("--source-branch") { Description = "Branch where the Dockerfiles are hosted" },
-                new Option<string>("--target-branch")
-                {
-                    Description = "Target branch of the generated PR (defaults to value of source-branch)",
-                    DefaultValueFactory = argumentResult =>
-                    {
-                        var thisOption = argumentResult.Parent as OptionResult;
-                        var command = thisOption?.Parent as CommandResult;
-
-                        OptionResult? sourceBranchOption = command?.Children?
-                            .Where(child => child is OptionResult)
-                            .Cast<OptionResult>()
-                            .Where(option => option.IdentifierToken?.Value == "--source-branch")
-                            .FirstOrDefault();
-
-                        string? sourceBranchValue = sourceBranchOption?.Tokens
-                            .FirstOrDefault()?
-                            .Value;
-
-                        return sourceBranchValue ?? "";
-                    },
-                },
+                new Option<string>("--target-branch") { Description = "Target branch of the generated PR (defaults to value of source-branch)" },
                 new Option<string>("--azdo-organization", "--org") { Description = "Name of the AzDO organization" },
                 new Option<string>("--azdo-project", "--project") { Description = "Name of the AzDO project" },
                 new Option<string>("--azdo-repo", "--repo") { Description = "Name of the AzDO repo" },
