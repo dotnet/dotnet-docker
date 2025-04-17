@@ -6,8 +6,8 @@
 
 ## Featured Tags
 
-* `9.1-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:9.1-preview`
+* `9.2`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:9.2`
 
 ## About
 
@@ -118,13 +118,13 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.1.0-preview.1, 9.1-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.2.0, 9.2, 9, latest | [Dockerfile](src/aspire-dashboard/9.2/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.1.0-preview.1, 9.1-preview, 9-preview, latest | [Dockerfile](src/aspire-dashboard/9.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.2.0, 9.2, 9, latest | [Dockerfile](src/aspire-dashboard/9.2/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list) for all supported and unsupported tags.*
