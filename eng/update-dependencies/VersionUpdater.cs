@@ -20,10 +20,10 @@ namespace Dotnet.Docker
         private static readonly string s_versionGroupName = "versionValue";
 
         private readonly string _productName;
-        private readonly Options _options;
+        private readonly SpecificCommandOptions _options;
         private readonly VersionType _versionType;
 
-        public VersionUpdater(VersionType versionType, string productName, string dockerfileVersion, string repoRoot, Options options)
+        public VersionUpdater(VersionType versionType, string productName, string dockerfileVersion, string repoRoot, SpecificCommandOptions options)
         {
             _productName = productName;
             _options = options;
@@ -32,7 +32,7 @@ namespace Dotnet.Docker
 
             Trace.TraceInformation($"Updating {versionVariableName}");
 
-            Path = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
+            Path = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
             VersionGroupName = s_versionGroupName;
             Regex = GetVersionVariableRegex(versionVariableName);
         }
@@ -95,7 +95,7 @@ namespace Dotnet.Docker
                 }
             }
 
-            return UpdateDependencies.ResolveProductVersion(version, _options);
+            return SpecificCommand.ResolveProductVersion(version, _options);
         }
 
         private static Regex GetVersionVariableRegex(string versionVariableName) =>

@@ -15,7 +15,7 @@ internal abstract class VariableUpdaterBase : FileRegexUpdater
     public VariableUpdaterBase(string repoRoot, string variableName)
     {
         VariableName = variableName;
-        Path = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
+        Path = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
         VersionGroupName = "val";
         Regex = ManifestHelper.GetManifestVariableRegex(variableName, @$"(?<{VersionGroupName}>\S*)");
 
@@ -23,10 +23,10 @@ internal abstract class VariableUpdaterBase : FileRegexUpdater
             () =>
             {
                 const string VariablesProperty = "variables";
-                JToken? variables = ManifestHelper.LoadManifest(UpdateDependencies.VersionsFilename)[VariablesProperty];
+                JToken? variables = ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename)[VariablesProperty];
                 if (variables is null)
                 {
-                    throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{UpdateDependencies.VersionsFilename}'");
+                    throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{SpecificCommand.VersionsFilename}'");
                 }
                 return (JObject)variables;
             });
