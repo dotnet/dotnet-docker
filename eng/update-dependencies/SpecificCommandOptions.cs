@@ -14,30 +14,40 @@ namespace Dotnet.Docker
         public string GitHubProject { get; } = "dotnet-docker";
         public string GitHubUpstreamOwner { get; } = "dotnet";
 
-        public required string InternalBaseUrl { get; init; }
-        public required string InternalAccessToken { get; init; }
-        public required bool ComputeShas { get; init; }
-        public required string DockerfileVersion { get; init; }
-        public required string Email { get; init; }
-        public required string Password { get; init; }
+        // .NET Version options
+        public required string DockerfileVersion { get; init; } = "";
+        public IDictionary<string, string?> ProductVersions { get; init; } = new Dictionary<string, string?>();
+        public ReleaseState? ReleaseState { get; init; } = null;
+        public bool StableBranding { get; init; } = false;
+        public string ChecksumsFile { get; init; } = "";
+
+        // Tool/image component version options
+        public IEnumerable<string> Tools { get; init; } = [];
+
+        // Pull request options
+        public string User { get; init; } = "";
+        public string Email { get; init; } = "";
+        public string Password { get; init; } = "";
+        public string AzdoOrganization { get; init; } = "";
+        public string AzdoProject { get; init; } = "";
+        public string AzdoRepo { get; init; } = "";
+        public string VersionSourceName { get; init; } = "";
         public string SourceBranch { get; init; } = "nightly";
         public string TargetBranch
         {
             get => _targetBranch ?? SourceBranch;
             init => _targetBranch = value;
         }
-        public required string User { get; init; }
-        public required string AzdoOrganization { get; init; }
-        public required string AzdoProject { get; init; }
-        public required string AzdoRepo { get; init; }
-        public required IDictionary<string, string?> ProductVersions { get; set; }
-        public required IEnumerable<string> Tools { get; init; }
-        public required string VersionSourceName { get; init; }
-        public required bool StableBranding { get; init; }
-        public required string ChecksumsFile { get; init; }
-        public required ReleaseState? ReleaseState { get; init; }
 
-        public bool UpdateOnly => Email == null || Password == null || User == null || TargetBranch == null;
+        public bool UpdateOnly =>
+            string.IsNullOrEmpty(Email)
+            || string.IsNullOrEmpty(Password)
+            || string.IsNullOrEmpty(User)
+            || string.IsNullOrEmpty(TargetBranch);
+
+        // Internal build options
+        public string InternalBaseUrl { get; init; } = "";
+        public string InternalAccessToken { get; init; } = "";
         public bool IsInternal => !string.IsNullOrEmpty(InternalBaseUrl);
 
         public static List<Argument> Arguments =>
