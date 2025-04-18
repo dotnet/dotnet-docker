@@ -45,26 +45,28 @@ internal partial class FromChannelCommand(
 
         IEnumerable<Asset> assets = await _barClient.GetAssetsAsync(buildId: latestBuild.Id);
 
-        // The asset containing product commit info will let us confirm the exact versions for SDK, ASP.NET Core, etc.
-        Asset productCommitAsset = assets.FirstOrDefault(a => ProductCommitInfos.AssetRegex.IsMatch(a.Name))
-            ?? throw new InvalidOperationException($"Could not find product commit version in assets.");
+        Asset runtimeProductVersionAsset = assets.FirstOrDefault(a => RuntimeProductVersionRegex.IsMatch(a.Name))
+            ?? throw new InvalidOperationException($"Could not find runtime product version in assets.");
+        Asset sdkProductVersionAsset = assets.FirstOrDefault(a => SdkProductVersionRegex.IsMatch(a.Name))
+            ?? throw new InvalidOperationException($"Could not find sdk product version in assets.");
 
-        string productCommitVersionResponse = await _buildAssetService.GetAssetContentsAsync(productCommitAsset);
-        var productInfos = ProductCommitInfos.FromJson(productCommitVersionResponse);
+        string runtimeVersion = await _buildAssetService.GetAssetContentsAsync(runtimeProductVersionAsset);
+        string sdkVersion = await _buildAssetService.GetAssetContentsAsync(sdkProductVersionAsset);
+
+        Version dockerfileVersion = ResolveMajorMinorVersion(sdkVersion);
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
-
-        Version majorMinorVersion = ResolveMajorMinorVersion(productInfos.Sdk.Version);
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
-            DockerfileVersion = majorMinorVersion.ToString(),
+            DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = new Dictionary<string, string?>()
             {
-                { "runtime", productInfos.Runtime.Version },
-                { "aspnet", productInfos.AspNetCore.Version },
-                { "aspnet-composite", productInfos.AspNetCore.Version },
-                { "sdk", productInfos.Sdk.Version },
+                // In the VMR, runtime and aspnetcore versions are coupled
+                { "runtime", runtimeVersion },
+                { "aspnet", runtimeVersion },
+                { "aspnet-composite", runtimeVersion },
+                { "sdk", sdkVersion },
             },
 
             // Pass through all properties of CreatePullRequestOptions
@@ -100,25 +102,9 @@ internal partial class FromChannelCommand(
             || repo == "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet";
     }
 
-    private partial record ProductCommitInfos(
-        ProductCommitInfo Sdk,
-        ProductCommitInfo Runtime,
-        ProductCommitInfo AspNetCore)
-    {
-        [GeneratedRegex("productCommit-linux-x64.json$")]
-        public static partial Regex AssetRegex { get; }
+    [GeneratedRegex("^Runtime/.*/productVersion.txt$")]
+    private static partial Regex RuntimeProductVersionRegex { get; }
 
-        public static ProductCommitInfos FromJson(string json)
-        {
-            return JsonSerializer.Deserialize<ProductCommitInfos>(json, JsonOptions)
-                ?? throw new InvalidOperationException($"Could not deserialize product commit versions.");
-        }
-
-        private static JsonSerializerOptions JsonOptions { get; } = new()
-        {
-            PropertyNameCaseInsensitive = true
-        };
-    };
-
-    private record ProductCommitInfo(string Commit, string Version);
+    [GeneratedRegex("^Sdk/.*/sdk-productVersion.txt$")]
+    private static partial Regex SdkProductVersionRegex { get; }
 }
