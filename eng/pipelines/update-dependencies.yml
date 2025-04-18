@@ -19,6 +19,8 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
+    - checkout: self
+      fetchDepth: 1
     - template: steps/update-dotnet-dependencies.yml
       parameters:
         channel: "5708"
