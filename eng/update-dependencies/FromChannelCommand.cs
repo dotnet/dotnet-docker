@@ -66,6 +66,17 @@ internal partial class FromChannelCommand(
                 { "aspnet-composite", productInfos.AspNetCore.Version },
                 { "sdk", productInfos.Sdk.Version },
             },
+
+            // Pass through all properties of CreatePullRequestOptions
+            User = options.User,
+            Email = options.Email,
+            Password = options.Password,
+            AzdoOrganization = options.AzdoOrganization,
+            AzdoProject = options.AzdoProject,
+            AzdoRepo = options.AzdoRepo,
+            VersionSourceName = options.VersionSourceName,
+            SourceBranch = options.SourceBranch,
+            TargetBranch = options.TargetBranch,
         };
 
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
