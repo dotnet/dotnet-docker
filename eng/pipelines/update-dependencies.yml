@@ -19,13 +19,11 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - checkout: self
-      fetchDepth: 1
     - template: steps/update-dotnet-dependencies.yml
       parameters:
         channel: "5708"
         repo: "https://github.com/dotnet/dotnet"
-        versionSourceName: "dotnet/sdk"
+        versionSourceName: "dotnet/dotnet"
         serviceConnection: "Darc: Maestro Production"
   # - template: jobs/update-tools.yml
   #   parameters:
