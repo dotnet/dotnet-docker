@@ -23,6 +23,7 @@ stages:
       parameters:
         channel: "5708"
         repo: "https://github.com/dotnet/dotnet"
+        versionSourceName: "dotnet/dotnet"
         serviceConnection: "Darc: Maestro Production"
   # - template: jobs/update-tools.yml
   #   parameters:

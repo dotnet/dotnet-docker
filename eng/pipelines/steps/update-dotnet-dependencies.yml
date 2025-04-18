@@ -2,10 +2,11 @@ parameters:
   serviceConnection: ""
   channel: ""
   repo: "https://github.com/dotnet/dotnet"
+  versionSourceName: ""
 
 steps:
 - template: update-dependencies.yml
   parameters:
-    args: "from-channel ${{ parameters.channel }} ${{ parameters.repo }}"
+    args: "from-channel ${{ parameters.channel }} ${{ parameters.repo }} --version-source-name '${{ parameters.versionSourceName }}'"
     useInternalBuild: false
     serviceConnection: ${{ parameters.serviceConnection }}
