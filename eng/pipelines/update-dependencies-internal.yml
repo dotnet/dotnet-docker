@@ -12,7 +12,7 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - template: steps/update-dotnet-dependencies.yml
+    - template: steps/update-dotnet-dependencies-specific.yml
       parameters:
         useInternalBuild: true
         buildId: $(buildId)

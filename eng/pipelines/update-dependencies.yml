@@ -20,6 +20,11 @@ stages:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
     - template: steps/update-dotnet-dependencies.yml
+      parameters:
+        channel: "${{ variables['channel'] }}"
+        repo: "https://github.com/dotnet/dotnet"
+        versionSourceName: "dotnet/dotnet"
+        serviceConnection: "Darc: Maestro Production"
   - template: jobs/update-tools.yml
     parameters:
       tools: ["chisel", "rocks-toolbox", "syft", "mingit"]
