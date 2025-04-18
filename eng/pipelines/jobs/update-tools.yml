@@ -11,7 +11,7 @@ jobs:
     - powershell: |
         Import-Module -force $(engPath)/DependencyManagement.psm1
 
-        $args=("9.0" + `
+        $args=("specific 9.0" + `
             " --tool ${{ tool }}" + `
             " --version-source-name ${{ tool }}" + `
             " --source-branch nightly" + `
