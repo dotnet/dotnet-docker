@@ -6,7 +6,7 @@ COPY --link . .
 RUN --mount=type=cache,target=/root/.nuget \
     --mount=type=cache,target=/source/bin \
     --mount=type=cache,target=/source/obj \
-    dotnet publish -o out
+    dotnet publish eng/update-dependencies/update-dependencies.csproj -o out
 
 # Runtime image
 FROM mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0
