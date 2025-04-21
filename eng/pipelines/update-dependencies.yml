@@ -15,7 +15,7 @@ stages:
 - stage: DotNet
   jobs:
   - job: UpdateDotNet
-    displayName: Update .NET (dotnet/sdk)
+    displayName: Update .NET (dotnet/dotnet)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
