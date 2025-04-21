@@ -21,7 +21,7 @@ stages:
     steps:
     - template: steps/update-dotnet-dependencies.yml
       parameters:
-        channel: ${{ variables.channel }}
+        channel: $(channel)
         repo: "https://github.com/dotnet/dotnet"
         versionSourceName: "dotnet/dotnet"
         serviceConnection: "Darc: Maestro Production"
