@@ -20,13 +20,14 @@ steps:
         Invoke-Expression $loginCommand;
 
 - powershell: |
-    $args = "${{ parameters.args }}"
-    $pat="$(BotAccount-dotnet-docker-bot-PAT)"
-    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat"
-    $args += " $credArgs"
+    $args = "${{ parameters.args }}";
+    $pat="$(BotAccount-dotnet-docker-bot-PAT)";
+    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat";
+    $args += " $credArgs";
 
-    $command = "docker exec update-dependencies update-dependencies $args"
-    Invoke-Expression $command
+    $command = "docker exec update-dependencies update-dependencies $args";
+    Write-Host "Executing '$command'";
+    Invoke-Expression '$command';
   displayName: Run Update Dependencies
 
 - script: docker rm -f update-dependencies
