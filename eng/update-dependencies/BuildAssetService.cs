@@ -59,7 +59,12 @@ internal class BuildAssetService(
             var response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             string content = await response.Content.ReadAsStringAsync();
-            _logger.LogInformation("Successfully fetched contents from {url}", url);
+            _logger.LogInformation(
+                """
+                Successfully fetched contents from {url}:
+                {content}
+                """,
+                url, content);
             // Remove trailing newlines
             return content.Trim();
         }
