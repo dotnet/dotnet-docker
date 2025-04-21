@@ -7,10 +7,8 @@ using System.Linq;
 
 namespace Dotnet.Docker
 {
-    public class SpecificCommandOptions : IOptions
+    public class SpecificCommandOptions : CreatePullRequestOptions, IOptions
     {
-        private string? _targetBranch = null;
-
         public string GitHubProject { get; } = "dotnet-docker";
         public string GitHubUpstreamOwner { get; } = "dotnet";
 
@@ -24,21 +22,6 @@ namespace Dotnet.Docker
         // Tool/image component version options
         public IEnumerable<string> Tools { get; init; } = [];
 
-        // Pull request options
-        public string User { get; init; } = "";
-        public string Email { get; init; } = "";
-        public string Password { get; init; } = "";
-        public string AzdoOrganization { get; init; } = "";
-        public string AzdoProject { get; init; } = "";
-        public string AzdoRepo { get; init; } = "";
-        public string VersionSourceName { get; init; } = "";
-        public string SourceBranch { get; init; } = "nightly";
-        public string TargetBranch
-        {
-            get => _targetBranch ?? SourceBranch;
-            init => _targetBranch = value;
-        }
-
         public bool UpdateOnly =>
             string.IsNullOrEmpty(Email)
             || string.IsNullOrEmpty(Password)
@@ -50,12 +33,17 @@ namespace Dotnet.Docker
         public string InternalAccessToken { get; init; } = "";
         public bool IsInternal => !string.IsNullOrEmpty(InternalBaseUrl);
 
-        public static List<Argument> Arguments =>
+        public static new List<Argument> Arguments =>
         [
             new Argument<string>("dockerfile-version"),
+            ..CreatePullRequestOptions.Arguments,
         ];
 
-        public static List<Option> Options => GetOptions();
+        public static new List<Option> Options =>
+        [
+            ..GetOptions(),
+            ..CreatePullRequestOptions.Options,
+        ];
 
         private static List<Option> GetOptions()
         {
@@ -101,16 +89,6 @@ namespace Dotnet.Docker
                 new Option<bool>("--stable-branding") { Description = "Use stable branding version numbers to compute paths" },
                 new Option<string>("--checksums-file") { Description = "File containing a list of checksums for each product asset" },
                 toolsOption,
-
-                new Option<string>("--user") { Description = "GitHub or AzDO user used to make PR (if not specified, a PR will not be created)" },
-                new Option<string>("--email") { Description = "GitHub or AzDO email used to make PR (if not specified, a PR will not be created)" },
-                new Option<string>("--password") { Description = "GitHub or AzDO password used to make PR (if not specified, a PR will not be created)" },
-                new Option<string>("--azdo-organization", "--org") { Description = "Name of the AzDO organization" },
-                new Option<string>("--azdo-project", "--project") { Description = "Name of the AzDO project" },
-                new Option<string>("--azdo-repo", "--repo") { Description = "Name of the AzDO repo" },
-                new Option<string>("--version-source-name") { Description = "The name of the source from which the version information was acquired." },
-                new Option<string>("--source-branch") { Description = "Branch where the Dockerfiles are hosted" },
-                new Option<string>("--target-branch") { Description = "Target branch of the generated PR (defaults to value of source-branch)" },
 
                 new Option<string>("--internal-base-url") { Description = "Base Url for internal build artifacts" },
                 new Option<string>("--internal-access-token") { Description = "PAT for accessing internal build artifacts" },
