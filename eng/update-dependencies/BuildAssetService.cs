@@ -12,8 +12,6 @@ namespace Dotnet.Docker;
 
 internal interface IBuildAssetService
 {
-    string ResolveAssetUrl(Asset asset);
-
     Task<string> GetAssetContentsAsync(Asset asset);
 }
 
@@ -24,31 +22,6 @@ internal class BuildAssetService(
 {
     private readonly HttpClient _httpClient = httpClient;
     private readonly ILogger<BuildAssetService> _logger = logger;
-
-    public string ResolveAssetUrl(Asset asset)
-    {
-        var blobStorageLocations = asset.Locations.Where(l => l.Location.Contains("blob.core.windows.net"));
-        var azdoLocations = asset.Locations.Where(l => l.Location.Contains("dev.azure.com"));
-
-        string allLocations =
-            string.Join(Environment.NewLine, asset.Locations.Select(l => $"Type: {l.Type}; Url: {l.Location}"));
-        _logger.LogInformation(
-            """
-            Asset {asset.Name} has {asset.Locations.Count} locations:
-            {allLocations}
-            """,
-            asset.Name, asset.Locations.Count, allLocations);
-
-        // Prefer public blob storage locations over azdo locations
-        AssetLocation bestLocation =
-            blobStorageLocations.FirstOrDefault()
-            ?? azdoLocations.FirstOrDefault()
-            ?? throw new InvalidOperationException(FormatErrorMessage(asset, "does not have any valid locations"));
-
-        string url = $"{bestLocation.Location}/{asset.Name}";
-        _logger.LogInformation("Using location {url}", url);
-        return url;
-    }
 
     public async Task<string> GetAssetContentsAsync(Asset asset)
     {
@@ -73,6 +46,31 @@ internal class BuildAssetService(
             _logger.LogError(ex, "Failed to fetch contents from {url}", url);
             throw;
         }
+    }
+
+    private string ResolveAssetUrl(Asset asset)
+    {
+        var blobStorageLocations = asset.Locations.Where(l => l.Location.Contains("blob.core.windows.net"));
+        var azdoLocations = asset.Locations.Where(l => l.Location.Contains("dev.azure.com"));
+
+        string allLocations =
+            string.Join(Environment.NewLine, asset.Locations.Select(l => $"Type: {l.Type}; Url: {l.Location}"));
+        _logger.LogInformation(
+            """
+            Asset {asset.Name} has {asset.Locations.Count} locations:
+            {allLocations}
+            """,
+            asset.Name, asset.Locations.Count, allLocations);
+
+        // Prefer public blob storage locations over azdo locations
+        AssetLocation bestLocation =
+            blobStorageLocations.FirstOrDefault()
+            ?? azdoLocations.FirstOrDefault()
+            ?? throw new InvalidOperationException(FormatErrorMessage(asset, "does not have any valid locations"));
+
+        string url = $"{bestLocation.Location}/{asset.Name}";
+        _logger.LogInformation("Using location {url}", url);
+        return url;
     }
 
     private static string FormatErrorMessage(Asset asset, string message)
