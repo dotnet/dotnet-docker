@@ -15,13 +15,13 @@ stages:
 - stage: DotNet
   jobs:
   - job: UpdateDotNet
-    displayName: Update .NET (dotnet/sdk)
+    displayName: Update .NET (dotnet/dotnet)
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
     - template: steps/update-dotnet-dependencies.yml
       parameters:
-        channel: "${{ variables['channel'] }}"
+        channel: $(channel)
         repo: "https://github.com/dotnet/dotnet"
         versionSourceName: "dotnet/dotnet"
         serviceConnection: "Darc: Maestro Production"
