@@ -27,7 +27,7 @@ steps:
 
     $command = "docker exec update-dependencies update-dependencies $args";
     Write-Host "Executing '$command'";
-    Invoke-Expression '$command';
+    Invoke-Expression "$command";
   displayName: Run Update Dependencies
 
 - script: docker rm -f update-dependencies
