@@ -1,3 +1,6 @@
+# This file intentionally has no final newline, otherwise the trailing newline
+# gets added into the arguments string, potentially causing issues with PowerShell
+
 parameters:
   tools: []
 
