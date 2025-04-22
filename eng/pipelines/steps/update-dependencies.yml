@@ -20,7 +20,7 @@ steps:
         Invoke-Expression $loginCommand;
 
 - powershell: |
-    $args = "${{ parameters.args }}";
+    $args = "${{ parameters.args }}".Trim();
     $pat="$(BotAccount-dotnet-docker-bot-PAT)";
     $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat";
     $args += " $credArgs";
