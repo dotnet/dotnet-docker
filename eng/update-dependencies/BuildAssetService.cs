@@ -12,7 +12,7 @@ namespace Dotnet.Docker;
 
 internal interface IBuildAssetService
 {
-    Task<string> GetAssetContentsAsync(Asset asset);
+    Task<string> GetAssetTextContentsAsync(Asset asset);
 }
 
 internal class BuildAssetService(
@@ -23,7 +23,7 @@ internal class BuildAssetService(
     private readonly HttpClient _httpClient = httpClient;
     private readonly ILogger<BuildAssetService> _logger = logger;
 
-    public async Task<string> GetAssetContentsAsync(Asset asset)
+    public async Task<string> GetAssetTextContentsAsync(Asset asset)
     {
         string url = ResolveAssetUrl(asset);
         try
