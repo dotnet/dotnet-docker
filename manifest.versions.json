@@ -287,6 +287,6 @@
     "sdk|10.0|win|x64|sha": "75972ff870ba60b514d4418d1ab71f73a3bb5f330388f35d18fd231bbe7b8ea4d0bb3bbd01897b1c67bd0f888c54d0ecb74c777ab52d70cd28bbbc868f407291",
 
     "syft|repo": "anchore/syft",
-    "syft|tag": "v1.22.0"
+    "syft|tag": "v1.23.1"
   }
 }
