@@ -4,8 +4,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
@@ -13,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker;
 
-internal partial class FromChannelCommand(
+internal class FromChannelCommand(
     IBuildAssetService buildAssetService,
     IBasicBarClient barClient,
     ILogger<FromChannelCommand> logger)
@@ -45,15 +43,13 @@ internal partial class FromChannelCommand(
 
         IEnumerable<Asset> assets = await _barClient.GetAssetsAsync(buildId: latestBuild.Id);
 
-        Asset runtimeProductVersionAsset = assets.FirstOrDefault(a => RuntimeProductVersionRegex.IsMatch(a.Name))
-            ?? throw new InvalidOperationException($"Could not find runtime product version in assets.");
-        Asset sdkProductVersionAsset = assets.FirstOrDefault(a => SdkProductVersionRegex.IsMatch(a.Name))
-            ?? throw new InvalidOperationException($"Could not find sdk product version in assets.");
+        Asset productCommitsAsset = assets.FirstOrDefault(a => ProductCommits.SdkAssetRegex.IsMatch(a.Name))
+            ?? throw new InvalidOperationException($"Could not find product version commit in assets.");
 
-        string runtimeVersion = await _buildAssetService.GetAssetContentsAsync(runtimeProductVersionAsset);
-        string sdkVersion = await _buildAssetService.GetAssetContentsAsync(sdkProductVersionAsset);
+        string productCommitsJson = await _buildAssetService.GetAssetTextContentsAsync(productCommitsAsset);
+        ProductCommits productCommits = ProductCommits.FromJson(productCommitsJson);
 
-        Version dockerfileVersion = ResolveMajorMinorVersion(sdkVersion);
+        Version dockerfileVersion = ResolveMajorMinorVersion(productCommits.Sdk.Version);
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
@@ -63,10 +59,10 @@ internal partial class FromChannelCommand(
             ProductVersions = new Dictionary<string, string?>()
             {
                 // In the VMR, runtime and aspnetcore versions are coupled
-                { "runtime", runtimeVersion },
-                { "aspnet", runtimeVersion },
-                { "aspnet-composite", runtimeVersion },
-                { "sdk", sdkVersion },
+                { "runtime", productCommits.Runtime.Version },
+                { "aspnet", productCommits.AspNetCore.Version },
+                { "aspnet-composite", productCommits.AspNetCore.Version },
+                { "sdk", productCommits.Sdk.Version },
             },
 
             // Pass through all properties of CreatePullRequestOptions
@@ -101,10 +97,4 @@ internal partial class FromChannelCommand(
         return repo == "https://github.com/dotnet/dotnet"
             || repo == "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet";
     }
-
-    [GeneratedRegex("^Runtime/.*/productVersion.txt$")]
-    private static partial Regex RuntimeProductVersionRegex { get; }
-
-    [GeneratedRegex("^Sdk/.*/sdk-productVersion.txt$")]
-    private static partial Regex SdkProductVersionRegex { get; }
 }
