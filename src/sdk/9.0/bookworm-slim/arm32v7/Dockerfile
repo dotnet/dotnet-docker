@@ -42,9 +42,9 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.5.0 \
+RUN powershell_version=7.5.1 \
     && curl -fSL --output PowerShell.Linux.arm32.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha512='3e87ac49de17a2eb35b0fa336b04fe6d7ef1ee2557f01d553d8eb54e45de41d8b48ceb1b49da9e046a31ab6b2f453a015a3554074f483c8e80e1a8834197ac34' \
+    && powershell_sha512='d9fe78a93d3b6b4e0df66fa9c9b8fe97a1d23c7a7a64e7fca82764aa400fcb69a40c196414d1897f721622267581e7dc4c73de1087de2029267e0d85cce18dfd' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir -p /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
