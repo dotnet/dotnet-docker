@@ -174,7 +174,7 @@ jobs:
       '$(imageInfoContainerDir)/full-image-info-new.json'
       '$(gitHubVersionsRepoInfo.userName)'
       '$(gitHubVersionsRepoInfo.email)'
-      '$(gitHubVersionsRepoInfo.accessToken)'
+      $(gitHubVersionsRepoInfo.authArgs)
       --git-owner '$(gitHubVersionsRepoInfo.org)'
       --git-repo '$(gitHubVersionsRepoInfo.repo)'
       --git-branch '$(gitHubVersionsRepoInfo.branch)'
@@ -192,7 +192,7 @@ jobs:
       '$(System.AccessToken)'
       '$(azdoOrgName)'
       '$(System.TeamProject)'
-      '$(gitHubNotificationsRepoInfo.accessToken)'
+      $(gitHubNotificationsRepoInfo.authArgs)
       '$(gitHubNotificationsRepoInfo.org)'
       '$(gitHubNotificationsRepoInfo.repo)'
       --repo-prefix '$(publishRepoPrefix)'
