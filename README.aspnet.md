@@ -88,6 +88,7 @@ For more information, see the [composite images section in the Image Variants do
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.4-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.4-bookworm-slim, 9.0-bookworm-slim, 9.0.4, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.4-trixie-slim-amd64, 9.0-trixie-slim-amd64, 9.0.4-trixie-slim, 9.0-trixie-slim | [Dockerfile](src/aspnet/9.0/trixie-slim/amd64/Dockerfile) | Debian 13
 9.0.4-alpine3.21-amd64, 9.0-alpine3.21-amd64, 9.0-alpine-amd64, 9.0.4-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
 9.0.4-alpine3.21-composite-amd64, 9.0-alpine3.21-composite-amd64, 9.0-alpine-composite-amd64, 9.0.4-alpine3.21-composite, 9.0-alpine3.21-composite, 9.0-alpine-composite | [Dockerfile](src/aspnet/9.0/alpine3.21-composite/amd64/Dockerfile) | Alpine 3.21
 9.0.4-noble-amd64, 9.0-noble-amd64, 9.0.4-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
@@ -101,6 +102,7 @@ Tags | Dockerfile | OS Version
 9.0.4-azurelinux3.0-distroless-composite-amd64, 9.0-azurelinux3.0-distroless-composite-amd64, 9.0.4-azurelinux3.0-distroless-composite, 9.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
 9.0.4-azurelinux3.0-distroless-composite-extra-amd64, 9.0-azurelinux3.0-distroless-composite-extra-amd64, 9.0.4-azurelinux3.0-distroless-composite-extra, 9.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
 8.0.15-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.15-bookworm-slim, 8.0-bookworm-slim, 8.0.15, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.15-trixie-slim-amd64, 8.0-trixie-slim-amd64, 8.0.15-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/aspnet/8.0/trixie-slim/amd64/Dockerfile) | Debian 13
 8.0.15-alpine3.21-amd64, 8.0-alpine3.21-amd64, 8.0-alpine-amd64, 8.0.15-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
 8.0.15-alpine3.21-composite-amd64, 8.0-alpine3.21-composite-amd64, 8.0-alpine-composite-amd64, 8.0.15-alpine3.21-composite, 8.0-alpine3.21-composite, 8.0-alpine-composite | [Dockerfile](src/aspnet/8.0/alpine3.21-composite/amd64/Dockerfile) | Alpine 3.21
 8.0.15-noble-amd64, 8.0-noble-amd64, 8.0.15-noble, 8.0-noble | [Dockerfile](src/aspnet/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
@@ -147,6 +149,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.4-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.4-bookworm-slim, 9.0-bookworm-slim, 9.0.4, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.4-trixie-slim-arm64v8, 9.0-trixie-slim-arm64v8, 9.0.4-trixie-slim, 9.0-trixie-slim | [Dockerfile](src/aspnet/9.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
 9.0.4-alpine3.21-arm64v8, 9.0-alpine3.21-arm64v8, 9.0-alpine-arm64v8, 9.0.4-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
 9.0.4-alpine3.21-composite-arm64v8, 9.0-alpine3.21-composite-arm64v8, 9.0-alpine-composite-arm64v8, 9.0.4-alpine3.21-composite, 9.0-alpine3.21-composite, 9.0-alpine-composite | [Dockerfile](src/aspnet/9.0/alpine3.21-composite/arm64v8/Dockerfile) | Alpine 3.21
 9.0.4-noble-arm64v8, 9.0-noble-arm64v8, 9.0.4-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -160,6 +163,7 @@ Tags | Dockerfile | OS Version
 9.0.4-azurelinux3.0-distroless-composite-arm64v8, 9.0-azurelinux3.0-distroless-composite-arm64v8, 9.0.4-azurelinux3.0-distroless-composite, 9.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.4-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0.4-azurelinux3.0-distroless-composite-extra, 9.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.15-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.15-bookworm-slim, 8.0-bookworm-slim, 8.0.15, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.15-trixie-slim-arm64v8, 8.0-trixie-slim-arm64v8, 8.0.15-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/aspnet/8.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
 8.0.15-alpine3.21-arm64v8, 8.0-alpine3.21-arm64v8, 8.0-alpine-arm64v8, 8.0.15-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
 8.0.15-alpine3.21-composite-arm64v8, 8.0-alpine3.21-composite-arm64v8, 8.0-alpine-composite-arm64v8, 8.0.15-alpine3.21-composite, 8.0-alpine3.21-composite, 8.0-alpine-composite | [Dockerfile](src/aspnet/8.0/alpine3.21-composite/arm64v8/Dockerfile) | Alpine 3.21
 8.0.15-noble-arm64v8, 8.0-noble-arm64v8, 8.0.15-noble, 8.0-noble | [Dockerfile](src/aspnet/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -206,6 +210,7 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.4-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.4-bookworm-slim, 9.0-bookworm-slim, 9.0.4, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.4-trixie-slim-arm32v7, 9.0-trixie-slim-arm32v7, 9.0.4-trixie-slim, 9.0-trixie-slim | [Dockerfile](src/aspnet/9.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 9.0.4-alpine3.21-arm32v7, 9.0-alpine3.21-arm32v7, 9.0-alpine-arm32v7, 9.0.4-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 9.0.4-alpine3.21-composite-arm32v7, 9.0-alpine3.21-composite-arm32v7, 9.0-alpine-composite-arm32v7, 9.0.4-alpine3.21-composite, 9.0-alpine3.21-composite, 9.0-alpine-composite | [Dockerfile](src/aspnet/9.0/alpine3.21-composite/arm32v7/Dockerfile) | Alpine 3.21
 9.0.4-noble-arm32v7, 9.0-noble-arm32v7, 9.0.4-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
@@ -214,6 +219,7 @@ Tags | Dockerfile | OS Version
 9.0.4-noble-chiseled-composite-arm32v7, 9.0-noble-chiseled-composite-arm32v7, 9.0.4-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
 9.0.4-noble-chiseled-composite-extra-arm32v7, 9.0-noble-chiseled-composite-extra-arm32v7, 9.0.4-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.15-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.15-bookworm-slim, 8.0-bookworm-slim, 8.0.15, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.15-trixie-slim-arm32v7, 8.0-trixie-slim-arm32v7, 8.0.15-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/aspnet/8.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 8.0.15-alpine3.21-arm32v7, 8.0-alpine3.21-arm32v7, 8.0-alpine-arm32v7, 8.0.15-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 8.0.15-alpine3.21-composite-arm32v7, 8.0-alpine3.21-composite-arm32v7, 8.0-alpine-composite-arm32v7, 8.0.15-alpine3.21-composite, 8.0-alpine3.21-composite, 8.0-alpine-composite | [Dockerfile](src/aspnet/8.0/alpine3.21-composite/arm32v7/Dockerfile) | Alpine 3.21
 8.0.15-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.15-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
