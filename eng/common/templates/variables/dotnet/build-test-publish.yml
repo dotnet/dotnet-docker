@@ -15,11 +15,14 @@ variables:
   value: public/,internal/private/,unlisted/
 
 - name: mcrDocsRepoInfo.authArgs
-  value: --gh-token '$(BotAccount-dotnet-docker-bot-PAT)'
+  value: >-
+    --gh-private-key '$(GitHubApp-NET-Docker-MAR-Docs-Updater-PrivateKey)'
+    --gh-app-client-id '$(gitHubApp.marDocsUpdater.clientId)'
+    --gh-app-installation-id '$(gitHubApp.marDocsUpdater.microsoft.installationId)'
 - name: mcrDocsRepoInfo.userName
-  value: $(dotnetDockerBot.userName)
+  value: $(gitHubApp.marDocsUpdater.userName)
 - name: mcrDocsRepoInfo.email
-  value: $(dotnetDockerBot.email)
+  value: $(gitHubApp.marDocsUpdater.email)
 
 - name: publishNotificationsEnabled
   value: true
