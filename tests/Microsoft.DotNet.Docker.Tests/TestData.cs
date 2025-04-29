@@ -97,7 +97,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     ImageVariant = DotNetImageVariant.Extra, SupportedImageRepos = DotNetImageRepo.Runtime_Deps },
 
             new ProductImageData { Version = V8_0, OS = OS.BookwormSlim,        Arch = Arch.Arm },
-            new ProductImageData { Version = V8_0, OS = OS.TrixieSlim,          Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.Jammy,               Arch = Arch.Arm },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy },
             new ProductImageData { Version = V8_0, OS = OS.JammyChiseled,       Arch = Arch.Arm,     SdkOS = OS.Jammy,

@@ -219,7 +219,6 @@ Tags | Dockerfile | OS Version
 9.0.4-noble-chiseled-composite-arm32v7, 9.0-noble-chiseled-composite-arm32v7, 9.0.4-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
 9.0.4-noble-chiseled-composite-extra-arm32v7, 9.0-noble-chiseled-composite-extra-arm32v7, 9.0.4-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.15-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.15-bookworm-slim, 8.0-bookworm-slim, 8.0.15, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.15-trixie-slim-arm32v7, 8.0-trixie-slim-arm32v7, 8.0.15-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/aspnet/8.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 8.0.15-alpine3.21-arm32v7, 8.0-alpine3.21-arm32v7, 8.0-alpine-arm32v7, 8.0.15-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 8.0.15-alpine3.21-composite-arm32v7, 8.0-alpine3.21-composite-arm32v7, 8.0-alpine-composite-arm32v7, 8.0.15-alpine3.21-composite, 8.0-alpine3.21-composite, 8.0-alpine-composite | [Dockerfile](src/aspnet/8.0/alpine3.21-composite/arm32v7/Dockerfile) | Alpine 3.21
 8.0.15-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.15-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04

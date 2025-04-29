@@ -166,7 +166,6 @@ Tags | Dockerfile | OS Version
 9.0.4-noble-chiseled-arm32v7, 9.0-noble-chiseled-arm32v7, 9.0.4-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/runtime-deps/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 9.0.4-noble-chiseled-extra-arm32v7, 9.0-noble-chiseled-extra-arm32v7, 9.0.4-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/runtime-deps/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.15-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.15-bookworm-slim, 8.0-bookworm-slim, 8.0.15, 8.0 | [Dockerfile](src/runtime-deps/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.15-trixie-slim-arm32v7, 8.0-trixie-slim-arm32v7, 8.0.15-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/runtime-deps/8.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 8.0.15-alpine3.21-arm32v7, 8.0-alpine3.21-arm32v7, 8.0-alpine-arm32v7, 8.0.15-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/runtime-deps/8.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 8.0.15-alpine3.21-extra-arm32v7, 8.0-alpine3.21-extra-arm32v7, 8.0-alpine-extra-arm32v7, 8.0.15-alpine3.21-extra, 8.0-alpine3.21-extra, 8.0-alpine-extra | [Dockerfile](src/runtime-deps/8.0/alpine3.21-extra/arm32v7/Dockerfile) | Alpine 3.21
 8.0.15-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.15-jammy, 8.0-jammy | [Dockerfile](src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04

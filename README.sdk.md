@@ -137,7 +137,6 @@ Tags | Dockerfile | OS Version
 9.0.203-alpine3.21-arm32v7, 9.0-alpine3.21-arm32v7, 9.0-alpine-arm32v7, 9.0.203-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 9.0.203-noble-arm32v7, 9.0-noble-arm32v7, 9.0.203-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.408-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.408-bookworm-slim, 8.0-bookworm-slim, 8.0.408, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.408-trixie-slim-arm32v7, 8.0-trixie-slim-arm32v7, 8.0.408-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/sdk/8.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 8.0.408-alpine3.21-arm32v7, 8.0-alpine3.21-arm32v7, 8.0-alpine-arm32v7, 8.0.408-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 8.0.408-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.408-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
