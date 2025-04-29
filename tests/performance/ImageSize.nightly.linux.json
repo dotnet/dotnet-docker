@@ -39,6 +39,9 @@
     "src/runtime-deps/9.0/bookworm-slim/amd64": 122238983,
     "src/runtime-deps/9.0/bookworm-slim/arm32v7": 97861952,
     "src/runtime-deps/9.0/bookworm-slim/arm64v8": 144762223,
+    "src/runtime-deps/9.0/trixie-slim/amd64": 122238983,
+    "src/runtime-deps/9.0/trixie-slim/arm32v7": 97861952,
+    "src/runtime-deps/9.0/trixie-slim/arm64v8": 144762223,
     "src/runtime-deps/9.0/alpine3.21/amd64": 10251833,
     "src/runtime-deps/9.0/alpine3.21/arm32v7": 6858356,
     "src/runtime-deps/9.0/alpine3.21/arm64v8": 10582917,
@@ -122,6 +125,9 @@
     "src/runtime/9.0/bookworm-slim/amd64": 193906419,
     "src/runtime/9.0/bookworm-slim/arm32v7": 165821014,
     "src/runtime/9.0/bookworm-slim/arm64v8": 222493669,
+    "src/runtime/9.0/trixie-slim/amd64": 193906419,
+    "src/runtime/9.0/trixie-slim/arm32v7": 165821014,
+    "src/runtime/9.0/trixie-slim/arm64v8": 222493669,
     "src/runtime/9.0/alpine3.21/amd64": 83969542,
     "src/runtime/9.0/alpine3.21/arm32v7": 74931261,
     "src/runtime/9.0/alpine3.21/arm64v8": 90558408,
@@ -220,6 +226,9 @@
     "src/aspnet/9.0/bookworm-slim/amd64": 217891272,
     "src/aspnet/9.0/bookworm-slim/arm32v7": 191294251,
     "src/aspnet/9.0/bookworm-slim/arm64v8": 249260740,
+    "src/aspnet/9.0/trixie-slim/amd64": 217891272,
+    "src/aspnet/9.0/trixie-slim/arm32v7": 191294251,
+    "src/aspnet/9.0/trixie-slim/arm64v8": 249260740,
     "src/aspnet/9.0/alpine3.21/amd64": 107954420,
     "src/aspnet/9.0/alpine3.21/arm32v7": 100404523,
     "src/aspnet/9.0/alpine3.21/arm64v8": 117325504,
@@ -305,6 +314,9 @@
     "src/sdk/9.0/bookworm-slim/amd64": 896392658,
     "src/sdk/9.0/bookworm-slim/arm32v7": 844112062,
     "src/sdk/9.0/bookworm-slim/arm64v8": 952784503,
+    "src/sdk/9.0/trixie-slim/amd64": 896392658,
+    "src/sdk/9.0/trixie-slim/arm32v7": 844112062,
+    "src/sdk/9.0/trixie-slim/arm64v8": 952784503,
     "src/sdk/9.0/alpine3.21/amd64": 720060909,
     "src/sdk/9.0/alpine3.21/arm32v7": 688280669,
     "src/sdk/9.0/alpine3.21/arm64v8": 738892101,
@@ -360,5 +372,5 @@
   "dotnet/nightly/yarp": {
     "src/yarp/2.3/azurelinux-distroless/amd64": 141557760,
     "src/yarp/2.3/azurelinux-distroless/arm64v8": 147836993
-  },
+  }
 }
