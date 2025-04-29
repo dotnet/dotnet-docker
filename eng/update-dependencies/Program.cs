@@ -30,7 +30,7 @@ config.UseHost(
             if (unmatchedArgs.Length > 0)
             {
                 var helpBuilder = new HelpBuilder();
-                var stringWriter = new StringWriter();
+                using var stringWriter = new StringWriter();
                 helpBuilder.Write(rootCommand, stringWriter);
                 Console.WriteLine(stringWriter.ToString());
                 throw new InvalidOperationException($"Unmatched tokens: {string.Join(" ", unmatchedArgs)}");
