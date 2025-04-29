@@ -4,7 +4,7 @@ pr: none
 resources:
   repositories:
   pipelines:
-  - pipeline: dotnet-docker-release-staging-pipeline
+  - pipeline: dotnet-docker-release-staging
     source: dotnet-docker-release-staging
 
 variables:
@@ -21,3 +21,15 @@ extends:
         # We always want staged images to be as up-to-date as possible,
         # so don't rely on any caching behavior.
         noCache: true
+        customPublishInitSteps:
+        - script: |
+            echo $(resources.pipeline.dotnet-docker-release-staging.pipelineID)
+            echo $(resources.pipeline.dotnet-docker-release-staging.runName)
+            echo $(resources.pipeline.dotnet-docker-release-staging.runID)
+            echo $(resources.pipeline.dotnet-docker-release-staging.runURI)
+            echo $(resources.pipeline.dotnet-docker-release-staging.sourceBranch)
+            echo $(resources.pipeline.dotnet-docker-release-staging.sourceCommit)
+            echo $(resources.pipeline.dotnet-docker-release-staging.sourceProvider)
+            echo $(resources.pipeline.dotnet-docker-release-staging.requestedFor)
+            echo $(resources.pipeline.dotnet-docker-release-staging.requestedForID)
+          displayName: Check Pipeline Resource Variables
