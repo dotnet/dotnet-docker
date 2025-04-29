@@ -2,7 +2,6 @@ trigger: none
 pr: none
 
 resources:
-  repositories:
   pipelines:
   - pipeline: dotnet-docker-release-staging
     source: dotnet-docker-release-staging
