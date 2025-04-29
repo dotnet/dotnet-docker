@@ -16,10 +16,10 @@ parameters:
 stages:
 - ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
   - stage: Publish
-    ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-      dependsOn: Test
-    ${{ else }}:
-      dependsOn: Post_Build
+    # ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+    #   dependsOn: Test
+    # ${{ else }}:
+    #   dependsOn: Post_Build
     condition: "
       and(
         not(canceled()),
