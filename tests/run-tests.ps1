@@ -28,7 +28,7 @@ param(
 
     [string]$ImageInfoPath,
 
-    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "image-size", "monitor", "aspire-dashboard", "yarp")]
+    [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "monitor", "aspire-dashboard", "yarp")]
     [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard", "yarp"),
 
     [string]$CustomTestFilter,
@@ -155,10 +155,6 @@ Try {
 
     Write-Host "`nRunning tests with $testFilter`n"
     Exec "$DotnetInstallDir/dotnet test $testFilter --logger:trx"
-
-    if ($TestCategories.Contains('image-size')) {
-        & ../performance/Validate-ImageSize.ps1 -PullImages:$PullImages -ValidationMode Integrity
-    }
 }
 Finally {
     Pop-Location
