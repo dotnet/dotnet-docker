@@ -20,7 +20,7 @@ extends:
 
         # Only allow the staging pipeline as a source for publishing
         # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
-        sourceBuildPipelineDefinitionId: 1434
+        sourceBuildPipelineDefinitionId: "1434"
         sourceBuildPipelineRunId: $(resources.pipeline.dotnet-docker-release-staging.runID)
 
         customPublishInitSteps:
