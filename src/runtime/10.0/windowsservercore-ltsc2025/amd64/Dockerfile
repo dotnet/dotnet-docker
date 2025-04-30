@@ -8,9 +8,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '10.0.0-preview.4.25228.102'; `
+        $dotnet_version = '10.0.0-preview.4.25229.110'; `
         Invoke-WebRequest -OutFile dotnet.zip https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
-        $dotnet_sha512 = 'f5c7c7b96929e9757db91cfd96dcc08de24dc5e22c8c0f93ea8f3ca144285cf3b2dd4887fa3ac7cfb65eab10d2b7fd3f7313783bacca72fb88fafc62ba235071'; `
+        $dotnet_sha512 = '1c0196345ae5dc654af1f51f71f55688ff6f62c8521712468ad9ff9fd532a221549a3833dcc9f566eb0389a427fdd25b201a95b274c279ec86f18707c6260483'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -30,7 +30,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-preview.4.25228.102
+    DOTNET_VERSION=10.0.0-preview.4.25229.110
 
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
 
