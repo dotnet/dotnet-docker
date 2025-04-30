@@ -3,15 +3,17 @@ parameters:
   artifactName: ""
   condition: true
   continueOnError: false
+  pipelineDefinitionId: ""
+  pipelineRunId: ""
 
 steps:
 - task: DownloadPipelineArtifact@1
   inputs:
     buildType: specific
     project: $(System.TeamProject)
-    pipline: $(System.DefinitionId)
+    pipeline: ${{ parameters.pipelineDefinitionId }}
     buildVersionToDownload: specific
-    buildId: $(sourceBuildId)
+    buildId: ${{ parameters.pipelineRunId }}
     targetPath: ${{ parameters.targetPath }}
     artifactName: ${{ parameters.artifactName }}
   displayName: Download Build Artifact(s)

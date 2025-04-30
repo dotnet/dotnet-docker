@@ -3,6 +3,8 @@ parameters:
   internalProjectName: null
   customInitSteps: []
   customPublishVariables: []
+  sourceBuildPipelineDefinitionId: $(System.DefinitionId)
+  sourceBuildPipelineRunId: $(sourceBuildId)
 
 jobs:
 - job: Publish
@@ -43,16 +45,18 @@ jobs:
 
   - ${{ parameters.customInitSteps }}
 
-  # - template: /eng/common/templates/steps/validate-branch.yml@self
-  #   parameters:
-  #     internalProjectName: ${{ parameters.internalProjectName }}
+  - template: /eng/common/templates/steps/validate-branch.yml@self
+    parameters:
+      internalProjectName: ${{ parameters.internalProjectName }}
 
-  # - template: /eng/common/templates/steps/download-build-artifact.yml@self
-  #   parameters:
-  #     targetPath: $(imageInfoHostDir)
-  #     artifactName: image-info
-  #     # This can fail in scenarios where no build jobs have run to produce any artifacts
-  #     continueOnError: true
+  - template: /eng/common/templates/steps/download-build-artifact.yml@self
+    parameters:
+      targetPath: $(imageInfoHostDir)
+      artifactName: image-info
+      piplineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
+      pipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+      # This can fail in scenarios where no build jobs have run to produce any artifacts
+      continueOnError: true
 
   # - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
   #   parameters:
@@ -238,7 +242,7 @@ jobs:
 
   # - powershell: |
   #     New-Item -ItemType Directory -Path $(sourceBuildIdOutputDir)
-  #     Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value $(sourceBuildId)
+  #     Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value ${{ parameters.sourceBuildPipelineRunId }}
   #   condition: succeeded()
   #   displayName: Write Source Build ID to File
 

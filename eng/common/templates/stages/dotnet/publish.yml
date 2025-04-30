@@ -7,6 +7,8 @@ parameters:
   pool: ""
   isInternalServicingValidation: false
   customPublishInitSteps: []
+  sourceBuildPipelineDefinitionId: ''
+  sourceBuildPipelineRunId: ''
 
 stages:
 - template: /eng/common/templates/stages/publish.yml@self
@@ -14,6 +16,8 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
 
     customPublishInitSteps:
     - pwsh: |
