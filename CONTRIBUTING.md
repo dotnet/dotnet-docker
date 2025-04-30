@@ -1,6 +1,6 @@
 # Contributing
 
-See [dotnet/runtime Contributing](https://github.com/dotnet/runtime/blob/master/CONTRIBUTING.md) for information about coding styles, source structure, making pull requests, and more.
+See [dotnet/runtime Contributing](https://github.com/dotnet/runtime/blob/main/CONTRIBUTING.md) for information about coding styles, source structure, making pull requests, and more.
 
 ## General Feedback and Questions
 
