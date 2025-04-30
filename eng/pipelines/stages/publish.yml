@@ -2,9 +2,6 @@
 # specific to the Dockerfiles in this repo.
 
 parameters:
-  - name: noCache
-    type: boolean
-    default: false
   - name: internalProjectName
     type: string
     default: null
@@ -20,11 +17,16 @@ parameters:
   - name: customPublishInitSteps
     type: stepList
     default: []
+  - name: sourceBuildPipelineDefinitionId
+    type: string
+    default: ''
+  - name: sourceBuildPipelineRunId
+    type: string
+    default: ''
 
 stages:
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
-    noCache: ${{ parameters.noCache }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
@@ -33,3 +35,5 @@ stages:
     - ${{ parameters.customPublishInitSteps }}
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - template: /eng/pipelines/steps/set-publish-mcrdocs-args-var.yml@self
+    sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
