@@ -58,19 +58,23 @@ jobs:
       # This can fail in scenarios where no build jobs have run to produce any artifacts
       continueOnError: true
 
-  # - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
-  #   parameters:
-  #     publicSourceBranch: $(publicSourceBranch)
+  - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
+    parameters:
+      publicSourceBranch: $(publicSourceBranch)
 
-  # - template: /eng/common/templates/steps/set-dry-run.yml@self
+  - template: /eng/common/templates/steps/set-dry-run.yml@self
 
-  # - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
-  #   displayName: Set Publish Variables
+  - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
+    displayName: Set Publish Variables
 
-  # - script: >
-  #     $(runImageBuilderCmd) trimUnchangedPlatforms
-  #     '$(imageInfoContainerDir)/image-info.json'
-  #   displayName: Trim Unchanged Images
+  - script: >
+      $(runImageBuilderCmd) trimUnchangedPlatforms
+      '$(imageInfoContainerDir)/image-info.json'
+    displayName: Trim Unchanged Images
+
+  - script: >
+      cat $(imageInfoHostDir)/image-info.json
+    displayName: Show Image Info Artifact
 
   # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   #   parameters:
