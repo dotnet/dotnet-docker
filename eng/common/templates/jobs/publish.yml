@@ -76,24 +76,24 @@ jobs:
       cat $(imageInfoHostDir)/image-info.json
     displayName: Show Image Info Artifact
 
-  # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
-  #   parameters:
-  #     displayName: Copy Images
-  #     serviceConnection: $(publish.serviceConnectionName)
-  #     internalProjectName: ${{ parameters.internalProjectName }}
-  #     args: >
-  #       copyAcrImages
-  #       '$(acr.subscription)'
-  #       '$(acr.resourceGroup)'
-  #       '$(stagingRepoPrefix)'
-  #       '$(acr-staging.server)'
-  #       --os-type '*'
-  #       --architecture '*'
-  #       --repo-prefix '$(publishRepoPrefix)'
-  #       --image-info '$(imageInfoContainerDir)/image-info.json'
-  #       $(dryRunArg)
-  #       $(imageBuilder.pathArgs)
-  #       $(imageBuilder.commonCmdArgs)
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Copy Images
+      serviceConnection: $(publish.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      args: >
+        copyAcrImages
+        '$(acr.subscription)'
+        '$(acr.resourceGroup)'
+        '$(stagingRepoPrefix)'
+        '$(acr-staging.server)'
+        --os-type '*'
+        --architecture '*'
+        --repo-prefix '$(publishRepoPrefix)'
+        --image-info '$(imageInfoContainerDir)/image-info.json'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
 
   # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   #   parameters:
