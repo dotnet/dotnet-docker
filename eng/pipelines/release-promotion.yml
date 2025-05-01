@@ -11,6 +11,8 @@ variables:
 # Set pathArgs to empty in order to publish all images
 - name: imageBuilder.pathArgs
   value: ""
+- name: imageBuilder.queueArgs
+  value: ""
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
@@ -21,7 +23,7 @@ extends:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
 
-        # Only allow the staging pipeline as a source for publishing
+        # Only allow the dotnet-docker-release-staging pipeline as a source for publishing
         # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
         sourceBuildPipelineDefinitionId: "1434"
         sourceBuildPipelineRunId: $(resources.pipeline.dotnet-docker-release-staging.runID)
