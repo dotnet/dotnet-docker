@@ -39,8 +39,7 @@ steps:
         $env:idToken | Out-File -FilePath $(tokenHostFilePath);
         $command = "$(runAuthedImageBuilderCmd) ${{ parameters.args }}";
         Write-Host "Executing $command";
-        # TODO: re-enable once we're sure this command is safe to run
-        # Invoke-Expression $command
+        Invoke-Expression $command
         Remove-Item -Path $(tokenHostFilePath) -Force
 - ${{ else }}:
   - task: PowerShell@2
@@ -54,5 +53,4 @@ steps:
       script: |
         $command = "$(runImageBuilderCmd) ${{ parameters.args }}";
         Write-Host "Executing $command";
-        # TODO: re-enable once we're sure this command is safe to run
-        # Invoke-Expression $command
+        Invoke-Expression $command
