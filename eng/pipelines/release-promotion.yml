@@ -8,6 +8,9 @@ resources:
 
 variables:
 - template: /eng/pipelines/variables/core.yml@self
+# Set pathArgs to empty in order to publish all images
+- name: imageBuilder.pathArgs
+  value: ""
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
