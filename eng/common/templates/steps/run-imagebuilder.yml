@@ -37,8 +37,8 @@ steps:
       condition: ${{ parameters.condition }}
       command: |
         $env:idToken | Out-File -FilePath $(tokenHostFilePath);
-        $command = $(runAuthedImageBuilderCmd) ${{ parameters.args }}
-        Write-Host "Executing $command"
+        $command = "$(runAuthedImageBuilderCmd) ${{ parameters.args }}";
+        Write-Host "Executing $command";
         # TODO: re-enable once we're sure this command is safe to run
         # Invoke-Expression $command
         Remove-Item -Path $(tokenHostFilePath) -Force
@@ -52,7 +52,7 @@ steps:
     inputs:
       targetType: 'inline'
       script: |
-        $command = "$(runImageBuilderCmd) ${{ parameters.args }}"
-        Write-Host "Executing $command"
+        $command = "$(runImageBuilderCmd) ${{ parameters.args }}";
+        Write-Host "Executing $command";
         # TODO: re-enable once we're sure this command is safe to run
         # Invoke-Expression $command
