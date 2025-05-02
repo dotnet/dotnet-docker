@@ -1,12 +1,8 @@
 parameters:
   # The customArgsArray parameter is used to specify the configuration for multiple Dockerfile versions.
   # This allows for a single branch to be generated for different internal .NET build versions.
-- name: customArgsArray
-  type: string
-  default: ""
-- name: useInternalBuild
-  type: boolean
-  default: false
+  customArgsArray: ""
+  useInternalBuild: false
 
 steps:
 - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
@@ -19,7 +15,7 @@ steps:
     } else {
       $pat="$(BotAccount-dotnet-docker-bot-PAT)"
     }
-    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat";
+    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat"
 
     # Execute update-deps for each of the items in the customArgsArray, representing different Dockerfile versions
     # Ensure that the value is treated as an array by wrapping it in an array literal. This deals with the quirk of
