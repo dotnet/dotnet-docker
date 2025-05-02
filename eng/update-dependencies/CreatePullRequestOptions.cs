@@ -18,6 +18,7 @@ public abstract class CreatePullRequestOptions
     public string AzdoRepo { get; init; } = "";
     public string VersionSourceName { get; init; } = "";
     public string SourceBranch { get; init; } = "nightly";
+    public bool DryRun { get; init; } = false;
     public string TargetBranch
     {
         get => _targetBranch ?? SourceBranch;
@@ -35,6 +36,7 @@ public abstract class CreatePullRequestOptions
         new Option<string>("--version-source-name") { Description = "The name of the source from which the version information was acquired." },
         new Option<string>("--source-branch") { Description = "Branch where the Dockerfiles are hosted" },
         new Option<string>("--target-branch") { Description = "Target branch of the generated PR (defaults to value of source-branch)" },
+        new Option<bool>("--dry-run") { Description = "Execute all steps but do not create a pull request" },
     ];
 
     public static List<Argument> Arguments => [];

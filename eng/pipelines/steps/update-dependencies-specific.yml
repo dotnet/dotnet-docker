@@ -1,9 +1,15 @@
 parameters:
   # The customArgsArray parameter is used to specify the configuration for multiple Dockerfile versions.
   # This allows for a single branch to be generated for different internal .NET build versions.
-  customArgsArray: ""
-
-  useInternalBuild: false
+- name: customArgsArray
+  type: string
+  default: ""
+- name: useInternalBuild
+  type: boolean
+  default: false
+- name: dryRun
+  type: boolean
+  default: false
 
 steps:
 - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
@@ -17,7 +23,10 @@ steps:
       $pat="$(BotAccount-dotnet-docker-bot-PAT)"
     }
 
-    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat"
+    $dryRunArg = ""
+    if ("${{ parameters.dryRun }}" -eq "true") {
+      $dryRunArg = "--dry-run"
+    }
 
     # Execute update-deps for each of the items in the customArgsArray, representing different Dockerfile versions
     # Ensure that the value is treated as an array by wrapping it in an array literal. This deals with the quirk of
@@ -27,7 +36,7 @@ steps:
       # If this is the last iteration, include the credentials to cause a PR to be generated.
       # For internal builds this will cause branch to be pushed to AzDO, but no PRs will be generated.
       if ($customArgs -eq $customArgsArray[-1]) {
-        $customArgs += " $credArgs"
+        $customArgs += " $credArgs $dryRunArg"
       }
 
       $command = "docker exec update-dependencies update-dependencies $customArgs"

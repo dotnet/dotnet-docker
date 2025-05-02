@@ -1,5 +1,6 @@
 parameters:
   tools: []
+  dryRun: false
 
 jobs:
 - ${{ each tool in parameters.tools }}:
@@ -10,6 +11,7 @@ jobs:
     steps:
     - template: /eng/pipelines/steps/update-dependencies.yml
       parameters:
+        dryRun: ${{ parameters.dryRun }}
         args: >
           specific 9.0
           --tool ${{ tool }}

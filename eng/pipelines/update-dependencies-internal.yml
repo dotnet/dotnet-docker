@@ -1,6 +1,12 @@
 trigger: none
 pr: none
 
+parameters:
+  - name: dryRun
+    displayName: Dry Run (Skip PR Creation)
+    type: boolean
+    default: false
+
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
 - group: DotNet-AllOrgs-Darc-Pats
@@ -14,5 +20,6 @@ stages:
     steps:
     - template: steps/update-dotnet-dependencies-specific.yml
       parameters:
+        dryRun: ${{ parameters.dryRun }}
         useInternalBuild: true
         buildId: $(buildId)

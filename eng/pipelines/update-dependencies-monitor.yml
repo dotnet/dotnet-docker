@@ -14,6 +14,13 @@ resources:
       - real signed
 trigger: none
 pr: none
+
+parameters:
+  - name: dryRun
+    displayName: Dry Run (Skip PR Creation)
+    type: boolean
+    default: false
+
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
 stages:
@@ -49,3 +56,4 @@ stages:
     - template: steps/update-dependencies-specific.yml
       parameters:
         customArgsArray: $(customArgsArray)
+        dryRun: ${{ parameters.dryRun }}

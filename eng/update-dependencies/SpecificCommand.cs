@@ -194,8 +194,15 @@ namespace Dotnet.Docker
 
                 Trace.WriteLine($"Pushing to {remoteBranch}");
 
-                // Force push
-                repo.Network.Push(remote, "+HEAD", pushRefSpec, pushOptions);
+                if (!Options.DryRun)
+                {
+                    // Force push
+                    repo.Network.Push(remote, "+HEAD", pushRefSpec, pushOptions);
+                }
+                else
+                {
+                    Trace.WriteLine($"(Dry run) Would have pushed to {pushRefSpec}");
+                }
             }
             finally
             {
@@ -233,13 +240,30 @@ namespace Dotnet.Docker
                 if (pullRequestToUpdate == null || pullRequestToUpdate.Head.Ref != $"{upstreamBranch.Name}-{branchSuffix}")
                 {
                     Trace.WriteLine("Didn't find a PR to update. Submitting a new one.");
-                    await prCreator.CreateOrUpdateAsync(
-                        commitMessage,
-                        commitMessage,
-                        string.Empty,
-                        upstreamBranch,
-                        new GitHubProject(Options.GitHubProject, gitHubAuth.User),
-                        prOptions);
+
+                    if (!Options.DryRun)
+                    {
+                        await prCreator.CreateOrUpdateAsync(
+                            commitMessage,
+                            commitMessage,
+                            string.Empty,
+                            upstreamBranch,
+                            new GitHubProject(Options.GitHubProject, gitHubAuth.User),
+                            prOptions);
+                    }
+                    else
+                    {
+                        Trace.WriteLine(
+                            $"""
+                            (Dry run) Would have created a new PR with the following options:
+                                Commit message: '{commitMessage}'
+                                Title: '{commitMessage}'
+                                Description: ''
+                                Base branch: '{upstreamBranch.Name}'
+                                Repo: '{Options.GitHubProject}'
+                            """
+                        );
+                    }
                 }
                 else
                 {
@@ -310,7 +334,15 @@ namespace Dotnet.Docker
                     Remote remote = repo.Network.Remotes["origin"];
                     string pushRefSpec = $@"refs/heads/{branchName}";
 
-                    repo.Network.Push(remote, pushRefSpec, pushOptions);
+                    if (!Options.DryRun)
+                    {
+                        Trace.WriteLine($"Pushing to {pushRefSpec}");
+                        repo.Network.Push(remote, pushRefSpec, pushOptions);
+                    }
+                    else
+                    {
+                        Trace.WriteLine($"(Dry run) Would have pushed to {pushRefSpec}");
+                    }
                 }
                 else
                 {

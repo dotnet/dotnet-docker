@@ -1,10 +1,9 @@
 parameters:
   useInternalBuild: false
-
   # Comma-delimited list of SDK versions to target (overrides the use of channel var to determine latest version)
   sdkVersions: ""
-
   buildId: ""
+  dryRun: false
 
 steps:
 - powershell: |
@@ -86,4 +85,5 @@ steps:
 - template: update-dependencies-specific.yml
   parameters:
     customArgsArray: "$(customArgsArray)"
+    dryRun: ${{ parameters.dryRun }}
     useInternalBuild: ${{ parameters.useInternalBuild }}

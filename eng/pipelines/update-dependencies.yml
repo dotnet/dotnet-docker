@@ -8,6 +8,12 @@ schedules:
     - nightly
   always: true
 
+parameters:
+  - name: dryRun
+    displayName: Dry Run (Skip PR Creation)
+    type: boolean
+    default: false
+
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
 
@@ -25,6 +31,8 @@ stages:
         repo: "https://github.com/dotnet/dotnet"
         versionSourceName: "dotnet/dotnet"
         serviceConnection: "Darc: Maestro Production"
+        dryRun: ${{ parameters.dryRun }}
   - template: jobs/update-tools.yml
     parameters:
       tools: ["chisel", "rocks-toolbox", "syft", "mingit"]
+      dryRun: ${{ parameters.dryRun }}
