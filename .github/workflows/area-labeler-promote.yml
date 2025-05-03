@@ -1,5 +1,5 @@
 # Promote a model from staging to 'ACTIVE', backing up the currently 'ACTIVE' model
-name: "Labeler: Promotion"
+name: "Area Labeler: Promotion"
 
 on:
   # Dispatched via the Actions UI, promotes the staged models from

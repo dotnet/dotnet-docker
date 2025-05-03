@@ -1,5 +1,5 @@
 # Predict labels for Issues using a trained model
-name: "Labeler: Predict (Issues)"
+name: "Area Labeler: Predict (Issues)"
 
 on:
   # Only automatically predict area labels when issues are first opened
@@ -23,8 +23,6 @@ env:
 
   LABEL_PREFIX: "area-"
   THRESHOLD: 0.40
-  DEFAULT_LABEL: "needs-area-label"
-  EXCLUDED_AUTHORS: "" # Comma-separated list of authors to exclude from training data
 
 jobs:
   predict-issue-label:
@@ -50,8 +48,6 @@ jobs:
           issues: ${{ inputs.issues || github.event.issue.number }}
           label_prefix: ${{ env.LABEL_PREFIX }}
           threshold: ${{ env.THRESHOLD }}
-          default_label: ${{ env.DEFAULT_LABEL }}
-          excluded_authors: ${{ env.EXCLUDED_AUTHORS }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
         continue-on-error: ${{ !env.ALLOW_FAILURE }}

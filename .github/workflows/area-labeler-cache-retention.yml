@@ -1,12 +1,12 @@
 # Regularly restore the prediction models from cache to prevent cache eviction
-name: "Labeler: Cache Retention"
+name: "Area Labeler: Cache Retention"
 
 # For more information about GitHub's action cache limits and eviction policy, see:
 # https://docs.github.com/actions/writing-workflows/choosing-what-your-workflow-does/caching-dependencies-to-speed-up-workflows#usage-limits-and-eviction-policy
 
 on:
   schedule:
-    - cron: "42 18 * * *" # 18:42 every day (arbitrary time daily)
+    - cron: "18 19 * * *" # 19:18 every day (arbitrary time daily)
 
   workflow_dispatch:
     inputs:
