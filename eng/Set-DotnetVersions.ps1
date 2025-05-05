@@ -68,7 +68,8 @@ param(
 
 Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 
-$updateDepsArgs = @($ProductVersion)
+# Use 'specific' command to set product versions to specific values
+$updateDepsArgs = @("specific", $ProductVersion)
 
 if ($SdkVersion) {
     $updateDepsArgs += @("--product-version", "sdk=$SdkVersion")
@@ -149,5 +150,5 @@ if ($AzdoVariableName) {
     Write-Host "##vso[task.setvariable variable=$AzdoVariableName]$updateDepsArgs"
 }
 else {
-    & dotnet run --project $PSScriptRoot/update-dependencies/update-dependencies.csproj specific @updateDepsArgs
+    & dotnet run --project $PSScriptRoot/update-dependencies/update-dependencies.csproj @updateDepsArgs
 }
