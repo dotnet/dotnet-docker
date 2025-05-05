@@ -23,9 +23,10 @@ steps:
       $pat="$(BotAccount-dotnet-docker-bot-PAT)"
     }
 
-    $skipPullRequestArg = ""
+    $credArgs = "--user $(dotnetDockerBot.userName) --email $(dotnetDockerBot.email) --password $pat"
+
     if ("${{ parameters.skipPullRequest }}" -eq "true") {
-      $skipPullRequestArg = "--skip-pull-request"
+      $customArgs += " --skip-pull-request"
     }
 
     # Execute update-deps for each of the items in the customArgsArray, representing different Dockerfile versions
@@ -36,7 +37,7 @@ steps:
       # If this is the last iteration, include the credentials to cause a PR to be generated.
       # For internal builds this will cause branch to be pushed to AzDO, but no PRs will be generated.
       if ($customArgs -eq $customArgsArray[-1]) {
-        $customArgs += " $credArgs $skipPullRequestArg"
+        $customArgs += " $credArgs"
       }
 
       $command = "docker exec update-dependencies update-dependencies $customArgs"
