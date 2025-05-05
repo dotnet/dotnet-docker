@@ -317,7 +317,36 @@ namespace Microsoft.DotNet.Docker.Tests
                         "distroless-packages-minimal",
                         "filesystem",
                         "prebuilt-ca-certificates",
-                        "tzdata"
+                        "tzdata",
+                        // The following packages are not desired, but were brought in by an update to SymCrypt
+                        // Tracking issue: https://github.com/dotnet/dotnet-docker/issues/6419
+                        "acl",
+                        "attr",
+                        "bash",
+                        "bzip2-libs",
+                        "coreutils",
+                        "glibc",
+                        "gmp",
+                        "grep",
+                        "libacl",
+                        "libattr",
+                        "libcap",
+                        "libgcc",
+                        "libpcre2-16-0",
+                        "libpcre2-32-0",
+                        "libpcre2-8-0",
+                        "libpcre2-posix2",
+                        "libselinux",
+                        "libsepol",
+                        "libstdc++",
+                        "ncurses",
+                        "ncurses-libs",
+                        "openssl",
+                        "openssl-libs",
+                        "pcre2",
+                        "pcre2-tools",
+                        "readline",
+                        "zlib"
                     },
                 { OS: string os } when os.Contains(OS.Mariner) => new[]
                     {
