@@ -40,6 +40,7 @@ config.UseHost(
         },
     configureHost: host => host.ConfigureServices(services =>
         {
+            services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
             services.AddSingleton<IBasicBarClient>(_ =>
                 new BarApiClient(null, null, disableInteractiveAuth: true));
             services.AddSingleton<IBuildAssetService, BuildAssetService>();
