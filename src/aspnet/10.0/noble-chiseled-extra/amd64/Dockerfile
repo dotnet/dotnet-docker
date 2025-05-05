@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-preview.4.25229.110 \
+RUN aspnetcore_version=10.0.0-preview.4.25252.106 \
     && curl -fSL --output aspnetcore.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='0f1a7981d8d0b57e3515bb50922ecc01fdb7e5a603375722145dcf556a77322962d67e65b619b260bc99e4792766c3c330032a0ba222fe8741dd9bc2cbe86ffa' \
+    && aspnetcore_sha512='f448e10a2d6695c0ad67d6ba68146667dbb67c4bac6fa4909cdc7c9285579680c817f619deb27372819e8563bf1fbe59941a31cd31d5351c26921115236a91f1' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -17,6 +17,6 @@ RUN aspnetcore_version=10.0.0-preview.4.25229.110 \
 FROM $REPO:10.0.0-preview.3-noble-chiseled-extra-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-preview.4.25229.110
+ENV ASPNET_VERSION=10.0.0-preview.4.25252.106
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
