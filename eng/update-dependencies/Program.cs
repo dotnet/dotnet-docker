@@ -14,6 +14,9 @@ using Microsoft.Extensions.Hosting;
 
 var rootCommand = new RootCommand()
 {
+    FromBuildCommand.Create(
+        name: "from-build",
+        description: "Update dependencies using a specific BAR build"),
     FromChannelCommand.Create(
         name: "from-channel",
         description: "Update dependencies using the latest build from a channel"),
@@ -46,6 +49,7 @@ config.UseHost(
             services.AddSingleton<IBuildAssetService, BuildAssetService>();
             services.AddSingleton<HttpClient>();
 
+            FromBuildCommand.Register<FromBuildCommand>(services);
             FromChannelCommand.Register<FromChannelCommand>(services);
             SpecificCommand.Register<SpecificCommand>(services);
         })
