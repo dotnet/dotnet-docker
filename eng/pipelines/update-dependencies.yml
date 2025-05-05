@@ -9,8 +9,8 @@ schedules:
   always: true
 
 parameters:
-  - name: dryRun
-    displayName: Dry Run (Skip PR Creation)
+  - name: skipPullRequest
+    displayName: Skip Pull Request
     type: boolean
     default: false
 
@@ -31,8 +31,8 @@ stages:
         repo: "https://github.com/dotnet/dotnet"
         versionSourceName: "dotnet/dotnet"
         serviceConnection: "Darc: Maestro Production"
-        dryRun: ${{ parameters.dryRun }}
+        skipPullRequest: ${{ parameters.skipPullRequest }}
   - template: jobs/update-tools.yml
     parameters:
       tools: ["chisel", "rocks-toolbox", "syft", "mingit"]
-      dryRun: ${{ parameters.dryRun }}
+      skipPullRequest: ${{ parameters.skipPullRequest }}

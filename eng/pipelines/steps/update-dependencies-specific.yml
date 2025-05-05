@@ -7,7 +7,7 @@ parameters:
 - name: useInternalBuild
   type: boolean
   default: false
-- name: dryRun
+- name: skipPullRequest
   type: boolean
   default: false
 
@@ -23,9 +23,9 @@ steps:
       $pat="$(BotAccount-dotnet-docker-bot-PAT)"
     }
 
-    $dryRunArg = ""
-    if ("${{ parameters.dryRun }}" -eq "true") {
-      $dryRunArg = "--dry-run"
+    $skipPullRequestArg = ""
+    if ("${{ parameters.skipPullRequest }}" -eq "true") {
+      $skipPullRequestArg = "--skip-pull-request"
     }
 
     # Execute update-deps for each of the items in the customArgsArray, representing different Dockerfile versions
@@ -36,7 +36,7 @@ steps:
       # If this is the last iteration, include the credentials to cause a PR to be generated.
       # For internal builds this will cause branch to be pushed to AzDO, but no PRs will be generated.
       if ($customArgs -eq $customArgsArray[-1]) {
-        $customArgs += " $credArgs $dryRunArg"
+        $customArgs += " $credArgs $skipPullRequestArg"
       }
 
       $command = "docker exec update-dependencies update-dependencies $customArgs"

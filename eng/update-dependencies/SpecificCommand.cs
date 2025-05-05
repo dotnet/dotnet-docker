@@ -194,7 +194,7 @@ namespace Dotnet.Docker
 
                 Trace.WriteLine($"Pushing to {remoteBranch}");
 
-                if (!Options.DryRun)
+                if (!Options.SkipPullRequest)
                 {
                     // Force push
                     repo.Network.Push(remote, "+HEAD", pushRefSpec, pushOptions);
@@ -241,7 +241,7 @@ namespace Dotnet.Docker
                 {
                     Trace.WriteLine("Didn't find a PR to update. Submitting a new one.");
 
-                    if (!Options.DryRun)
+                    if (!Options.SkipPullRequest)
                     {
                         await prCreator.CreateOrUpdateAsync(
                             commitMessage,
@@ -334,7 +334,7 @@ namespace Dotnet.Docker
                     Remote remote = repo.Network.Remotes["origin"];
                     string pushRefSpec = $@"refs/heads/{branchName}";
 
-                    if (!Options.DryRun)
+                    if (!Options.SkipPullRequest)
                     {
                         Trace.WriteLine($"Pushing to {pushRefSpec}");
                         repo.Network.Push(remote, pushRefSpec, pushOptions);

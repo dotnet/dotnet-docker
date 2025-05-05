@@ -16,8 +16,8 @@ trigger: none
 pr: none
 
 parameters:
-  - name: dryRun
-    displayName: Dry Run (Skip PR Creation)
+  - name: skipPullRequest
+    displayName: Skip Pull Request
     type: boolean
     default: false
 
@@ -56,4 +56,4 @@ stages:
     - template: steps/update-dependencies-specific.yml
       parameters:
         customArgsArray: $(customArgsArray)
-        dryRun: ${{ parameters.dryRun }}
+        skipPullRequest: ${{ parameters.skipPullRequest }}

@@ -2,8 +2,8 @@ trigger: none
 pr: none
 
 parameters:
-  - name: dryRun
-    displayName: Dry Run (Skip PR Creation)
+  - name: skipPullRequest
+    displayName: Skip Pull Request
     type: boolean
     default: false
 
@@ -20,6 +20,6 @@ stages:
     steps:
     - template: steps/update-dotnet-dependencies-specific.yml
       parameters:
-        dryRun: ${{ parameters.dryRun }}
+        skipPullRequest: ${{ parameters.skipPullRequest }}
         useInternalBuild: true
         buildId: $(buildId)
