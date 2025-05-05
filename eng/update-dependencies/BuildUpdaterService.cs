@@ -55,6 +55,7 @@ internal class BuildUpdaterService(
             ProductVersions = new Dictionary<string, string?>()
             {
                 // In the VMR, runtime and aspnetcore versions are coupled
+                { "dotnet", productCommits.Runtime.Version },
                 { "runtime", productCommits.Runtime.Version },
                 { "aspnet", productCommits.AspNetCore.Version },
                 { "aspnet-composite", productCommits.AspNetCore.Version },
