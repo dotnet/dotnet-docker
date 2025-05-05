@@ -31,6 +31,7 @@ steps:
       }
 
       $command = "docker exec update-dependencies update-dependencies $customArgs"
+      Write-Host "Executing: $command"
       Invoke-Expression $command
     }
   displayName: Run Update Dependencies
