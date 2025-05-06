@@ -3,12 +3,12 @@ parameters:
   channel: ""
   repo: "https://github.com/dotnet/dotnet"
   versionSourceName: ""
-  dryRun: false
+  skipPullRequest: false
 
 steps:
 - template: update-dependencies.yml
   parameters:
     args: "from-channel ${{ parameters.channel }} ${{ parameters.repo }} --version-source-name '${{ parameters.versionSourceName }}'"
-    dryRun: ${{ parameters.dryRun }}
+    skipPullRequest: ${{ parameters.skipPullRequest }}
     useInternalBuild: false
     serviceConnection: ${{ parameters.serviceConnection }}

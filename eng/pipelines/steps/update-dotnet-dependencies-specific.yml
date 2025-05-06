@@ -3,7 +3,7 @@ parameters:
   # Comma-delimited list of SDK versions to target (overrides the use of channel var to determine latest version)
   sdkVersions: ""
   buildId: ""
-  dryRun: false
+  skipPullRequest: false
 
 steps:
 - powershell: |
@@ -85,5 +85,5 @@ steps:
 - template: update-dependencies-specific.yml
   parameters:
     customArgsArray: "$(customArgsArray)"
-    dryRun: ${{ parameters.dryRun }}
+    skipPullRequest: ${{ parameters.skipPullRequest }}
     useInternalBuild: ${{ parameters.useInternalBuild }}
