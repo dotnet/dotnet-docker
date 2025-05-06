@@ -25,6 +25,18 @@ internal class BuildUpdaterService(
     private readonly IBasicBarClient _barClient = barClient;
     private readonly ILogger<BuildUpdaterService> _logger = logger;
 
+    /// <summary>
+    /// Updates product versions according to a specific BAR build of the VMR. This will update the
+    /// manifest.versions.json file, generate Dockerfiles and Readmes from the templates, and if
+    /// credentials are provided, submit a pull request.
+    /// </summary>
+    /// <param name="build">
+    /// A build of the VMR repo (dotnet/dotnet)
+    /// </param>
+    /// <param name="pullRequestOptions">
+    /// Options for creating a pull request. If credentials are provided, a pull request will be created.
+    /// </param>
+    /// <returns>Exit code (0 for success)</returns>
     public async Task<int> UpdateFrom(Build build, CreatePullRequestOptions pullRequestOptions)
     {
         _logger.LogInformation("Updating to build {build.Id} with commit {options.Repo}@{build.Commit}",
@@ -54,7 +66,8 @@ internal class BuildUpdaterService(
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = new Dictionary<string, string?>()
             {
-                // In the VMR, runtime and aspnetcore versions are coupled
+                // "dotnet" version is also required. It sets the "dotnet|*|product-version"
+                // variable which is used for runtime-deps, runtime, and aspnet tags.
                 { "dotnet", productCommits.Runtime.Version },
                 { "runtime", productCommits.Runtime.Version },
                 { "aspnet", productCommits.AspNetCore.Version },
