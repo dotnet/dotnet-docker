@@ -153,23 +153,23 @@ jobs:
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: 🟪⚠️ Merge Image Info
 
-  # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
-  #   parameters:
-  #     displayName: 🟪⚠️ Ingest Kusto Image Info
-  #     serviceConnection: $(kusto.serviceConnectionName)
-  #     internalProjectName: ${{ parameters.internalProjectName }}
-  #     condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
-  #     args: >
-  #       ingestKustoImageInfo
-  #       '$(imageInfoContainerDir)/image-info.json'
-  #       '$(kusto.cluster)'
-  #       '$(kusto.database)'
-  #       '$(kusto.imageTable)'
-  #       '$(kusto.layerTable)'
-  #       --os-type '*'
-  #       --architecture '*'
-  #       $(dryRunArg)
-  #       $(imageBuilder.commonCmdArgs)
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: 🟪⚠️ Ingest Kusto Image Info
+      serviceConnection: $(kusto.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
+      args: >
+        ingestKustoImageInfo
+        '$(imageInfoContainerDir)/image-info.json'
+        '$(kusto.cluster)'
+        '$(kusto.database)'
+        '$(kusto.imageTable)'
+        '$(kusto.layerTable)'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.commonCmdArgs)
 
   # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   #   parameters:
