@@ -30,4 +30,4 @@ extends:
 
         customPublishInitSteps:
         - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.dotnet-docker-release-staging.runID)"
-          displayName: Set sourceBuildId
+          displayName: 🟪 Set sourceBuildId
