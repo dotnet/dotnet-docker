@@ -171,89 +171,89 @@ jobs:
         $(dryRunArg)
         $(imageBuilder.commonCmdArgs)
 
-  # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
-  #   parameters:
-  #     displayName: 🟪⚠️ Generate EOL Annotation Data
-  #     serviceConnection: $(publish.serviceConnectionName)
-  #     internalProjectName: internal
-  #     condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
-  #     args: >
-  #       generateEolAnnotationData
-  #       '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
-  #       '$(imageInfoContainerDir)/full-image-info-orig.json'
-  #       '$(imageInfoContainerDir)/full-image-info-new.json'
-  #       '$(acr.server)'
-  #       '$(publishRepoPrefix)'
-  #       $(generateEolAnnotationDataExtraOptions)
-  #       $(dryRunArg)
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: 🟪⚠️ Generate EOL Annotation Data
+      serviceConnection: $(publish.serviceConnectionName)
+      internalProjectName: internal
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
+      args: >
+        generateEolAnnotationData
+        '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
+        '$(imageInfoContainerDir)/full-image-info-orig.json'
+        '$(imageInfoContainerDir)/full-image-info-new.json'
+        '$(acr.server)'
+        '$(publishRepoPrefix)'
+        $(generateEolAnnotationDataExtraOptions)
+        $(dryRunArg)
 
-  # - template: /eng/common/templates/steps/publish-artifact.yml@self
-  #   parameters:
-  #     path: $(Build.ArtifactStagingDirectory)/eol-annotation-data
-  #     artifactName: eol-annotation-data-$(System.JobAttempt)
-  #     displayName: 🟪 Publish EOL Annotation Data Artifact
-  #     internalProjectName: internal
-  #     publicProjectName: public
-  #     condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)/eol-annotation-data
+      artifactName: eol-annotation-data-$(System.JobAttempt)
+      displayName: 🟪 Publish EOL Annotation Data Artifact
+      internalProjectName: internal
+      publicProjectName: public
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
 
-  # - template: /eng/common/templates/steps/annotate-eol-digests.yml@self
-  #   parameters:
-  #     internalProjectName: ${{ parameters.internalProjectName }}
-  #     dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
+  - template: /eng/common/templates/steps/annotate-eol-digests.yml@self
+    parameters:
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
 
-  # - script: >
-  #     $(runImageBuilderCmd) publishImageInfo
-  #     '$(imageInfoContainerDir)/full-image-info-new.json'
-  #     '$(gitHubVersionsRepoInfo.userName)'
-  #     '$(gitHubVersionsRepoInfo.email)'
-  #     $(gitHubVersionsRepoInfo.authArgs)
-  #     --git-owner '$(gitHubVersionsRepoInfo.org)'
-  #     --git-repo '$(gitHubVersionsRepoInfo.repo)'
-  #     --git-branch '$(gitHubVersionsRepoInfo.branch)'
-  #     --git-path '$(gitHubImageInfoVersionsPath)'
-  #     $(dryRunArg)
-  #     $(imageBuilder.commonCmdArgs)
-  #   condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-  #   displayName: 🟪⚠️ Publish Image Info
+  - script: >
+      $(runImageBuilderCmd) publishImageInfo
+      '$(imageInfoContainerDir)/full-image-info-new.json'
+      '$(gitHubVersionsRepoInfo.userName)'
+      '$(gitHubVersionsRepoInfo.email)'
+      $(gitHubVersionsRepoInfo.authArgs)
+      --git-owner '$(gitHubVersionsRepoInfo.org)'
+      --git-repo '$(gitHubVersionsRepoInfo.repo)'
+      --git-branch '$(gitHubVersionsRepoInfo.branch)'
+      --git-path '$(gitHubImageInfoVersionsPath)'
+      $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: 🟪⚠️ Publish Image Info
 
-  # - script: >
-  #     $(runImageBuilderCmd) postPublishNotification
-  #     '$(publishNotificationRepoName)'
-  #     '$(branchName)'
-  #     '$(imageInfoContainerDir)/image-info.json'
-  #     $(Build.BuildId)
-  #     '$(System.AccessToken)'
-  #     '$(azdoOrgName)'
-  #     '$(System.TeamProject)'
-  #     $(gitHubNotificationsRepoInfo.authArgs)
-  #     '$(gitHubNotificationsRepoInfo.org)'
-  #     '$(gitHubNotificationsRepoInfo.repo)'
-  #     --repo-prefix '$(publishRepoPrefix)'
-  #     --task "Copy Images (Authenticated)"
-  #     --task "Publish Manifest (Authenticated)"
-  #     --task "Wait for Image Ingestion (Authenticated)"
-  #     --task "Publish Readmes"
-  #     --task "Wait for MCR Doc Ingestion (Authenticated)"
-  #     --task "Publish Image Info"
-  #     --task "Ingest Kusto Image Info (Authenticated)"
-  #     --task "Generate EOL Annotation Data (Authenticated)"
-  #     --task "Annotate EOL Images (Authenticated)"
-  #     --task "Wait for Annotation Ingestion (Authenticated)"
-  #     $(dryRunArg)
-  #     $(imageBuilder.commonCmdArgs)
-  #   displayName: 🟪⚠️ Post Publish Notification
-  #   condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
+  - script: >
+      $(runImageBuilderCmd) postPublishNotification
+      '$(publishNotificationRepoName)'
+      '$(branchName)'
+      '$(imageInfoContainerDir)/image-info.json'
+      $(Build.BuildId)
+      '$(System.AccessToken)'
+      '$(azdoOrgName)'
+      '$(System.TeamProject)'
+      $(gitHubNotificationsRepoInfo.authArgs)
+      '$(gitHubNotificationsRepoInfo.org)'
+      '$(gitHubNotificationsRepoInfo.repo)'
+      --repo-prefix '$(publishRepoPrefix)'
+      --task "Copy Images (Authenticated)"
+      --task "Publish Manifest (Authenticated)"
+      --task "Wait for Image Ingestion (Authenticated)"
+      --task "Publish Readmes"
+      --task "Wait for MCR Doc Ingestion (Authenticated)"
+      --task "Publish Image Info"
+      --task "Ingest Kusto Image Info (Authenticated)"
+      --task "Generate EOL Annotation Data (Authenticated)"
+      --task "Annotate EOL Images (Authenticated)"
+      --task "Wait for Annotation Ingestion (Authenticated)"
+      $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
+    displayName: 🟪⚠️ Post Publish Notification
+    condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
 
-  # - powershell: |
-  #     New-Item -ItemType Directory -Path $(sourceBuildIdOutputDir)
-  #     Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value ${{ parameters.sourceBuildPipelineRunId }}
-  #   condition: succeeded()
-  #   displayName: 🟪 Write Source Build ID to File
+  - powershell: |
+      New-Item -ItemType Directory -Path $(sourceBuildIdOutputDir)
+      Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value ${{ parameters.sourceBuildPipelineRunId }}
+    condition: succeeded()
+    displayName: 🟪 Write Source Build ID to File
 
-  # - template: /eng/common/templates/steps/publish-artifact.yml@self
-  #   parameters:
-  #     path: $(sourceBuildIdOutputDir)
-  #     artifactName: source-build-id
-  #     displayName: 🟪 Publish Source Build ID Artifact
-  #     internalProjectName: ${{ parameters.internalProjectName }}
-  #     publicProjectName: ${{ parameters.publicProjectName }}
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(sourceBuildIdOutputDir)
+      artifactName: source-build-id
+      displayName: 🟪 Publish Source Build ID Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
