@@ -95,29 +95,29 @@ jobs:
         $(imageBuilder.pathArgs)
         $(imageBuilder.commonCmdArgs)
 
-  # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
-  #   parameters:
-  #     displayName: 🟪⚠️ Publish Manifest
-  #     serviceConnection: $(publish.serviceConnectionName)
-  #     internalProjectName: ${{ parameters.internalProjectName }}
-  #     dockerClientOS: ${{ parameters.dockerClientOS }}
-  #     args: >
-  #       publishManifest
-  #       '$(imageInfoContainerDir)/image-info.json'
-  #       --repo-prefix '$(publishRepoPrefix)'
-  #       --os-type '*'
-  #       --architecture '*'
-  #       $(dryRunArg)
-  #       $(imageBuilder.pathArgs)
-  #       $(imageBuilder.commonCmdArgs)
+  - template: /eng/common/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: 🟪⚠️ Publish Manifest
+      serviceConnection: $(publish.serviceConnectionName)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      args: >
+        publishManifest
+        '$(imageInfoContainerDir)/image-info.json'
+        --repo-prefix '$(publishRepoPrefix)'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
 
-  # - template: /eng/common/templates/steps/publish-artifact.yml@self
-  #   parameters:
-  #     path: $(imageInfoHostDir)
-  #     artifactName: image-info-final-$(System.JobAttempt)
-  #     displayName: 🟪 Publish Image Info File Artifact
-  #     internalProjectName: ${{ parameters.internalProjectName }}
-  #     publicProjectName: ${{ parameters.publicProjectName }}
+  - template: /eng/common/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(imageInfoHostDir)
+      artifactName: image-info-final-$(System.JobAttempt)
+      displayName: 🟪 Publish Image Info File Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
 
   # - template: /eng/common/templates/steps/wait-for-mcr-image-ingestion.yml@self
   #   parameters:
