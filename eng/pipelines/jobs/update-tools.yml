@@ -1,5 +1,6 @@
 parameters:
   tools: []
+  skipPullRequest: false
 
 jobs:
 - ${{ each tool in parameters.tools }}:
@@ -10,6 +11,7 @@ jobs:
     steps:
     - template: /eng/pipelines/steps/update-dependencies.yml
       parameters:
+        skipPullRequest: ${{ parameters.skipPullRequest }}
         args: >
           specific 9.0
           --tool ${{ tool }}
