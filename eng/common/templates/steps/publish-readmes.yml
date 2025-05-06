@@ -20,7 +20,7 @@ steps:
     --git-path 'teams'
     $(additionalPublishMcrDocsArgs)
   name: PublishReadmes
-  displayName: Publish Readmes
+  displayName: 🟪⚠️ Publish Readmes
   condition: ${{ parameters.condition }}
 - template: /eng/common/templates/steps/wait-for-mcr-doc-ingestion.yml@self
   parameters:

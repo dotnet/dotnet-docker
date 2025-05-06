@@ -119,39 +119,39 @@ jobs:
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
 
-  # - template: /eng/common/templates/steps/wait-for-mcr-image-ingestion.yml@self
-  #   parameters:
-  #     imageInfoPath: '$(imageinfoContainerDir)/image-info.json'
-  #     minQueueTime: $(imageQueueTime)
-  #     dryRunArg: $(dryRunArg)
-  #     condition: succeeded()
+  - template: /eng/common/templates/steps/wait-for-mcr-image-ingestion.yml@self
+    parameters:
+      imageInfoPath: '$(imageinfoContainerDir)/image-info.json'
+      minQueueTime: $(imageQueueTime)
+      dryRunArg: $(dryRunArg)
+      condition: succeeded()
 
-  # - template: /eng/common/templates/steps/publish-readmes.yml@self
-  #   parameters:
-  #     dryRunArg: $(dryRunArg)
-  #     condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
+  - template: /eng/common/templates/steps/publish-readmes.yml@self
+    parameters:
+      dryRunArg: $(dryRunArg)
+      condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
 
-  # - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
-  #   displayName: 🟪 Create EOL Annotation Data Directory
+  - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
+    displayName: 🟪 Create EOL Annotation Data Directory
 
-  # - script: >
-  #     curl -fSL
-  #     --output $(imageInfoHostDir)/full-image-info-orig.json
-  #     https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/refs/heads/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)
-  #   condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-  #   displayName: 🟪 Download Latest Image Info
+  - script: >
+      curl -fSL
+      --output $(imageInfoHostDir)/full-image-info-orig.json
+      https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/refs/heads/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: 🟪 Download Latest Image Info
 
-  # - script: >
-  #     $(runImageBuilderCmd) mergeImageInfo
-  #     $(imageInfoContainerDir)
-  #     $(imageInfoContainerDir)/full-image-info-new.json
-  #     $(manifestVariables)
-  #     $(dryRunArg)
-  #     --manifest $(manifest)
-  #     --publish
-  #     --initial-image-info-path $(imageInfoContainerDir)/full-image-info-orig.json
-  #   condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-  #   displayName: 🟪⚠️ Merge Image Info
+  - script: >
+      $(runImageBuilderCmd) mergeImageInfo
+      $(imageInfoContainerDir)
+      $(imageInfoContainerDir)/full-image-info-new.json
+      $(manifestVariables)
+      $(dryRunArg)
+      --manifest $(manifest)
+      --publish
+      --initial-image-info-path $(imageInfoContainerDir)/full-image-info-orig.json
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: 🟪⚠️ Merge Image Info
 
   # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   #   parameters:
