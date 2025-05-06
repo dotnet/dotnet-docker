@@ -41,7 +41,7 @@ jobs:
   - pwsh: |
       $azdoOrgName = Split-Path -Leaf $Env:SYSTEM_COLLECTIONURI
       echo "##vso[task.setvariable variable=azdoOrgName]$azdoOrgName"
-    displayName: Set Publish Variables
+    displayName: 🟪 Set Publish Variables
 
   - ${{ parameters.customInitSteps }}
 
@@ -65,20 +65,20 @@ jobs:
   - template: /eng/common/templates/steps/set-dry-run.yml@self
 
   - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
-    displayName: Set Publish Variables
+    displayName: 🟪 Set Publish Variables
 
   - script: >
       $(runImageBuilderCmd) trimUnchangedPlatforms
       '$(imageInfoContainerDir)/image-info.json'
-    displayName: Trim Unchanged Images
+    displayName: 🟪 Trim Unchanged Images
 
   - script: >
       cat $(imageInfoHostDir)/image-info.json
-    displayName: Show Image Info Artifact
+    displayName: 🟪 Show Image Info Artifact
 
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
-      displayName: Copy Images
+      displayName: 🟪 Copy Images
       serviceConnection: $(publish.serviceConnectionName)
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >
@@ -97,7 +97,7 @@ jobs:
 
   # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   #   parameters:
-  #     displayName: Publish Manifest
+  #     displayName: 🟪 Publish Manifest
   #     serviceConnection: $(publish.serviceConnectionName)
   #     internalProjectName: ${{ parameters.internalProjectName }}
   #     dockerClientOS: ${{ parameters.dockerClientOS }}
@@ -115,7 +115,7 @@ jobs:
   #   parameters:
   #     path: $(imageInfoHostDir)
   #     artifactName: image-info-final-$(System.JobAttempt)
-  #     displayName: Publish Image Info File Artifact
+  #     displayName: 🟪 Publish Image Info File Artifact
   #     internalProjectName: ${{ parameters.internalProjectName }}
   #     publicProjectName: ${{ parameters.publicProjectName }}
 
@@ -132,14 +132,14 @@ jobs:
   #     condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
 
   # - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
-  #   displayName: Create EOL Annotation Data Directory
+  #   displayName: 🟪 Create EOL Annotation Data Directory
 
   # - script: >
   #     curl -fSL
   #     --output $(imageInfoHostDir)/full-image-info-orig.json
   #     https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/refs/heads/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)
   #   condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-  #   displayName: Download Latest Image Info
+  #   displayName: 🟪 Download Latest Image Info
 
   # - script: >
   #     $(runImageBuilderCmd) mergeImageInfo
@@ -151,11 +151,11 @@ jobs:
   #     --publish
   #     --initial-image-info-path $(imageInfoContainerDir)/full-image-info-orig.json
   #   condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-  #   displayName: Merge Image Info
+  #   displayName: 🟪 Merge Image Info
 
   # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   #   parameters:
-  #     displayName: Ingest Kusto Image Info
+  #     displayName: 🟪 Ingest Kusto Image Info
   #     serviceConnection: $(kusto.serviceConnectionName)
   #     internalProjectName: ${{ parameters.internalProjectName }}
   #     condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
@@ -173,7 +173,7 @@ jobs:
 
   # - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   #   parameters:
-  #     displayName: Generate EOL Annotation Data
+  #     displayName: 🟪 Generate EOL Annotation Data
   #     serviceConnection: $(publish.serviceConnectionName)
   #     internalProjectName: internal
   #     condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
@@ -191,7 +191,7 @@ jobs:
   #   parameters:
   #     path: $(Build.ArtifactStagingDirectory)/eol-annotation-data
   #     artifactName: eol-annotation-data-$(System.JobAttempt)
-  #     displayName: Publish EOL Annotation Data Artifact
+  #     displayName: 🟪 Publish EOL Annotation Data Artifact
   #     internalProjectName: internal
   #     publicProjectName: public
   #     condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
@@ -214,7 +214,7 @@ jobs:
   #     $(dryRunArg)
   #     $(imageBuilder.commonCmdArgs)
   #   condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-  #   displayName: Publish Image Info
+  #   displayName: 🟪 Publish Image Info
 
   # - script: >
   #     $(runImageBuilderCmd) postPublishNotification
@@ -241,19 +241,19 @@ jobs:
   #     --task "Wait for Annotation Ingestion (Authenticated)"
   #     $(dryRunArg)
   #     $(imageBuilder.commonCmdArgs)
-  #   displayName: Post Publish Notification
+  #   displayName: 🟪 Post Publish Notification
   #   condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
 
   # - powershell: |
   #     New-Item -ItemType Directory -Path $(sourceBuildIdOutputDir)
   #     Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value ${{ parameters.sourceBuildPipelineRunId }}
   #   condition: succeeded()
-  #   displayName: Write Source Build ID to File
+  #   displayName: 🟪 Write Source Build ID to File
 
   # - template: /eng/common/templates/steps/publish-artifact.yml@self
   #   parameters:
   #     path: $(sourceBuildIdOutputDir)
   #     artifactName: source-build-id
-  #     displayName: Publish Source Build ID Artifact
+  #     displayName: 🟪 Publish Source Build ID Artifact
   #     internalProjectName: ${{ parameters.internalProjectName }}
   #     publicProjectName: ${{ parameters.publicProjectName }}
