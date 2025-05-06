@@ -1,9 +1,15 @@
 parameters:
   # The customArgsArray parameter is used to specify the configuration for multiple Dockerfile versions.
   # This allows for a single branch to be generated for different internal .NET build versions.
-  customArgsArray: ""
-
-  useInternalBuild: false
+- name: customArgsArray
+  type: string
+  default: ""
+- name: useInternalBuild
+  type: boolean
+  default: false
+- name: skipPullRequest
+  type: boolean
+  default: false
 
 steps:
 - script: docker build -t update-dependencies -f $(engPath)/update-dependencies/Dockerfile --pull .
@@ -26,7 +32,7 @@ steps:
     foreach ($customArgs in $customArgsArray) {
       # If this is the last iteration, include the credentials to cause a PR to be generated.
       # For internal builds this will cause branch to be pushed to AzDO, but no PRs will be generated.
-      if ($customArgs -eq $customArgsArray[-1]) {
+      if ($customArgs -eq $customArgsArray[-1] -and "${{ parameters.skipPullRequest }}" -ne "true") {
         $customArgs += " $credArgs"
       }
 
