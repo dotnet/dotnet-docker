@@ -5,11 +5,11 @@ FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=0.0.0 \
-    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz" \
+    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-egress-azureblobstorage.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/0.0.0/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz" \
     && dotnet_monitor_extension_sha512='{sha512_placeholder}' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     \
-    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-egress-s3storage.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz" \
+    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-egress-s3storage.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/0.0.0/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz" \
     && dotnet_monitor_extension_sha512='{sha512_placeholder}' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     \
