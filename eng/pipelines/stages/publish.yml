@@ -14,6 +14,9 @@ parameters:
   - name: isInternalServicingValidation
     type: boolean
     default: false
+  - name: isStandalonePublish
+    type: boolean
+    default: false
   - name: customPublishInitSteps
     type: stepList
     default: []
@@ -30,6 +33,7 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    isStandalonePublish: ${{ parameters.isStandalonePublish }}
     linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
     customPublishInitSteps:
     - ${{ parameters.customPublishInitSteps }}
