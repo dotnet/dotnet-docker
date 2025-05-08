@@ -22,12 +22,11 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
-
+        isStandalonePublish: true
         # Only allow the dotnet-docker-release-staging pipeline as a source for publishing
         # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
         sourceBuildPipelineDefinitionId: "1434"
         sourceBuildPipelineRunId: $(resources.pipeline.dotnet-docker-release-staging.runID)
-
         customPublishInitSteps:
         - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.dotnet-docker-release-staging.runID)"
           displayName: Set sourceBuildId
