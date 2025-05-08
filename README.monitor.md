@@ -56,7 +56,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.1.0-preview.2, 9.1-preview, 9-preview | [Dockerfile](src/monitor/9.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor/9.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
@@ -70,7 +70,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.1.0-preview.2, 9.1-preview, 9-preview | [Dockerfile](src/monitor/9.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor/9.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/monitor/tags/list) for all supported and unsupported tags.*
