@@ -6,7 +6,7 @@ parameters:
 steps:
 - template: /eng/common/templates/steps/run-imagebuilder.yml@self
   parameters:
-    displayName: 🟪⚠️ Wait for MCR Doc Ingestion
+    displayName: Wait for MCR Doc Ingestion
     condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
     serviceConnection: $(marStatus.serviceConnectionName)
     internalProjectName: 'internal'
