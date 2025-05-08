@@ -36,7 +36,7 @@ stages:
           $repoName = $repoName.Substring($orgSeparatorIndex + 1)
         }
         echo "##vso[task.setvariable variable=publishNotificationRepoName]$repoName"
-      displayName: 🟪 "Set Custom Repo Name Var"
+      displayName: "Set Custom Repo Name Var"
     - ${{ parameters.customPublishInitSteps }}
 
     ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
