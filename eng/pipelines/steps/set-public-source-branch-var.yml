@@ -1,15 +1,24 @@
 steps:
 - powershell: |
+    echo "Env:PUBLICSOURCEBRANCH: $Env:PUBLICSOURCEBRANCH"
+    echo "Env:SYSTEM_PULLREQUEST_TARGETBRANCH: $Env:SYSTEM_PULLREQUEST_TARGETBRANCH"
+    echo "sourceBranch: $(sourceBranch)"
+
     # publicSourceBranch is not necessarily the working branch, it is the branch referenced in the readme Dockerfile source links
     if ($env:PUBLICSOURCEBRANCH) {
+        echo 'Setting publicSourceBranch from environment variable $env:PUBLICSOURCEBRANCH'
         $publicSourceBranch = $env:PUBLICSOURCEBRANCH
     }
     elseif (-not "$(manifest)".Contains("samples") -and ("$(sourceBranch)" -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly")) {
+        echo 'Setting publicSourceBranch to nightly because sourceBranch is nightly or $env:SYSTEM_PULLREQUEST_TARGETBRANCH is nightly'
         $publicSourceBranch = "nightly"
     }
     else {
+        echo 'Setting publicSourceBranch to main because sourceBranch is not nightly and $env:SYSTEM_PULLREQUEST_TARGETBRANCH is not nightly'
+        echo 'This behavior can be overridden by setting $env:PUBLICSOURCEBRANCH'
         $publicSourceBranch = "main"
     }
 
+    echo "publicSourceBranch: $publicSourceBranch"
     echo "##vso[task.setvariable variable=publicSourceBranch]$publicSourceBranch"
   displayName: Set Public Source Branch Var
