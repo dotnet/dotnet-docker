@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-//
 
 using System;
 using System.IO;
@@ -22,7 +21,7 @@ public static partial class ManifestHelper
     /// </summary>
     /// <param name="manifestVariables">JSON object of the variables from the manifest.</param>
     /// <param name="options">Configured options from the app.</param>
-    public static string GetBaseUrl(JObject manifestVariables, Options options) =>
+    public static string GetBaseUrl(JObject manifestVariables, SpecificCommandOptions options) =>
         ResolveVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName), manifestVariables);
 
     /// <summary>
@@ -94,7 +93,7 @@ public static partial class ManifestHelper
     /// <param name="filename">Name, not path, of the manifest file located at the root of the repo.</param>
     public static JObject LoadManifest(string filename)
     {
-        string path = Path.Combine(UpdateDependencies.RepoRoot, filename);
+        string path = Path.Combine(SpecificCommand.RepoRoot, filename);
         string contents = File.ReadAllText(path);
         return JObject.Parse(contents);
     }

@@ -34,9 +34,6 @@ Add due dates to each of the issues so that we don't lose track of them.
   - [ ] Update readmes
     - [ ] Update the [MCR tags metadata templates](https://github.com/dotnet/dotnet-docker/tree/main/eng/mcr-tags-metadata-templates) to include the new distro version
       - The new tags should be in a preview sub-table, like so: <https://github.com/dotnet/dotnet-docker/blob/8fc28db4f706d81a1fd075f2c6b2ca514ae75c84/eng/mcr-tags-metadata-templates/aspnet-tags.yml#L1-L3>
-  - [ ] Update image size baselines
-    - [ ] Queue a build of the [dotnet-docker-nightly](https://dev.azure.com/dnceng/internal/_build?definitionId=359) pipeline
-    - [ ] Inspect the image sizes by pulling the new images from the `dotnetdocker` ACR and update the baselines accordingly
 
 ## Preview 1
 
@@ -91,7 +88,6 @@ Create announcement:
     - [ ] [TestData.cs](/tests/Microsoft.DotNet.Docker.Tests/TestData.cs)
     - [ ] [mcr-tags-metadata-templates](/eng/mcr-tags-metadata-templates)
     - [ ] [Featured tags](/eng/readme-templates/FeaturedTags.md)
-    - [ ] [Image size tests](/tests/performance)
   - [ ] Delete the Dockerfiles
   - [ ] Search for and simplify conditions including the EOL .NET Version in the Dockerfile templates and tests
   - [ ] Update the path variable appropriately for the [dotnet-docker-nightly-pr-no-cache](https://dev.azure.com/dnceng-public/public/_build?definitionId=184) pipeline so that it continues to target active Dockerfiles.

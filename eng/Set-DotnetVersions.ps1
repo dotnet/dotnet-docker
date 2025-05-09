@@ -68,7 +68,8 @@ param(
 
 Import-Module -force $PSScriptRoot/DependencyManagement.psm1
 
-$updateDepsArgs = @($ProductVersion)
+# Use 'specific' command to set product versions to specific values
+$updateDepsArgs = @("specific", $ProductVersion)
 
 if ($SdkVersion) {
     $updateDepsArgs += @("--product-version", "sdk=$SdkVersion")

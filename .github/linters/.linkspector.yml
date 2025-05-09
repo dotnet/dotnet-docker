@@ -1,6 +1,10 @@
 aliveStatusCodes:
-  - 200
-  - 406
+  - 200 # OK
+  - 406 # Not acceptable: server cannot provide a suitable representation for the specified `Accept` header
+  # All GitHub links give status code 429 as of 2025-04-25.
+  # Tracking issue: https://github.com/UmbrellaDocs/action-linkspector/issues/43
+  # Remove status code 429 from this list when that issue is resolved.
+  - 429 # Too many requests
 dirs:
   - .
   - .github

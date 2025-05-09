@@ -1,0 +1,21 @@
+# A wrapper template around the common .NET publish template with settings
+# specific to the Dockerfiles in this repo.
+
+parameters:
+  noCache: false
+  internalProjectName: null
+  publicProjectName: null
+  linuxAmd64Pool: ""
+  isInternalServicingValidation: false
+
+stages:
+- template: /eng/common/templates/stages/dotnet/publish.yml@self
+  parameters:
+    noCache: ${{ parameters.noCache }}
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
+    customPublishInitSteps:
+    - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
+    - template: /eng/pipelines/steps/set-publish-mcrdocs-args-var.yml@self

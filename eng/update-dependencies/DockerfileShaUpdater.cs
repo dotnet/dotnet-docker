@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-//
 
 using System;
 using System.Collections.Generic;
@@ -38,13 +37,13 @@ namespace Dotnet.Docker
         private readonly string? _buildVersion;
         private readonly string _arch;
         private readonly string _os;
-        private readonly Options _options;
+        private readonly SpecificCommandOptions _options;
         private readonly string _versions;
         private readonly Dictionary<string, string> _urls;
         private readonly Lazy<JObject> _manifestVariables;
 
         public DockerfileShaUpdater(
-            string productName, string dockerfileVersion, string? buildVersion, string arch, string os, string versions, Options options)
+            string productName, string dockerfileVersion, string? buildVersion, string arch, string os, string versions, SpecificCommandOptions options)
         {
             _productName = productName;
             _dockerfileVersion = new Version(dockerfileVersion);
@@ -74,10 +73,10 @@ namespace Dotnet.Docker
                 () =>
                 {
                     const string VariablesProperty = "variables";
-                    JToken? variables = ManifestHelper.LoadManifest(UpdateDependencies.VersionsFilename)[VariablesProperty];
+                    JToken? variables = ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename)[VariablesProperty];
                     if (variables is null)
                     {
-                        throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{UpdateDependencies.VersionsFilename}'");
+                        throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{SpecificCommand.VersionsFilename}'");
                     }
                     return (JObject)variables;
                 });
@@ -92,23 +91,14 @@ namespace Dotnet.Docker
         }
 
         public static IEnumerable<IDependencyUpdater> CreateUpdaters(
-            string productName, string dockerfileVersion, string repoRoot, Options options)
+            string productName, string dockerfileVersion, string repoRoot, SpecificCommandOptions options)
         {
-            string versionsPath = System.IO.Path.Combine(repoRoot, UpdateDependencies.VersionsFilename);
+            string versionsPath = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
             string versions = File.ReadAllText(versionsPath);
 
             // The format of the sha variable name is '<productName>|<dockerfileVersion>|<os>|<arch>|sha'.
             // The 'os' and 'arch' segments are optional.
-            string shaVariablePattern;
-            if (productName == NetStandard21TargetingPack)
-            {
-                // NetStandard targeting pack is not associated with a specific Dockerfile version
-                shaVariablePattern = $"\"(?<{ShaVariableGroupName}>{Regex.Escape(productName)}.*\\|sha)\":";
-            }
-            else
-            {
-                shaVariablePattern = $"\"(?<{ShaVariableGroupName}>{Regex.Escape(productName)}\\|{Regex.Escape(dockerfileVersion)}.*\\|sha)\":";
-            }
+            string shaVariablePattern = $"\"(?<{ShaVariableGroupName}>{Regex.Escape(productName)}\\|{Regex.Escape(dockerfileVersion)}.*\\|sha)\":";
 
             Regex shaVariableRegex = new(shaVariablePattern);
 
@@ -151,7 +141,7 @@ namespace Dotnet.Docker
             // Remove Aspire Dashboard case once https://github.com/dotnet/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
-            string versionFile = UpdateDependencies.ResolveProductVersion(versionDir, _options);
+            string versionFile = SpecificCommand.ResolveProductVersion(versionDir, _options);
 
             string downloadUrl = _urls[_productName]
                 .Replace("$DOTNET_BASE_URL", baseUrl)
@@ -416,7 +406,7 @@ namespace Dotnet.Docker
             return checksumEntries;
         }
 
-        private static string? GetBuildVersion(string productName, string dockerfileVersion, string variables, Options options)
+        private static string? GetBuildVersion(string productName, string dockerfileVersion, string variables, SpecificCommandOptions options)
         {
             string? buildVersion;
             if (options.ProductVersions.TryGetValue(productName, out string? version))

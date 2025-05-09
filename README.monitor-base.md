@@ -17,7 +17,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Usage
 
-The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Building Docker Images for .NET Applications](https://docs.microsoft.com/dotnet/core/docker/building-net-docker-images) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/introduction) to learn more.
 
 The following Dockerfiles demonstrate how you can use this base image to build a .NET Monitor image with a custom set of extensions.
 
@@ -52,8 +52,6 @@ Tags | Dockerfile | OS Version
 9.0.2-amd64, 9.0-amd64, 9.0.2, 9.0, 9, latest | [Dockerfile](src/monitor-base/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.1.0-ubuntu-chiseled-amd64, 8.1-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.0-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0, 8.1, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.1.0-azurelinux-distroless-amd64, 8.1-azurelinux-distroless-amd64, 8-azurelinux-distroless-amd64, 8.1.0-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor-base/8.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
-8.0.8-ubuntu-chiseled-amd64, 8.0-ubuntu-chiseled-amd64, 8.0.8-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.8, 8.0 | [Dockerfile](src/monitor-base/8.0/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.0.8-azurelinux-distroless-amd64, 8.0-azurelinux-distroless-amd64, 8.0.8-azurelinux-distroless, 8.0-azurelinux-distroless | [Dockerfile](src/monitor-base/8.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 #### .NET Monitor Preview Tags
 
@@ -68,8 +66,6 @@ Tags | Dockerfile | OS Version
 9.0.2-arm64v8, 9.0-arm64v8, 9.0.2, 9.0, 9, latest | [Dockerfile](src/monitor-base/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.1.0-ubuntu-chiseled-arm64v8, 8.1-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.0-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.0, 8.1, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.1.0-azurelinux-distroless-arm64v8, 8.1-azurelinux-distroless-arm64v8, 8-azurelinux-distroless-arm64v8, 8.1.0-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor-base/8.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.8-ubuntu-chiseled-arm64v8, 8.0-ubuntu-chiseled-arm64v8, 8.0.8-ubuntu-chiseled, 8.0-ubuntu-chiseled, 8.0.8, 8.0 | [Dockerfile](src/monitor-base/8.0/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.8-azurelinux-distroless-arm64v8, 8.0-azurelinux-distroless-arm64v8, 8.0.8-azurelinux-distroless, 8.0-azurelinux-distroless | [Dockerfile](src/monitor-base/8.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 #### .NET Monitor Preview Tags
 

@@ -1,11 +1,29 @@
+# This pipeline takes the current branch and builds and tests the images,
+# but does not publish them.
+#
+# The images can later be published by running the release-promotion pipeline.
+
 trigger: none
 pr: none
 
+resources:
+  repositories:
+  - repository: InternalVersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+
+variables:
+- template: /eng/pipelines/variables/core.yml@self
+
 extends:
   template: /eng/common/templates/1es-official.yml@self
-  stages:
-  - stage: release-staging
-    jobs:
-    - job: release-staging
-      steps:
-      - script: echo "Hello world"
+  parameters:
+    stages:
+    - template: /eng/pipelines/stages/build-and-test.yml@self
+      parameters:
+        internalProjectName: ${{ variables.internalProjectName }}
+        publicProjectName: ${{ variables.publicProjectName }}
+        # We always want staged images to be as up-to-date as possible,
+        # so don't rely on any caching behavior.
+        noCache: true

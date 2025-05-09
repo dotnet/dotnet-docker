@@ -28,7 +28,7 @@ Examples:
 - `8.0.11-noble-amd64`
 - `8.0.11-noble-arm64v8`
 - `8.0.11-nanoserver-ltsc2022`
-- `8.0.11-alpine3.20-arm64v8`
+- `8.0.11-alpine3.21-arm64v8`
 - `8.0.11-bookworm-slim-arm32v7`
 
 ### `<Major.Minor .NET Version>-<OS>-<Architecture>`
@@ -40,7 +40,7 @@ Examples:
 - `8.0-noble-arm64v8`
 - `8.0-noble-amd64`
 - `8.0-nanoserver-ltsc2022`
-- `8.0-alpine3.20-arm64v8`
+- `8.0-alpine3.21-arm64v8`
 - `8.0-bookworm-slim-arm32v7`
 
 ## Multi-platform tags
@@ -76,7 +76,7 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 Examples:
 
 - `8.0.11-noble`
-- `8.0.11-alpine3.20`
+- `8.0.11-alpine3.21`
 
 ### `<Major.Minor .NET Version>-<OS version>`
 
@@ -84,7 +84,7 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `8.0-alpine3.20`
+- `8.0-alpine3.21`
 - `8.0-noble`
 
 ### `<Major.Minor .NET Version>-alpine`
@@ -98,7 +98,7 @@ Examples:
 
 > [!NOTE]
 >
-> - New versions of Alpine will be published with version-specific tags (e.g. `8.0-alpine3.20`).
+> - New versions of Alpine will be published with version-specific tags (e.g. `8.0-alpine3.21`).
 > - Floating tag (e.g. `8.0-alpine`) will be updated with the new Alpine version a month later.
 > - Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
 
@@ -129,7 +129,7 @@ Examples:
 
 - `8.0-noble-chiseled`
 - `8.0.11-noble-chiseled-extra`
-- `9.0.0-alpine3.20-extra`
+- `9.0.0-alpine3.21-extra`
 
 For more information, see the [Image Variants documentation](./image-variants.md).
 
@@ -170,7 +170,7 @@ See [.NET's release policies](https://github.com/dotnet/core/blob/main/release-p
 Examples:
 
 - `8.0.11`
-- `8.0.11-alpine3.20`
+- `8.0.11-alpine3.21`
 - `9.0.0-preview.7`
 - `9.0.0-rc.1`
 
@@ -188,7 +188,7 @@ Examples:
 
 - `8.0`
 - `9.0`
-- `9.0-alpine3.20`
+- `9.0-alpine3.21`
 - `9.0-preview`
 - `9.0-preview-noble`
 
@@ -204,7 +204,7 @@ Version-specific operating system tags reference an image with a specific OS ver
 Examples:
 
 - `8.0-noble`
-- `9.0-alpine3.20`
+- `9.0-alpine3.21`
 
 > [!NOTE]
 >
