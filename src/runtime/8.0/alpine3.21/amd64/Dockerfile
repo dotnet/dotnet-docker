@@ -1,12 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:8.0.15-alpine3.21-amd64 AS installer
+FROM $REPO:8.0.16-alpine3.21-amd64 AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.15 \
+RUN dotnet_version=8.0.16 \
     && wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='424fb3f807c809271752f79189abee1e6cf9f2326e1cbb5866cbc030d6b6deae98a3913fb5ecb5f944f8c13869fa4c53baa19ddeba1c2b07f9ae72739f061a74' \
+    && dotnet_sha512='ae77fffe1fc8e6b65a6908bc6f8b413b3dc15a89db1a425974ad7686bf307b068076f77079ba06224129a74209c10aaba7a418a5e3ddf4dbeef889c2fc4da23c' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet \
@@ -14,10 +14,10 @@ RUN dotnet_version=8.0.15 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.15-alpine3.21-amd64
+FROM $REPO:8.0.16-alpine3.21-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.15
+ENV DOTNET_VERSION=8.0.16
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

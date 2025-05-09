@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.408/dotnet-sdk-8.0.408-linux-arm.tar.gz \
-    && dotnet_sha512='9686fc37b42a322e8acaf3991f68837cfef10a41aef323286331e63123ca34a9367bf4274dd14ce019ca37345d6d868cfbfe4fbcd353f57fd3035151b97983f9' \
+RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.409/dotnet-sdk-8.0.409-linux-arm.tar.gz \
+    && dotnet_sha512='d29937db92ef085d4c3736f1be811c574e81cc0fe9b1decef4199c2d5170947648a7c694f3d2a963403f41040c7c9a1f78c909ca0cd93c1adc00b0ed48c589d3' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -12,7 +12,7 @@ RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/
 
 
 # .NET SDK image
-FROM $REPO:8.0.15-bookworm-slim-arm32v7
+FROM $REPO:8.0.16-bookworm-slim-arm32v7
 
 ENV \
     # Do not generate certificate
@@ -20,7 +20,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.408 \
+    DOTNET_SDK_VERSION=8.0.409 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
