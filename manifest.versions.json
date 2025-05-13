@@ -223,7 +223,7 @@
     "rocks-toolbox|latest|version": "v1.2.0",
     "rocks-toolbox|8.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|version)",
-    "rocks-toolbox|10.0|version": "v1.1.2",
+    "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
 
     "runtime|8.0|build-version": "8.0.15",
     "runtime|8.0|linux-musl|x64|sha": "424fb3f807c809271752f79189abee1e6cf9f2326e1cbb5866cbc030d6b6deae98a3913fb5ecb5f944f8c13869fa4c53baa19ddeba1c2b07f9ae72739f061a74",
