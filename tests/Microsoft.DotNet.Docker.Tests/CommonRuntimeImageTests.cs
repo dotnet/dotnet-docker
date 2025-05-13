@@ -63,12 +63,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (imageData.OS.Contains(OS.AzureLinux))
-            {
-                OutputHelper.WriteLine("Skipping test for Azure Linux due to https://github.com/dotnet/dotnet-docker/issues/6419");
-                return;
-            }
-
             string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
 
             // Attempting to execute the container's shell should result in an exception.
