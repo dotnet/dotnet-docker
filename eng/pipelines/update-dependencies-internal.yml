@@ -1,6 +1,12 @@
 trigger: none
 pr: none
 
+parameters:
+  - name: skipPullRequest
+    displayName: Skip Pull Request
+    type: boolean
+    default: false
+
 variables:
 - template: ../common/templates/variables/dotnet/common.yml
 - group: DotNet-AllOrgs-Darc-Pats
@@ -12,7 +18,8 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - template: steps/update-dotnet-dependencies.yml
+    - template: steps/update-dotnet-dependencies-specific.yml
       parameters:
+        skipPullRequest: ${{ parameters.skipPullRequest }}
         useInternalBuild: true
         buildId: $(buildId)

@@ -8,18 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="LibGit2Sharp" Version="0.29.0" />
+    <PackageReference Include="LibGit2Sharp" Version="0.30.0" />
+    <PackageReference Include="Microsoft.DotNet.DarcLib" Version="1.1.0-beta.25210.2" />
     <PackageReference Include="Microsoft.DotNet.VersionTools" Version="9.0.0-beta.24151.5" />
-    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.225.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.4" />
+    <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.232.0-preview" />
     <PackageReference Include="Octokit" Version="13.0.1" />
-    <PackageReference Include="System.Diagnostics.TextWriterTraceListener" Version="4.3.0" />
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20574.7" />
-
-    <!-- Workaround for CVE-2024-0056 introduced as a transient dependency of Microsoft.TeamFoundationServer.Client -->
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
-
-    <!-- CVE-2024-38095: Upgrade version of System.Formats.Asn1 implicitly referenced by Microsoft.DotNet.VersionTools -->
-    <!-- Tracking issue for Arcade: https://github.com/dotnet/dnceng/issues/3336 -->
-    <PackageReference Include="System.Formats.Asn1" Version="6.0.1" />
+    <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25210.1" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.25210.1" />
+    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta5.25210.1" />
   </ItemGroup>
 </Project>
