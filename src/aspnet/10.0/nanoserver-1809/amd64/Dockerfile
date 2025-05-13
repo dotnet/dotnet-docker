@@ -11,7 +11,7 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $aspnetcore_version = '10.0.0-preview.4.25258.110'; `
-        Invoke-WebRequest -OutFile aspnetcore.zip https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
+        Invoke-WebRequest -OutFile aspnetcore.zip https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
         $aspnetcore_sha512 = 'db68461f744a623a62fd63d230e5c9fa160c220013a46b23d436fad18927c0f349432cdeb6c9e115db5ed8311dc82891bd81f2958d7d6773c4ba84c92ad0e7fc'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `

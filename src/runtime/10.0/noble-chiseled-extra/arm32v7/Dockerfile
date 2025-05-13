@@ -5,7 +5,7 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0-preview.4.25258.110 \
-    && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
+    && curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
     && dotnet_sha512='403d9c733139895e3ea6269f054a5324df870baeb5a6fe3bb74fa0bae62254962df49025c01b162085e8c633c89b4b2c8403780f0e322d7889d5da16c186ca2a' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /usr/share/dotnet \
