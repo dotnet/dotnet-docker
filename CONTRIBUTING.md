@@ -1,6 +1,6 @@
 # Contributing
 
-See [dotnet/runtime Contributing](https://github.com/dotnet/runtime/blob/master/CONTRIBUTING.md) for information about coding styles, source structure, making pull requests, and more.
+See [dotnet/runtime Contributing](https://github.com/dotnet/runtime/blob/main/CONTRIBUTING.md) for information about coding styles, source structure, making pull requests, and more.
 
 ## General Feedback and Questions
 
@@ -104,7 +104,7 @@ To start, open [tasks.json](.vscode/tasks.json) and find the "Test with debugger
 Check the `args` and `env` settings to filter down to the exact image you want to test.
 
 To filter tests to a specific image, use the `DOCKERFILE_PATHS` environment variable.
-For example, to test only Alpine 3.20 ASP.NET images, you could set the `DOCKERFILE_PATHS` to `src/aspnet/9.0/alpine3.20/amd64`.
+For example, to test only Alpine 3.21 ASP.NET images, you could set the `DOCKERFILE_PATHS` to `src/aspnet/9.0/alpine3.21/amd64`.
 To run specific individual tests, you can use [Xunit test filtering](https://learn.microsoft.com/dotnet/core/testing/selective-unit-tests?pivots=xunit) arguments to filter by fully qualified test name and test category.
 
 To start debugging, open the VS Code command palette and type "Tasks: Run Task", then choose the "Test with debugger" task. The terminal will open and print a process ID:
