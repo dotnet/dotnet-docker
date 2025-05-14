@@ -139,7 +139,7 @@
 
     "monitor|8|major-tag": "8",
 
-    "monitor|8.1|build-version": "8.1.1",
+    "monitor|8.1|build-version": "8.1.1-servicing.25257.8",
     "monitor|8.1|product-version": "8.1.1",
     "monitor|8.1|fixed-tag": "$(monitor|8.1|product-version)",
     "monitor|8.1|minor-tag": "8.1",
@@ -155,7 +155,7 @@
     "monitor|9|major-tag": "9",
     "monitor|9|major-preview-tag": "9-preview",
 
-    "monitor|9.0|build-version": "9.0.3",
+    "monitor|9.0|build-version": "9.0.3-servicing.25257.4",
     "monitor|9.0|product-version": "9.0.3",
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
     "monitor|9.0|minor-tag": "9.0",
