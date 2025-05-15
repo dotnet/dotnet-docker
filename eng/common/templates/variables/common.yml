@@ -12,7 +12,7 @@ variables:
 
 # stagingRepoPrefix defines where images will be pushed to in the staging repo,
 # which is defined in the $(acr-staging.server) variable.
-- ${{ if ne(parameters.sourceBuildId, "") }}:
+- ${{ if ne(parameters.sourceBuildId, '') }}:
   - name: stagingRepoPrefix
     value: build-staging/${{ parameters.sourceBuildId }}
 - ${{ else }}:
