@@ -183,6 +183,15 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Publish Image Info
+  # Task displayNames names are hardcoded to reference the task prefix used by 1ES official
+  # pipelines in eng/common/templates/1es-official.yml.
+  #
+  # These will fail if they are dependend on by an unofficial pipeline since they use a unique task
+  # prefix compared to official pipelines (see eng/common/templates/1es-unofficial.yml). This is
+  # acceptable because unofficial pipelines should not publish images.
+  #
+  # https://github.com/dotnet/docker-tools/issues/1698 tracks making this command no longer depend
+  # on individual step displayNames.
   - script: >
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
@@ -196,16 +205,16 @@ jobs:
       '$(gitHubNotificationsRepoInfo.org)'
       '$(gitHubNotificationsRepoInfo.repo)'
       --repo-prefix '$(publishRepoPrefix)'
-      --task "Copy Images (Authenticated)"
-      --task "Publish Manifest (Authenticated)"
-      --task "Wait for Image Ingestion (Authenticated)"
-      --task "Publish Readmes"
-      --task "Wait for MCR Doc Ingestion (Authenticated)"
-      --task "Publish Image Info"
-      --task "Ingest Kusto Image Info (Authenticated)"
-      --task "Generate EOL Annotation Data (Authenticated)"
-      --task "Annotate EOL Images (Authenticated)"
-      --task "Wait for Annotation Ingestion (Authenticated)"
+      --task "🟪 Copy Images (Authenticated)"
+      --task "🟪 Publish Manifest (Authenticated)"
+      --task "🟪 Wait for Image Ingestion (Authenticated)"
+      --task "🟪 Publish Readmes"
+      --task "🟪 Wait for MCR Doc Ingestion (Authenticated)"
+      --task "🟪 Publish Image Info"
+      --task "🟪 Ingest Kusto Image Info (Authenticated)"
+      --task "🟪 Generate EOL Annotation Data (Authenticated)"
+      --task "🟪 Annotate EOL Images (Authenticated)"
+      --task "🟪 Wait for Annotation Ingestion (Authenticated)"
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
