@@ -22,10 +22,10 @@ steps:
 # https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/download-pipeline-artifact-v2
 - task: DownloadPipelineArtifact@2
   inputs:
-    ${{ if ne(pipelineRunId, '') }}:
+    ${{ if ne(parameters.pipelineRunId, '') }}:
       buildType: specific
       project: $(System.TeamProject)
-      ${{ if ne(pipelineDefinitionId, '') }}:
+      ${{ if ne(parameters.pipelineDefinitionId, '') }}:
         definition: ${{ parameters.pipelineDefinitionId }}
       ${{ else }}:
         definition: $(System.DefinitionId)
