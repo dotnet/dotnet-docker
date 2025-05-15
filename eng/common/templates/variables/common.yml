@@ -14,10 +14,10 @@ variables:
 # which is defined in the $(acr-staging.server) variable.
 - ${{ if ne(parameters.sourceBuildId, '') }}:
   - name: stagingRepoPrefix
-    value: build-staging/${{ parameters.sourceBuildId }}
+    value: build-staging/${{ parameters.sourceBuildId }}/
 - ${{ else }}:
   - name: stagingRepoPrefix
-    value: build-staging/$(Build.BuildId)
+    value: build-staging/$(Build.BuildId)/
 
 - name: publishReadme
   value: true
