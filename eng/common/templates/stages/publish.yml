@@ -61,7 +61,5 @@ stages:
         internalProjectName: ${{ parameters.internalProjectName }}
         customPublishVariables: ${{ parameters.customPublishVariables }}
         customInitSteps: ${{ parameters.customPublishInitSteps }}
-        ${{ if ne(parameters.sourcebuildPipelineDefinitionId, '') }}:
-          sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
-        ${{ if ne(parameters.sourceBuildPipelineRunId, '') }}:
-          sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

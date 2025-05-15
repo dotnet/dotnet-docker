@@ -35,11 +35,9 @@ steps:
       continueOnError: ${{ parameters.continueOnError }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       condition: ${{ parameters.condition }}
-      command: |
+      command: >
         $env:idToken | Out-File -FilePath $(tokenHostFilePath);
-        $command = "$(runAuthedImageBuilderCmd) ${{ parameters.args }}";
-        Write-Host "Executing $command";
-        Invoke-Expression $command
+        $(runAuthedImageBuilderCmd) ${{ parameters.args }};
         Remove-Item -Path $(tokenHostFilePath) -Force
 - ${{ else }}:
   - task: PowerShell@2
@@ -50,7 +48,5 @@ steps:
     condition: ${{ parameters.condition }}
     inputs:
       targetType: 'inline'
-      script: |
-        $command = "$(runImageBuilderCmd) ${{ parameters.args }}";
-        Write-Host "Executing $command";
-        Invoke-Expression $command
+      script: >
+        $(runImageBuilderCmd) ${{ parameters.args }}
