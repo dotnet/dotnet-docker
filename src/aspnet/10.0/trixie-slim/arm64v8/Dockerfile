@@ -4,9 +4,9 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm64v8/buildpack-deps:trixie-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-preview.4.25258.110 \
+RUN aspnetcore_version=10.0.0-preview.4.25258.107 \
     && curl -fSL --output aspnetcore.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
-    && aspnetcore_sha512='7c56bc04dd5515291fc29a944e501ce276b722aa78e3c679188cb9fe33fbe063c21b04efd0fcbba61013dd73914e7a4b438626a816c0b6f9cf7f097646a6d208' \
+    && aspnetcore_sha512='bf2dbd07f7d41ca9bd4e82e25a0be3e26a31c65d98d823810aa4ad50b9214013eb6559a864db0ad0c3093edd446c27e1fb967c957b710ecb5820c08ec9b9a42b' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -17,6 +17,6 @@ RUN aspnetcore_version=10.0.0-preview.4.25258.110 \
 FROM $REPO:10.0.0-preview.4-trixie-slim-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-preview.4.25258.110
+ENV ASPNET_VERSION=10.0.0-preview.4.25258.107
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
