@@ -25,9 +25,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '10.0.100-preview.4.25258.110'; `
+        $sdk_version = '10.0.100-preview.5.25265.103'; `
         Invoke-WebRequest -OutFile dotnet.zip https://ci.dot.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '266d9f25c196bada1c73af596ebe1605ef0e4527d66aafbe0209f597c78d3cc9bed3a87fddcdc0c3d4a757adb108f71487ee2374a79278e688a9f12093a5131f'; `
+        $dotnet_sha512 = 'd1c1e7bdcdfc9b37c32572fb3af385ab8c133d0817f7f88bd9928bf86b4a6cbe368632726692434b44a6e8680e20166221245fe50d58cf163ebbb709ac3b0195'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -57,7 +57,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:10.0.0-preview.4-nanoserver-ltsc2025
+FROM $REPO:10.0.0-preview.5-nanoserver-ltsc2025
 
 ENV `
     # Do not generate certificate
@@ -65,7 +65,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.4.25258.110 `
+    DOTNET_SDK_VERSION=10.0.100-preview.5.25265.103 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
