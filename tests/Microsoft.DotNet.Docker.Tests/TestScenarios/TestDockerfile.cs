@@ -155,7 +155,7 @@ public static class TestDockerfileBuilder
             buildStageBuilder.AppendLine();
             buildStageBuilder.AppendLine(
                 $"""
-                RUN dotnet workload install {nugetConfigFileOption} wasm-tools \
+                RUN dotnet workload install {nugetConfigFileOption} --skip-manifest-update wasm-tools \
                     && . /etc/os-release \
                     && case $ID in \
                         alpine) apk add --no-cache python3 ;; \
