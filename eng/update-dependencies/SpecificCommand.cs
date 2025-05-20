@@ -233,6 +233,17 @@ namespace Dotnet.Docker
                 if (pullRequestToUpdate == null || pullRequestToUpdate.Head.Ref != $"{upstreamBranch.Name}-{branchSuffix}")
                 {
                     Trace.WriteLine("Didn't find a PR to update. Submitting a new one.");
+
+                    // Workaround for https://github.com/dotnet/dotnet-docker/issues/6427
+                    //
+                    // CreateOrUpdateAsync has its own internal logic to search for and update PRs, and it doesn't
+                    // check that source branch names match. It only checks if the author matches the current user.
+                    // If we don't force the creation of a new PR here, then we run the risk of overwriting other
+                    // unrelated PRs. The downside is that since SearchPullRequestsAsync only returns one result, we
+                    // may end up submitting a duplicate PR, but that's still better than overwriting an unrelated PR.
+                    // https://github.com/dotnet/docker-tools/issues/1658 tracks migrating off of this library.
+                    prOptions.ForceCreate = true;
+
                     await prCreator.CreateOrUpdateAsync(
                         commitMessage,
                         commitMessage,

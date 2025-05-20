@@ -8,9 +8,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-preview.5.25267.102 \
+RUN aspnetcore_version=10.0.0-preview.5.25269.109 \
     && curl -fSL --output aspnetcore.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-    && aspnetcore_sha512='934475c71e38d3598056fd791c2530e14d252546147518bf12ee4363e66b40d55077f88a470356c10ea8c5ff4792ce25977224555ef695964c9e2f80f5d373bd' \
+    && aspnetcore_sha512='93abec5d41d65c2702b8cb7e70a5f9c5ec37e03369912bdd518f4bda3b33431664dac8a0a4d5885dd7313ce7fae54068d83b8b5e0ca9ea2096201166d8d61284' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -21,6 +21,6 @@ RUN aspnetcore_version=10.0.0-preview.5.25267.102 \
 FROM $REPO:10.0.0-preview.5-azurelinux3.0-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-preview.5.25267.102
+ENV ASPNET_VERSION=10.0.0-preview.5.25269.109
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
