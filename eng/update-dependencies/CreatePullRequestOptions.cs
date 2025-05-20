@@ -6,7 +6,7 @@ using System.CommandLine;
 
 namespace Dotnet.Docker;
 
-public abstract class CreatePullRequestOptions
+public abstract record CreatePullRequestOptions
 {
     private string? _targetBranch = null;
 
@@ -16,6 +16,7 @@ public abstract class CreatePullRequestOptions
     public string AzdoOrganization { get; init; } = "";
     public string AzdoProject { get; init; } = "";
     public string AzdoRepo { get; init; } = "";
+    public string AzdoToken { get; init; } = "";
     public string VersionSourceName { get; init; } = "";
     public string SourceBranch { get; init; } = "nightly";
     public string TargetBranch

@@ -11,6 +11,7 @@ using Dotnet.Docker;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 var rootCommand = new RootCommand()
 {
@@ -44,19 +45,29 @@ config.UseHost(
 
             return Host.CreateDefaultBuilder();
         },
-    configureHost: host => host.ConfigureServices(services =>
-        {
-            services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
-            services.AddSingleton<IBasicBarClient>(_ =>
-                new BarApiClient(null, null, disableInteractiveAuth: true));
-            services.AddSingleton<IBuildAssetService, BuildAssetService>();
-            services.AddSingleton<HttpClient>();
+    configureHost: host => host
+        .ConfigureLogging(logging =>
+            {
+                logging.ClearProviders();
+                logging.AddSimpleConsole(options =>
+                {
+                    options.IncludeScopes = true;
+                    options.SingleLine = true;
+                });
+            })
+        .ConfigureServices(services =>
+            {
+                services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
+                services.AddSingleton<IBasicBarClient>(_ =>
+                    new BarApiClient(null, null, disableInteractiveAuth: true));
+                services.AddSingleton<IBuildAssetService, BuildAssetService>();
+                services.AddSingleton<HttpClient>();
 
-            FromBuildCommand.Register<FromBuildCommand>(services);
-            FromChannelCommand.Register<FromChannelCommand>(services);
-            FromStagingPipelineCommand.Register<FromStagingPipelineCommand>(services);
-            SpecificCommand.Register<SpecificCommand>(services);
-        })
+                FromBuildCommand.Register<FromBuildCommand>(services);
+                FromChannelCommand.Register<FromChannelCommand>(services);
+                FromStagingPipelineCommand.Register<FromStagingPipelineCommand>(services);
+                SpecificCommand.Register<SpecificCommand>(services);
+            })
     );
 
 return await config.InvokeAsync(args);
