@@ -1,7 +1,16 @@
 # Common variables for building/testing/publishing in the .NET team's pipelines
+parameters:
+# sourceBuildId should be overridden when skipping a build to run tests or
+# publish images that were produced in a different pipeline run.
+# Defaults to $(Build.BuildId) which refers to the current pipeline run.
+- name: sourceBuildId
+  type: string
+  default: ""
 
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
+  parameters:
+    sourceBuildId: ${{ parameters.sourceBuildId }}
 
 - name: commonVersionsImageInfoPath
   value: build-info/docker
