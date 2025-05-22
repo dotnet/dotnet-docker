@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.409/dotnet-sdk-8.0.409-linux-arm.tar.gz \
-    && dotnet_sha512='d29937db92ef085d4c3736f1be811c574e81cc0fe9b1decef4199c2d5170947648a7c694f3d2a963403f41040c7c9a1f78c909ca0cd93c1adc00b0ed48c589d3' \
+RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.410/dotnet-sdk-8.0.410-linux-arm.tar.gz \
+    && dotnet_sha512='aae9c76dc346b162e7c0ba002d8978e946ebc11741567ede048806ebb09bfe90756d8c11476544d6ef21d6af2e9d96effd8b82272ec04540c87b25c57683065d' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -20,7 +20,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.409 \
+    DOTNET_SDK_VERSION=8.0.410 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

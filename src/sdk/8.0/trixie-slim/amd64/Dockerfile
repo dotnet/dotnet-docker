@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:trixie-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.409/dotnet-sdk-8.0.409-linux-x64.tar.gz \
-    && dotnet_sha512='fb855ff04db010594bb7da884e3a86da94e26a43cc5d858724cc0d3d8ee31f6d64eb09558bad3dba540a25082219ba41aa7feb40d1c4f3468c3720ea4c552fda' \
+RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.410/dotnet-sdk-8.0.410-linux-x64.tar.gz \
+    && dotnet_sha512='757879ef16bf8dc0677e0222ed2fd87b6126aa5ef6370120fb6ee8dfb42a194a796d105d388320cc623548a2eebbd349b1badf3e53631d9f059edeafea1b83bf' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -20,7 +20,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.409 \
+    DOTNET_SDK_VERSION=8.0.410 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
