@@ -13,4 +13,5 @@ excludedDirs:
 ignorePatterns:
   - pattern: "^https://github.com/microsoft/mcr.*$"
   - pattern: "^https://github.com/dotnet/release.*$"
+  - pattern: "^https://aka.ms/$"
 useGitIgnore: true
