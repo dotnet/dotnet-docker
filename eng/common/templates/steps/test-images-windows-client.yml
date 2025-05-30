@@ -2,6 +2,7 @@ parameters:
   internalProjectName: null
   condition: true
   customInitSteps: []
+  sourceBuildPipelineRunId: ""
 
 steps:
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
@@ -16,7 +17,7 @@ steps:
       serviceConnection: $(test.serviceConnectionName)
       dockerClientOS: windows
       condition: and(succeeded(), ${{ parameters.condition }})
-      command: >
+      command: >-
         az login --service-principal --tenant $env:tenantId -u $env:servicePrincipalId --federated-token $env:idToken;
         $accessToken = $(az acr login -n $(acr-staging.server) --expose-token --query accessToken --output tsv);
         docker login $(acr-staging.server) -u 00000000-0000-0000-0000-000000000000 -p $accessToken
@@ -37,6 +38,7 @@ steps:
       targetPath: $(Build.ArtifactStagingDirectory)
       artifactName: image-info
       condition: ${{ parameters.condition }}
+      pipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
 - template: /eng/common/templates/steps/parse-test-arg-arrays.yml@self
 - powershell: >
     $(test.init);

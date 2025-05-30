@@ -8,9 +8,13 @@ steps:
   parameters:
     displayName: Wait for MCR Doc Ingestion
     condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
-    serviceConnection: $(marStatus.serviceConnectionName)
+    serviceConnections:
+    - name: mar
+      id: $(marStatus.serviceConnection.id)
+      tenantId: $(marStatus.serviceConnection.tenantId)
+      clientId: $(marStatus.serviceConnection.clientId)
     internalProjectName: 'internal'
-    args: >
+    args: >-
       waitForMcrDocIngestion
       '${{ parameters.commitDigest }}'
       --timeout '$(mcrDocIngestionTimeout)'

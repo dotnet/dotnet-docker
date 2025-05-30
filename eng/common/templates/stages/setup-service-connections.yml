@@ -1,0 +1,34 @@
+# This stage exists to tell Azure DevOps about all of the service connections
+# that will be used in the pipeline. A service connection will not work unless
+# it is declared in this stage's parameters, even if your pipeline has already
+# been granted access to the service connection. This stage also does not need
+# to complete before the service connection is used.
+parameters:
+- name: pool
+  type: object
+# serviceConnections object shape:
+# - name: string
+- name: serviceConnections
+  type: object
+  default: []
+
+stages:
+
+- stage: SetupServiceConnectionsStage
+  displayName: Setup service connections
+  jobs:
+
+  - job: SetupServiceConnectionsJob
+    displayName: Setup service connections
+    pool: ${{ parameters.pool }}
+    steps:
+
+    - ${{ each serviceConnection in parameters.serviceConnections }}:
+      - task: AzureCLI@2
+        displayName: Setup ${{ serviceConnection.name }}
+        inputs:
+          azureSubscription: ${{ serviceConnection.name }}
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: |
+            az account show
