@@ -5,9 +5,18 @@ parameters:
 - name: displayName
   type: string
   default: "Run ImageBuilder"
-- name: serviceConnection
-  type: string
-  default: ""
+- name: serviceConnections
+  type: object
+  default:
+  # name: the name of the service connection argument that will be passed to the ImageBuilder command.
+  #   For example, if the argument is --acr-service-connection, the name would be "acr".
+  - name: ""
+    # The service connection's ID (GUID).
+    id: ""
+    # The client ID of the Managed Idendity backing the service connection (GUID).
+    clientId: ""
+    # The ID of the tenant that the Managed Identity is in (GUID).
+    tenantId: ""
 - name: internalProjectName
   type: string
   default: null
@@ -25,21 +34,36 @@ parameters:
   default: "linux"
 
 steps:
-- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), ne(parameters.serviceConnection, '')) }}:
-  - template: /eng/common/templates/steps/run-pwsh-with-auth.yml@self
-    parameters:
-      ${{ if ne(parameters.name, '') }}:
-        name: ${{ parameters.name }}
-      displayName: ${{ parameters.displayName }}
-      serviceConnection: ${{ parameters.serviceConnection }}
-      continueOnError: ${{ parameters.continueOnError }}
-      dockerClientOS: ${{ parameters.dockerClientOS }}
-      condition: ${{ parameters.condition }}
-      command: >
-        $env:idToken | Out-File -FilePath $(tokenHostFilePath);
-        $(runAuthedImageBuilderCmd) ${{ parameters.args }};
-        Remove-Item -Path $(tokenHostFilePath) -Force
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+
+  - task: PowerShell@2
+    ${{ if ne(parameters.name, '') }}:
+      name: ${{ parameters.name }}
+    displayName: ${{ parameters.displayName }}
+    continueOnError: ${{ parameters.continueOnError }}
+    condition: ${{ parameters.condition }}
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      SYSTEM_OIDCREQUESTURI: $(System.OidcRequestUri)
+    inputs:
+      targetType: 'inline'
+      script: |
+        $serviceConnections = '${{ convertToJson(parameters.serviceConnections) }}'
+
+        Write-Host "Service connections:"
+        Write-Host "${serviceConnections}"
+
+        $serviceConnectionsJson = $serviceConnections | ConvertFrom-Json
+        $serviceConnectionsArgs = @()
+        foreach ($connection in $serviceConnectionsJson) {
+            $serviceConnectionsArgs += "--$($connection.name)-service-connection"
+            $serviceConnectionsArgs += "$($connection.tenantId):$($connection.clientId):$($connection.id)"
+        }
+
+        $(runAuthedImageBuilderCmd) ${{ parameters.args }} @serviceConnectionsArgs
+
 - ${{ else }}:
+
   - task: PowerShell@2
     ${{ if ne(parameters.name, '') }}:
       name: ${{ parameters.name }}
@@ -48,5 +72,5 @@ steps:
     condition: ${{ parameters.condition }}
     inputs:
       targetType: 'inline'
-      script: >
+      script: >-
         $(runImageBuilderCmd) ${{ parameters.args }}

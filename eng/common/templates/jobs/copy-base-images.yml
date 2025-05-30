@@ -32,7 +32,7 @@ jobs:
   - ${{ parameters.customInitSteps }}
   - template: /eng/common/templates/steps/copy-base-images.yml@self
     parameters:
-      acr: ${{ parameters.acr }} 
+      acr: ${{ parameters.acr }}
       repoPrefix: ${{ parameters.repoPrefix }}
       additionalOptions: ${{ parameters.additionalOptions }}
       continueOnError: ${{ parameters.continueOnError }}

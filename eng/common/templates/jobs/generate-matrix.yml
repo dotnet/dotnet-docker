@@ -8,6 +8,7 @@ parameters:
   noCache: false
   customInitSteps: []
   commonInitStepsForMatrixAndBuild: []
+  sourceBuildPipelineRunId: ""
 
 jobs:
 - job: ${{ parameters.name }}
@@ -28,9 +29,10 @@ jobs:
       parameters:
         targetPath: $(Build.ArtifactStagingDirectory)
         artifactName: image-info
+        pipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
   - powershell: |
       $additionalGenerateBuildMatrixOptions = "$(additionalGenerateBuildMatrixOptions)"
-      
+
       if ("${{ parameters.isTestStage}}" -eq "true") {
         $additionalGenerateBuildMatrixOptions = "$additionalGenerateBuildMatrixOptions --image-info $(artifactsPath)/image-info.json"
       }
@@ -59,6 +61,10 @@ jobs:
     parameters:
       name: matrix
       displayName: Generate ${{ parameters.matrixType }} Matrix
-      serviceConnection: $(build.serviceConnectionName)
+      serviceConnections:
+      - name: acr
+        tenantId: $(build.serviceConnection.tenantId)
+        clientId: $(build.serviceConnection.clientId)
+        id: $(build.serviceConnection.id)
       internalProjectName: internal
       args: $(generateBuildMatrixCommand)
