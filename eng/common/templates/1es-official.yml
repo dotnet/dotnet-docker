@@ -17,6 +17,9 @@ parameters:
 - name: stages
   type: stageList
   default: []
+- name: serviceConnections
+  type: object
+  default: []
 - name: pool
   type: object
   default:
@@ -38,23 +41,30 @@ resources:
     ref: refs/tags/release
 
 extends:
-  template: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+  template: /eng/common/templates/task-prefix-decorator.yml@self
   parameters:
-    pool: ${{ parameters.pool }}
-    sdl:
-      binskim:
-        enabled: true
-      componentgovernance:
-        ignoreDirectories: $(Build.SourcesDirectory)/versions
-        whatIf: ${{ parameters.cgDryRun }}
-        showAlertLink: true
-      policheck:
-        enabled: true
-      sourceRepositoriesToScan:
-        exclude:
-        - repository: InternalVersionsRepo
-        - repository: PublicVersionsRepo
-      sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
-      tsa:
-        enabled: true
-    stages: ${{ parameters.stages }}
+    baseTemplate: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+    templateParameters:
+      pool: ${{ parameters.pool }}
+      sdl:
+        binskim:
+          enabled: true
+        componentgovernance:
+          ignoreDirectories: $(Build.SourcesDirectory)/versions
+          whatIf: ${{ parameters.cgDryRun }}
+          showAlertLink: true
+        policheck:
+          enabled: true
+        sourceRepositoriesToScan:
+          exclude:
+          - repository: InternalVersionsRepo
+          - repository: PublicVersionsRepo
+        sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
+        tsa:
+          enabled: true
+    stages:
+    - template: /eng/common/templates/stages/setup-service-connections.yml@self
+      parameters:
+        pool: ${{ parameters.pool }}
+        serviceConnections: ${{ parameters.serviceConnections }}
+    - ${{ parameters.stages }}
