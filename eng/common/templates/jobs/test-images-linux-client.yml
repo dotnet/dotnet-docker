@@ -6,6 +6,7 @@ parameters:
   preBuildValidation: false
   internalProjectName: null
   customInitSteps: []
+  sourceBuildPipelineRunId: ""
 
 jobs:
 - job: ${{ parameters.name }}
@@ -24,3 +25,4 @@ jobs:
       preBuildValidation: ${{ parameters.preBuildValidation }}
       internalProjectName: ${{ parameters.internalProjectName }}
       customInitSteps: ${{ parameters.customInitSteps }}
+      sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
