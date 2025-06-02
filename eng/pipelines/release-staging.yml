@@ -13,8 +13,20 @@ resources:
     endpoint: dotnet
     name: dotnet/versions
 
+parameters:
+- name: sourceBuildPipelineRunId
+  displayName: >
+    Source build pipeline run ID. This refers to runs of *this pipeline*.
+    Override this parameter in combination with disabling the `Build` stage to
+    test images that were built in a different pipeline run. When
+    building new images, leave this value alone.
+  type: string
+  default: $(Build.BuildId)
+
 variables:
 - template: /eng/pipelines/variables/core.yml@self
+  parameters:
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
@@ -27,6 +39,7 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
         # We always want staged images to be as up-to-date as possible,
         # so don't rely on any caching behavior.
         noCache: true
