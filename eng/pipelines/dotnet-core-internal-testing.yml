@@ -22,8 +22,8 @@ parameters:
   displayName: >
     Source build pipeline run ID. This refers to runs of *this pipeline*.
     Override this parameter in combination with disabling the `Build` stage to
-    test or publish images that were built in a different pipeline run. When
-    building new images, leave this value alone.
+    test images that were built in a different pipeline run. When building new
+    images, leave this value alone.
   type: string
   default: $(Build.BuildId)
 
@@ -48,5 +48,6 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
         isInternalServicingValidation: ${{ variables.IsInternalServicingValidation }}
         noCache: true

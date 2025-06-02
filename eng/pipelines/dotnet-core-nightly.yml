@@ -49,3 +49,4 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
