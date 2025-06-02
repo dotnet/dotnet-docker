@@ -6,7 +6,7 @@
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
 
     "alpine|floating-tag-version": "alpine3.21",
-    "alpine|10.0|floating-tag-version": "$(alpine|floating-tag-version)",
+    "alpine|10.0|floating-tag-version": "alpine3.22",
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
@@ -121,6 +121,7 @@
 
     "libssl|alpine3.20": "3",
     "libssl|alpine3.21": "3",
+    "libssl|alpine3.22": "3",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
     "libssl|focal": "1.1",
