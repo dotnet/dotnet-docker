@@ -15,7 +15,7 @@ RUN apk add --upgrade --no-cache \
         icu-data-full \
         icu-libs \
         libgcc \
-        libssl \
+        libssl3 \
         libstdc++ \
         tzdata
 
