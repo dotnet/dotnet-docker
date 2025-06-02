@@ -1,4 +1,4 @@
-FROM arm32v7/alpine:3.21
+FROM amd64/alpine:3.22
 
 ENV \
     # UID of the non-root user 'app'
@@ -15,7 +15,7 @@ RUN apk add --upgrade --no-cache \
         icu-data-full \
         icu-libs \
         libgcc \
-        libssl3 \
+        libssl \
         libstdc++ \
         tzdata
 

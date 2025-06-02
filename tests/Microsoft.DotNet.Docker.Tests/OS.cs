@@ -9,6 +9,7 @@ namespace Microsoft.DotNet.Docker.Tests
         // Alpine
         public const string Alpine = "alpine";
         public const string Alpine321 = $"{Alpine}3.21";
+        public const string Alpine322 = $"{Alpine}3.22";
 
         // AzureLinux
         public const string AzureLinux = "azurelinux";

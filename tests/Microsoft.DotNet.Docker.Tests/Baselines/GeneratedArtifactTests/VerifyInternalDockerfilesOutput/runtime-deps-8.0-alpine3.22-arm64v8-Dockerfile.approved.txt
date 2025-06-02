@@ -1,4 +1,4 @@
-FROM arm32v7/alpine:3.21
+FROM arm64v8/alpine:3.22
 
 ENV \
     # UID of the non-root user 'app'
@@ -15,8 +15,9 @@ RUN apk add --upgrade --no-cache \
         \
         # .NET dependencies
         libgcc \
-        libssl3 \
-        libstdc++
+        libssl \
+        libstdc++ \
+        zlib
 
 # Create a non-root user and group
 RUN addgroup \

@@ -1,4 +1,4 @@
-FROM amd64/alpine:3.21
+FROM amd64/alpine:3.22
 
 ENV \
     # UID of the non-root user 'app'
@@ -15,7 +15,7 @@ RUN apk add --upgrade --no-cache \
         \
         # .NET dependencies
         libgcc \
-        libssl3 \
+        libssl \
         libstdc++
 
 # Create a non-root user and group
