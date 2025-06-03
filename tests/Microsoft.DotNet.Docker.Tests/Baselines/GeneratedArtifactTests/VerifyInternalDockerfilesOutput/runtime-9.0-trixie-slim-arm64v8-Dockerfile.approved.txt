@@ -6,8 +6,8 @@ FROM arm64v8/buildpack-deps:trixie-curl AS installer
 ARG ACCESSTOKEN
 
 # Retrieve .NET Runtime
-RUN dotnet_version=0.0.0 \
-    && curl -H "Authorization: Bearer $ACCESSTOKEN" -H "x-ms-version: 2017-11-09" -fSL --output dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz" \
+ RUN dotnet_version=0.0.0 \
+    && curl -H "Authorization: Bearer $ACCESSTOKEN" -H "x-ms-version: 2017-11-09" -fSL --output dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/Runtime/0.0.0/dotnet-runtime-0.0.0-linux-arm64.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
