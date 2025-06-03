@@ -10,7 +10,7 @@ RUN tdnf install -y \
 
 # Retrieve Aspire Dashboard
 RUN dotnet_aspire_version=0.0.0 \
-    && curl -H "Authorization: Bearer $ACCESSTOKEN" -H "x-ms-version: 2017-11-09" -fSL --output aspire_dashboard.zip "https://dotnetstage.blob.core.windows.net/aspire/$dotnet_aspire_version/aspire-dashboard-linux-arm64.zip" \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" -fSL --output aspire_dashboard.zip "https://dotnetstage.blob.core.windows.net/aspire/$dotnet_aspire_version/aspire-dashboard-linux-arm64.zip" \
     && aspire_dashboard_sha512='{sha512_placeholder}' \
     && echo "$aspire_dashboard_sha512  aspire_dashboard.zip" | sha512sum -c - \
     && mkdir -p /app \
