@@ -40,6 +40,7 @@ extends:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        isInternalServicingValidation: true
         # We always want staged images to be as up-to-date as possible,
         # so don't rely on any caching behavior.
         noCache: true
