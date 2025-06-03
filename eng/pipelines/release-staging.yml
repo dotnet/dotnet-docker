@@ -19,6 +19,9 @@ variables:
 extends:
   template: /eng/common/templates/1es-official.yml@self
   parameters:
+    serviceConnections:
+    - name: $(internal-mirror.serviceConnectionName)
+    - name: $(build.serviceConnectionName)
     stages:
     - template: /eng/pipelines/stages/build-and-test.yml@self
       parameters:
