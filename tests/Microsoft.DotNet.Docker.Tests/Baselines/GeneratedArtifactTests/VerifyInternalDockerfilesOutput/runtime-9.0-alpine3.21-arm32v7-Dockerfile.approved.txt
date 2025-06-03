@@ -7,8 +7,7 @@ ARG ACCESSTOKEN
 
 # Retrieve .NET Runtime
 RUN dotnet_version=0.0.0 \
-    && token=$(echo "${ACCESSTOKEN}:${ACCESSTOKEN}" | base64 -w 0) \
-    && wget --header="Authorization: Basic $token" -O dotnet.tar.gz "https://artifacts.visualstudio.com/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz" \
+    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" -O dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
