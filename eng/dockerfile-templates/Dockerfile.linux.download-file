@@ -12,11 +12,10 @@
         https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
 
     set isInternal to find(ARGS["url"], "dotnetstage") >= 0 ^
-    set additionalWgetArgs to when(isInternal, '--header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" ', '') ^
-    set additionalCurlArgs to when(isInternal, '-H "Authorization: Bearer $ACCESSTOKEN" -H "x-ms-version: 2017-11-09" ', '') ^
+    set headerArgs to when(isInternal, '--header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" ', '') ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set shaFunction to ARGS["sha-function"] ^
     set shaFunction to when(shaFunction, shaFunction, "512")
-}}{{if isAlpine:wget {{additionalWgetArgs}}-O^else:curl {{additionalCurlArgs}}-fSL --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
+}}{{if isAlpine:wget {{headerArgs}}-O^else:curl {{headerArgs}}-fSL --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
 && {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
 && echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha{{shaFunction}}sum -c -}}
