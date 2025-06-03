@@ -4,7 +4,7 @@ FROM arm64v8/buildpack-deps:bookworm-curl AS installer
 
 ARG ACCESSTOKEN
 
-# Install .NET SDK
+ # Install .NET SDK
 RUN curl -H "Authorization: Bearer $ACCESSTOKEN" -H "x-ms-version: 2017-11-09" -fSL --output dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-arm64.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
