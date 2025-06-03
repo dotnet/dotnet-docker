@@ -66,7 +66,7 @@ public class GeneratedArtifactTests
         string errorMessage = $"Failed to generate Dockerfiles using `{s_generateDockerfilesScript}`.";
 
         // Override base URLs to make templates generate internal versions of Dockerfiles
-        const string InternalBaseUrl = "https://artifacts.visualstudio.com";
+        const string InternalBaseUrl = "https://dotnetstage.blob.core.windows.net";
         string customImageBuilderArgs =
             $" --var 'base-url|public|maintenance|main={InternalBaseUrl}'" +
             $" --var 'base-url|public|maintenance|nightly={InternalBaseUrl}'" +
