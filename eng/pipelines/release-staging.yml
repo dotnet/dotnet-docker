@@ -34,6 +34,7 @@ extends:
     serviceConnections:
     - name: $(internal-mirror.serviceConnectionName)
     - name: $(build.serviceConnectionName)
+    - name: $(dotnetstaging.serviceConnection.name)
     stages:
     - template: /eng/pipelines/stages/build-and-test.yml@self
       parameters:
