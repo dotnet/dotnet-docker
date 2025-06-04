@@ -8,12 +8,30 @@ resources:
     endpoint: dotnet
     name: dotnet/versions
 
+parameters:
+- name: sourceBuildPipelineRunId
+  displayName: >
+    Source build pipeline run ID. This refers to runs of *this pipeline*.
+    Override this parameter in combination with disabling the `Build` stage to
+    test or publish images that were built in a different pipeline run. When
+    building new images, leave this value alone.
+  type: string
+  default: $(Build.BuildId)
+
 variables:
 - template: /eng/pipelines/variables/samples.yml@self
+  parameters:
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
   parameters:
+    serviceConnections:
+    - name: $(internal-mirror.serviceConnectionName)
+    - name: $(build.serviceConnectionName)
+    - name: $(publish.serviceConnectionName)
+    - name: $(kusto.serviceConnectionName)
+    - name: $(marStatus.serviceConnectionName)
     stages:
     - template: /eng/pipelines/stages/build-test-publish-repo.yml@self
       parameters:

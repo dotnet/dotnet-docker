@@ -20,6 +20,9 @@ parameters:
   type: stageList
   default: []
   # 1ES Pipeline Template parameters
+- name: serviceConnections
+  type: object
+  default: []
 - name: pool
   type: object
   default:
@@ -67,4 +70,9 @@ extends:
         sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
         tsa:
           enabled: true
-    stages: ${{ parameters.stages }}
+    stages:
+    - template: /eng/common/templates/stages/setup-service-connections.yml@self
+      parameters:
+        pool: ${{ parameters.pool }}
+        serviceConnections: ${{ parameters.serviceConnections }}
+    - ${{ parameters.stages }}

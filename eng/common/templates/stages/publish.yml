@@ -6,9 +6,13 @@ parameters:
   publicProjectName: null
 
   isInternalServicingValidation: false
+  isStandalonePublish: false
 
   pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
+
+  sourceBuildPipelineDefinitionId: ''
+  sourceBuildPipelineRunId: ''
 
 ################################################################################
 # Publish Images
@@ -16,10 +20,11 @@ parameters:
 stages:
 - ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
   - stage: Publish
-    ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-      dependsOn: Test
-    ${{ else }}:
-      dependsOn: Post_Build
+    ${{ if not(parameters.isStandalonePublish) }}:
+      ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+        dependsOn: Test
+      ${{ else }}:
+        dependsOn: Post_Build
     condition: "
       and(
         not(canceled()),
@@ -56,3 +61,5 @@ stages:
         internalProjectName: ${{ parameters.internalProjectName }}
         customPublishVariables: ${{ parameters.customPublishVariables }}
         customInitSteps: ${{ parameters.customPublishInitSteps }}
+        sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

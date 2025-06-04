@@ -10,6 +10,7 @@ parameters:
   publicProjectName: null
   linuxAmd64Pool: ""
   isInternalServicingValidation: false
+  sourceBuildPipelineRunId: ""
 
 stages:
 - template: /eng/pipelines/stages/build-and-test.yml@self
