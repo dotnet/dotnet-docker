@@ -94,7 +94,6 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
             AzdoOrganization = options.AzdoOrganization,
             AzdoProject = options.AzdoProject,
             AzdoRepo = options.AzdoRepo,
-            AzdoToken = options.AzdoToken,
             VersionSourceName = options.VersionSourceName,
             SourceBranch = options.SourceBranch,
             TargetBranch = options.TargetBranch,

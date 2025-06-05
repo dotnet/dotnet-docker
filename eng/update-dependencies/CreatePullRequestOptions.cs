@@ -16,7 +16,6 @@ public abstract record CreatePullRequestOptions
     public string AzdoOrganization { get; init; } = "";
     public string AzdoProject { get; init; } = "";
     public string AzdoRepo { get; init; } = "";
-    public string AzdoToken { get; init; } = "";
     public string VersionSourceName { get; init; } = "";
     public string SourceBranch { get; init; } = "nightly";
     public string TargetBranch
