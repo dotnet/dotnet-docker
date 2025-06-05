@@ -6,7 +6,7 @@ using System.CommandLine;
 
 namespace Dotnet.Docker;
 
-internal class FromBuildOptions : CreatePullRequestOptions, IOptions
+internal record FromBuildOptions : CreatePullRequestOptions, IOptions
 {
     public required int Id { get; init; }
 

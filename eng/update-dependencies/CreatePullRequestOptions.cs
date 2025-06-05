@@ -6,7 +6,7 @@ using System.CommandLine;
 
 namespace Dotnet.Docker;
 
-public abstract class CreatePullRequestOptions
+public abstract record CreatePullRequestOptions
 {
     private string? _targetBranch = null;
 

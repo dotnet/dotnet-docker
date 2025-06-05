@@ -6,7 +6,7 @@ using System.CommandLine;
 
 namespace Dotnet.Docker;
 
-internal class FromChannelOptions : CreatePullRequestOptions, IOptions
+internal record FromChannelOptions : CreatePullRequestOptions, IOptions
 {
     public required int Channel { get; init; }
     public required string Repo { get; init; }
