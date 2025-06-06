@@ -1,0 +1,63 @@
+# This Azure Pipelines template is adds a prefix to the display name of each
+# task passed through the `stages` parameter. When used in conjunction with
+# an "extends" template which injects a lot of tasks into the pipeline, the
+# added prefix helps to identify which tasks were passed through this template
+# and which tasks were injected by the `baseTemplate`.
+#
+# This template assumes that `baseTemplate` uses the `stages` parameter. If it
+# doesn't, this template likely won't work as expected.
+
+parameters:
+# The pipeline will behave as if it were originally extended from this template,
+# except with updated task display names.
+- name: baseTemplate
+  type: string
+  default: ""
+
+# These parameters are passed directly to `baseTemplate`
+- name: templateParameters
+  type: object
+  default: null
+
+# These stages will be modified and passed to the `baseTemplate` as the
+# `stages` parameter. The
+- name: stages
+  type: stageList
+  default: []
+
+# This prefix will be added to the display name of each task.
+- name: taskPrefix
+  type: string
+  default: "🟪"
+
+
+extends:
+  template: ${{ parameters.baseTemplate }}
+  parameters:
+    ${{ insert }}: ${{ parameters.templateParameters }}
+    stages:
+    - ${{ each stage in parameters.stages }}:
+      - stage: ${{ stage.stage }}
+        ${{ each property in stage }}:
+          ${{ if notIn(property.key, 'stage', 'jobs') }}:
+            ${{ property.key }} : ${{ property.value }}
+        jobs:
+        - ${{ each job in stage.jobs }}:
+          - job: ${{ job.job }}
+            ${{ each property in job }}:
+              ${{ if notIn(property.key, 'job', 'steps') }}:
+                ${{ property.key }} : ${{ property.value }}
+            steps:
+            - ${{ each step in job.steps }}:
+              # Special case for Azure Pipelines checkout task:
+              # https://learn.microsoft.com/azure/devops/extend/develop/pipeline-decorator-context?view=azure-devops#task-names-and-guids
+              # The checkout task does not have a name - it is special and built directly into the agent.
+              # Avoid modifying the checkout task, or else it will show up in the UI as a task with no name.
+              - ${{ if contains(step.task, '6d15af64-176c-496d-b583-fd2ae21d4df4') }}:
+                - ${{ step }}
+              - ${{ else }}:
+                - task: ${{ step.task }}
+                  ${{ each property in step }}:
+                    ${{ if notIn(property.key, 'task', 'displayName') }}:
+                      ${{ property.key }} : ${{ property.value }}
+                  displayName: ${{ parameters.taskPrefix }} ${{ step.displayName }}
