@@ -24,9 +24,6 @@ public record BuildManifest
             .SelectMany(build => build.Assets)
             .Concat(ExtraAssets);
 
-    public override string ToString() =>
-        JsonSerializer.Serialize(this, s_jsonOptions);
-
     public static BuildManifest FromJson(string json) =>
         JsonSerializer.Deserialize<BuildManifest>(json, s_jsonOptions)
             ?? throw new InvalidOperationException($"Failed to deserialize {nameof(BuildManifest)}: " + json);
