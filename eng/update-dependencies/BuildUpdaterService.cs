@@ -57,7 +57,7 @@ internal class BuildUpdaterService(
         string productCommitsJson = await _buildAssetService.GetAssetTextContentsAsync(productCommitsAsset);
         ProductCommits productCommits = ProductCommits.FromJson(productCommitsJson);
 
-        Version dockerfileVersion = ResolveMajorMinorVersion(productCommits.Sdk.Version);
+        Version dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(productCommits.Sdk.Version);
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
@@ -82,23 +82,13 @@ internal class BuildUpdaterService(
             AzdoOrganization = pullRequestOptions.AzdoOrganization,
             AzdoProject = pullRequestOptions.AzdoProject,
             AzdoRepo = pullRequestOptions.AzdoRepo,
+            AzdoToken = pullRequestOptions.AzdoToken,
             VersionSourceName = pullRequestOptions.VersionSourceName,
             SourceBranch = pullRequestOptions.SourceBranch,
             TargetBranch = pullRequestOptions.TargetBranch,
         };
 
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
-    }
-
-    private static Version ResolveMajorMinorVersion(string versionString)
-    {
-        string[] versionParts = versionString.Split('.');
-        if (versionParts.Length < 2)
-        {
-            throw new InvalidOperationException($"Could not parse major-minor version from '{versionString}'.");
-        }
-
-        return new Version(major: int.Parse(versionParts[0]), minor: int.Parse(versionParts[1]));
     }
 
     private static bool IsVmrBuild(Build build)
