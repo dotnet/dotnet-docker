@@ -8,6 +8,15 @@ using System.Text.Json;
 
 namespace Dotnet.Docker.Model.Release;
 
+// The models in this file are a subset of the BuildManifest models used by the .NET release infrastructure.
+// They should stay in sync.
+// https://dev.azure.com/dnceng/internal/_git/dotnet-release?path=/src/Microsoft.DotNet.Release/Microsoft.DotNet.ReleaseLib/Models/BuildManifest.cs
+
+/// <summary>
+/// Represents a single release of .NET. This can contain multiple channels but typically spans only one major version
+/// of .NET. For example, a .NET 8.0 BuildManifest would contain all .NET 8.0.1XX/2XX/3XX SDKs, but no versions of .NET
+/// 9.0.
+/// </summary>
 public record BuildManifest
 {
     private static readonly JsonSerializerOptions s_jsonOptions = new()
@@ -29,6 +38,10 @@ public record BuildManifest
             ?? throw new InvalidOperationException($"Failed to deserialize {nameof(BuildManifest)}: " + json);
 }
 
+/// <summary>
+/// Represents a single, unique build on the .NET build asset registry (BAR). This is a unique build of a single commit
+/// of a single repository.
+/// </summary>
 public record Build
 {
     public required Uri Repo { get; init; }
@@ -41,6 +54,10 @@ public record Build
     public required Asset[] Assets { get; init; }
 }
 
+/// <summary>
+/// Represents one single downloadable asset from a .NET build. Can be a binary, NuGet package, text file, or any other
+/// type of file that is produced by a .NET build.
+/// </summary>
 public record Asset
 {
     public required string Name { get; init; }
@@ -52,4 +69,10 @@ public record Asset
     public required long BarAssetId { get; init; }
 }
 
+/// <summary>
+/// Represents a .NET build asset registry (BAR) channel. Channels group together builds of different repositories that
+/// must ship together. An example channel might be something like ".NET SDK 10.0.100-preview.1".
+/// </summary>
+/// <param name="Id">The ID of the channel</param>
+/// <param name="Name">The name of the channel</param>
 public record Channel(long Id, string Name);
