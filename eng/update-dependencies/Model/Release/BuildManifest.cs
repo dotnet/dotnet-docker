@@ -9,7 +9,7 @@ using System.Text.Json;
 
 namespace Dotnet.Docker.Model.Release;
 
-public record ReleaseManifest
+public record BuildManifest
 {
     private static readonly JsonSerializerOptions s_jsonOptions = new()
     {
@@ -28,9 +28,9 @@ public record ReleaseManifest
     public override string ToString() =>
         JsonSerializer.Serialize(this, s_jsonOptions);
 
-    public static ReleaseManifest FromJson(string json) =>
-        JsonSerializer.Deserialize<ReleaseManifest>(json, s_jsonOptions)
-            ?? throw new InvalidOperationException($"Failed to deserialize {nameof(ReleaseManifest)}: " + json);
+    public static BuildManifest FromJson(string json) =>
+        JsonSerializer.Deserialize<BuildManifest>(json, s_jsonOptions)
+            ?? throw new InvalidOperationException($"Failed to deserialize {nameof(BuildManifest)}: " + json);
 }
 
 public record Build

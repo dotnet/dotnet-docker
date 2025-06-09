@@ -40,8 +40,8 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
             containerName: $"stage-{options.StagingPipelineRunId}",
             blobPath: "metadata/ReleaseManifest.json");
 
-        var releaseManifest = ReleaseManifest.FromJson(releaseManifestJson);
-        var allAssets = releaseManifest.AllAssets.ToList();
+        var buildManifest = BuildManifest.FromJson(releaseManifestJson);
+        var allAssets = buildManifest.AllAssets.ToList();
 
         // Look through all the assets and get the version of the highest SDK feature band
         var sdkAssets = allAssets
