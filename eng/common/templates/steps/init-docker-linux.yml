@@ -24,26 +24,27 @@ steps:
   # Setup Image Builder (Optional)
   ################################################################################
 - ${{ if eq(parameters.setupImageBuilder, 'true') }}:
+
   - script: $(engCommonPath)/pull-image.sh $(imageNames.imageBuilder)
     displayName: Pull Image Builder
     condition: and(succeeded(), ${{ parameters.condition }})
-  - script: >
+
+  - script: >-
       docker build
       -t $(imageNames.imageBuilder.withrepo)
       --build-arg IMAGE=$(imageNames.imageBuilder)
       -f $(engCommonPath)/Dockerfile.WithRepo .
     displayName: Build Image for Image Builder
     condition: and(succeeded(), ${{ parameters.condition }})
+
   - task: PowerShell@2
     displayName: Define ImageBuilder Command Variables
     condition: and(succeeded(), ${{ parameters.condition }})
     inputs:
       targetType: 'inline'
       script: |
-        $tokenHostPath = '$(Agent.TempDirectory)'
-        $tokenHostFilePath = "${tokenHostPath}/token"
-        $tokenContainerPath = "/tmp"
-        $tokenContainerFilePath = "${tokenContainerPath}/token"
+        $imageBuilderImageName = "$(imageNames.imageBuilder.withrepo)"
+        Write-Host "##vso[task.setvariable variable=imageBuilderImageName]$imageBuilderImageName"
 
         $dockerRunBaseCmd = @(
           "docker run --rm"
@@ -58,10 +59,10 @@ steps:
         )
 
         $authedDockerRunArgs = @(
-          '-e AZURE_TENANT_ID=$env:tenantId'
-          '-e AZURE_CLIENT_ID=$env:servicePrincipalId'
-          "-e AZURE_FEDERATED_TOKEN_FILE=$tokenContainerFilePath"
-          "-v ${tokenHostPath}:${tokenContainerPath}"
+          '-e'
+          'SYSTEM_ACCESSTOKEN=$env:SYSTEM_ACCESSTOKEN'
+          '-e'
+          'SYSTEM_OIDCREQUESTURI=$env:SYSTEM_OIDCREQUESTURI'
         )
 
         $dockerRunCmd = $dockerRunBaseCmd + $dockerRunArgs
@@ -72,7 +73,6 @@ steps:
 
         Write-Host "##vso[task.setvariable variable=runImageBuilderCmd]$runImageBuilderCmd"
         Write-Host "##vso[task.setvariable variable=runAuthedImageBuilderCmd]$runAuthedImageBuilderCmd"
-        Write-Host "##vso[task.setvariable variable=tokenHostFilePath]$tokenHostFilePath"
 
   ################################################################################
   # Setup Test Runner (Optional)

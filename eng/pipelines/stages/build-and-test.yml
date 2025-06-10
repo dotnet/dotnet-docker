@@ -7,15 +7,13 @@ parameters:
   publicProjectName: null
   linuxAmd64Pool: ""
   isInternalServicingValidation: false
+  sourceBuildPipelineRunId: ""
 
 stages:
 - template: /eng/common/templates/stages/dotnet/build-and-test.yml@self
   parameters:
-    noCache: ${{ parameters.noCache }}
-    internalProjectName: ${{ parameters.internalProjectName }}
-    publicProjectName: ${{ parameters.publicProjectName }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
-    linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
+    ${{ insert }}: ${{ parameters }}
+
     ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), and(eq(variables['System.TeamProject'], parameters.internalProjectName), or(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'true')))) }}:
       buildMatrixType: platformVersionedOs
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
