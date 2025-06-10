@@ -7,34 +7,50 @@
         - installer-stage (optional): Name of the Dockerfile stage responsible for installation ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
+    set buildVersion to VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")] ^
+
     set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set destDir to "/dotnet" ^
-    set aspnetVersionDir to when(ARGS["use-local-version-var"],
-        "$aspnetcore_version",
-        when(ARGS["is-internal"],
-            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
-            "$ASPNET_VERSION")) ^
-    set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
-        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
-    set aspnetVersionFile to when(isStableBranding,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        aspnetVersionDir) ^
-    set url to cat(
-        VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
-        "/aspnetcore/Runtime/", aspnetVersionDir, "/aspnetcore-runtime-", aspnetVersionFile,
-        "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
+
+    set sdkBuildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
+    set isStableBranding to find(sdkBuildVersion, "-servicing") >= 0 || find(sdkBuildVersion, "-rtm") >= 0 ^
+
+    _ Set versions explicitly, and dynamically replace them based on whether they match the env/local variables. ^
+    _ For preview (non-stable) versions, the full build version is always in the file name. ^
+    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
+    set versionDir to buildVersion ^
+
+    set versionVariable to
+        when(ARGS["use-local-version-var"],
+            "aspnetcore_version",
+            "ASPNET_VERSION") ^
+
+    set versionVariableValue to buildVersion ^
+    if (versionDir = versionVariableValue):{{
+        set versionDir to cat("$", versionVariable)
+    }}^
+    if (fileVersion = versionVariableValue):{{
+        set fileVersion to cat("$", versionVariable)
+    }}^
+
+    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
+    set downloadUrl to cat(baseUrl, "/aspnetcore/Runtime/", versionDir, "/aspnetcore-runtime-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
+    set sha to VARIABLES[join(["aspnet", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")] ^
+
     set files to [
         [
             "filename": "aspnetcore.tar.gz",
-            "url": url,
-            "sha": VARIABLES[join(["aspnet", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")],
+            "url": downloadUrl,
+            "sha": sha,
             "sha-var-name": "aspnetcore_sha512",
             "extract-paths": ["./shared/Microsoft.AspNetCore.App"]
         ]
     ] ^
+
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -46,7 +62,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
         "destination": ""
     ])
 }}
-}}RUN {{if ARGS["use-local-version-var"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
+}}RUN {{if ARGS["use-local-version-var"]:{{versionVariable}}={{versionVariableValue}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
             "files": files,
