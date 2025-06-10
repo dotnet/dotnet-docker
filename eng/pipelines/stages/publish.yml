@@ -7,15 +7,12 @@ parameters:
   publicProjectName: null
   linuxAmd64Pool: ""
   isInternalServicingValidation: false
+  sourceBuildPipelineRunId: ""
 
 stages:
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
-    noCache: ${{ parameters.noCache }}
-    internalProjectName: ${{ parameters.internalProjectName }}
-    publicProjectName: ${{ parameters.publicProjectName }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
-    linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
+    ${{ insert }}: ${{ parameters }}
     customPublishInitSteps:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     - template: /eng/pipelines/steps/set-publish-mcrdocs-args-var.yml@self
