@@ -1,12 +1,12 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:10.0.0-preview.4-alpine3.22-arm32v7 AS installer
+FROM $REPO:10.0.0-preview.5-alpine3.22-arm32v7 AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-preview.4.25258.110 \
+RUN aspnetcore_version=10.0.0-preview.5.25277.114 \
     && wget -O aspnetcore.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm.tar.gz \
-    && aspnetcore_sha512='d6b6e4f2f548b0de2ba48c85a55de60675243d91b9e433aa2c4c036679aeb814236f9cf4f38509da5d471352a3845a830e1e02e5bc5e971acdb841567285626d' \
+    && aspnetcore_sha512='789ec6dcb6805ed709f03facd19e2cf04faeb88408e2436bc7e7e76eb65f273402f4714cee60c6b08fd9b59138bff43b805965d1d5c5ba585beae71e5ffb8b4d' \
     && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir -p /dotnet \
     && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
@@ -14,9 +14,9 @@ RUN aspnetcore_version=10.0.0-preview.4.25258.110 \
 
 
 # ASP.NET Core image
-FROM $REPO:10.0.0-preview.4-alpine3.22-arm32v7
+FROM $REPO:10.0.0-preview.5-alpine3.22-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-preview.4.25258.110
+ENV ASPNET_VERSION=10.0.0-preview.5.25277.114
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
