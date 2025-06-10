@@ -19,7 +19,7 @@ RUN yarp_version=3.0.0-preview.1.25171.2 \
 
 
 # YARP image
-FROM $REPO:9.0.5-azurelinux3.0-distroless-arm64v8
+FROM $REPO:9.0.6-azurelinux3.0-distroless-arm64v8
 
 COPY --from=installer ["/app", "/app"]
 
