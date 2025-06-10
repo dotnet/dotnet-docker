@@ -9,9 +9,13 @@ steps:
   parameters:
     displayName: Wait for Image Ingestion
     condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
-    serviceConnection: $(marStatus.serviceConnectionName)
+    serviceConnections:
+    - name: mar
+      id: $(marStatus.serviceConnection.id)
+      tenantId: $(marStatus.serviceConnection.tenantId)
+      clientId: $(marStatus.serviceConnection.clientId)
     internalProjectName: 'internal'
-    args: >
+    args: >-
       waitForMcrImageIngestion
       '${{ parameters.imageInfoPath }}'
       --manifest '$(manifest)'

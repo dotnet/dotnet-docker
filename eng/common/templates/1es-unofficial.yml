@@ -20,6 +20,9 @@ parameters:
   type: stageList
   default: []
   # 1ES Pipeline Template parameters
+- name: serviceConnections
+  type: object
+  default: []
 - name: pool
   type: object
   default:
@@ -41,26 +44,35 @@ resources:
     ref: refs/tags/release
 
 extends:
-  template: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
+  template: /eng/common/templates/task-prefix-decorator.yml@self
   parameters:
-    pool: ${{ parameters.pool }}
-    sdl:
-      binskim:
-        enabled: true
-      componentgovernance:
-        ignoreDirectories: $(Build.SourcesDirectory)/versions
-        whatIf: true
-        showAlertLink: true
-      enableAllTools: ${{ not(parameters.disableSDL) }}
-      policheck:
-        enabled: true
-      sbom:
-        enabled: true
-      sourceRepositoriesToScan:
-        exclude:
-        - repository: InternalVersionsRepo
-        - repository: PublicVersionsRepo
-      sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
-      tsa:
-        enabled: true
-    stages: ${{ parameters.stages }}
+    # Use a unique task prefix for unofficial pipelines
+    taskPrefix: "🟦"
+    baseTemplate: v1/1ES.Unofficial.PipelineTemplate.yml@1ESPipelineTemplates
+    templateParameters:
+      pool: ${{ parameters.pool }}
+      sdl:
+        binskim:
+          enabled: true
+        componentgovernance:
+          ignoreDirectories: $(Build.SourcesDirectory)/versions
+          whatIf: true
+          showAlertLink: true
+        enableAllTools: ${{ not(parameters.disableSDL) }}
+        policheck:
+          enabled: true
+        sbom:
+          enabled: true
+        sourceRepositoriesToScan:
+          exclude:
+          - repository: InternalVersionsRepo
+          - repository: PublicVersionsRepo
+        sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
+        tsa:
+          enabled: true
+    stages:
+    - template: /eng/common/templates/stages/setup-service-connections.yml@self
+      parameters:
+        pool: ${{ parameters.pool }}
+        serviceConnections: ${{ parameters.serviceConnections }}
+    - ${{ parameters.stages }}
