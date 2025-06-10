@@ -70,7 +70,7 @@ jobs:
         id: $(build.serviceConnection.id)
         tenantId: $(build.serviceConnection.tenantId)
         clientId: $(build.serviceConnection.clientId)
-      - ${{ if parameters.isInternalServicingValidation }}:
+      - ${{ if eq(parameters.isInternalServicingValidation, true) }}:
         - name: storage
           id: $(dotnetstaging.serviceConnection.id)
           tenantId: $(dotnetstaging.serviceConnection.tenantId)
