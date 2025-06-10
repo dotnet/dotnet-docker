@@ -3,11 +3,18 @@
 
 *               @dotnet/dotnet-docker-reviewers
 
-monitor/        @dotnet/dotnet-docker-reviewers @jander-msft
-monitor-base/   @dotnet/dotnet-docker-reviewers @jander-msft
-*monitor*       @dotnet/dotnet-docker-reviewers @jander-msft
-*Monitor*       @dotnet/dotnet-docker-reviewers @jander-msft
+monitor/        @dotnet/dotnet-docker-reviewers @wiktork
+monitor-base/   @dotnet/dotnet-docker-reviewers @wiktork
+*monitor*       @dotnet/dotnet-docker-reviewers @wiktork
+*Monitor*       @dotnet/dotnet-docker-reviewers @wiktork
 
 aspire-dashboard/   @dotnet/dotnet-docker-reviewers @joperezr
 *aspire*            @dotnet/dotnet-docker-reviewers @joperezr
 *Aspire*            @dotnet/dotnet-docker-reviewers @joperezr
+
+yarp/ @dotnet/dotnet-docker-reviewers @benjaminpetit
+*yarp* @dotnet/dotnet-docker-reviewers @benjaminpetit
+*Yarp* @dotnet/dotnet-docker-reviewers @benjaminpetit
+*YARP* @dotnet/dotnet-docker-reviewers @benjaminpetit
+*ReverseProxy* @dotnet/dotnet-docker-reviewers @benjaminpetit
+otlptestlistener/ @dotnet/dotnet-docker-reviewers @benjaminpetit

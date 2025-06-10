@@ -6,8 +6,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `9.2`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:9.2`
+* `9.3`
+  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:9.3`
 
 ## Related Repositories
 
