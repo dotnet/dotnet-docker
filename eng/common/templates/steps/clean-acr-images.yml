@@ -11,9 +11,13 @@ steps:
   - template: /eng/common/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Clean ACR Images - ${{ parameters.repo }}
-      serviceConnection: $(clean.serviceConnectionName)
+      serviceConnections:
+      - name: acr
+        id: $(clean.serviceConnection.id)
+        tenantId: $(clean.serviceConnection.tenantId)
+        clientId: $(clean.serviceConnection.clientId)
       internalProjectName: ${{ parameters.internalProjectName }}
-      args: >
+      args: >-
         cleanAcrImages
         ${{ parameters.repo }}
         ${{ parameters.subscription }}

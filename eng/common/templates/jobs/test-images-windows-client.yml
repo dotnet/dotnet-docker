@@ -5,6 +5,7 @@ parameters:
   testJobTimeout: 60
   internalProjectName: null
   customInitSteps: []
+  sourceBuildPipelineRunId: ""
 
 jobs:
 - job: ${{ parameters.name }}
@@ -19,3 +20,4 @@ jobs:
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
       customInitSteps: ${{ parameters.customInitSteps }}
+      sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

@@ -1,17 +1,38 @@
 parameters:
+  # Destination directory on the pipeline agent's filesystem, relative or absolute.
   targetPath: ""
+  # The build/pipeline artifact to download. If the value is left empty,
+  # the task downloads all artifacts associated with the pipeline run.
   artifactName: ""
+  # AKA pipeline/definition - optional.
+  # If this is left empty, use the current pipeline's definition ID.
+  # You can get this from the URL of the pipeline's overview page on Azure DevOps.
+  # Example: https://dev.azure.com/$org/$project/_build?definitionId=373
+  pipelineDefinitionId: ""
+  # AKA runId/buildId/pipelineId - optional.
+  # The identifier of the pipeline run from which to download the artifacts.
+  # If this is left empty, then always download from the current pipeline
+  # You can get this from the URL of the specific pipeline run, for example:
+  # https://dev.azure.com/$org/$project/_build/results?buildId=2709155&view=results
+  pipelineRunId: ""
   condition: true
   continueOnError: false
 
 steps:
-- task: DownloadPipelineArtifact@1
+# https://learn.microsoft.com/azure/devops/pipelines/tasks/reference/download-pipeline-artifact-v2
+- task: DownloadPipelineArtifact@2
   inputs:
-    buildType: specific
-    project: $(System.TeamProject)
-    pipline: $(System.DefinitionId)
-    buildVersionToDownload: specific
-    buildId: $(sourceBuildId)
+    ${{ if ne(parameters.pipelineRunId, '') }}:
+      buildType: specific
+      project: $(System.TeamProject)
+      ${{ if ne(parameters.pipelineDefinitionId, '') }}:
+        definition: ${{ parameters.pipelineDefinitionId }}
+      ${{ else }}:
+        definition: $(System.DefinitionId)
+      buildId: ${{ parameters.pipelineRunId }}
+      buildVersionToDownload: specific
+    ${{ else }}:
+      buildType: current
     targetPath: ${{ parameters.targetPath }}
     artifactName: ${{ parameters.artifactName }}
   displayName: Download Build Artifact(s)
