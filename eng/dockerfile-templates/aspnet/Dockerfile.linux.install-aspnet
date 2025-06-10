@@ -37,11 +37,6 @@
         set fileVersion to cat("$", versionVariable)
     }}^
 
-    if (ARGS["is-internal"]):{{
-        set versionDir to buildVersion ^
-        set fileVersion to productVersion
-    }} ^
-
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set downloadUrl to cat(baseUrl, "/aspnetcore/Runtime/", versionDir, "/aspnetcore-runtime-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
     set sha to VARIABLES[join(["aspnet", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")] ^
@@ -67,7 +62,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
         "destination": ""
     ])
 }}
-}}RUN {{if ARGS["use-local-version-var"]:aspnetcore_version={{buildVersion}} \
+}}RUN {{if ARGS["use-local-version-var"]:{{versionVariable}}={{versionVariableValue}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
             "files": files,
