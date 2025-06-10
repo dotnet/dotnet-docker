@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=10.0.0-preview.5.25277.114  \
+RUN aspnetcore_version=10.0.0-preview.5.25277.114 \
     && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
     && dotnet_sha512='390edf8b930f1ad580f555e3f795e6f0568bfac09433661c6d04d80e7dd6615f8438c2301cd55daeab9766722e40ec94c7b442cbb0c6aaf82c501a55d3224ec2' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \

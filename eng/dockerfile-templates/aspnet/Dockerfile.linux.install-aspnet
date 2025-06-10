@@ -16,15 +16,26 @@
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set destDir to "/dotnet" ^
 
-    set versionDir to
-        when(ARGS["use-local-version-var"],
-            "$aspnetcore_version",
-            "$ASPNET_VERSION") ^
-
     set sdkBuildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
     set isStableBranding to find(sdkBuildVersion, "-servicing") >= 0 || find(sdkBuildVersion, "-rtm") >= 0 ^
 
-    set fileVersion to when(isStableBranding, productVersion, versionDir) ^
+    _ Set versions explicitly, and dynamically replace them based on whether they match the env/local variables. ^
+    _ For preview (non-stable) versions, the full build version is always in the file name. ^
+    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
+    set versionDir to buildVersion ^
+
+    set versionVariable to
+        when(ARGS["use-local-version-var"],
+            "aspnetcore_version",
+            "ASPNET_VERSION") ^
+
+    set versionVariableValue to buildVersion ^
+    if (versionDir = versionVariableValue):{{
+        set versionDir to cat("$", versionVariable)
+    }}^
+    if (fileVersion = versionVariableValue):{{
+        set fileVersion to cat("$", versionVariable)
+    }}^
 
     if (ARGS["is-internal"]):{{
         set versionDir to buildVersion ^

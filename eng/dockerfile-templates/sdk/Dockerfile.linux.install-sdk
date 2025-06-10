@@ -19,20 +19,11 @@
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set installDir to "/dotnet" ^
 
-    set versionDir to
-        when(ARGS["no-version-env-var"],
-            buildVersion,
-        when(ARGS["use-local-version-var"],
-            "$sdk_version",
-            "$DOTNET_SDK_VERSION")) ^
-
     set isStableBranding to find(buildVersion, "-servicing") >= 0 || find(buildVersion, "-rtm") >= 0 ^
-    set fileVersion to when(isStableBranding, productVersion, versionDir) ^
 
-    if (ARGS["is-internal"]):{{
-        set versionDir to buildVersion ^
-        set fileVersion to productVersion
-    }} ^
+    _ For preview (non-stable) versions, the full build version is always in the file name. ^
+    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
+    set versionDir to buildVersion ^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set downloadUrl to cat(baseUrl, "/Sdk/", versionDir, "/dotnet-sdk-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
@@ -66,11 +57,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
     ])
 }}
 }}# Install .NET SDK
-RUN {{if ARGS["use-local-version-var"]:sdk_version={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} \
-{{
-if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
-    aspnet_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
-}}}}{{if ARGS["use-local-version-var"]:    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
+RUN {{InsertTemplate("../Dockerfile.linux.download-and-install",
     [
         "files": files,
         "skip-download": !downloadEnabled,

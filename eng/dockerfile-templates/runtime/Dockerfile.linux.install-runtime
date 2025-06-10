@@ -19,25 +19,30 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
 
-    set versionDir to
-        when(ARGS["is-composite-runtime"],
-            when(ARGS["use-local-version-var"],
-                "$aspnetcore_version",
-                "$ASPNET_VERSION"),
-            when(ARGS["use-local-version-var"],
-                "$dotnet_version",
-                "$DOTNET_VERSION")) ^
-
     set sdkBuildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
     set isStableBranding to find(sdkBuildVersion, "-servicing") >= 0 || find(sdkBuildVersion, "-rtm") >= 0 ^
 
-    set fileVersion to when(isStableBranding, productVersion, versionDir) ^
+    _ Set versions explicitly, and dynamically replace them based on whether they match the env/local variables. ^
+    _ For preview (non-stable) versions, the full build version is always in the file name. ^
+    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
+    set versionDir to buildVersion ^
 
-    _ This is specific to the layout of the staging storage account blob containers. ^
-    if (ARGS["is-internal"]):{{
-        set versionDir to buildVersion ^
-        set fileVersion to productVersion
-    }} ^
+    set versionVariable to
+        when(ARGS["is-composite-runtime"],
+            when(ARGS["use-local-version-var"],
+                "aspnetcore_version",
+                "ASPNET_VERSION"),
+            when(ARGS["use-local-version-var"],
+                "dotnet_version",
+                "DOTNET_VERSION")) ^
+
+    set versionVariableValue to buildVersion ^
+    if (versionDir = versionVariableValue):{{
+        set versionDir to cat("$", versionVariable)
+    }}^
+    if (fileVersion = versionVariableValue):{{
+        set fileVersion to cat("$", versionVariable)
+    }}^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set downloadUrl to
@@ -70,8 +75,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
         "destination": ""
     ])
 }}
-}}RUN {{if ARGS["use-local-version-var"]:{{ if ARGS["is-composite-runtime"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} ^
-    else:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}}} \
+}}RUN {{if ARGS["use-local-version-var"]:{{versionVariable}}={{versionVariableValue}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
             "files": files,

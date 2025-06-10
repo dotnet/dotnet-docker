@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=10.0.0-preview.5.25277.114  \
+RUN aspnetcore_version=10.0.0-preview.5.25277.114 \
     && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm.tar.gz \
     && dotnet_sha512='e0023293584c9df783f1ccb4a8368fe9dab128bc42b469caf883e52a6afdf0c216f001be0a9e383c537dfd5f31b8106944936784e5d74193d77e50eb08d453a7' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
