@@ -82,7 +82,6 @@ internal class BuildUpdaterService(
             AzdoOrganization = pullRequestOptions.AzdoOrganization,
             AzdoProject = pullRequestOptions.AzdoProject,
             AzdoRepo = pullRequestOptions.AzdoRepo,
-            AzdoToken = pullRequestOptions.AzdoToken,
             VersionSourceName = pullRequestOptions.VersionSourceName,
             SourceBranch = pullRequestOptions.SourceBranch,
             TargetBranch = pullRequestOptions.TargetBranch,
