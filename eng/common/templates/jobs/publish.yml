@@ -250,16 +250,16 @@ jobs:
       '$(gitHubNotificationsRepoInfo.org)'
       '$(gitHubNotificationsRepoInfo.repo)'
       --repo-prefix '$(publishRepoPrefix)'
-      --task "🟪 Copy Images (Authenticated)"
-      --task "🟪 Publish Manifest (Authenticated)"
-      --task "🟪 Wait for Image Ingestion (Authenticated)"
+      --task "🟪 Copy Images"
+      --task "🟪 Publish Manifest"
+      --task "🟪 Wait for Image Ingestion"
       --task "🟪 Publish Readmes"
-      --task "🟪 Wait for MCR Doc Ingestion (Authenticated)"
+      --task "🟪 Wait for MCR Doc Ingestion"
       --task "🟪 Publish Image Info"
-      --task "🟪 Ingest Kusto Image Info (Authenticated)"
-      --task "🟪 Generate EOL Annotation Data (Authenticated)"
-      --task "🟪 Annotate EOL Images (Authenticated)"
-      --task "🟪 Wait for Annotation Ingestion (Authenticated)"
+      --task "🟪 Ingest Kusto Image Info"
+      --task "🟪 Generate EOL Annotation Data"
+      --task "🟪 Annotate EOL Images"
+      --task "🟪 Wait for Annotation Ingestion"
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
