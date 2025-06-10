@@ -10,49 +10,60 @@
         is-composite-runtime (optional): Whether to install aspnetcore composite version ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set varPlatform to when(isAlpine, "linux-musl", "linux") ^
-    set runtimeVersionDir to when(ARGS["use-local-version-var"],
-        "$dotnet_version",
-        when(ARGS["is-internal"],
-            VARIABLES[cat("runtime|", dotnetVersion, "|build-version")],
-            "$DOTNET_VERSION")) ^
-    set aspnetCompositeVersionDir to when(ARGS["use-local-version-var"],
-        "$aspnetcore_version",
-        when(ARGS["is-internal"],
+    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
+    set buildVersion to
+        when(ARGS["is-composite-runtime"],
             VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
-            "$ASPNET_VERSION")) ^
-    set isInternalStableBranding to ARGS["is-internal"] &&
-        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
-        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
-    set runtimeVersionFile to when(isInternalStableBranding,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        runtimeVersionDir) ^
-    set aspnetCompositeVersionFile to when(isInternalStableBranding,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        aspnetCompositeVersionDir) ^
-    set filePlatform to when(isAlpine, "-linux-musl", "-linux") ^
+            VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]) ^
+
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set platform to when(isAlpine, "linux-musl", "linux") ^
+
+    set sdkBuildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
+    set isStableBranding to find(sdkBuildVersion, "-servicing") >= 0 || find(sdkBuildVersion, "-rtm") >= 0 ^
+
+    _ Set versions explicitly, and dynamically replace them based on whether they match the env/local variables. ^
+    _ For preview (non-stable) versions, the full build version is always in the file name. ^
+    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
+    set versionDir to buildVersion ^
+
+    set versionVariable to
+        when(ARGS["is-composite-runtime"],
+            when(ARGS["use-local-version-var"],
+                "aspnetcore_version",
+                "ASPNET_VERSION"),
+            when(ARGS["use-local-version-var"],
+                "dotnet_version",
+                "DOTNET_VERSION")) ^
+
+    set versionVariableValue to buildVersion ^
+    if (versionDir = versionVariableValue):{{
+        set versionDir to cat("$", versionVariable)
+    }}^
+    if (fileVersion = versionVariableValue):{{
+        set fileVersion to cat("$", versionVariable)
+    }}^
+
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set runtimeBaseUrl to cat(baseUrl, "/Runtime/", runtimeVersionDir, "/") ^
-    set aspnetCompositeUrl to cat(baseUrl, "/aspnetcore/Runtime/", aspnetCompositeVersionDir, "/aspnetcore-runtime-composite-", aspnetCompositeVersionFile,
-        filePlatform, "-", ARCH_SHORT, ".tar.gz") ^
-    set files to when(ARGS["is-composite-runtime"],
+    set downloadUrl to
+        when(ARGS["is-composite-runtime"],
+            cat(baseUrl, "/aspnetcore/Runtime/", versionDir, "/aspnetcore-runtime-composite-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz"),
+            cat(baseUrl, "/Runtime/",            versionDir, "/dotnet-runtime-",               fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")) ^
+    set sha to
+        when(ARGS["is-composite-runtime"],
+            VARIABLES[join(["aspnet-composite", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")],
+            VARIABLES[join(["runtime",          dotnetVersion, platform, ARCH_SHORT, "sha"], "|")]) ^
+
+    set files to
         [
             [
                 "filename": "dotnet.tar.gz",
-                "url": aspnetCompositeUrl,
-                "sha": VARIABLES[join(["aspnet-composite", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
+                "url": downloadUrl,
+                "sha": sha,
                 "sha-var-name": "dotnet_sha512"
             ]
-        ],
-        [
-            [
-                "filename": "dotnet.tar.gz",
-                "url": cat(runtimeBaseUrl, "dotnet-runtime-", runtimeVersionFile, "-", varPlatform, "-", ARCH_SHORT, ".tar.gz"),
-                "sha": VARIABLES[join(["runtime", dotnetVersion, varPlatform, ARCH_SHORT, "sha"], "|")],
-                "sha-var-name": "dotnet_sha512"
-            ]
-        ]) ^
+        ] ^
+
     set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
     set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
     set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
@@ -64,8 +75,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
         "destination": ""
     ])
 }}
-}}RUN {{if ARGS["use-local-version-var"]:{{ if ARGS["is-composite-runtime"]:aspnetcore_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} ^
-    else:dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}}} \
+}}RUN {{if ARGS["use-local-version-var"]:{{versionVariable}}={{versionVariableValue}} \
     && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
         [
             "files": files,

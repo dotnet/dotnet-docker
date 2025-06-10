@@ -8,14 +8,14 @@
         sha-var-name: Name of variable that stores the checksum
         sha-function: SHA function to use ^
 
-    set isInternal to find(ARGS["url"], "artifacts.visualstudio.com") >= 0 ^
-    set alpineSetTokenCmd to 'token=$(echo "${ACCESSTOKEN}:${ACCESSTOKEN}" | base64 -w 0)' ^
-    set additionalWgetArgs to when(isInternal, '--header="Authorization: Basic $token" ', '') ^
-    set additionalCurlArgs to when(isInternal, '-u :$ACCESSTOKEN --basic ', '') ^
+    _ Documentation for using Managed Identity/OAuth tokens to access Azure storage accounts:
+        https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
+
+    set isInternal to find(ARGS["url"], "dotnetstage") >= 0 ^
+    set headerArgs to when(isInternal, '--header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" ', '') ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set shaFunction to ARGS["sha-function"] ^
     set shaFunction to when(shaFunction, shaFunction, "512")
-}}{{if isAlpine:{{if isInternal:{{alpineSetTokenCmd}} \
-&& }}wget {{additionalWgetArgs}}-O^else:curl {{additionalCurlArgs}}-fSL --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
+}}{{if isAlpine:wget {{headerArgs}}-O^else:curl {{headerArgs}}-fSL --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
 && {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
 && echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha{{shaFunction}}sum -c -}}

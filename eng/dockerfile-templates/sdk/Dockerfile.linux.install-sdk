@@ -11,42 +11,30 @@
         no-version-env-var (optional): Force reading the from the versions file instead of using DOTNET_SDK_VERSION env var ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set buildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
+    set productVersion to VARIABLES[cat("sdk|", dotnetVersion, "|product-version")] ^
+
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isFullAzureLinux to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
     set installDir to "/dotnet" ^
-    set url to cat(
-        VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])],
-        "/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-", platform, "-", ARCH_SHORT, ".tar.gz") ^
-    set sdkVersionDir to when(ARGS["use-local-version-var"],
-        "$sdk_version",
-        when(ARGS["is-internal"] || ARGS["no-version-env-var"],
-            VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]
-            "$DOTNET_SDK_VERSION")) ^
-    set isInternalStableBranding to ARGS["is-internal"] &&
-        (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
-        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
-    set sdkVersionFile to when(isInternalStableBranding,
-        VARIABLES[cat("sdk|", dotnetVersion, "|product-version")],
-        sdkVersionDir) ^
-    set runtimeVersionDir to when(ARGS["use-local-version-var"], "$dotnet_version", "$DOTNET_VERSION") ^
-    set runtimeVersionFile to when(isInternalStableBranding,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        runtimeVersionDir) ^
-    set runtimeTargetingPackVersionFile to when(isInternalStableBranding,
-        split(VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")], "-")[0],
-        VARIABLES[cat("runtime|", dotnetVersion, "|targeting-pack-version")]) ^
-    set aspnetTargetingPackVersionFile to when(isInternalStableBranding,
-        split(VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")], "-")[0],
-        VARIABLES[cat("aspnet|", dotnetVersion, "|targeting-pack-version")]) ^
+
+    set isStableBranding to find(buildVersion, "-servicing") >= 0 || find(buildVersion, "-rtm") >= 0 ^
+
+    _ For preview (non-stable) versions, the full build version is always in the file name. ^
+    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
+    set versionDir to buildVersion ^
+
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set commonShaVarName to "dotnet_sha512" ^
+    set downloadUrl to cat(baseUrl, "/Sdk/", versionDir, "/dotnet-sdk-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
+    set sha to VARIABLES[join(["sdk", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")] ^
+
     set files to [
         [
             "filename": "dotnet.tar.gz",
-            "url": cat(baseUrl, "/Sdk/", sdkVersionDir, "/dotnet-sdk-", sdkVersionFile, "-", platform, "-", ARCH_SHORT, ".tar.gz"),
-            "sha": VARIABLES[join(["sdk", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": commonShaVarName,
+            "url": downloadUrl,
+            "sha": sha,
+            "sha-var-name": "dotnet_sha512",
             "extract-paths": [
                 "./packs",
                 "./sdk",
@@ -69,11 +57,7 @@ if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
     ])
 }}
 }}# Install .NET SDK
-RUN {{if ARGS["use-local-version-var"]:sdk_version={{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}} \
-{{
-if isFullAzureLinux:    dotnet_version={{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}} \
-    aspnet_version={{VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]}} \
-}}}}{{if ARGS["use-local-version-var"]:    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
+RUN {{InsertTemplate("../Dockerfile.linux.download-and-install",
     [
         "files": files,
         "skip-download": !downloadEnabled,

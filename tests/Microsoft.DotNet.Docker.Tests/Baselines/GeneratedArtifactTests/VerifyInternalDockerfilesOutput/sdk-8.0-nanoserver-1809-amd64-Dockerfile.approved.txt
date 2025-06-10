@@ -30,9 +30,11 @@ RUN `
         # Retrieve .NET SDK
         $sdk_version = '0.0.0'; `
         `
-        $Base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\":$($Env:ACCESSTOKEN)\")); `
-        $Headers = @{Authorization = \"Basic $Base64AuthInfo\"}; `
-        Invoke-WebRequest -OutFile dotnet.zip \"https://artifacts.visualstudio.com/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip\" -Headers $Headers; `
+        $Headers = @{ `
+            Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+            'x-ms-version' = '2017-11-09'; `
+        }; `
+        Invoke-WebRequest -OutFile dotnet.zip \"https://dotnetstage.blob.core.windows.net/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip\" -Headers $Headers; `
         `
         $dotnet_sha512 = '{sha512_placeholder}'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
