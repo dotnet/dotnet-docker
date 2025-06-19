@@ -18,4 +18,4 @@ RUN wget --output-document dotnet.tar.gz https://ci.dot.net/public/aspnetcore/Ru
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /usr/share/dotnet \
     && rm dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+    && ln --symbolic /usr/share/dotnet/dotnet /usr/bin/dotnet

@@ -18,7 +18,7 @@ RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-ver
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{nupkgPlatform}} \
     && dotnet nuget locals all --clear \
     && rm {{nupkgName}} \
-    && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
+    && ln --symbolic /usr/share/powershell/pwsh /usr/bin/pwsh \
     && chmod 755 /usr/share/powershell/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm{{if isAlpine: \

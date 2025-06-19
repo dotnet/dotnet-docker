@@ -25,4 +25,4 @@ ENV DOTNET_VERSION=10.0.0-preview.6.25274.104
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+RUN ln --symbolic /usr/share/dotnet/dotnet /usr/bin/dotnet
