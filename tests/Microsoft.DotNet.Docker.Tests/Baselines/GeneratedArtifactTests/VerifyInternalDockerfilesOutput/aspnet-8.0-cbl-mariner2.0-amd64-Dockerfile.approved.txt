@@ -11,11 +11,11 @@ RUN tdnf install -y \
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=0.0.0 \
-    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" -fSL --output aspnetcore.tar.gz "https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz" \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output aspnetcore.tar.gz "https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz" \
     && aspnetcore_sha512='{sha512_placeholder}' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
+    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum --check - \
     && mkdir -p /dotnet \
-    && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
+    && tar --gzip --extract --no-same-owner --file aspnetcore.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz
 
 
