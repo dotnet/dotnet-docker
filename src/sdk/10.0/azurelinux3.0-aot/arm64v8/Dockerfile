@@ -2,7 +2,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM $REPO:10.0.100-preview.6-azurelinux3.0-arm64v8
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         build-essential \
         clang \
         zlib-devel \

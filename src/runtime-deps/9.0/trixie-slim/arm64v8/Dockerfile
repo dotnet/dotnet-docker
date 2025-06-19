@@ -9,7 +9,7 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install --assume-yes --no-install-recommends \
         ca-certificates \
         \
         # .NET dependencies
@@ -19,13 +19,13 @@ RUN apt-get update \
         libssl3t64 \
         libstdc++6 \
         tzdata \
-    && rm -rf /var/lib/apt/lists/*
+    && rm --recursive --force /var/lib/apt/lists/*
 
 # Create a non-root user and group
 RUN groupadd \
         --gid=$APP_UID \
         app \
-    && useradd -l \
+    && useradd --no-log-init \
         --uid=$APP_UID \
         --gid=$APP_UID \
         --create-home \

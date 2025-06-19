@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:9.0.6-azurelinux3.0-arm64v8 AS installer
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         tar \
     && tdnf clean all
 
@@ -32,7 +32,7 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Azure-Linux-3.0-arm64
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         git \
         libgcc-atomic \
         tar \

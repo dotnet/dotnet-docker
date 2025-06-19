@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         ca-certificates \
         gzip \
         tar \

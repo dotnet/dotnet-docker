@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 # Installer image
 FROM $REPO:8.0.17-azurelinux3.0-arm64v8 AS installer
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         tar \
     && tdnf clean all
 

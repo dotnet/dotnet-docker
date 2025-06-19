@@ -1,14 +1,14 @@
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         gawk \
         shadow-utils \
     && tdnf clean all
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
-    && tdnf install -y --releasever=2.0 --installroot /staging \
+    && tdnf install --assumeyes --releasever=2.0 --installroot /staging \
         prebuilt-ca-certificates \
         \
         # .NET dependencies
@@ -31,7 +31,7 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 RUN groupadd \
         --gid=1654 \
         app \
-    && useradd -l \
+    && useradd --no-log-init \
         --uid=1654 \
         --gid=1654 \
         --shell /bin/false \
@@ -43,12 +43,13 @@ RUN groupadd \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
 
 # Clean up staging
-RUN rm -rf /staging/etc/tdnf \
-    && rm -rf /staging/run/* \
-    && rm -rf /staging/var/cache/tdnf \
-    && rm -rf /staging/var/lib/rpm \
-    && rm -rf /staging/usr/share/doc \
-    && rm -rf /staging/usr/share/man \
+RUN rm --recursive --force \
+        /staging/etc/tdnf \
+        /staging/run/* \
+        /staging/var/cache/tdnf \
+        /staging/var/lib/rpm \
+        /staging/usr/share/doc \
+        /staging/usr/share/man \
     && find /staging/var/log -type f -size +0 -delete
 
 

@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:10.0.0-preview.6-azurelinux3.0-arm64v8 AS installer
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         tar \
     && tdnf clean all
 
@@ -34,7 +34,7 @@ ENV \
     # Workaround for https://github.com/PowerShell/PowerShell/issues/20685
     DOTNET_ROLL_FORWARD=Major
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         git \
         libgcc-atomic \
         tar \

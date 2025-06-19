@@ -12,7 +12,7 @@ RUN curl --fail --show-error --location --output chisel.tar.gz https://github.co
 RUN groupadd \
         --gid=1654 \
         app \
-    && useradd -l \
+    && useradd --no-log-init \
         --uid=1654 \
         --gid=1654 \
         --shell /bin/false \

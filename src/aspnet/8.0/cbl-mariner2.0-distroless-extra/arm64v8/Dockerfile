@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
-RUN tdnf install -y \
+RUN tdnf install --assumeyes \
         ca-certificates \
         gzip \
         tar \

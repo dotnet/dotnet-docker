@@ -49,12 +49,13 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         ])}}
 
 # Clean up staging
-RUN rm -rf {{distrolessStagingDir}}/etc/tdnf \
-    && rm -rf {{distrolessStagingDir}}/run/* \
-    && rm -rf {{distrolessStagingDir}}/var/cache/tdnf \
-    && rm -rf {{distrolessStagingDir}}/var/lib/rpm \
-    && rm -rf {{distrolessStagingDir}}/usr/share/doc \
-    && rm -rf {{distrolessStagingDir}}/usr/share/man \
+RUN rm --recursive --force \
+        {{distrolessStagingDir}}/etc/tdnf \
+        {{distrolessStagingDir}}/run/* \
+        {{distrolessStagingDir}}/var/cache/tdnf \
+        {{distrolessStagingDir}}/var/lib/rpm \
+        {{distrolessStagingDir}}/usr/share/doc \
+        {{distrolessStagingDir}}/usr/share/man \
     && find {{distrolessStagingDir}}/var/log -type f -size +0 -delete
 
 

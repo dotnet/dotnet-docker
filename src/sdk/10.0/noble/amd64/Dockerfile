@@ -31,12 +31,12 @@ ENV \
     DOTNET_ROLL_FORWARD=Major
 
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
+    && apt-get install --assume-yes --no-install-recommends \
         curl \
         git \
         libatomic1 \
         wget \
-    && rm -rf /var/lib/apt/lists/*
+    && rm --recursive --force /var/lib/apt/lists/*
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
