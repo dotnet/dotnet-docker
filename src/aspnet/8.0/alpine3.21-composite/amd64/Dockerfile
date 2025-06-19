@@ -14,7 +14,7 @@ ENV \
 # Install ASP.NET Composite Runtime
 RUN wget --output-document dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-composite-$ASPNET_VERSION-linux-musl-x64.tar.gz \
     && dotnet_sha512='5e98d742c80e12142f5371a3c9c2946a966a4cf3a11eec1f082b27920574729ba7c8194ede92e8aabcd69a1b3eb5553b4a568db11167df1efb542453b44ce91b' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum --check - \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /usr/share/dotnet \
     && rm dotnet.tar.gz \

@@ -9,7 +9,7 @@ ARG ACCESSTOKEN
 RUN aspnetcore_version=0.0.0 \
     && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --output-document aspnetcore.tar.gz "https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-x64.tar.gz" \
     && aspnetcore_sha512='{sha512_placeholder}' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum --check - \
+    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
     && rm aspnetcore.tar.gz

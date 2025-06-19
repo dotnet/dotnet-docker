@@ -5,7 +5,7 @@ FROM $REPO:9.0.6-alpine3.21-amd64 AS installer
 # Install .NET SDK
 RUN wget --output-document dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-linux-musl-x64.tar.gz \
     && dotnet_sha512='8205f0654bd1722364543587e9d2ea43b0a96ec9925c3791f2e7f4fb04f4a5a348ca2386092ea1564a727e0034e46775d4294909eb8405358d62ee8333d5dc8f' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum --check - \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
@@ -47,7 +47,7 @@ RUN dotnet help
 RUN powershell_version=7.5.1 \
     && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
     && powershell_sha512='5be83dbc97bebe12588ef82bb31188b5be305c42445bcc87100c5532396cc2e790f3db8128671d5cc647e95f5fe06903fdfc0960a8f4d009282e3cd7e1f9f42c' \
-    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum --check - \
+    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
     && dotnet nuget locals all --clear \

@@ -15,7 +15,8 @@
     set headerArgs to when(isInternal, '--header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" ', '') ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set shaFunction to ARGS["sha-function"] ^
-    set shaFunction to when(shaFunction, shaFunction, "512")
+    set shaFunction to when(shaFunction, shaFunction, "512") ^
+    set shaCheckArg to when(isAlpine, "-c", "--check")
 }}{{if isAlpine:wget {{headerArgs}}--output-document^else:curl {{headerArgs}}--fail --show-error --location --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
 && {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
-&& echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha{{shaFunction}}sum --check -}}
+&& echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha{{shaFunction}}sum {{shaCheckArg}} -}}
