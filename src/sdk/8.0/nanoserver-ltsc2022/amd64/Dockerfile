@@ -17,7 +17,7 @@ RUN powershell -Command " `
             exit 1; `
         }; `
         mkdir MinGit; `
-        tar -oxzf mingit.zip -C MinGit; `
+        tar --gzip --extract --no-same-owner --file mingit.zip --directory MinGit; `
         Remove-Item -Force mingit.zip"
 
 RUN powershell -Command " `
@@ -33,7 +33,7 @@ RUN powershell -Command " `
             exit 1; `
         }; `
         mkdir dotnet; `
-        tar -oxzf dotnet.zip -C dotnet; `
+        tar --gzip --extract --no-same-owner --file dotnet.zip --directory dotnet; `
         Remove-Item -Force dotnet.zip; `
         `
         # Install PowerShell global tool
