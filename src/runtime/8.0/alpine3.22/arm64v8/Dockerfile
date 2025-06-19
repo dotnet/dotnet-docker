@@ -8,7 +8,7 @@ RUN dotnet_version=8.0.17 \
     && wget --output-document dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
     && dotnet_sha512='807e8b4576e71962406349f32506a5b4abd7291d4bf7c951e5eb80fcaccf77cc3f1b57fe4e7110d0b7169554e0e8905c4988bb7417f0309bdecbcadcaaecbd66' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum --check - \
-    && mkdir -p /dotnet \
+    && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
     && rm dotnet.tar.gz
 

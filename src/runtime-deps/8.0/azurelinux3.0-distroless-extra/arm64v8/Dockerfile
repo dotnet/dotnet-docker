@@ -25,7 +25,7 @@ RUN mkdir /staging \
 COPY --from=mcr.microsoft.com/azurelinux/distroless/minimal:3.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
 RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
-    && mkdir -p /staging/var/lib/rpmmanifest \
+    && mkdir --parents /staging/var/lib/rpmmanifest \
     # Remove duplicates that match on the first field (package name)
     && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
 

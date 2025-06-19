@@ -8,7 +8,7 @@ ARG ACCESSTOKEN
 RUN wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --output-document dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-musl-x64.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum --check - \
-    && mkdir -p /dotnet \
+    && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
@@ -52,7 +52,7 @@ RUN powershell_version=0.0.0 \
     && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
     && powershell_sha512='{sha512_placeholder}' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum --check - \
-    && mkdir -p /usr/share/powershell \
+    && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
     && dotnet nuget locals all --clear \
     && rm PowerShell.Linux.Alpine.$powershell_version.nupkg \

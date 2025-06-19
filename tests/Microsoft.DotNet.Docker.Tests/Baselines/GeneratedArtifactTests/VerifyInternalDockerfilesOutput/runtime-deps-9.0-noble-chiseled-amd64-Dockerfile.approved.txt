@@ -18,12 +18,12 @@ RUN groupadd \
         --shell /bin/false \
         app \
     && install -d -m 0755 -o 1654 -g 1654 "/rootfs/home/app" \
-    && mkdir -p "/rootfs/etc" \
+    && mkdir --parents "/rootfs/etc" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/rootfs/etc/group"
 
-RUN mkdir -p /rootfs/var/lib/dpkg/ \
+RUN mkdir --parents /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
         --release ubuntu-24.04 --root /rootfs \
             base-files_base \

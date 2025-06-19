@@ -19,7 +19,7 @@ RUN dotnet_monitor_extension_version=9.1.0-preview.3.25317.1 \
     && dotnet_monitor_extension_sha512='b40f647f8946c3c8dcaa7c642803eb6ab0de56179784042c51758c400c2dd89fa2fa0c69e6df6435957de8a0cf00767ea910eb56927e76de9d361c852964dc71' \
     && echo "$dotnet_monitor_extension_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum --check - \
     \
-    && mkdir -p /app \
+    && mkdir --parents /app \
     && tar --gzip --extract --no-same-owner --file dotnet-monitor-egress-azureblobstorage.tar.gz --directory /app \
     && rm dotnet-monitor-egress-azureblobstorage.tar.gz \
     && tar --gzip --extract --no-same-owner --file dotnet-monitor-egress-s3storage.tar.gz --directory /app \

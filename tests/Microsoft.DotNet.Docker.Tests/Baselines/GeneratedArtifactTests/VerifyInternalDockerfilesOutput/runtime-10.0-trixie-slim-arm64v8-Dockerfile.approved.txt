@@ -10,7 +10,7 @@ RUN dotnet_version=0.0.0 \
     && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum --check - \
-    && mkdir -p /dotnet \
+    && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
     && rm dotnet.tar.gz
 
