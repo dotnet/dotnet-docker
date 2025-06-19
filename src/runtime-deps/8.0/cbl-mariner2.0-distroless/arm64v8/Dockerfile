@@ -37,7 +37,7 @@ RUN groupadd \
         --shell /bin/false \
         --create-home \
         app \
-    && install -d -m 0755 -o 1654 -g 1654 "/staging/home/app" \
+    && install --directory --mode 0755 --owner 1654 --group 1654 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"

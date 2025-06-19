@@ -17,7 +17,7 @@ RUN groupadd \
         --gid=1654 \
         --shell /bin/false \
         app \
-    && install -d -m 0755 -o 1654 -g 1654 "/rootfs/home/app" \
+    && install --directory --mode 0755 --owner 1654 --group 1654 "/rootfs/home/app" \
     && mkdir --parents "/rootfs/etc" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
