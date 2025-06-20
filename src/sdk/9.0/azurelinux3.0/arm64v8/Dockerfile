@@ -7,11 +7,11 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-linux-arm64.tar.gz \
+RUN curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-linux-arm64.tar.gz \
     && dotnet_sha512='24e2329c40cf3e42cd1e8753d88fce454bc4a9abbad2b01e80f33130a801123a531e227673d381cb9710b715805f188fe0dcb9833fb7d04dab2cd937a1f480ed' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /dotnet \
-    && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 
@@ -45,10 +45,10 @@ RUN dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.5.1 \
-    && curl -fSL --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
+    && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
     && powershell_sha512='919f92bc7cdba754065026be2f32ea355913cba042572174ee44992be82801b9a2ed31717c039d8f7faa04095f018433fadc7541bc366a04bccfc45b228406aa' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
-    && mkdir -p /usr/share/powershell \
+    && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
     && dotnet nuget locals all --clear \
     && rm PowerShell.Linux.arm64.$powershell_version.nupkg \

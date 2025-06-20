@@ -17,7 +17,7 @@ RUN powershell -Command `
         }; `
         `
         mkdir dotnet; `
-        tar -oxzf dotnet.zip -C dotnet; `
+        tar --gzip --extract --no-same-owner --file dotnet.zip --directory dotnet; `
         Remove-Item -Force dotnet.zip
 
 

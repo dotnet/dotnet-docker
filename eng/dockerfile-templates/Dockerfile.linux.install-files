@@ -8,7 +8,7 @@
     set fileExtractionTemplate to when(ARGS["is-zip"], "Dockerfile.linux.extract-zip", "Dockerfile.linux.extract-tarball")
 }}{{
 if ARGS["create-install-dir"]
-    :mkdir -p {{ARGS["install-dir"]}} \
+    :mkdir --parents {{ARGS["install-dir"]}} \
 }}{{
 for i, file in ARGS["files"]:{{
     if i > 0 || ARGS["create-install-dir"]:&& }}{{

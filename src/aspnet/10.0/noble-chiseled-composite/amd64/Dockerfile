@@ -5,11 +5,11 @@ FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=10.0.0-preview.5.25277.114 \
-    && curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+    && curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
     && dotnet_sha512='390edf8b930f1ad580f555e3f795e6f0568bfac09433661c6d04d80e7dd6615f8438c2301cd55daeab9766722e40ec94c7b442cbb0c6aaf82c501a55d3224ec2' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
+    && mkdir --parents /usr/share/dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /usr/share/dotnet \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \

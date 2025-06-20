@@ -5,11 +5,11 @@ FROM $REPO:9.0.6-alpine3.21-arm32v7 AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=9.0.6 \
-    && wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz \
+    && wget --output-document dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz \
     && dotnet_sha512='a7979a10bf8124f83510b68d9f5036bd92a21e3b625fe334cc971b79ce2168bde265ef76c92d5f909e2539fd443ad7f14265270647c98770717fc666ad15bd9e' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /dotnet \
-    && tar -oxzf dotnet.tar.gz -C /dotnet \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
     && rm dotnet.tar.gz
 
 

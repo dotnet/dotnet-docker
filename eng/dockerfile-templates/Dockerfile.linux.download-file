@@ -16,6 +16,6 @@
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set shaFunction to ARGS["sha-function"] ^
     set shaFunction to when(shaFunction, shaFunction, "512")
-}}{{if isAlpine:wget {{headerArgs}}-O^else:curl {{headerArgs}}-fSL --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
+}}{{if isAlpine:wget {{headerArgs}}--output-document^else:curl {{headerArgs}}--fail --show-error --location --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
 && {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
 && echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha{{shaFunction}}sum -c -}}

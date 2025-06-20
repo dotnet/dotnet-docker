@@ -3,11 +3,11 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm64v8/buildpack-deps:trixie-curl AS installer
 
 # Install .NET SDK
-RUN curl -fSL --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.100-preview.5.25277.114/dotnet-sdk-10.0.100-preview.5.25277.114-linux-arm64.tar.gz \
+RUN curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/10.0.100-preview.5.25277.114/dotnet-sdk-10.0.100-preview.5.25277.114-linux-arm64.tar.gz \
     && dotnet_sha512='e99f03858baffa1b41e67eb6291b7e9eb68fc8926409794d4416982092b7e80356e5547be779b774216c1ec7aee236b6474567cb7c0d815ecd19ebc71b07f971' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /dotnet \
-    && tar -oxzf dotnet.tar.gz -C /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 
@@ -45,10 +45,10 @@ RUN dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.6.0-preview.4 \
-    && curl -fSL --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
+    && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
     && powershell_sha512='265519a89209f8c0c6c736f3a0d92d97468ee5ddfc245c9ed24ec8ebe13826f15b6d3a879ce6e4274c17091d38811c91b2e5acf8ec4d2202d9b0d1176a28c710' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
-    && mkdir -p /usr/share/powershell \
+    && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
     && dotnet nuget locals all --clear \
     && rm PowerShell.Linux.arm64.$powershell_version.nupkg \
