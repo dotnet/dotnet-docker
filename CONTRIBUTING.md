@@ -83,7 +83,7 @@ Use the following formatting guidelines when authoring Dockerfiles in this repo:
 
 - Separate instructions with an empty newline.
 - Separate stages with two empty newlines.
-- Use long-form command line options for better readability.
+- Prefer to use long-form command line options for better readability.
 - Leave an empty newline at the end of the Dockerfile.
 
 ### Editing READMEs
