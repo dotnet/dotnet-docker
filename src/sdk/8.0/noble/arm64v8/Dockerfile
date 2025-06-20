@@ -5,7 +5,7 @@ FROM arm64v8/buildpack-deps:noble-curl AS installer
 # Install .NET SDK
 RUN curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.411/dotnet-sdk-8.0.411-linux-arm64.tar.gz \
     && dotnet_sha512='7fd70c97e549e873ceefb62ed9fef317597fb300b0f95487858719a231e6d333430c7b70e02c8105c1ba679446f6056af0072d22c17368906d94491f4705136c' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum --check - \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
@@ -45,7 +45,7 @@ RUN dotnet help
 RUN powershell_version=7.4.10 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
     && powershell_sha512='8a354c031efed49ffbbb37455f0bb7197ba7e6cef558ba4e2eec1aa3d60bc197a296b9e6235cdc90cbd52dc4419fb21e78d55707e3f9b59a7a7960ccb3fbb053' \
-    && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum --check - \
+    && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
     && dotnet nuget locals all --clear \

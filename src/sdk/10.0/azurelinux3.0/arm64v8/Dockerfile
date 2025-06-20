@@ -9,7 +9,7 @@ RUN tdnf install -y \
 # Install .NET SDK
 RUN curl --fail --show-error --location --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.6.25274.104/dotnet-sdk-10.0.100-preview.6.25274.104-linux-arm64.tar.gz \
     && dotnet_sha512='da9bdd7613a7ec47629aa3cb80a9cc2fc6ad9638bd61e5fb4f55303e75556f09d410c6591909beaac330acf1c79135477418c851ad7fbe1943d6240d2d1cc892' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum --check - \
+    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
@@ -49,7 +49,7 @@ RUN dotnet help
 RUN powershell_version=7.6.0-preview.4 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
     && powershell_sha512='265519a89209f8c0c6c736f3a0d92d97468ee5ddfc245c9ed24ec8ebe13826f15b6d3a879ce6e4274c17091d38811c91b2e5acf8ec4d2202d9b0d1176a28c710' \
-    && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum --check - \
+    && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
     && dotnet nuget locals all --clear \
