@@ -13,7 +13,7 @@ RUN dotnet_version=8.0.17 \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \
-    && ln --symbolic /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
 
 
 # .NET runtime image

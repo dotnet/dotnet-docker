@@ -56,7 +56,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}{{ if isDistroless:
 
 RUN mkdir /dotnet-symlink \
-    && ln --symbolic /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
 
 
 # .NET runtime image

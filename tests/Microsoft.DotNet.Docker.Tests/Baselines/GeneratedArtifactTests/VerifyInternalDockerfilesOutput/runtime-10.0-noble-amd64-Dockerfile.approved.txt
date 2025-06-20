@@ -23,4 +23,4 @@ ENV DOTNET_VERSION=0.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-RUN ln --symbolic /usr/share/dotnet/dotnet /usr/bin/dotnet
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

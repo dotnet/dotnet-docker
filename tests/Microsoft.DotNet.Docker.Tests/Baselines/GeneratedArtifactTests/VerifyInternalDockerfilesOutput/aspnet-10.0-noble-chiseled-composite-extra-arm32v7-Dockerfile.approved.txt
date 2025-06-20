@@ -15,7 +15,7 @@ RUN aspnetcore_version=0.0.0 \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \
-    && ln --symbolic /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
 
 
 # ASP.NET Composite Image

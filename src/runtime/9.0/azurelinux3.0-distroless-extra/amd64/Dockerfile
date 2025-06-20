@@ -19,7 +19,7 @@ RUN dotnet_version=9.0.6 \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \
-    && ln --symbolic /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
 
 
 # .NET runtime image
