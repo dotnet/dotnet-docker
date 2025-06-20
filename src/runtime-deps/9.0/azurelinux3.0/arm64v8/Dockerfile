@@ -8,7 +8,7 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         ca-certificates \
         \
         # .NET dependencies
@@ -21,7 +21,7 @@ RUN tdnf install --assumeyes \
     && tdnf clean all
 
 # Create a non-root user and group
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         shadow-utils \
     && groupadd \
         --gid=$APP_UID \

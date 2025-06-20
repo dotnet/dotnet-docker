@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
 ARG ACCESSTOKEN
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         ca-certificates \
         gzip \
         tar \

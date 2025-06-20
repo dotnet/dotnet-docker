@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 # Installer image
 FROM $REPO:8.0.17-cbl-mariner2.0-arm64v8 AS installer
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         tar \
     && tdnf clean all
 

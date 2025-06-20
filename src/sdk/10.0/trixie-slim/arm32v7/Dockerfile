@@ -31,7 +31,7 @@ ENV \
     DOTNET_ROLL_FORWARD=Major
 
 RUN apt-get update \
-    && apt-get install --assume-yes --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
         curl \
         git \
         libatomic1 \

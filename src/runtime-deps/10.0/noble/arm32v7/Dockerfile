@@ -9,7 +9,7 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true
 
 RUN apt-get update \
-    && apt-get install --assume-yes --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
         ca-certificates \
         \
         # .NET dependencies

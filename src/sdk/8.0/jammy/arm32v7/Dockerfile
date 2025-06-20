@@ -29,7 +29,7 @@ ENV \
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-22.04-arm32
 
 RUN apt-get update \
-    && apt-get install --assume-yes --no-install-recommends \
+    && apt-get install -y --no-install-recommends \
         curl \
         git \
         libatomic1 \

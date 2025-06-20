@@ -1,14 +1,14 @@
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         gawk \
         shadow-utils \
     && tdnf clean all
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
-    && tdnf install --assumeyes --releasever=3.0 --installroot /staging \
+    && tdnf install -y --releasever=3.0 --installroot /staging \
         prebuilt-ca-certificates \
         \
         # .NET dependencies

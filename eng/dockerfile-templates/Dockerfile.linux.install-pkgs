@@ -18,9 +18,9 @@
 }}{{
 if isDnf:dnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 elif isApk:apk add --upgrade --no-cache{{ARGS["pkg-mgr-opts"]}} \^
-elif isTdnf:tdnf install --assumeyes{{ARGS["pkg-mgr-opts"]}} \^
+elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 else:apt-get update \
-    && apt-get install --assume-yes --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
+    && apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
     for index, pkg in ARGS["pkgs"]:
         {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{if !ARGS["no-clean"]:{{
 if isTdnf:

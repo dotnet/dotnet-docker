@@ -1,14 +1,14 @@
 # Installer image
 FROM mcr.microsoft.com/cbl-mariner/base/core:2.0 AS installer
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         gawk \
         shadow-utils \
     && tdnf clean all
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
-    && tdnf install --assumeyes --releasever=2.0 --installroot /staging \
+    && tdnf install -y --releasever=2.0 --installroot /staging \
         prebuilt-ca-certificates \
         \
         # .NET dependencies

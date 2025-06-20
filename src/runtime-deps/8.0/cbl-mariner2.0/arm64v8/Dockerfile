@@ -8,7 +8,7 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         ca-certificates \
         \
         # .NET dependencies
@@ -24,7 +24,7 @@ RUN tdnf install --assumeyes \
 
 FROM base AS installer
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         shadow-utils \
     && tdnf clean all
 

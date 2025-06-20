@@ -2,7 +2,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:8.0.17-cbl-mariner2.0-arm64v8 AS installer
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         tar \
     && tdnf clean all
 
@@ -32,7 +32,7 @@ ENV \
     # PowerShell telemetry for docker image usage
     POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-CBL-Mariner-2.0-arm64
 
-RUN tdnf install --assumeyes \
+RUN tdnf install -y \
         git \
         libatomic_ops \
         tar \
