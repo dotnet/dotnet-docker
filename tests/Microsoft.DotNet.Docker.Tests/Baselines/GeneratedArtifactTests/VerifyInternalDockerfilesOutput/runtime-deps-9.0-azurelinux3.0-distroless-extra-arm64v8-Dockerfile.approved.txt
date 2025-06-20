@@ -44,7 +44,7 @@ RUN groupadd \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
 
 # Clean up staging
-RUN rm --recursive --force \
+RUN rm -rf \
         /staging/etc/tdnf \
         /staging/run/* \
         /staging/var/cache/tdnf \

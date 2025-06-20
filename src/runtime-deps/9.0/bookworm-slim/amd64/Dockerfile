@@ -19,7 +19,7 @@ RUN apt-get update \
         libssl3 \
         libstdc++6 \
         tzdata \
-    && rm --recursive --force /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user and group
 RUN groupadd \

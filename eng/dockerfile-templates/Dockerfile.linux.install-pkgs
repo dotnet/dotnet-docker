@@ -28,4 +28,4 @@ if isTdnf:
 elif isDnf:
     && dnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif !isApk:
-    && rm --recursive --force /var/lib/apt/lists/*}}}}
+    && rm -rf /var/lib/apt/lists/*}}}}

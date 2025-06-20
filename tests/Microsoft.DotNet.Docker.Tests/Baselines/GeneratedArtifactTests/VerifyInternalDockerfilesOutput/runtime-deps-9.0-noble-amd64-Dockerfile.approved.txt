@@ -20,7 +20,7 @@ RUN apt-get update \
         libstdc++6 \
         tzdata \
         tzdata-legacy \
-    && rm --recursive --force /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user and group
 RUN groupadd \

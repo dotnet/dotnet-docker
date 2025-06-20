@@ -49,7 +49,7 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         ])}}
 
 # Clean up staging
-RUN rm --recursive --force \
+RUN rm -rf \
         {{distrolessStagingDir}}/etc/tdnf \
         {{distrolessStagingDir}}/run/* \
         {{distrolessStagingDir}}/var/cache/tdnf \

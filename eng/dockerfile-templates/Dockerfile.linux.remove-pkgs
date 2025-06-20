@@ -35,7 +35,7 @@
         when(isTdnf,
             "tdnf clean all",
             "apt-get autoremove \
-&& rm --recursive --force /var/lib/apt/lists/*"))
+&& rm -rf /var/lib/apt/lists/*"))
 
 }}{{
 removeCmd}}{{ARGS["pkg-mgr-opts"]}} \{{

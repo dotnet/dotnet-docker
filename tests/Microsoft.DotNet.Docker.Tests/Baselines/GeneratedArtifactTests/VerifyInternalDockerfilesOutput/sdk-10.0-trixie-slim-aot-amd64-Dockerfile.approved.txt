@@ -7,4 +7,4 @@ RUN apt-get update \
         clang \
         llvm \
         zlib1g-dev \
-    && rm --recursive --force /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*

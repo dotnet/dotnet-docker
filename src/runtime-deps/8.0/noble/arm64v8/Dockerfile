@@ -21,7 +21,7 @@ RUN apt-get update \
         tzdata \
         tzdata-legacy \
         zlib1g \
-    && rm --recursive --force /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user and group
 RUN groupadd \

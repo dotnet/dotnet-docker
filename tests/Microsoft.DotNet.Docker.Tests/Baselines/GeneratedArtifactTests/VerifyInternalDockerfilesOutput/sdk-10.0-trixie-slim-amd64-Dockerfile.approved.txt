@@ -38,7 +38,7 @@ RUN apt-get update \
         git \
         libatomic1 \
         wget \
-    && rm --recursive --force /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
