@@ -2,28 +2,28 @@ FROM arm64v8/buildpack-deps:noble-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl -fSL --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.1.0/chisel_v1.1.0_linux_arm64.tar.gz \
+RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.1.0/chisel_v1.1.0_linux_arm64.tar.gz \
     && chisel_sha384='980f53722642429478eba402f720ced634c032445d993e2165e9fd29c6054cf3c15c32b6a570938bb86f8218d3f92d15' \
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
-    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
+    && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
 RUN groupadd \
         --gid=1654 \
         app \
-    && useradd -l \
+    && useradd --no-log-init \
         --uid=1654 \
         --gid=1654 \
         --shell /bin/false \
         app \
-    && install -d -m 0755 -o 1654 -g 1654 "/rootfs/home/app" \
-    && mkdir -p "/rootfs/etc" \
+    && install --directory --mode 0755 --owner 1654 --group 1654 "/rootfs/home/app" \
+    && mkdir --parents "/rootfs/etc" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/rootfs/etc/group"
 
-RUN mkdir -p /rootfs/var/lib/dpkg/ \
+RUN mkdir --parents /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
         --release ubuntu-24.04 --root /rootfs \
             base-files_base \

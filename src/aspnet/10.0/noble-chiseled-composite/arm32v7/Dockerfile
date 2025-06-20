@@ -5,11 +5,11 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=10.0.0-preview.6.25274.104 \
-    && curl -fSL --output dotnet.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm.tar.gz \
+    && curl --fail --show-error --location --output dotnet.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm.tar.gz \
     && dotnet_sha512='88a473f51a142dd7a5512ab3aba8889b6e0f6602aad82d16666bb45381af71d8478b190a16d9b461f7ff0ed1f0318795731b9b702a0c71546d2b8ce0e5f63597' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
+    && mkdir --parents /usr/share/dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /usr/share/dotnet \
     && rm dotnet.tar.gz
 
 RUN mkdir /dotnet-symlink \

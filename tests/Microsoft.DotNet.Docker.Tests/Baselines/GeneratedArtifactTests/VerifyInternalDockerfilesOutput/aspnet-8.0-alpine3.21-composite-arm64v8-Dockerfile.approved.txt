@@ -7,11 +7,11 @@ ARG ACCESSTOKEN
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=0.0.0 \
-    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" -O dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz" \
+    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --output-document dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz" \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /dotnet \
-    && tar -oxzf dotnet.tar.gz -C /dotnet \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
     && rm dotnet.tar.gz
 
 

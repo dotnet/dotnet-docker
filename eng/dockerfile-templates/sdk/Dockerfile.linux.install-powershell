@@ -14,7 +14,7 @@ RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-ver
             "sha": VARIABLES[join(["powershell", dotnetVersion, shaPlatform, "sha"], "|")],
             "sha-var-name": "powershell_sha512"
         ], "    ")}} \
-    && mkdir -p /usr/share/powershell \
+    && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{nupkgPlatform}} \
     && dotnet nuget locals all --clear \
     && rm {{nupkgName}} \

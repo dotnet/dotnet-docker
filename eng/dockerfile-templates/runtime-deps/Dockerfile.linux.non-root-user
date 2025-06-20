@@ -25,7 +25,7 @@
 
     set addUserCommand to when(isAlpine,
         "adduser",
-        "useradd -l") ^
+        "useradd --no-log-init") ^
     set addUserGroupArg to when(isAlpine,
         cat("--ingroup=", name),
         cat("--gid=", gid)) ^

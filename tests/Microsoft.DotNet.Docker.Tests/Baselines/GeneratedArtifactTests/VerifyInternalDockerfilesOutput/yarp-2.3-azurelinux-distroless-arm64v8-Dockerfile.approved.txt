@@ -10,10 +10,10 @@ RUN tdnf install -y \
 
 # Retrieve YARP
 RUN yarp_version=0.0.0 \
-    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" -fSL --output yarp.zip "https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.zip" \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output yarp.zip "https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.zip" \
     && yarp_sha512='{sha512_placeholder}' \
     && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
-    && mkdir -p /app \
+    && mkdir --parents /app \
     && unzip yarp.zip -d /app \
     && rm yarp.zip
 
