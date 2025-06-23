@@ -5,7 +5,7 @@
     "base-url|public|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
 
-    "alpine|floating-tag-version": "alpine3.21",
+    "alpine|floating-tag-version": "alpine3.22",
     "alpine|10.0|floating-tag-version": "alpine3.22",
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
