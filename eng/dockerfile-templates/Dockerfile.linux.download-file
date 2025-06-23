@@ -3,10 +3,11 @@
 
     ARGS:
         out-file: name of the output file
-        url: URL to download
-        sha: Expected checksum of the downloaded file
+        url: URL to download the file from
+        sha: (optional) Expected checksum of the downloaded file - mutually exclusive with sha-url
+        sha-url: (optional) URL to download the checksum file - mutually exclusive with sha
         sha-var-name: Name of variable that stores the checksum
-        sha-function: SHA function to use ^
+        sha-function: SHA function to use (e.g. 256, 384, 512) ^
 
     _ Documentation for using Managed Identity/OAuth tokens to access Azure storage accounts:
         https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
@@ -14,8 +15,15 @@
     set isInternal to find(ARGS["url"], "dotnetstage") >= 0 ^
     set headerArgs to when(isInternal, '--header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" ', '') ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+
     set shaFunction to ARGS["sha-function"] ^
-    set shaFunction to when(shaFunction, shaFunction, "512")
-}}{{if isAlpine:wget {{headerArgs}}--output-document^else:curl {{headerArgs}}--fail --show-error --location --output}} {{ARGS["out-file"]}} {{if isInternal:"{{ARGS["url"]}}"^else:{{ARGS["url"]}}}}{{if ARGS["sha"]: \
+    set shaFunction to when(shaFunction, shaFunction, "512") ^
+
+    set downloadCommand to
+        when(isAlpine,
+            cat("wget ", headerArgs, "--output-document")
+            cat("curl ", headerArgs, "--fail --show-error --location --output"))
+
+}}{{downloadCommand}} {{ARGS["out-file"]}} {{ARGS["url"]}}{{if ARGS["sha"]: \
 && {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
 && echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha{{shaFunction}}sum -c -}}
