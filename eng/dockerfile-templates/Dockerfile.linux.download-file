@@ -41,7 +41,11 @@
 
     set downloadCommand to cat(downloadCommand, [ARGS["url"]])
 
-}}{{join(downloadCommand, " ")}}{{if (ARGS["sha"]): \
+}}{{InsertTemplate("Dockerfile.linux.download-files-2", [
+    "files": [
+        ["url": ARGS["url"], "out-file": ARGS["out-file"]],
+    ]
+])}}{{if (ARGS["sha"]): \
 && {{InsertTemplate("Dockerfile.linux.validate-checksum", [
     "file": ARGS["out-file"],
     "sha": ARGS["sha"],

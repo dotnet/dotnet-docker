@@ -1,0 +1,53 @@
+{{
+    _ Downloads a file and verifies its checksum
+
+    ARGS:
+        files: array of files to download, with the following format:
+            [
+                url: URL to download the file from
+                out-file: (optional) name of the output file
+            ]
+        ^
+
+    _ Documentation for using Managed Identity/OAuth tokens to access Azure storage accounts:
+        https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
+
+    set isInternal to find(ARGS["url"], "dotnetstage") >= 0 ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set useWget to isAlpine ^
+
+    set downloadCommand to when(useWget, "wget", "curl --fail --show-error --location") ^
+
+    _ Add authentication header for internal builds, if appropriate. The same
+      header works for both wget and curl. ^
+    _ When downloading multiple files, the same header argument applies to all
+      files in the download. ^
+    if (isInternal):{{
+        set downloadCommand to cat(downloadCommand, ' --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09"')
+    }}^
+
+    set perFileArgs(file) to:{{
+
+        if (useWget):{{
+            if (file["out-file"]):{{
+                return cat("--output-document ", file["out-file"], " ", file["url"])
+            }}^
+            return file["url"]
+        }}^
+
+        if (file["out-file"]):{{
+            return cat("--output ", file["out-file"], " ", file["url"])
+        }}^
+        return cat("--remote-name ", file["url"])
+
+    }}^
+
+    set numFiles to len(ARGS["files"]) ^
+    set indent to when(numFiles > 1, "    ", "")
+
+}}{{downloadCommand}} {{if (numFiles > 1): \
+}}{{
+for i, file in ARGS["files"]:{{
+    set isLastFile to (i = len(ARGS["files"]) - 1)
+}}{{indent}}{{perFileArgs(file)}}{{if !isLastFile: \
+}}}}
