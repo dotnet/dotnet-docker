@@ -10,12 +10,15 @@
         sha-file-aggregate  : (optional) file that contains checksums
         ^
 
-    set isAlpine to find(OS_VERSION, "alpine") >= 0
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+
+    set shaValue to when(ARGS["sha-var-name"],
+        cat("$", ARGS["sha-var-name"]),
+        ARGS["sha"])
 
 }}{{
-if ARGS["sha"] && ARGS["sha-var-name"]
-    :{{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
-&& echo "${{ARGS["sha-var-name"]}}  {{ARGS["file"]}}" | sha{{ARGS["sha-function"]}}sum -c -^
+if ARGS["sha"]:{{if ARGS["sha-var-name"]:{{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
+&& }}echo "{{shaValue}}  {{ARGS["file"]}}" | sha{{ARGS["sha-function"]}}sum -c -^
 elif (ARGS["sha-file"])
     :sha{{ARGS["sha-function"]}}sum -c {{ARGS["sha-file"]}}^
 elif (ARGS["sha-file-aggregate"])

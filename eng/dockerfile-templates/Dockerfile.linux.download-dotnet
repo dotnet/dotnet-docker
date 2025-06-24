@@ -1,0 +1,52 @@
+{{
+    _ ARGS:
+        dest-dir: Destination directory to install .NET runtime
+        install-method: Method of installation. Can be "download", "download-and-install", or "copy-and-install"
+        add-symlink (optional): If set, adds a symlink to the dotnet executable
+        use-local-version-var (optional): Whether to define a local variable for the .NET runtime version
+            instead of referencing the environment variable.
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
+        installer-stage (optional): Name of the Dockerfile stage responsible for installation
+        is-composite-runtime (optional): Whether to install aspnetcore composite version ^
+
+    _ NEW ARGS:
+        download-url    : URL to download .NET from
+        extract-to      : Directory where .NET will be extracted
+        extract-paths   : (optional) Paths within the tarball to extract
+        out-file        : (optional) Name of the output file
+
+        The following arguments are mutually exclusive:
+            sha-url           : (optional) URL to download checksum file
+            sha-url-aggregate : (optional) URL to download aggregate checksum file
+
+        ^
+
+    set urlParts to split(ARGS["download-url"], "/") ^
+    set fileName to
+        when(ARGS["out-file"],
+            ARGS["out-file"],
+            urlParts[len(urlParts) - 1]) ^
+    set fileNameParts to split(fileName, ".") ^
+    set fileExtension to fileNameParts[len(fileNameParts) - 1]
+
+}}{{InsertTemplate("Dockerfile.linux.download-file", [
+    "url": ARGS["download-url"],
+    "out-file": ARGS["out-file"],
+    "sha": ARGS["sha"],
+    "sha-url": ARGS["sha-url"],
+    "sha-url-aggregate": ARGS["sha-url-aggregate"],
+    "sha-var-name": ARGS["sha-var-name"]
+])}}{{
+if ARGS["extract-to"]: \
+&& mkdir --parents {{ARGS["extract-to"]}} \
+&& {{if (fileExtension = "zip"):{{
+    InsertTemplate("Dockerfile.linux.extract-zip", [
+        "file": fileName,
+        "dest-dir": ARGS["extract-to"],
+        "extract-paths": ARGS["extract-paths"]
+])}}^else:{{
+    InsertTemplate("Dockerfile.linux.extract-tarball", [
+        "file": fileName,
+        "dest-dir": ARGS["extract-to"],
+        "extract-paths": ARGS["extract-paths"]
+])}}}}}}

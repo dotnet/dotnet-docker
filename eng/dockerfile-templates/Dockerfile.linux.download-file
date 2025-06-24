@@ -2,12 +2,15 @@
     _ Downloads a file and verifies its checksum
 
     ARGS:
-        url: URL to download the file from
-        out-file: (optional) name of the output file
-        sha: (optional) Expected checksum of the downloaded file - mutually exclusive with sha-url
-        sha-url: (optional) URL to download the checksum file - mutually exclusive with sha
-        sha-var-name (optional): Name of variable that stores the checksum
-        sha-function (optional): SHA function to use (e.g. 256, 384, 512) ^
+        url                 : URL to download the file from
+        out-file            : (optional) name of the output file
+        sha                 : (optional) Expected checksum of the downloaded file - mutually exclusive with sha-url
+        sha-url             : (optional) URL to download the checksum file - mutually exclusive with sha
+        sha-url-aggregate   : (optional) URL to download the aggregate checksum file - mutually exclusive with sha
+        sha-var-name        : (optional) Name of variable that stores the checksum
+        sha-function        : (optional) SHA function to use (e.g. 256, 384, 512) ^
+
+    _ TODO: Rename this file to Dockerfile.linux.download-validate-file ^
 
     _ Documentation for using Managed Identity/OAuth tokens to access Azure storage accounts:
         https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
@@ -41,7 +44,7 @@
 
     set downloadCommand to cat(downloadCommand, [ARGS["url"]])
 
-}}{{InsertTemplate("Dockerfile.linux.download-files-2", [
+}}{{InsertTemplate("Dockerfile.linux.download-files", [
     "files": [
         ["url": ARGS["url"], "out-file": ARGS["out-file"]],
     ]

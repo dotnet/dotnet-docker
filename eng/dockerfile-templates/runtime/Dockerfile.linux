@@ -4,6 +4,9 @@
             for example globalization support ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
+    set buildVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
+
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
@@ -16,6 +19,8 @@
     set runtimeDepsBaseTag to cat(
         "$REPO:", tagVersion, "-", OS_VERSION, runtimeDepsVariant, ARCH_TAG_SUFFIX) ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
+
+    set platform to when(isAlpine, "linux-musl", "linux") ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
     set osVersionBase to
@@ -31,7 +36,31 @@
             OS_VERSION_NUMBER),
         when(isAlpine || isFullAzureLinux,
             runtimeDepsBaseTag,
-            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
+            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))) ^
+
+    _ Calculate download URL ^
+
+    set sdkBuildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
+    set isStableBranding to find(sdkBuildVersion, "-servicing") >= 0 || find(sdkBuildVersion, "-rtm") >= 0 ^
+
+    _ Set versions explicitly, and dynamically replace them based on whether they match the env/local variables. ^
+    _ For preview (non-stable) versions, the full build version is always in the file name. ^
+    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
+    set versionDir to buildVersion ^
+
+    set versionVariable to "dotnet_version" ^
+    set versionVariableValue to buildVersion ^
+    if (versionDir = versionVariableValue):{{
+        set versionDir to cat("$", versionVariable)
+    }}^
+    if (fileVersion = versionVariableValue):{{
+        set fileVersion to cat("$", versionVariable)
+    }}^
+
+    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
+    set downloadUrl to cat(baseUrl, "/Runtime/", versionDir, "/dotnet-runtime-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
+    set sha to VARIABLES[join(["runtime", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")]
+
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image

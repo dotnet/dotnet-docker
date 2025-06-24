@@ -6,7 +6,15 @@
     set installerImageTag to cat("mcr.microsoft.com/azurelinux", "/base/core:", OS_VERSION_NUMBER) ^
 
     set baseUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0
+    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+
+    set buildVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|build-version")] ^
+    set yarpVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set yarpVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|", yarpVersionVariable)] ^
+    set versionFolder to when(buildVersion != yarpVersion, buildVersion, '$yarp_version') ^
+
+    set downloadUrl to cat(baseUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".zip") ^
+    set sha to VARIABLES[join(["yarp", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
 
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
@@ -17,7 +25,14 @@ ARG ACCESSTOKEN}}
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
 
 # Retrieve YARP
-{{InsertTemplate("Dockerfile.linux.install-yarp", [ "is-internal": isInternal ])}}
+RUN yarp_version={{yarpVersion}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+        "download-url": downloadUrl,
+        "out-file": "yarp.zip",
+        "extract-to": "/app",
+        "sha-var-name": "yarp_sha512",
+        "sha": sha
+    ], "    ")}}
 
 
 # YARP image
