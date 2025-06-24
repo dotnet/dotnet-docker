@@ -10,9 +10,6 @@
     set isCblMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isAzureLinux to isCblMariner || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
 
-    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
-
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
         when(isDebian,
@@ -39,6 +36,7 @@
     set uid to 1654 ^
     set gid to uid ^
     set nonRootUserComment to "# Create a non-root user and group"
+
 }}FROM {{baseImage}}{{if isMultiStage: AS base}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs",

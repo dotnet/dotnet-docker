@@ -76,13 +76,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve .NET Runtime
-{{InsertTemplate("Dockerfile.linux.install-runtime",
-    [
-        "install-method": "download-and-install",
-        "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}{{ if isDistroless:
+{{InsertTemplate("Dockerfile.linux.install-runtime")}}{{
+if isDistroless:
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
