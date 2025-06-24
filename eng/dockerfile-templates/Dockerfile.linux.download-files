@@ -12,11 +12,15 @@
     _ Documentation for using Managed Identity/OAuth tokens to access Azure storage accounts:
         https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
 
-    set isInternal to find(ARGS["url"], "dotnetstage") >= 0 ^
+    for i, file in ARGS["files"]:{{
+        if (find(file["url"], "dotnetstage") >= 0):{{
+            set isInternal to 1
+    }}}}^
+
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set useWget to isAlpine ^
 
-    set downloadCommand to when(useWget, "wget", "curl --fail --show-error --location") ^
+    set downloadCommand to when(useWget, "wget", "curl") ^
 
     _ Add authentication header for internal builds, if appropriate. The same
       header works for both wget and curl. ^
@@ -25,6 +29,11 @@
     if (isInternal):{{
         set downloadCommand to cat(downloadCommand, ' --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09"')
     }}^
+
+    _ Add extra arguments required by curl ^
+    set downloadCommand to when(!useWget,
+        cat(downloadCommand, " --fail --show-error --location"),
+        downloadCommand) ^
 
     set perFileArgs(file) to:{{
 
