@@ -1,21 +1,12 @@
 {{
     _ ARGS:
-        dest-dir: Destination directory to install .NET runtime
-        install-method: Method of installation. Can be "download", "download-and-install", or "copy-and-install"
-        add-symlink (optional): If set, adds a symlink to the dotnet executable
-        use-local-version-var (optional): Whether to define a local variable for the .NET runtime version
-            instead of referencing the environment variable.
-        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        is-composite-runtime (optional): Whether to install aspnetcore composite version ^
-
-    _ NEW ARGS:
         download-url    : URL to download .NET from
         extract-to      : Directory where .NET will be extracted
         extract-paths   : (optional) Paths within the tarball to extract
         out-file        : (optional) Name of the output file
 
         The following arguments are mutually exclusive:
+            sha               : (optional) The checksum of the downloaded file
             sha-url           : (optional) URL to download checksum file
             sha-url-aggregate : (optional) URL to download aggregate checksum file
         ^
