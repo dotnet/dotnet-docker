@@ -1,0 +1,25 @@
+{{
+    _ Downloads a file and verifies its checksum
+
+    ARGS:
+        file                : name of the file to validate
+        sha-function        : SHA function to use (e.g. 256, 384, 512)
+        sha                 : (optional) checksum to validate the file against
+        sha-var-name        : (optional) name of variable that stores the checksum
+        sha-file            : (optional) file that contains a single checksum
+        sha-file-aggregate  : (optional) file that contains checksums
+        ^
+
+    set isAlpine to find(OS_VERSION, "alpine") >= 0
+
+}}{{
+if ARGS["sha"] && ARGS["sha-var-name"]
+    :{{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
+&& echo "${{ARGS["sha-var-name"]}}  {{ARGS["file"]}}" | sha{{ARGS["sha-function"]}}sum -c -^
+elif (ARGS["sha-file"])
+    :sha{{ARGS["sha-function"]}}sum -c {{ARGS["sha-file"]}}^
+elif (ARGS["sha-file-aggregate"])
+    :if (isAlpine)
+        :awk -v file="{{ARGS["file"]}}" '{gsub(/\r/, "")} $2 == file' ${{ARGS["sha-file-aggregate"]}} | sha512sum -c^
+    else
+        :sha512sum --ignore-missing --check {{ARGS["sha-file"]}}}}

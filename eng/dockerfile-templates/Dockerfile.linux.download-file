@@ -41,6 +41,10 @@
 
     set downloadCommand to cat(downloadCommand, [ARGS["url"]])
 
-}}{{join(downloadCommand, " ")}}{{if ARGS["sha"]: \
-&& {{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
-&& echo "${{ARGS["sha-var-name"]}}  {{ARGS["out-file"]}}" | sha{{shaFunction}}sum -c -}}
+}}{{join(downloadCommand, " ")}}{{if (ARGS["sha"]): \
+&& {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+    "file": ARGS["out-file"],
+    "sha": ARGS["sha"],
+    "sha-var-name": ARGS["sha-var-name"],
+    "sha-function": shaFunction
+])}}}}
