@@ -18,7 +18,6 @@
         The following arguments are mutually exclusive:
             sha-url           : (optional) URL to download checksum file
             sha-url-aggregate : (optional) URL to download aggregate checksum file
-
         ^
 
     set urlParts to split(ARGS["download-url"], "/") ^
@@ -29,7 +28,7 @@
     set fileNameParts to split(fileName, ".") ^
     set fileExtension to fileNameParts[len(fileNameParts) - 1]
 
-}}{{InsertTemplate("Dockerfile.linux.download-file", [
+}}{{InsertTemplate("Dockerfile.linux.download-validate-file", [
     "url": ARGS["download-url"],
     "out-file": ARGS["out-file"],
     "sha": ARGS["sha"],
