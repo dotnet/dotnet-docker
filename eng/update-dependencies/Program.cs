@@ -63,10 +63,10 @@ config.UseHost(
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
                 services.AddSingleton<HttpClient>();
 
-                FromBuildCommand.Register<FromBuildCommand>(services);
-                FromChannelCommand.Register<FromChannelCommand>(services);
-                FromStagingPipelineCommand.Register<FromStagingPipelineCommand>(services);
-                SpecificCommand.Register<SpecificCommand>(services);
+                services.AddCommand<FromBuildCommand, FromBuildOptions>();
+                services.AddCommand<FromChannelCommand, FromChannelOptions>();
+                services.AddCommand<FromStagingPipelineCommand, FromStagingPipelineOptions>();
+                services.AddCommand<SpecificCommand, SpecificCommandOptions>();
             })
     );
 
