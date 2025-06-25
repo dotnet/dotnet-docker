@@ -16,13 +16,17 @@ public class AzdoAuthProvider
     /// </remarks
     private const string Scope = "499b84ac-1321-427f-aa17-267ca6975798/.default";
 
+    private readonly Lazy<string> _accessToken = new(GetAccessTokenInternal);
+
     /// <summary>
     /// Gets an Azure DevOps access token. Defaults to SYSTEM_ACCESSTOKEN
     /// environment variable, then falls back to using the Azure Developer CLI
     /// credential to get a PAT.
     /// </summary>
     /// <returns></returns>
-    public string GetAccessToken()
+    public string AccessToken => _accessToken.Value;
+
+    private static string GetAccessTokenInternal()
     {
         string? accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
         if (!string.IsNullOrWhiteSpace(accessToken))
