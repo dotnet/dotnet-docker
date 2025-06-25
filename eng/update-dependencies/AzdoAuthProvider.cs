@@ -3,6 +3,8 @@
 
 using System;
 using Azure.Identity;
+using Microsoft.VisualStudio.Services.Common;
+using Microsoft.VisualStudio.Services.WebApi;
 
 namespace Dotnet.Docker;
 
@@ -19,23 +21,29 @@ public class AzdoAuthProvider
     private readonly Lazy<string> _accessToken = new(GetAccessTokenInternal);
 
     /// <summary>
-    /// Gets an Azure DevOps access token. Defaults to SYSTEM_ACCESSTOKEN
-    /// environment variable, then falls back to using the Azure Developer CLI
-    /// credential to get a PAT.
+    /// Gets an Azure DevOps REST API access token.
     /// </summary>
-    /// <returns></returns>
     public string AccessToken => _accessToken.Value;
+
+    public VssConnection GetVssConnection(string azdoProject)
+    {
+        var baseUrl = new Uri($"https://dev.azure.com/{azdoProject}");
+        var credential = new VssBasicCredential(userName: string.Empty, password: AccessToken);
+        var connection = new VssConnection(baseUrl, credential);
+        return connection;
+    }
 
     private static string GetAccessTokenInternal()
     {
-        string? accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
+        var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
         if (!string.IsNullOrWhiteSpace(accessToken))
         {
             return accessToken;
         }
 
         var credential = new AzureDeveloperCliCredential();
-        accessToken = credential.GetToken(new Azure.Core.TokenRequestContext(scopes: [Scope])).Token;
+        var requestContext = new Azure.Core.TokenRequestContext([Scope]);
+        accessToken = credential.GetToken(requestContext).Token;
         return accessToken;
     }
 }
