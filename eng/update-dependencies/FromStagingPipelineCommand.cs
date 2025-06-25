@@ -27,17 +27,10 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
 
-        // Each pipeline run has a corresponding blob container named stage-${options.StagingPipelineRunId}.
-        // Release metadata is stored in metadata/ReleaseManifest.json.
-        // Release assets are stored individually under in assets/shipping/assets/[Sdk|Runtime|aspnetcore|...].
-
         // Get release manifest from staging storage account
         var storageAccount = new StorageAccount(options.StagingStorageAccount);
-        var releaseManifestJson = await storageAccount.DownloadTextAsync(
-            containerName: $"stage-{options.StagingPipelineRunId}",
-            blobPath: "metadata/ReleaseManifest.json");
-
-        var buildManifest = BuildManifest.FromJson(releaseManifestJson);
+        var buildManifestProvider = new StorageAccountBuildManifestProvider(storageAccount);
+        BuildManifest buildManifest = await buildManifestProvider.GetBuildManifestAsync(options.StagingPipelineRunId);
         var allAssets = buildManifest.AllAssets.ToList();
 
         // Look through all the assets and get the version of the highest SDK feature band
