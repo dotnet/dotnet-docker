@@ -1,13 +1,27 @@
 {{
-    _ Downloads a file and verifies its checksum
+    _ Verify the checksum of a file on disk against a known value or a checksum file.
 
     ARGS:
-        file                : name of the file to validate
-        sha-function        : SHA function to use (e.g. 256, 384, 512)
-        sha                 : (optional) checksum to validate the file against
-        sha-var-name        : (optional) name of variable that stores the checksum
-        sha-file            : (optional) file that contains a single checksum
-        sha-file-aggregate  : (optional) file that contains checksums
+        Required by all option groups:
+        sha-function        : SHA function to use (e.g. 256, 384, 512), not optional.
+
+        The following argument groups are mutually exclusive:
+
+        file                : Path to the file to validate.
+        sha                 : Expected checksum of the downloaded file.
+        sha-var-name        : (optional) Name of variable to store the checksum in. If not provided,
+                              the checksum will be written inline with the call to the sha*sum check
+                              tool.
+
+        sha-file            : Checksum file to validate against. The file should contain a single
+                              line with the expected checksum and the file name to validate,
+                              separated by one or two spaces. See `man cksum` or `man sha512sum` for
+                              details.
+
+        sha-file-aggregate  : File containing a list of checksums. The file may contain one or more
+                              lines with expected checksums and file names separated by one or two
+                              spaces. One line must have a filename matching the file you wish to
+                              validate. See `man cksum` or `man sha512sum` for details.
         ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
