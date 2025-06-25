@@ -5,7 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Dotnet.Docker.Model.Release;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -27,10 +26,14 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
 
-        // Get release manifest from staging storage account
-        var storageAccount = new StorageAccount(options.StagingStorageAccount);
-        var buildManifestProvider = new StorageAccountBuildManifestProvider(storageAccount);
-        BuildManifest buildManifest = await buildManifestProvider.GetBuildManifestAsync(options.StagingPipelineRunId);
+        IBuildManifestProvider buildManifestProvider = options.StagingStorageAccount switch
+        {
+            null => throw new NotImplementedException("Staging storage account is the only supported option."),
+            // Get release manifest from staging storage account
+            _ => new StorageAccountBuildManifestProvider(new StorageAccount(options.StagingStorageAccount)),
+        };
+
+        var buildManifest = await buildManifestProvider.GetBuildManifestAsync(options.StagingPipelineRunId);
         var allAssets = buildManifest.AllAssets.ToList();
 
         // Look through all the assets and get the version of the highest SDK feature band

@@ -22,7 +22,7 @@ internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
     /// This Azure Storage Account will be used as a source for the update.
     /// This should be one of two storage accounts: dotnetstagetest or dotnetstage.
     /// </summary>
-    public required string StagingStorageAccount { get; init; }
+    public string? StagingStorageAccount { get; init; }
 
     public static new List<Argument> Arguments { get; } =
     [
@@ -31,18 +31,17 @@ internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
             Arity = ArgumentArity.ExactlyOne,
             Description = "The staging pipeline run ID to use as a source for the update"
         },
-        new Argument<string>("staging-storage-account")
-        {
-            Arity = ArgumentArity.ExactlyOne,
-            Description = "The Azure Storage Account to use as a source for the update."
-                + " This should be one of two storage accounts: dotnetstagetest or dotnetstage."
-                + " For example: https://dotnetstagetest.blob.core.windows.net/"
-        },
         ..CreatePullRequestOptions.Arguments,
     ];
 
     public static new List<Option> Options { get; } =
     [
+        new Option<string>("--staging-storage-account")
+        {
+            Description = "The Azure Storage Account to use as a source for the update."
+                + " This should be one of two storage accounts: dotnetstagetest or dotnetstage."
+                + " For example: https://dotnetstagetest.blob.core.windows.net/"
+        },
         new Option<bool>("--internal")
         {
             Description = "Whether or not to use the internal versions of the staged build. When not using an internal"
