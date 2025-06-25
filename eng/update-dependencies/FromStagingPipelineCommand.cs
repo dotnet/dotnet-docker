@@ -7,13 +7,19 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Dotnet.Docker.Model.Release;
 
 namespace Dotnet.Docker;
 
-internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCommand> logger)
+internal partial class FromStagingPipelineCommand(
+    ILogger<FromStagingPipelineCommand> logger,
+    PipelineArtifactBuildManifestProvider pipelineArtifactBuildManifestProvider,
+    StorageAccountBuildManifestProvider storageAccountBuildManifestProvider)
     : BaseCommand<FromStagingPipelineOptions>
 {
     private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
+    private readonly PipelineArtifactBuildManifestProvider _pipelineArtifactBuildManifestProvider = pipelineArtifactBuildManifestProvider;
+    private readonly StorageAccountBuildManifestProvider _storageAccountBuildManifestProvider = storageAccountBuildManifestProvider;
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
@@ -26,14 +32,22 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
 
-        IBuildManifestProvider buildManifestProvider = options.StagingStorageAccount switch
+        BuildManifest buildManifest;
+        if (string.IsNullOrWhiteSpace(options.StagingStorageAccount))
         {
-            null => throw new NotImplementedException("Staging storage account is the only supported option."),
-            // Get release manifest from staging storage account
-            _ => new StorageAccountBuildManifestProvider(new StorageAccount(options.StagingStorageAccount)),
-        };
+            buildManifest = await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+                options.AzdoOrganization,
+                options.AzdoProject,
+                options.StagingPipelineRunId
+            );
+        }
+        else
+        {
+            buildManifest = await _storageAccountBuildManifestProvider.GetBuildManifestAsync(
+                options.StagingStorageAccount,
+                options.StagingPipelineRunId);
+        }
 
-        var buildManifest = await buildManifestProvider.GetBuildManifestAsync(options.StagingPipelineRunId);
         var allAssets = buildManifest.AllAssets.ToList();
 
         // Look through all the assets and get the version of the highest SDK feature band

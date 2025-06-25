@@ -62,6 +62,9 @@ config.UseHost(
                     new BarApiClient(null, null, disableInteractiveAuth: true));
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
                 services.AddSingleton<HttpClient>();
+                services.AddSingleton<AzdoAuthProvider>();
+                services.AddSingleton<PipelineArtifactBuildManifestProvider>();
+                services.AddSingleton<StorageAccountBuildManifestProvider>();
 
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();
                 services.AddCommand<FromChannelCommand, FromChannelOptions>();

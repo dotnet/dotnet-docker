@@ -2,6 +2,9 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using Azure.Identity;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
@@ -25,12 +28,24 @@ public class AzdoAuthProvider
     /// </summary>
     public string AccessToken => _accessToken.Value;
 
-    public VssConnection GetVssConnection(string azdoProject)
+    public VssConnection GetVssConnection(string azdoOrg)
     {
-        var baseUrl = new Uri($"https://dev.azure.com/{azdoProject}");
+        var baseUrl = new Uri($"https://dev.azure.com/{azdoOrg}");
         var credential = new VssBasicCredential(userName: string.Empty, password: AccessToken);
         var connection = new VssConnection(baseUrl, credential);
         return connection;
+    }
+
+    public HttpClient GetAuthenticatedHttpClient()
+    {
+        // Create an HttpClient that uses the Azure Developer CLI credential for authentication.
+        var httpClient = new HttpClient();
+        var header = new AuthenticationHeaderValue(
+            "Basic",
+            Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "", _accessToken.Value))));
+        httpClient.DefaultRequestHeaders.Authorization = header;
+
+        return httpClient;
     }
 
     private static string GetAccessTokenInternal()
