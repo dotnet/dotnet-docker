@@ -36,30 +36,7 @@
             OS_VERSION_NUMBER),
         when(isAlpine || isFullAzureLinux,
             runtimeDepsBaseTag,
-            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))) ^
-
-    _ Calculate download URL ^
-
-    set sdkBuildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
-    set isStableBranding to find(sdkBuildVersion, "-servicing") >= 0 || find(sdkBuildVersion, "-rtm") >= 0 ^
-
-    _ Set versions explicitly, and dynamically replace them based on whether they match the env/local variables. ^
-    _ For preview (non-stable) versions, the full build version is always in the file name. ^
-    set fileVersion to when(isStableBranding, productVersion, buildVersion) ^
-    set versionDir to buildVersion ^
-
-    set versionVariable to "dotnet_version" ^
-    set versionVariableValue to buildVersion ^
-    if (versionDir = versionVariableValue):{{
-        set versionDir to cat("$", versionVariable)
-    }}^
-    if (fileVersion = versionVariableValue):{{
-        set fileVersion to cat("$", versionVariable)
-    }}^
-
-    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set downloadUrl to cat(baseUrl, "/Runtime/", versionDir, "/dotnet-runtime-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
-    set sha to VARIABLES[join(["runtime", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")]
+            cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
 
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
