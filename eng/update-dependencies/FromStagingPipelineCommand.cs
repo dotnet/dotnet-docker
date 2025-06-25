@@ -23,9 +23,6 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
             throw new NotImplementedException("Updating Dockerfiles for internal builds is not implemented yet.");
         }
 
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoOrganization);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoProject);
-
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
