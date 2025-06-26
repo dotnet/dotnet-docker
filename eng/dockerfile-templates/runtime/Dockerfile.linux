@@ -4,6 +4,9 @@
             for example globalization support ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
+    set buildVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
+
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
@@ -32,6 +35,7 @@
         when(isAlpine || isFullAzureLinux,
             runtimeDepsBaseTag,
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
+
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
@@ -47,13 +51,8 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve .NET Runtime
-{{InsertTemplate("Dockerfile.linux.install-runtime",
-    [
-        "install-method": "download-and-install",
-        "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}{{ if isDistroless:
+{{InsertTemplate("Dockerfile.linux.install-runtime")}}{{
+if isDistroless:
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
