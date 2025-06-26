@@ -70,6 +70,11 @@ jobs:
         id: $(build.serviceConnection.id)
         tenantId: $(build.serviceConnection.tenantId)
         clientId: $(build.serviceConnection.clientId)
+      - ${{ if eq(parameters.isInternalServicingValidation, true) }}:
+        - name: storage
+          id: $(dotnetstaging.serviceConnection.id)
+          tenantId: $(dotnetstaging.serviceConnection.tenantId)
+          clientId: $(dotnetstaging.serviceConnection.clientId)
       internalProjectName: ${{ parameters.internalProjectName }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       args: >-

@@ -33,6 +33,7 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
         // Each pipeline run has a corresponding blob container named stage-${options.StagingPipelineRunId}.
         // Release metadata is stored in metadata/ReleaseManifest.json.
         // Release assets are stored individually under in assets/shipping/assets/[Sdk|Runtime|aspnetcore|...].
+        // Full example: https://dotnetstagetest.blob.core.windows.net/stage-2XXXXXX/assets/shipping/assets/Runtime/10.0.0-preview.N.XXXXX.YYY/dotnet-runtime-10.0.0-preview.N.XXXXX.YYY-linux-arm64.tar.gz
 
         // Get release manifest from staging storage account
         var storageAccount = new StorageAccount(options.StagingStorageAccount);
