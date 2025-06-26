@@ -5,24 +5,45 @@
     set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
     set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$dotnet_monitor_extension_version') ^
     set monitorBaseUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
-    set files to [
-        [
-            "filename": "dotnet-monitor-egress-azureblobstorage.tar.gz",
-            "url": cat(monitorBaseUrl, "dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz"),
-            "sha": VARIABLES[join(["monitor-ext-azureblobstorage", monitorMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_monitor_extension_sha512"
-        ],
-        [
-            "filename": "dotnet-monitor-egress-s3storage.tar.gz",
-            "url": cat(monitorBaseUrl, "dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz"),
-            "sha": VARIABLES[join(["monitor-ext-s3storage", monitorMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
-            "sha-var-name": "dotnet_monitor_extension_sha512"
-        ]
-    ]
+
+    set installDir to "/app" ^
+
+    set azBlobFileName to "dotnet-monitor-egress-azureblobstorage.tar.gz" ^
+    set s3FileName to "dotnet-monitor-egress-s3storage.tar.gz"
+
 }}RUN dotnet_monitor_extension_version={{monitorVersion}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-and-install",
-        [
-            "files": files,
-            "install-dir": "/app",
-            "create-install-dir": "true"
-        ], "    ")}}
+    && {{InsertTemplate("../Dockerfile.linux.download-files", [
+        "files": [
+            [
+                "url": cat(monitorBaseUrl, "dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz"),
+                "out-file": azBlobFileName
+            ],
+            [
+                "url": cat(monitorBaseUrl, "dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz"),
+                "out-file": s3FileName
+            ]
+        ]
+    ], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": azBlobFileName,
+        "sha": VARIABLES[join(["monitor-ext-azureblobstorage", monitorMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
+        "sha-var-name": "dotnet_monitor_azureblobstorage_sha512",
+        "sha-function": "512"
+    ], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": s3FileName,
+        "sha": VARIABLES[join(["monitor-ext-s3storage", monitorMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
+        "sha-var-name": "dotnet_monitor_s3storage_sha512",
+        "sha-function": "512"
+    ], "    ")}} \
+    && mkdir --parents {{installDir}} \
+    && {{InsertTemplate("../Dockerfile.linux.extract-tarball", [
+        "file": azBlobFileName,
+        "dest-dir": installDir,
+        "extract-paths": ARGS["extract-paths"]
+    ], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.extract-tarball", [
+        "file": s3FileName,
+        "dest-dir": installDir,
+        "extract-paths": ARGS["extract-paths"]
+    ], "    ")}}
