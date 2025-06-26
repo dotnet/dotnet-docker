@@ -5,6 +5,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
 using System.Threading.Tasks;
 using Dotnet.Docker.Model.Release;
 using Microsoft.Build.Framework;
@@ -26,11 +28,13 @@ internal record PipelineArtifactFile(string ArtifactName, string SubPath);
 
 internal class PipelineArtifactBuildManifestProvider(
     AzdoAuthProvider azdoAuthProvider,
-    ILogger<PipelineArtifactBuildManifestProvider> logger
+    ILogger<PipelineArtifactBuildManifestProvider> logger,
+    AzdoHttpClient azdoHttpClient
 )
 {
     private readonly AzdoAuthProvider _azdoAuthProvider = azdoAuthProvider;
     private readonly ILogger<PipelineArtifactBuildManifestProvider> _logger = logger;
+    private readonly AzdoHttpClient _azdoHttpClient = azdoHttpClient;
 
     // The release staging pipeline has multiple versions, and the build
     // manifest has a different location depending on whether it's using the
@@ -89,8 +93,7 @@ internal class PipelineArtifactBuildManifestProvider(
                     artifactFile.ArtifactName, downloadUrl
                 );
 
-                using var httpClient = _azdoAuthProvider.GetAuthenticatedHttpClient();
-                using var response = await httpClient.GetAsync(downloadUrl);
+                using var response = await _azdoHttpClient.GetAsync(downloadUrl);
                 response.EnsureSuccessStatusCode();
                 var buildManifestJson = await response.Content.ReadAsStringAsync();
 
