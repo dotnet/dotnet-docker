@@ -19,6 +19,6 @@ FROM mcr.microsoft.com/dotnet/aspnet:9.0-nanoserver-$TAG
 EXPOSE 8080
 WORKDIR /app
 COPY --link --from=build /app .
-HEALTHCHECK CMD curl -sf --show-error http://localhost:80/healthz || exit 1
+HEALTHCHECK CMD curl -sf --show-error http://localhost:8080/healthz || exit 1
 
 ENTRYPOINT ["aspnetapp"]
