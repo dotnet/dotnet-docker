@@ -13,11 +13,6 @@ public abstract class BaseCommand<TOptions>() where TOptions : IOptions
 {
     public abstract Task<int> ExecuteAsync(TOptions options);
 
-    public static void Register<T>(IServiceCollection serviceCollection) where T : BaseCommand<TOptions>
-    {
-        serviceCollection.AddSingleton<BaseCommand<TOptions>, T>();
-    }
-
     public static Command Create(string name, string description)
     {
         var command = new Command(name, description);

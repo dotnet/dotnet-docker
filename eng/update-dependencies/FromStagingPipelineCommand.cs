@@ -5,16 +5,21 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Dotnet.Docker.Model.Release;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Dotnet.Docker.Model.Release;
 
 namespace Dotnet.Docker;
 
-internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCommand> logger)
+internal partial class FromStagingPipelineCommand(
+    ILogger<FromStagingPipelineCommand> logger,
+    PipelineArtifactBuildManifestProvider pipelineArtifactBuildManifestProvider,
+    StorageAccountBuildManifestProvider storageAccountBuildManifestProvider)
     : BaseCommand<FromStagingPipelineOptions>
 {
     private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
+    private readonly PipelineArtifactBuildManifestProvider _pipelineArtifactBuildManifestProvider = pipelineArtifactBuildManifestProvider;
+    private readonly StorageAccountBuildManifestProvider _storageAccountBuildManifestProvider = storageAccountBuildManifestProvider;
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
@@ -23,24 +28,26 @@ internal partial class FromStagingPipelineCommand(ILogger<FromStagingPipelineCom
             throw new NotImplementedException("Updating Dockerfiles for internal builds is not implemented yet.");
         }
 
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoOrganization);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoProject);
-
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
 
-        // Each pipeline run has a corresponding blob container named stage-${options.StagingPipelineRunId}.
-        // Release metadata is stored in metadata/ReleaseManifest.json.
-        // Release assets are stored individually under in assets/shipping/assets/[Sdk|Runtime|aspnetcore|...].
+        BuildManifest buildManifest;
+        if (string.IsNullOrWhiteSpace(options.StagingStorageAccount))
+        {
+            buildManifest = await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+                options.AzdoOrganization,
+                options.AzdoProject,
+                options.StagingPipelineRunId
+            );
+        }
+        else
+        {
+            buildManifest = await _storageAccountBuildManifestProvider.GetBuildManifestAsync(
+                options.StagingStorageAccount,
+                options.StagingPipelineRunId);
+        }
 
-        // Get release manifest from staging storage account
-        var storageAccount = new StorageAccount(options.StagingStorageAccount);
-        var releaseManifestJson = await storageAccount.DownloadTextAsync(
-            containerName: $"stage-{options.StagingPipelineRunId}",
-            blobPath: "metadata/ReleaseManifest.json");
-
-        var buildManifest = BuildManifest.FromJson(releaseManifestJson);
         var allAssets = buildManifest.AllAssets.ToList();
 
         // Look through all the assets and get the version of the highest SDK feature band

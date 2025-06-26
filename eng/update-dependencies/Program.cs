@@ -61,12 +61,18 @@ config.UseHost(
                 services.AddSingleton<IBasicBarClient>(_ =>
                     new BarApiClient(null, null, disableInteractiveAuth: true));
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
-                services.AddSingleton<HttpClient>();
 
-                FromBuildCommand.Register<FromBuildCommand>(services);
-                FromChannelCommand.Register<FromChannelCommand>(services);
-                FromStagingPipelineCommand.Register<FromStagingPipelineCommand>(services);
-                SpecificCommand.Register<SpecificCommand>(services);
+                services.AddHttpClient();
+                services.AddHttpClient<AzdoHttpClient>();
+
+                services.AddSingleton<AzdoAuthProvider>();
+                services.AddSingleton<PipelineArtifactBuildManifestProvider>();
+                services.AddSingleton<StorageAccountBuildManifestProvider>();
+
+                services.AddCommand<FromBuildCommand, FromBuildOptions>();
+                services.AddCommand<FromChannelCommand, FromChannelOptions>();
+                services.AddCommand<FromStagingPipelineCommand, FromStagingPipelineOptions>();
+                services.AddCommand<SpecificCommand, SpecificCommandOptions>();
             })
     );
 

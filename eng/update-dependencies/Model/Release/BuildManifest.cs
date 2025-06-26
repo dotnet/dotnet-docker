@@ -26,7 +26,7 @@ public record BuildManifest
     };
 
     public required Build[] Builds { get; init; }
-    public required Asset[] ExtraAssets { get; init; }
+    public Asset[] ExtraAssets { get; init; } = [];
 
     public IEnumerable<Asset> AllAssets =>
         Builds
