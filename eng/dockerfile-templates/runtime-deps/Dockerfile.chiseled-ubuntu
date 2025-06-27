@@ -8,10 +8,12 @@
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
 
     set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|url")] ^
+    set chiselFileName to "chisel.tar.gz" ^
     set shaFunction to "384" ^
     set chiselSha to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|sha", shaFunction)] ^
-    set rocksToolboxUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
+    set rocksToolboxBaseUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|version")] ^
+    set rocksToolboxUrl to cat(rocksToolboxBaseUrl, "/", rocksToolboxRef, "/chisel-wrapper") ^
 
     set installerImageTag to cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl") ^
 
@@ -62,20 +64,25 @@
 
 RUN apt-get update && apt-get install -y file
 
-RUN {{InsertTemplate("../Dockerfile.linux.download-validate-file",
-    [
-        "out-file": "chisel.tar.gz",
+RUN {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
         "url": chiselUrl,
-        "sha": chiselSha,
-        "sha-var-name": cat("chisel_sha", shaFunction),
+        "out-file": chiselFileName
+    ]]], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": chiselFileName,
         "sha-function": shaFunction,
+        "sha": chiselSha,
+        "sha-var-name": cat("chisel_sha", shaFunction)
     ], "    ")}} \
-    && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
-    && {{InsertTemplate("../Dockerfile.linux.download-validate-file",
-    [
-        "out-file": "/usr/bin/chisel-wrapper",
-        "url": cat(rocksToolboxUrl, "/", rocksToolboxRef, "/chisel-wrapper")
+    && {{InsertTemplate("../Dockerfile.linux.extract-tarball", [
+        "file": chiselFileName,
+        "dest-dir": "/usr/bin/"
     ], "    ")}} \
+    && rm {{chiselFileName}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
+        "url": rocksToolboxUrl,
+        "out-file": "/usr/bin/chisel-wrapper"
+    ]]], "    ")}} \
     && chmod 755 /usr/bin/chisel-wrapper
 
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [

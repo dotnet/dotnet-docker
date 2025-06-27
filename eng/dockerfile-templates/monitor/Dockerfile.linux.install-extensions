@@ -46,4 +46,7 @@
         "file": s3FileName,
         "dest-dir": installDir,
         "extract-paths": ARGS["extract-paths"]
-    ], "    ")}}
+    ], "    ")}} \
+    && rm \
+        {{azBlobFileName}} \
+        {{s3FileName}}
