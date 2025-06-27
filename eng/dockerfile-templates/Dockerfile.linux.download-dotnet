@@ -10,6 +10,7 @@
         sha                  : (optional) The checksum of the downloaded file
 
         sha-url              : (optional) URL to download checksum file
+        sha-url-is-bare      : (optional) Whether the checksum file does not contain the file name
         sha-url-is-aggregate : (optional) True if the checksum file contains more than one checksum,
                                but we only want to validate the checksum of the file we downloaded
         ^
@@ -51,7 +52,8 @@ if (ARGS["sha"] || ARGS["sha-url"]): \
         "sha": ARGS["sha"],
         "sha-var-name": ARGS["sha-var-name"],
         "sha-file": shaFileName,
-        "sha-file-is-aggregate": ARGS["sha-url-is-aggregate"]
+        "sha-file-is-bare": ARGS["sha-url-is-bare"],
+        "sha-file-is-aggregate": ARGS["sha-url-is-aggregate"],
     ])
 }}}}{{
 if ARGS["extract-to"]: \
