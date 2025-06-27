@@ -54,7 +54,7 @@
     set numFiles to len(ARGS["files"]) ^
     set indent to when(numFiles > 1, "    ", "")
 
-}}{{downloadCommand}} {{if (numFiles > 1): \
+}}{{downloadCommand}} {{if (numFiles > 1):\
 }}{{
 for i, file in ARGS["files"]:{{indent}}{{
     set isLastFile to (i = len(ARGS["files"]) - 1)

@@ -1,9 +1,0 @@
-{{
-    _ Extracts a zip file and cleans it up
-
-    ARGS:
-        file: Zip file to extract
-        dest-dir: Destination directory
-        extract-paths: Paths within the zip to extract
-}}unzip {{ARGS["file"]}}{{if ARGS["dest-dir"]: -d {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"], " ")}}}} \
-&& rm {{ARGS["file"]}}
