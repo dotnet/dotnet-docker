@@ -7,12 +7,16 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN curl --fail --show-error --location --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.6.25274.104/dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz \
-    && dotnet_sha512='d3a410249b32c3363ef51be2c906a2b47968e9648265feb2ac54338b03b53a93abba3cbcbb05c56f89e17e50dcd7b862dd0c561a351465520a4905d320f88b73' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+RUN curl --fail --show-error --location \
+        --remote-name https://ci.dot.net/public/Sdk/10.0.100-preview.6.25274.104/dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/Sdk/10.0.100-preview.6.25274.104/dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz.sha512 \
+    && dotnet_sha512='' \
+    && echo "$(cat dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz.sha512)  dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm \
+        dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz \
+        dotnet-sdk-10.0.100-preview.6.25274.104-linux-x64.tar.gz.sha512
 
 
 # .NET SDK image

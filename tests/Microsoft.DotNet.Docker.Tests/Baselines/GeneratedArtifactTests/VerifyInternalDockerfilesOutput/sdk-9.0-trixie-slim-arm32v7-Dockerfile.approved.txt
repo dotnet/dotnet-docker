@@ -5,12 +5,15 @@ FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 ARG ACCESSTOKEN
 
 # Install .NET SDK
-RUN curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output dotnet.tar.gz https://dotnetstage.blob.core.windows.net/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-arm.tar.gz \
-    && dotnet_sha512='{sha512_placeholder}' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+RUN curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-arm.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/checksums/0.0.0-sha.txt \
+    && sha512sum -c 0.0.0-sha.txt --ignore-missing \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-0.0.0-linux-arm.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm \
+        dotnet-sdk-0.0.0-linux-arm.tar.gz \
+        0.0.0-sha.txt
 
 
 # .NET SDK image

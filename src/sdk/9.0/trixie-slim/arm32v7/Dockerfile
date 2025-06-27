@@ -3,12 +3,15 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Install .NET SDK
-RUN curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-linux-arm.tar.gz \
-    && dotnet_sha512='a8bf2ddb358ee2c7bd7afc040d18426f5c92206cace0572798f9ce6925c910dd1a493ed3e35304c9a8509b2621a664559ff445d3014ae0a039559c78ca002b41' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+RUN curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-linux-arm.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt \
+    && sha512sum -c 9.0.6-sha.txt --ignore-missing \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-9.0.301-linux-arm.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm \
+        dotnet-sdk-9.0.301-linux-arm.tar.gz \
+        9.0.6-sha.txt
 
 
 # .NET SDK image

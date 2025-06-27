@@ -14,13 +14,28 @@
     set versionDir to buildVersion ^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set downloadUrl to cat(baseUrl, "/Sdk/", versionDir, "/dotnet-sdk-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
-    set sha to VARIABLES[join(["sdk", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")]
+    set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
+
+    set downloadUrlPath to cat("/Sdk/", versionDir, "/dotnet-sdk-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
+    set downloadUrl to cat(baseUrl, downloadUrlPath) ^
+
+    _ For now the aggregate and bare checksum files are mutually exclusive, but
+      in the future we expect .NET 10 to have non-aggregate, non-bare checksum
+      files before the other .NET versions, so it's necessary to have a
+      separate condition for bare checksum files. ^
+    _ Aggregate checksum files are also not available for internal builds. ^
+    set shaUrlIsAggregate to (!isInternal && (dotnetVersion = "8.0" || dotnetVersion = "9.0")) ^
+    set shaUrlIsBare to (isInternal || dotnetVersion = "10.0") ^
+
+    set shaUrlPath to
+        when(shaUrlIsAggregate,
+            VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
+            cat(downloadUrlPath, ".sha512")) ^
+    set shaUrl to cat(checksumsBaseUrl, shaUrlPath)
 
 }}# Install .NET SDK
 RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
         "download-url": downloadUrl,
-        "out-file": "dotnet.tar.gz",
         "extract-to": "/dotnet",
         "extract-paths": [
             "./packs",
@@ -31,5 +46,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
             "./ThirdPartyNotices.txt"
         ],
         "sha-var-name": "dotnet_sha512",
-        "sha": sha
+        "sha-url": shaUrl,
+        "sha-url-is-bare": shaUrlIsBare,
+        "sha-url-is-aggregate": shaUrlIsAggregate
     ], "    ")}}
