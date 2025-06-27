@@ -9,12 +9,15 @@ RUN tdnf install -y \
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0-preview.6.25274.104 \
-    && curl --fail --show-error --location --output dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-    && dotnet_sha512='1b0d38b14262f961a360ddfffcebab4e0530834a9b19a4908b5b96b1a42c6e638053762bc4eddb6b7d276e82f7a15546d4a27294b178e5113b5bc6c016d962ab' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && curl --fail --show-error --location \
+        --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-x64.tar.gz --directory /dotnet \
+    && rm \
+        dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512
 
 
 # .NET runtime image

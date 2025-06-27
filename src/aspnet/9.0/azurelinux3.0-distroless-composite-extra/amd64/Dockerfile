@@ -11,12 +11,15 @@ RUN tdnf install -y \
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=9.0.6 \
-    && curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
-    && dotnet_sha512='c2e0b1ff54ae60c7a4dd59c8d458f7db362f40bfff31d31279aa544fdf4ba2b0eae704fee62c28cf1e38d9768cefc1c0a9f8522bb9abcbfc0df3603979a94860' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt \
+    && sha512sum -c 9.0.6-sha.txt --ignore-missing \
     && mkdir --parents /usr/share/dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /usr/share/dotnet \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz --directory /usr/share/dotnet \
+    && rm \
+        aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+        9.0.6-sha.txt
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet

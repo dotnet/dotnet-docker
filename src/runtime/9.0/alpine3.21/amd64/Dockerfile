@@ -5,12 +5,15 @@ FROM $REPO:9.0.6-alpine3.21-amd64 AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=9.0.6 \
-    && wget --output-document dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='70ae92ffc4cd1cf074468d8671a6b97ce44debccaf724bcb517af655cd2e75d7f9876389e3d83ca4e745df51e97c2b2209b739ea29cb24dd68b34db12f58827d' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && wget \
+        https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt \
+    && awk -v file="dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz" '{gsub(/\r/, "")} $2 == file' 9.0.6-sha.txt | sha512sum -c \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz --directory /dotnet \
+    && rm \
+        dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
+        9.0.6-sha.txt
 
 
 # .NET runtime image

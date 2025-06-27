@@ -7,12 +7,15 @@ ARG ACCESSTOKEN
 
 # Retrieve .NET Runtime
 RUN dotnet_version=0.0.0 \
-    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --output-document dotnet.tar.gz https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
-    && dotnet_sha512='{sha512_placeholder}' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" \
+        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
+        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz --directory /dotnet \
+    && rm \
+        dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
+        dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz.sha512
 
 
 # .NET runtime image

@@ -5,12 +5,15 @@ FROM $REPO:10.0.0-preview.6-alpine3.22-arm64v8 AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=10.0.0-preview.6.25274.104 \
-    && wget --output-document dotnet.tar.gz https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='00aee1f2c4b7f10ee3b8d2d736c21b495d0dd6f5374483840f5249449c29ebcdad366b6f8f03593acd97b1a7e08e863067b2602dfd2580e632be33b83d9bca4b' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && wget \
+        https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz \
+        https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512 \
+    && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz --directory /dotnet \
+    && rm \
+        aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz \
+        aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512
 
 
 # ASP.NET Composite Image
