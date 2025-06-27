@@ -36,10 +36,6 @@ param(
     [string]
     $AspireVersion,
 
-    # Compute the checksum if a published checksum cannot be found
-    [Switch]
-    $ComputeShas,
-
     # Use stable branding version numbers to compute paths
     [Switch]
     $UseStableBranding,
@@ -107,10 +103,6 @@ if ($MonitorVersion) {
 if ($AspireVersion) {
     $updateDepsArgs += @("--product-version", "aspire-dashboard=$AspireVersion")
     $productMajorVersion = $ProductVersion.Split('.', 2)[0]
-}
-
-if ($ComputeShas) {
-    $updateDepsArgs += "--compute-shas"
 }
 
 if ($ChecksumsFile) {

@@ -51,12 +51,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve ASP.NET Core
-{{InsertTemplate("Dockerfile.linux.install-aspnet",
-    [
-        "install-method": "download-and-install",
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}
+{{InsertTemplate("Dockerfile.linux.install-aspnet")}}
 
 
 # ASP.NET Core image

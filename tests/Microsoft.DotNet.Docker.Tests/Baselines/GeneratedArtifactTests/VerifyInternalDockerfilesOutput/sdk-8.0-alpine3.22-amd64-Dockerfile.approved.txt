@@ -5,7 +5,7 @@ FROM $REPO:0.0.0-alpine3.XX-amd64 AS installer
 ARG ACCESSTOKEN
 
 # Install .NET SDK
-RUN wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --output-document dotnet.tar.gz "https://dotnetstage.blob.core.windows.net/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-musl-x64.tar.gz" \
+RUN wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --output-document dotnet.tar.gz https://dotnetstage.blob.core.windows.net/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-musl-x64.tar.gz \
     && dotnet_sha512='{sha512_placeholder}' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \

@@ -1,6 +1,5 @@
 {{
     _ ARGS:
-        is-aot (optional): Whether to use the smallest set of packages that is necessary to run native AOT apps
         is-extra (optional): Whether to include extra packages that are not needed for every app,
             for example globalization support ^
 
@@ -10,9 +9,6 @@
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isCblMariner to defined(match(OS_VERSION, "^cbl-mariner\d+\.\d+$")) ^
     set isAzureLinux to isCblMariner || defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
-
-    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
@@ -40,6 +36,7 @@
     set uid to 1654 ^
     set gid to uid ^
     set nonRootUserComment to "# Create a non-root user and group"
+
 }}FROM {{baseImage}}{{if isMultiStage: AS base}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs",
@@ -49,12 +46,10 @@
     ]
 )}}
 
-RUN {{InsertTemplate("../Dockerfile.linux.install-deps",
-    [
-        "is-aot": ARGS["is-aot"],
-        "is-extra": ARGS["is-extra"]
-    ]
-)}}{{if isMultiStage:
+RUN {{InsertTemplate("../Dockerfile.linux.install-deps", [
+    "is-extra": ARGS["is-extra"]
+])}}{{
+if isMultiStage:
 
 
 FROM base AS installer

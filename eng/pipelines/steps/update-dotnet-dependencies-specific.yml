@@ -43,7 +43,6 @@ steps:
         RuntimeVersion = $versionInfo.RuntimeVersion
         AspnetVersion = $versionInfo.AspnetVersion
         SdkVersion = $versionInfo.SdkVersion
-        ComputeShas = $true
         AzdoVariableName = "updateDepsArgs-$index"
         UseStableBranding = $versionInfo.StableBranding
       }

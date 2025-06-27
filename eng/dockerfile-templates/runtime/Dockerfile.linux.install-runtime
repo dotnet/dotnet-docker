@@ -1,13 +1,7 @@
 {{
     _ ARGS:
-        dest-dir: Destination directory to install .NET runtime
-        install-method: Method of installation. Can be "download", "download-and-install", or "copy-and-install"
-        add-symlink (optional): If set, adds a symlink to the dotnet executable
-        use-local-version-var (optional): Whether to define a local variable for the .NET runtime version
-            instead of referencing the environment variable.
-        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product.
-        installer-stage (optional): Name of the Dockerfile stage responsible for installation
-        is-composite-runtime (optional): Whether to install aspnetcore composite version ^
+        is-composite-runtime (optional): Whether to install aspnetcore composite version
+        ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
@@ -16,6 +10,7 @@
             VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")],
             VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]) ^
 
+    set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
 
@@ -29,12 +24,8 @@
 
     set versionVariable to
         when(ARGS["is-composite-runtime"],
-            when(ARGS["use-local-version-var"],
-                "aspnetcore_version",
-                "ASPNET_VERSION"),
-            when(ARGS["use-local-version-var"],
-                "dotnet_version",
-                "DOTNET_VERSION")) ^
+            "aspnetcore_version",
+            "dotnet_version") ^
 
     set versionVariableValue to buildVersion ^
     if (versionDir = versionVariableValue):{{
@@ -52,36 +43,13 @@
     set sha to
         when(ARGS["is-composite-runtime"],
             VARIABLES[join(["aspnet-composite", dotnetVersion, platform, ARCH_SHORT, "sha"], "|")],
-            VARIABLES[join(["runtime",          dotnetVersion, platform, ARCH_SHORT, "sha"], "|")]) ^
+            VARIABLES[join(["runtime",          dotnetVersion, platform, ARCH_SHORT, "sha"], "|")])
 
-    set files to
-        [
-            [
-                "filename": "dotnet.tar.gz",
-                "url": downloadUrl,
-                "sha": sha,
-                "sha-var-name": "dotnet_sha512"
-            ]
-        ] ^
-
-    set copyEnabled to ARGS["install-method"] = "copy-and-install" ^
-    set downloadEnabled to ARGS["install-method"] = "download" || ARGS["install-method"] = "download-and-install" ^
-    set installEnabled to ARGS["install-method"] = "download-and-install" || ARGS["install-method"] = "copy-and-install"
-}}{{
-if copyEnabled:{{InsertTemplate("../Dockerfile.linux.copy-files",
-    [
-        "files": files,
-        "srcStage": ARGS["installer-stage"],
-        "destination": ""
-    ])
-}}
-}}RUN {{if ARGS["use-local-version-var"]:{{versionVariable}}={{versionVariableValue}} \
-    && }}{{InsertTemplate("../Dockerfile.linux.download-and-install",
-        [
-            "files": files,
-            "skip-download": !downloadEnabled,
-            "skip-install": !installEnabled,
-            "install-dir": ARGS["dest-dir"],
-            "create-install-dir": "true"
-        ], "    ")}}{{if ARGS["add-symlink"]: \
-    && {{InsertTemplate("Dockerfile.linux.symlink")}}}}
+}}RUN {{versionVariable}}={{versionVariableValue}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+        "download-url": downloadUrl,
+        "out-file": "dotnet.tar.gz",
+        "extract-to": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
+        "sha-var-name": "dotnet_sha512",
+        "sha": sha
+    ], "    ")}}
