@@ -1,9 +1,0 @@
-{{
-    _ Extracts a .tar.gz file
-
-    ARGS:
-        file            : Tarball to extract
-        extract-paths   : (optional) Paths within the tarball to extract
-        dest-dir        : Destination directory
-
-}}tar --gzip --extract --no-same-owner --file {{ARGS["file"]}}{{if ARGS["dest-dir"]: --directory {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"], " ")}}}}

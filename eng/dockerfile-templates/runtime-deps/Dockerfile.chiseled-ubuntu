@@ -74,7 +74,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
         "sha": chiselSha,
         "sha-var-name": cat("chisel_sha", shaFunction)
     ], "    ")}} \
-    && {{InsertTemplate("../Dockerfile.linux.extract-tarball", [
+    && {{InsertTemplate("../Dockerfile.linux.extract-file", [
         "file": chiselFileName,
         "dest-dir": "/usr/bin/"
     ], "    ")}} \

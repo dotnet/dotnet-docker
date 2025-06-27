@@ -37,12 +37,12 @@
         "sha-function": "512"
     ], "    ")}} \
     && mkdir --parents {{installDir}} \
-    && {{InsertTemplate("../Dockerfile.linux.extract-tarball", [
+    && {{InsertTemplate("../Dockerfile.linux.extract-file", [
         "file": azBlobFileName,
         "dest-dir": installDir,
         "extract-paths": ARGS["extract-paths"]
     ], "    ")}} \
-    && {{InsertTemplate("../Dockerfile.linux.extract-tarball", [
+    && {{InsertTemplate("../Dockerfile.linux.extract-file", [
         "file": s3FileName,
         "dest-dir": installDir,
         "extract-paths": ARGS["extract-paths"]

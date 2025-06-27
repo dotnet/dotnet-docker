@@ -44,28 +44,25 @@
     ])
 }}{{
 if (ARGS["sha"] || ARGS["sha-url"]): \
-&& {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+&& {{
+    InsertTemplate("Dockerfile.linux.validate-checksum", [
         "file": fileName,
         "sha-function": shaFunction,
         "sha": ARGS["sha"],
         "sha-var-name": ARGS["sha-var-name"],
         "sha-file": shaFileName,
         "sha-file-is-aggregate": ARGS["sha-url-is-aggregate"]
-])}}}}{{
+    ])
+}}}}{{
 if ARGS["extract-to"]: \
 && mkdir --parents {{ARGS["extract-to"]}} \
-&& {{if (fileExtension = "zip"):{{
-    InsertTemplate("Dockerfile.linux.extract-zip", [
-        "file": fileName,
-        "dest-dir": ARGS["extract-to"],
-        "extract-paths": ARGS["extract-paths"]
-])}}^else:{{
-    InsertTemplate("Dockerfile.linux.extract-tarball", [
+&& {{
+    InsertTemplate("Dockerfile.linux.extract-file", [
         "file": fileName,
         "dest-dir": ARGS["extract-to"],
         "extract-paths": ARGS["extract-paths"]
     ])
-}}}}}}{{
+}}}}{{
 if (ARGS["sha-url"]): \
 && rm \
     {{fileName}} \
