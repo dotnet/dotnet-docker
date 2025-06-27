@@ -7,13 +7,16 @@
     set url to cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgName)
 }}# Install PowerShell global tool
 RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-validate-file",
-        [
-            "out-file": nupkgName,
-            "url": url,
-            "sha": VARIABLES[join(["powershell", dotnetVersion, shaPlatform, "sha"], "|")],
-            "sha-var-name": "powershell_sha512"
-        ], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
+        "url": url,
+        "out-file": nupkgName
+    ]]], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": nupkgName,
+        "sha-function": "512",
+        "sha-var-name": "powershell_sha512",
+        "sha": VARIABLES[join(["powershell", dotnetVersion, shaPlatform, "sha"], "|")]
+    ], "    ")}} \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.{{nupkgPlatform}} \
     && dotnet nuget locals all --clear \
