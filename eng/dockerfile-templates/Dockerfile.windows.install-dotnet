@@ -4,7 +4,7 @@
         extract-paths: (optional) Paths within the downloaded archive to extract into extract-dir.
         extract-dir: (optional) Directory to extract the .NET files into. Defaults to "dotnet".
         mkdir: (optional) Directory to create before extracting the .NET files.
-        version-var: Name of the environment or local version variable to use for the .NET version
+        version-var: (optional) Name of the environment or local version variable to use for the .NET version
         use-local-version-var (optional): Whether to define a local variable for the .NET version
             instead of referencing the environment variable.
         ^

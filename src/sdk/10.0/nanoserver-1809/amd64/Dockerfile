@@ -25,16 +25,28 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '10.0.100-preview.6.25326.107'; `
-        Invoke-WebRequest -OutFile dotnet.zip https://ci.dot.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '37ed67bf1709bf0be35abd2c33bce80551823c57015e6543646c0ccf38ad06b8654b624a76609be820972f4005ee238125eaa2f71dd04a2ade8d71f63f9ed554'; `
-        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+        $dotnetFile = \"dotnet-sdk-10.0.100-preview.6.25326.107-win-x64.zip\"; `
+        `
+        Invoke-WebRequest -OutFile $dotnetFile https://ci.dot.net/public/Sdk/10.0.100-preview.6.25326.107/dotnet-sdk-10.0.100-preview.6.25326.107-win-x64.zip; `
+        Invoke-WebRequest -OutFile  https://ci.dot.net/public-checksums; `
+        `
+        $expectedHash = ( `
+            (Get-Content  | Where-Object { `
+                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            }) -split '\s+' `
+        )[0].ToUpper(); `
+        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        `
+        if ($expectedHash -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host \"Expected: $expectedHash\"; `
+            Write-Host \"Actual:   $actualHash\"; `
             exit 1; `
         }; `
+        `
         mkdir dotnet; `
-        tar --gzip --extract --no-same-owner --file dotnet.zip --directory dotnet; `
-        Remove-Item -Force dotnet.zip; `
+        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet; `
+        Remove-Item -Force $dotnetFile, ; `
         `
         # Install PowerShell global tool
         $powershell_version = '7.6.0-preview.4'; `
