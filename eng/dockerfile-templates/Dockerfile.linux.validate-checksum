@@ -40,9 +40,12 @@ if ARGS["sha-var-name"]:{{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
 && }}echo "{{shaValue}}  {{ARGS["file"]}}" | sha{{ARGS["sha-function"]}}sum -c -^
 elif (ARGS["file"]):{{
     if (ARGS["sha-file-is-aggregate"]):{{
+        _ As a temporary workaround, these commands need to normalize line endings in the checksum files.
+          Remove the `sed` and `gsub` calls when https://github.com/dotnet/core/issues/9958 is fixed. ^
         if (isAlpine)
             :awk -v file="{{ARGS["file"]}}" '{gsub(/\r/, "")} $2 == file' {{ARGS["sha-file"]}} | sha{{ARGS["sha-function"]}}sum -c^
         else
-            :sha{{ARGS["sha-function"]}}sum -c {{ARGS["sha-file"]}} --ignore-missing}}^
+            :sed -i 's/\r$//' {{ARGS["sha-file"]}} \
+&& sha{{ARGS["sha-function"]}}sum -c {{ARGS["sha-file"]}} --ignore-missing}}^
     else
         :sha{{ARGS["sha-function"]}}sum -c {{ARGS["sha-file"]}}}}}}

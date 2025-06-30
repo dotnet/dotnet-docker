@@ -10,6 +10,7 @@ RUN tdnf install -y \
 RUN curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt \
+    && sed -i 's/\r$//' 9.0.6-sha.txt \
     && sha512sum -c 9.0.6-sha.txt --ignore-missing \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-9.0.301-linux-arm64.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
