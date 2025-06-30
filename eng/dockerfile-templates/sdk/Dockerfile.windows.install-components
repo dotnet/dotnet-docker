@@ -6,18 +6,24 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
+
+    set sdkExtractPaths to [
+        "LICENSE.txt",
+        "ThirdPartyNotices.txt",
+        "packs",
+        "sdk",
+        "sdk-manifests",
+        "templates",
+        "shared"
+    ] ^
+    if (dotnetVersion != "8.0" && dotnetVersion != "9.0"):{{
+        set sdkExtractPaths to cat(["dnx"], sdkExtractPaths)
+    }}^
+
     set sdkExtractGroups to [
         [
             "dir": "dotnet",
-            "paths": filter([
-                "LICENSE.txt",
-                "ThirdPartyNotices.txt",
-                "packs",
-                "sdk",
-                "sdk-manifests",
-                "templates",
-                "shared"
-            ], len)
+            "paths": filter(sdkExtractPaths, len)
         ],
         [
             "dir": "dotnet\shared",

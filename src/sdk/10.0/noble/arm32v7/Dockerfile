@@ -7,7 +7,7 @@ RUN curl --fail --show-error --location --output dotnet.tar.gz https://ci.dot.ne
     && dotnet_sha512='2b9089d95bdec1f9f76ccf53804512f211750de1f805c492b4164e786adb7eae8f4a7a7a45f6a363a8ed5c7f2ea1d204dd030e4b7f77a2cdba101c030f32dda2' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 

@@ -4,6 +4,18 @@
     set buildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
     set productVersion to VARIABLES[cat("sdk|", dotnetVersion, "|product-version")] ^
 
+    set sdkExtractPaths to [
+        "./packs",
+        "./sdk",
+        "./sdk-manifests",
+        "./templates",
+        "./LICENSE.txt",
+        "./ThirdPartyNotices.txt"
+    ]^
+    if (dotnetVersion != "8.0" && dotnetVersion != "9.0"):{{
+        set sdkExtractPaths to cat(["./dnx"], sdkExtractPaths)
+    }}^
+
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
 
@@ -22,14 +34,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
         "download-url": downloadUrl,
         "out-file": "dotnet.tar.gz",
         "extract-to": "/dotnet",
-        "extract-paths": [
-            "./packs",
-            "./sdk",
-            "./sdk-manifests",
-            "./templates",
-            "./LICENSE.txt",
-            "./ThirdPartyNotices.txt"
-        ],
+        "extract-paths": sdkExtractPaths,
         "sha-var-name": "dotnet_sha512",
         "sha": sha
     ], "    ")}}

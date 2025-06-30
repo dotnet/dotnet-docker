@@ -7,7 +7,7 @@ RUN wget --output-document dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-
     && dotnet_sha512='4ca3a2ae073e3d733e24da717863f57233b42ea5a734575bc1af6e42655fbc4dbd1aaf319de241d5b2d6fe43fda3966aeba0ec6943d3159b0a0a901484d4a807' \
     && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm dotnet.tar.gz
 
 
