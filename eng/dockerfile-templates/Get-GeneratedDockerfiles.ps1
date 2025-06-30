@@ -36,5 +36,5 @@ if (!$Branch) {
 }
 
 & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
-    -ImageBuilderArgs "generateDockerfiles $CustomImageBuilderArgs --var branch=$Branch" `
+    -ImageBuilderArgs "generateDockerfiles $CustomImageBuilderArgs --var branch=$Branch --no-version-logging" `
     -OnCommandExecuted $onDockerfilesGenerated
