@@ -11,7 +11,7 @@ RUN tdnf install -y \
 
 # Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=8.1.1 \
-    && curl --fail --show-error --location  \
+    && curl --fail --show-error --location \
         --output dotnet-monitor-egress-azureblobstorage.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
         --output dotnet-monitor-egress-s3storage.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
     && dotnet_monitor_azureblobstorage_sha512='4011e41fdf1a08c2dcbc1ce2b20be10a126e7e2789f8e558bcc87d3a41f34e7c6481128775c51004d02608dcb1915db38119699f31f72ac718ab0f0b1159afb7' \
@@ -20,9 +20,10 @@ RUN dotnet_monitor_extension_version=8.1.1 \
     && echo "$dotnet_monitor_s3storage_sha512  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
     && tar --gzip --extract --no-same-owner --file dotnet-monitor-egress-azureblobstorage.tar.gz --directory /app \
-    && rm dotnet-monitor-egress-azureblobstorage.tar.gz \
     && tar --gzip --extract --no-same-owner --file dotnet-monitor-egress-s3storage.tar.gz --directory /app \
-    && rm dotnet-monitor-egress-s3storage.tar.gz
+    && rm \
+        dotnet-monitor-egress-azureblobstorage.tar.gz \
+        dotnet-monitor-egress-s3storage.tar.gz
 
 
 # .NET Monitor image
