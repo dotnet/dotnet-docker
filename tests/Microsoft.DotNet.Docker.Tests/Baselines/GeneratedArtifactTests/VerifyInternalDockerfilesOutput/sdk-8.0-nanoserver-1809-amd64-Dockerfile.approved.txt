@@ -29,6 +29,7 @@ RUN `
         `
         # Retrieve .NET SDK
         $dotnetFile = \"dotnet-sdk-0.0.0-win-x64.zip\"; `
+        $dotnetChecksumsFile = \"0.0.0-sha.txt\"; `
         `
         $Headers = @{ `
             Authorization = \"Bearer $env:ACCESSTOKEN\"; `
@@ -39,16 +40,16 @@ RUN `
             Authorization = \"Bearer $env:ACCESSTOKEN\"; `
             'x-ms-version' = '2017-11-09'; `
         }; `
-        Invoke-WebRequest -OutFile 0.0.0-sha.txt \"https://dotnetstage.blob.core.windows.net/checksums/0.0.0-sha.txt\" -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnetChecksumsFile \"https://dotnetstage.blob.core.windows.net/checksums/0.0.0-sha.txt\" -Headers $Headers; `
         `
-        $expectedHash = ( `
-            (Get-Content 0.0.0-sha.txt | Where-Object { `
+        $dotnetSha512 = ( `
+            (Get-Content $dotnetChecksumsFile | Where-Object { `
                     $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
             }) -split '\s+' `
         )[0].ToUpper(); `
         $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
         `
-        if ($expectedHash -ne $actualHash) { `
+        if ($dotnetSha512 -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             Write-Host \"Expected: $expectedHash\"; `
             Write-Host \"Actual:   $actualHash\"; `
@@ -57,7 +58,7 @@ RUN `
         `
         mkdir dotnet; `
         tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet; `
-        Remove-Item -Force $dotnetFile, 0.0.0-sha.txt; `
+        Remove-Item -Force $dotnetFile, $dotnetChecksumsFile; `
         `
         # Install PowerShell global tool
         $powershell_version = '0.0.0'; `

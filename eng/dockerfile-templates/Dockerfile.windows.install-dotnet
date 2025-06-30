@@ -14,35 +14,48 @@
     set dotnetFileParts to split(ARGS["download-path"], "/") ^
     set dotnetFileName to dotnetFileParts[len(dotnetFileParts) - 1] ^
 
-    set dotnetFileVariable to "$dotnetFile" ^
     set extractDir to when(ARGS["extract-dir"], ARGS["extract-dir"], "dotnet") ^
-
-    set checksumsFilePath to VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")] ^
-    set checksumsFileParts to split(checksumsFilePath, "/") ^
-    set checksumsFileName to checksumsFileParts[len(checksumsFileParts) - 1] ^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set downloadUrl to cat(baseUrl, ARGS["download-path"]) ^
 
+    set useAggregateChecksums to (dotnetVersion = "8.0" || dotnetVersion = "9.0") ^
     set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
-    set checksumsUrl to cat(checksumsBaseUrl, checksumsFilePath)
+
+    set dotnetFileVariable to "$dotnetFile" ^
+    set checksumFileVariable to when(useAggregateChecksums, "$dotnetChecksumsFile", "$dotnetSha512File") ^
+
+    if (useAggregateChecksums):{{
+        set checksumsFilePath to VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")] ^
+        set checksumsUrl to cat(checksumsBaseUrl, checksumsFilePath)
+    }}^else:{{
+        set checksumsUrl to cat(checksumsBaseUrl, ARGS["download-path"], ".sha512") ^
+        set shaFileIsBare to "true"
+    }}^
+
+    set checksumsFileParts to split(checksumsUrl, "/") ^
+    set checksumsFileName to checksumsFileParts[len(checksumsFileParts) - 1]
 
 }}{{if ARGS["use-local-version-var"]:{{ARGS['version-var']}} = '{{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}'; `
 }}{{dotnetFileVariable}} = \"{{dotnetFileName}}\"; `
+{{checksumFileVariable}} = \"{{checksumsFileName}}\"; `
 `
 {{InsertTemplate("Dockerfile.windows.download-file", [
     "out-file": dotnetFileVariable,
     "url": downloadUrl
 ])}}; `
 {{InsertTemplate("Dockerfile.windows.download-file", [
-    "out-file": checksumsFileName,
+    "out-file": checksumFileVariable,
     "url": checksumsUrl
 ])}}; `
 `
 {{InsertTemplate("Dockerfile.windows.validate-checksum", [
     "file": dotnetFileVariable,
-    "sha-file": checksumsFileName,
-])}}
+    "sha-file": checksumFileVariable,
+    "sha-file-is-aggregate": useAggregateChecksums,
+    "sha-file-is-bare": shaFileIsBare,
+    "sha-function": "512"
+])}}; `
 `
 {{if (ARGS["mkdir"]):mkdir {{ARGS["mkdir"]}}; `
 }}{{InsertTemplate("Dockerfile.windows.extract-zip", [
@@ -50,4 +63,4 @@
     "dest-dir": "dotnet",
     "extract-paths": ARGS["extract-paths"]
 ])}}; `
-Remove-Item -Force {{dotnetFileVariable}}, {{checksumsFileName}}
+Remove-Item -Force {{dotnetFileVariable}}, {{checksumFileVariable}}

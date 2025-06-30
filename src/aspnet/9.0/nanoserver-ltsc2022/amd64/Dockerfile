@@ -11,18 +11,19 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $dotnetFile = \"aspnetcore-runtime-9.0.6-win-x64.zip\"; `
+        $dotnetChecksumsFile = \"9.0.6-sha.txt\"; `
         `
         Invoke-WebRequest -OutFile $dotnetFile https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/9.0.6/aspnetcore-runtime-9.0.6-win-x64.zip; `
-        Invoke-WebRequest -OutFile 9.0.6-sha.txt https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt; `
+        Invoke-WebRequest -OutFile $dotnetChecksumsFile https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt; `
         `
-        $expectedHash = ( `
-            (Get-Content 9.0.6-sha.txt | Where-Object { `
+        $dotnetSha512 = ( `
+            (Get-Content $dotnetChecksumsFile | Where-Object { `
                     $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
             }) -split '\s+' `
         )[0].ToUpper(); `
         $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
         `
-        if ($expectedHash -ne $actualHash) { `
+        if ($dotnetSha512 -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             Write-Host \"Expected: $expectedHash\"; `
             Write-Host \"Actual:   $actualHash\"; `
@@ -31,7 +32,7 @@ RUN powershell -Command " `
         `
         mkdir dotnet/shared/Microsoft.AspNetCore.App; `
         tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force $dotnetFile, 9.0.6-sha.txt"
+        Remove-Item -Force $dotnetFile, $dotnetChecksumsFile"
 
 
 # ASP.NET Core image

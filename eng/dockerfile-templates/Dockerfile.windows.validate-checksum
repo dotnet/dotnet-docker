@@ -23,22 +23,29 @@
                                 `man sha512sum` for details.
         ^
 
-    set shaValue to when(ARGS["sha-var-name"], ARGS["sha-var-name"], ARGS["sha"])
+    set shaValue to
+        when(ARGS["sha-file"] && ARGS["sha-file-is-bare"],
+            cat("(Get-Content ", ARGS["sha-file"],")"),
+        when(ARGS["sha-var-name"],
+            ARGS["sha-var-name"],
+        ARGS["sha"]))
 
-}}{{if (ARGS["sha"]):{{if (ARGS["sha-var-name"]):{{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
+}}{{
+if (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
+    if (ARGS["sha-var-name"]):{{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
 }}if ((Get-FileHash {{ARGS["file"]}} -Algorithm sha{{ARGS["sha-function"]}}).Hash -ne {{shaValue}}) { `
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
     exit 1; `
-}^else:$expectedHash = ( `
+}^else:$dotnetSha512 = ( `
     (Get-Content {{ARGS['sha-file']}} | Where-Object { `
             $_ -match \"$([regex]::Escape({{ARGS['file']}}))$\"; `
     }) -split '\s+' `
 )[0].ToUpper(); `
-$actualHash = (Get-FileHash {{ARGS['file']}} -Algorithm SHA512).Hash.ToUpper(); `
+$actualHash = (Get-FileHash {{ARGS['file']}} -Algorithm SHA{{ARGS["sha-function"]}}).Hash.ToUpper(); `
 `
-if ($expectedHash -ne $actualHash) { `
+if ($dotnetSha512 -ne $actualHash) { `
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
     Write-Host \"Expected: $expectedHash\"; `
     Write-Host \"Actual:   $actualHash\"; `
     exit 1; `
-}; `}}
+}^_}}
