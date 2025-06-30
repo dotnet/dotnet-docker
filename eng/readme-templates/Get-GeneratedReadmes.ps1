@@ -62,7 +62,7 @@ function Invoke-GenerateReadme {
 
     & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
         -ImageBuilderArgs `
-            "generateReadmes --manifest $Manifest --source-branch $SourceBranch$customImageBuilderArgs --var branch=$SourceBranch 'https://github.com/dotnet/dotnet-docker'" `
+            "generateReadmes --manifest $Manifest --source-branch $SourceBranch$customImageBuilderArgs --var branch=$SourceBranch 'https://github.com/dotnet/dotnet-docker' --no-version-logging" `
         -OnCommandExecuted $onDockerfilesGenerated
 }
 
