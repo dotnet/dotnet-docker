@@ -5,7 +5,8 @@ RUN apt-get update && apt-get install -y file
 RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.2.0/chisel_v1.2.0_linux_arm64.tar.gz \
     && chisel_sha384='561d083aac81d44aaec8b3449fb0cc1f6a0e7c910b2c5e3f1f24d66195d772654a481334b26295961a147ee2b38f8229' \
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
-    && tar -xzf chisel.tar.gz -C /usr/bin/ chisel \
+    && tar --gzip --extract --no-same-owner --file chisel.tar.gz --directory /usr/bin/ \
+    && rm chisel.tar.gz \
     && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
