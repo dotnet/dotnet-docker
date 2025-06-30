@@ -8,27 +8,40 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019-amd64 AS installer
 ARG ACCESSTOKEN
 
 # Install ASP.NET Core Runtime
-RUN powershell -Command `
+RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '0.0.0'; `
+        $dotnetFile = \"aspnetcore-runtime-0.0.0-win-x64.zip\"; `
         `
         $Headers = @{ `
             Authorization = \"Bearer $env:ACCESSTOKEN\"; `
             'x-ms-version' = '2017-11-09'; `
         }; `
-        Invoke-WebRequest -OutFile aspnetcore.zip \"https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip\" -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnetFile \"https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/0.0.0/aspnetcore-runtime-0.0.0-win-x64.zip\" -Headers $Headers; `
+        $Headers = @{ `
+            Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+            'x-ms-version' = '2017-11-09'; `
+        }; `
+        Invoke-WebRequest -OutFile 0.0.0-sha.txt \"https://dotnetstage.blob.core.windows.net/checksums/0.0.0-sha.txt\" -Headers $Headers; `
         `
-        $aspnetcore_sha512 = '{sha512_placeholder}'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
+        $expectedHash = ( `
+            (Get-Content 0.0.0-sha.txt | Where-Object { `
+                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            }) -split '\s+' `
+        )[0].ToUpper(); `
+        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        `
+        if ($expectedHash -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host \"Expected: $expectedHash\"; `
+            Write-Host \"Actual:   $actualHash\"; `
             exit 1; `
         }; `
         `
         mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar --gzip --extract --no-same-owner --file aspnetcore.zip --directory dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force $dotnetFile, 0.0.0-sha.txt"
 
 
 # ASP.NET Core image

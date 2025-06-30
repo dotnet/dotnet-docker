@@ -1,0 +1,53 @@
+{{
+    _ ARGS:
+        download-path: Path to download .NET from - this will be appended to the base URL.
+        extract-paths: (optional) Paths within the downloaded archive to extract into extract-dir.
+        extract-dir: (optional) Directory to extract the .NET files into. Defaults to "dotnet".
+        mkdir: (optional) Directory to create before extracting the .NET files.
+        version-var: Name of the environment or local version variable to use for the .NET version
+        use-local-version-var (optional): Whether to define a local variable for the .NET version
+            instead of referencing the environment variable.
+        ^
+
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+
+    set dotnetFileParts to split(ARGS["download-path"], "/") ^
+    set dotnetFileName to dotnetFileParts[len(dotnetFileParts) - 1] ^
+
+    set dotnetFileVariable to "$dotnetFile" ^
+    set extractDir to when(ARGS["extract-dir"], ARGS["extract-dir"], "dotnet") ^
+
+    set checksumsFilePath to VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")] ^
+    set checksumsFileParts to split(checksumsFilePath, "/") ^
+    set checksumsFileName to checksumsFileParts[len(checksumsFileParts) - 1] ^
+
+    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
+    set downloadUrl to cat(baseUrl, ARGS["download-path"]) ^
+
+    set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
+    set checksumsUrl to cat(checksumsBaseUrl, checksumsFilePath)
+
+}}{{if ARGS["use-local-version-var"]:{{ARGS['version-var']}} = '{{VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]}}'; `
+}}{{dotnetFileVariable}} = \"{{dotnetFileName}}\"; `
+`
+{{InsertTemplate("Dockerfile.windows.download-file", [
+    "out-file": dotnetFileVariable,
+    "url": downloadUrl
+])}}; `
+{{InsertTemplate("Dockerfile.windows.download-file", [
+    "out-file": checksumsFileName,
+    "url": checksumsUrl
+])}}; `
+`
+{{InsertTemplate("Dockerfile.windows.validate-checksum", [
+    "file": dotnetFileVariable,
+    "sha-file": checksumsFileName,
+])}}
+`
+{{if (ARGS["mkdir"]):mkdir {{ARGS["mkdir"]}}; `
+}}{{InsertTemplate("Dockerfile.windows.extract-zip", [
+    "file": dotnetFileVariable,
+    "dest-dir": "dotnet",
+    "extract-paths": ARGS["extract-paths"]
+])}}; `
+Remove-Item -Force {{dotnetFileVariable}}, {{checksumsFileName}}

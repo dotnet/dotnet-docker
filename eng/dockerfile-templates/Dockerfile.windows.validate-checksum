@@ -1,0 +1,44 @@
+{{
+    _ Verify the checksum of a file on disk against a known value or a checksum file.
+
+    ARGS:
+        Required by all option groups:
+        sha-function          : SHA function to use (e.g. 256, 384, 512), not optional.
+
+        The following argument groups are mutually exclusive:
+
+        file                  : Path to the file to validate.
+        sha                   : Expected checksum of the downloaded file.
+        sha-var-name          : (optional) Name of variable to store the checksum in.
+
+        sha-file              : Checksum file to validate against. The file should contain a single
+                                line with the expected checksum and the file name to validate,
+                                separated by one or two spaces. If the file contains multiple lines,
+                                set sha-file-is-aggregate to true.
+        sha-file-is-bare      : (optional) Whether the checksum file does not contain the file name.
+        sha-file-is-aggregate : (optional) Whether the checksum file contains more than one checksum. The file
+                                should contain one or more lines with expected checksums and file
+                                names separated by one or two spaces. One line must have a filename
+                                matching the file you wish to validate. See `man cksum` or
+                                `man sha512sum` for details.
+        ^
+
+    set shaValue to when(ARGS["sha-var-name"], ARGS["sha-var-name"], ARGS["sha"])
+
+}}{{if (ARGS["sha"]):{{if (ARGS["sha-var-name"]):{{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
+}}if ((Get-FileHash {{ARGS["file"]}} -Algorithm sha{{ARGS["sha-function"]}}).Hash -ne {{shaValue}}) { `
+    Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+    exit 1; `
+}^else:$expectedHash = ( `
+    (Get-Content {{ARGS['sha-file']}} | Where-Object { `
+            $_ -match \"$([regex]::Escape({{ARGS['file']}}))$\"; `
+    }) -split '\s+' `
+)[0].ToUpper(); `
+$actualHash = (Get-FileHash {{ARGS['file']}} -Algorithm SHA512).Hash.ToUpper(); `
+`
+if ($expectedHash -ne $actualHash) { `
+    Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+    Write-Host \"Expected: $expectedHash\"; `
+    Write-Host \"Actual:   $actualHash\"; `
+    exit 1; `
+}; `}}

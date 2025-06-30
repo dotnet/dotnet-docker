@@ -1,7 +1,10 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set buildVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
+
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
     set isServer2025 to find(OS_VERSION_NUMBER, "2025") >= 0 ^
+
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
@@ -22,11 +25,15 @@ FROM {{installerStageFromImage}} AS installer
 ARG ACCESSTOKEN
 }}
 # Retrieve .NET Runtime
-{{InsertTemplate("Dockerfile.windows.install-runtime",
-    [
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}
+RUN powershell -Command " `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        {{InsertTemplate("../Dockerfile.windows.install-dotnet", [
+            "download-path": cat("/Runtime/", buildVersion, "/", "dotnet-runtime-", buildVersion, "-win-x64.zip"),
+            "extract-dir": "dotnet",
+            "mkdir": "dotnet"
+        ], "        ")}}"
 
 
 # Runtime image

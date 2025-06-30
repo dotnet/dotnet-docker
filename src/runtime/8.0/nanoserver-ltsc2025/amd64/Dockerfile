@@ -4,21 +4,32 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2025-amd64 AS installer
 
 # Retrieve .NET Runtime
-RUN powershell -Command `
+RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '8.0.17'; `
-        Invoke-WebRequest -OutFile dotnet.zip https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
-        $dotnet_sha512 = 'fbace810bcfeaf6fc3cdad6fd6758eb2cb241fc1bffd2bf6ded78ff8fc0593e59e5ca013abfd5ca289c20a636cc8a243efd4e703062fdea0a394c4020a9c0820'; `
-        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+        $dotnetFile = \"dotnet-runtime-8.0.17-win-x64.zip\"; `
+        `
+        Invoke-WebRequest -OutFile $dotnetFile https://builds.dotnet.microsoft.com/dotnet/Runtime/8.0.17/dotnet-runtime-8.0.17-win-x64.zip; `
+        Invoke-WebRequest -OutFile 8.0.17-sha.txt https://builds.dotnet.microsoft.com/dotnet/checksums/8.0.17-sha.txt; `
+        `
+        $expectedHash = ( `
+            (Get-Content 8.0.17-sha.txt | Where-Object { `
+                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            }) -split '\s+' `
+        )[0].ToUpper(); `
+        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        `
+        if ($expectedHash -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host \"Expected: $expectedHash\"; `
+            Write-Host \"Actual:   $actualHash\"; `
             exit 1; `
         }; `
         `
         mkdir dotnet; `
-        tar --gzip --extract --no-same-owner --file dotnet.zip --directory dotnet; `
-        Remove-Item -Force dotnet.zip
+        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet; `
+        Remove-Item -Force $dotnetFile, 8.0.17-sha.txt"
 
 
 # Runtime image

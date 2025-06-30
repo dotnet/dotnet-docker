@@ -9,13 +9,16 @@
     set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]
 }}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
-{{InsertTemplate("../Dockerfile.windows.download-file",
-        [
-            "out-file": nupkgFile,
-            "url": url,
-            "sha": VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")],
-            "sha-var-name": "powershell_sha512"
-        ],)}}; `
+{{InsertTemplate("../Dockerfile.windows.download-file", [
+    "out-file": nupkgFile,
+    "url": url
+],)}}; `
+{{InsertTemplate("../Dockerfile.windows.validate-checksum", [
+    "file": nupkgFile,
+    "sha": VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")],
+    "sha-function": "512",
+    "sha-var-name": "$powershell_sha512"
+])}}; `
 & {{rootDir}}dotnet\dotnet tool install --add-source . --tool-path {{rootDir}}powershell --version $powershell_version PowerShell.Windows.x64; `
 & {{rootDir}}dotnet\dotnet nuget locals all --clear; `
 Remove-Item -Force {{nupkgFile}}; `

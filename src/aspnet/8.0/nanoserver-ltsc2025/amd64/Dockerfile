@@ -6,21 +6,32 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM mcr.microsoft.com/windows/servercore:ltsc2025-amd64 AS installer
 
 # Install ASP.NET Core Runtime
-RUN powershell -Command `
+RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '8.0.17'; `
-        Invoke-WebRequest -OutFile aspnetcore.zip https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = 'af61590a7fd915ecdc93a4e82e7319ced0abe7e8307102769f52a0541af8064df1d719c8f22e8ede1832f4a9779c36c7e3cf0ffd27837ad2229ae302c8b9c1aa'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
+        $dotnetFile = \"aspnetcore-runtime-8.0.17-win-x64.zip\"; `
+        `
+        Invoke-WebRequest -OutFile $dotnetFile https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/8.0.17/aspnetcore-runtime-8.0.17-win-x64.zip; `
+        Invoke-WebRequest -OutFile 8.0.17-sha.txt https://builds.dotnet.microsoft.com/dotnet/checksums/8.0.17-sha.txt; `
+        `
+        $expectedHash = ( `
+            (Get-Content 8.0.17-sha.txt | Where-Object { `
+                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            }) -split '\s+' `
+        )[0].ToUpper(); `
+        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        `
+        if ($expectedHash -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host \"Expected: $expectedHash\"; `
+            Write-Host \"Actual:   $actualHash\"; `
             exit 1; `
         }; `
         `
         mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar --gzip --extract --no-same-owner --file aspnetcore.zip --directory dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force $dotnetFile, 8.0.17-sha.txt"
 
 
 # ASP.NET Core image

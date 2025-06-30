@@ -2,6 +2,8 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
 
+    set buildVersion to VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")] ^
+
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
@@ -19,11 +21,17 @@ FROM {{installerStageFromImage}} AS installer
 {{if isInternal:
 ARG ACCESSTOKEN
 }}
-{{InsertTemplate("Dockerfile.windows.install-aspnet",
-    [
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}
+# Install ASP.NET Core Runtime
+RUN powershell -Command " `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        {{InsertTemplate("../Dockerfile.windows.install-dotnet", [
+            "download-path": cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-", buildVersion, "-win-x64.zip"),
+            "extract-paths": ["./shared/Microsoft.AspNetCore.App"],
+            "extract-dir": "dotnet",
+            "mkdir": "dotnet/shared/Microsoft.AspNetCore.App"
+        ], "        ")}}"
 
 
 # ASP.NET Core image

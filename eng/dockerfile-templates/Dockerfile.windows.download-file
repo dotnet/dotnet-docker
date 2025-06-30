@@ -13,15 +13,10 @@
 
     set isInternal to find(ARGS["url"], "dotnetstage") >= 0 ^
     set hashAlgorithm to when(ARGS["hash-algorithm"], ARGS["hash-algorithm"], "sha512")
-}}{{if isInternal:`
-$Headers = @@{ `
+
+}}{{if isInternal:$Headers = @@{ `
     Authorization = \"Bearer $env:ACCESSTOKEN\"; `
     'x-ms-version' = '2017-11-09'; `
 }; `
-Invoke-WebRequest -OutFile {{ARGS["out-file"]}} \"{{ARGS["url"]}}\" -Headers $Headers; `
-`^else:Invoke-WebRequest -OutFile {{ARGS["out-file"]}} {{ARGS["url"]}}; `}}
-${{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
-if ((Get-FileHash {{ARGS["out-file"]}} -Algorithm {{hashAlgorithm}}).Hash -ne ${{ARGS["sha-var-name"]}}) { `
-    Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-    exit 1; `
-}
+Invoke-WebRequest -OutFile {{ARGS["out-file"]}} \"{{ARGS["url"]}}\" -Headers $Headers^
+else:Invoke-WebRequest -OutFile {{ARGS["out-file"]}} {{ARGS["url"]}}}}

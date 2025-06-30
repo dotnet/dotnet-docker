@@ -6,27 +6,40 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2025-amd64 AS installer
 ARG ACCESSTOKEN
 
 # Retrieve .NET Runtime
-RUN powershell -Command `
+RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '0.0.0'; `
+        $dotnetFile = \"dotnet-runtime-0.0.0-win-x64.zip\"; `
         `
         $Headers = @{ `
             Authorization = \"Bearer $env:ACCESSTOKEN\"; `
             'x-ms-version' = '2017-11-09'; `
         }; `
-        Invoke-WebRequest -OutFile dotnet.zip \"https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip\" -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnetFile \"https://dotnetstage.blob.core.windows.net/Runtime/0.0.0/dotnet-runtime-0.0.0-win-x64.zip\" -Headers $Headers; `
+        $Headers = @{ `
+            Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+            'x-ms-version' = '2017-11-09'; `
+        }; `
+        Invoke-WebRequest -OutFile 0.0.0-sha.txt \"https://dotnetstage.blob.core.windows.net/checksums/0.0.0-sha.txt\" -Headers $Headers; `
         `
-        $dotnet_sha512 = '{sha512_placeholder}'; `
-        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+        $expectedHash = ( `
+            (Get-Content 0.0.0-sha.txt | Where-Object { `
+                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            }) -split '\s+' `
+        )[0].ToUpper(); `
+        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        `
+        if ($expectedHash -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host \"Expected: $expectedHash\"; `
+            Write-Host \"Actual:   $actualHash\"; `
             exit 1; `
         }; `
         `
         mkdir dotnet; `
-        tar --gzip --extract --no-same-owner --file dotnet.zip --directory dotnet; `
-        Remove-Item -Force dotnet.zip
+        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet; `
+        Remove-Item -Force $dotnetFile, 0.0.0-sha.txt"
 
 
 # Runtime image

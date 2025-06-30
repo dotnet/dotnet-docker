@@ -41,17 +41,20 @@
     }} ^
     map(ARGS["sdk-extract-groups"], groupToFormattedPaths)
 }}{{if ARGS["use-local-version-var"]:{{sdkVersionDir}} = '{{VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]}}'; `
-}}{{InsertTemplate("../Dockerfile.windows.download-file",
-    [
-        "out-file": dotnetZipFile,
-        "url": url,
-        "sha": VARIABLES[cat("sdk|", dotnetVersion, "|win|x64|sha")],
-        "sha-var-name": "dotnet_sha512"
-    ])}}; `
+}}{{InsertTemplate("../Dockerfile.windows.download-file", [
+    "out-file": dotnetZipFile,
+    "url": url
+])}}; `
+{{InsertTemplate("../Dockerfile.windows.validate-checksum", [
+    "file": dotnetZipFile,
+    "sha": VARIABLES[cat("sdk|", dotnetVersion, "|win|x64|sha")],
+    "sha-function": "512",
+    "sha-var-name": "$dotnet_sha512"
+])}}; `
 mkdir {{dotnetDir}}; `
-{{InsertTemplate("../Dockerfile.windows.extract-zip",
-    [
-        "file": dotnetZipFile,
-        "dest-dir": dotnetDir,
-        "extract-paths": sdkExtractPaths
-    ])}};
+{{InsertTemplate("../Dockerfile.windows.extract-zip", [
+    "file": dotnetZipFile,
+    "dest-dir": dotnetDir,
+    "extract-paths": sdkExtractPaths
+])}}; `
+Remove-Item -Force {{dotnetZipFile}}
