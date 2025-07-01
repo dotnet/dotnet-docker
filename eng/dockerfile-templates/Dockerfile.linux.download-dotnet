@@ -67,8 +67,10 @@
     set shaFileName to replace(shaFileName, versionVariableValue, versionVariableRef) ^
     set fileName to replace(fileName, versionVariableValue, versionVariableRef) ^
 
-    _ The SDK has two versions - SDK version and Runtime version. We need to have variables for both. ^
-    if (product = "sdk"):{{
+    _ The .NET SDK has two versions associated with it - SDK version and Runtime version.
+      Aggregate checksum files are associated with the .NET runtime version, so if we're
+      installing the SDK we need to have a separate variable for the runtime version. ^
+    if (product = "sdk" && shaUrlIsAggregate):{{
         set runtimeVersionVariable to "dotnet_version" ^
         set runtimeVersionVariableRef to cat("$", runtimeVersionVariable) ^
         set runtimeVersionVariableValue to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
@@ -84,7 +86,7 @@
         ["url": shaUrl]
     ]
 
-}}{{versionVariable}}={{versionVariableValue}}{{if product = "sdk": \
+}}{{versionVariable}}={{versionVariableValue}}{{if product = "sdk" && shaUrlIsAggregate: \
 && {{runtimeVersionVariable}}={{runtimeVersionVariableValue}}}} \
 && {{InsertTemplate("Dockerfile.linux.download-files", [
     "files": filesToDownload
