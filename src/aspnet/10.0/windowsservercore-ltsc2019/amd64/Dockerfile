@@ -10,9 +10,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '10.0.0-preview.6.25274.104'; `
+        $aspnetcore_version = '10.0.0-preview.6.25326.107'; `
         Invoke-WebRequest -OutFile aspnetcore.zip https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = 'a22c29eae86b11d3d91b795188013cb1a4e0cd0e96c6ed4fe6ee32351f5a697c42ab4a903c8790a35a5c26349b6a8a6c149bedab328cc024b1a6fea2c50eb8b2'; `
+        $aspnetcore_sha512 = 'c59ea0baa3ca44927eafd932a9c2fa47de7f00a9aac5d7f60909bb6203b9139a319e8b40160974156f13266f2e5697c513ca16282d19d4307aa71c047a5b2f38'; `
         if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -27,6 +27,6 @@ RUN powershell -Command `
 FROM $REPO:10.0.0-preview.6-windowsservercore-ltsc2019
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-preview.6.25274.104
+ENV ASPNET_VERSION=10.0.0-preview.6.25326.107
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
