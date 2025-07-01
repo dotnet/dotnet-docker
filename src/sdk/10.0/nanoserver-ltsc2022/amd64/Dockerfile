@@ -50,7 +50,7 @@ RUN powershell -Command " `
         Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
-        Get-ChildItem -Exclude 'dnx','LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
+        Get-ChildItem -Exclude 'dnx.cmd','LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
             | Remove-Item -Force -Recurse; `
         Get-ChildItem -Exclude 'Microsoft.WindowsDesktop.App' -Path dotnet\shared `
             | Remove-Item -Force -Recurse"
