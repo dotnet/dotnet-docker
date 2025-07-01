@@ -3,12 +3,18 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
-RUN curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.411/dotnet-sdk-8.0.411-linux-arm.tar.gz \
-    && dotnet_sha512='60060d98f8dedb15b11b8fca709269a9d6b944a7871decc238cf7f588b78c12f73b7f68f21bfa1d7c247ab4ded5cbad4976d6ab8fbe59a4af298d53d0c037596' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+RUN dotnet_sdk_version=8.0.411 \
+    && dotnet_version=8.0.17 \
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
+    && sed -i 's/\r$//' $dotnet_version-sha.txt \
+    && sha512sum -c $dotnet_version-sha.txt --ignore-missing \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm \
+        dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
+        $dotnet_version-sha.txt
 
 
 # .NET SDK image

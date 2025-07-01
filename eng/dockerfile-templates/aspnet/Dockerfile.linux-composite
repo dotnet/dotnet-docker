@@ -42,7 +42,10 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve ASP.NET Composite Runtime
-{{InsertTemplate("../runtime/Dockerfile.linux.install-runtime", [ "is-composite-runtime": "true", ])}}
+RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+    "product": "aspnet-composite",
+    "extract-to": when(isDistroless, "/usr/share/dotnet", "/dotnet")
+], "    ")}}
 {{ if isDistroless:
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet

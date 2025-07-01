@@ -11,12 +11,16 @@ RUN tdnf install -y \
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=9.0.6 \
-    && curl --fail --show-error --location --output aspnetcore.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
-    && aspnetcore_sha512='8a7024bd144254f400c0758efd5c39854eba5d7e3187fbde2dc857cedd9012ae93aceeb1683bf6bf390cefba40c50f95cc3295a1a8eb83133a8e01b91289dfc5' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
+    && sed -i 's/\r$//' $aspnetcore_version-sha.txt \
+    && sha512sum -c $aspnetcore_version-sha.txt --ignore-missing \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file aspnetcore.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
+    && rm \
+        aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
+        $aspnetcore_version-sha.txt
 
 
 # ASP.NET Core image
