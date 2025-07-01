@@ -7,14 +7,14 @@ FROM arm64v8/buildpack-deps:noble-curl AS installer
 RUN dotnet_version=8.0.17 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/8.0.17-sha.txt \
-    && sed -i 's/\r$//' 8.0.17-sha.txt \
-    && sha512sum -c 8.0.17-sha.txt --ignore-missing \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
+    && sed -i 's/\r$//' $dotnet_version-sha.txt \
+    && sha512sum -c $dotnet_version-sha.txt --ignore-missing \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-arm64.tar.gz --directory /usr/share/dotnet \
     && rm \
         dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-        8.0.17-sha.txt
+        $dotnet_version-sha.txt
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet

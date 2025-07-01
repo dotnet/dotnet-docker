@@ -5,16 +5,18 @@ FROM amd64/buildpack-deps:jammy-curl AS installer
 ARG ACCESSTOKEN
 
 # Install .NET SDK
-RUN curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
-        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/0.0.0/dotnet-sdk-0.0.0-linux-x64.tar.gz \
-        --remote-name https://dotnetstage.blob.core.windows.net/checksums/0.0.0-sha.txt \
-    && sed -i 's/\r$//' 0.0.0-sha.txt \
-    && sha512sum -c 0.0.0-sha.txt --ignore-missing \
+RUN dotnet_sdk_version=0.0.0 \
+    && dotnet_version=0.0.0 \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/checksums/$dotnet_version-sha.txt \
+    && sed -i 's/\r$//' $dotnet_version-sha.txt \
+    && sha512sum -c $dotnet_version-sha.txt --ignore-missing \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet-sdk-0.0.0-linux-x64.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
-        dotnet-sdk-0.0.0-linux-x64.tar.gz \
-        0.0.0-sha.txt
+        dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
+        $dotnet_version-sha.txt
 
 
 # .NET SDK image

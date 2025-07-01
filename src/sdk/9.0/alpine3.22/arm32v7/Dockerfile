@@ -3,15 +3,17 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:9.0.6-alpine3.22-arm32v7 AS installer
 
 # Install .NET SDK
-RUN wget \
-        https://builds.dotnet.microsoft.com/dotnet/Sdk/9.0.301/dotnet-sdk-9.0.301-linux-musl-arm.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt \
-    && awk -v file="dotnet-sdk-9.0.301-linux-musl-arm.tar.gz" '{gsub(/\r/, "")} $2 == file' 9.0.6-sha.txt | sha512sum -c \
+RUN dotnet_sdk_version=9.0.301 \
+    && dotnet_version=9.0.6 \
+    && wget \
+        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
+    && awk -v file="dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz" '{gsub(/\r/, "")} $2 == file' $dotnet_version-sha.txt | sha512sum -c \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet-sdk-9.0.301-linux-musl-arm.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
-        dotnet-sdk-9.0.301-linux-musl-arm.tar.gz \
-        9.0.6-sha.txt
+        dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz \
+        $dotnet_version-sha.txt
 
 
 # .NET SDK image

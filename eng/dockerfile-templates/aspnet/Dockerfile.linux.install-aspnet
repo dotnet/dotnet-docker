@@ -17,14 +17,8 @@
     set versionDir to buildVersion ^
 
     set versionVariable to "aspnetcore_version" ^
-
+    set versionVariableRef to cat("$", versionVariable) ^
     set versionVariableValue to buildVersion ^
-    if (versionDir = versionVariableValue):{{
-        set versionDir to cat("$", versionVariable)
-    }}^
-    if (fileVersion = versionVariableValue):{{
-        set fileVersion to cat("$", versionVariable)
-    }}^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
@@ -32,6 +26,7 @@
 
     set downloadUrlPath to cat("/aspnetcore/Runtime/", versionDir, "/aspnetcore-runtime-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
     set downloadUrl to cat(baseUrl, downloadUrlPath) ^
+    set downloadUrl to replace(downloadUrl, versionVariableValue, versionVariableRef) ^
 
     _ For now the aggregate and bare checksum files are mutually exclusive, but
       in the future we expect .NET 10 to have non-aggregate, non-bare checksum
@@ -45,7 +40,8 @@
         when(shaUrlIsAggregate,
             VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
             cat(downloadUrlPath, ".sha512")) ^
-    set shaUrl to cat(checksumsBaseUrl, shaUrlPath)
+    set shaUrl to cat(checksumsBaseUrl, shaUrlPath) ^
+    set shaUrl to replace(shaUrl, versionVariableValue, versionVariableRef)
 
 }}RUN {{versionVariable}}={{versionVariableValue}} \
     && {{InsertTemplate("../Dockerfile.linux.download-dotnet", [

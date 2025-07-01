@@ -7,13 +7,13 @@ FROM $REPO:9.0.6-alpine3.22-arm32v7 AS installer
 RUN aspnetcore_version=9.0.6 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt \
-    && awk -v file="aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz" '{gsub(/\r/, "")} $2 == file' 9.0.6-sha.txt | sha512sum -c \
+        https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
+    && awk -v file="aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz" '{gsub(/\r/, "")} $2 == file' $aspnetcore_version-sha.txt | sha512sum -c \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz --directory /dotnet \
     && rm \
         aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz \
-        9.0.6-sha.txt
+        $aspnetcore_version-sha.txt
 
 
 # ASP.NET Composite Image

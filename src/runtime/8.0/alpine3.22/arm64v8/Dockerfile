@@ -7,13 +7,13 @@ FROM $REPO:8.0.17-alpine3.22-arm64v8 AS installer
 RUN dotnet_version=8.0.17 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/checksums/8.0.17-sha.txt \
-    && awk -v file="dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz" '{gsub(/\r/, "")} $2 == file' 8.0.17-sha.txt | sha512sum -c \
+        https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
+    && awk -v file="dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz" '{gsub(/\r/, "")} $2 == file' $dotnet_version-sha.txt | sha512sum -c \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz --directory /dotnet \
     && rm \
         dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
-        8.0.17-sha.txt
+        $dotnet_version-sha.txt
 
 
 # .NET runtime image

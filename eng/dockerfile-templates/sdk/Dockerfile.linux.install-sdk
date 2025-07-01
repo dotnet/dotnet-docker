@@ -3,9 +3,18 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("sdk|", dotnetVersion, "|build-version")] ^
     set productVersion to VARIABLES[cat("sdk|", dotnetVersion, "|product-version")] ^
+    set dotnetProductVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set platform to when(isAlpine, "linux-musl", "linux") ^
+
+    set sdkVersionVariable to "dotnet_sdk_version" ^
+    set sdkVersionVariableRef to cat("$", sdkVersionVariable) ^
+    set sdkVersionVariableValue to buildVersion ^
+
+    set dotnetVersionVariable to "dotnet_version" ^
+    set dotnetVersionVariableRef to cat("$", dotnetVersionVariable) ^
+    set dotnetVersionVariableValue to dotnetProductVersion ^
 
     set isStableBranding to find(buildVersion, "-servicing") >= 0 || find(buildVersion, "-rtm") >= 0 ^
 
@@ -18,6 +27,8 @@
 
     set downloadUrlPath to cat("/Sdk/", versionDir, "/dotnet-sdk-", fileVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz") ^
     set downloadUrl to cat(baseUrl, downloadUrlPath) ^
+    set downloadUrl to replace(downloadUrl, sdkVersionVariableValue, sdkVersionVariableRef) ^
+    set downloadUrl to replace(downloadUrl, dotnetVersionVariableValue, dotnetVersionVariableRef) ^
 
     _ For now the aggregate and bare checksum files are mutually exclusive, but
       in the future we expect .NET 10 to have non-aggregate, non-bare checksum
@@ -31,10 +42,14 @@
         when(shaUrlIsAggregate,
             VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
             cat(downloadUrlPath, ".sha512")) ^
-    set shaUrl to cat(checksumsBaseUrl, shaUrlPath)
+    set shaUrl to cat(checksumsBaseUrl, shaUrlPath) ^
+    set shaUrl to replace(shaUrl, sdkVersionVariableValue, sdkVersionVariableRef) ^
+    set shaUrl to replace(shaUrl, dotnetVersionVariableValue, dotnetVersionVariableRef)
 
 }}# Install .NET SDK
-RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+RUN {{sdkVersionVariable}}={{sdkVersionVariableValue}}{{if (shaUrlIsAggregate): \
+    && {{dotnetVersionVariable}}={{dotnetVersionVariableValue}}}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
         "download-url": downloadUrl,
         "extract-to": "/dotnet",
         "extract-paths": [
