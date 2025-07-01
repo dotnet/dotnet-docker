@@ -10,7 +10,7 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.50.0.windows.1/MinGit-2.50.0-64-bit.zip; `
+        Invoke-WebRequest -OutFile mingit.zip \"https://github.com/git-for-windows/git/releases/download/v2.50.0.windows.1/MinGit-2.50.0-64-bit.zip\"; `
         $mingit_sha256 = '69b1a81f881077d3c89806d2cd13cfd0f2b31a4e934e6fb9f8370435aaa7a94e'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -25,18 +25,20 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnetFile = \"dotnet-sdk-8.0.411-win-x64.zip\"; `
-        $dotnetChecksumsFile = \"8.0.17-sha.txt\"; `
+        $dotnet_sdk_version = \"8.0.411\"; `
+        $dotnet_version = \"8.0.17\"; `
+        $dotnet_file = \"dotnet-sdk-$dotnet_sdk_version-win-x64.tar.gz\"; `
+        $dotnet_checksums_file = \"$dotnet_version-sha.txt\"; `
         `
-        Invoke-WebRequest -OutFile $dotnetFile https://builds.dotnet.microsoft.com/dotnet/Sdk/8.0.411/dotnet-sdk-8.0.411-win-x64.zip; `
-        Invoke-WebRequest -OutFile $dotnetChecksumsFile https://builds.dotnet.microsoft.com/dotnet/checksums/8.0.17-sha.txt; `
+        Invoke-WebRequest -OutFile $dotnet_file \"https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/$dotnet_file\"; `
+        Invoke-WebRequest -OutFile $dotnet_checksums_file \"https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file\"; `
         `
         $dotnetSha512 = ( `
-            (Get-Content $dotnetChecksumsFile | Where-Object { `
-                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            (Get-Content $dotnet_checksums_file | Where-Object { `
+                    $_ -match \"$([regex]::Escape($dotnet_file))$\"; `
             }) -split '\s+' `
         )[0].ToUpper(); `
-        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        $actualHash = (Get-FileHash $dotnet_file -Algorithm SHA512).Hash.ToUpper(); `
         `
         if ($dotnetSha512 -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -46,12 +48,16 @@ RUN powershell -Command " `
         }; `
         `
         mkdir dotnet; `
-        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet; `
-        Remove-Item -Force $dotnetFile, $dotnetChecksumsFile; `
+        tar --gzip --extract --no-same-owner --file $dotnet_file --directory dotnet; `
+        Remove-Item -Force `
+            $dotnet_file `
+            $dotnet_checksums_file; `
         `
         # Install PowerShell global tool
         $powershell_version = '7.4.11'; `
-        Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
+        Invoke-WebRequest -OutFile  \"\"; `
+        Invoke-WebRequest -OutFile  \"\"; `
+        ; `
         $powershell_sha512 = '3e8848ef2759e2941217438635330848b1a340c7cbea16e9a53d76612b695ba27a689f9a1895b1a1cd458b7e21ed18bf726f0a8b95421018356a07def36cdbd2'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `

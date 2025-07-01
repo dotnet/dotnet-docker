@@ -10,18 +10,19 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnetFile = \"aspnetcore-runtime-8.0.17-win-x64.zip\"; `
-        $dotnetChecksumsFile = \"8.0.17-sha.txt\"; `
+        $aspnetcore_version = \"8.0.17\"; `
+        $aspnetcore_file = \"aspnetcore-runtime-$aspnetcore_version-win-x64.tar.gz\"; `
+        $dotnet_checksums_file = \"$aspnetcore_version-sha.txt\"; `
         `
-        Invoke-WebRequest -OutFile $dotnetFile https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/8.0.17/aspnetcore-runtime-8.0.17-win-x64.zip; `
-        Invoke-WebRequest -OutFile $dotnetChecksumsFile https://builds.dotnet.microsoft.com/dotnet/checksums/8.0.17-sha.txt; `
+        Invoke-WebRequest -OutFile $aspnetcore_file \"https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file\"; `
+        Invoke-WebRequest -OutFile $dotnet_checksums_file \"https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file\"; `
         `
         $dotnetSha512 = ( `
-            (Get-Content $dotnetChecksumsFile | Where-Object { `
-                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            (Get-Content $dotnet_checksums_file | Where-Object { `
+                    $_ -match \"$([regex]::Escape($aspnetcore_file))$\"; `
             }) -split '\s+' `
         )[0].ToUpper(); `
-        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        $actualHash = (Get-FileHash $aspnetcore_file -Algorithm SHA512).Hash.ToUpper(); `
         `
         if ($dotnetSha512 -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -30,9 +31,11 @@ RUN powershell -Command " `
             exit 1; `
         }; `
         `
-        mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force $dotnetFile, $dotnetChecksumsFile"
+        mkdir dotnet; `
+        tar --gzip --extract --no-same-owner --file $aspnetcore_file --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force `
+            $aspnetcore_file `
+            $dotnet_checksums_file"
 
 
 # ASP.NET Core image

@@ -41,10 +41,10 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        {{InsertTemplate("../Dockerfile.windows.download-file", [
-            "out-file": "mingit.zip",
-            "url": VARIABLES[cat("mingit|", dotnetVersion, "|", ARCH_SHORT, "|url")]
-        ], "        ")}}; `
+        {{InsertTemplate("../Dockerfile.windows.download-files", ["files": [[
+            "url": VARIABLES[cat("mingit|", dotnetVersion, "|", ARCH_SHORT, "|url")],
+            "out-file": "mingit.zip"
+        ]]], "        ")}}; `
         {{InsertTemplate("../Dockerfile.windows.validate-checksum", [
             "file": "mingit.zip",
             "sha": VARIABLES[cat("mingit|", dotnetVersion, "|", ARCH_SHORT, "|sha")],
@@ -52,7 +52,7 @@ RUN powershell -Command " `
             "sha-var-name": "$mingit_sha256"
         ], "        ")}}; `
         mkdir {{ mingitDir }}; `
-        {{InsertTemplate("../Dockerfile.windows.extract-zip",
+        {{InsertTemplate("../Dockerfile.windows.extract-file",
             [
                 "file": "mingit.zip",
                 "dest-dir": mingitDir
@@ -65,10 +65,9 @@ RUN `^else:RUN powershell -Command " `}}
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        {{InsertTemplate("Dockerfile.windows.install-sdk", [
-            "use-local-version-var": ARGS["use-local-version-var"],
-            "sdk-extract-groups": [],
-            "is-internal": ARGS["dotnet-is-internal"]
+        {{InsertTemplate("../Dockerfile.download-dotnet", [
+            "product": "sdk",
+            "extract-to": "dotnet"
         ], "        ")}}; `
         `
         {{InsertTemplate("Dockerfile.windows.install-powershell", [

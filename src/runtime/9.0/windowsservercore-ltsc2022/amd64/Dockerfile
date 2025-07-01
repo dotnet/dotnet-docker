@@ -8,18 +8,19 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnetFile = \"dotnet-runtime-9.0.6-win-x64.zip\"; `
-        $dotnetChecksumsFile = \"9.0.6-sha.txt\"; `
+        $dotnet_version = \"9.0.6\"; `
+        $dotnet_file = \"dotnet-runtime-$dotnet_version-win-x64.tar.gz\"; `
+        $dotnet_checksums_file = \"$dotnet_version-sha.txt\"; `
         `
-        Invoke-WebRequest -OutFile $dotnetFile https://builds.dotnet.microsoft.com/dotnet/Runtime/9.0.6/dotnet-runtime-9.0.6-win-x64.zip; `
-        Invoke-WebRequest -OutFile $dotnetChecksumsFile https://builds.dotnet.microsoft.com/dotnet/checksums/9.0.6-sha.txt; `
+        Invoke-WebRequest -OutFile $dotnet_file \"https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/$dotnet_file\"; `
+        Invoke-WebRequest -OutFile $dotnet_checksums_file \"https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file\"; `
         `
         $dotnetSha512 = ( `
-            (Get-Content $dotnetChecksumsFile | Where-Object { `
-                    $_ -match \"$([regex]::Escape($dotnetFile))$\"; `
+            (Get-Content $dotnet_checksums_file | Where-Object { `
+                    $_ -match \"$([regex]::Escape($dotnet_file))$\"; `
             }) -split '\s+' `
         )[0].ToUpper(); `
-        $actualHash = (Get-FileHash $dotnetFile -Algorithm SHA512).Hash.ToUpper(); `
+        $actualHash = (Get-FileHash $dotnet_file -Algorithm SHA512).Hash.ToUpper(); `
         `
         if ($dotnetSha512 -ne $actualHash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -29,8 +30,10 @@ RUN powershell -Command " `
         }; `
         `
         mkdir dotnet; `
-        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet; `
-        Remove-Item -Force $dotnetFile, $dotnetChecksumsFile"
+        tar --gzip --extract --no-same-owner --file $dotnet_file --directory dotnet; `
+        Remove-Item -Force `
+            $dotnet_file `
+            $dotnet_checksums_file"
 
 
 # Runtime image

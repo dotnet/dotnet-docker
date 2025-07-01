@@ -10,20 +10,23 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnetFile = \"aspnetcore-runtime-10.0.0-preview.6.25326.107-win-x64.zip\"; `
-        $dotnetSha512File = \"aspnetcore-runtime-10.0.0-preview.6.25326.107-win-x64.zip.sha512\"; `
+        $aspnetcore_version = \"10.0.0-preview.6.25326.107\"; `
+        $aspnetcore_file = \"aspnetcore-runtime-$aspnetcore_version-win-x64.tar.gz\"; `
+        $dotnet_sha512_file = \"aspnetcore-runtime-$aspnetcore_version-win-x64.tar.gz.sha512\"; `
         `
-        Invoke-WebRequest -OutFile $dotnetFile https://ci.dot.net/public/aspnetcore/Runtime/10.0.0-preview.6.25326.107/aspnetcore-runtime-10.0.0-preview.6.25326.107-win-x64.zip; `
-        Invoke-WebRequest -OutFile $dotnetSha512File https://ci.dot.net/public-checksums/aspnetcore/Runtime/10.0.0-preview.6.25326.107/aspnetcore-runtime-10.0.0-preview.6.25326.107-win-x64.zip.sha512; `
+        Invoke-WebRequest -OutFile $aspnetcore_file \"https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file\"; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file \"https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file.sha512\"; `
         `
-        if ((Get-FileHash $dotnetFile -Algorithm sha512).Hash -ne (Get-Content $dotnetSha512File)) { `
+        if ((Get-FileHash $aspnetcore_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
         `
-        mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar --gzip --extract --no-same-owner --file $dotnetFile --directory dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force $dotnetFile, $dotnetSha512File"
+        mkdir dotnet; `
+        tar --gzip --extract --no-same-owner --file $aspnetcore_file --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force `
+            $aspnetcore_file `
+            $dotnet_sha512_file"
 
 
 # ASP.NET Core image

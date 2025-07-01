@@ -1,0 +1,33 @@
+{{
+    _ Downloads one or more files using PowerShell
+
+    ARGS:
+        files: array of files to download, with the following format:
+            [
+                url: URL to download the file from
+                out-file: (optional) name of the output file
+            ]
+        ^
+
+    _ Documentation for using Managed Identity/OAuth tokens to access Azure storage accounts:
+        https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
+
+    set isInternal(url) to:{{
+        return find(url, "dotnetstage") >= 0
+    }}^
+
+    for i, file in ARGS["files"]:{{
+        if (!isAnyInternal):{{
+            set isAnyInternal to isInternal(file["url"])
+        }}^_
+    }}^_
+
+}}{{if isAnyInternal:$Headers = @@{ `
+    Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+    'x-ms-version' = '2017-11-09'; `
+}; `}}{{
+for i, file in ARGS["files"]:Invoke-WebRequest -OutFile {{file["out-file"]}} \"{{file["url"]}}\"{{
+    if (isInternal(file["url"])): -Headers $Headers^
+    set isLastFile to (i = len(ARGS["files"]) - 1)^
+    if (!isLastFile):; `
+}}}}

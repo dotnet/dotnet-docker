@@ -26,11 +26,10 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        {{InsertTemplate("../Dockerfile.windows.install-dotnet", [
-            "download-path": cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-", buildVersion, "-win-x64.zip"),
-            "extract-paths": ["./shared/Microsoft.AspNetCore.App"],
-            "extract-dir": "dotnet",
-            "mkdir": "dotnet/shared/Microsoft.AspNetCore.App"
+        {{InsertTemplate("../Dockerfile.download-dotnet", [
+            "product": "aspnet",
+            "extract-to": "dotnet",
+            "extract-paths": ["./shared/Microsoft.AspNetCore.App"]
         ], "        ")}}"
 
 

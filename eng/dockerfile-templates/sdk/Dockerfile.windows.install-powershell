@@ -9,10 +9,10 @@
     set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]
 }}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
-{{InsertTemplate("../Dockerfile.windows.download-file", [
+{{InsertTemplate("../Dockerfile.windows.download-files", ["files": [
     "out-file": nupkgFile,
     "url": url
-],)}}; `
+]])}}; `
 {{InsertTemplate("../Dockerfile.windows.validate-checksum", [
     "file": nupkgFile,
     "sha": VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")],

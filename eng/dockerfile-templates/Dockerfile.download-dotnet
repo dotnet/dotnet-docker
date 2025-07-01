@@ -1,5 +1,6 @@
 {{
-    _ ARGS:
+    _
+    ARGS:
         product         : Product name, e.g. "dotnet", "aspnet", "sdk"
         extract-to      : Directory where .NET will be extracted
         extract-paths   : (optional) Paths within the .NET tarball to extract
@@ -7,8 +8,25 @@
 
     set product to ARGS["product"] ^
 
+    set isWindows to find(OS_VERSION, "server") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set platform to when(isAlpine, "linux-musl", "linux") ^
+
+    set templatePlatform to when(isWindows, "windows", "linux") ^
+    set lineEnd to when(isWindows, "; `", " \") ^
+    set lineContinue to when(isWindows, "`", "\") ^
+    set continue to when(isWindows, "", "&& ") ^
+
+    set useFileVariables to isWindows ^
+    set useExtraLines to isWindows ^
+    set extraLine to when(useExtraLines, cat("
+", lineContinue), "") ^
+
+    set platform to
+        when(isAlpine,
+            "linux-musl",
+        when(isWindows,
+            "win",
+            "linux"))^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
@@ -37,6 +55,9 @@
             "dotnet_version")) ^
     set versionVariableRef to cat("$", versionVariable) ^
     set versionVariableValue to buildVersion ^
+    set assignVersionVariable to when(isWindows,
+        cat("$", versionVariable, " = ", versionVariableValue),
+        cat(versionVariable, "=", versionVariableValue)) ^
 
     set shaFunction to "512" ^
     set urlParts to split(downloadUrl, "/") ^
@@ -81,32 +102,67 @@
         set fileName to replace(fileName, runtimeVersionVariableValue, runtimeVersionVariableRef)
     }}^
 
+    set assign(variable, value) to:{{
+        if (isWindows):{{
+            return cat("$", variable, " = \@"", value, "\@"")
+        }}^else:{{
+            return cat(variable, "=", value)
+        }}^_
+    }}^
+
     set filesToDownload to [
         ["url": downloadUrl],
         ["url": shaUrl]
-    ]
+    ]^
 
-}}{{versionVariable}}={{versionVariableValue}}{{if product = "sdk" && shaUrlIsAggregate: \
-&& {{runtimeVersionVariable}}={{runtimeVersionVariableValue}}}} \
-&& {{InsertTemplate("Dockerfile.linux.download-files", [
+    if (useFileVariables):{{
+        set fileVariable to when(product = "aspnet", "aspnetcore_file", "dotnet_file") ^
+        set fileVariableRef to cat("$", fileVariable) ^
+        set fileVariableValue to fileName ^
+        set fileName to fileVariableRef ^
+
+        set shaVariable to when(shaUrlIsAggregate, "dotnet_checksums_file", "dotnet_sha512_file") ^
+        set shaVariableRef to cat("$", shaVariable) ^
+        set shaVariableValue to shaFileName ^
+        set shaFileName to shaVariableRef ^
+
+        set downloadUrl to replace(downloadUrl, fileVariableValue, fileVariableRef) ^
+        set shaUrl to replace(shaUrl, fileVariableValue, fileVariableRef) ^
+        set shaUrl to replace(shaUrl, shaVariableValue, shaVariableRef) ^
+
+        set filesToDownload to [
+            ["out-file": fileName, "url": downloadUrl],
+            ["out-file": shaFileName, "url": shaUrl]
+        ]
+    }}^
+
+    set remove to when(isWindows, "Remove-Item -Force", "rm") ^
+    set downloadFiles to cat("Dockerfile.", templatePlatform, ".download-files") ^
+    set validateChecksum to cat("Dockerfile.", templatePlatform, ".validate-checksum") ^
+    set extractFile to cat("Dockerfile.", templatePlatform, ".extract-file")
+
+}}{{assign(versionVariable, versionVariableValue)}}{{if product = "sdk" && shaUrlIsAggregate:{{lineEnd}}
+{{continue}}{{assign(runtimeVersionVariable, runtimeVersionVariableValue)}}}}{{if useFileVariables:{{lineEnd}}
+{{continue}}{{assign(fileVariable, fileVariableValue)}}{{lineEnd}}
+{{continue}}{{assign(shaVariable, shaVariableValue)}}}}{{lineEnd}}{{extraLine}}
+{{continue}}{{InsertTemplate(downloadFiles, [
     "files": filesToDownload
-])}} \
-&& {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+])}}{{lineEnd}}{{extraLine}}
+{{continue}}{{InsertTemplate(validateChecksum, [
     "file": fileName,
     "sha-function": shaFunction,
     "sha-file": shaFileName,
     "sha-file-is-bare": shaUrlIsBare,
     "sha-file-is-aggregate": shaUrlIsAggregate
-])}}{{
-if ARGS["extract-to"]: \
-&& mkdir --parents {{ARGS["extract-to"]}} \
-&& {{
-    InsertTemplate("Dockerfile.linux.extract-file", [
+])}}{{if ARGS["extract-to"]:{{lineEnd}}{{extraLine}}
+{{continue}}mkdir {{if !isWindows:--parents }}{{ARGS["extract-to"]}}{{lineEnd}}
+{{continue}}{{
+    InsertTemplate(extractFile, [
         "file": fileName,
         "dest-dir": ARGS["extract-to"],
         "extract-paths": ARGS["extract-paths"]
     ])
-}}}} \
-&& rm \
-    {{fileName}} \
+}}}}{{lineEnd}}
+{{continue}}{{remove}} {{lineContinue}}
+    {{fileName}} {{lineContinue}}
     {{shaFileName}}

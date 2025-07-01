@@ -29,10 +29,9 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        {{InsertTemplate("../Dockerfile.windows.install-dotnet", [
-            "download-path": cat("/Runtime/", buildVersion, "/", "dotnet-runtime-", buildVersion, "-win-x64.zip"),
-            "extract-dir": "dotnet",
-            "mkdir": "dotnet"
+        {{InsertTemplate("../Dockerfile.download-dotnet", [
+            "product": "runtime",
+            "extract-to": "dotnet"
         ], "        ")}}"
 
 
