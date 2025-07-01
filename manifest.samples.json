@@ -88,6 +88,42 @@
                 "dotnetapp-9.0-nanoserver-ltsc2022": {},
                 "dotnetapp-nanoserver-ltsc2022": {}
               }
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2025"
+              },
+              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "dotnetapp-9.0-nanoserver-ltsc2025": {},
+                "dotnetapp-nanoserver-ltsc2025": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2022"
+              },
+              "dockerfile": "samples/dotnetapp/Dockerfile.windowsservercore",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2022",
+              "tags": {
+                "dotnetapp-9.0-windowsservercore-ltsc2022": {},
+                "dotnetapp-windowsservercore-ltsc2022": {}
+              }
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2025"
+              },
+              "dockerfile": "samples/dotnetapp/Dockerfile.windowsservercore",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "dotnetapp-9.0-windowsservercore-ltsc2025": {},
+                "dotnetapp-windowsservercore-ltsc2025": {}
+              }
             }
           ]
         },
@@ -240,6 +276,111 @@
                   "type": "Integral",
                   "dependencies": [
                     "$(Repo:samples):dotnetapp-9.0-nanoserver-ltsc2022"
+                  ]
+                }
+              ]
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2025"
+              },
+              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
+              "os": "windows",
+              "osVersion": "nanoserver-ltsc2025",
+              "tags": {
+                "aspnetapp-9.0-nanoserver-ltsc2025": {},
+                "aspnetapp-nanoserver-ltsc2025": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-9.0-nanoserver-ltsc2025"
+                  ]
+                }
+              ]
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2022"
+              },
+              "dockerfile": "samples/aspnetapp/Dockerfile.windowsservercore",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2022",
+              "tags": {
+                "aspnetapp-9.0-windowsservercore-ltsc2022": {},
+                "aspnetapp-windowsservercore-ltsc2022": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-9.0-windowsservercore-ltsc2022"
+                  ]
+                }
+              ]
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2025"
+              },
+              "dockerfile": "samples/aspnetapp/Dockerfile.windowsservercore",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "aspnetapp-9.0-windowsservercore-ltsc2025": {},
+                "aspnetapp-windowsservercore-ltsc2025": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-9.0-windowsservercore-ltsc2025"
+                  ]
+                }
+              ]
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2022"
+              },
+              "dockerfile": "samples/aspnetapp/Dockerfile.windowsservercore-iis",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2022",
+              "tags": {
+                "aspnetapp-9.0-windowsservercore-iis-ltsc2022": {},
+                "aspnetapp-windowsservercore-iis-ltsc2022": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-9.0-windowsservercore-ltsc2022"
+                  ]
+                }
+              ]
+            },
+            {
+              "buildArgs": {
+                "TAG": "ltsc2025"
+              },
+              "dockerfile": "samples/aspnetapp/Dockerfile.windowsservercore-iis",
+              "os": "windows",
+              "osVersion": "windowsservercore-ltsc2025",
+              "tags": {
+                "aspnetapp-9.0-windowsservercore-iis-ltsc2025": {},
+                "aspnetapp-windowsservercore-iis-ltsc2025": {}
+              },
+              "customBuildLegGroups": [
+                {
+                  "name": "test-dependencies",
+                  "type": "Integral",
+                  "dependencies": [
+                    "$(Repo:samples):dotnetapp-9.0-windowsservercore-ltsc2025"
                   ]
                 }
               ]
