@@ -60,7 +60,20 @@
                 "libatomic1",
                 "wget",
             ]
-        )), len)
+        )), len) ^
+
+    set sdkExtractPaths to [
+        "./packs",
+        "./sdk",
+        "./sdk-manifests",
+        "./templates",
+        "./LICENSE.txt",
+        "./ThirdPartyNotices.txt"
+    ]^
+    if (dotnetVersion != "8.0" && dotnetVersion != "9.0"):{{
+        set sdkExtractPaths to cat(["./dnx"], sdkExtractPaths)
+    }}
+
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM {{internalInstallerBase}} AS installer{{if isInternal:
@@ -76,14 +89,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
     "product": "sdk",
     "extract-to": "/dotnet",
-    "extract-paths": [
-        "./packs",
-        "./sdk",
-        "./sdk-manifests",
-        "./templates",
-        "./LICENSE.txt",
-        "./ThirdPartyNotices.txt"
-    ],
+    "extract-paths": sdkExtractPaths
 ], "    ")}}
 
 

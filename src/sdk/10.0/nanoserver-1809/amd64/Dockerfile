@@ -25,9 +25,9 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '10.0.100-preview.6.25274.104'; `
+        $sdk_version = '10.0.100-preview.6.25326.107'; `
         Invoke-WebRequest -OutFile dotnet.zip https://ci.dot.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '445ead153a69374ab8ddcd4fcf3d29fdbeac6776c5da80ccebc64d1db00b3e4c6b63de159ac1a757526553f0d52d9d91662478472bb8cd4ce1de885f25d5ab32'; `
+        $dotnet_sha512 = '37ed67bf1709bf0be35abd2c33bce80551823c57015e6543646c0ccf38ad06b8654b624a76609be820972f4005ee238125eaa2f71dd04a2ade8d71f63f9ed554'; `
         if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -50,7 +50,7 @@ RUN powershell -Command " `
         Remove-Item -Path \powershell\.store\powershell.windows.x64\$powershell_version\powershell.windows.x64\$powershell_version\powershell.windows.x64.$powershell_version.nupkg -Force; `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers
-        Get-ChildItem -Exclude 'LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
+        Get-ChildItem -Exclude 'dnx.cmd','LICENSE.txt','ThirdPartyNotices.txt','packs','sdk','sdk-manifests','templates','shared' -Path dotnet `
             | Remove-Item -Force -Recurse; `
         Get-ChildItem -Exclude 'Microsoft.WindowsDesktop.App' -Path dotnet\shared `
             | Remove-Item -Force -Recurse"
@@ -65,7 +65,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.6.25274.104 `
+    DOTNET_SDK_VERSION=10.0.100-preview.6.25326.107 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

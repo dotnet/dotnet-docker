@@ -25,9 +25,9 @@
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
     "aspnet|8.0|win|x64|sha": "af61590a7fd915ecdc93a4e82e7319ced0abe7e8307102769f52a0541af8064df1d719c8f22e8ede1832f4a9779c36c7e3cf0ffd27837ad2229ae302c8b9c1aa",
 
-    "aspnet|10.0|build-version": "10.0.0-preview.6.25274.104",
+    "aspnet|10.0|build-version": "10.0.0-preview.6.25326.107",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
-    "aspnet|10.0|win|x64|sha": "a22c29eae86b11d3d91b795188013cb1a4e0cd0e96c6ed4fe6ee32351f5a697c42ab4a903c8790a35a5c26349b6a8a6c149bedab328cc024b1a6fea2c50eb8b2",
+    "aspnet|10.0|win|x64|sha": "c59ea0baa3ca44927eafd932a9c2fa47de7f00a9aac5d7f60909bb6203b9139a319e8b40160974156f13266f2e5697c513ca16282d19d4307aa71c047a5b2f38",
 
     "aspnet|9.0|build-version": "9.0.6",
     "aspnet-composite|9.0|build-version": "$(aspnet|9.0|build-version)",
@@ -203,8 +203,8 @@
     "runtime|9.0|build-version": "9.0.6",
     "runtime|9.0|win|x64|sha": "dbc510d2391b34bcad62a622b65ff32c1ea3a210a4d80e084e93cf0c47bbcfa53a5aedbfcfeb9641f23a90abc63eb31da2107711ff5bde0d48d51645eb12bece",
 
-    "runtime|10.0|build-version": "10.0.0-preview.6.25274.104",
-    "runtime|10.0|win|x64|sha": "ca111f166df987d551c47ad1b911aa3400a65f78b522c6098f1b61517353ff803c22acb20c902afd0b31c40cb3091d467007144ab63696fcedbbcf9fe6bf8627",
+    "runtime|10.0|build-version": "10.0.0-preview.6.25326.107",
+    "runtime|10.0|win|x64|sha": "9fffbc933b36d2dfafcedb9e3d2a3c721d462cab9c9c55bcca412f3393b03da49baf4bfd7cb14dd5a81883cbd94ed4e72a73ea894347659005634d5eb8d74c67",
 
     "sdk|8.0|build-version": "8.0.411",
     "sdk|8.0|product-version": "8.0.411",
@@ -218,11 +218,11 @@
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
     "sdk|9.0|win|x64|sha": "f5b4a5e0c27d3e8cb6ce3524d99ea4e02c2d1f17a9b2a219f154bcd788455e25c45f3b305bb0b25468626b392f3b14e92dc7c628cc4299f7a7dd74c3ce1b05cd",
 
-    "sdk|10.0|build-version": "10.0.100-preview.6.25274.104",
+    "sdk|10.0|build-version": "10.0.100-preview.6.25326.107",
     "sdk|10.0|product-version": "10.0.100-preview.6",
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
-    "sdk|10.0|win|x64|sha": "445ead153a69374ab8ddcd4fcf3d29fdbeac6776c5da80ccebc64d1db00b3e4c6b63de159ac1a757526553f0d52d9d91662478472bb8cd4ce1de885f25d5ab32",
+    "sdk|10.0|win|x64|sha": "37ed67bf1709bf0be35abd2c33bce80551823c57015e6543646c0ccf38ad06b8654b624a76609be820972f4005ee238125eaa2f71dd04a2ade8d71f63f9ed554",
 
     "syft|repo": "anchore/syft",
     "syft|tag": "v1.26.1"
