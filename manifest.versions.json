@@ -22,12 +22,15 @@
     "aspire-dashboard|9.3|base-url|nightly": "$(base-url|public|preview|nightly)",
 
     "aspnet|8.0|build-version": "8.0.17",
+    "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
     "aspnet|8.0|win|x64|sha": "af61590a7fd915ecdc93a4e82e7319ced0abe7e8307102769f52a0541af8064df1d719c8f22e8ede1832f4a9779c36c7e3cf0ffd27837ad2229ae302c8b9c1aa",
 
     "aspnet|10.0|build-version": "10.0.0-preview.6.25274.104",
+    "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
     "aspnet|10.0|win|x64|sha": "a22c29eae86b11d3d91b795188013cb1a4e0cd0e96c6ed4fe6ee32351f5a697c42ab4a903c8790a35a5c26349b6a8a6c149bedab328cc024b1a6fea2c50eb8b2",
 
     "aspnet|9.0|build-version": "9.0.6",
+    "aspnet-composite|9.0|build-version": "$(aspnet|9.0|build-version)",
     "aspnet|9.0|win|x64|sha": "fa60842bc0b069390e1eeb8409478e38a54b1c0889b828a20f3a6f70166b121d58afcdc02c5a2e092bf862c0d3644416303f0712b6ecc6dc52cd805c8822b8df",
 
     "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/v1.2.0/chisel_v1.2.0_linux_amd64.tar.gz",

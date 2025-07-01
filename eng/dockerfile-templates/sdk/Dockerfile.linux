@@ -72,7 +72,19 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "pkgs": ["tar"]
     ])}}
 }}
-{{InsertTemplate("Dockerfile.linux.install-sdk")}}
+# Install .NET SDK
+RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+    "product": "sdk",
+    "extract-to": "/dotnet",
+    "extract-paths": [
+        "./packs",
+        "./sdk",
+        "./sdk-manifests",
+        "./templates",
+        "./LICENSE.txt",
+        "./ThirdPartyNotices.txt"
+    ],
+], "    ")}}
 
 
 # .NET SDK image

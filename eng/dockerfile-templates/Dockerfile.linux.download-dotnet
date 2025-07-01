@@ -1,61 +1,101 @@
 {{
     _ ARGS:
-        download-url    : URL to download .NET from
+        product         : Product name, e.g. "dotnet", "aspnet", "sdk"
         extract-to      : Directory where .NET will be extracted
-        extract-paths   : (optional) Paths within the tarball to extract
-        out-file        : (optional) Name of the output file
-
-        The following arguments groups are mutually exclusive:
-
-        sha                  : (optional) The checksum of the downloaded file
-
-        sha-url              : (optional) URL to download checksum file
-        sha-url-is-bare      : (optional) Whether the checksum file does not contain the file name
-        sha-url-is-aggregate : (optional) True if the checksum file contains more than one checksum,
-                               but we only want to validate the checksum of the file we downloaded
+        extract-paths   : (optional) Paths within the .NET tarball to extract
         ^
 
+    set product to ARGS["product"] ^
+
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set platform to when(isAlpine, "linux-musl", "linux") ^
+
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
+    set buildVersion to VARIABLES[cat(product, "|", dotnetVersion, "|build-version")] ^
+
+    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
+    set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
+
+    if (product = "runtime"):{{
+        set downloadPath to cat("/Runtime/", buildVersion, "/dotnet-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+    }}^elif (product = "aspnet"):{{
+        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+    }}^elif (product = "aspnet-composite"):{{
+        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-composite-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+    }}^elif (product = "sdk"):{{
+        set downloadPath to cat("/Sdk/", buildVersion, "/dotnet-sdk-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+    }}^
+    set downloadUrl to cat(baseUrl, downloadPath) ^
+
+    set versionVariable to
+        when(product = "aspnet" || product = "aspnet-composite",
+            "aspnetcore_version",
+        when(product = "sdk",
+            "dotnet_sdk_version",
+            "dotnet_version")) ^
+    set versionVariableRef to cat("$", versionVariable) ^
+    set versionVariableValue to buildVersion ^
+
     set shaFunction to "512" ^
-    set urlParts to split(ARGS["download-url"], "/") ^
-    set fileName to
-        when(ARGS["out-file"],
-            ARGS["out-file"],
-            urlParts[len(urlParts) - 1]) ^
+    set urlParts to split(downloadUrl, "/") ^
+    set fileName to urlParts[len(urlParts) - 1] ^
 
     set fileNameParts to split(fileName, ".") ^
     set fileExtension to fileNameParts[len(fileNameParts) - 1] ^
 
-    set shaUrlParts to split(ARGS["sha-url"], "/") ^
+    _ For now the aggregate and bare checksum files are mutually exclusive, but
+      in the future we expect .NET 10 to have non-aggregate, non-bare checksum
+      files before the other .NET versions, so it's necessary to have a
+      separate condition for bare checksum files. ^
+    _ Aggregate checksum files are also not available for internal builds. ^
+    set shaUrlIsAggregate to (!isInternal && (dotnetVersion = "8.0" || dotnetVersion = "9.0")) ^
+    set shaUrlIsBare to (isInternal || dotnetVersion = "10.0") ^
+
+    set shaUrlPath to when(shaUrlIsAggregate,
+        VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
+        cat(downloadPath, ".sha512")) ^
+    set shaUrl to cat(checksumsBaseUrl, shaUrlPath) ^
+
+    set shaUrlParts to split(shaUrl, "/") ^
     set shaFileName to shaUrlParts[len(shaUrlParts) - 1] ^
 
-    set filesToDownload to
-        when(ARGS["sha-url"],
-            [
-                ["url": ARGS["download-url"]],
-                ["url": ARGS["sha-url"]]
-            ],
-            [
-                ["url": ARGS["download-url"], "out-file": ARGS["out-file"]]
-            ]
-        )
+    _ Replace occurrences of versions with references to the version variable ^
+    set downloadUrl to replace(downloadUrl, versionVariableValue, versionVariableRef) ^
+    set shaUrl to replace(shaUrl, versionVariableValue, versionVariableRef) ^
+    set shaFileName to replace(shaFileName, versionVariableValue, versionVariableRef) ^
+    set fileName to replace(fileName, versionVariableValue, versionVariableRef) ^
 
-}}{{
-    InsertTemplate("Dockerfile.linux.download-files", [
-        "files": filesToDownload
-    ])
-}}{{
-if (ARGS["sha"] || ARGS["sha-url"]): \
-&& {{
-    InsertTemplate("Dockerfile.linux.validate-checksum", [
-        "file": fileName,
-        "sha-function": shaFunction,
-        "sha": ARGS["sha"],
-        "sha-var-name": ARGS["sha-var-name"],
-        "sha-file": shaFileName,
-        "sha-file-is-bare": ARGS["sha-url-is-bare"],
-        "sha-file-is-aggregate": ARGS["sha-url-is-aggregate"],
-    ])
-}}}}{{
+    _ The SDK has two versions - SDK version and Runtime version. We need to have variables for both. ^
+    if (product = "sdk"):{{
+        set runtimeVersionVariable to "dotnet_version" ^
+        set runtimeVersionVariableRef to cat("$", runtimeVersionVariable) ^
+        set runtimeVersionVariableValue to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
+
+        set downloadUrl to replace(downloadUrl, runtimeVersionVariableValue, runtimeVersionVariableRef) ^
+        set shaUrl to replace(shaUrl, runtimeVersionVariableValue, runtimeVersionVariableRef) ^
+        set shaFileName to replace(shaFileName, runtimeVersionVariableValue, runtimeVersionVariableRef) ^
+        set fileName to replace(fileName, runtimeVersionVariableValue, runtimeVersionVariableRef)
+    }}^
+
+    set filesToDownload to [
+        ["url": downloadUrl],
+        ["url": shaUrl]
+    ]
+
+}}{{versionVariable}}={{versionVariableValue}}{{if product = "sdk": \
+&& {{runtimeVersionVariable}}={{runtimeVersionVariableValue}}}} \
+&& {{InsertTemplate("Dockerfile.linux.download-files", [
+    "files": filesToDownload
+])}} \
+&& {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+    "file": fileName,
+    "sha-function": shaFunction,
+    "sha-file": shaFileName,
+    "sha-file-is-bare": shaUrlIsBare,
+    "sha-file-is-aggregate": shaUrlIsAggregate
+])}}{{
 if ARGS["extract-to"]: \
 && mkdir --parents {{ARGS["extract-to"]}} \
 && {{
@@ -64,10 +104,7 @@ if ARGS["extract-to"]: \
         "dest-dir": ARGS["extract-to"],
         "extract-paths": ARGS["extract-paths"]
     ])
-}}}}{{
-if (ARGS["sha-url"]): \
+}}}} \
 && rm \
     {{fileName}} \
-    {{shaFileName}}^
-else: \
-&& rm {{fileName}}}}
+    {{shaFileName}}

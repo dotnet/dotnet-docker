@@ -14,6 +14,8 @@
     set versionFolder to when(buildVersion != yarpVersion, buildVersion, '$yarp_version') ^
 
     set downloadUrl to cat(baseUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".zip") ^
+    set outFile to "yarp.zip" ^
+    set appDir to "/app" ^
     set sha to VARIABLES[join(["yarp", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
 
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
@@ -26,12 +28,13 @@ ARG ACCESSTOKEN}}
 
 # Retrieve YARP
 RUN yarp_version={{yarpVersion}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+    && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
+        "product": "yarp",
+        "productVersion": yarpVersion,
         "download-url": downloadUrl,
-        "out-file": "yarp.zip",
-        "extract-to": "/app",
-        "sha-var-name": "yarp_sha512",
-        "sha": sha
+        "sha": sha,
+        "file-name": outFile,
+        "extract-to": appDir
     ], "    ")}}
 
 
