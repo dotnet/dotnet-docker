@@ -7,6 +7,42 @@
         extract-paths   : (optional) Paths within the .NET tarball to extract
         ^
 
+    set assign(variable, value) to:{{
+        if (isWindows):{{
+            return cat("$", variable, " = ", value)
+        }}^else:{{
+            return cat(variable, "=", value)
+        }}
+    }}^
+
+    set stringify(value) to:{{
+        _ PowerShell requires strings to be quoted, while sh/bash doesn't care ^
+        if (!isWindows || find(value, "$") = 0):{{
+            return value
+        }}^else:{{
+            return cat("'", value, "'")
+        }}^_
+    }}^
+
+    _ Inserts a variable into a string literal. ^
+    set insertVariable(string, variableValue, variableRef) to:{{
+        _ The plus signs aren't special, they are just used as a delimiter ^
+        set variableRef to cat("+", variableRef, "+") ^
+        set parts to replace(string, variableValue, variableRef) ^
+
+        _ Split based on our delimiter. Filter out empty strings which happen
+          when the variable is at the start or end of the string. Then, call into  ^
+        set parts to filter(split(parts, "+"), len) ^
+
+        if (isWindows):{{
+            _ When using PowerShell, wraps string literals in single quotes and
+              use string addition to build up the string. ^
+            return join(map(parts, stringify), " + ")
+        }}^else:{{
+            return join(parts)
+        }}
+    }}^
+
     set product to ARGS["product"] ^
 
     set isWindows to find(OS_VERSION, "server") >= 0 ^
@@ -37,14 +73,16 @@
     set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
+    set archiveExtension to when(isWindows, ".zip", ".tar.gz") ^
+
     if (product = "runtime"):{{
-        set downloadPath to cat("/Runtime/", buildVersion, "/dotnet-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+        set downloadPath to cat("/Runtime/", buildVersion, "/dotnet-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^elif (product = "aspnet"):{{
-        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^elif (product = "aspnet-composite"):{{
-        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-composite-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-composite-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^elif (product = "sdk"):{{
-        set downloadPath to cat("/Sdk/", buildVersion, "/dotnet-sdk-", buildVersion, "-", platform, "-", ARCH_SHORT, ".tar.gz")
+        set downloadPath to cat("/Sdk/", buildVersion, "/dotnet-sdk-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^
     set downloadUrl to cat(baseUrl, downloadPath) ^
 
@@ -56,9 +94,6 @@
             "dotnet_version")) ^
     set versionVariableRef to cat("$", versionVariable) ^
     set versionVariableValue to buildVersion ^
-    set assignVersionVariable to when(isWindows,
-        cat("$", versionVariable, " = ", versionVariableValue),
-        cat(versionVariable, "=", versionVariableValue)) ^
 
     set shaFunction to "512" ^
     set urlParts to split(downloadUrl, "/") ^
@@ -103,14 +138,6 @@
         set fileName to replace(fileName, runtimeVersionVariableValue, runtimeVersionVariableRef)
     }}^
 
-    set assign(variable, value) to:{{
-        if (isWindows):{{
-            return cat("$", variable, " = \@"", value, "\@"")
-        }}^else:{{
-            return cat(variable, "=", value)
-        }}^_
-    }}^
-
     set filesToDownload to [
         ["url": downloadUrl],
         ["url": shaUrl]
@@ -119,17 +146,16 @@
     if (useFileVariables):{{
         set fileVariable to when(product = "aspnet", "aspnetcore_file", "dotnet_file") ^
         set fileVariableRef to cat("$", fileVariable) ^
-        set fileVariableValue to fileName ^
+        set fileVariableValue to insertVariable(fileName, versionVariableRef, versionVariableRef) ^
+        set shaUrl to replace(shaUrl, fileName, fileVariableRef) ^
+        set downloadUrl to replace(downloadUrl, fileName, fileVariableRef) ^
         set fileName to fileVariableRef ^
 
         set shaVariable to when(shaUrlIsAggregate, "dotnet_checksums_file", "dotnet_sha512_file") ^
         set shaVariableRef to cat("$", shaVariable) ^
-        set shaVariableValue to shaFileName ^
+        set shaVariableValue to insertVariable(shaFileName, versionVariableRef, versionVariableRef) ^
+        set shaUrl to replace(shaUrl, shaFileName, shaVariableRef) ^
         set shaFileName to shaVariableRef ^
-
-        set downloadUrl to replace(downloadUrl, fileVariableValue, fileVariableRef) ^
-        set shaUrl to replace(shaUrl, fileVariableValue, fileVariableRef) ^
-        set shaUrl to replace(shaUrl, shaVariableValue, shaVariableRef) ^
 
         set filesToDownload to [
             ["out-file": fileName, "url": downloadUrl],
@@ -142,8 +168,8 @@
     set validateChecksum to cat("Dockerfile.", templatePlatform, ".validate-checksum") ^
     set extractFile to cat("Dockerfile.", templatePlatform, ".extract-file")
 
-}}{{assign(versionVariable, versionVariableValue)}}{{if product = "sdk" && shaUrlIsAggregate:{{lineEnd}}
-{{continue}}{{assign(runtimeVersionVariable, runtimeVersionVariableValue)}}}}{{if useFileVariables:{{lineEnd}}
+}}{{assign(versionVariable, stringify(versionVariableValue))}}{{if product = "sdk" && shaUrlIsAggregate:{{lineEnd}}
+{{continue}}{{assign(runtimeVersionVariable, stringify(runtimeVersionVariableValue))}}}}{{if useFileVariables:{{lineEnd}}
 {{continue}}{{assign(fileVariable, fileVariableValue)}}{{lineEnd}}
 {{continue}}{{assign(shaVariable, shaVariableValue)}}}}{{lineEnd}}{{extraLine}}
 {{continue}}{{InsertTemplate(downloadFiles, [
@@ -165,5 +191,5 @@
     ])
 }}}}{{lineEnd}}
 {{continue}}{{remove}} {{lineContinue}}
-    {{fileName}} {{lineContinue}}
+    {{fileName}}{{if isWindows:,}} {{lineContinue}}
     {{shaFileName}}

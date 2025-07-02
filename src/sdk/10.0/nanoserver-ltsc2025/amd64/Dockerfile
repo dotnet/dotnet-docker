@@ -10,7 +10,7 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip \"https://github.com/git-for-windows/git/releases/download/v2.50.0.windows.2/MinGit-2.50.0.2-64-bit.zip\"; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.50.0.windows.2/MinGit-2.50.0.2-64-bit.zip; `
         $mingit_sha256 = '6d28c7e9f9c219a16c078c94a80492dd10fa309fbd17a67b2230736fdfb263b9'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -25,12 +25,12 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = \"10.0.100-preview.6.25326.107\"; `
-        $dotnet_file = \"dotnet-sdk-$dotnet_sdk_version-win-x64.tar.gz\"; `
-        $dotnet_sha512_file = \"dotnet-sdk-$dotnet_sdk_version-win-x64.tar.gz.sha512\"; `
+        $dotnet_sdk_version = '10.0.100-preview.6.25326.107'; `
+        $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip.sha512'; `
         `
-        Invoke-WebRequest -OutFile $dotnet_file \"https://ci.dot.net/public/Sdk/$dotnet_sdk_version/$dotnet_file\"; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file \"https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/$dotnet_file.sha512\"; `
+        Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Sdk/$dotnet_sdk_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/$dotnet_file.sha512; `
         `
         if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -40,13 +40,13 @@ RUN powershell -Command " `
         mkdir dotnet; `
         tar --gzip --extract --no-same-owner --file $dotnet_file --directory dotnet; `
         Remove-Item -Force `
-            $dotnet_file `
+            $dotnet_file, `
             $dotnet_sha512_file; `
         `
         # Install PowerShell global tool
         $powershell_version = '7.6.0-preview.4'; `
-        Invoke-WebRequest -OutFile  \"\"; `
-        Invoke-WebRequest -OutFile  \"\"; `
+        Invoke-WebRequest -OutFile  ; `
+        Invoke-WebRequest -OutFile  ; `
         ; `
         $powershell_sha512 = 'a529408a93ca2be753d84137bff8ed95dc9301faf2da62fbd9d7bfb29fe502bfca9427736b1004884e839e3f2585ac613349f0fbbb97ea6f979b115dcf06aa0c'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `

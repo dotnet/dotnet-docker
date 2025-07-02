@@ -4,36 +4,36 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2025-amd64 AS installer
 
 # Retrieve .NET Runtime
-RUN powershell -Command " `
+RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = \"8.0.17\"; `
-        $dotnet_file = \"dotnet-runtime-$dotnet_version-win-x64.tar.gz\"; `
-        $dotnet_checksums_file = \"$dotnet_version-sha.txt\"; `
+        $dotnet_version = '8.0.17'; `
+        $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
+        $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
-        Invoke-WebRequest -OutFile $dotnet_file \"https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/$dotnet_file\"; `
-        Invoke-WebRequest -OutFile $dotnet_checksums_file \"https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file\"; `
+        Invoke-WebRequest -OutFile $dotnet_file https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_checksums_file https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file; `
         `
-        $dotnetSha512 = ( `
-            (Get-Content $dotnet_checksums_file | Where-Object { `
-                    $_ -match \"$([regex]::Escape($dotnet_file))$\"; `
+        $dotnet_sha512 = ( `
+            (Get-Content $dotnet_checksums_file ^| Where-Object { `
+                    $_ -match ([regex]::Escape($dotnet_file))` + '$'; `
             }) -split '\s+' `
         )[0].ToUpper(); `
-        $actualHash = (Get-FileHash $dotnet_file -Algorithm SHA512).Hash.ToUpper(); `
+        $actual_hash = (Get-FileHash $dotnet_file -Algorithm SHA512).Hash.ToUpper(); `
         `
-        if ($dotnetSha512 -ne $actualHash) { `
+        if ($dotnet_sha512 -ne $actual_hash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-            Write-Host \"Expected: $expectedHash\"; `
-            Write-Host \"Actual:   $actualHash\"; `
+            Write-Host 'Expected: ' + $dotnet_sha512; `
+            Write-Host 'Actual:   ' + $actual_hash; `
             exit 1; `
         }; `
         `
         mkdir dotnet; `
         tar --gzip --extract --no-same-owner --file $dotnet_file --directory dotnet; `
         Remove-Item -Force `
-            $dotnet_file `
-            $dotnet_checksums_file"
+            $dotnet_file, `
+            $dotnet_checksums_file
 
 
 # Runtime image

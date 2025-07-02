@@ -26,7 +26,7 @@
     Authorization = \"Bearer $env:ACCESSTOKEN\"; `
     'x-ms-version' = '2017-11-09'; `
 }; `}}{{
-for i, file in ARGS["files"]:Invoke-WebRequest -OutFile {{file["out-file"]}} \"{{file["url"]}}\"{{
+for i, file in ARGS["files"]:Invoke-WebRequest -OutFile {{file["out-file"]}} {{file["url"]}}{{
     if (isInternal(file["url"])): -Headers $Headers^
     set isLastFile to (i = len(ARGS["files"]) - 1)^
     if (!isLastFile):; `

@@ -32,16 +32,16 @@ if (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
 }}if ((Get-FileHash {{ARGS["file"]}} -Algorithm sha{{ARGS["sha-function"]}}).Hash -ne {{shaValue}}) { `
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
     exit 1; `
-}^else:$dotnetSha512 = ( `
-    (Get-Content {{ARGS['sha-file']}} | Where-Object { `
-            $_ -match \"$([regex]::Escape({{ARGS['file']}}))$\"; `
+}^else:$dotnet_sha512 = ( `
+    (Get-Content {{ARGS['sha-file']}} @^| Where-Object { `
+            $_ -match ([regex]::Escape({{ARGS['file']}}))` + '$'; `
     }) -split '\s+' `
 )[0].ToUpper(); `
-$actualHash = (Get-FileHash {{ARGS['file']}} -Algorithm SHA{{ARGS["sha-function"]}}).Hash.ToUpper(); `
+$actual_hash = (Get-FileHash {{ARGS['file']}} -Algorithm SHA{{ARGS["sha-function"]}}).Hash.ToUpper(); `
 `
-if ($dotnetSha512 -ne $actualHash) { `
+if ($dotnet_sha512 -ne $actual_hash) { `
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
-    Write-Host \"Expected: $expectedHash\"; `
-    Write-Host \"Actual:   $actualHash\"; `
+    Write-Host 'Expected: ' + $dotnet_sha512; `
+    Write-Host 'Actual:   ' + $actual_hash; `
     exit 1; `
 }^_}}

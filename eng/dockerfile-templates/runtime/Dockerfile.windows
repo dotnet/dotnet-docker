@@ -22,14 +22,14 @@ FROM {{installerStageFromImage}} AS installer
 ARG ACCESSTOKEN
 }}
 # Retrieve .NET Runtime
-RUN powershell -Command " `
+RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         {{InsertTemplate("../Dockerfile.download-dotnet", [
             "product": "runtime",
             "extract-to": "dotnet"
-        ], "        ")}}"
+        ], "        ")}}
 
 
 # Runtime image

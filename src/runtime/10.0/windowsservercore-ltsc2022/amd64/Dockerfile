@@ -4,16 +4,16 @@
 FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
 
 # Retrieve .NET Runtime
-RUN powershell -Command " `
+RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = \"10.0.0-preview.6.25326.107\"; `
-        $dotnet_file = \"dotnet-runtime-$dotnet_version-win-x64.tar.gz\"; `
-        $dotnet_sha512_file = \"dotnet-runtime-$dotnet_version-win-x64.tar.gz.sha512\"; `
+        $dotnet_version = '10.0.0-preview.6.25326.107'; `
+        $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip.sha512'; `
         `
-        Invoke-WebRequest -OutFile $dotnet_file \"https://ci.dot.net/public/Runtime/$dotnet_version/$dotnet_file\"; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file \"https://ci.dot.net/public-checksums/Runtime/$dotnet_version/$dotnet_file.sha512\"; `
+        Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Runtime/$dotnet_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/Runtime/$dotnet_version/$dotnet_file.sha512; `
         `
         if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -23,8 +23,8 @@ RUN powershell -Command " `
         mkdir dotnet; `
         tar --gzip --extract --no-same-owner --file $dotnet_file --directory dotnet; `
         Remove-Item -Force `
-            $dotnet_file `
-            $dotnet_sha512_file"
+            $dotnet_file, `
+            $dotnet_sha512_file
 
 
 # Runtime image
