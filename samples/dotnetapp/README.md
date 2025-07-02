@@ -51,3 +51,4 @@ Windows variants of the sample can be pulled via one the following image names:
 
 - `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-1809`
 - `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-ltsc2022`
+- `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-ltsc2025`
