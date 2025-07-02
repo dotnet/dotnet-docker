@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Dotnet.Docker.Model.Release;
+using System.Text;
 
 namespace Dotnet.Docker;
 
@@ -41,7 +42,7 @@ internal partial class FromStagingPipelineCommand(
             // Full example: https://dotnetstagetest.blob.core.windows.net/stage-2XXXXXX/assets/shipping/assets/Runtime/10.0.0-preview.N.XXXXX.YYY/dotnet-runtime-10.0.0-preview.N.XXXXX.YYY-linux-arm64.tar.gz
 
             var urlBuilder = new StringBuilder();
-            urlBuilder.Append(options.StagingStorageAccount.TrimEnd('/'));
+            urlBuilder.Append(NormalizeStorageAccountUrl(options.StagingStorageAccount));
             urlBuilder.Append($"/stage-{options.StagingPipelineRunId}/assets/shipping/assets");
             internalBaseUrl = urlBuilder.ToString();
         }
@@ -151,6 +152,30 @@ internal partial class FromStagingPipelineCommand(
                 options.StagingPipelineRunId
             );
         }
+    }
+
+    /// <summary>
+    /// Formats a storage account URL has a specific format:
+    /// - Starts with "https://"
+    /// - No trailing slash
+    /// - Defaults to using blob.core.windows.net as the root domain
+    /// </summary>
+    private static string NormalizeStorageAccountUrl(string storageAccount)
+    {
+        if (string.IsNullOrWhiteSpace(storageAccount))
+        {
+            return storageAccount;
+        }
+
+        storageAccount = storageAccount.Trim();
+
+        if (storageAccount.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            return storageAccount.TrimEnd('/');
+        }
+
+        // If it's just the storage account name, construct the full URL
+        return $"https://{storageAccount}.blob.core.windows.net";
     }
 
     // Examples:
