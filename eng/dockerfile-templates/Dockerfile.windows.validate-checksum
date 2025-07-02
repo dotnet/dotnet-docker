@@ -11,16 +11,12 @@
         sha                   : Expected checksum of the downloaded file.
         sha-var-name          : (optional) Name of variable to store the checksum in.
 
-        sha-file              : Checksum file to validate against. The file should contain a single
-                                line with the expected checksum and the file name to validate,
-                                separated by one or two spaces. If the file contains multiple lines,
-                                set sha-file-is-aggregate to true.
-        sha-file-is-bare      : (optional) Whether the checksum file does not contain the file name.
-        sha-file-is-aggregate : (optional) Whether the checksum file contains more than one checksum. The file
-                                should contain one or more lines with expected checksums and file
-                                names separated by one or two spaces. One line must have a filename
-                                matching the file you wish to validate. See `man cksum` or
-                                `man sha512sum` for details.
+        sha-file              : Checksum file to validate against. The file should consist of one
+                                or more lines, each of which must contain the expected checksum
+                                followed by the file name to validate, separated by one or two
+                                spaces.
+        sha-file-is-bare      : (optional) Whether the checksum file only contains one checksum and
+                                does not contain any file names.
         ^
 
     set shaValue to
