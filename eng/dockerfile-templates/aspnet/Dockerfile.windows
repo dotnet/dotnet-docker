@@ -1,8 +1,5 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
-
-    set buildVersion to VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")] ^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
