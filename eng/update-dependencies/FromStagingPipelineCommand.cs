@@ -23,14 +23,28 @@ internal partial class FromStagingPipelineCommand(
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
-        if (options.Internal)
-        {
-            throw new NotImplementedException("Updating Dockerfiles for internal builds is not implemented yet.");
-        }
-
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
+
+        string internalBaseUrl = string.Empty;
+        if (options.Internal)
+        {
+            ArgumentException.ThrowIfNullOrWhiteSpace(
+                options.StagingStorageAccount,
+                $"{FromStagingPipelineOptions.StagingStorageAccountOption} must be set when using the {FromStagingPipelineOptions.InternalOption} option."
+            );
+
+            // Each pipeline run has a corresponding blob container named stage-${options.StagingPipelineRunId}.
+            // Release metadata is stored in metadata/ReleaseManifest.json.
+            // Release assets are stored individually under in assets/shipping/assets/[Sdk|Runtime|aspnetcore|...].
+            // Full example: https://dotnetstagetest.blob.core.windows.net/stage-2XXXXXX/assets/shipping/assets/Runtime/10.0.0-preview.N.XXXXX.YYY/dotnet-runtime-10.0.0-preview.N.XXXXX.YYY-linux-arm64.tar.gz
+
+            var urlBuilder = new StringBuilder();
+            urlBuilder.Append(options.StagingStorageAccount.TrimEnd('/'));
+            urlBuilder.Append($"/stage-{options.StagingPipelineRunId}/assets/shipping/assets");
+            internalBaseUrl = urlBuilder.ToString();
+        }
 
         var buildManifest = await GetBuildManifest(options);
         var allAssets = buildManifest.AllAssets.ToList();
@@ -89,6 +103,7 @@ internal partial class FromStagingPipelineCommand(
             VersionSourceName = options.VersionSourceName,
             SourceBranch = options.SourceBranch,
             TargetBranch = options.TargetBranch,
+            InternalBaseUrl = internalBaseUrl,
         };
 
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
