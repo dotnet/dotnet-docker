@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip \"https://github.com/git-for-windows/git/releases/download/v2.50.0.windows.1/MinGit-2.50.0-64-bit.zip\"; `
-        $mingit_sha256 = '69b1a81f881077d3c89806d2cd13cfd0f2b31a4e934e6fb9f8370435aaa7a94e'; `
+        Invoke-WebRequest -OutFile mingit.zip \"https://github.com/git-for-windows/git/releases/download/v2.50.0.windows.2/MinGit-2.50.0.2-64-bit.zip\"; `
+        $mingit_sha256 = '6d28c7e9f9c219a16c078c94a80492dd10fa309fbd17a67b2230736fdfb263b9'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
