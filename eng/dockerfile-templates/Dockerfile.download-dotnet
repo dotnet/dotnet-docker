@@ -1,5 +1,6 @@
 {{
-    _
+    _ Downloads, validate, and extracts the .NET Runtime, ASP.NET Core Runtime, or .NET SDK
+
     ARGS:
         product         : Product name, e.g. "dotnet", "aspnet", "sdk"
         extract-to      : Directory where .NET will be extracted
