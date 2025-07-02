@@ -5,12 +5,15 @@ FROM $REPO:10.0.0-preview.6-alpine3.22-arm64v8 AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0-preview.6.25326.107 \
-    && wget --output-document dotnet.tar.gz https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='17e333a3d057123812d3a7e914b60cd62b7915498a6c967be9c1eafc38d69e3642c2f7d61b04870fac8ed344b51b4c9b8c6cc89a391bee38f33135b2bea2522d' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && wget \
+        https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
+        https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz --directory /dotnet \
+    && rm \
+        dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
+        dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz.sha512
 
 
 # .NET runtime image

@@ -1,14 +1,20 @@
+
+
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:10.0.0-preview.6-alpine3.22-arm64v8 AS installer
 
 # Install .NET SDK
-RUN wget --output-document dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.6.25326.107/dotnet-sdk-10.0.100-preview.6.25326.107-linux-musl-arm64.tar.gz \
-    && dotnet_sha512='a47e7b41c873adeb870eebf8b647968cbfcf80950d337fe71249aaf90f9429601bf0f418e7456732e96152bc8ba74c31419eb4d3a49738e43c788b637fa96dd5' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+RUN dotnet_sdk_version=10.0.100-preview.6.25326.107 \
+    && wget \
+        https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
+        https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
+    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm \
+        dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
+        dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512
 
 
 # .NET SDK image

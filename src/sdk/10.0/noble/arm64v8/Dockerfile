@@ -1,14 +1,20 @@
+
+
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Install .NET SDK
-RUN curl --fail --show-error --location --output dotnet.tar.gz https://ci.dot.net/public/Sdk/10.0.100-preview.6.25326.107/dotnet-sdk-10.0.100-preview.6.25326.107-linux-arm64.tar.gz \
-    && dotnet_sha512='4fc8eec54ae002f69609d3deb09b6e05b04a20d717527f8e71373d8a3d6a6db95eb5e934bb33f3b974f6f7eca6821bebf224fda6f6048cbb973539239d086ae9' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+RUN dotnet_sdk_version=10.0.100-preview.6.25326.107 \
+    && curl --fail --show-error --location \
+        --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
+    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && rm \
+        dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
+        dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512
 
 
 # .NET SDK image

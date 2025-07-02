@@ -5,12 +5,16 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=9.0.6 \
-    && curl --fail --show-error --location --output dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm.tar.gz \
-    && dotnet_sha512='6ab4b011d6b6c47c2224ec83692a8df06a23e3a87c4e8aae767b9e55db563ac7765be016e7a57b06237ec0b3a9783b341b96c25b1f3a5feedad297a6a294d81a' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
+    && sed -i 's/\r$//' $aspnetcore_version-sha.txt \
+    && sha512sum -c $aspnetcore_version-sha.txt --ignore-missing \
     && mkdir --parents /usr/share/dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet.tar.gz --directory /usr/share/dotnet \
-    && rm dotnet.tar.gz
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-arm.tar.gz --directory /usr/share/dotnet \
+    && rm \
+        aspnetcore-runtime-composite-$aspnetcore_version-linux-arm.tar.gz \
+        $aspnetcore_version-sha.txt
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
