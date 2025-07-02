@@ -8,19 +8,19 @@ FROM mcr.microsoft.com/windows/servercore:ltsc2019-amd64 AS installer
 ARG ACCESSTOKEN
 
 # Install ASP.NET Core Runtime
-RUN powershell -Command " `
+RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = \"0.0.0\"; `
-        $aspnetcore_file = \"aspnetcore-runtime-$aspnetcore_version-win-x64.tar.gz\"; `
-        $dotnet_sha512_file = \"aspnetcore-runtime-$aspnetcore_version-win-x64.tar.gz.sha512\"; `
+        $aspnetcore_version = '0.0.0'; `
+        $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip.sha512'; `
         `
         $Headers = @{ `
             Authorization = \"Bearer $env:ACCESSTOKEN\"; `
             'x-ms-version' = '2017-11-09'; `
-        }; `Invoke-WebRequest -OutFile $aspnetcore_file \"https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file\" -Headers $Headers; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file \"https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file.sha512\" -Headers $Headers; `
+        }; `Invoke-WebRequest -OutFile $aspnetcore_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file.sha512 -Headers $Headers; `
         `
         if ((Get-FileHash $aspnetcore_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -30,8 +30,8 @@ RUN powershell -Command " `
         mkdir dotnet; `
         tar --gzip --extract --no-same-owner --file $aspnetcore_file --directory dotnet ./shared/Microsoft.AspNetCore.App; `
         Remove-Item -Force `
-            $aspnetcore_file `
-            $dotnet_sha512_file"
+            $aspnetcore_file, `
+            $dotnet_sha512_file
 
 
 # ASP.NET Core image
