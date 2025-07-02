@@ -9,9 +9,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve YARP
-RUN yarp_version=3.0.0-preview.1.25171.2 \
+RUN yarp_version=3.0.0-preview.1.25351.1 \
     && curl --fail --show-error --location --output yarp.zip https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.zip \
-    && yarp_sha512='70ace0ebbe550b4d059ddf7582fcda3959d1c9d607f4da6ec91c0ff1ed4f340601a194f558f3346c18a1678327ea4ad8ad5e4df3fed4f3fedad2fdcfb76115f0' \
+    && yarp_sha512='ccff375ec74a9d7e96fb6fc64100773c67c72c7039c3109b4dc4925a9950215438dcebf974275e4bd86af7728041ef7f404f4d3e5cf6b2e575a10c39c86fc7d5' \
     && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
     && mkdir --parents /app \
     && unzip yarp.zip -d /app \
