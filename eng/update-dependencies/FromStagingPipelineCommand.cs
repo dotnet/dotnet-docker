@@ -32,22 +32,7 @@ internal partial class FromStagingPipelineCommand(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
 
-        BuildManifest buildManifest;
-        if (string.IsNullOrWhiteSpace(options.StagingStorageAccount))
-        {
-            buildManifest = await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
-                options.AzdoOrganization,
-                options.AzdoProject,
-                options.StagingPipelineRunId
-            );
-        }
-        else
-        {
-            buildManifest = await _storageAccountBuildManifestProvider.GetBuildManifestAsync(
-                options.StagingStorageAccount,
-                options.StagingPipelineRunId);
-        }
-
+        var buildManifest = await GetBuildManifest(options);
         var allAssets = buildManifest.AllAssets.ToList();
 
         // Look through all the assets and get the version of the highest SDK feature band
@@ -107,6 +92,50 @@ internal partial class FromStagingPipelineCommand(
         };
 
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
+    }
+
+    private async Task<BuildManifest> GetBuildManifest(FromStagingPipelineOptions options)
+    {
+        if (!string.IsNullOrWhiteSpace(options.StagingStorageAccount))
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Attempting to get build manifest from storage account: {StagingStorageAccount}",
+                    options.StagingStorageAccount
+                );
+
+                return await _storageAccountBuildManifestProvider.GetBuildManifestAsync(
+                    options.StagingStorageAccount,
+                    options.StagingPipelineRunId
+                );
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Failed to get build manifest from storage account. Falling back to pipeline artifact provider."
+                );
+
+                return await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+                    options.AzdoOrganization,
+                    options.AzdoProject,
+                    options.StagingPipelineRunId
+                );
+            }
+        }
+        else
+        {
+            _logger.LogInformation(
+                "No staging storage account provided. Using pipeline artifact provider."
+            );
+
+            return await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+                options.AzdoOrganization,
+                options.AzdoProject,
+                options.StagingPipelineRunId
+            );
+        }
     }
 
     // Examples:
