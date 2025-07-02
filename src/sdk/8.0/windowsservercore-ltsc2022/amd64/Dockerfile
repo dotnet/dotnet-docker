@@ -28,7 +28,7 @@ RUN powershell -Command " `
         $dotnet_sdk_version = '8.0.411'; `
         $dotnet_version = '8.0.17'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
-        $dotnet_checksums_file = $dotnet_version-sha.txt; `
+        $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
         Invoke-WebRequest -OutFile $dotnet_file https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/$dotnet_file; `
         Invoke-WebRequest -OutFile $dotnet_checksums_file https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file; `

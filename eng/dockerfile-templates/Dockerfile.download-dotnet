@@ -25,7 +25,7 @@
     }}^
 
     _ Inserts a variable into a string literal. ^
-    set insertVariable(string, variableValue, variableRef) to:{{
+    set formatAsString(string, variableValue, variableRef) to:{{
         _ The plus signs aren't special, they are just used as a delimiter ^
         set variableRef to cat("+", variableRef, "+") ^
         set parts to replace(string, variableValue, variableRef) ^
@@ -146,14 +146,17 @@
     if (useFileVariables):{{
         set fileVariable to when(product = "aspnet", "aspnetcore_file", "dotnet_file") ^
         set fileVariableRef to cat("$", fileVariable) ^
-        set fileVariableValue to insertVariable(fileName, versionVariableRef, versionVariableRef) ^
+        set fileVariableValue to formatAsString(fileName, versionVariableRef, versionVariableRef) ^
         set shaUrl to replace(shaUrl, fileName, fileVariableRef) ^
         set downloadUrl to replace(downloadUrl, fileName, fileVariableRef) ^
         set fileName to fileVariableRef ^
 
         set shaVariable to when(shaUrlIsAggregate, "dotnet_checksums_file", "dotnet_sha512_file") ^
         set shaVariableRef to cat("$", shaVariable) ^
-        set shaVariableValue to insertVariable(shaFileName, versionVariableRef, versionVariableRef) ^
+        set shaVariableValue to formatAsString(shaFileName, versionVariableRef, versionVariableRef) ^
+        if (runtimeVersionVariableRef):{{
+            set shaVariableValue to formatAsString(shaFileName, runtimeVersionVariableRef, runtimeVersionVariableRef)
+        }}^
         set shaUrl to replace(shaUrl, shaFileName, shaVariableRef) ^
         set shaFileName to shaVariableRef ^
 
