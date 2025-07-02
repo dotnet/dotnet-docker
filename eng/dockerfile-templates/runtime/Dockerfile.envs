@@ -1,6 +1,7 @@
 {{
     _ ARGS:
-        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product ^
+        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product
+        is-standalone (optional): Whether the ENV instruction should be included ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
@@ -8,5 +9,6 @@
     set runtimeVersion to when(isStableBranding && ARGS["is-internal"],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         VARIABLES[cat("runtime|", dotnetVersion, "|build-version")])
+
 }}# .NET Runtime version
-{{if INDENT ="":ENV }}DOTNET_VERSION={{runtimeVersion}}
+{{if ARGS["is-standalone"]:ENV }}DOTNET_VERSION={{runtimeVersion}}

@@ -23,6 +23,8 @@
     set aspireBaseUrl to cat(VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|base-url|", VARIABLES["branch"])], "/aspire/", versionFolder, "/") ^
 
     set downloadUrl to cat(aspireBaseUrl, "aspire-dashboard-linux-", ARCH_SHORT, ".zip") ^
+    set outFile to "aspire_dashboard.zip" ^
+    set appDir to "/app" ^
     set sha to VARIABLES[join(["aspire-dashboard", aspireMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
 
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
@@ -35,21 +37,22 @@ ARG ACCESSTOKEN}}
 }}
 # Retrieve Aspire Dashboard
 RUN dotnet_aspire_version={{aspireVersion}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+    && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
+        "product": "aspire_dashboard",
+        "productVersion": aspireVersion,
         "download-url": downloadUrl,
-        "out-file": "aspire_dashboard.zip",
-        "extract-to": "/app",
-        "sha-var-name": "aspire_dashboard_sha512",
-        "sha": sha
+        "sha": sha,
+        "file-name": outFile,
+        "extract-to": appDir
     ], "    ")}}
 
 
 # Aspire Dashboard image
 FROM {{aspnetBaseTag}}
 
-WORKDIR /app
-COPY --from=installer /app .
+WORKDIR {{appDir}}
+COPY --from=installer {{appDir}} .
 
 {{InsertTemplate("Dockerfile.envs")}}
 
-ENTRYPOINT [ "dotnet", "/app/Aspire.Dashboard.dll" ]
+ENTRYPOINT [ "dotnet", "{{appDir}}/Aspire.Dashboard.dll" ]
