@@ -21,6 +21,35 @@ internal static class VersionHelper
     }
 
     /// <summary>
+    /// Given a build version or product version, resolve the product version.
+    /// </summary>
+    /// <param name="buildVersion">
+    /// A version that may already be a simple 3-part version (e.g. "8.0.100"),
+    /// or a full build version (e.g. "8.0.100-servicing.12345.6").
+    /// </param>
+    /// <param name="isStableRelease"
+    /// Whether the build version is a stable release. This should be false
+    /// for preview releases only. Release candidates are considered stable.
+    /// </param>
+    /// <returns>
+    /// The product version, which doesn't have a suffix like `-servicing*`,
+    /// `-rc*` etc.
+    /// </returns>
+    public static string ResolveProductVersion(string buildVersion, bool isStableRelease = false)
+    {
+        if (!string.IsNullOrEmpty(buildVersion) && isStableRelease)
+        {
+            int monikerSeparatorIndex = buildVersion.IndexOf('-');
+            if (monikerSeparatorIndex >= 0)
+            {
+                return buildVersion.Substring(0, monikerSeparatorIndex);
+            }
+        }
+
+        return buildVersion;
+    }
+
+    /// <summary>
     /// Given a list of .NET SDK versions, return the highest version. For example, given the
     /// following versions:
     /// <code>

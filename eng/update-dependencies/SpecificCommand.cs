@@ -30,20 +30,6 @@ namespace Dotnet.Docker
 
         public static string RepoRoot { get; } = Directory.GetCurrentDirectory();
 
-        internal static string ResolveProductVersion(string version, SpecificCommandOptions options)
-        {
-            if (!string.IsNullOrEmpty(version) && options.StableBranding)
-            {
-                int monikerSeparatorIndex = version.IndexOf('-');
-                if (monikerSeparatorIndex >= 0)
-                {
-                    return version.Substring(0, monikerSeparatorIndex);
-                }
-            }
-
-            return version;
-        }
-
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
             Options = options;

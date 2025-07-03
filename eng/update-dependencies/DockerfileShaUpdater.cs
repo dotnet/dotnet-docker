@@ -141,7 +141,7 @@ namespace Dotnet.Docker
             // Remove Aspire Dashboard case once https://github.com/dotnet/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
-            string versionFile = SpecificCommand.ResolveProductVersion(versionDir, _options);
+            string versionFile = VersionHelper.ResolveProductVersion(versionDir, _options.StableBranding);
 
             string downloadUrl = _urls[_productName]
                 .Replace("$DOTNET_BASE_URL", baseUrl)

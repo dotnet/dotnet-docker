@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Dotnet.Docker;
+namespace Dotnet.Docker.Model.Release;
 
 /// <summary>
 /// This represents the configuration for a single run of the .NET release and staging pipelines. It contains
