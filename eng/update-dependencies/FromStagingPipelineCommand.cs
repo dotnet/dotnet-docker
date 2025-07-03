@@ -14,12 +14,12 @@ namespace Dotnet.Docker;
 
 internal partial class FromStagingPipelineCommand(
     ILogger<FromStagingPipelineCommand> logger,
-    PipelineArtifactBuildManifestProvider pipelineArtifactBuildManifestProvider,
+    PipelineArtifactProvider pipelineArtifactBuildManifestProvider,
     StorageAccountBuildManifestProvider storageAccountBuildManifestProvider)
     : BaseCommand<FromStagingPipelineOptions>
 {
     private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
-    private readonly PipelineArtifactBuildManifestProvider _pipelineArtifactBuildManifestProvider = pipelineArtifactBuildManifestProvider;
+    private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactBuildManifestProvider;
     private readonly StorageAccountBuildManifestProvider _storageAccountBuildManifestProvider = storageAccountBuildManifestProvider;
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
@@ -44,36 +44,31 @@ internal partial class FromStagingPipelineCommand(
                 + $"/stage-{options.StagingPipelineRunId}/assets/shipping/assets";
         }
 
-        var buildManifest = await GetBuildManifest(options);
-        var allAssets = buildManifest.AllAssets.ToList();
+        var releaseConfig = await _pipelineArtifactProvider.GetReleaseConfigAsync(
+            options.AzdoOrganization,
+            options.AzdoProject,
+            options.StagingPipelineRunId);
 
-        // Look through all the assets and get the version of the highest SDK feature band
-        var sdkAssets = allAssets
-            .Where(asset => SdkRegex.IsMatch(asset.Name))
-            .ToList();
-        var sdkVersions = sdkAssets.Select(asset => asset.Version);
-        string highestSdkVersion = VersionHelper.GetHighestSdkVersion(sdkVersions);
-        string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(highestSdkVersion).ToString();
-
-        string runtimeVersion = allAssets
-            .Where(asset => RuntimeRegex.IsMatch(asset.Name))
-            .Select(asset => asset.Version)
-            .First();
-
-        string aspnetVersion = allAssets
-            .Where(asset => AspNetCoreRegex.IsMatch(asset.Name))
-            .Select(asset => asset.Version)
-            .First();
+        var sdkBuild = VersionHelper.GetHighestSdkVersion(releaseConfig.SdkBuilds);
+        var dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(sdkBuild);
+        var runtimeBuild = releaseConfig.RuntimeBuild;
+        var aspnetBuild = releaseConfig.AspBuild;
+        var dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
 
         _logger.LogInformation(
             """
             Resolved .NET versions:
             .NET: {dockerfileVersion}
-            - SDK: {highestSdkVersion}
-            - Runtime: {runtimeVersion}
-            - ASP.NET Core: {aspnetVersion}
+            - Product version: {dotnetProductVersion}
+            - SDK: {sdkBuild}
+            - Runtime: {runtimeBuild}
+            - ASP.NET Core: {aspnetBuild}
             """,
-            dockerfileVersion, highestSdkVersion, runtimeVersion, aspnetVersion);
+            dockerfileVersion,
+            dotnetProductVersion,
+            sdkBuild,
+            runtimeBuild,
+            aspnetBuild);
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
@@ -84,11 +79,11 @@ internal partial class FromStagingPipelineCommand(
             {
                 // "dotnet" version is required. It sets the "dotnet|*|product-version"
                 // variable which is used for runtime-deps, runtime, and aspnet tags.
-                { "dotnet", runtimeVersion },
-                { "runtime",  runtimeVersion },
-                { "aspnet", aspnetVersion },
-                { "aspnet-composite", aspnetVersion },
-                { "sdk", highestSdkVersion },
+                { "dotnet", dotnetProductVersion },
+                { "runtime",  runtimeBuild },
+                { "aspnet", aspnetBuild },
+                { "aspnet-composite", aspnetBuild },
+                { "sdk", sdkBuild },
             },
 
             // Pass through all properties of CreatePullRequestOptions
@@ -130,7 +125,7 @@ internal partial class FromStagingPipelineCommand(
                     "Failed to get build manifest from storage account. Falling back to pipeline artifact provider."
                 );
 
-                return await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+                return await _pipelineArtifactProvider.GetBuildManifestAsync(
                     options.AzdoOrganization,
                     options.AzdoProject,
                     options.StagingPipelineRunId
@@ -143,7 +138,7 @@ internal partial class FromStagingPipelineCommand(
                 "No staging storage account provided. Using pipeline artifact provider."
             );
 
-            return await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+            return await _pipelineArtifactProvider.GetBuildManifestAsync(
                 options.AzdoOrganization,
                 options.AzdoProject,
                 options.StagingPipelineRunId

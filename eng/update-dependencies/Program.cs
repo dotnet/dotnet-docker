@@ -66,7 +66,7 @@ config.UseHost(
                 services.AddHttpClient<AzdoHttpClient>();
 
                 services.AddSingleton<AzdoAuthProvider>();
-                services.AddSingleton<PipelineArtifactBuildManifestProvider>();
+                services.AddSingleton<PipelineArtifactProvider>();
                 services.AddSingleton<StorageAccountBuildManifestProvider>();
 
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();
