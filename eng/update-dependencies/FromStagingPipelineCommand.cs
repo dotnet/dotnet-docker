@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using System.Text;
+using System.Linq;
 
 namespace Dotnet.Docker;
 
@@ -44,42 +45,39 @@ internal partial class FromStagingPipelineCommand(
             options.AzdoProject,
             options.StagingPipelineRunId);
 
-        var sdkBuild = VersionHelper.GetHighestSdkVersion(releaseConfig.SdkBuilds);
-        var dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(sdkBuild);
-        var runtimeBuild = releaseConfig.RuntimeBuild;
-        var aspnetBuild = releaseConfig.AspBuild;
-        var dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
+        string dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
+        string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(releaseConfig.RuntimeBuild).ToString();
+
+        var productVersions = options.Internal switch
+        {
+            true => new Dictionary<string, string?>
+            {
+                { "dotnet", dotnetProductVersion },
+                { "runtime",  releaseConfig.RuntimeBuild },
+                { "aspnet", releaseConfig.AspBuild },
+                { "aspnet-composite", releaseConfig.AspBuild },
+                { "sdk", VersionHelper.GetHighestSdkVersion(releaseConfig.SdkBuilds) },
+            },
+            false => new Dictionary<string, string?>
+            {
+                { "dotnet", dotnetProductVersion },
+                { "runtime", releaseConfig.Runtime },
+                { "aspnet", releaseConfig.Asp },
+                { "aspnet-composite", releaseConfig.Asp },
+                { "sdk", VersionHelper.GetHighestSdkVersion(releaseConfig.Sdks) },
+            }
+        };
 
         _logger.LogInformation(
-            """
-            Resolved .NET versions:
-            .NET: {dockerfileVersion}
-            - Product version: {dotnetProductVersion}
-            - SDK: {sdkBuild}
-            - Runtime: {runtimeBuild}
-            - ASP.NET Core: {aspnetBuild}
-            """,
-            dockerfileVersion,
-            dotnetProductVersion,
-            sdkBuild,
-            runtimeBuild,
-            aspnetBuild);
+            "Resolved product versions: {productVersions}",
+            string.Join(", ", productVersions.Select(kv => $"{kv.Key}: {kv.Value}")));
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
             DockerfileVersion = dockerfileVersion.ToString(),
-            ProductVersions = new Dictionary<string, string?>()
-            {
-                // "dotnet" version is required. It sets the "dotnet|*|product-version"
-                // variable which is used for runtime-deps, runtime, and aspnet tags.
-                { "dotnet", dotnetProductVersion },
-                { "runtime",  runtimeBuild },
-                { "aspnet", aspnetBuild },
-                { "aspnet-composite", aspnetBuild },
-                { "sdk", sdkBuild },
-            },
+            ProductVersions = productVersions,
 
             // Pass through all properties of CreatePullRequestOptions
             User = options.User,
