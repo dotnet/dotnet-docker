@@ -161,7 +161,8 @@
         "sha-function": shaFunction,
         "sha-file": replaceVariables(shaFileName),
         "sha-file-is-bare": shaUrlIsBare,
-        "sha-file-is-aggregate": shaUrlIsAggregate
+        "sha-file-is-aggregate": shaUrlIsAggregate,
+        "use-cmd-escape": isWindows && product = "sdk"
     ])
 }}{{if ARGS["extract-to"]:{{lineEnd}}{{extraLine}}
 {{continue}}mkdir {{if !isWindows:--parents }}{{ARGS["extract-to"]}}{{lineEnd}}

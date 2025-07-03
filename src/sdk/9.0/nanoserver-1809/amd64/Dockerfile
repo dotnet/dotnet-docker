@@ -34,7 +34,7 @@ RUN powershell -Command " `
         Invoke-WebRequest -OutFile $dotnet_checksums_file https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file; `
         `
         $dotnet_sha512 = ( `
-            (Get-Content $dotnet_checksums_file ^| Where-Object { `
+            (Get-Content $dotnet_checksums_file | Where-Object { `
                     $_ -match ([regex]::Escape($dotnet_file))` + '$'; `
             }) -split '\s+' `
         )[0].ToUpper(); `

@@ -3,7 +3,9 @@
 
     ARGS:
         Required by all option groups:
-        sha-function          : SHA function to use (e.g. 256, 384, 512), not optional.
+        sha-function   : SHA function to use (e.g. 256, 384, 512), not optional.
+        use-cmd-escape : (optional) Whether to escape pipe characters so they won't get interpreted
+                         by CMD.EXE.
 
         The following argument groups are mutually exclusive:
 
@@ -24,7 +26,9 @@
             cat("(Get-Content ", ARGS["sha-file"],")"),
         when(ARGS["sha-var-name"],
             ARGS["sha-var-name"],
-        ARGS["sha"]))
+        ARGS["sha"]))^
+
+    set pipe to when(ARGS["use-cmd-escape"], "|", "@^|")
 
 }}{{
 if (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
@@ -33,7 +37,7 @@ if (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
     Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
     exit 1; `
 }^else:$dotnet_sha512 = ( `
-    (Get-Content {{ARGS['sha-file']}} @^| Where-Object { `
+    (Get-Content {{ARGS['sha-file']}} {{pipe}} Where-Object { `
             $_ -match ([regex]::Escape({{ARGS['file']}}))` + '$'; `
     }) -split '\s+' `
 )[0].ToUpper(); `
