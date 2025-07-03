@@ -42,7 +42,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve ASP.NET Composite Runtime
-RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
     "product": "aspnet-composite",
     "extract-to": when(isDistroless, "/usr/share/dotnet", "/dotnet")
 ], "    ")}}

@@ -51,7 +51,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve ASP.NET Core
-RUN {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
     "product": "aspnet",
     "extract-to": "/dotnet",
     "extract-paths": ["./shared/Microsoft.AspNetCore.App"],

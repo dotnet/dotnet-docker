@@ -1,0 +1,51 @@
+{{
+    _ Verify the checksum of a file on disk against a known value or a checksum file.
+
+    ARGS:
+        Required by all option groups:
+        sha-function   : SHA function to use (e.g. 256, 384, 512), not optional.
+        use-cmd-escape : (optional) Whether to escape pipe characters so they won't get interpreted
+                         by CMD.EXE.
+
+        The following argument groups are mutually exclusive:
+
+        file                  : Path to the file to validate.
+        sha                   : Expected checksum of the downloaded file.
+        sha-var-name          : (optional) Name of variable to store the checksum in.
+
+        sha-file              : Checksum file to validate against. The file should consist of one
+                                or more lines, each of which must contain the expected checksum
+                                followed by the file name to validate, separated by one or two
+                                spaces.
+        sha-file-is-bare      : (optional) Whether the checksum file only contains one checksum and
+                                does not contain any file names.
+        ^
+
+    set shaValue to
+        when(ARGS["sha-file"] && ARGS["sha-file-is-bare"],
+            cat("(Get-Content ", ARGS["sha-file"],")"),
+        when(ARGS["sha-var-name"],
+            ARGS["sha-var-name"],
+        ARGS["sha"]))^
+
+    set pipe to when(ARGS["use-cmd-escape"], "|", "@^|")
+
+}}{{
+if (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
+    if (ARGS["sha-var-name"]):{{ARGS["sha-var-name"]}} = '{{ARGS["sha"]}}'; `
+}}if ((Get-FileHash {{ARGS["file"]}} -Algorithm sha{{ARGS["sha-function"]}}).Hash -ne {{shaValue}}) { `
+    Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+    exit 1; `
+}^else:$dotnet_sha512 = ( `
+    (Get-Content {{ARGS['sha-file']}} {{pipe}} Where-Object { `
+            $_ -match ([regex]::Escape({{ARGS['file']}}))` + '$'; `
+    }) -split '\s+' `
+)[0].ToUpper(); `
+$actual_hash = (Get-FileHash {{ARGS['file']}} -Algorithm SHA{{ARGS["sha-function"]}}).Hash.ToUpper(); `
+`
+if ($dotnet_sha512 -ne $actual_hash) { `
+    Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+    Write-Host 'Expected: ' + $dotnet_sha512; `
+    Write-Host 'Actual:   ' + $actual_hash; `
+    exit 1; `
+}^_}}
