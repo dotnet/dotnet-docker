@@ -25,23 +25,28 @@
 ", lineContinue), "") ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
-    set buildVersion to VARIABLES[cat(product, "|", dotnetVersion, "|build-version")] ^
-
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
+    set productVersion to when(product = "sdk",
+        VARIABLES[cat(product, "|", dotnetVersion, "|product-version")],
+        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
+    )^
+    set buildVersion to VARIABLES[cat(product, "|", dotnetVersion, "|build-version")] ^
+    set isStableVersion to find(buildVersion, "preview") < 0 ^
+    set fileVersion to when(isStableVersion, productVersion, buildVersion) ^
+
     set archiveExtension to when(isWindows, ".zip", ".tar.gz") ^
 
     if (product = "runtime"):{{
-        set downloadPath to cat("/Runtime/", buildVersion, "/dotnet-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
+        set downloadPath to cat("/Runtime/", buildVersion, "/dotnet-runtime-", fileVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^elif (product = "aspnet"):{{
-        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
+        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-", fileVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^elif (product = "aspnet-composite"):{{
-        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-composite-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
+        set downloadPath to cat("/aspnetcore/Runtime/", buildVersion, "/aspnetcore-runtime-composite-", fileVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^elif (product = "sdk"):{{
-        set downloadPath to cat("/Sdk/", buildVersion, "/dotnet-sdk-", buildVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
+        set downloadPath to cat("/Sdk/", buildVersion, "/dotnet-sdk-", fileVersion, "-", platform, "-", ARCH_SHORT, archiveExtension)
     }}^
     set downloadUrl to cat(baseUrl, downloadPath) ^
 
@@ -122,9 +127,19 @@
         when(product = "sdk",
             "dotnet_sdk_version",
             "dotnet_version")),
-        buildVersion
+        when(isStableVersion, productVersion, buildVersion)
     )
-}}{{if runtimeVersion:{{lineEnd}}
+}}{{if (isInternal && isStableVersion):{{lineEnd}}
+{{continue}}{{
+    assign(
+        when(product = "aspnet" || product = "aspnet-composite",
+            "aspnetcore_build_version",
+        when(product = "sdk",
+            "dotnet_sdk_build_version",
+            "dotnet_build_version")),
+        buildVersion
+    )^_
+}}}}{{if runtimeVersion:{{lineEnd}}
 {{continue}}{{
     assign("dotnet_version", runtimeVersion)
 }}}}{{if useFileVariables:{{lineEnd}}
