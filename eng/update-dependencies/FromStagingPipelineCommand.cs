@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Dotnet.Docker.Model.Release;
+using System.Text;
 
 namespace Dotnet.Docker;
 
@@ -23,31 +24,27 @@ internal partial class FromStagingPipelineCommand(
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
-        if (options.Internal)
-        {
-            throw new NotImplementedException("Updating Dockerfiles for internal builds is not implemented yet.");
-        }
-
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
 
-        BuildManifest buildManifest;
-        if (string.IsNullOrWhiteSpace(options.StagingStorageAccount))
+        string internalBaseUrl = string.Empty;
+        if (options.Internal)
         {
-            buildManifest = await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
-                options.AzdoOrganization,
-                options.AzdoProject,
-                options.StagingPipelineRunId
-            );
-        }
-        else
-        {
-            buildManifest = await _storageAccountBuildManifestProvider.GetBuildManifestAsync(
+            ArgumentException.ThrowIfNullOrWhiteSpace(
                 options.StagingStorageAccount,
-                options.StagingPipelineRunId);
+                $"{FromStagingPipelineOptions.StagingStorageAccountOption} must be set when using the {FromStagingPipelineOptions.InternalOption} option."
+            );
+
+            // Each pipeline run has a corresponding blob container named stage-${options.StagingPipelineRunId}.
+            // Release metadata is stored in metadata/ReleaseManifest.json.
+            // Release assets are stored individually under in assets/shipping/assets/[Sdk|Runtime|aspnetcore|...].
+            // Full example: https://dotnetstagetest.blob.core.windows.net/stage-2XXXXXX/assets/shipping/assets/Runtime/10.0.0-preview.N.XXXXX.YYY/dotnet-runtime-10.0.0-preview.N.XXXXX.YYY-linux-arm64.tar.gz
+            internalBaseUrl = NormalizeStorageAccountUrl(options.StagingStorageAccount)
+                + $"/stage-{options.StagingPipelineRunId}/assets/shipping/assets";
         }
 
+        var buildManifest = await GetBuildManifest(options);
         var allAssets = buildManifest.AllAssets.ToList();
 
         // Look through all the assets and get the version of the highest SDK feature band
@@ -104,9 +101,78 @@ internal partial class FromStagingPipelineCommand(
             VersionSourceName = options.VersionSourceName,
             SourceBranch = options.SourceBranch,
             TargetBranch = options.TargetBranch,
+            InternalBaseUrl = internalBaseUrl,
         };
 
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
+    }
+
+    private async Task<BuildManifest> GetBuildManifest(FromStagingPipelineOptions options)
+    {
+        if (!string.IsNullOrWhiteSpace(options.StagingStorageAccount))
+        {
+            try
+            {
+                _logger.LogInformation(
+                    "Attempting to get build manifest from storage account: {StagingStorageAccount}",
+                    options.StagingStorageAccount
+                );
+
+                return await _storageAccountBuildManifestProvider.GetBuildManifestAsync(
+                    options.StagingStorageAccount,
+                    options.StagingPipelineRunId
+                );
+            }
+            catch (Exception e)
+            {
+                _logger.LogError(
+                    e,
+                    "Failed to get build manifest from storage account. Falling back to pipeline artifact provider."
+                );
+
+                return await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+                    options.AzdoOrganization,
+                    options.AzdoProject,
+                    options.StagingPipelineRunId
+                );
+            }
+        }
+        else
+        {
+            _logger.LogInformation(
+                "No staging storage account provided. Using pipeline artifact provider."
+            );
+
+            return await _pipelineArtifactBuildManifestProvider.GetBuildManifestAsync(
+                options.AzdoOrganization,
+                options.AzdoProject,
+                options.StagingPipelineRunId
+            );
+        }
+    }
+
+    /// <summary>
+    /// Formats a storage account URL has a specific format:
+    /// - Starts with "https://"
+    /// - No trailing slash
+    /// - Defaults to using blob.core.windows.net as the root domain
+    /// </summary>
+    private static string NormalizeStorageAccountUrl(string storageAccount)
+    {
+        if (string.IsNullOrWhiteSpace(storageAccount))
+        {
+            return storageAccount;
+        }
+
+        storageAccount = storageAccount.Trim();
+
+        if (storageAccount.StartsWith("https://", StringComparison.OrdinalIgnoreCase))
+        {
+            return storageAccount.TrimEnd('/');
+        }
+
+        // If it's just the storage account name, construct the full URL
+        return $"https://{storageAccount}.blob.core.windows.net";
     }
 
     // Examples:
