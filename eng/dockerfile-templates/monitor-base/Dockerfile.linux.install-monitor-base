@@ -7,10 +7,10 @@
     set monitorBaseUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/")
 
 }}RUN dotnet_monitor_version={{monitorVersion}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-dotnet", [
+    && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
+        "product": "dotnet_monitor_base",
         "download-url": cat(monitorBaseUrl, "dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz"),
-        "out-file": "dotnet-monitor-base.tar.gz",
-        "extract-to": "/app",
-        "sha-var-name": "dotnet_monitor_base_sha512",
-        "sha": VARIABLES[join(["monitor-base", monitorMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
+        "file-name": "dotnet-monitor-base.tar.gz",
+        "extract-to": "/app"
+        "sha": VARIABLES[join(["monitor-base", monitorMajorMinor, "linux", ARCH_SHORT, "sha"], "|")],
     ], "    ")}}
