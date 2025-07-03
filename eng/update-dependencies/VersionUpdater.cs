@@ -95,7 +95,7 @@ namespace Dotnet.Docker
                 }
             }
 
-            return SpecificCommand.ResolveProductVersion(version, _options);
+            return VersionHelper.ResolveProductVersion(version, _options.StableBranding);
         }
 
         private static Regex GetVersionVariableRegex(string versionVariableName) =>
