@@ -31,18 +31,6 @@ internal class PipelineArtifactProvider(
     private readonly ILogger<PipelineArtifactProvider> _logger = logger;
     private readonly AzdoHttpClient _azdoHttpClient = azdoHttpClient;
 
-    // The release staging pipeline has multiple versions, and the build
-    // manifest has a different location depending on whether it's using the
-    // new or old version of the staging pipeline.
-    // These files will be tried, in order, to retrieve the build manifest.
-    private static readonly IEnumerable<PipelineArtifactFile> s_buildManifestFiles =
-    [
-        // Newest version of the staging pipeline
-        new PipelineArtifactFile("metadata", "ReleaseManifest.json"),
-        // Old version
-        new PipelineArtifactFile("manifests", "manifest.json"),
-    ];
-
     private static readonly IEnumerable<PipelineArtifactFile> s_releaseConfigFiles =
     [
         // Newest version of the staging pipeline
@@ -50,23 +38,6 @@ internal class PipelineArtifactProvider(
         // Old version
         new PipelineArtifactFile("drop", "config.json"),
     ];
-
-    /// <summary>
-    /// Gets the .NET build manifest from a run of the staging pipeline.
-    /// </summary>
-    public async Task<BuildManifest> GetBuildManifestAsync(
-        string azdoOrganization,
-        string azdoProject,
-        int stagingPipelineRunId)
-    {
-        var buildManifestJson = await GetArtifactTextContentAsync(
-            azdoOrganization,
-            azdoProject,
-            stagingPipelineRunId,
-            s_buildManifestFiles);
-
-        return BuildManifest.FromJson(buildManifestJson);
-    }
 
     /// <summary>
     /// Gets the .NET release config from a run of the staging pipeline.

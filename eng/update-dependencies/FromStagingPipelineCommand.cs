@@ -5,22 +5,17 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using System.Linq;
-using System.Text.RegularExpressions;
-using Dotnet.Docker.Model.Release;
 using System.Text;
 
 namespace Dotnet.Docker;
 
 internal partial class FromStagingPipelineCommand(
     ILogger<FromStagingPipelineCommand> logger,
-    PipelineArtifactProvider pipelineArtifactBuildManifestProvider,
-    StorageAccountBuildManifestProvider storageAccountBuildManifestProvider)
+    PipelineArtifactProvider pipelineArtifactProvider)
     : BaseCommand<FromStagingPipelineOptions>
 {
     private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
-    private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactBuildManifestProvider;
-    private readonly StorageAccountBuildManifestProvider _storageAccountBuildManifestProvider = storageAccountBuildManifestProvider;
+    private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactProvider;
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
@@ -102,50 +97,6 @@ internal partial class FromStagingPipelineCommand(
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
     }
 
-    private async Task<BuildManifest> GetBuildManifest(FromStagingPipelineOptions options)
-    {
-        if (!string.IsNullOrWhiteSpace(options.StagingStorageAccount))
-        {
-            try
-            {
-                _logger.LogInformation(
-                    "Attempting to get build manifest from storage account: {StagingStorageAccount}",
-                    options.StagingStorageAccount
-                );
-
-                return await _storageAccountBuildManifestProvider.GetBuildManifestAsync(
-                    options.StagingStorageAccount,
-                    options.StagingPipelineRunId
-                );
-            }
-            catch (Exception e)
-            {
-                _logger.LogError(
-                    e,
-                    "Failed to get build manifest from storage account. Falling back to pipeline artifact provider."
-                );
-
-                return await _pipelineArtifactProvider.GetBuildManifestAsync(
-                    options.AzdoOrganization,
-                    options.AzdoProject,
-                    options.StagingPipelineRunId
-                );
-            }
-        }
-        else
-        {
-            _logger.LogInformation(
-                "No staging storage account provided. Using pipeline artifact provider."
-            );
-
-            return await _pipelineArtifactProvider.GetBuildManifestAsync(
-                options.AzdoOrganization,
-                options.AzdoProject,
-                options.StagingPipelineRunId
-            );
-        }
-    }
-
     /// <summary>
     /// Formats a storage account URL has a specific format:
     /// - Starts with "https://"
@@ -169,18 +120,4 @@ internal partial class FromStagingPipelineCommand(
         // If it's just the storage account name, construct the full URL
         return $"https://{storageAccount}.blob.core.windows.net";
     }
-
-    // Examples:
-    // - "Sdk/8.0.117-servicing.25269.14/dotnet-sdk-8.0.117-linux-x64.tar.gz"
-    // - "Sdk/8.0.310-servicing.25113.14/dotnet-sdk-8.0.310-linux-musl-arm64.tar.gz"
-    [GeneratedRegex(@"Sdk/.*/dotnet-sdk-.*-linux-x64.tar.gz$")]
-    private static partial Regex SdkRegex { get; }
-
-    // "aspnetcore/Runtime/8.0.14-servicing.25112.21/aspnetcore-runtime-8.0.14-linux-x64.tar.gz",
-    [GeneratedRegex(@"aspnetcore/Runtime/.*/aspnetcore-runtime-.*-linux-x64.tar.gz")]
-    private static partial Regex AspNetCoreRegex { get; }
-
-    // "Runtime/8.0.14-servicing.25111.18/dotnet-runtime-8.0.14-linux-x64.tar.gz"
-    [GeneratedRegex(@"Runtime/.*/dotnet-runtime-.*-linux-x64.tar.gz")]
-    private static partial Regex RuntimeRegex { get; }
 }
