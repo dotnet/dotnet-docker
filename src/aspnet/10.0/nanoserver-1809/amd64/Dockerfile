@@ -12,10 +12,10 @@ RUN powershell -Command `
         `
         $aspnetcore_version = '10.0.0-preview.6.25326.107'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
-        $dotnet_sha512_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip.sha512'; `
+        $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
         `
         Invoke-WebRequest -OutFile $aspnetcore_file https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file.sha512; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/$dotnet_sha512_file; `
         `
         if ((Get-FileHash $aspnetcore_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `

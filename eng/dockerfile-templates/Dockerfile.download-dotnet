@@ -7,63 +7,22 @@
         extract-paths   : (optional) Paths within the .NET tarball to extract
         ^
 
-    set assign(variable, value) to:{{
-        if (isWindows):{{
-            return cat("$", variable, " = ", value)
-        }}^else:{{
-            return cat(variable, "=", value)
-        }}
-    }}^
-
-    set stringify(value) to:{{
-        _ PowerShell requires strings to be quoted, while sh/bash doesn't care ^
-        if (!isWindows || find(value, "$") = 0):{{
-            return value
-        }}^else:{{
-            return cat("'", value, "'")
-        }}^_
-    }}^
-
-    _ Inserts a variable into a string literal. ^
-    set formatAsString(string, variableValue, variableRef) to:{{
-        _ The plus signs aren't special, they are just used as a delimiter ^
-        set variableRef to cat("+", variableRef, "+") ^
-        set parts to replace(string, variableValue, variableRef) ^
-
-        _ Split based on our delimiter. Filter out empty strings which happen
-          when the variable is at the start or end of the string. Then, call into  ^
-        set parts to filter(split(parts, "+"), len) ^
-
-        if (isWindows):{{
-            _ When using PowerShell, wraps string literals in single quotes and
-              use string addition to build up the string. ^
-            return join(map(parts, stringify), " + ")
-        }}^else:{{
-            return join(parts)
-        }}
-    }}^
-
     set product to ARGS["product"] ^
 
     set isWindows to find(OS_VERSION, "server") >= 0 ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
 
+    set platform to when(isWindows, "win", when(isAlpine, "linux-musl", "linux"))^
     set templatePlatform to when(isWindows, "windows", "linux") ^
     set lineEnd to when(isWindows, "; `", " \") ^
     set lineContinue to when(isWindows, "`", "\") ^
     set continue to when(isWindows, "", "&& ") ^
+    set remove to when(isWindows, "Remove-Item -Force", "rm") ^
 
     set useFileVariables to isWindows ^
     set useExtraLines to isWindows ^
     set extraLine to when(useExtraLines, cat("
 ", lineContinue), "") ^
-
-    set platform to
-        when(isAlpine,
-            "linux-musl",
-        when(isWindows,
-            "win",
-            "linux"))^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
@@ -86,21 +45,9 @@
     }}^
     set downloadUrl to cat(baseUrl, downloadPath) ^
 
-    set versionVariable to
-        when(product = "aspnet" || product = "aspnet-composite",
-            "aspnetcore_version",
-        when(product = "sdk",
-            "dotnet_sdk_version",
-            "dotnet_version")) ^
-    set versionVariableRef to cat("$", versionVariable) ^
-    set versionVariableValue to buildVersion ^
-
     set shaFunction to "512" ^
     set urlParts to split(downloadUrl, "/") ^
     set fileName to urlParts[len(urlParts) - 1] ^
-
-    set fileNameParts to split(fileName, ".") ^
-    set fileExtension to fileNameParts[len(fileNameParts) - 1] ^
 
     _ For now the aggregate and bare checksum files are mutually exclusive, but
       in the future we expect .NET 10 to have non-aggregate, non-bare checksum
@@ -118,81 +65,113 @@
     set shaUrlParts to split(shaUrl, "/") ^
     set shaFileName to shaUrlParts[len(shaUrlParts) - 1] ^
 
-    _ Replace occurrences of versions with references to the version variable ^
-    set downloadUrl to replace(downloadUrl, versionVariableValue, versionVariableRef) ^
-    set shaUrl to replace(shaUrl, versionVariableValue, versionVariableRef) ^
-    set shaFileName to replace(shaFileName, versionVariableValue, versionVariableRef) ^
-    set fileName to replace(fileName, versionVariableValue, versionVariableRef) ^
-
     _ The .NET SDK has two versions associated with it - SDK version and Runtime version.
       Aggregate checksum files are associated with the .NET runtime version, so if we're
       installing the SDK we need to have a separate variable for the runtime version. ^
     if (product = "sdk" && shaUrlIsAggregate):{{
-        set runtimeVersionVariable to "dotnet_version" ^
-        set runtimeVersionVariableRef to cat("$", runtimeVersionVariable) ^
-        set runtimeVersionVariableValue to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
-
-        set downloadUrl to replace(downloadUrl, runtimeVersionVariableValue, runtimeVersionVariableRef) ^
-        set shaUrl to replace(shaUrl, runtimeVersionVariableValue, runtimeVersionVariableRef) ^
-        set shaFileName to replace(shaFileName, runtimeVersionVariableValue, runtimeVersionVariableRef) ^
-        set fileName to replace(fileName, runtimeVersionVariableValue, runtimeVersionVariableRef)
+        set runtimeVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]
     }}^
 
-    set filesToDownload to [
-        ["url": downloadUrl],
-        ["url": shaUrl]
-    ]^
-
-    if (useFileVariables):{{
-        set fileVariable to when(product = "aspnet", "aspnetcore_file", "dotnet_file") ^
-        set fileVariableRef to cat("$", fileVariable) ^
-        set fileVariableValue to formatAsString(fileName, versionVariableRef, versionVariableRef) ^
-        set shaUrl to replace(shaUrl, fileName, fileVariableRef) ^
-        set downloadUrl to replace(downloadUrl, fileName, fileVariableRef) ^
-        set fileName to fileVariableRef ^
-
-        set shaVariable to when(shaUrlIsAggregate, "dotnet_checksums_file", "dotnet_sha512_file") ^
-        set shaVariableRef to cat("$", shaVariable) ^
-        set shaVariableValue to formatAsString(shaFileName, versionVariableRef, versionVariableRef) ^
-        if (runtimeVersionVariableRef):{{
-            set shaVariableValue to formatAsString(shaFileName, runtimeVersionVariableRef, runtimeVersionVariableRef)
-        }}^
-        set shaUrl to replace(shaUrl, shaFileName, shaVariableRef) ^
-        set shaFileName to shaVariableRef ^
-
-        set filesToDownload to [
-            ["out-file": fileName, "url": downloadUrl],
-            ["out-file": shaFileName, "url": shaUrl]
-        ]
-    }}^
-
-    set remove to when(isWindows, "Remove-Item -Force", "rm") ^
     set downloadFiles to cat("Dockerfile.", templatePlatform, ".download-files") ^
     set validateChecksum to cat("Dockerfile.", templatePlatform, ".validate-checksum") ^
-    set extractFile to cat("Dockerfile.", templatePlatform, ".extract-file")
+    set extractFile to cat("Dockerfile.", templatePlatform, ".extract-file") ^
 
-}}{{assign(versionVariable, stringify(versionVariableValue))}}{{if product = "sdk" && shaUrlIsAggregate:{{lineEnd}}
-{{continue}}{{assign(runtimeVersionVariable, stringify(runtimeVersionVariableValue))}}}}{{if useFileVariables:{{lineEnd}}
-{{continue}}{{assign(fileVariable, fileVariableValue)}}{{lineEnd}}
-{{continue}}{{assign(shaVariable, shaVariableValue)}}}}{{lineEnd}}{{extraLine}}
-{{continue}}{{InsertTemplate(downloadFiles, [
-    "files": filesToDownload
-])}}{{lineEnd}}{{extraLine}}
-{{continue}}{{InsertTemplate(validateChecksum, [
-    "file": fileName,
-    "sha-function": shaFunction,
-    "sha-file": shaFileName,
-    "sha-file-is-bare": shaUrlIsBare,
-    "sha-file-is-aggregate": shaUrlIsAggregate
-])}}{{if ARGS["extract-to"]:{{lineEnd}}{{extraLine}}
+    set variableAssignments to [] ^
+
+    _ Replace variables in a string with their values ^
+    set replaceVariables(string) to:{{
+        for variable, value in variableAssignments:{{
+            set string to replace(string, value, cat("$", variable))
+        }}^
+        return string
+    }}^
+
+    _ Replace variables in a string, format specifically for the purpose of
+    assigning to a variable in PowerShell. ^
+    set replaceVariablesPwshString(string) to:{{
+        for variable, value in variableAssignments:{{
+            set found to find(string, value)^
+            if (found = 0):{{
+                _ variable at beginning of string ^
+                return cat(replace(string, value, cat("$", variable, " + '")), "'")
+            }}^elif (found > 0):{{
+                _ variable somewhere in the middle of the string ^
+                set parts to split(string, value)^
+                return cat("'", parts[0], "' + $", variable, " + '", parts[1], "'")
+            }}^_
+        }}^
+        return cat("'", string, "'")
+    }}^
+
+    set assign(variable, value, isPwshString) to:{{
+        _ Add variable to collection, return a string that assigns the variable ^
+        set rhs to when(isWindows,
+            replaceVariablesPwshString(value),
+            replaceVariables(value))^
+        set out to when(isWindows,
+            cat("$", variable, " = ", rhs),
+            cat(variable, "=", rhs))^
+        set variableAssignments to union([variable: value], variableAssignments) ^
+        return out
+    }}
+
+}}{{
+    assign(
+        when(product = "aspnet" || product = "aspnet-composite",
+            "aspnetcore_version",
+        when(product = "sdk",
+            "dotnet_sdk_version",
+            "dotnet_version")),
+        buildVersion
+    )
+}}{{if runtimeVersion:{{lineEnd}}
+{{continue}}{{
+    assign("dotnet_version", runtimeVersion)
+}}}}{{if useFileVariables:{{lineEnd}}
+{{continue}}{{
+    set fileNameVar to when(product = "aspnet", "aspnetcore_file", "dotnet_file")^
+    assign(fileNameVar, fileName)^
+    set fileName to replaceVariables(fileName)
+}}{{lineEnd}}
+{{continue}}{{
+    set shaFileVar to when(shaUrlIsAggregate, "dotnet_checksums_file", "dotnet_sha512_file")^
+    assign(shaFileVar, shaFileName)^
+    set shaFileName to replaceVariables(shaFileName)
+}}}}{{lineEnd}}{{extraLine}}
+{{continue}}{{
+    set downloadUrl to replaceVariables(downloadUrl) ^
+    set shaUrl to replaceVariables(shaUrl) ^
+    set filesToDownload to when(useFileVariables,
+        [
+            ["out-file": fileName, "url": downloadUrl],
+            ["out-file": shaFileName, "url": shaUrl]
+        ],
+        [
+            ["url": downloadUrl],
+            ["url": shaUrl]
+        ]
+    )^
+    InsertTemplate(downloadFiles, [
+        "files": filesToDownload
+    ])
+}}{{lineEnd}}{{extraLine}}
+{{continue}}{{
+    InsertTemplate(validateChecksum, [
+        "file": replaceVariables(fileName),
+        "sha-function": shaFunction,
+        "sha-file": replaceVariables(shaFileName),
+        "sha-file-is-bare": shaUrlIsBare,
+        "sha-file-is-aggregate": shaUrlIsAggregate
+    ])
+}}{{if ARGS["extract-to"]:{{lineEnd}}{{extraLine}}
 {{continue}}mkdir {{if !isWindows:--parents }}{{ARGS["extract-to"]}}{{lineEnd}}
 {{continue}}{{
     InsertTemplate(extractFile, [
-        "file": fileName,
+        "file": replaceVariables(fileName),
         "dest-dir": ARGS["extract-to"],
         "extract-paths": ARGS["extract-paths"]
     ])
 }}}}{{lineEnd}}
 {{continue}}{{remove}} {{lineContinue}}
-    {{fileName}}{{if isWindows:,}} {{lineContinue}}
-    {{shaFileName}}
+    {{replaceVariables(fileName)}}{{if isWindows:,}} {{lineContinue}}
+    {{replaceVariables(shaFileName)}}
