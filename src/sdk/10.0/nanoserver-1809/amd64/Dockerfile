@@ -25,16 +25,23 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $sdk_version = '10.0.100-preview.6.25326.107'; `
-        Invoke-WebRequest -OutFile dotnet.zip https://ci.dot.net/public/Sdk/$sdk_version/dotnet-sdk-$sdk_version-win-x64.zip; `
-        $dotnet_sha512 = '37ed67bf1709bf0be35abd2c33bce80551823c57015e6543646c0ccf38ad06b8654b624a76609be820972f4005ee238125eaa2f71dd04a2ade8d71f63f9ed554'; `
-        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+        $dotnet_sdk_version = '10.0.100-preview.6.25326.107'; `
+        $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = $dotnet_file + '.sha512'; `
+        `
+        Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Sdk/$dotnet_sdk_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/$dotnet_sha512_file; `
+        `
+        if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
+        `
         mkdir dotnet; `
-        tar --gzip --extract --no-same-owner --file dotnet.zip --directory dotnet; `
-        Remove-Item -Force dotnet.zip; `
+        tar --gzip --extract --no-same-owner --file $dotnet_file --directory dotnet; `
+        Remove-Item -Force `
+            $dotnet_file, `
+            $dotnet_sha512_file; `
         `
         # Install PowerShell global tool
         $powershell_version = '7.6.0-preview.4'; `
