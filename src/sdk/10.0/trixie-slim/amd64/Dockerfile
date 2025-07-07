@@ -1,5 +1,3 @@
-
-
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM amd64/buildpack-deps:trixie-curl AS installer

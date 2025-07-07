@@ -1,5 +1,3 @@
-
-
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:10.0.0-preview.5-azurelinux3.0-amd64 AS installer

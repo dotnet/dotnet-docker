@@ -1,5 +1,3 @@
-
-
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM arm32v7/buildpack-deps:jammy-curl AS installer

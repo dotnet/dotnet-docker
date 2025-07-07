@@ -1,5 +1,3 @@
-
-
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
