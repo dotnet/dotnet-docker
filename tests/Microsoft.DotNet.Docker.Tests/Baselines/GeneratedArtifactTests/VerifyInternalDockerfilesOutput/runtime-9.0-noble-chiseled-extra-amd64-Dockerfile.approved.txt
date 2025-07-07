@@ -7,15 +7,16 @@ ARG ACCESSTOKEN
 
 # Retrieve .NET Runtime
 RUN dotnet_version=0.0.0 \
+    && dotnet_build_version=$dotnet_version \
     && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
-        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
-    && echo "$(cat dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-x64.tar.gz" | sha512sum -c - \
+        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_build_version-linux-x64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_build_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_build_version-linux-x64.tar.gz.sha512)  dotnet-runtime-$dotnet_build_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-x64.tar.gz --directory /usr/share/dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_build_version-linux-x64.tar.gz --directory /usr/share/dotnet \
     && rm \
-        dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-        dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512
+        dotnet-runtime-$dotnet_build_version-linux-x64.tar.gz \
+        dotnet-runtime-$dotnet_build_version-linux-x64.tar.gz.sha512
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
