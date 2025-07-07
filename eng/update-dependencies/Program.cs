@@ -20,6 +20,9 @@ var rootCommand = new RootCommand()
     FromChannelCommand.Create(
         name: "from-channel",
         description: "Update dependencies using the latest build from a channel"),
+    FromStagingPipelineCommand.Create(
+        name: "from-staging-pipeline",
+        description: "Update dependencies using a specific staging pipeline run"),
     SpecificCommand.Create(
         name: "specific",
         description: "Update dependencies using specific product versions"),
