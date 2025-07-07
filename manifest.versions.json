@@ -27,7 +27,7 @@
     "aspnet|10.0|build-version": "10.0.0-preview.5.25277.114",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
-    "aspnet|9.0|build-version": "9.0.6",
+    "aspnet|9.0|build-version": "9.0.7",
     "aspnet-composite|9.0|build-version": "$(aspnet|9.0|build-version)",
 
     "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/v1.2.0/chisel_v1.2.0_linux_amd64.tar.gz",
@@ -65,7 +65,7 @@
     "dotnet|8.0|base-url|checksums|nightly": "$(dotnet|8.0|base-url|nightly)",
     "dotnet|8.0|aggregate-checksums": "/checksums/$(dotnet|8.0|product-version)-sha.txt",
 
-    "dotnet|9.0|product-version": "9.0.6",
+    "dotnet|9.0|product-version": "9.0.7",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0",
     "dotnet|9.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -184,7 +184,7 @@
     "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
 
     "runtime|8.0|build-version": "8.0.18",
-    "runtime|9.0|build-version": "9.0.6",
+    "runtime|9.0|build-version": "9.0.7",
     "runtime|10.0|build-version": "10.0.0-preview.5.25277.114",
 
     "sdk|8.0|build-version": "8.0.412",
@@ -192,8 +192,8 @@
     "sdk|8.0|fixed-tag": "$(sdk|8.0|product-version)",
     "sdk|8.0|minor-tag": "$(dotnet|8.0|minor-tag)",
 
-    "sdk|9.0|build-version": "9.0.301",
-    "sdk|9.0|product-version": "9.0.301",
+    "sdk|9.0|build-version": "9.0.302",
+    "sdk|9.0|product-version": "9.0.302",
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
 
