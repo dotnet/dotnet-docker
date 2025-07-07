@@ -23,15 +23,12 @@
 
     "aspnet|8.0|build-version": "8.0.17",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
-    "aspnet|8.0|win|x64|sha": "af61590a7fd915ecdc93a4e82e7319ced0abe7e8307102769f52a0541af8064df1d719c8f22e8ede1832f4a9779c36c7e3cf0ffd27837ad2229ae302c8b9c1aa",
 
     "aspnet|10.0|build-version": "10.0.0-preview.5.25277.114",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
-    "aspnet|10.0|win|x64|sha": "fe9d46066f394bf11d172e847a90038f0b42951cd06960d153822c158666e13def904dcd7a900b1cd43f2888aab94e90405ccb0552e7d707fbfc0278e6314df0",
 
     "aspnet|9.0|build-version": "9.0.6",
     "aspnet-composite|9.0|build-version": "$(aspnet|9.0|build-version)",
-    "aspnet|9.0|win|x64|sha": "fa60842bc0b069390e1eeb8409478e38a54b1c0889b828a20f3a6f70166b121d58afcdc02c5a2e092bf862c0d3644416303f0712b6ecc6dc52cd805c8822b8df",
 
     "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/v1.2.0/chisel_v1.2.0_linux_amd64.tar.gz",
     "chisel|latest|arm|url": "https://github.com/canonical/chisel/releases/download/v1.2.0/chisel_v1.2.0_linux_arm.tar.gz",
@@ -187,31 +184,23 @@
     "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
 
     "runtime|8.0|build-version": "8.0.17",
-    "runtime|8.0|win|x64|sha": "fbace810bcfeaf6fc3cdad6fd6758eb2cb241fc1bffd2bf6ded78ff8fc0593e59e5ca013abfd5ca289c20a636cc8a243efd4e703062fdea0a394c4020a9c0820",
-
     "runtime|9.0|build-version": "9.0.6",
-    "runtime|9.0|win|x64|sha": "dbc510d2391b34bcad62a622b65ff32c1ea3a210a4d80e084e93cf0c47bbcfa53a5aedbfcfeb9641f23a90abc63eb31da2107711ff5bde0d48d51645eb12bece",
-
     "runtime|10.0|build-version": "10.0.0-preview.5.25277.114",
-    "runtime|10.0|win|x64|sha": "9a2e9fac1424cd7e50624466e410d3dda7f97effd6f4f96be2b08961a1929a48169b84243555622ac015d6bcffe8e953b86f68da6fb9a66ded5f72ec1e362021",
 
     "sdk|8.0|build-version": "8.0.411",
     "sdk|8.0|product-version": "8.0.411",
     "sdk|8.0|fixed-tag": "$(sdk|8.0|product-version)",
     "sdk|8.0|minor-tag": "$(dotnet|8.0|minor-tag)",
-    "sdk|8.0|win|x64|sha": "4f72fe242f4d370d8c85fc28c3210b676e7473037bc8450164969e1d6b366a8bede965f692048725358e20ec3368e5f0e041e442a7b15eaecb7c5d135179ff02",
 
     "sdk|9.0|build-version": "9.0.301",
     "sdk|9.0|product-version": "9.0.301",
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
-    "sdk|9.0|win|x64|sha": "f5b4a5e0c27d3e8cb6ce3524d99ea4e02c2d1f17a9b2a219f154bcd788455e25c45f3b305bb0b25468626b392f3b14e92dc7c628cc4299f7a7dd74c3ce1b05cd",
 
     "sdk|10.0|build-version": "10.0.100-preview.5.25277.114",
     "sdk|10.0|product-version": "10.0.100-preview.5",
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
-    "sdk|10.0|win|x64|sha": "e54a15f594474dd9902aebcb99c3ec0963d7e4dcd73935dade6e70d726bcc21410dea104ca699f19d8caeb4d3e82ee52f8f373102d4e46f5e9121cacf9dc53cf",
 
     "syft|repo": "anchore/syft",
     "syft|tag": "v1.26.1"

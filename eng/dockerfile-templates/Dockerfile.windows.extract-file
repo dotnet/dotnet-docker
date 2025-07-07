@@ -1,0 +1,8 @@
+{{
+    _ Extracts a zip file and cleans it up
+
+    ARGS:
+        file: Zip to extract
+        extract-paths: Paths within the zip file to extract
+        dest-dir: Destination directory
+}}tar --gzip --extract --no-same-owner --file {{ARGS["file"]}}{{if ARGS["dest-dir"]: --directory {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"], " ")}}}}
