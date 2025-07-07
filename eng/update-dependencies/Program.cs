@@ -6,7 +6,6 @@ using System.CommandLine;
 using System.CommandLine.Help;
 using System.CommandLine.Hosting;
 using System.IO;
-using System.Net.Http;
 using Dotnet.Docker;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.DependencyInjection;
@@ -63,8 +62,7 @@ config.UseHost(
                 services.AddHttpClient<AzdoHttpClient>();
 
                 services.AddSingleton<AzdoAuthProvider>();
-                services.AddSingleton<PipelineArtifactBuildManifestProvider>();
-                services.AddSingleton<StorageAccountBuildManifestProvider>();
+                services.AddSingleton<PipelineArtifactProvider>();
 
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();
                 services.AddCommand<FromChannelCommand, FromChannelOptions>();
