@@ -1,0 +1,28 @@
+{{
+    _ Download, verify, extract, and clean up an "appliance" product
+
+    ARGS:
+        product         : Product name, e.g. "yarp", "aspire-dashboard", etc.
+        productVersion  : Version of the product that will be downloaded
+        download-url    : URL to download the product from
+        sha             : SHA512 checksum of the product archive
+        file-name       : Name of the file to download, e.g. "yarp.zip"
+        extract-to      : Directory where the product will be extracted to
+
+}}{{InsertTemplate("Dockerfile.linux.download-files", [
+    "files": [
+        ["url": ARGS["download-url"], "out-file": ARGS["file-name"]]
+    ]
+])}} \
+&& {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+    "file": ARGS["file-name"],
+    "sha-function": "512",
+    "sha": ARGS["sha"],
+    "sha-var-name": cat(ARGS["product"], "_sha512")
+])}} \
+&& mkdir --parents {{ARGS["extract-to"]}} \
+&& {{InsertTemplate("Dockerfile.linux.extract-file", [
+    "file": ARGS["file-name"],
+    "dest-dir": ARGS["extract-to"]
+])}} \
+&& rm {{ARGS["file-name"]}}

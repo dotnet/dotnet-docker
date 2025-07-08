@@ -1,10 +1,10 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
-    set isServer2025 to find(OS_VERSION_NUMBER, "2025") >= 0 ^
 
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
     set installerStageRepo to cat("mcr.microsoft.com/windows/", "servercore") ^
     set runtimeStageRepo to cat("mcr.microsoft.com/windows/", when(isServerCore, "servercore", "nanoserver")) ^
@@ -22,11 +22,14 @@ FROM {{installerStageFromImage}} AS installer
 ARG ACCESSTOKEN
 }}
 # Retrieve .NET Runtime
-{{InsertTemplate("Dockerfile.windows.install-runtime",
-    [
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}
+RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        {{InsertTemplate("../Dockerfile.download-dotnet", [
+            "product": "runtime",
+            "extract-to": "dotnet"
+        ], "        ")}}
 
 
 # Runtime image

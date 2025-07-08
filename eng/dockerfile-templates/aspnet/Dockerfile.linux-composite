@@ -6,7 +6,7 @@
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set isSingleStage to isAlpine && !isInternal ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
     set tagVersion to when(dotnetVersion = "8.0",
@@ -27,34 +27,7 @@
         when(isAlpine || isFullAzureLinux,
             runtimeDepsBaseTag,
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
-}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps{{ if isSingleStage:
-{{
-
-    _ SINGLE STAGE
-
-}}FROM {{runtimeDepsBaseTag}}
-{{ if isAlpine:
-{{InsertTemplate("../Dockerfile.alpine.invariant-mode")}}
-}}
-{{InsertTemplate("Dockerfile.envs",
-    [
-        "is-composite-runtime": "true",
-        "is-internal": isInternal
-    ])}}
-
-# Install ASP.NET Composite Runtime
-{{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
-    [
-        "install-method": "download-and-install",
-        "dest-dir": "/usr/share/dotnet",
-        "add-symlink": "true",
-        "is-composite-runtime": "true"
-    ])}}^
-else:{{
-
-    _ MULTI STAGE
-
-}}
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
 FROM {{installerImageTag}} AS installer
@@ -69,14 +42,10 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve ASP.NET Composite Runtime
-{{InsertTemplate("../runtime/Dockerfile.linux.install-runtime",
-    [
-        "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
-        "install-method": "download-and-install",
-        "use-local-version-var": "true",
-        "is-internal": isInternal,
-        "is-composite-runtime": "true",
-    ])}}
+RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
+    "product": "aspnet-composite",
+    "extract-to": when(isDistroless, "/usr/share/dotnet", "/dotnet")
+], "    ")}}
 {{ if isDistroless:
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
@@ -85,11 +54,8 @@ RUN mkdir /dotnet-symlink \
 # ASP.NET Composite Image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs",
-    [
-        "is-composite-runtime": "true",
-        "is-internal": isInternal
-    ])}}{{ if isDistroless:
+{{InsertTemplate("Dockerfile.envs", ["is-composite-runtime": "true"])}}{{
+if isDistroless:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
 
@@ -97,4 +63,4 @@ ENTRYPOINT ["/usr/bin/dotnet"]
 CMD ["--info"]^
 else:
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
-RUN {{InsertTemplate("../runtime/Dockerfile.linux.symlink")}}}}}}
+RUN {{InsertTemplate("../runtime/Dockerfile.linux.symlink")}}}}

@@ -1,0 +1,41 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+
+# Installer image
+FROM arm64v8/buildpack-deps:trixie-curl AS installer
+
+# Retrieve .NET Runtime
+RUN dotnet_version=0.0.0 \
+<<<<<<< HEAD
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
+    && sed -i 's/\r$//' $dotnet_version-sha.txt \
+    && sha512sum -c $dotnet_version-sha.txt --ignore-missing \
+=======
+    && dotnet_build_version=$dotnet_version \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_build_version-linux-arm64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_build_version-linux-arm64.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_build_version-linux-arm64.tar.gz.sha512)  dotnet-runtime-$dotnet_build_version-linux-arm64.tar.gz" | sha512sum -c - \
+>>>>>>> e3a0bec7d (Fix internal download URLs for stable product versions (#6520))
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_build_version-linux-arm64.tar.gz --directory /dotnet \
+    && rm \
+<<<<<<< HEAD
+        dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+        $dotnet_version-sha.txt
+=======
+        dotnet-runtime-$dotnet_build_version-linux-arm64.tar.gz \
+        dotnet-runtime-$dotnet_build_version-linux-arm64.tar.gz.sha512
+>>>>>>> e3a0bec7d (Fix internal download URLs for stable product versions (#6520))
+
+
+# .NET runtime image
+FROM $REPO:0.0.0-trixie-slim-arm64v8
+
+# .NET Runtime version
+ENV DOTNET_VERSION=0.0.0
+
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

@@ -1,0 +1,18 @@
+{{
+    _ Extracts a file (zip or tarball) based on its extension
+
+    ARGS:
+        file: File to extract
+        dest-dir: Destination directory
+        extract-paths: (optional) Paths within the archive to extract
+        ^
+
+    set fileNameParts to split(ARGS["file"], ".") ^
+    set fileExtension to fileNameParts[len(fileNameParts) - 1]
+
+
+}}{{
+if (fileExtension = "zip")
+    :unzip {{ARGS["file"]}}{{if ARGS["dest-dir"]: -d {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"], " ")}}}}^
+else
+    :tar --gzip --extract --no-same-owner --file {{ARGS["file"]}}{{if ARGS["dest-dir"]: --directory {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"], " ")}}}}}}

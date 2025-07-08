@@ -22,7 +22,7 @@ RUN mkdir /staging \
 COPY --from=mcr.microsoft.com/azurelinux/distroless/minimal:3.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
 RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
-    && mkdir -p /staging/var/lib/rpmmanifest \
+    && mkdir --parents /staging/var/lib/rpmmanifest \
     # Remove duplicates that match on the first field (package name)
     && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
 
@@ -30,24 +30,25 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
 RUN groupadd \
         --gid=1654 \
         app \
-    && useradd -l \
+    && useradd --no-log-init \
         --uid=1654 \
         --gid=1654 \
         --shell /bin/false \
         --create-home \
         app \
-    && install -d -m 0755 -o 1654 -g 1654 "/staging/home/app" \
+    && install --directory --mode 0755 --owner 1654 --group 1654 "/staging/home/app" \
     && rootOrAppRegex='^\(root\|app\):' \
     && cat /etc/passwd | grep $rootOrAppRegex > "/staging/etc/passwd" \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
 
 # Clean up staging
-RUN rm -rf /staging/etc/tdnf \
-    && rm -rf /staging/run/* \
-    && rm -rf /staging/var/cache/tdnf \
-    && rm -rf /staging/var/lib/rpm \
-    && rm -rf /staging/usr/share/doc \
-    && rm -rf /staging/usr/share/man \
+RUN rm -rf \
+        /staging/etc/tdnf \
+        /staging/run/* \
+        /staging/var/cache/tdnf \
+        /staging/var/lib/rpm \
+        /staging/usr/share/doc \
+        /staging/usr/share/man \
     && find /staging/var/log -type f -size +0 -delete
 
 

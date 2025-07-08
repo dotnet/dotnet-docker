@@ -1,22 +1,25 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:9.0.6-alpine3.22-arm64v8 AS installer
+FROM $REPO:9.0.7-alpine3.22-arm64v8 AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=9.0.6 \
-    && wget -O aspnetcore.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz \
-    && aspnetcore_sha512='c61f3490e7f6c2d43bd98df9594a38a9913c9f601688bf0631bbe21d55329a5f5731fcc4c0f6bf60db4d8e99f0b50700b1886d342d1f899a8ddbe9e9ae96f0d0' \
-    && echo "$aspnetcore_sha512  aspnetcore.tar.gz" | sha512sum -c - \
-    && mkdir -p /dotnet \
-    && tar -oxzf aspnetcore.tar.gz -C /dotnet ./shared/Microsoft.AspNetCore.App \
-    && rm aspnetcore.tar.gz
+RUN aspnetcore_version=9.0.7 \
+    && wget \
+        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
+    && awk -v file="aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz" '{gsub(/\r/, "")} $2 == file' $aspnetcore_version-sha.txt | sha512sum -c \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
+    && rm \
+        aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz \
+        $aspnetcore_version-sha.txt
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.6-alpine3.22-arm64v8
+FROM $REPO:9.0.7-alpine3.22-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.6
+ENV ASPNET_VERSION=9.0.7
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

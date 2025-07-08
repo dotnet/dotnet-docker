@@ -1,9 +1,0 @@
-{{
-    _ Extracts a tarball file and cleans it up
-
-    ARGS:
-        file: Tarball to extract
-        extract-paths: Paths within the tarball to extract
-        dest-dir: Destination directory
-}}tar -oxzf {{ARGS["file"]}}{{if ARGS["dest-dir"]: -C {{ARGS["dest-dir"]}}}}{{if ARGS["extract-paths"]: {{join(ARGS["extract-paths"], " ")}}}} \
-&& rm {{ARGS["file"]}}

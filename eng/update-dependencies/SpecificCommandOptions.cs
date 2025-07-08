@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Dotnet.Docker
 {
-    public class SpecificCommandOptions : CreatePullRequestOptions, IOptions
+    public record SpecificCommandOptions : CreatePullRequestOptions, IOptions
     {
         public string GitHubProject { get; } = "dotnet-docker";
         public string GitHubUpstreamOwner { get; } = "dotnet";

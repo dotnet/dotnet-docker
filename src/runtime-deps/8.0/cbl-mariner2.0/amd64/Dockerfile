@@ -32,12 +32,12 @@ RUN tdnf install -y \
 RUN groupadd \
         --gid=$APP_UID \
         app \
-    && useradd -l \
+    && useradd --no-log-init \
         --uid=$APP_UID \
         --gid=$APP_UID \
         --no-create-home \
         app \
-    && mkdir -p "/staging/etc" \
+    && mkdir --parents "/staging/etc" \
     # Copy user/group info to staging
     && cp /etc/passwd /staging/etc/passwd \
     && cp /etc/group /staging/etc/group

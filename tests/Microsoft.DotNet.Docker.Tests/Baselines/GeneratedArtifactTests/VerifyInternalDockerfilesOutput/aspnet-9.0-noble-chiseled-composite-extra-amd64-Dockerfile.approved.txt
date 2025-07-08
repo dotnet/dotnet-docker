@@ -6,13 +6,17 @@ FROM amd64/buildpack-deps:noble-curl AS installer
 ARG ACCESSTOKEN
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=0.0.0  \
-    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet.tar.gz "https://artifacts.visualstudio.com/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz" \
-    && dotnet_sha512='{sha512_placeholder}' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
-    && rm dotnet.tar.gz
+RUN aspnetcore_version=0.0.0 \
+    && aspnetcore_build_version=$aspnetcore_version \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+        --remote-name https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_build_version-linux-x64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_build_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_build_version-linux-x64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_build_version-linux-x64.tar.gz" | sha512sum -c - \
+    && mkdir --parents /usr/share/dotnet \
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_build_version-linux-x64.tar.gz --directory /usr/share/dotnet \
+    && rm \
+        aspnetcore-runtime-composite-$aspnetcore_build_version-linux-x64.tar.gz \
+        aspnetcore-runtime-composite-$aspnetcore_build_version-linux-x64.tar.gz.sha512
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
