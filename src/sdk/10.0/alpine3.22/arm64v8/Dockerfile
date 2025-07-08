@@ -1,5 +1,3 @@
-
-
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:10.0.0-preview.6-alpine3.22-arm64v8 AS installer

@@ -10,7 +10,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=8.0.17 \
+RUN aspnetcore_version=8.0.18 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
@@ -27,13 +27,13 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:8.0.17-cbl-mariner2.0-distroless-amd64
+FROM $REPO:8.0.18-cbl-mariner2.0-distroless-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=8.0.17 \
+    DOTNET_VERSION=8.0.18 \
     # ASP.NET Core version
-    ASPNET_VERSION=8.0.17
+    ASPNET_VERSION=8.0.18
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
