@@ -105,8 +105,8 @@
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|9.0|x64|sha": "$(mingit|latest|x64|sha)",
-    "mingit|10.0|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.49.0.windows.1/MinGit-2.49.0-64-bit.zip",
-    "mingit|10.0|x64|sha": "971cdee7c0feaa1e41369c46da88d1000a24e79a6f50191c820100338fb7eca5",
+    "mingit|10.0|x64|url": "$(mingit|latest|x64|url)",
+    "mingit|10.0|x64|sha": "$(mingit|latest|x64|sha)",
 
     "monitor|8|major-tag": "8",
 
