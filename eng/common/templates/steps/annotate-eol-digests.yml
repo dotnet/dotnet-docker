@@ -38,7 +38,7 @@ steps:
         tenantId: $(marStatus.serviceConnection.tenantId)
         clientId: $(marStatus.serviceConnection.clientId)
       internalProjectName: internal
-      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'), eq(variables['waitForIngestionEnabled'], 'true'))
       args: >-
         waitForMarAnnotationIngestion
         $(artifactsPath)/annotation-digests/annotation-digests.txt
