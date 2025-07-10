@@ -311,24 +311,12 @@ Tag | Dockerfile
 9.0.7-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile)
 8.0.18-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile)
 
-#### .NET 10 Preview Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.0-preview.6-nanoserver-1809, 10.0-preview-nanoserver-1809 | [Dockerfile](src/aspnet/10.0/nanoserver-1809/amd64/Dockerfile)
-
 ### Windows Server Core 2019 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
 9.0.7-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 8.0.18-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-
-#### .NET 10 Preview Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.0-preview.6-windowsservercore-ltsc2019, 10.0-preview-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list) for all supported and unsupported tags.*
