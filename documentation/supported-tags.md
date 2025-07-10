@@ -49,7 +49,8 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 
 They include:
 
-- Debian, unless specified (like `8.0-alpine`).
+- For .NET 10, multi-platform tags refer to Ubuntu unless otherwise specified (like `8.0-alpine`).
+- For .NET versions prior to 10, multi-platform tags refer to Debian unless otherwise specified.
 - All [supported architectures](supported-platforms.md#architectures).
 
 > [!WARNING]
