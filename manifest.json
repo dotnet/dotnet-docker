@@ -119,9 +119,6 @@
             },
             "$(dotnet|8.0|minor-tag)-alpine3.21-aot": {
               "docType": "Undocumented"
-            },
-            "$(dotnet|8.0|minor-tag)-alpine-aot": {
-              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -137,9 +134,6 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|8.0|minor-tag)-alpine3.21-aot-amd64": {
-                  "docType": "Undocumented"
-                },
-                "$(dotnet|8.0|minor-tag)-alpine-aot-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -158,9 +152,6 @@
                 },
                 "$(dotnet|8.0|minor-tag)-alpine3.21-aot-arm32v7": {
                   "docType": "Undocumented"
-                },
-                "$(dotnet|8.0|minor-tag)-alpine-aot-arm32v7": {
-                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -178,9 +169,6 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|8.0|minor-tag)-alpine3.21-aot-arm64v8": {
-                  "docType": "Undocumented"
-                },
-                "$(dotnet|8.0|minor-tag)-alpine-aot-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -269,6 +257,9 @@
             },
             "$(dotnet|8.0|minor-tag)-alpine3.22-aot": {
               "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-alpine-aot": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -285,6 +276,9 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|8.0|minor-tag)-alpine3.22-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine-aot-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -304,6 +298,9 @@
                 },
                 "$(dotnet|8.0|minor-tag)-alpine3.22-aot-arm32v7": {
                   "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine-aot-arm32v7": {
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -322,6 +319,9 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|8.0|minor-tag)-alpine3.22-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-alpine-aot-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -1213,9 +1213,6 @@
             },
             "$(dotnet|9.0|minor-tag)-alpine3.21-aot": {
               "docType": "Undocumented"
-            },
-            "$(dotnet|9.0|minor-tag)-alpine-aot": {
-              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -1231,9 +1228,6 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|9.0|minor-tag)-alpine3.21-aot-amd64": {
-                  "docType": "Undocumented"
-                },
-                "$(dotnet|9.0|minor-tag)-alpine-aot-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -1252,9 +1246,6 @@
                 },
                 "$(dotnet|9.0|minor-tag)-alpine3.21-aot-arm32v7": {
                   "docType": "Undocumented"
-                },
-                "$(dotnet|9.0|minor-tag)-alpine-aot-arm32v7": {
-                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -1272,9 +1263,6 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|9.0|minor-tag)-alpine3.21-aot-arm64v8": {
-                  "docType": "Undocumented"
-                },
-                "$(dotnet|9.0|minor-tag)-alpine-aot-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -1363,6 +1351,9 @@
             },
             "$(dotnet|9.0|minor-tag)-alpine3.22-aot": {
               "docType": "Undocumented"
+            },
+            "$(dotnet|9.0|minor-tag)-alpine-aot": {
+              "docType": "Undocumented"
             }
           },
           "platforms": [
@@ -1379,6 +1370,9 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|9.0|minor-tag)-alpine3.22-aot-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine-aot-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -1398,6 +1392,9 @@
                 },
                 "$(dotnet|9.0|minor-tag)-alpine3.22-aot-arm32v7": {
                   "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine-aot-arm32v7": {
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v7"
@@ -1416,6 +1413,9 @@
                   "docType": "Undocumented"
                 },
                 "$(dotnet|9.0|minor-tag)-alpine3.22-aot-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|9.0|minor-tag)-alpine-aot-arm64v8": {
                   "docType": "Undocumented"
                 }
               },

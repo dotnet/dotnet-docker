@@ -10,7 +10,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '9.0.6'; `
+        $aspnetcore_version = '9.0.7'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $aspnetcore_version + '-sha.txt'; `
         `
@@ -39,9 +39,9 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.6-windowsservercore-ltsc2019
+FROM $REPO:9.0.7-windowsservercore-ltsc2019
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.6
+ENV ASPNET_VERSION=9.0.7
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

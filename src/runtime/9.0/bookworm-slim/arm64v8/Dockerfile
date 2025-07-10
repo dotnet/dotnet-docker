@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=9.0.6 \
+RUN dotnet_version=9.0.7 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -18,10 +18,10 @@ RUN dotnet_version=9.0.6 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.6-bookworm-slim-arm64v8
+FROM $REPO:9.0.7-bookworm-slim-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=9.0.6
+ENV DOTNET_VERSION=9.0.7
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
