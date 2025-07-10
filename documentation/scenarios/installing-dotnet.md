@@ -48,9 +48,13 @@ In the spirit of [clarity](https://github.com/docker-library/official-images#cla
 Example (Linux):
 
 ```Dockerfile
-FROM amd64/ubuntu:noble
+# Latest .NET versions can be found in the relaeses-index:
+# https://github.com/dotnet/core/blob/main/release-notes/releases-index.json
+ARG DOTNET_VERSION="9.0.X"
 
-# Reference:
+FROM amd64/ubuntu:noble AS runtime-deps
+
+# Install .NET Runtime dependencies. References:
 # - https://github.com/dotnet/core/blob/main/release-notes/9.0/os-packages.md#ubuntu-2404-noble-numbat
 # - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/noble/amd64/Dockerfile
 RUN apt-get update \
@@ -67,49 +71,70 @@ RUN apt-get update \
         tzdata \
     && rm -rf /var/lib/apt/lists/*
 
-# Latest download URLs and SHA512 hashes can be found in releases.json:
-# https://github.com/dotnet/core/blob/main/release-notes/9.0/releases.json
-ENV DOTNET_URL="https://download.visualstudio.microsoft.com/download/pr/ebc433c4-8f01-43c8-a1e2-bbe1291ba857/e073f3f679d7a4067a56e8f5d12fc0e5/dotnet-runtime-8.0.10-linux-x64.tar.gz"
-ENV DOTNET_SHA512="7fb813677720d125c2337fedc6131b230daf1c1d79d5912a1ca6b5e08bf7802b412de3248d645b6483ab23f3fae837ed02a0e520e33020cfef2c888c54f474ac"
+
+FROM runtime-deps AS runtime
+ARG DOTNET_VERSION
 
 # Install .NET
-RUN curl -fSL --output dotnet.tar.gz $DOTNET_URL \
-    && dotnet_sha512=$DOTNET_SHA512 \
-    && echo "$DOTNET_SHA512 dotnet.tar.gz" | sha512sum -c - \
+RUN dotnet_archive=dotnet-runtime-${DOTNET_VERSION}-linux-x64.tar.gz \
+    && dotnet_checksums=${DOTNET_VERSION}-sha.txt \
+    \
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/${DOTNET_VERSION}/${dotnet_archive} \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/${dotnet_checksums} \
+    && sha512sum -c ${dotnet_checksums} --ignore-missing \
     && mkdir -p /usr/share/dotnet \
-    && tar -zxf dotnet.tar.gz -C /usr/share/dotnet \
-    && rm dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+    && tar --gzip --extract --no-same-owner --file ${dotnet_archive} --directory /usr/share/dotnet \
+    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet \
+    && rm \
+        ${dotnet_archive} \
+        ${dotnet_checksums}
 ```
 
 Example (Windows):
 
 ```Dockerfile
-FROM mcr.microsoft.com/windows/servercore:ltsc2022
+# escape=`
 
-# Latest download URLs and SHA512 hashes can be found in releases.json:
-# https://github.com/dotnet/core/blob/main/release-notes/9.0/releases.json
-ENV DOTNET_URL="https://download.visualstudio.microsoft.com/download/pr/697fe02d-5f59-4fd3-ba15-b0ee74bec5d9/4fb434c648aaf10f18682ccbe6d59bc6/dotnet-runtime-8.0.10-win-x64.zip"
-ENV DOTNET_SHA512="fefa7e8958a67d1a108457ed55906eb62a53fa61d5fb0187c489b981946d988ff2e31aa1ce7b1fd70ce7b6c1e07c616983161e13cd1009655a9ba5297677a5f7"
+# Latest .NET versions can be found in the relaeses-index:
+# https://github.com/dotnet/core/blob/main/release-notes/releases-index.json
+ARG DOTNET_VERSION="9.0.X"
+
+FROM mcr.microsoft.com/windows/servercore:ltsc2025
+ARG DOTNET_VERSION
 
 # Reference:
-# - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/nanoserver-ltsc2022/amd64/Dockerfile
+# - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/nanoserver-ltsc2025/amd64/Dockerfile
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile dotnet.zip $Env:DOTNET_URL; `
-        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $Env:DOTNET_SHA512) { `
+        $dotnet_archive = 'dotnet-runtime-' + $Env:DOTNET_VERSION + '-win-x64.zip'; `
+        $dotnet_checksums = $Env:DOTNET_VERSION + '-sha.txt'; `
+        `
+        Invoke-WebRequest -OutFile $dotnet_archive https://builds.dotnet.microsoft.com/dotnet/Runtime/$Env:DOTNET_VERSION/$dotnet_archive; `
+        Invoke-WebRequest -OutFile $dotnet_checksums https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums; `
+        `
+        $dotnet_sha512 = ( `
+            (Get-Content $dotnet_checksums ^| Where-Object { `
+                    $_ -match ([regex]::Escape($dotnet_archive))` + '$'; `
+            }) -split '\s+' `
+        )[0].ToUpper(); `
+        $actual_hash = (Get-FileHash $dotnet_archive -Algorithm SHA512).Hash.ToUpper(); `
+        `
+        if ($dotnet_sha512 -ne $actual_hash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host 'Expected: ' + $dotnet_sha512; `
+            Write-Host 'Actual:   ' + $actual_hash; `
             exit 1; `
         }; `
         `
         mkdir dotnet; `
-        tar -oxzf dotnet.zip -C dotnet; `
-        Remove-Item -Force dotnet.zip
+        tar --gzip --extract --no-same-owner --file $dotnet_archive --directory dotnet; `
+        Remove-Item -Force `
+            $dotnet_archive, `
+            $dotnet_checksums
 ```
-
-This provides full transparency to consumers of the image in regard to where the content is coming from and whether it can be trusted; it's not hiding somewhere buried within a script. It also ensures [repeatability](https://github.com/docker-library/official-images#repeatability), another guideline of official Docker images.
 
 #### Servicing Maintenance
 
