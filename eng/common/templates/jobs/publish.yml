@@ -138,10 +138,11 @@ jobs:
   - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
     displayName: Create EOL Annotation Data Directory
 
-  - script: >
-      curl -fSL
+  - powershell: >-
+      $(engCommonPath)/Invoke-WithRetry.ps1
+      "curl -fSL
       --output $(imageInfoHostDir)/full-image-info-orig.json
-      https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/refs/heads/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)
+      https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/refs/heads/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)"
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Download Latest Image Info
 
