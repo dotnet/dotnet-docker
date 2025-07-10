@@ -20,8 +20,6 @@ namespace Microsoft.DotNet.Docker.Tests
         // Debian
         public const string Bookworm = "bookworm";
         public const string BookwormSlim = $"{Bookworm}{SlimSuffix}";
-        public const string Trixie = "trixie";
-        public const string TrixieSlim = $"{Trixie}{SlimSuffix}";
 
         // Mariner
         public const string Mariner = "cbl-mariner";

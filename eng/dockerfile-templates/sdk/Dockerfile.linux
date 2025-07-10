@@ -9,13 +9,7 @@
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
-    set useJammyArm32Workaround to (OS_VERSION_BASE = "noble" || OS_VERSION_BASE = "trixie") && ARCH_SHORT = "arm" ^
-    set osVersionBase to
-        when(useJammyArm32Workaround,
-            when(OS_VERSION_BASE = "noble",
-                "jammy",
-                "bookworm"),
-            OS_VERSION_BASE) ^
+    set osVersionBase to when(ARCH_VERSIONED = "arm32v7" && osVersionBase = "noble", "jammy", OS_VERSION_BASE) ^
 
     set internalInstallerBase to when(isAlpine || isAzureLinux,
         baseImageTag,
