@@ -78,7 +78,6 @@ Tags | Dockerfile | OS Version
 9.0.302-noble-amd64, 9.0-noble-amd64, 9.0.302-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.302-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.302-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 8.0.412-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.412-bookworm-slim, 8.0-bookworm-slim, 8.0.412, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.412-trixie-slim-amd64, 8.0-trixie-slim-amd64, 8.0.412-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/sdk/8.0/trixie-slim/amd64/Dockerfile) | Debian 13
 8.0.412-alpine3.21-amd64, 8.0-alpine3.21-amd64, 8.0.412-alpine3.21, 8.0-alpine3.21 | [Dockerfile](src/sdk/8.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
 8.0.412-alpine3.22-amd64, 8.0-alpine3.22-amd64, 8.0-alpine-amd64, 8.0.412-alpine3.22, 8.0-alpine3.22, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
 8.0.412-noble-amd64, 8.0-noble-amd64, 8.0.412-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
@@ -107,7 +106,6 @@ Tags | Dockerfile | OS Version
 9.0.302-noble-arm64v8, 9.0-noble-arm64v8, 9.0.302-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.302-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.302-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.412-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.412-bookworm-slim, 8.0-bookworm-slim, 8.0.412, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.412-trixie-slim-arm64v8, 8.0-trixie-slim-arm64v8, 8.0.412-trixie-slim, 8.0-trixie-slim | [Dockerfile](src/sdk/8.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
 8.0.412-alpine3.21-arm64v8, 8.0-alpine3.21-arm64v8, 8.0.412-alpine3.21, 8.0-alpine3.21 | [Dockerfile](src/sdk/8.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
 8.0.412-alpine3.22-arm64v8, 8.0-alpine3.22-arm64v8, 8.0-alpine-arm64v8, 8.0.412-alpine3.22, 8.0-alpine3.22, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
 8.0.412-noble-arm64v8, 8.0-noble-arm64v8, 8.0.412-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
