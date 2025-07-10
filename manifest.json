@@ -1163,49 +1163,6 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-trixie-slim": {},
-            "$(dotnet|9.0|minor-tag)-trixie-slim": {}
-          },
-          "platforms": [
-            {
-              "dockerfile": "src/runtime-deps/9.0/trixie-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-amd64": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm",
-              "dockerfile": "src/runtime-deps/9.0/trixie-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-arm32v7": {}
-              },
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "dockerfile": "src/runtime-deps/9.0/trixie-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime-deps/Dockerfile",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|9.0|product-version)",
-          "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21": {},
             "$(dotnet|9.0|minor-tag)-alpine3.21": {},
             "$(dotnet|9.0|fixed-tag)-alpine3.21-aot": {
@@ -3378,58 +3335,6 @@
               "tags": {
                 "$(dotnet|9.0|fixed-tag)-bookworm-slim-arm64v8": {},
                 "$(dotnet|9.0|minor-tag)-bookworm-slim-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|9.0|product-version)",
-          "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-trixie-slim": {},
-            "$(dotnet|9.0|minor-tag)-trixie-slim": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/9.0/trixie-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-amd64": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/9.0/trixie-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-arm32v7": {}
-              },
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime-deps)"
-              },
-              "dockerfile": "src/runtime/9.0/trixie-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/runtime/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-arm64v8": {}
               },
               "variant": "v8"
             }
@@ -6179,58 +6084,6 @@
         {
           "productVersion": "$(dotnet|9.0|product-version)",
           "sharedTags": {
-            "$(dotnet|9.0|fixed-tag)-trixie-slim": {},
-            "$(dotnet|9.0|minor-tag)-trixie-slim": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/9.0/trixie-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-amd64": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-amd64": {}
-              }
-            },
-            {
-              "architecture": "arm",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/9.0/trixie-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-arm32v7": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-arm32v7": {}
-              },
-              "variant": "v7"
-            },
-            {
-              "architecture": "arm64",
-              "buildArgs": {
-                "REPO": "$(Repo:runtime)"
-              },
-              "dockerfile": "src/aspnet/9.0/trixie-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/aspnet/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(dotnet|9.0|fixed-tag)-trixie-slim-arm64v8": {},
-                "$(dotnet|9.0|minor-tag)-trixie-slim-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(dotnet|9.0|product-version)",
-          "sharedTags": {
             "$(dotnet|9.0|fixed-tag)-alpine3.21": {},
             "$(dotnet|9.0|minor-tag)-alpine3.21": {}
           },
@@ -8620,58 +8473,6 @@
               "tags": {
                 "$(sdk|9.0|fixed-tag)-bookworm-slim-arm64v8": {},
                 "$(sdk|9.0|minor-tag)-bookworm-slim-arm64v8": {}
-              },
-              "variant": "v8"
-            }
-          ]
-        },
-        {
-          "productVersion": "$(sdk|9.0|product-version)",
-          "sharedTags": {
-            "$(sdk|9.0|fixed-tag)-trixie-slim": {},
-            "$(sdk|9.0|minor-tag)-trixie-slim": {}
-          },
-          "platforms": [
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "dockerfile": "src/sdk/9.0/trixie-slim/amd64",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-trixie-slim-amd64": {},
-                "$(sdk|9.0|minor-tag)-trixie-slim-amd64": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "architecture": "arm",
-              "dockerfile": "src/sdk/9.0/trixie-slim/arm32v7",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-trixie-slim-arm32v7": {},
-                "$(sdk|9.0|minor-tag)-trixie-slim-arm32v7": {}
-              },
-              "variant": "v7"
-            },
-            {
-              "buildArgs": {
-                "REPO": "$(Repo:aspnet)"
-              },
-              "architecture": "arm64",
-              "dockerfile": "src/sdk/9.0/trixie-slim/arm64v8",
-              "dockerfileTemplate": "eng/dockerfile-templates/sdk/Dockerfile.linux",
-              "os": "linux",
-              "osVersion": "trixie-slim",
-              "tags": {
-                "$(sdk|9.0|fixed-tag)-trixie-slim-arm64v8": {},
-                "$(sdk|9.0|minor-tag)-trixie-slim-arm64v8": {}
               },
               "variant": "v8"
             }

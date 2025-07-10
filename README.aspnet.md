@@ -88,7 +88,6 @@ For more information, see the [composite images section in the Image Variants do
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.7-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.7-bookworm-slim, 9.0-bookworm-slim, 9.0.7, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.7-trixie-slim-amd64, 9.0-trixie-slim-amd64, 9.0.7-trixie-slim, 9.0-trixie-slim | [Dockerfile](src/aspnet/9.0/trixie-slim/amd64/Dockerfile) | Debian 13
 9.0.7-alpine3.21-amd64, 9.0-alpine3.21-amd64, 9.0.7-alpine3.21, 9.0-alpine3.21 | [Dockerfile](src/aspnet/9.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
 9.0.7-alpine3.21-composite-amd64, 9.0-alpine3.21-composite-amd64, 9.0.7-alpine3.21-composite, 9.0-alpine3.21-composite | [Dockerfile](src/aspnet/9.0/alpine3.21-composite/amd64/Dockerfile) | Alpine 3.21
 9.0.7-alpine3.22-amd64, 9.0-alpine3.22-amd64, 9.0-alpine-amd64, 9.0.7-alpine3.22, 9.0-alpine3.22, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
@@ -152,7 +151,6 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.7-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.7-bookworm-slim, 9.0-bookworm-slim, 9.0.7, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.7-trixie-slim-arm64v8, 9.0-trixie-slim-arm64v8, 9.0.7-trixie-slim, 9.0-trixie-slim | [Dockerfile](src/aspnet/9.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
 9.0.7-alpine3.21-arm64v8, 9.0-alpine3.21-arm64v8, 9.0.7-alpine3.21, 9.0-alpine3.21 | [Dockerfile](src/aspnet/9.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
 9.0.7-alpine3.21-composite-arm64v8, 9.0-alpine3.21-composite-arm64v8, 9.0.7-alpine3.21-composite, 9.0-alpine3.21-composite | [Dockerfile](src/aspnet/9.0/alpine3.21-composite/arm64v8/Dockerfile) | Alpine 3.21
 9.0.7-alpine3.22-arm64v8, 9.0-alpine3.22-arm64v8, 9.0-alpine-arm64v8, 9.0.7-alpine3.22, 9.0-alpine3.22, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
@@ -216,7 +214,6 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 9.0.7-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.7-bookworm-slim, 9.0-bookworm-slim, 9.0.7, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.7-trixie-slim-arm32v7, 9.0-trixie-slim-arm32v7, 9.0.7-trixie-slim, 9.0-trixie-slim | [Dockerfile](src/aspnet/9.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 9.0.7-alpine3.21-arm32v7, 9.0-alpine3.21-arm32v7, 9.0.7-alpine3.21, 9.0-alpine3.21 | [Dockerfile](src/aspnet/9.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 9.0.7-alpine3.21-composite-arm32v7, 9.0-alpine3.21-composite-arm32v7, 9.0.7-alpine3.21-composite, 9.0-alpine3.21-composite | [Dockerfile](src/aspnet/9.0/alpine3.21-composite/arm32v7/Dockerfile) | Alpine 3.21
 9.0.7-alpine3.22-arm32v7, 9.0-alpine3.22-arm32v7, 9.0-alpine-arm32v7, 9.0.7-alpine3.22, 9.0-alpine3.22, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
