@@ -146,7 +146,6 @@ Tags | Dockerfile | OS Version
 10.0.0-preview.6-azurelinux3.0-distroless-extra-amd64, 10.0-preview-azurelinux3.0-distroless-extra-amd64, 10.0.0-preview.6-azurelinux3.0-distroless-extra, 10.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
 10.0.0-preview.6-azurelinux3.0-distroless-composite-amd64, 10.0-preview-azurelinux3.0-distroless-composite-amd64, 10.0.0-preview.6-azurelinux3.0-distroless-composite, 10.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
 10.0.0-preview.6-azurelinux3.0-distroless-composite-extra-amd64, 10.0-preview-azurelinux3.0-distroless-composite-extra-amd64, 10.0.0-preview.6-azurelinux3.0-distroless-composite-extra, 10.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
-10.0.0-preview.6-trixie-slim-amd64, 10.0-preview-trixie-slim-amd64, 10.0.0-preview.6-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/aspnet/10.0/trixie-slim/amd64/Dockerfile) | Debian 13
 
 ### Linux arm64 Tags
 
@@ -211,7 +210,6 @@ Tags | Dockerfile | OS Version
 10.0.0-preview.6-azurelinux3.0-distroless-extra-arm64v8, 10.0-preview-azurelinux3.0-distroless-extra-arm64v8, 10.0.0-preview.6-azurelinux3.0-distroless-extra, 10.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.0-preview.6-azurelinux3.0-distroless-composite-arm64v8, 10.0-preview-azurelinux3.0-distroless-composite-arm64v8, 10.0.0-preview.6-azurelinux3.0-distroless-composite, 10.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.0-preview.6-azurelinux3.0-distroless-composite-extra-arm64v8, 10.0-preview-azurelinux3.0-distroless-composite-extra-arm64v8, 10.0.0-preview.6-azurelinux3.0-distroless-composite-extra, 10.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.0-preview.6-trixie-slim-arm64v8, 10.0-preview-trixie-slim-arm64v8, 10.0.0-preview.6-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/aspnet/10.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
 
 ### Linux arm32 Tags
 
@@ -250,7 +248,6 @@ Tags | Dockerfile | OS Version
 10.0.0-preview.6-noble-chiseled-composite-extra-arm32v7, 10.0-preview-noble-chiseled-composite-extra-arm32v7, 10.0.0-preview.6-noble-chiseled-composite-extra, 10.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.0-preview.6-alpine3.22-arm32v7, 10.0-preview-alpine3.22-arm32v7, 10.0-preview-alpine-arm32v7, 10.0.0-preview.6-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/aspnet/10.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
 10.0.0-preview.6-alpine3.22-composite-arm32v7, 10.0-preview-alpine3.22-composite-arm32v7, 10.0-preview-alpine-composite-arm32v7, 10.0.0-preview.6-alpine3.22-composite, 10.0-preview-alpine3.22-composite, 10.0-preview-alpine-composite | [Dockerfile](src/aspnet/10.0/alpine3.22-composite/arm32v7/Dockerfile) | Alpine 3.22
-10.0.0-preview.6-trixie-slim-arm32v7, 10.0-preview-trixie-slim-arm32v7, 10.0.0-preview.6-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/aspnet/10.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 
 ### Nano Server 2025 amd64 Tags
 
