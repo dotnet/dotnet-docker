@@ -29,14 +29,14 @@ For [.NET appliance images](./supported-tags.md#net-appliance-images) based on A
 
 ### Windows
 
-The official .NET images support Nano Server as well as LTS versions of Windows Server Core for .NET 5.0 and higher. Nano Server is the best Windows SKU to run .NET apps from a performance perspective. In order for Nano Server to perform well and remain lightweight, it doesn't have support for every scenario. In case your scenario isn't supported by Nano Server, you may need to use one of the .NET images based on Windows Server Core.
+The official .NET images support Nano Server as well as LTS versions of Windows Server Core. Nano Server is the best Windows SKU to run .NET apps from a performance perspective. In order for Nano Server to perform well and remain lightweight, it doesn't have support for every scenario. In case your scenario isn't supported by Nano Server, you may need to use one of the .NET images based on Windows Server Core.
 
-Windows server support timelines can be found here: [Windows Server release information](https://learn.microsoft.com/en-us/windows/release-health/windows-server-release-info). .NET images will be published for the following Windows OS versions:
+Windows Server support timelines can be found here: [Windows Server release information](https://learn.microsoft.com/windows/release-health/windows-server-release-info). .NET images will be published for the following Windows OS versions:
 
 - Nano Server - all versions in the [Mainstream Support](https://learn.microsoft.com/lifecycle/policies/fixed#mainstream-support) phase.
 - Windows Server Core - all versions in the [Mainstream Support](https://learn.microsoft.com/lifecycle/policies/fixed#mainstream-support) phase.
 
-For scenarios where the official .NET images don't meet your needs, you will need to manage your own custom .NET images based on [Windows Server Core](https://mcr.microsoft.com/en-us/product/windows/servercore/about) or [Windows](https://mcr.microsoft.com/en-us/product/windows/about).
+For scenarios where the official .NET images don't meet your needs, you will need to manage your own custom .NET images based on [Windows Server Core](https://mcr.microsoft.com/product/windows/servercore/about) or [Windows Server](https://mcr.microsoft.com/product/windows/server/about).
 
 ## Architectures
 
