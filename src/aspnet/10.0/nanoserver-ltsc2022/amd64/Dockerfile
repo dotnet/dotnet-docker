@@ -11,16 +11,22 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $aspnetcore_version = '10.0.0-preview.5.25277.114'; `
-        Invoke-WebRequest -OutFile aspnetcore.zip https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = 'fe9d46066f394bf11d172e847a90038f0b42951cd06960d153822c158666e13def904dcd7a900b1cd43f2888aab94e90405ccb0552e7d707fbfc0278e6314df0'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
+        $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
+        `
+        Invoke-WebRequest -OutFile $aspnetcore_file https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/$dotnet_sha512_file; `
+        `
+        if ((Get-FileHash $aspnetcore_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
         `
-        mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar -oxzf aspnetcore.zip -C dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+        mkdir dotnet; `
+        tar --gzip --extract --no-same-owner --file $aspnetcore_file --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force `
+            $aspnetcore_file, `
+            $dotnet_sha512_file
 
 
 # ASP.NET Core image

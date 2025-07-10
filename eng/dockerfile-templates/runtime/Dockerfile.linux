@@ -4,13 +4,16 @@
             for example globalization support ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
+    set buildVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
+
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
     set tagVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
     set runtimeDepsBaseTag to cat(
@@ -32,6 +35,7 @@
         when(isAlpine || isFullAzureLinux,
             runtimeDepsBaseTag,
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")))
+
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
@@ -47,13 +51,11 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve .NET Runtime
-{{InsertTemplate("Dockerfile.linux.install-runtime",
-    [
-        "install-method": "download-and-install",
-        "dest-dir": when(isDistroless, "/usr/share/dotnet", "/dotnet"),
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}{{ if isDistroless:
+RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
+    "product": "runtime",
+    "extract-to": when(isDistroless, "/usr/share/dotnet", "/dotnet")
+], "    ")}}{{
+if isDistroless:
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
@@ -62,7 +64,10 @@ RUN mkdir /dotnet-symlink \
 # .NET runtime image
 FROM {{runtimeDepsBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
+{{InsertTemplate("Dockerfile.envs", [
+    "is-internal": isInternal,
+    "is-standalone": "true"
+])}}
 {{ if isDistroless:
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

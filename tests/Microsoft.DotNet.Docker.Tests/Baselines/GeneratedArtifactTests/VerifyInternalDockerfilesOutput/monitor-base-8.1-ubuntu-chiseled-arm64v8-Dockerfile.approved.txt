@@ -5,11 +5,11 @@ FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Monitor Base
 RUN dotnet_monitor_version=0.0.0 \
-    && curl -u :$ACCESSTOKEN --basic -fSL --output dotnet-monitor-base.tar.gz "https://artifacts.visualstudio.com/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz" \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output dotnet-monitor-base.tar.gz https://dotnetstage.blob.core.windows.net/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
     && dotnet_monitor_base_sha512='{sha512_placeholder}' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
-    && mkdir -p /app \
-    && tar -oxzf dotnet-monitor-base.tar.gz -C /app \
+    && mkdir --parents /app \
+    && tar --gzip --extract --no-same-owner --file dotnet-monitor-base.tar.gz --directory /app \
     && rm dotnet-monitor-base.tar.gz
 
 

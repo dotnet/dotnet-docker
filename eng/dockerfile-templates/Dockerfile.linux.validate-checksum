@@ -1,0 +1,51 @@
+{{
+    _ Verify the checksum of a file on disk against a known value or a checksum file.
+
+    ARGS:
+        Required by all option groups:
+        sha-function          : SHA function to use (e.g. 256, 384, 512), not optional.
+
+        The following argument groups are mutually exclusive:
+
+        file                  : Path to the file to validate.
+        sha                   : Expected checksum of the downloaded file.
+        sha-var-name          : (optional) Name of variable to store the checksum in. If not provided,
+                                the checksum will be written inline with the call to the sha*sum check
+                                tool.
+
+        sha-file              : Checksum file to validate against. The file should contain a single
+                                line with the expected checksum and the file name to validate,
+                                separated by one or two spaces. See `man cksum` or `man sha512sum` for
+                                details.
+        sha-file-is-bare      : Whether the checksum file does not contain the file name.
+        sha-file-is-aggregate : Whether the checksum file contains more than one checksum. The file
+                                should contain one or more lines with expected checksums and file
+                                names separated by one or two spaces. One line must have a filename
+                                matching the file you wish to validate. See `man cksum` or
+                                `man sha512sum` for details.
+        ^
+
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+
+    set shaValue to
+        when(ARGS["sha-file"] && ARGS["sha-file-is-bare"],
+            cat("$(cat ", ARGS["sha-file"],")"),
+        when(ARGS["sha-var-name"],
+            cat("$", ARGS["sha-var-name"]),
+            ARGS["sha"]))
+
+}}{{
+if (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
+if ARGS["sha-var-name"]:{{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
+&& }}echo "{{shaValue}}  {{ARGS["file"]}}" | sha{{ARGS["sha-function"]}}sum -c -^
+elif (ARGS["file"]):{{
+    if (ARGS["sha-file-is-aggregate"]):{{
+        _ As a temporary workaround, these commands need to normalize line endings in the checksum files.
+          Remove the `sed` and `gsub` calls when https://github.com/dotnet/core/issues/9958 is fixed. ^
+        if (isAlpine)
+            :awk -v file="{{ARGS["file"]}}" '{gsub(/\r/, "")} $2 == file' {{ARGS["sha-file"]}} | sha{{ARGS["sha-function"]}}sum -c^
+        else
+            :sed -i 's/\r$//' {{ARGS["sha-file"]}} \
+&& sha{{ARGS["sha-function"]}}sum -c {{ARGS["sha-file"]}} --ignore-missing}}^
+    else
+        :sha{{ARGS["sha-function"]}}sum -c {{ARGS["sha-file"]}}}}}}

@@ -4,7 +4,7 @@
     set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
     set isAzureLinux to isMariner || find(OS_VERSION, "azurelinux") >= 0 ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set tagVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
@@ -60,7 +60,17 @@
                 "libatomic1",
                 "wget",
             ]
-        )), len)
+        )), len) ^
+
+    set sdkExtractPaths to [
+        "./packs",
+        "./sdk",
+        "./sdk-manifests",
+        "./templates",
+        "./LICENSE.txt",
+        "./ThirdPartyNotices.txt"
+    ]
+
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM {{internalInstallerBase}} AS installer{{if isInternal:
@@ -72,13 +82,12 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
         "pkgs": ["tar"]
     ])}}
 }}
-{{InsertTemplate("Dockerfile.linux.install-sdk",
-    [
-        "install-method": "download-and-install",
-        "is-internal": isInternal,
-        "disable-first-run-experience": "true",
-        "no-version-env-var": "true"
-    ])}}
+# Install .NET SDK
+RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
+    "product": "sdk",
+    "extract-to": "/dotnet",
+    "extract-paths": sdkExtractPaths
+], "    ")}}
 
 
 # .NET SDK image

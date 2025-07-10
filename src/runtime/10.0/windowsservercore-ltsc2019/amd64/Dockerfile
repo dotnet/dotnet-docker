@@ -9,16 +9,22 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $dotnet_version = '10.0.0-preview.5.25277.114'; `
-        Invoke-WebRequest -OutFile dotnet.zip https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-win-x64.zip; `
-        $dotnet_sha512 = '9a2e9fac1424cd7e50624466e410d3dda7f97effd6f4f96be2b08961a1929a48169b84243555622ac015d6bcffe8e953b86f68da6fb9a66ded5f72ec1e362021'; `
-        if ((Get-FileHash dotnet.zip -Algorithm sha512).Hash -ne $dotnet_sha512) { `
+        $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = $dotnet_file + '.sha512'; `
+        `
+        Invoke-WebRequest -OutFile $dotnet_file https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/$dotnet_sha512_file; `
+        `
+        if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
         `
         mkdir dotnet; `
-        tar -oxzf dotnet.zip -C dotnet; `
-        Remove-Item -Force dotnet.zip
+        tar --gzip --extract --no-same-owner --file $dotnet_file --directory dotnet; `
+        Remove-Item -Force `
+            $dotnet_file, `
+            $dotnet_sha512_file
 
 
 # Runtime image

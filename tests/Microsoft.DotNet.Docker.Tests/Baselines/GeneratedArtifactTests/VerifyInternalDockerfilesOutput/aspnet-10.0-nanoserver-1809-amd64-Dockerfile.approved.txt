@@ -13,20 +13,26 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $aspnetcore_version = '0.0.0'; `
+        $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
         `
-        $Base64AuthInfo = [Convert]::ToBase64String([Text.Encoding]::ASCII.GetBytes(\":$($Env:ACCESSTOKEN)\")); `
-        $Headers = @{Authorization = \"Basic $Base64AuthInfo\"}; `
-        Invoke-WebRequest -OutFile aspnetcore.zip \"https://artifacts.visualstudio.com/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip\" -Headers $Headers; `
+        $Headers = @{ `
+            Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+            'x-ms-version' = '2017-11-09'; `
+        }; `
+        Invoke-WebRequest -OutFile $aspnetcore_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$dotnet_sha512_file -Headers $Headers; `
         `
-        $aspnetcore_sha512 = '{sha512_placeholder}'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
+        if ((Get-FileHash $aspnetcore_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
         `
-        mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar -oxzf aspnetcore.zip -C dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+        mkdir dotnet; `
+        tar --gzip --extract --no-same-owner --file $aspnetcore_file --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force `
+            $aspnetcore_file, `
+            $dotnet_sha512_file
 
 
 # ASP.NET Core image

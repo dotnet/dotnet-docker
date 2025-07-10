@@ -1,0 +1,32 @@
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
+
+# Installer image
+FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
+
+RUN tdnf install -y \
+        ca-certificates \
+        unzip \
+    && tdnf clean all
+
+# Retrieve YARP
+RUN yarp_version=0.0.0 \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output yarp.zip https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.zip \
+    && yarp_sha512='{sha512_placeholder}' \
+    && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
+    && mkdir --parents /app \
+    && unzip yarp.zip -d /app \
+    && rm yarp.zip
+
+
+# YARP image
+FROM $REPO:0.0.0-azurelinux3.0-distroless-amd64
+
+COPY --from=installer ["/app", "/app"]
+
+ENV \
+    # Unset ASPNETCORE_HTTP_PORTS from base image
+    ASPNETCORE_HTTP_PORTS= \
+    # yarp environment variables
+    ASPNETCORE_URLS=http://+:5000
+
+ENTRYPOINT [ "dotnet", "/app/yarp.dll", "/etc/yarp.config" ]

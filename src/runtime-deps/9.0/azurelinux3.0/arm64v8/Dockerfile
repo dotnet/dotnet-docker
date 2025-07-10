@@ -26,7 +26,7 @@ RUN tdnf install -y \
     && groupadd \
         --gid=$APP_UID \
         app \
-    && useradd -l \
+    && useradd --no-log-init \
         --uid=$APP_UID \
         --gid=$APP_UID \
         --create-home \

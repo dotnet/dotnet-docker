@@ -10,7 +10,7 @@
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
     set tagVersion to when(dotnetVersion = "8.0",
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
@@ -51,12 +51,11 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Retrieve ASP.NET Core
-{{InsertTemplate("Dockerfile.linux.install-aspnet",
-    [
-        "install-method": "download-and-install",
-        "use-local-version-var": "true",
-        "is-internal": isInternal
-    ])}}
+RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
+    "product": "aspnet",
+    "extract-to": "/dotnet",
+    "extract-paths": ["./shared/Microsoft.AspNetCore.App"],
+], "    ")}}
 
 
 # ASP.NET Core image

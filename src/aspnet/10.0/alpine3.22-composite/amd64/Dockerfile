@@ -1,8 +1,23 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
-FROM $REPO:10.0.0-preview.5-alpine3.22-amd64
 
-# .NET globalization APIs will use invariant mode by default because DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=true is set
-# by the base runtime-deps image. See https://aka.ms/dotnet-globalization-alpine-containers for more information.
+# Installer image
+FROM $REPO:10.0.0-preview.5-alpine3.22-amd64 AS installer
+
+# Retrieve ASP.NET Composite Runtime
+RUN aspnetcore_version=10.0.0-preview.5.25277.114 \
+    && wget \
+        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz.sha512 \
+    && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz" | sha512sum -c - \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz --directory /dotnet \
+    && rm \
+        aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz \
+        aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz.sha512
+
+
+# ASP.NET Composite Image
+FROM $REPO:10.0.0-preview.5-alpine3.22-amd64
 
 ENV \
     # .NET Runtime version
@@ -10,12 +25,5 @@ ENV \
     # ASP.NET Core version
     ASPNET_VERSION=10.0.0-preview.5.25277.114
 
-
-# Install ASP.NET Composite Runtime
-RUN wget -O dotnet.tar.gz https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$ASPNET_VERSION/aspnetcore-runtime-composite-$ASPNET_VERSION-linux-musl-x64.tar.gz \
-    && dotnet_sha512='197d5a9c080743a7ce1f3547bd7a3d7abce2a1f66796416fabdd01630bb127033004013eab1cfb8cdeb1f80c62fe18fb858e13fd32388d2b48ea291a42c9c6f1' \
-    && echo "$dotnet_sha512  dotnet.tar.gz" | sha512sum -c - \
-    && mkdir -p /usr/share/dotnet \
-    && tar -oxzf dotnet.tar.gz -C /usr/share/dotnet \
-    && rm dotnet.tar.gz \
-    && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

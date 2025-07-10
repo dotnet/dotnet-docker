@@ -10,23 +10,38 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '9.0.6'; `
-        Invoke-WebRequest -OutFile aspnetcore.zip https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-win-x64.zip; `
-        $aspnetcore_sha512 = 'fa60842bc0b069390e1eeb8409478e38a54b1c0889b828a20f3a6f70166b121d58afcdc02c5a2e092bf862c0d3644416303f0712b6ecc6dc52cd805c8822b8df'; `
-        if ((Get-FileHash aspnetcore.zip -Algorithm sha512).Hash -ne $aspnetcore_sha512) { `
+        $aspnetcore_version = '9.0.7'; `
+        $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
+        $dotnet_checksums_file = $aspnetcore_version + '-sha.txt'; `
+        `
+        Invoke-WebRequest -OutFile $aspnetcore_file https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file; `
+        Invoke-WebRequest -OutFile $dotnet_checksums_file https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_checksums_file; `
+        `
+        $dotnet_sha512 = ( `
+            (Get-Content $dotnet_checksums_file ^| Where-Object { `
+                    $_ -match ([regex]::Escape($aspnetcore_file))` + '$'; `
+            }) -split '\s+' `
+        )[0].ToUpper(); `
+        $actual_hash = (Get-FileHash $aspnetcore_file -Algorithm SHA512).Hash.ToUpper(); `
+        `
+        if ($dotnet_sha512 -ne $actual_hash) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            Write-Host 'Expected: ' + $dotnet_sha512; `
+            Write-Host 'Actual:   ' + $actual_hash; `
             exit 1; `
         }; `
         `
-        mkdir dotnet/shared/Microsoft.AspNetCore.App; `
-        tar -oxzf aspnetcore.zip -C dotnet ./shared/Microsoft.AspNetCore.App; `
-        Remove-Item -Force aspnetcore.zip
+        mkdir dotnet; `
+        tar --gzip --extract --no-same-owner --file $aspnetcore_file --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force `
+            $aspnetcore_file, `
+            $dotnet_checksums_file
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.6-nanoserver-1809
+FROM $REPO:9.0.7-nanoserver-1809
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.6
+ENV ASPNET_VERSION=9.0.7
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
