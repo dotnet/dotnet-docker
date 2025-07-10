@@ -19,12 +19,12 @@ Instead, we have separate policies for each distro.
 We publish .NET container images for the following versions of each Linux distro:
 
 - Alpine Linux
-    - .NET images will be published for the latest Alpine Linux version.
-    - When new Alpine versions are released, new images will be added for all in-support .NET versions.
-    - .NET images for the previous version of Alpine will published for 3 months after the new version is released.
+  - .NET images will be published for the latest Alpine Linux version.
+  - When new Alpine versions are released, new images will be added for all in-support .NET versions.
+  - .NET images for the previous version of Alpine will published for 3 months after the new version is released.
 - Azure Linux and Ubuntu LTS
-    - .NET images will be published images for the latest OS version at the time a new major/minor version of .NET is released.
-    - When new OS versions are released, new images will be added to the latest .NET version and latest LTS .NET version (if they differ).
+  - .NET images will be published images for the latest OS version at the time a new major/minor version of .NET is released.
+  - When new OS versions are released, new images will be added to the latest .NET version and latest LTS .NET version (if they differ).
 
 Pre-release versions of the above distros will be published in the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md), pending the availability of pre-release base images.
 
