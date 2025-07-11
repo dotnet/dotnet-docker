@@ -296,10 +296,8 @@ namespace Microsoft.DotNet.Docker.Tests
             new ProductImageData { Version = V9_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V9_0, OS = OS.ServerCoreLtsc2025, Arch = Arch.Amd64 },
 
-            new ProductImageData { Version = V10_0_Preview, OS = OS.NanoServer1809,     Arch = Arch.Amd64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64 },
-            new ProductImageData { Version = V10_0_Preview, OS = OS.ServerCoreLtsc2019, Arch = Arch.Amd64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
             new ProductImageData { Version = V10_0_Preview, OS = OS.ServerCoreLtsc2025, Arch = Arch.Amd64 },
         };
