@@ -24,7 +24,7 @@
     "aspnet|8.0|build-version": "8.0.18",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
 
-    "aspnet|10.0|build-version": "10.0.0-preview.6.25326.107",
+    "aspnet|10.0|build-version": "10.0.0-preview.6.25358.103",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
     "aspnet|9.0|build-version": "9.0.7",
@@ -99,8 +99,8 @@
     "libssl|noble": "3t64",
     "libssl|trixie": "3t64",
 
-    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.50.0.windows.2/MinGit-2.50.0.2-64-bit.zip",
-    "mingit|latest|x64|sha": "6d28c7e9f9c219a16c078c94a80492dd10fa309fbd17a67b2230736fdfb263b9",
+    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.50.1.windows.1/MinGit-2.50.1-64-bit.zip",
+    "mingit|latest|x64|sha": "6f672aebe9e488a246efd6875f9197dbc0d9a40100e218acc3877cba2b206c45",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
@@ -196,7 +196,7 @@
 
     "runtime|8.0|build-version": "8.0.18",
     "runtime|9.0|build-version": "9.0.7",
-    "runtime|10.0|build-version": "10.0.0-preview.6.25326.107",
+    "runtime|10.0|build-version": "10.0.0-preview.6.25358.103",
 
     "sdk|8.0|build-version": "8.0.412",
     "sdk|8.0|product-version": "8.0.412",
@@ -208,7 +208,7 @@
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
 
-    "sdk|10.0|build-version": "10.0.100-preview.6.25326.107",
+    "sdk|10.0|build-version": "10.0.100-preview.6.25358.103",
     "sdk|10.0|product-version": "10.0.100-preview.6",
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
