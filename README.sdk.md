@@ -88,8 +88,6 @@ Tags | Dockerfile | OS Version
 10.0.100-preview.5-alpine3.22-aot-amd64, 10.0-preview-alpine3.22-aot-amd64, 10.0-preview-alpine-aot-amd64, 10.0.100-preview.5-alpine3.22-aot, 10.0-preview-alpine3.22-aot, 10.0-preview-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.22-aot/amd64/Dockerfile) | Alpine 3.22
 10.0.100-preview.5-azurelinux3.0-amd64, 10.0-preview-azurelinux3.0-amd64, 10.0.100-preview.5-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 10.0.100-preview.5-azurelinux3.0-aot-amd64, 10.0-preview-azurelinux3.0-aot-amd64, 10.0.100-preview.5-azurelinux3.0-aot, 10.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
-10.0.100-preview.5-trixie-slim-amd64, 10.0-preview-trixie-slim-amd64, 10.0.100-preview.5-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/sdk/10.0/trixie-slim/amd64/Dockerfile) | Debian 13
-10.0.100-preview.5-trixie-slim-aot-amd64, 10.0-preview-trixie-slim-aot-amd64, 10.0.100-preview.5-trixie-slim-aot, 10.0-preview-trixie-slim-aot | [Dockerfile](src/sdk/10.0/trixie-slim-aot/amd64/Dockerfile) | Debian 13
 
 ### Linux arm64 Tags
 
@@ -118,8 +116,6 @@ Tags | Dockerfile | OS Version
 10.0.100-preview.5-alpine3.22-aot-arm64v8, 10.0-preview-alpine3.22-aot-arm64v8, 10.0-preview-alpine-aot-arm64v8, 10.0.100-preview.5-alpine3.22-aot, 10.0-preview-alpine3.22-aot, 10.0-preview-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.22-aot/arm64v8/Dockerfile) | Alpine 3.22
 10.0.100-preview.5-azurelinux3.0-arm64v8, 10.0-preview-azurelinux3.0-arm64v8, 10.0.100-preview.5-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.100-preview.5-azurelinux3.0-aot-arm64v8, 10.0-preview-azurelinux3.0-aot-arm64v8, 10.0.100-preview.5-azurelinux3.0-aot, 10.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.100-preview.5-trixie-slim-arm64v8, 10.0-preview-trixie-slim-arm64v8, 10.0.100-preview.5-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/sdk/10.0/trixie-slim/arm64v8/Dockerfile) | Debian 13
-10.0.100-preview.5-trixie-slim-aot-arm64v8, 10.0-preview-trixie-slim-aot-arm64v8, 10.0.100-preview.5-trixie-slim-aot, 10.0-preview-trixie-slim-aot | [Dockerfile](src/sdk/10.0/trixie-slim-aot/arm64v8/Dockerfile) | Debian 13
 
 ### Linux arm32 Tags
 
@@ -140,7 +136,6 @@ Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 10.0.100-preview.5-noble-arm32v7, 10.0-preview-noble-arm32v7, 10.0.100-preview.5-noble, 10.0-preview-noble, 10.0.100-preview.5, 10.0-preview | [Dockerfile](src/sdk/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.100-preview.5-alpine3.22-arm32v7, 10.0-preview-alpine3.22-arm32v7, 10.0-preview-alpine-arm32v7, 10.0.100-preview.5-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
-10.0.100-preview.5-trixie-slim-arm32v7, 10.0-preview-trixie-slim-arm32v7, 10.0.100-preview.5-trixie-slim, 10.0-preview-trixie-slim | [Dockerfile](src/sdk/10.0/trixie-slim/arm32v7/Dockerfile) | Debian 13
 
 ### Nano Server 2025 amd64 Tags
 

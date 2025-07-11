@@ -33,7 +33,6 @@ These Dockerfiles work on AMD64 and ARM64 when targeting the same architecture.
 - [Ubuntu Chiseled](Dockerfile)
 - [Alpine Linux](Dockerfile.alpine)
 - [Azure Linux Distroless](Dockerfile.azurelinux-distroless)
-- [Debian](Dockerfile.debian)
 - [Ubuntu Chiseled with Globalization support](Dockerfile.icu)
 - [Alpine Linux with Globalization support](Dockerfile.alpine-icu)
 - [Azure Linux Distroless with Globalization support](Dockerfile.azurelinux-distroless-icu)
@@ -45,12 +44,8 @@ For cross-compilation support, you will need to install a few extra packages dur
 The following Dockerfiles demonstrate how to add cross-compilation support for native AOT .NET Dockerfiles.
 This means you can build ARM64 images using an AMD64 machine and vice-versa.
 
-- Build on AMD64 targeting ARM64
-  - [Ubuntu](Dockerfile.ubuntu-cross-x64-arm64)
-  - [Debian](Dockerfile.debian-cross-x64-arm64)
-- Build on ARM64 targeting AMD64
-  - [Ubuntu](Dockerfile.ubuntu-cross-arm64-x64)
-  - [Debian](Dockerfile.debian-cross-arm64-x64)
+- [Build on AMD64 targeting ARM64](Dockerfile.ubuntu-cross-x64-arm64)
+- [Build on ARM64 targeting AMD64](Dockerfile.ubuntu-cross-arm64-x64)
 
 For example, to build an Ubuntu ARM64 native AOT .NET image on an AMD64 machine, you can run the following command:
 
