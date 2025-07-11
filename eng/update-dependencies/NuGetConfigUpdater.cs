@@ -33,31 +33,34 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
     {
         string existingContent = File.ReadAllText(_configPath);
+
         IDependencyInfo? sdkInfo = dependencyInfos
             .FirstOrDefault(info => info.SimpleName == "sdk");
+
         if (sdkInfo is not null)
         {
             string newContent = GetUpdatedNuGetConfigContent(sdkInfo.SimpleVersion);
 
             if (newContent != existingContent)
             {
-                return new[]
-                {
+                return
+                [
                     new DependencyUpdateTask(
-                        () => File.WriteAllText(_configPath, newContent),
-                        new[] { sdkInfo },
-                        Enumerable.Empty<string>())
-                };
+                        updateAction: () => File.WriteAllText(_configPath, newContent),
+                        usedInfos: [sdkInfo],
+                        readableDescriptionLines: []
+                    )
+                ];
             }
         }
 
-        return Enumerable.Empty<DependencyUpdateTask>();
+        return [];
     }
 
     /// <summary>
     /// Updates the NuGet.config file to include a URL to the internal package feed of the specified version.
     /// </summary>
-    private string GetUpdatedNuGetConfigContent(string sdkVersion)
+    private string GetUpdatedNuGetConfigContent(DotNetVersion sdkVersion)
     {
         string pkgSrcName = $"dotnet{_options.DockerfileVersion.Replace(".", "_")}{PkgSrcSuffix}";
 
@@ -103,20 +106,22 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         }
     }
 
-    private void UpdatePackageSources(string sdkVersion, string pkgSrcName, XElement configuration)
+    private void UpdatePackageSources(DotNetVersion sdkVersion, string pkgSrcName, XElement configuration)
     {
         XElement? pkgSources = configuration.Element("packageSources");
         if (_options.IsInternal)
         {
             pkgSources = GetOrCreateXObject(
-                pkgSources,
-                configuration,
-                () => new XElement("packageSources"));
+                node: pkgSources,
+                parent: configuration,
+                createNode: () => new XElement("packageSources")
+            );
 
             UpdateAddElement(
-                pkgSources,
-                pkgSrcName,
-                $"https://pkgs.dev.azure.com/dnceng/internal/_packaging/{sdkVersion}-shipping/nuget/v3/index.json");
+                parentElement: pkgSources,
+                key: pkgSrcName,
+                value: $"https://pkgs.dev.azure.com/dnceng/internal/_packaging/{sdkVersion}-shipping/nuget/v3/index.json"
+            );
         }
         else
         {
