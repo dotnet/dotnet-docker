@@ -9,6 +9,7 @@ This document describes the platforms (OS and architectures) supported by the of
 - Images for new OS versions are typically released within one month of the new OS release, with a goal to release same-day when possible.
 - New OS versions are available in [`dotnet/nightly` repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) first, and are added to the officially supported repos afterwards.
 - All new OS releases will be accompanied by an [announcement](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements).
+- Unless otherwise specified (see Alpine Linux below), we stop publishing updates to images when the .NET version in the image reaches [end of support](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) or when the OS base image stops receiving updates, whichever happens first.
 
 These policies are specific to .NET container images. For more information on overall .NET OS support, see [.NET OS Support Tracking](https://github.com/dotnet/core/issues/9638).
 
