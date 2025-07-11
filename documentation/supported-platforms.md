@@ -25,6 +25,8 @@ We publish .NET container images for the following versions of each Linux distro
 - Azure Linux and Ubuntu LTS
   - .NET images will be published images for the latest OS version at the time a new major/minor version of .NET is released.
   - When new OS versions are released, new images will be added to the latest .NET version and latest LTS .NET version (if they differ).
+- Debian
+  - Existing .NET Debian images will continue to receive base image updates, but new .NET images will not be added for future Debian versions.
 
 Pre-release versions of the above distros will be published in the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md), pending the availability of pre-release base images.
 
