@@ -9,19 +9,27 @@ This document describes the platforms (OS and architectures) supported by the of
 - Images for new OS versions are typically released within one month of the new OS release, with a goal to release same-day when possible.
 - New OS versions are available in [`dotnet/nightly` repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) first, and are added to the officially supported repos afterwards.
 - All new OS releases will be accompanied by an [announcement](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements).
+- Unless otherwise specified (see Alpine Linux below), we stop publishing updates to images when the .NET version in the image reaches [end of support](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) or when the OS base image stops receiving updates, whichever happens first.
 
 These policies are specific to .NET container images. For more information on overall .NET OS support, see [.NET OS Support Tracking](https://github.com/dotnet/core/issues/9638).
 
 ### Linux
 
-Each distribution (distro) has a unique approach to releasing, schedule, and end-of life (EOL). This prohibits the definition of a one-size-fits-all policy. Instead, a policy is defined for each supported distro.
+Since Linux distributions ("distros") each have unique release and support policies, a one-size-fits-all policy doesn't make sense.
+Instead, we have separate policies for each distro.
+We publish .NET container images for the following versions of each Linux distro:
 
-- Alpine — support latest and retain support for the previous version one quarter (3 months) after a new version is released.
-- Azure Linux — support the latest *stable* version at the time a `major.minor` version of .NET is released. As new *stable* versions are released, support is added to the latest .NET version and latest LTS (if they differ).
-- Debian — support the latest *stable* version at the time a `major.minor` version of .NET is released. As new *stable* versions are released, support is added to the latest .NET version and latest LTS (if they differ) via an [OS-specific tag](supported-tags.md#os-tags-and-base-image-updates).
-- Ubuntu — support the latest *LTS* version at the time a `major.minor` version of .NET is released. As new *LTS* versions are released, support is added to the latest .NET version and latest LTS (if they differ).
+- Alpine Linux
+  - .NET images will be published for the latest Alpine Linux version.
+  - When new Alpine versions are released, new images will be added for all in-support .NET versions.
+  - .NET images for the previous version of Alpine will published for 3 months after the new version is released.
+- Azure Linux and Ubuntu LTS
+  - .NET images will be published images for the latest OS version at the time a new major/minor version of .NET is released.
+  - When new OS versions are released, new images will be added to the latest .NET version and latest LTS .NET version (if they differ).
+- Debian
+  - Existing .NET Debian images will continue to receive base image updates, but new .NET images will not be added for future Debian versions.
 
-Pre-release versions of the supported distros will be made available within the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md) based on the availability of pre-release OS base images.
+Pre-release versions of the above distros will be published in the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md), pending the availability of pre-release base images.
 
 #### FedRAMP Compliance
 
