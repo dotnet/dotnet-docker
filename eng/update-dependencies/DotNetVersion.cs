@@ -52,6 +52,14 @@ internal partial class DotNetVersion
     /// </remarks>
     public string Prerelease => _match.Value.Groups["prerelease"].Value;
 
+    /// <summary>
+    /// Whether the .NET version is a public preview version.
+    /// </summary>
+    public bool IsPublicPreview =>
+        // Assume all "preview" versions are public, non-security releases.
+        // Assume that all "rc" and "servicing" versions are internal security releases.
+        Prerelease.StartsWith("preview", StringComparison.OrdinalIgnoreCase);
+
     // Semantic version 2.0.0 regex from https://semver.org/
     [GeneratedRegex(@"^(?<major>0|[1-9]\d*)\.(?<minor>0|[1-9]\d*)\.(?<patch>0|[1-9]\d*)(?:-(?<prerelease>(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+(?<buildmetadata>[0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$")]
     private static partial Regex SemanticVersionRegex { get; }
