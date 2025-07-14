@@ -1,11 +1,38 @@
 trigger: none
 pr: none
 
+resources:
+  pipelines:
+  # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
+  - pipeline: dotnet-docker-release-staging
+    source: dotnet-docker-release-staging
+
+variables:
+- template: /eng/pipelines/variables/core.yml@self
+  parameters:
+    sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
+# Set pathArgs to empty in order to publish all images
+- name: imageBuilder.pathArgs
+  value: ""
+- name: imageBuilder.queueArgs
+  value: ""
+
 extends:
   template: /eng/common/templates/1es-official.yml@self
-  stages:
-  - stage: release-promotion
-    jobs:
-    - job: release-promotion
-      steps:
-      - script: echo "Hello world"
+  parameters:
+    serviceConnections:
+    - name: $(internal-mirror.serviceConnectionName)
+    - name: $(publish.serviceConnectionName)
+    - name: $(kusto.serviceConnectionName)
+    - name: $(marStatus.serviceConnectionName)
+    stages:
+    - template: /eng/pipelines/stages/publish.yml@self
+      parameters:
+        internalProjectName: ${{ variables.internalProjectName }}
+        publicProjectName: ${{ variables.publicProjectName }}
+        isStandalonePublish: true
+        sourceBuildPipelineDefinitionId: "$(resources.pipeline.dotnet-docker-release-staging.pipelineID)"
+        sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
+        customPublishInitSteps:
+        - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.dotnet-docker-release-staging.runID)"
+          displayName: Set sourceBuildId
