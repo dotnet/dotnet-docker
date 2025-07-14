@@ -8,7 +8,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '10.0.0-preview.5.25277.114'; `
+        $dotnet_version = '10.0.0-preview.6.25358.103'; `
         $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
@@ -36,7 +36,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-preview.5.25277.114
+    DOTNET_VERSION=10.0.0-preview.6.25358.103
 
 RUN setx /M PATH "%PATH%;C:\Program Files\dotnet"
 
