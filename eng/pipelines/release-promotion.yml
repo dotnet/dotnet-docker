@@ -9,7 +9,7 @@ resources:
 variables:
 - template: /eng/pipelines/variables/core.yml@self
   parameters:
-    sourceBuildId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
+    sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
 # Set pathArgs to empty in order to publish all images
 - name: imageBuilder.pathArgs
   value: ""
