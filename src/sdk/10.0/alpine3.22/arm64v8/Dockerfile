@@ -9,7 +9,7 @@ RUN dotnet_sdk_version=10.0.100-preview.6.25358.103 \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
     && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz --directory /dotnet ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
         dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
         dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512

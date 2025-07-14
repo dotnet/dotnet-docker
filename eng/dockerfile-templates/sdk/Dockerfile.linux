@@ -63,7 +63,10 @@
         "./templates",
         "./LICENSE.txt",
         "./ThirdPartyNotices.txt"
-    ]
+    ]^
+    if (dotnetVersion != "8.0" && dotnetVersion != "9.0"):{{
+        set sdkExtractPaths to cat(["./dnx"], sdkExtractPaths)
+    }}^_
 
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
