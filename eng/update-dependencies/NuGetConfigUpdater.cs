@@ -33,31 +33,34 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
     {
         string existingContent = File.ReadAllText(_configPath);
+
         IDependencyInfo? sdkInfo = dependencyInfos
             .FirstOrDefault(info => info.SimpleName == "sdk");
+
         if (sdkInfo is not null)
         {
             string newContent = GetUpdatedNuGetConfigContent(sdkInfo.SimpleVersion);
 
             if (newContent != existingContent)
             {
-                return new[]
-                {
+                return
+                [
                     new DependencyUpdateTask(
-                        () => File.WriteAllText(_configPath, newContent),
-                        new[] { sdkInfo },
-                        Enumerable.Empty<string>())
-                };
+                        updateAction: () => File.WriteAllText(_configPath, newContent),
+                        usedInfos: [sdkInfo],
+                        readableDescriptionLines: []
+                    )
+                ];
             }
         }
 
-        return Enumerable.Empty<DependencyUpdateTask>();
+        return [];
     }
 
     /// <summary>
     /// Updates the NuGet.config file to include a URL to the internal package feed of the specified version.
     /// </summary>
-    private string GetUpdatedNuGetConfigContent(string sdkVersion)
+    private string GetUpdatedNuGetConfigContent(DotNetVersion sdkVersion)
     {
         string pkgSrcName = $"dotnet{_options.DockerfileVersion.Replace(".", "_")}{PkgSrcSuffix}";
 
@@ -65,7 +68,8 @@ internal class NuGetConfigUpdater : IDependencyUpdater
 
         XElement configuration = doc.Root!;
         UpdatePackageSources(sdkVersion, pkgSrcName, configuration);
-        UpdatePackageSourceCredentials(pkgSrcName, configuration);
+        UpdatePackageSourceCredentials(sdkVersion, pkgSrcName, configuration);
+
         return ToStringWithDeclaration(doc) + Environment.NewLine;
     }
 
@@ -80,10 +84,10 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         return builder.ToString();
     }
 
-    private void UpdatePackageSourceCredentials(string pkgSrcName, XElement configuration)
+    private void UpdatePackageSourceCredentials(DotNetVersion sdkVersion, string pkgSrcName, XElement configuration)
     {
         XElement? pkgSourceCreds = configuration.Element("packageSourceCredentials");
-        if (_options.IsInternal)
+        if (_options.IsInternal && !sdkVersion.IsPublicPreview)
         {
             pkgSourceCreds = GetOrCreateXObject(
                 pkgSourceCreds,
@@ -103,20 +107,25 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         }
     }
 
-    private void UpdatePackageSources(string sdkVersion, string pkgSrcName, XElement configuration)
+    private void UpdatePackageSources(DotNetVersion sdkVersion, string pkgSrcName, XElement configuration)
     {
         XElement? pkgSources = configuration.Element("packageSources");
         if (_options.IsInternal)
         {
             pkgSources = GetOrCreateXObject(
-                pkgSources,
-                configuration,
-                () => new XElement("packageSources"));
+                node: pkgSources,
+                parent: configuration,
+                createNode: () => new XElement("packageSources")
+            );
+
+            // Public preview versions have builds and NuGet feeds in the public prior to release.
+            string project = sdkVersion.IsPublicPreview ? "public" : "internal";
 
             UpdateAddElement(
-                pkgSources,
-                pkgSrcName,
-                $"https://pkgs.dev.azure.com/dnceng/internal/_packaging/{sdkVersion}-shipping/nuget/v3/index.json");
+                parentElement: pkgSources,
+                key: pkgSrcName,
+                value: $"https://pkgs.dev.azure.com/dnceng/{project}/_packaging/{sdkVersion}-shipping/nuget/v3/index.json"
+            );
         }
         else
         {
