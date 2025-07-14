@@ -19,6 +19,11 @@ variables:
 extends:
   template: /eng/common/templates/1es-official.yml@self
   parameters:
+    serviceConnections:
+    - name: $(internal-mirror.serviceConnectionName)
+    - name: $(publish.serviceConnectionName)
+    - name: $(kusto.serviceConnectionName)
+    - name: $(marStatus.serviceConnectionName)
     stages:
     - template: /eng/pipelines/stages/publish.yml@self
       parameters:
