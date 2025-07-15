@@ -14,7 +14,7 @@ stages:
   parameters:
     ${{ insert }}: ${{ parameters }}
 
-    ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), and(eq(variables['System.TeamProject'], parameters.internalProjectName), or(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'true')))) }}:
+    ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), and(eq(variables['System.TeamProject'], parameters.internalProjectName), eq(variables['Build.Reason'], 'PullRequest'))) }}:
       buildMatrixType: platformVersionedOs
       buildMatrixCustomBuildLegGroupArgs: --custom-build-leg-group pr-build --custom-build-leg-group test-dependencies
     ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
@@ -25,14 +25,15 @@ stages:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     customBuildInitSteps:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
-    - powershell: |
-        $imageBuilderBuildArgs = "$IMAGEBUILDERBUILDARGS"
-        if ("${{ parameters.IsInternalServicingValidation }}" -eq "true") {
-          $accessToken = "$(System.AccessToken)"
-          $imageBuilderBuildArgs += " --build-arg ACCESSTOKEN='$accessToken'"
-        }
-        echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
-      displayName: Set Custom Build Variables
+    - ${{ if eq(parameters.isInternalServicingValidation, true) }}:
+      - powershell: |
+          $imageBuilderBuildArgs = "$IMAGEBUILDERBUILDARGS --internal"
+          echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
+        displayName: Set Custom Build Variables
     - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
+      parameters:
+        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     customTestInitSteps:
     - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
+      parameters:
+        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}

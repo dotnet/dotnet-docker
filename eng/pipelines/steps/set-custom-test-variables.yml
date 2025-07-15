@@ -1,3 +1,6 @@
+parameters:
+  isInternalServicingValidation: false
+
 steps:
 - powershell: |
     # Use public cache registry for pulling external images during tests
@@ -7,7 +10,7 @@ steps:
     $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
     $testInit=""
 
-    if ("$(publishRepoPrefix)".Contains("internal/")) {
+    if (("$(publishRepoPrefix)".Contains("internal/")) -or $${{ parameters.isInternalServicingValidation }}) {
       if ($Env:AGENT_OS -eq 'Linux') {
         $testRunnerOptions="$testRunnerOptions -e INTERNAL_TESTING='1' -e INTERNAL_ACCESS_TOKEN='$(System.AccessToken)'"
       }
@@ -19,7 +22,7 @@ steps:
           $testInit='$Env:INTERNAL_TESTING=''1'' ; $Env:INTERNAL_ACCESS_TOKEN=''$(System.AccessToken)'''
       }
     }
-    
+
     echo "##vso[task.setvariable variable=additionalTestArgs]$additionalTestArgs"
     echo "##vso[task.setvariable variable=testRunner.options]$testRunnerOptions"
     echo "##vso[task.setvariable variable=test.init]$testInit"
