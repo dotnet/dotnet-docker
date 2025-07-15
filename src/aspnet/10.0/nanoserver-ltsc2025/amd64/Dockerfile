@@ -10,9 +10,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '10.0.0-preview.5.25277.114'; `
+        $aspnetcore_version = '10.0.0-preview.6.25358.103'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
-        $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
+        $dotnet_sha512_file = $aspnetcore_file + '.sha512-bare'; `
         `
         Invoke-WebRequest -OutFile $aspnetcore_file https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file; `
         Invoke-WebRequest -OutFile $dotnet_sha512_file https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/$dotnet_sha512_file; `
@@ -30,9 +30,9 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:10.0.0-preview.5-nanoserver-ltsc2025
+FROM $REPO:10.0.0-preview.6-nanoserver-ltsc2025
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-preview.5.25277.114
+ENV ASPNET_VERSION=10.0.0-preview.6.25358.103
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
