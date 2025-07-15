@@ -49,7 +49,7 @@ jobs:
       # all we need is for that value to be in a PowerShell variable, we can get that by the fact that AzDO automatically creates
       # the environment variable for us.
       $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json $(commonMatrixAndBuildOptions)"
-      if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest" -and "${{ parameters.isInternalServicingValidation }}" -ne "true") {
+      if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
         $imageBuilderBuildArgs = "$imageBuilderBuildArgs --repo-prefix $(stagingRepoPrefix) --push"
       }
 
@@ -70,6 +70,11 @@ jobs:
         id: $(build.serviceConnection.id)
         tenantId: $(build.serviceConnection.tenantId)
         clientId: $(build.serviceConnection.clientId)
+      - ${{ if eq(parameters.isInternalServicingValidation, true) }}:
+        - name: storage
+          id: $(dotnetstaging.serviceConnection.id)
+          tenantId: $(dotnetstaging.serviceConnection.tenantId)
+          clientId: $(dotnetstaging.serviceConnection.clientId)
       internalProjectName: ${{ parameters.internalProjectName }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       args: >-
@@ -92,7 +97,7 @@ jobs:
       displayName: Publish Image Info File Artifact
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'false')) }}:
+  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
     # The following task depends on the SBOM Manifest Generator task installed on the agent.
     # This task is auto-injected by 1ES Pipeline Templates so we don't need to install it ourselves.
     - powershell: |
@@ -144,11 +149,11 @@ jobs:
         }
       displayName: Generate SBOMs
       condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
-  - ${{ if or(eq(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'true')) }}:
+  - ${{ if eq(variables['Build.Reason'], 'PullRequest') }}:
     - template: /eng/common/templates/jobs/${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}@self
       parameters:
         condition: ne(variables.testScriptPath, '')
-  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.isInternalServicingValidation, 'false')) }}:
+  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
     - template: /eng/common/templates/steps/publish-artifact.yml@self
       parameters:
         path: $(sbomDirectory)

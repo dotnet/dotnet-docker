@@ -18,4 +18,8 @@ stages:
     ${{ insert }}: ${{ parameters }}
 - template: /eng/pipelines/stages/publish.yml@self
   parameters:
-    ${{ insert }}: ${{ parameters }}
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
+    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
