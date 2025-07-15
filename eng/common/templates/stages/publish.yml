@@ -20,7 +20,9 @@ parameters:
 stages:
 - ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
   - stage: Publish
-    ${{ if not(parameters.isStandalonePublish) }}:
+    ${{ if eq(parameters.isStandalonePublish, true) }}:
+      dependsOn: []
+    ${{ else }}:
       ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
         dependsOn: Test
       ${{ else }}:
