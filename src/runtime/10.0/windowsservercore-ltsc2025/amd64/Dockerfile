@@ -10,7 +10,7 @@ RUN powershell -Command `
         `
         $dotnet_version = '10.0.0-preview.6.25358.103'; `
         $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
-        $dotnet_sha512_file = $dotnet_file + '.sha512'; `
+        $dotnet_sha512_file = $dotnet_file + '.sha512-bare'; `
         `
         Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Runtime/$dotnet_version/$dotnet_file; `
         Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/Runtime/$dotnet_version/$dotnet_sha512_file; `

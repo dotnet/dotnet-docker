@@ -49,7 +49,8 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 
 They include:
 
-- Debian, unless specified (like `8.0-alpine`).
+- For .NET 10, multi-platform tags refer to Ubuntu unless otherwise specified (like `8.0-alpine`).
+- For .NET versions prior to 10, multi-platform tags refer to Debian unless otherwise specified.
 - All [supported architectures](supported-platforms.md#architectures).
 
 > [!WARNING]
@@ -235,7 +236,7 @@ For Windows, `amd64` is the only architecture supported and is excluded from the
 
 Each tag will be supported for the lifetime of the .NET and OS version referenced by the tag, unless further restricted according to [platform support policy](supported-platforms.md).
 
-When a .NET version or an OS version reaches End-of-Life (EOL), its tags will no longer be supported.
+When a .NET version or an OS version reaches [end of support](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) (sometimes referred to as end-of-life or EOL), its tags will no longer be supported.
 Unsupported tags and images can still be pulled, but they will no longer receive updates for any reason.
 
 See ["Is your image built from a supported .NET tag?"](vulnerability-reporting.md#c-is-your-image-built-from-a-supported-net-tag) for details on how to tell if a specific tag is supported.

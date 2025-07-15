@@ -60,11 +60,19 @@
       separate condition for bare checksum files. ^
     _ Aggregate checksum files are also not available for internal builds. ^
     set shaUrlIsAggregate to (!isInternal && (dotnetVersion = "8.0" || dotnetVersion = "9.0")) ^
-    set shaUrlIsBare to (isInternal || dotnetVersion = "10.0") ^
+    _ Bare files don't exist internally yet, see https://github.com/dotnet/release/issues/1382 ^
+    set bareFileExists to (!isInternal && dotnetVersion != "8.0" && dotnetVersion != "9.0") ^
+    _ Checksum files can contain bare shas, even if the file doesn't have the .sha512-bare extension.
+      We basically want to use the bare file on Windows only. However, we're currently also forced to use bare files internally.
+      When https://github.com/dotnet/release/issues/1382 is fixed, internal sha files will not be bare by default. ^
+    set shaFileContentIsBare to (isInternal || (isWindows && bareFileExists)) ^
 
-    set shaUrlPath to when(shaUrlIsAggregate,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
-        cat(downloadPath, ".sha512")) ^
+    set shaUrlPath to
+        when(shaUrlIsAggregate,
+            VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
+        when(bareFileExists && shaFileContentIsBare,
+            cat(downloadPath, ".sha512-bare"),
+            cat(downloadPath, ".sha512"))) ^
     set shaUrl to cat(checksumsBaseUrl, shaUrlPath) ^
 
     set shaUrlParts to split(shaUrl, "/") ^
@@ -175,7 +183,7 @@
         "file": replaceVariables(fileName),
         "sha-function": shaFunction,
         "sha-file": replaceVariables(shaFileName),
-        "sha-file-is-bare": shaUrlIsBare,
+        "sha-file-is-bare": shaFileContentIsBare,
         "sha-file-is-aggregate": shaUrlIsAggregate,
         "use-cmd-escape": isWindows && product = "sdk"
     ])

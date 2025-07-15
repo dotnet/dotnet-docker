@@ -12,7 +12,7 @@ RUN powershell -Command `
         `
         $aspnetcore_version = '10.0.0-preview.6.25358.103'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
-        $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
+        $dotnet_sha512_file = $aspnetcore_file + '.sha512-bare'; `
         `
         Invoke-WebRequest -OutFile $aspnetcore_file https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file; `
         Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/$dotnet_sha512_file; `

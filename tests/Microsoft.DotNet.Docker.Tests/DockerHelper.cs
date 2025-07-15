@@ -271,7 +271,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public void Pull(string image) => ExecuteWithLogging($"pull {image}", autoRetry: true);
 
-        public void PullExternalImage(string image)
+        /// <summary>
+        /// Pulls an image from DockerHub, optionally redirecting it through a
+        /// cache registry.
+        /// </summary>
+        /// <param name="image">
+        /// The image to pull, in the format "repo:tag". Since the image is
+        /// assumed to be from DockerHub, do not include a registry.
+        /// </param>
+        /// <returns>
+        /// A tag for the image that was pulled. Use this value to refer to the
+        /// image in subsequent operations. Do not use the original value of
+        /// <paramref name="image"/>.
+        /// </returns>
+        public string PullDockerHubImage(string image)
         {
             if (!string.IsNullOrEmpty(Config.CacheRegistry))
             {
@@ -279,6 +292,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             Pull(image);
+            return image;
         }
 
         public string GetHistory(string image) =>
