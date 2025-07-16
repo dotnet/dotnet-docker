@@ -14,7 +14,7 @@ RUN powershell -Command `
         Remove-Item -Recurse C:\inetpub\wwwroot\*; `
         `
         # Acquire ServiceMonitor
-        Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://dotnetbinaries.blob.core.windows.net/servicemonitor/2.0.1.10/ServiceMonitor.exe; `
+        Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://github.com/microsoft/IIS.ServiceMonitor/releases/download/v2.0.1.10/ServiceMonitor.exe; `
         `
         # Install the ASP.NET Core Module
         Invoke-WebRequest -OutFile c:\dotnet-hosting-win.exe https://aka.ms/dotnet/9.0/dotnet-hosting-win.exe; `
