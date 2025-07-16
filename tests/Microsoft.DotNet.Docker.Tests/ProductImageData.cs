@@ -23,6 +23,12 @@ namespace Microsoft.DotNet.Docker.Tests
         // PowerShell does not support Arm-based Alpine
         public bool SupportsPowerShell => !(OS.Contains("alpine") && IsArm);
 
+        /// <summary>
+        /// Indicates whether the SDK version of the image supports `dnx` and
+        /// should have it installed.
+        /// </summary>
+        public bool SupportsDnx => VersionFamily != ImageVersion.V8_0 && VersionFamily != ImageVersion.V9_0;
+
         public string SdkOS
         {
             get => HasCustomSdk ? _sdkOS : OS;
