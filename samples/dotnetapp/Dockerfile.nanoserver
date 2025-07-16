@@ -1,7 +1,7 @@
 # escape=`
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-ARG TAG=ltsc2022
+ARG TAG=ltsc2025
 FROM mcr.microsoft.com/dotnet/sdk:9.0-nanoserver-$TAG AS build
 WORKDIR /source
 

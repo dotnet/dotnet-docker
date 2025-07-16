@@ -75,6 +75,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 useWasmTools = false;
             }
 
+            // Emscripten SDK workload is the wrong version on linux-musl-x64 in .NET 10 Preview 6
+            // Remove in nightly branch when https://github.com/dotnet/dotnet/issues/1487 is resolved
+            if (imageData.Version.Major == 10)
+            {
+                useWasmTools = false;
+            }
+
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
             await testScenario.ExecuteAsync();
         }

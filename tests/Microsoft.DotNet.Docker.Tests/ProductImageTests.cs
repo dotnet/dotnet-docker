@@ -239,7 +239,7 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> extraExcludePaths = null)
         {
             string syftImage = $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}";
-            dockerHelper.PullExternalImage(syftImage);
+            syftImage = dockerHelper.PullDockerHubImage(syftImage);
 
             string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
 
