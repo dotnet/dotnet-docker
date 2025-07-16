@@ -17,14 +17,21 @@ internal class BaseUrlUpdater : FileRegexUpdater
     private const string BaseUrlGroupName = "BaseUrlValue";
     private readonly SpecificCommandOptions _options;
     private readonly JObject _manifestVariables;
+    private readonly string _manifestVariableName;
 
     public BaseUrlUpdater(string repoRoot, SpecificCommandOptions options)
     {
         Path = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
         VersionGroupName = BaseUrlGroupName;
-        Regex = ManifestHelper.GetManifestVariableRegex(
-            ManifestHelper.GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName),
-            $"(?<{BaseUrlGroupName}>.+)");
+
+        _manifestVariableName = ManifestHelper.GetBaseUrlVariableName(
+            options.DockerfileVersion,
+            options.SourceBranch,
+            options.VersionSourceName,
+            options.IsSdkOnly
+        );
+
+        Regex = ManifestHelper.GetManifestVariableRegex(_manifestVariableName, $"(?<{BaseUrlGroupName}>.+)");
         _options = options;
 
         _manifestVariables = (JObject?)ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename)["variables"] ??
@@ -35,7 +42,7 @@ internal class BaseUrlUpdater : FileRegexUpdater
     {
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
 
-        string baseUrlVersionVarName = ManifestHelper.GetBaseUrlVariableName(_options.DockerfileVersion, _options.SourceBranch, _options.VersionSourceName);
+        string baseUrlVersionVarName = _manifestVariableName;
         string unresolvedBaseUrl = _manifestVariables[baseUrlVersionVarName]?.ToString() ??
             throw new InvalidOperationException($"Variable with name '{baseUrlVersionVarName}' is missing.");
 
