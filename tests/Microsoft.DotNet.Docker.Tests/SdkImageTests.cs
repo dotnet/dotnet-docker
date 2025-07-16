@@ -158,6 +158,14 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyDotnetFolderContents(ProductImageData imageData)
         {
+            if (Config.IsInternal)
+            {
+                // Skip this test for internal builds, since this test does not
+                // yet authenticate to download the internal staged version of
+                // the .NET SDK.
+                return;
+            }
+
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
