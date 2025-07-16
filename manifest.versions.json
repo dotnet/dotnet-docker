@@ -198,16 +198,28 @@
 
     "sdk|8.0|build-version": "8.0.412",
     "sdk|8.0|product-version": "8.0.412",
+    "sdk|8.0|base-url|main": "$(dotnet|8.0|base-url|main)",
+    "sdk|8.0|base-url|nightly": "$(dotnet|8.0|base-url|nightly)",
+    "sdk|8.0|base-url|checksums|main": "$(dotnet|8.0|base-url|checksums|main)",
+    "sdk|8.0|base-url|checksums|nightly": "$(dotnet|8.0|base-url|checksums|nightly)",
     "sdk|8.0|fixed-tag": "$(sdk|8.0|product-version)",
     "sdk|8.0|minor-tag": "$(dotnet|8.0|minor-tag)",
 
     "sdk|9.0|build-version": "9.0.303",
     "sdk|9.0|product-version": "9.0.303",
+    "sdk|9.0|base-url|main": "$(dotnet|9.0|base-url|main)",
+    "sdk|9.0|base-url|nightly": "$(dotnet|9.0|base-url|nightly)",
+    "sdk|9.0|base-url|checksums|main": "$(dotnet|9.0|base-url|checksums|main)",
+    "sdk|9.0|base-url|checksums|nightly": "$(dotnet|9.0|base-url|checksums|nightly)",
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
 
     "sdk|10.0|build-version": "10.0.100-preview.6.25358.103",
     "sdk|10.0|product-version": "10.0.100-preview.6",
+    "sdk|10.0|base-url|main": "$(dotnet|10.0|base-url|main)",
+    "sdk|10.0|base-url|nightly": "$(dotnet|10.0|base-url|nightly)",
+    "sdk|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|checksums|main)",
+    "sdk|10.0|base-url|checksums|nightly": "$(dotnet|10.0|base-url|checksums|nightly)",
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
 
