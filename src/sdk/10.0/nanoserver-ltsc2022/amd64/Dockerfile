@@ -27,7 +27,7 @@ RUN powershell -Command " `
         # Retrieve .NET SDK
         $dotnet_sdk_version = '10.0.100-preview.6.25358.103'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
-        $dotnet_sha512_file = $dotnet_file + '.sha512-bare'; `
+        $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
         Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Sdk/$dotnet_sdk_version/$dotnet_file; `
         Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/$dotnet_sha512_file; `
