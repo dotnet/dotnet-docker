@@ -1,0 +1,8 @@
+{{
+    _ Creates a symbolic link at "to" which links to "from"
+
+    ARGS:
+        from: The target file or directory to link to
+        to: Where to create the symbolic link
+
+}}ln -s {{ARGS["from"]}} {{ARGS["to"]}}

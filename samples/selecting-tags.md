@@ -42,8 +42,10 @@ The following tags demonstrate the pattern used to describe each operating syste
 * `9.0-azurelinux3.0` (Azure Linux 3.0)
 * `9.0-bookworm-slim` (Debian 12)
 * `9.0-noble` (Ubuntu 24.04)
+* `9.0-nanoserver-ltsc2025` (Nano Server LTSC 2025)
 * `9.0-nanoserver-ltsc2022` (Nano Server LTSC 2022)
 * `9.0-nanoserver-1809` (Nano Server, version 1809)
+* `9.0-windowsservercore-ltsc2025` (Windows Server Core LTSC 2025)
 * `9.0-windowsservercore-ltsc2022` (Windows Server Core LTSC 2022)
 * `9.0-windowsservercore-ltsc2019` (Windows Server Core LTSC 2019)
 
@@ -148,7 +150,9 @@ The following tags demonstrate the pattern used to describe each processor, usin
 * `9.0-alpine-amd64`
 * `9.0-noble-amd64`
 * `9.0-bookworm-slim-amd64`
+* `9.0-nanoserver-ltsc2025`
 * `9.0-nanoserver-ltsc2022`
+* `9.0-windowsservercore-ltsc2025`
 * `9.0-windowsservercore-ltsc2022`
 
 ### ARM64

@@ -44,5 +44,6 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-# Trigger first run experience by running arbitrary cmd
-RUN dotnet help
+RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
+    # Trigger first run experience by running arbitrary cmd
+    && dotnet help

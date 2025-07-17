@@ -109,6 +109,13 @@ dotnetapp-chiseled-9.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dock
 aspnetapp-9.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
 aspnetapp-chiseled-9.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
 
+### Nano Server 2025 amd64 Tags
+
+Tag | Dockerfile
+---------| ---------------
+dotnetapp-9.0-nanoserver-ltsc2025, dotnetapp-nanoserver-ltsc2025, dotnetapp-9.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.nanoserver)
+aspnetapp-9.0-nanoserver-ltsc2025, aspnetapp-nanoserver-ltsc2025, aspnetapp-9.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.nanoserver)
+
 ### Nano Server 2022 amd64 Tags
 
 Tag | Dockerfile

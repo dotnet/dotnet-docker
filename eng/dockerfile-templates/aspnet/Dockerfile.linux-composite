@@ -63,4 +63,7 @@ ENTRYPOINT ["/usr/bin/dotnet"]
 CMD ["--info"]^
 else:
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
-RUN {{InsertTemplate("../runtime/Dockerfile.linux.symlink")}}}}
+RUN {{InsertTemplate("../Dockerfile.linux.symlink", [
+    "from": "/usr/share/dotnet/dotnet",
+    "to": "/usr/bin/dotnet"
+])}}}}

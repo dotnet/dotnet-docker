@@ -54,17 +54,21 @@
     set urlParts to split(downloadUrl, "/") ^
     set fileName to urlParts[len(urlParts) - 1] ^
 
-    _ For now the aggregate and bare checksum files are mutually exclusive, but
-      in the future we expect .NET 10 to have non-aggregate, non-bare checksum
-      files before the other .NET versions, so it's necessary to have a
-      separate condition for bare checksum files. ^
-    _ Aggregate checksum files are also not available for internal builds. ^
-    set shaUrlIsAggregate to (!isInternal && (dotnetVersion = "8.0" || dotnetVersion = "9.0")) ^
-    set shaUrlIsBare to (isInternal || dotnetVersion = "10.0") ^
+    _ New checksum files have both bare and non-bare versions under different
+      file extensions. Old checksum files contain only bare shas. ^
+    _ We want to use the bare checksum files on Windows only. However, the new
+      checksum files aren't available for internal staging builds yet.
+      When https://github.com/dotnet/release/issues/1382 is fixed, internal sha
+      files should match the new format. ^
+    set isReleasedBuild to find(baseUrl, "builds.dotnet.microsoft.com") >= 0 ^
+    set useNewChecksumFiles to (isReleasedBuild && dotnetVersion != "8.0" && dotnetVersion != "9.0") ^
+    set shaUrlIsAggregate to ((dotnetVersion = "8.0" || dotnetVersion = "9.0") && !isInternal) ^
+    set shaFileContentIsBare to (useNewChecksumFiles && isWindows) || (!useNewChecksumFiles && !shaUrlIsAggregate) ^
+    set shaExtension to when(useNewChecksumFiles && isWindows, ".sha512-bare", ".sha512") ^
 
     set shaUrlPath to when(shaUrlIsAggregate,
         VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
-        cat(downloadPath, ".sha512")) ^
+        cat(downloadPath, shaExtension)) ^
     set shaUrl to cat(checksumsBaseUrl, shaUrlPath) ^
 
     set shaUrlParts to split(shaUrl, "/") ^
@@ -175,7 +179,7 @@
         "file": replaceVariables(fileName),
         "sha-function": shaFunction,
         "sha-file": replaceVariables(shaFileName),
-        "sha-file-is-bare": shaUrlIsBare,
+        "sha-file-is-bare": shaFileContentIsBare,
         "sha-file-is-aggregate": shaUrlIsAggregate,
         "use-cmd-escape": isWindows && product = "sdk"
     ])

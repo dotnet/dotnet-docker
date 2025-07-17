@@ -75,6 +75,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 useWasmTools = false;
             }
 
+            // Emscripten SDK workload is the wrong version on linux-musl-x64 in .NET 10 Preview 6
+            // Remove in nightly branch when https://github.com/dotnet/dotnet/issues/1487 is resolved
+            if (imageData.Version.Major == 10)
+            {
+                useWasmTools = false;
+            }
+
             using BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
             await testScenario.ExecuteAsync();
         }
@@ -219,6 +226,29 @@ namespace Microsoft.DotNet.Docker.Tests
                 image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
                 name: imageData.GetIdentifier("tar"),
                 command: "tar --version"
+            );
+        }
+
+        /// <summary>
+        /// Verifies that dnx is on the PATH and that it is functional.
+        /// </summary>
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDnxInstallation(ProductImageData imageData)
+        {
+            if (!imageData.SupportsDnx)
+            {
+                return;
+            }
+
+            var dnxCommand = DockerHelper.IsLinuxContainerModeEnabled
+                ? "dnx --help"
+                : "dnx.cmd --help";
+
+            DockerHelper.Run(
+                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
+                name: imageData.GetIdentifier("dnx"),
+                command: dnxCommand
             );
         }
 
