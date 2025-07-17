@@ -25,8 +25,9 @@
 ", lineContinue), "") ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
-    set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
+    set baseUrlType to when(product = "sdk", "sdk", "dotnet") ^
+    set baseUrl to VARIABLES[cat(baseUrlType, "|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
+    set checksumsBaseUrl to VARIABLES[cat(baseUrlType, "|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
     set productVersion to when(product = "sdk",
