@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=9.0.302 \
+RUN dotnet_sdk_version=9.0.303 \
     && dotnet_version=9.0.7 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
@@ -26,7 +26,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.302 \
+    DOTNET_SDK_VERSION=9.0.303 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
