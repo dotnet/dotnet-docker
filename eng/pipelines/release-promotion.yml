@@ -1,12 +1,6 @@
 trigger: none
 pr: none
 
-resources:
-  pipelines:
-  # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
-  - pipeline: dotnet-docker-release-staging
-    source: dotnet-docker-release-staging
-
 variables:
 - template: /eng/pipelines/variables/core.yml@self
   parameters:
@@ -18,6 +12,10 @@ variables:
   value: ""
 
 resources:
+  pipelines:
+  # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
+  - pipeline: dotnet-docker-release-staging
+    source: dotnet-docker-release-staging
   repositories:
   - repository: VersionsRepo
     type: github
