@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:10.0.0-preview.6-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:10.0.0-preview.7-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-preview.6.25274.104 \
+RUN dotnet_version=10.0.0-preview.7.25368.105 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
@@ -21,10 +21,10 @@ RUN dotnet_version=10.0.0-preview.6.25274.104 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-preview.6-azurelinux3.0-arm64v8
+FROM $REPO:10.0.0-preview.7-azurelinux3.0-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-preview.6.25274.104
+ENV DOTNET_VERSION=10.0.0-preview.7.25368.105
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
