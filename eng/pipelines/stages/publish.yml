@@ -26,12 +26,16 @@ parameters:
   - name: sourceBuildPipelineRunId
     type: string
     default: ''
+  - name: versionsRepoRef
+    type: string
+    default: ''
 
 stages:
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     pool: ${{ parameters.linuxAmd64Pool }}

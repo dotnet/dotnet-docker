@@ -11,18 +11,20 @@ pr:
     - samples/*
     - tests/*
 
+variables:
+- template: variables/samples.yml
+
 resources:
   repositories:
-  - repository: PublicVersionsRepo
+  - repository: VersionsRepo
     type: github
     endpoint: public
     name: dotnet/versions
-
-variables:
-- template: variables/samples.yml
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 stages:
 - template: stages/build-test-publish-repo.yml
   parameters:
     internalProjectName: ${{ variables.internalProjectName }}
     publicProjectName: ${{ variables.publicProjectName }}
+    versionsRepoRef: VersionsRepo

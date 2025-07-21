@@ -17,6 +17,14 @@ variables:
 - name: imageBuilder.queueArgs
   value: ""
 
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
+
 extends:
   template: /eng/common/templates/1es-official.yml@self
   parameters:
@@ -30,6 +38,7 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        versionsRepoRef: VersionsRepo
         isStandalonePublish: true
         sourceBuildPipelineDefinitionId: "$(resources.pipeline.dotnet-docker-release-staging.pipelineID)"
         sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
