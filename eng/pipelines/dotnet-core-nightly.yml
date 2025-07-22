@@ -20,13 +20,6 @@ parameters:
   type: string
   default: $(Build.BuildId)
 
-resources:
-  repositories:
-  - repository: InternalVersionsRepo
-    type: github
-    endpoint: dotnet
-    name: dotnet/versions
-
 variables:
 - template: /eng/pipelines/variables/core.yml@self
   parameters:
@@ -34,6 +27,14 @@ variables:
 - name: officialBranches
   # comma-delimited list of branch names
   value: nightly
+
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
@@ -49,4 +50,5 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        versionsRepoRef: VersionsRepo
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
