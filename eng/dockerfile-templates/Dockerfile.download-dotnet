@@ -29,6 +29,12 @@
     set checksumsBaseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
+    _ ASP.NET Core 8.0 sha512 files get published as nonshipping artifacts instead of shipping artifacts ^
+    _ Tracking issue: https://github.com/dotnet/release/issues/1395 ^
+    if (dotnetVersion = "8.0" && find(product, "aspnet") >= 0 && isInternal):{{
+        set checksumsBaseUrl to replace(checksumsBaseUrl, "shipping", "nonshipping")
+    }}^
+
     set productVersion to when(product = "sdk",
         VARIABLES[cat(product, "|", dotnetVersion, "|product-version")],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
