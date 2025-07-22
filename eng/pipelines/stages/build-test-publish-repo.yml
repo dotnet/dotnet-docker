@@ -11,6 +11,7 @@ parameters:
   linuxAmd64Pool: ""
   isInternalServicingValidation: false
   sourceBuildPipelineRunId: ""
+  versionsRepoRef: ""
 
 stages:
 - template: /eng/pipelines/stages/build-and-test.yml@self
@@ -20,6 +21,7 @@ stages:
   parameters:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
     linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
