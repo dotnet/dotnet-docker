@@ -5,6 +5,8 @@ parameters:
   customPublishVariables: []
   sourceBuildPipelineDefinitionId: ""
   sourceBuildPipelineRunId: ""
+  versionsRepoRef: null
+  versionsRepoPath: ""
 
 jobs:
 - job: Publish
@@ -34,6 +36,11 @@ jobs:
   - ${{ parameters.customPublishVariables }}
 
   steps:
+  - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
+    parameters:
+      cloneVersionsRepo: ${{ variables.publishImageInfo }}
+      versionsRepoRef: ${{ parameters.versionsRepoRef }}
+
   - template: /eng/common/templates/steps/retain-build.yml@self
 
   - template: /eng/common/templates/steps/init-docker-linux.yml@self
@@ -41,6 +48,8 @@ jobs:
   - pwsh: |
       $azdoOrgName = Split-Path -Leaf $Env:SYSTEM_COLLECTIONURI
       echo "##vso[task.setvariable variable=azdoOrgName]$azdoOrgName"
+      $versionsRepoRoot = "$(Pipeline.Workspace)/s/${{ parameters.versionsRepoPath }}"
+      echo "##vso[task.setvariable variable=versionsRepoRoot]$versionsRepoRoot"
     displayName: Set Publish Variables
 
   - ${{ parameters.customInitSteps }}
@@ -138,13 +147,16 @@ jobs:
   - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
     displayName: Create EOL Annotation Data Directory
 
-  - powershell: >-
-      $(engCommonPath)/Invoke-WithRetry.ps1
-      "curl -fSL
-      --output $(imageInfoHostDir)/full-image-info-orig.json
-      https://raw.githubusercontent.com/$(gitHubVersionsRepoInfo.org)/$(gitHubVersionsRepoInfo.repo)/refs/heads/$(gitHubVersionsRepoInfo.branch)/$(gitHubImageInfoVersionsPath)"
+  - script: |-
+      cd $(versionsRepoRoot)
+      git pull origin $(gitHubVersionsRepoInfo.branch)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
-    displayName: Download Latest Image Info
+    displayName: Pull Latest Changes from Versions Repo
+
+  - script: >-
+      cp $(versionsRepoRoot)/$(gitHubImageInfoVersionsPath) $(imageInfoHostDir)/full-image-info-orig.json
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: Copy Latest Image Info from Versions Repo
 
   - script: >
       $(runImageBuilderCmd) mergeImageInfo
