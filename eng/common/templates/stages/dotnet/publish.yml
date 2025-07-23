@@ -10,6 +10,7 @@ parameters:
   customPublishInitSteps: []
   sourceBuildPipelineDefinitionId: ''
   sourceBuildPipelineRunId: ''
+  versionsRepoRef: null
 
 stages:
 - template: /eng/common/templates/stages/publish.yml@self
@@ -20,6 +21,7 @@ stages:
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
 
     customPublishInitSteps:
     - pwsh: |

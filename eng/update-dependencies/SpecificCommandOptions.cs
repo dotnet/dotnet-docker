@@ -32,6 +32,7 @@ namespace Dotnet.Docker
         public string InternalBaseUrl { get; init; } = "";
         public string InternalAccessToken { get; init; } = "";
         public bool IsInternal => !string.IsNullOrEmpty(InternalBaseUrl);
+        public bool IsSdkOnly => ProductVersions.Count == 1 && ProductVersions.ContainsKey("sdk");
 
         public static new List<Argument> Arguments =>
         [

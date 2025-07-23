@@ -1,12 +1,6 @@
 trigger: none
 pr: none
 
-resources:
-  pipelines:
-  # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
-  - pipeline: dotnet-docker-release-staging
-    source: dotnet-docker-release-staging
-
 variables:
 - template: /eng/pipelines/variables/core.yml@self
   parameters:
@@ -16,6 +10,18 @@ variables:
   value: ""
 - name: imageBuilder.queueArgs
   value: ""
+
+resources:
+  pipelines:
+  # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
+  - pipeline: dotnet-docker-release-staging
+    source: dotnet-docker-release-staging
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
@@ -30,6 +36,7 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        versionsRepoRef: VersionsRepo
         isStandalonePublish: true
         sourceBuildPipelineDefinitionId: "$(resources.pipeline.dotnet-docker-release-staging.pipelineID)"
         sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"

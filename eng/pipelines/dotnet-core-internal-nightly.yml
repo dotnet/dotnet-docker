@@ -16,13 +16,6 @@ parameters:
   type: boolean
   default: false
 
-resources:
-  repositories:
-  - repository: InternalVersionsRepo
-    type: github
-    endpoint: dotnet
-    name: dotnet/dotnet-docker-internal
-
 variables:
 - template: /eng/pipelines/variables/internal-core.yml@self
 - name: officialBranches
@@ -39,6 +32,14 @@ variables:
   - name: publishRepoPrefix
     value: internal/private/
 
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/dotnet-docker-internal
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
+
 extends:
   template: /eng/common/templates/1es-official.yml@self
   parameters:
@@ -47,3 +48,4 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        versionsRepoRef: VersionsRepo
