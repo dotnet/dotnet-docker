@@ -29,6 +29,9 @@ parameters:
   - name: versionsRepoRef
     type: string
     default: ''
+  - name: overrideImageInfoCommit
+    type: boolean
+    default: false
 
 stages:
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
@@ -45,3 +48,4 @@ stages:
     - template: /eng/pipelines/steps/set-publish-mcrdocs-args-var.yml@self
     sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    overrideImageInfoCommit: ${{ parameters.overrideImageInfoCommit }}

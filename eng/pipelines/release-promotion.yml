@@ -38,6 +38,11 @@ extends:
         publicProjectName: ${{ variables.publicProjectName }}
         versionsRepoRef: VersionsRepo
         isStandalonePublish: true
+        # Whenever staged images are published, we need to override the commit SHA since they were
+        # staged from an earlier, internal commit. We want the image info's commit URLs to point to
+        # the commit that this pipeline is running on, which should be the latest commit on the
+        # main branch.
+        overrideImageInfoCommit: true
         sourceBuildPipelineDefinitionId: "$(resources.pipeline.dotnet-docker-release-staging.pipelineID)"
         sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
         customPublishInitSteps:
