@@ -7,6 +7,9 @@ parameters:
   sourceBuildPipelineRunId: ""
   versionsRepoRef: null
   versionsRepoPath: ""
+  # When true, overrides the commit SHA in merged image info files to use the current repository commit.
+  # This ensures that updated images reference the correct commit in their commitUrl properties.
+  overrideImageInfoCommit: false
 
 jobs:
 - job: Publish
@@ -33,6 +36,11 @@ jobs:
     value: $(artifactsPath)/imageInfo
   - name: sourceBuildIdOutputDir
     value: $(Build.ArtifactStagingDirectory)/sourceBuildId
+  - name: commitOverrideArg
+    ${{ if eq(parameters.overrideImageInfoCommit, true) }}:
+      value: --commit-override $(Build.SourceVersion)
+    ${{ else }}:
+      value: ''
   - ${{ parameters.customPublishVariables }}
 
   steps:
@@ -167,6 +175,7 @@ jobs:
       --manifest $(manifest)
       --publish
       --initial-image-info-path $(imageInfoContainerDir)/full-image-info-orig.json
+      $(commitOverrideArg)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Merge Image Info
 
