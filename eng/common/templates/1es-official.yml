@@ -2,7 +2,7 @@
 # do the following:
 #
 # - Do not rely on any source code from the versions repo so as to not circumvent SDL and CG guidelines
-# - The versions repo resource must be named `InternalVersionsRepo` or `PublicVersionsRepo` to avoid SDL scans
+# - The versions repo resource must be named `VersionsRepo` to avoid SDL scans
 # - The versions repo must be checked out to `$(Build.SourcesDirectory)/versions` to avoid CG scans
 #
 # If the pipeline is not using a separate repository resource, ensure that there is no source code checked out in
@@ -57,8 +57,7 @@ extends:
           enabled: true
         sourceRepositoriesToScan:
           exclude:
-          - repository: InternalVersionsRepo
-          - repository: PublicVersionsRepo
+          - repository: VersionsRepo
         sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
         tsa:
           enabled: true
