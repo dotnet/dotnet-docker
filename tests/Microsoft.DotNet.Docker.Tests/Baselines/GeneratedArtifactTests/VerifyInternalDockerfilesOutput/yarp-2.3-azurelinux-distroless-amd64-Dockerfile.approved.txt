@@ -5,17 +5,21 @@ FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates \
-        unzip \
+        gzip \
+        tar \
     && tdnf clean all
 
 # Retrieve YARP
 RUN yarp_version=0.0.0 \
-    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output yarp.zip https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.zip \
-    && yarp_sha512='{sha512_placeholder}' \
-    && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+        --remote-name https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.tar.gz.sha512 \
+    && echo "$(cat reverse-proxy-linux-x64.tar.gz.sha512)  reverse-proxy-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
-    && unzip yarp.zip -d /app \
-    && rm yarp.zip
+    && tar --gzip --extract --no-same-owner --file reverse-proxy-linux-x64.tar.gz --directory /app \
+    && rm  \
+        reverse-proxy-linux-x64.tar.gz \
+        reverse-proxy-linux-x64.tar.gz.sha512
 
 
 # YARP image

@@ -5,17 +5,21 @@ FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
 RUN tdnf install -y \
         ca-certificates \
-        unzip \
+        gzip \
+        tar \
     && tdnf clean all
 
 # Retrieve YARP
-RUN yarp_version=3.0.0-preview.1.25373.1 \
-    && curl --fail --show-error --location --output yarp.zip https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.zip \
-    && yarp_sha512='db90bd806de2592a87860e295d5b10ec382e708f3384ac0e740cc73811b6866c5cb01947bda8afa961ccb2fda5f9c1784fe76e47b82db01da836bc09e027cc41' \
-    && echo "$yarp_sha512  yarp.zip" | sha512sum -c - \
+RUN yarp_version=3.0.0-preview.1.25375.1 \
+    && curl --fail --show-error --location \
+        --remote-name https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz.sha512 \
+    && echo "$(cat reverse-proxy-linux-arm64.tar.gz.sha512)  reverse-proxy-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
-    && unzip yarp.zip -d /app \
-    && rm yarp.zip
+    && tar --gzip --extract --no-same-owner --file reverse-proxy-linux-arm64.tar.gz --directory /app \
+    && rm  \
+        reverse-proxy-linux-arm64.tar.gz \
+        reverse-proxy-linux-arm64.tar.gz.sha512
 
 
 # YARP image
