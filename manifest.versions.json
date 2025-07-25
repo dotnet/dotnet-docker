@@ -179,7 +179,7 @@
     "yarp|2.3|base-url|main": "$(base-url|public|preview|nightly)",
     "yarp|2.3|base-url|nightly": "$(base-url|public|preview|nightly)",
     "yarp|2.3|base-url|checksums|main": "$(base-url|public-checksums|preview|nightly)",
-    "yarp|2.3|base-url|checksums|nightly":"$(base-url|public-checksums|preview|nightly)",
+    "yarp|2.3|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
     "yarp|2.3|dotnet-version": "9.0",
 
     "rocks-toolbox|latest|url": "https://raw.githubusercontent.com/canonical/rocks-toolbox",
