@@ -12,12 +12,14 @@ RUN tdnf install -y \
 # Retrieve YARP
 RUN yarp_version=3.0.0-preview.1.25375.1 \
     && curl --fail --show-error --location \
-        --output yarp.tar.gz https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz \
-        --output reverse-proxy-linux-arm64.tar.gz.sha512 https://ci.dot.net/public-checksums/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz.sha512 \
-    && echo "$(cat reverse-proxy-linux-arm64.tar.gz.sha512)  yarp.tar.gz" | sha512sum -c - \
+        --remote-name https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz.sha512 \
+    && echo "$(cat reverse-proxy-linux-arm64.tar.gz.sha512)  reverse-proxy-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
-    && tar --gzip --extract --no-same-owner --file yarp.tar.gz --directory /app \
-    && rm yarp.tar.gz
+    && tar --gzip --extract --no-same-owner --file reverse-proxy-linux-arm64.tar.gz --directory /app \
+    && rm  \
+        reverse-proxy-linux-arm64.tar.gz \
+        reverse-proxy-linux-arm64.tar.gz.sha512
 
 
 # YARP image

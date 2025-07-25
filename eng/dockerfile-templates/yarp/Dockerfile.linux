@@ -16,7 +16,6 @@
 
     set downloadUrl to cat(baseUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".tar.gz") ^
     set shaUrl to cat(baseChecksumUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".tar.gz.sha512") ^
-    set outFile to "yarp.tar.gz" ^
     set appDir to "/app" ^
     set sha to VARIABLES[join(["yarp", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
 
@@ -36,7 +35,6 @@ RUN yarp_version={{yarpVersion}} \
         "download-url": downloadUrl,
         "sha-url": shaUrl,
         "sha-file-is-bare": "true",
-        "file-name": outFile,
         "extract-to": appDir
     ], "    ")}}
 
