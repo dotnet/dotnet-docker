@@ -5,21 +5,37 @@
         product         : Product name, e.g. "yarp", "aspire-dashboard", etc.
         productVersion  : Version of the product that will be downloaded
         download-url    : URL to download the product from
+        sha-url         : URL to download the sha value from
         sha             : SHA512 checksum of the product archive
         file-name       : Name of the file to download, e.g. "yarp.zip"
         extract-to      : Directory where the product will be extracted to
 
-}}{{InsertTemplate("Dockerfile.linux.download-files", [
-    "files": [
-        ["url": ARGS["download-url"], "out-file": ARGS["file-name"]]
-    ]
+}}{{set shaUrlParts to split(ARGS["sha-url"], "/") ^
+    set shaFileName to shaUrlParts[len(shaUrlParts) - 1] ^
+    set filesToDownload to when(ARGS["sha-url"] > 0,
+        [
+            ["url": ARGS["download-url"], "out-file": ARGS["file-name"]],
+            ["url": ARGS["sha-url"], "out-file": shaFileName]
+        ],
+        [
+            ["url": ARGS["download-url"], "out-file": ARGS["file-name"]]
+        ]
+    )^
+    InsertTemplate("Dockerfile.linux.download-files", [
+    "files": filesToDownload
 ])}} \
-&& {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+&&{{
+if ARGS["sha-url"]: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+    "file": ARGS["file-name"],
+    "sha-function": "512",
+    "sha-file-is-bare": ARGS["sha-file-is-bare"],
+    "sha-file": shaFileName
+    ])}}}}{{if ARGS["sha"]: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
     "file": ARGS["file-name"],
     "sha-function": "512",
     "sha": ARGS["sha"],
     "sha-var-name": cat(ARGS["product"], "_sha512")
-])}} \
+    ])}}}} \
 && mkdir --parents {{ARGS["extract-to"]}} \
 && {{InsertTemplate("Dockerfile.linux.extract-file", [
     "file": ARGS["file-name"],

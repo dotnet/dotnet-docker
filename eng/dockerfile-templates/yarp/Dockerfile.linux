@@ -6,6 +6,7 @@
     set installerImageTag to cat("mcr.microsoft.com/azurelinux", "/base/core:", OS_VERSION_NUMBER) ^
 
     set baseUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])] ^
+    set baseChecksumUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|checksums|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
 
     set buildVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|build-version")] ^
@@ -13,8 +14,9 @@
     set yarpVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|", yarpVersionVariable)] ^
     set versionFolder to when(buildVersion != yarpVersion, buildVersion, '$yarp_version') ^
 
-    set downloadUrl to cat(baseUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".zip") ^
-    set outFile to "yarp.zip" ^
+    set downloadUrl to cat(baseUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".tar.gz") ^
+    set shaUrl to cat(baseChecksumUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".tar.gz.sha512") ^
+    set outFile to "yarp.tar.gz" ^
     set appDir to "/app" ^
     set sha to VARIABLES[join(["yarp", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
 
@@ -24,7 +26,7 @@
 FROM {{installerImageTag}} AS installer{{if isInternal:
 ARG ACCESSTOKEN}}
 
-{{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
+{{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 
 # Retrieve YARP
 RUN yarp_version={{yarpVersion}} \
@@ -32,7 +34,8 @@ RUN yarp_version={{yarpVersion}} \
         "product": "yarp",
         "productVersion": yarpVersion,
         "download-url": downloadUrl,
-        "sha": sha,
+        "sha-url": shaUrl,
+        "sha-file-is-bare": "true",
         "file-name": outFile,
         "extract-to": appDir
     ], "    ")}}
