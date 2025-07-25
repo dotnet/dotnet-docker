@@ -34,7 +34,7 @@ RUN yarp_version={{yarpVersion}} \
         "productVersion": yarpVersion,
         "download-url": downloadUrl,
         "sha-url": shaUrl,
-        "sha-file-is-bare": "true",
+        "sha-url-is-bare": "true",
         "extract-to": appDir
     ], "    ")}}
 

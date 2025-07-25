@@ -3,7 +3,6 @@
 
     ARGS:
         product         : Product name, e.g. "yarp", "aspire-dashboard", etc.
-        productVersion  : Version of the product that will be downloaded
         download-url    : URL to download the product from
         extract-to      : Directory where the product will be extracted to
         file-name       : (optional) Name of the file to download, e.g. "yarp.zip". If unspecified,
@@ -38,7 +37,7 @@
 &&{{if len(ARGS["sha-url"]) > 0: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
     "file": applianceFilename,
     "sha-function": "512",
-    "sha-file-is-bare": ARGS["sha-file-is-bare"],
+    "sha-file-is-bare": ARGS["sha-url-is-bare"],
     "sha-file": shaFileName
 ])}}}}{{if len(ARGS["sha"]) > 0: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
     "file": applianceFilename,
