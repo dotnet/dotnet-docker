@@ -21,7 +21,7 @@
     set shaUrlParts to split(ARGS["sha-url"], "/") ^
     set shaFileName to shaUrlParts[len(shaUrlParts) - 1] ^
 
-    set filesToDownload to when(len(ARGS["sha-url"]) > 0,
+    set filesToDownload to when(ARGS["sha-url"],
         [
             ["url": ARGS["download-url"]],
             ["url": ARGS["sha-url"]]
@@ -34,12 +34,12 @@
 }}{{InsertTemplate("Dockerfile.linux.download-files", [
     "files": filesToDownload
 ])}} \
-&&{{if len(ARGS["sha-url"]) > 0: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+&&{{if ARGS["sha-url"]: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
     "file": applianceFilename,
     "sha-function": "512",
     "sha-file-is-bare": ARGS["sha-url-is-bare"],
     "sha-file": shaFileName
-])}}}}{{if len(ARGS["sha"]) > 0: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
+])}}}}{{if ARGS["sha"]: {{InsertTemplate("Dockerfile.linux.validate-checksum", [
     "file": applianceFilename,
     "sha-function": "512",
     "sha": ARGS["sha"],
