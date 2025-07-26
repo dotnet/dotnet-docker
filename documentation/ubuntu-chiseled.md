@@ -49,7 +49,6 @@ First, acquire `chisel` and `chisel-wrapper`.
 FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview-noble AS chisel
 
 # Docker build arg documentation: https://docs.docker.com/build/building/variables/
-ARG BASE_IMAGE="mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled"
 # Find the latest chisel releases: https://github.com/canonical/chisel/releases
 ARG CHISEL_VERSION="v1.X.X"
 # Find the latest chisel-wrapper releases: https://github.com/canonical/rocks-toolbox/releases
@@ -62,10 +61,10 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/*
 
 # Install chisel and chisel-wrapper
-RUN chisel_url=https://github.com/canonical/chisel/releases/download/v${CHISEL_VERSION}/chisel_v${CHISEL_VERSION}_linux_amd64.tar.gz \
+RUN chisel_url=https://github.com/canonical/chisel/releases/download/${CHISEL_VERSION}/chisel_${CHISEL_VERSION}_linux_amd64.tar.gz \
     && curl -fSLOJ ${chisel_url} \
     && curl -fSL ${chisel_url}.sha384 | sha384sum -c - \
-    && tar -xzf chisel_v${CHISEL_VERSION}_linux_amd64.tar.gz -C /usr/bin/ chisel \
+    && tar -xzf chisel_${CHISEL_VERSION}_linux_amd64.tar.gz -C /usr/bin/ chisel \
     && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/${CHISEL_WRAPPER_VERSION}/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 ```
@@ -74,7 +73,7 @@ Then, copy over the filesystem from your desired base image and use `chisel` and
 See [canonical/chisel-releases](https://github.com/canonical/chisel-releases) for available slices.
 
 ```Dockerfile
-COPY --from=$BASE_IMAGE / /rootfs/
+COPY --from=mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled / /rootfs/
 
 RUN chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
         --release ubuntu-24.04 --root /rootfs/ \
@@ -89,8 +88,9 @@ Finally, copy the new root filesystem into a scratch base image for your final (
 FROM scratch AS final
 COPY --link --from=chisel /rootfs /
 WORKDIR /app
-COPY --link --from=build /app .
-USER $APP_UID
+COPY --link --from=chisel /app .
+# user as defined in .NET base image
+USER app
 ENTRYPOINT ["./app"]
 ```
 
