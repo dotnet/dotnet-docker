@@ -1,0 +1,48 @@
+trigger: none
+pr: none
+
+parameters:
+- name: sourceBuildPipelineRunId
+  displayName: >
+    Source build pipeline run ID. This refers to runs of *this pipeline*.
+    Override this parameter in combination with disabling the `Build` stage to
+    test images that were built in a different pipeline run. When
+    building new images, leave this value alone.
+  type: string
+  default: $(Build.BuildId)
+- name: noCache
+  displayName: >
+    Disable image caching. By default, an image is built only when its
+    Dockerfile was modified or its base image has been updated. Setting this
+    parameter to true forces all images to be built (except those excluded by
+    path arguments).
+  type: boolean
+  default: false
+
+variables:
+- template: /eng/pipelines/variables/core.yml@self
+  parameters:
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
+
+extends:
+  template: /eng/common/templates/1es-unofficial.yml@self
+  parameters:
+    stages:
+    - stage: DotNet
+      jobs:
+      - job: BuildDotNet
+        displayName: Build .NET images
+        pool:
+          vmImage: $(defaultLinuxAmd64PoolImage)
+        steps:
+        - powershell: |-
+            Write-Host "This pipeline is a work in progress.
+            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."
