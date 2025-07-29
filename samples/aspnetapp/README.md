@@ -102,10 +102,10 @@ Once you have the prerequisites set up, you can build the ASP.NET app sample for
 
 ```console
 # From an amd64 machine:
-docker buildx build --platform linux/arm64 -t aspnetapp .
+docker buildx build --platform linux/amd64 -t aspnetapp .
 
 # From an arm64 machine:
-docker buildx build --platform linux/amd64 -t aspnetapp .
+docker buildx build --platform linux/arm64 -t aspnetapp .
 ```
 
 You can also build both platforms at once:
