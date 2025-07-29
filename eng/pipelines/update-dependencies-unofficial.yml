@@ -1,0 +1,20 @@
+trigger: none
+pr: none
+
+variables:
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+
+extends:
+  template: /eng/common/templates/1es-unofficial.yml@self
+  parameters:
+    stages:
+    - stage: DotNet
+      jobs:
+      - job: UpdateDotNet
+        displayName: Update .NET (dotnet/dotnet)
+        pool:
+          vmImage: $(defaultLinuxAmd64PoolImage)
+        steps:
+        - powershell: |-
+            Write-Host "This pipeline is a work in progress.
+            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."
