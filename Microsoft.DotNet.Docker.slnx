@@ -1,0 +1,13 @@
+<Solution>
+  <Configurations>
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Folder Name="/eng/">
+    <Project Path="eng/update-dependencies/update-dependencies.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Microsoft.DotNet.Docker.Tests/Microsoft.DotNet.Docker.Tests.csproj" />
+  </Folder>
+</Solution>
