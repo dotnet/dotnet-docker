@@ -59,6 +59,7 @@
 *.vbproj text=auto
 *.fsproj text=auto
 *.dbproj text=auto
+*.slnx text=auto
 *.sln text=auto eol=crlf
 
 # Set linguist language for .h files explicitly based on
