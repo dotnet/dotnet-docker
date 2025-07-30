@@ -150,7 +150,7 @@ jobs:
   - template: /eng/common/templates/steps/publish-readmes.yml@self
     parameters:
       dryRunArg: $(dryRunArg)
-      condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
+      condition: false
 
   - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
     displayName: Create EOL Annotation Data Directory
@@ -275,8 +275,6 @@ jobs:
       --task "🟪 Copy Images"
       --task "🟪 Publish Manifest"
       --task "🟪 Wait for Image Ingestion"
-      --task "🟪 Publish Readmes"
-      --task "🟪 Wait for MCR Doc Ingestion"
       --task "🟪 Publish Image Info"
       --task "🟪 Ingest Kusto Image Info"
       --task "🟪 Generate EOL Annotation Data"
