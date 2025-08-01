@@ -1,0 +1,90 @@
+parameters:
+# Whether this is an official or unofficial pipeline
+- name: official
+  type: boolean
+  default: false
+# Build ID of the .NET staging pipeline to fetch updates from. This can be a
+# pipeline run of the real staging pipeline or the staging test pipeline, but
+# the stagingStorageAccount parameter must match which pipeline is used here.
+- name: buildId
+  type: string
+  default: ""
+# Staging storage account for .NET release artifacts
+- name: stagingStorageAccount
+  type: string
+  default: ""
+# This must match what's in the manifest.json. This will determine which base
+# URLs get updated in manifest.versions.json.
+- name: sourceBranch
+  type: string
+  default: "nightly"
+# Name of the branch that the changes will be pushed to.
+- name: targetBranch
+  type: string
+  default: ""
+# The password for git, used to push changes
+- name: gitPassword
+  type: string
+  default: ""
+# Service connection details to use for git operations. This must represent a
+# managed identity user that has "contributor" access to the target branch.
+# These are mutually exclusive with the "gitPassword" parameter.
+- name: gitServiceConnectionName
+  type: string
+  default: ""
+- name: gitServiceConnectionClientId
+  type: string
+  default: ""
+
+extends:
+  template: /eng/common/templates/1es-${{ iif(parameters.official, 'official', 'unofficial') }}.yml@self
+  parameters:
+    stages:
+    - stage: UpdateDepsStage
+      displayName: Update dotnet
+
+      jobs:
+      - template: /eng/pipelines/jobs/update-dependency.yml@self
+        parameters:
+          dependencyName: dotnet
+          updateSteps:
+
+          - ${{ if ne(parameters.gitPassword, '') }}:
+            - powershell: >-
+                Write-Host "##vso[task.setvariable variable=gitPassword;isreadonly=true;issecret=true]${{ parameters.gitPassword }}"
+              displayName: Set git password
+          - ${{ else }}:
+            - task: AzureCLI@2
+              displayName: Set git password (MI)
+              continueOnError: False
+              condition: and(succeeded(), true)
+              inputs:
+                azureSubscription: "${{ parameters.gitServiceConnectionName }}"
+                scriptType: "pscore"
+                scriptLocation: "inlineScript"
+                inlineScript: >-
+                  az login --identity --client-id "${{ parameters.gitServiceConnectionClientId }}";
+                  $password = $(az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query "accessToken" --output tsv);
+                  Write-Host "##vso[task.setvariable variable=gitPassword;isreadonly=true;issecret=true]$password"
+
+          - powershell: >-
+              dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+              from-staging-pipeline
+              ${{ parameters.buildId }}
+              --azdo-organization "$(System.CollectionUri)"
+              --azdo-project "$(System.TeamProject)"
+              --azdo-repo "$(Build.Repository.Name)"
+              --source-branch ${{ parameters.sourceBranch }}
+              --internal
+              --staging-storage-account ${{ parameters.stagingStorageAccount }}
+              --version-source-name "dotnet/dotnet"
+              --target-branch "${{ parameters.targetBranch }}"
+              --user "$(dotnetDockerBot.userName)"
+              --email "$(dotnetDockerBot.email)"
+              --password "$env:GIT_PASSWORD"
+            env:
+              # Used to download build artifacts from .NET release staging pipeline
+              SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+              # Used to push changes to the target branch
+              GIT_PASSWORD: $(gitPassword)
+            displayName: Update .NET
