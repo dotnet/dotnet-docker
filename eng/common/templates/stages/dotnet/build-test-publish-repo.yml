@@ -32,6 +32,7 @@ parameters:
   # Other common parameters
   internalProjectName: null
   publicProjectName: null
+  versionsRepoRef: null
 
 
 stages:
@@ -61,6 +62,7 @@ stages:
     # Other
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
 
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
@@ -70,3 +72,4 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}

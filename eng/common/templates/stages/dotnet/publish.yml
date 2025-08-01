@@ -10,6 +10,8 @@ parameters:
   customPublishInitSteps: []
   sourceBuildPipelineDefinitionId: ''
   sourceBuildPipelineRunId: ''
+  versionsRepoRef: null
+  overrideImageInfoCommit: false
 
 stages:
 - template: /eng/common/templates/stages/publish.yml@self
@@ -20,6 +22,8 @@ stages:
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
+    overrideImageInfoCommit: ${{ parameters.overrideImageInfoCommit }}
 
     customPublishInitSteps:
     - pwsh: |

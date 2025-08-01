@@ -14,6 +14,15 @@ parameters:
   sourceBuildPipelineDefinitionId: ''
   sourceBuildPipelineRunId: ''
 
+  versionsRepoRef: null
+  versionsRepoPath: "versions"
+
+  # When true, any updated images will have the SHA in their commit URL updated
+  # to the commit that this pipeline is running on, instead of the commit they
+  # were built from. Use in combination with isStandalonePublish to ensure that
+  # internally built images still reference public Dockerfiles.
+  overrideImageInfoCommit: false
+
 ################################################################################
 # Publish Images
 ################################################################################
@@ -65,3 +74,6 @@ stages:
         customInitSteps: ${{ parameters.customPublishInitSteps }}
         sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        versionsRepoRef: ${{ parameters.versionsRepoRef }}
+        versionsRepoPath: ${{ parameters.versionsRepoPath }}
+        overrideImageInfoCommit: ${{ parameters.overrideImageInfoCommit }}
