@@ -71,8 +71,9 @@ extends:
         tsa:
           enabled: true
     stages:
-    - template: /eng/common/templates/stages/setup-service-connections.yml@self
-      parameters:
-        pool: ${{ parameters.pool }}
-        serviceConnections: ${{ parameters.serviceConnections }}
+    - ${{ if gt(length(parameters.serviceConnections), 0) }}:
+      - template: /eng/common/templates/stages/setup-service-connections.yml@self
+        parameters:
+          pool: ${{ parameters.pool }}
+          serviceConnections: ${{ parameters.serviceConnections }}
     - ${{ parameters.stages }}

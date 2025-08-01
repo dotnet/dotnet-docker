@@ -59,7 +59,10 @@ internal class PipelineArtifactProvider(
     /// <summary>
     /// Downloads text content from a pipeline artifact file.
     /// </summary>
-    /// <param name="azdoOrganization">Azure DevOps organization</param>
+    /// <param name="azdoOrganization">
+    /// The URI of the Azure DevOps organization or collection.
+    /// For example: https://dev.azure.com/fabrikamfiber/.
+    /// </param>
     /// <param name="azdoProject">Azure DevOps project</param>
     /// <param name="stagingPipelineRunId">Pipeline run ID</param>
     /// <param name="artifactsToTry">The collection of artifact files to try, in order.</param>

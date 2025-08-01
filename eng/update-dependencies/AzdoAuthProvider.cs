@@ -25,9 +25,21 @@ public class AzdoAuthProvider
     /// </summary>
     public string AccessToken => _accessToken.Value;
 
+    /// <summary>
+    /// Gets a connection to Azure DevOps Services.
+    /// </summary>
+    /// <param name="azdoOrg">
+    /// The URI of the Azure DevOps organization or collection. For example,
+    /// https://dev.azure.com/fabrikamfiber/. You can get this from the Azure
+    /// Pipeline variable $(System.CollectionUri).
+    /// </param>
+    /// <returns>
+    /// A <see cref="VssConnection"/> that can be used to connect to Azure
+    /// DevOps Services.
+    /// </returns>
     public VssConnection GetVssConnection(string azdoOrg)
     {
-        var baseUrl = new Uri($"https://dev.azure.com/{azdoOrg}");
+        var baseUrl = new Uri(azdoOrg);
         var credential = new VssBasicCredential(userName: string.Empty, password: AccessToken);
         var connection = new VssConnection(baseUrl, credential);
         return connection;
