@@ -10,6 +10,7 @@ variables:
   value: ""
 - name: imageBuilder.queueArgs
   value: ""
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
 
 resources:
   pipelines:
