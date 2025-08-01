@@ -15,8 +15,6 @@ variables:
   value: public
 - name: internalProjectName
   value: internal
-- name: dockerHubRegistryCreds
-  value: --registry-creds 'docker.io=$(dotnetDockerHubBot.userName);$(BotAccount-dotnet-dockerhub-bot-PAT)'
 
 - name: linuxAmd64InternalPoolImage
   value: 1es-ubuntu-2204
@@ -66,5 +64,3 @@ variables:
   value: Docker-2025-${{ variables['System.TeamProject'] }}
 
 - group: DotNet-Docker-Common-2
-- ${{ if eq(variables['System.TeamProject'], 'internal') }}:
-  - group: DotNet-Docker-Secrets

@@ -22,7 +22,7 @@ stages:
     displayName: Setup service connections
     pool: ${{ parameters.pool }}
     steps:
-
+    - checkout: none
     - ${{ each serviceConnection in parameters.serviceConnections }}:
       - task: AzureCLI@2
         displayName: Setup ${{ serviceConnection.name }}
