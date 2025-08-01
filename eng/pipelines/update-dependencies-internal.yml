@@ -2,24 +2,21 @@ trigger: none
 pr: none
 
 parameters:
-  - name: skipPullRequest
-    displayName: Skip Pull Request
-    type: boolean
-    default: false
+- name: buildId
+  type: string
+  default: ""
 
 variables:
-- template: ../common/templates/variables/dotnet/common.yml
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+# Uses AzDO token to push changes internally
 - group: DotNet-AllOrgs-Darc-Pats
-stages:
-- stage: DotNet
-  jobs:
-  - job: UpdateDependencies
-    displayName: Update Dependencies (dotnet/sdk)
-    pool:
-      vmImage: $(defaultLinuxAmd64PoolImage)
-    steps:
-    - template: steps/update-dotnet-dependencies-specific.yml
-      parameters:
-        skipPullRequest: ${{ parameters.skipPullRequest }}
-        useInternalBuild: true
-        buildId: $(buildId)
+
+extends:
+  template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
+  parameters:
+    official: false
+    buildId: ${{ parameters.buildId }}
+    stagingStorageAccount: "dotnetstage"
+    sourceBranch: "nightly"
+    targetBranch: "testing/pipeline-$(Build.BuildId)"
+    gitPassword: "$(dn-bot-devdiv-dnceng-rw-code-pat)"

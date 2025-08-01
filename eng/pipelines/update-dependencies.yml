@@ -15,24 +15,17 @@ parameters:
     default: false
 
 variables:
-- template: ../common/templates/variables/dotnet/common.yml
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+# Uses GitHub token to create pull requests
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
 
-stages:
-- stage: DotNet
-  jobs:
-  - job: UpdateDotNet
-    displayName: Update .NET (dotnet/dotnet)
-    pool:
-      vmImage: $(defaultLinuxAmd64PoolImage)
-    steps:
-    - template: steps/update-dotnet-dependencies.yml
-      parameters:
-        channel: $(channel)
-        repo: "https://github.com/dotnet/dotnet"
-        versionSourceName: "dotnet/dotnet"
-        serviceConnection: "Darc: Maestro Production"
-        skipPullRequest: ${{ parameters.skipPullRequest }}
-  - template: jobs/update-tools.yml
-    parameters:
-      tools: ["chisel", "rocks-toolbox", "syft", "mingit"]
-      skipPullRequest: ${{ parameters.skipPullRequest }}
+extends:
+  template: /eng/pipelines/pipelines/update-dependencies.yml@self
+  parameters:
+    official: true
+    channel: $(channel)
+    ${{ if ne(parameters.skipPullRequest, true) }}:
+      gitHubAuthArgs: >-
+        --user $(dotnetDockerBot.userName)
+        --email $(dotnetDockerBot.email)
+        --password $(BotAccount-dotnet-docker-bot-PAT)

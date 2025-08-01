@@ -1,0 +1,60 @@
+parameters:
+# Whether this is an official or unofficial pipeline
+- name: official
+  type: boolean
+  default: false
+# BAR build channel to read .NET versions from
+- name: channel
+  type: string
+  default: ""
+# .NET image components to update
+- name: tools
+  type: object
+  default:
+  - "chisel"
+  - "rocks-toolbox"
+  - "syft"
+  - "mingit"
+# Additional authentication arguments to pass to update-dependencies
+- name: gitHubAuthArgs
+  type: string
+  default: ""
+
+extends:
+  template: /eng/common/templates/1es-${{ iif(parameters.official, 'official', 'unofficial') }}.yml@self
+  parameters:
+    stages:
+    - stage: UpdateDepsStage
+      displayName: Update dependencies
+
+      jobs:
+      - template: /eng/pipelines/jobs/update-dependency.yml@self
+        parameters:
+          dependencyName: dotnet
+          updateSteps:
+          - task: AzureCLI@2
+            displayName: Update Dotnet
+            inputs:
+              azureSubscription: "Darc: Maestro Production"
+              scriptType: "pscore"
+              scriptLocation: "inlineScript"
+              inlineScript: >-
+                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                from-channel
+                ${{ parameters.channel }}
+                https://github.com/dotnet/dotnet
+                --version-source-name 'dotnet/dotnet'
+                ${{ parameters.gitHubAuthArgs }}
+
+      - ${{ each tool in parameters.tools }}:
+        - template: /eng/pipelines/jobs/update-dependency.yml@self
+          parameters:
+            dependencyName: ${{ tool }}
+            updateSteps:
+            - powershell: >-
+                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                specific 9.0
+                --tool ${{ tool }}
+                --version-source-name ${{ tool }}
+                ${{ parameters.gitHubAuthArgs }}
+              displayName: Update ${{ tool }}
