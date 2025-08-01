@@ -71,8 +71,6 @@ namespace Dotnet.Docker
                     string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
                     Console.Error.WriteLine("Failed to update dependencies due to the following errors:");
                     Console.Error.WriteLine(errors);
-                    Console.Error.WriteLine();
-                    Console.Error.WriteLine("You may need to use the --compute-shas option if checksum files are missing.");
                     Environment.Exit(1);
                 }
 
