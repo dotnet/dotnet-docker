@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:10.0.100-preview.6-azurelinux3.0-arm64v8
+FROM $REPO:10.0.100-rc.1-azurelinux3.0-arm64v8
 
 RUN tdnf install -y \
         build-essential \
