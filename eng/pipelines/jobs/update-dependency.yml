@@ -1,0 +1,20 @@
+parameters:
+- name: dependencyName
+  type: string
+  default: ""
+- name: updateSteps
+  type: stepList
+  default: []
+
+jobs:
+- job: Update${{ replace(parameters.dependencyName, '-', '') }}Job
+  displayName: Update ${{ parameters.dependencyName }}
+  pool:
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
+    os: linux
+  steps:
+  - checkout: self
+    fetchDepth: 0
+  - template: /eng/pipelines/steps/install-dotnet.yml@self
+  - ${{ parameters.updateSteps }}

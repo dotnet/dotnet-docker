@@ -8,6 +8,8 @@ parameters:
 
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
+# Uses AzDO token to push changes internally
+- group: DotNet-AllOrgs-Darc-Pats
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
@@ -15,6 +17,5 @@ extends:
     buildId: ${{ parameters.buildId }}
     stagingStorageAccount: "dotnetstage"
     sourceBranch: "nightly"
-    targetBranch: "unofficial/pipeline-$(Build.BuildId)"
-    gitServiceConnectionName: "$(updateDepsInt-test.serviceConnectionName)"
-    gitServiceConnectionClientId: "$(updateDepsInt-test.serviceConnection.clientId)"
+    targetBranch: "testing/pipeline-$(Build.BuildId)"
+    gitPassword: "$(dn-bot-devdiv-dnceng-rw-code-pat)"
