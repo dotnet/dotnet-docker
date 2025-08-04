@@ -27,6 +27,7 @@ variables:
 - name: officialBranches
   # comma-delimited list of branch names
   value: nightly
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
 
 resources:
   repositories:
