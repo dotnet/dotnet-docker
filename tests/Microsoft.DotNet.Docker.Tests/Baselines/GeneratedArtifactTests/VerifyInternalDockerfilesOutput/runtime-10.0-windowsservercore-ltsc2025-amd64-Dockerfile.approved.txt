@@ -11,6 +11,7 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $dotnet_version = '0.0.0'; `
+        $dotnet_build_version = $dotnet_version + '.25401.103'; `
         $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
@@ -18,8 +19,8 @@ RUN powershell -Command `
             Authorization = \"Bearer $env:ACCESSTOKEN\"; `
             'x-ms-version' = '2017-11-09'; `
         }; `
-        Invoke-WebRequest -OutFile $dotnet_file https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/$dotnet_file -Headers $Headers; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/$dotnet_sha512_file -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnet_file https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/$dotnet_file -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/$dotnet_sha512_file -Headers $Headers; `
         `
         if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
