@@ -14,5 +14,4 @@ variables:
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
-    official: false
     channel: ${{ parameters.channel }}

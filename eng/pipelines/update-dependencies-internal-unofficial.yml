@@ -12,7 +12,6 @@ variables:
 extends:
   template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
   parameters:
-    official: false
     buildId: ${{ parameters.buildId }}
     stagingStorageAccount: "dotnetstage"
     sourceBranch: "nightly"
