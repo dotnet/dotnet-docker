@@ -71,21 +71,48 @@ namespace Dotnet.Docker
                     string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
                     Console.Error.WriteLine("Failed to update dependencies due to the following errors:");
                     Console.Error.WriteLine(errors);
-                    Console.Error.WriteLine();
-                    Console.Error.WriteLine("You may need to use the --compute-shas option if checksum files are missing.");
                     Environment.Exit(1);
                 }
 
-                if (updateResults.Any(result => result.ChangesDetected()))
+                if (!updateResults.Any(result => result.ChangesDetected()))
                 {
-                    if (Options.UpdateOnly)
+                    Trace.TraceInformation("No changes detected after updates.");
+                    return 0;
+                }
+
+                if (string.IsNullOrEmpty(Options.Email)
+                    || string.IsNullOrEmpty(Options.Password)
+                    || string.IsNullOrEmpty(Options.User)
+                    || string.IsNullOrEmpty(Options.TargetBranch))
+                {
+                    Trace.TraceInformation("Changes made but no credentials specified, skipping push to remote.");
+                    return 0;
+                }
+
+                GitRemote remote = Options switch
+                {
                     {
-                        Trace.TraceInformation($"Changes made but no GitHub credentials specified, skipping PR creation");
-                    }
-                    else
-                    {
-                        await CreatePullRequestAsync();
-                    }
+                        AzdoOrganization: not null and not "",
+                        AzdoProject: not null and not "",
+                        AzdoRepo: not null and not "",
+                    } => GitRemote.AzureDevOps,
+                    _ => GitRemote.GitHub,
+                };
+
+                string commitMessage = $"[{Options.TargetBranch}] Update dependencies from {Options.VersionSourceName}";
+
+                switch (remote)
+                {
+                    case GitRemote.AzureDevOps:
+                        PushToAzdoBranch(commitMessage, Options.TargetBranch);
+                        break;
+
+                    case GitRemote.GitHub:
+                        var branchSuffix = FormatBranchName($"UpdateDependencies-{Options.TargetBranch}-From-{Options.VersionSourceName}");
+                        var branchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix);
+                        var prOptions = new PullRequestOptions() { BranchNamingStrategy = branchNamingStrategy };
+                        await CreateGitHubPullRequest(commitMessage, prOptions, branchSuffix);
+                        break;
                 }
             }
             catch (Exception e)
@@ -122,30 +149,7 @@ namespace Dotnet.Docker
         // Replace slashes with hyphens for use in naming the branch
         private static string FormatBranchName(string branchName) => branchName.Replace('/', '-');
 
-        private static async Task CreatePullRequestAsync()
-        {
-            string commitMessage = $"[{Options.TargetBranch}] Update dependencies from {Options.VersionSourceName}";
-
-            string branchSuffix = Options.IsInternal
-                ? Options.TargetBranch
-                : FormatBranchName($"UpdateDependencies-{Options.TargetBranch}-From-{Options.VersionSourceName}");
-
-            PullRequestOptions prOptions = new()
-            {
-                BranchNamingStrategy = new SingleBranchNamingStrategy(branchSuffix)
-            };
-
-            if (Options.IsInternal)
-            {
-                PushToAzdoBranch(commitMessage, prOptions);
-            }
-            else
-            {
-                await CreateGitHubPullRequest(commitMessage, prOptions, branchSuffix);
-            }
-        }
-
-        private static void PushToAzdoBranch(string commitMessage, PullRequestOptions prOptions)
+        private static void PushToAzdoBranch(string commitMessage, string targetBranch)
         {
             using Repository repo = new(RepoRoot);
 
@@ -166,19 +170,20 @@ namespace Dotnet.Docker
             // Create a remote to AzDO
             string remoteName = GetUniqueName(
                 repo.Network.Remotes.Select(remote => remote.Name).ToList(),
-                Options.AzdoOrganization);
-            Remote remote = repo.Network.Remotes.Add(
-                remoteName,
-                $"https://dev.azure.com/{Options.AzdoOrganization}/{Options.AzdoProject}/_git/{Options.AzdoRepo}");
+                "azuredevops"
+            );
+
+            var url = $"{Options.AzdoOrganization}{Options.AzdoProject}/_git/{Options.AzdoRepo}";
+            Trace.WriteLine($"Adding remote {remoteName} with URL {url}");
+            Remote remote = repo.Network.Remotes.Add(remoteName, url);
 
             try
             {
                 // Push the commit to AzDO
                 string username = Options.Email.Substring(0, Options.Email.IndexOf('@'));
-                string remoteBranch = prOptions.BranchNamingStrategy.Prefix($"testing/{Options.DockerfileVersion}-internal");
-                string pushRefSpec = $@"refs/heads/{remoteBranch}";
+                string pushRefSpec = $@"refs/heads/{targetBranch}";
 
-                Trace.WriteLine($"Pushing to {remoteBranch}");
+                Trace.WriteLine($"Pushing to {targetBranch}");
 
                 // Force push
                 repo.Network.Push(remote, "+HEAD", pushRefSpec, pushOptions);
