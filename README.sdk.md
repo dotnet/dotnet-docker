@@ -70,13 +70,13 @@ Tags | Dockerfile | OS Version
 9.0.303-alpine3.22-amd64, 9.0-alpine3.22-amd64, 9.0.303-alpine3.22, 9.0-alpine3.22 | [Dockerfile](src/sdk/9.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
 9.0.303-noble-amd64, 9.0-noble-amd64, 9.0.303-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.303-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.303-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-8.0.412-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.412-bookworm-slim, 8.0-bookworm-slim, 8.0.412, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.412-alpine3.21-amd64, 8.0-alpine3.21-amd64, 8.0-alpine-amd64, 8.0.412-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
-8.0.412-alpine3.22-amd64, 8.0-alpine3.22-amd64, 8.0.412-alpine3.22, 8.0-alpine3.22 | [Dockerfile](src/sdk/8.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
-8.0.412-noble-amd64, 8.0-noble-amd64, 8.0.412-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-8.0.412-jammy-amd64, 8.0-jammy-amd64, 8.0.412-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-8.0.412-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.412-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-8.0.412-cbl-mariner2.0-amd64, 8.0-cbl-mariner2.0-amd64, 8.0.412-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
+8.0.413-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.413-bookworm-slim, 8.0-bookworm-slim, 8.0.413, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.413-alpine3.21-amd64, 8.0-alpine3.21-amd64, 8.0-alpine-amd64, 8.0.413-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
+8.0.413-alpine3.22-amd64, 8.0-alpine3.22-amd64, 8.0.413-alpine3.22, 8.0-alpine3.22 | [Dockerfile](src/sdk/8.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
+8.0.413-noble-amd64, 8.0-noble-amd64, 8.0.413-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+8.0.413-jammy-amd64, 8.0-jammy-amd64, 8.0.413-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.413-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.413-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+8.0.413-cbl-mariner2.0-amd64, 8.0-cbl-mariner2.0-amd64, 8.0.413-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 
 #### .NET 10 Preview Tags
 
@@ -98,13 +98,13 @@ Tags | Dockerfile | OS Version
 9.0.303-alpine3.22-arm64v8, 9.0-alpine3.22-arm64v8, 9.0.303-alpine3.22, 9.0-alpine3.22 | [Dockerfile](src/sdk/9.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
 9.0.303-noble-arm64v8, 9.0-noble-arm64v8, 9.0.303-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.303-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.303-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.412-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.412-bookworm-slim, 8.0-bookworm-slim, 8.0.412, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.412-alpine3.21-arm64v8, 8.0-alpine3.21-arm64v8, 8.0-alpine-arm64v8, 8.0.412-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
-8.0.412-alpine3.22-arm64v8, 8.0-alpine3.22-arm64v8, 8.0.412-alpine3.22, 8.0-alpine3.22 | [Dockerfile](src/sdk/8.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
-8.0.412-noble-arm64v8, 8.0-noble-arm64v8, 8.0.412-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.412-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.412-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.412-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.412-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.412-cbl-mariner2.0-arm64v8, 8.0-cbl-mariner2.0-arm64v8, 8.0.412-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
+8.0.413-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.413-bookworm-slim, 8.0-bookworm-slim, 8.0.413, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.413-alpine3.21-arm64v8, 8.0-alpine3.21-arm64v8, 8.0-alpine-arm64v8, 8.0.413-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
+8.0.413-alpine3.22-arm64v8, 8.0-alpine3.22-arm64v8, 8.0.413-alpine3.22, 8.0-alpine3.22 | [Dockerfile](src/sdk/8.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
+8.0.413-noble-arm64v8, 8.0-noble-arm64v8, 8.0.413-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.413-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.413-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.413-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.413-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.413-cbl-mariner2.0-arm64v8, 8.0-cbl-mariner2.0-arm64v8, 8.0.413-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
 #### .NET 10 Preview Tags
 
@@ -125,10 +125,10 @@ Tags | Dockerfile | OS Version
 9.0.303-alpine3.21-arm32v7, 9.0-alpine3.21-arm32v7, 9.0-alpine-arm32v7, 9.0.303-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 9.0.303-alpine3.22-arm32v7, 9.0-alpine3.22-arm32v7, 9.0.303-alpine3.22, 9.0-alpine3.22 | [Dockerfile](src/sdk/9.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
 9.0.303-noble-arm32v7, 9.0-noble-arm32v7, 9.0.303-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.412-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.412-bookworm-slim, 8.0-bookworm-slim, 8.0.412, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.412-alpine3.21-arm32v7, 8.0-alpine3.21-arm32v7, 8.0-alpine-arm32v7, 8.0.412-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
-8.0.412-alpine3.22-arm32v7, 8.0-alpine3.22-arm32v7, 8.0.412-alpine3.22, 8.0-alpine3.22 | [Dockerfile](src/sdk/8.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
-8.0.412-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.412-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.413-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.413-bookworm-slim, 8.0-bookworm-slim, 8.0.413, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.413-alpine3.21-arm32v7, 8.0-alpine3.21-arm32v7, 8.0-alpine-arm32v7, 8.0.413-alpine3.21, 8.0-alpine3.21, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
+8.0.413-alpine3.22-arm32v7, 8.0-alpine3.22-arm32v7, 8.0.413-alpine3.22, 8.0-alpine3.22 | [Dockerfile](src/sdk/8.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
+8.0.413-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.413-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 #### .NET 10 Preview Tags
 
@@ -142,7 +142,7 @@ Tags | Dockerfile | OS Version
 Tag | Dockerfile
 ---------| ---------------
 9.0.303-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
-8.0.412-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
+8.0.413-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
 
 #### .NET 10 Preview Tags
 
@@ -155,7 +155,7 @@ Tag | Dockerfile
 Tag | Dockerfile
 ---------| ---------------
 9.0.303-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-8.0.412-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+8.0.413-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 
 #### .NET 10 Preview Tags
 
@@ -168,7 +168,7 @@ Tag | Dockerfile
 Tag | Dockerfile
 ---------| ---------------
 9.0.303-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
-8.0.412-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
+8.0.413-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 #### .NET 10 Preview Tags
 
@@ -181,7 +181,7 @@ Tag | Dockerfile
 Tag | Dockerfile
 ---------| ---------------
 9.0.303-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-8.0.412-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+8.0.413-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 #### .NET 10 Preview Tags
 
@@ -194,14 +194,14 @@ Tag | Dockerfile
 Tag | Dockerfile
 ---------| ---------------
 9.0.303-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/sdk/9.0/nanoserver-1809/amd64/Dockerfile)
-8.0.412-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
+8.0.413-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/sdk/8.0/nanoserver-1809/amd64/Dockerfile)
 
 ### Windows Server Core 2019 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
 9.0.303-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-8.0.412-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
+8.0.413-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/sdk/tags/list) for all supported and unsupported tags.*

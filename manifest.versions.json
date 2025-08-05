@@ -21,7 +21,7 @@
     "aspire-dashboard|9.4|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|9.4|base-url|nightly": "$(base-url|public|preview|nightly)",
 
-    "aspnet|8.0|build-version": "8.0.18",
+    "aspnet|8.0|build-version": "8.0.19",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
 
     "aspnet|10.0|build-version": "10.0.0-preview.6.25358.103",
@@ -56,7 +56,7 @@
     "chisel|8.0|arm|sha384": "$(chisel|latest|arm|sha384)",
     "chisel|8.0|arm64|sha384": "$(chisel|latest|arm64|sha384)",
 
-    "dotnet|8.0|product-version": "8.0.18",
+    "dotnet|8.0|product-version": "8.0.19",
     "dotnet|8.0|fixed-tag": "$(dotnet|8.0|product-version)",
     "dotnet|8.0|minor-tag": "8.0",
     "dotnet|8.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -181,12 +181,12 @@
     "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
 
-    "runtime|8.0|build-version": "8.0.18",
+    "runtime|8.0|build-version": "8.0.19",
     "runtime|9.0|build-version": "9.0.7",
     "runtime|10.0|build-version": "10.0.0-preview.6.25358.103",
 
-    "sdk|8.0|build-version": "8.0.412",
-    "sdk|8.0|product-version": "8.0.412",
+    "sdk|8.0|build-version": "8.0.413",
+    "sdk|8.0|product-version": "8.0.413",
     "sdk|8.0|base-url|main": "$(dotnet|8.0|base-url|main)",
     "sdk|8.0|base-url|nightly": "$(dotnet|8.0|base-url|nightly)",
     "sdk|8.0|base-url|checksums|main": "$(sdk|8.0|base-url|main)",
