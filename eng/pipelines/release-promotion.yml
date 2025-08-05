@@ -16,7 +16,7 @@ resources:
   pipelines:
   # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
   - pipeline: dotnet-docker-release-staging
-    source: dotnet-docker-release-staging
+    source: dotnet-docker-release-promotion-official
   repositories:
   - repository: VersionsRepo
     type: github
