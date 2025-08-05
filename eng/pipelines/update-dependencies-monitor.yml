@@ -22,7 +22,9 @@ parameters:
     default: false
 
 variables:
-- template: ../common/templates/variables/dotnet/common.yml
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
+
 stages:
 - stage: Monitor
   jobs:

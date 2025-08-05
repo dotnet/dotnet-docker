@@ -8,6 +8,7 @@ parameters:
   linuxAmd64Pool: ""
   isInternalServicingValidation: false
   sourceBuildPipelineRunId: ""
+  versionsRepoRef: ""
 
 stages:
 - template: /eng/common/templates/stages/dotnet/build-and-test.yml@self

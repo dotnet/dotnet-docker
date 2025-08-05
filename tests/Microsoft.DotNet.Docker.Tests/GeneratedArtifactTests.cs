@@ -71,7 +71,8 @@ public class GeneratedArtifactTests
             $" --var 'base-url|public|maintenance|main={InternalBaseUrl}'" +
             $" --var 'base-url|public|maintenance|nightly={InternalBaseUrl}'" +
             $" --var 'base-url|public|preview|main={InternalBaseUrl}'" +
-            $" --var 'base-url|public|preview|nightly={InternalBaseUrl}'";
+            $" --var 'base-url|public|preview|nightly={InternalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|preview|nightly={InternalBaseUrl}'";
 
         // Generate internal Dockerfiles
         ExecuteScript(

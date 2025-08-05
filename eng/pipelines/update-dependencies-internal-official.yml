@@ -1,0 +1,21 @@
+trigger: none
+pr: none
+
+parameters:
+- name: buildId
+  type: string
+  default: ""
+
+variables:
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+# Uses AzDO token to push changes internally
+- group: DotNet-AllOrgs-Darc-Pats
+
+extends:
+  template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
+  parameters:
+    buildId: ${{ parameters.buildId }}
+    stagingStorageAccount: "dotnetstage"
+    sourceBranch: "nightly"
+    targetBranch: "testing/pipeline-$(Build.BuildId)"
+    gitPassword: "$(dn-bot-devdiv-dnceng-rw-code-pat)"

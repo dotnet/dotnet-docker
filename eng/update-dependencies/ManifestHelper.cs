@@ -27,16 +27,34 @@ public static partial class ManifestHelper
     /// <summary>
     /// Constructs the name of the product version base URL variable.
     /// </summary>
-    /// <param name="dockerfileVersion">Dockerfile version.</param>
-    /// <param name="branch">Name of the branch.</param>
-    public static string GetBaseUrlVariableName(string dockerfileVersion, string branch, string? versionSourceName)
+    /// <param name="dockerfileVersion">
+    /// Dockerfile version. This should be a major.minor version e.g. "8.0",
+    /// "9.0", "10.0".
+    /// </param>
+    /// <param name="branch">
+    /// Name of the branch. This is typically "main" or "nightly".
+    /// </param>
+    public static string GetBaseUrlVariableName(
+        string dockerfileVersion,
+        string branch,
+        string versionSourceName = "",
+        bool sdkOnlyRelease = false
+    )
     {
-        string product = versionSourceName switch
+        string product;
+        if (sdkOnlyRelease)
         {
-            string v when v.Contains("dotnet-monitor") => $"monitor",
-            string v when v.Contains("aspire-dashboard") => $"aspire-dashboard",
-            _ => "dotnet",
-        };
+            product = "sdk";
+        }
+        else
+        {
+            product = versionSourceName switch
+            {
+                string v when v.Contains("dotnet-monitor") => "monitor",
+                string v when v.Contains("aspire-dashboard") => "aspire-dashboard",
+                _ => "dotnet",
+            };
+        }
 
         return $"{product}|{dockerfileVersion}|base-url|{branch}";
     }

@@ -1,0 +1,17 @@
+trigger: none
+pr: none
+
+parameters:
+- name: channel
+  displayName: BAR build channel to read .NET versions from (see aka.ms/bar)
+  type: string
+  default: ""
+
+variables:
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+- group: DotNet-Docker-Common-2
+
+extends:
+  template: /eng/pipelines/pipelines/update-dependencies.yml@self
+  parameters:
+    channel: ${{ parameters.channel }}

@@ -9,9 +9,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve Aspire Dashboard
-RUN dotnet_aspire_version=9.3.0-preview.1.25265.20 \
-    && curl --fail --show-error --location --output aspire_dashboard.zip https://ci.dot.net/public/aspire/$dotnet_aspire_version/aspire-dashboard-linux-arm64.zip \
-    && aspire_dashboard_sha512='30f865ca6b004c5f2ce2a43bf1c079d08a6200ef0f5d4969811abf335dd3a0509d4c258fb1edf97c3ed9f39419f8c8ee610eccf8d5adad60f641b0d220741bcb' \
+RUN dotnet_aspire_version=9.4.0-preview.1.25378.8 \
+    && curl --fail --show-error --location --output aspire_dashboard.zip https://ci.dot.net/public/aspire/$dotnet_aspire_version/aspire-dashboard-linux-x64.zip \
+    && aspire_dashboard_sha512='81c6d8e792ba2edaa33894aefed4b0246e2e2a56e0132975ba343fe396f3c6fc69aaf3225dca5cb26d91e243e685cedfa09ba7ba7f3edb410aa75e940c5dec0e' \
     && echo "$aspire_dashboard_sha512  aspire_dashboard.zip" | sha512sum -c - \
     && mkdir --parents /app \
     && unzip aspire_dashboard.zip -d /app \
@@ -19,7 +19,7 @@ RUN dotnet_aspire_version=9.3.0-preview.1.25265.20 \
 
 
 # Aspire Dashboard image
-FROM $REPO:8.0.18-azurelinux3.0-distroless-extra-arm64v8
+FROM $REPO:8.0.19-azurelinux3.0-distroless-extra-amd64
 
 WORKDIR /app
 COPY --from=installer /app .

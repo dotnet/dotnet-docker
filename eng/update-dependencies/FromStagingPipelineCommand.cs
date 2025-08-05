@@ -48,9 +48,23 @@ internal partial class FromStagingPipelineCommand(
         string dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
         string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(releaseConfig.RuntimeBuild).ToString();
 
-        var productVersions = options.Internal switch
+        var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
         {
-            true => new Dictionary<string, string?>
+            // SDK-only internal/staging release
+            (true, true) => new Dictionary<string, string?>
+            {
+                // SDK-only releases are almost always one-off updates/bug
+                // fixes on top of an existing release of the Runtime and
+                // ASP.NET Core.
+                //
+                // If the release config tells us that this is an
+                // SDK-only release, we can assume that we have already
+                // released the runtime/aspnet versions that it's based on, and
+                // therefore we shouldn't update them unnecessarily.
+                { "sdk", VersionHelper.GetHighestSdkVersion(releaseConfig.SdkBuilds) }
+            },
+            // Internal/staging release
+            (true, false) => new Dictionary<string, string?>
             {
                 { "dotnet", dotnetProductVersion },
                 { "runtime",  releaseConfig.RuntimeBuild },
@@ -58,7 +72,9 @@ internal partial class FromStagingPipelineCommand(
                 { "aspnet-composite", releaseConfig.AspBuild },
                 { "sdk", VersionHelper.GetHighestSdkVersion(releaseConfig.SdkBuilds) },
             },
-            false => new Dictionary<string, string?>
+            // Public release - whether or not it's an SDK-only release doesn't
+            // matter because the product versions will end up being the same.
+            (false, _) => new Dictionary<string, string?>
             {
                 { "dotnet", dotnetProductVersion },
                 { "runtime", releaseConfig.Runtime },

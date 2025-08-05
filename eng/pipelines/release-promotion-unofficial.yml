@@ -1,0 +1,44 @@
+trigger: none
+pr: none
+
+variables:
+- template: /eng/pipelines/variables/core.yml@self
+  parameters:
+    sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging-unofficial.runID)"
+# Set pathArgs to empty in order to publish all images
+- name: imageBuilder.pathArgs
+  value: ""
+- name: imageBuilder.queueArgs
+  value: ""
+- name: gitHubVersionsRepoInfo.org
+  value: dotnet
+- name: gitHubVersionsRepoInfo.repo
+  value: dotnet-docker-internal
+- name: gitHubVersionsRepoInfo.branch
+  value: main
+
+resources:
+  pipelines:
+  - pipeline: dotnet-docker-release-staging-unofficial
+    source: dotnet-docker-release-staging-unofficial
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/dotnet-docker-internal
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
+
+extends:
+  template: /eng/common/templates/1es-unofficial.yml@self
+  parameters:
+    stages:
+    - stage: DotNet
+      jobs:
+      - job: PublishDotNet
+        displayName: Publish .NET images
+        pool:
+          vmImage: $(defaultLinuxAmd64PoolImage)
+        steps:
+        - powershell: |-
+            Write-Host "This pipeline is a work in progress.
+            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."

@@ -6,13 +6,6 @@
 trigger: none
 pr: none
 
-resources:
-  repositories:
-  - repository: InternalVersionsRepo
-    type: github
-    endpoint: dotnet
-    name: dotnet/versions
-
 parameters:
 - name: sourceBuildPipelineRunId
   displayName: >
@@ -22,11 +15,28 @@ parameters:
     building new images, leave this value alone.
   type: string
   default: $(Build.BuildId)
+- name: noCache
+  displayName: >
+    Disable image caching. By default, an image is built only when its
+    Dockerfile was modified or its base image has been updated. Setting this
+    parameter to true forces all images to be built (except those excluded by
+    path arguments).
+  type: boolean
+  default: false
 
 variables:
 - template: /eng/pipelines/variables/core.yml@self
   parameters:
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
+
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
@@ -40,8 +50,7 @@ extends:
       parameters:
         internalProjectName: ${{ variables.internalProjectName }}
         publicProjectName: ${{ variables.publicProjectName }}
+        versionsRepoRef: VersionsRepo
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
         isInternalServicingValidation: true
-        # We always want staged images to be as up-to-date as possible,
-        # so don't rely on any caching behavior.
-        noCache: true
+        noCache: ${{ parameters.noCache }}
