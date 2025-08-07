@@ -23,11 +23,6 @@ variables:
 - name: officialRepoPrefixes
   value: public/,internal/private/,unlisted/
 
-- name: mcrDocsRepoInfo.authArgs
-  value: >-
-    --gh-private-key '$(GitHubApp-NET-Docker-MAR-Docs-Updater-PrivateKey)'
-    --gh-app-client-id '$(gitHubApp.marDocsUpdater.clientId)'
-    --gh-app-installation-id '$(gitHubApp.marDocsUpdater.microsoft.installationId)'
 - name: mcrDocsRepoInfo.userName
   value: $(gitHubApp.marDocsUpdater.userName)
 - name: mcrDocsRepoInfo.email
@@ -39,8 +34,12 @@ variables:
   value: dotnet
 - name: gitHubNotificationsRepoInfo.repo
   value: dotnet-docker-internal
+# $(gitHubNotificationsRepoInfo.authArgs) is needed by the "Post Publish
+# Notification" step in eng/common/templates/jobs/publish.yml#L271, even during
+# a dry-run. This value is a placeholder that gets replaced when referencing
+# the secrets.yml variable template.
 - name: gitHubNotificationsRepoInfo.authArgs
-  value: --gh-token '$(BotAccount-dotnet-docker-bot-PAT)'
+  value: --gh-token 'placeholder'
 
 - name: gitHubVersionsRepoInfo.org
   value: dotnet
@@ -50,8 +49,6 @@ variables:
   value: main
 - name: gitHubVersionsRepoInfo.path
   value: ${{ variables.commonVersionsImageInfoPath }}
-- name: gitHubVersionsRepoInfo.authArgs
-  value: --gh-token '$(BotAccount-dotnet-docker-bot-PAT)'
 - name: gitHubVersionsRepoInfo.userName
   value: $(dotnetDockerBot.userName)
 - name: gitHubVersionsRepoInfo.email

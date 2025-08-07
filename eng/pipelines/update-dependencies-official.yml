@@ -1,0 +1,30 @@
+trigger: none
+pr: none
+schedules:
+- cron: "0 13 * * Mon-Fri"
+  displayName: M-F daily build
+  branches:
+    include:
+    - nightly
+  always: true
+
+parameters:
+  - name: skipPullRequest
+    displayName: Skip Pull Request
+    type: boolean
+    default: false
+
+variables:
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+# Uses GitHub token to create pull requests
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
+
+extends:
+  template: /eng/pipelines/pipelines/update-dependencies.yml@self
+  parameters:
+    channel: $(channel)
+    ${{ if ne(parameters.skipPullRequest, true) }}:
+      gitHubAuthArgs: >-
+        --user $(dotnetDockerBot.userName)
+        --email $(dotnetDockerBot.email)
+        --password $(BotAccount-dotnet-docker-bot-PAT)

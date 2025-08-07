@@ -1,20 +1,20 @@
 trigger: none
 pr: none
 
+parameters:
+- name: buildId
+  type: string
+  default: ""
+
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
 
 extends:
-  template: /eng/common/templates/1es-unofficial.yml@self
+  template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
   parameters:
-    stages:
-    - stage: DotNet
-      jobs:
-      - job: UpdateDotNet
-        displayName: Update .NET (dotnet/dotnet)
-        pool:
-          vmImage: $(defaultLinuxAmd64PoolImage)
-        steps:
-        - powershell: |-
-            Write-Host "This pipeline is a work in progress.
-            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."
+    buildId: ${{ parameters.buildId }}
+    stagingStorageAccount: "dotnetstage"
+    sourceBranch: "nightly"
+    targetBranch: "unofficial/pipeline-$(Build.BuildId)"
+    gitServiceConnectionName: "$(updateDepsInt-test.serviceConnectionName)"
+    gitServiceConnectionClientId: "$(updateDepsInt-test.serviceConnection.clientId)"

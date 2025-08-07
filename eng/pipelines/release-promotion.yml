@@ -10,12 +10,13 @@ variables:
   value: ""
 - name: imageBuilder.queueArgs
   value: ""
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
 
 resources:
   pipelines:
   # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
   - pipeline: dotnet-docker-release-staging
-    source: dotnet-docker-release-staging
+    source: dotnet-docker-release-staging-official
   repositories:
   - repository: VersionsRepo
     type: github

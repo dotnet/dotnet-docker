@@ -1,20 +1,17 @@
 trigger: none
 pr: none
 
+parameters:
+- name: channel
+  displayName: BAR build channel to read .NET versions from (see aka.ms/bar)
+  type: string
+  default: ""
+
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
+- group: DotNet-Docker-Common-2
 
 extends:
-  template: /eng/common/templates/1es-unofficial.yml@self
+  template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
-    stages:
-    - stage: DotNet
-      jobs:
-      - job: UpdateDotNet
-        displayName: Update .NET (dotnet/dotnet)
-        pool:
-          vmImage: $(defaultLinuxAmd64PoolImage)
-        steps:
-        - powershell: |-
-            Write-Host "This pipeline is a work in progress.
-            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."
+    channel: ${{ parameters.channel }}
