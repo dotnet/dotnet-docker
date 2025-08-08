@@ -83,7 +83,6 @@ Tags | Dockerfile | OS Version
 8.0.413-noble-amd64, 8.0-noble-amd64, 8.0.413-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 8.0.413-jammy-amd64, 8.0-jammy-amd64, 8.0.413-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.413-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.413-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-8.0.413-cbl-mariner2.0-amd64, 8.0-cbl-mariner2.0-amd64, 8.0.413-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/amd64/Dockerfile) | CBL-Mariner 2.0
 
 #### .NET 10 Preview Tags
 
@@ -111,7 +110,6 @@ Tags | Dockerfile | OS Version
 8.0.413-noble-arm64v8, 8.0-noble-arm64v8, 8.0.413-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 8.0.413-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.413-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.413-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.413-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.413-cbl-mariner2.0-arm64v8, 8.0-cbl-mariner2.0-arm64v8, 8.0.413-cbl-mariner2.0, 8.0-cbl-mariner2.0 | [Dockerfile](src/sdk/8.0/cbl-mariner2.0/arm64v8/Dockerfile) | CBL-Mariner 2.0
 
 #### .NET 10 Preview Tags
 
