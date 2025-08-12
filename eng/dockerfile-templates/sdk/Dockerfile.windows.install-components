@@ -17,7 +17,7 @@
         "shared"
     ] ^
     if (dotnetVersion != "8.0" && dotnetVersion != "9.0"):{{
-        set sdkExtractPaths to cat(["dnx.cmd"], sdkExtractPaths)
+        set sdkExtractPaths to cat(["dnx.cmd", "dnx.ps1"], sdkExtractPaths)
     }}^
 
     set sdkExtractGroups to [

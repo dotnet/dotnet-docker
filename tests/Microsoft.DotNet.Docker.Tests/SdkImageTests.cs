@@ -229,6 +229,29 @@ namespace Microsoft.DotNet.Docker.Tests
             );
         }
 
+        /// <summary>
+        /// Verifies that dnx is on the PATH and that it is functional.
+        /// </summary>
+        [DotNetTheory]
+        [MemberData(nameof(GetImageData))]
+        public void VerifyDnxInstallation(ProductImageData imageData)
+        {
+            if (!imageData.SupportsDnx)
+            {
+                return;
+            }
+
+            var dnxCommand = DockerHelper.IsLinuxContainerModeEnabled
+                ? "dnx --help"
+                : "dnx.cmd --help";
+
+            DockerHelper.Run(
+                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
+                name: imageData.GetIdentifier("dnx"),
+                command: dnxCommand
+            );
+        }
+
         private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
         {
             string dotnetPath;

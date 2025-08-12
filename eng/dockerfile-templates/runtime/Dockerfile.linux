@@ -54,7 +54,10 @@ RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
 if isDistroless:
 
 RUN mkdir /dotnet-symlink \
-    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet}}
+    && {{InsertTemplate("../Dockerfile.linux.symlink", [
+        "from": "/usr/share/dotnet/dotnet",
+        "to": "/dotnet-symlink/dotnet"
+    ])}}}}
 
 
 # .NET runtime image
@@ -73,4 +76,7 @@ CMD ["--info"]^
 else:
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-RUN {{InsertTemplate("Dockerfile.linux.symlink")}}}}
+RUN {{InsertTemplate("../Dockerfile.linux.symlink", [
+    "from": "/usr/share/dotnet/dotnet",
+    "to": "/usr/bin/dotnet"
+])}}}}

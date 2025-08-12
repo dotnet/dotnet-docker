@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:10.0.0-preview.6-alpine3.22-amd64 AS installer
+FROM $REPO:10.0.0-preview.7-alpine3.22-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.100-preview.6.25358.103 \
+RUN dotnet_sdk_version=10.0.100-preview.7.25380.108 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
@@ -16,7 +16,7 @@ RUN dotnet_sdk_version=10.0.100-preview.6.25358.103 \
 
 
 # .NET SDK image
-FROM $REPO:10.0.0-preview.6-alpine3.22-amd64
+FROM $REPO:10.0.0-preview.7-alpine3.22-amd64
 
 ENV \
     # Do not generate certificate
@@ -24,7 +24,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-preview.6.25358.103 \
+    DOTNET_SDK_VERSION=10.0.100-preview.7.25380.108 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -46,8 +46,9 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-# Trigger first run experience by running arbitrary cmd
-RUN dotnet help
+RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
+    # Trigger first run experience by running arbitrary cmd
+    && dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.6.0-preview.4 \

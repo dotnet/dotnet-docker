@@ -18,6 +18,8 @@
     set isPowerShellSupported to !(isAlpine && ARCH_SHORT != "x64") ^
     set includePowerShellVars to isPowerShellSupported || dotnetVersion = "8.0" || dotnetVersion = "9.0" ^
 
+    set dnxIsSupported to dotnetVersion != "8.0" && dotnetVersion != "9.0" ^
+
     set pkgs to filter(
         when(isAlpine,
             when(dotnetVersion = "8.0",
@@ -64,7 +66,7 @@
         "./LICENSE.txt",
         "./ThirdPartyNotices.txt"
     ]^
-    if (dotnetVersion != "8.0" && dotnetVersion != "9.0"):{{
+    if (dnxIsSupported):{{
         set sdkExtractPaths to cat(["./dnx"], sdkExtractPaths)
     }}^_
 
@@ -99,6 +101,14 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-{{InsertTemplate("Dockerfile.linux.first-run")}}{{if isPowerShellSupported:
+{{if dnxIsSupported:RUN {{
+        InsertTemplate("../Dockerfile.linux.symlink", [
+            "from": "/usr/share/dotnet/dnx",
+            "to": "/usr/bin/dnx"
+        ])
+    }} \
+    }}{{InsertTemplate("Dockerfile.linux.first-run", [
+        "append-cmd": dnxIsSupported
+    ], when(dnxIsSupported, "    ", ""))}}{{if isPowerShellSupported:
 
 {{InsertTemplate("Dockerfile.linux.install-powershell")}}}}
