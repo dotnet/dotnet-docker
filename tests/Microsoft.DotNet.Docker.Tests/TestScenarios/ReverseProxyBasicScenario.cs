@@ -58,7 +58,6 @@ public class YarpBasicScenario : ITestScenario
         try
         {
             // Deploy opentelemetry endpoint
-            string otelAppTag = "otlptestlistener";
             string sampleFolder = Path.Combine(DockerHelper.TestArtifactsDir, "otlptestlistener");
             string dockerfilePath = $"{sampleFolder}/Dockerfile";
             _dockerHelper.Build(otelContainerTag, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
