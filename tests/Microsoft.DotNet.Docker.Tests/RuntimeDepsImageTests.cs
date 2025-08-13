@@ -5,6 +5,7 @@
 using System.Collections.Generic;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
+using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -118,7 +119,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 OutputHelper.WriteLine("This test is only relevant to distroless images.");
                 return;
             }
-            Assert.NotEmpty(GetOSReleaseInfo(imageData, ImageRepo, DockerHelper));
+
+            var osReleaseInfo = GetOSReleaseInfo(imageData, ImageRepo, DockerHelper, OutputHelper);
+            OutputHelper.WriteLine($"OS Release Info: {osReleaseInfo}");
+            osReleaseInfo.ShouldNotBeEmpty();
         }
 
         /// <summary>
@@ -164,9 +168,10 @@ namespace Microsoft.DotNet.Docker.Tests
         private static string GetOSReleaseInfo(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper)
+            DockerHelper dockerHelper,
+            ITestOutputHelper outputHelper)
         {
-            JsonNode output = GetSyftOutput("os-release-info", imageData, imageRepo, dockerHelper);
+            JsonNode output = SyftHelper.Scan(imageData, imageRepo, dockerHelper, outputHelper: outputHelper);
             JsonObject distro = (JsonObject)output["distro"];
             return (string)distro["version"];
         }

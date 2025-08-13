@@ -182,7 +182,13 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<string> extraExcludePaths = null)
         {
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
-            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, dockerHelper, extraExcludePaths);
+            IEnumerable<string> actualPackages = GetInstalledPackages(
+                imageData,
+                imageRepo,
+                dockerHelper,
+                outputHelper,
+                extraExcludePaths
+            );
 
             string imageName = imageData.GetImage(imageRepo, dockerHelper, skipPull: true);
             ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, outputHelper);
@@ -196,13 +202,12 @@ namespace Microsoft.DotNet.Docker.Tests
             ITestOutputHelper outputHelper)
         {
             outputHelper.WriteLine($"Expected Packages: [ {string.Join(", ", expectedPackages)} ]");
+            outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
 
             // Verify we only include strictly necessary packages in distroless images
             if (isDistroless)
             {
-                outputHelper.WriteLine($"Actual Packages: [ {string.Join(", ", actualPackages)} ]");
-                actualPackages.Should().BeEquivalentTo(expectedPackages,
-                    because: $"image {imageName} is distroless");
+                actualPackages.Should().BeEquivalentTo(expectedPackages, because: $"image {imageName} is distroless");
                 return;
             }
 
@@ -215,9 +220,17 @@ namespace Microsoft.DotNet.Docker.Tests
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
             DockerHelper dockerHelper,
+            ITestOutputHelper outputHelper,
             IEnumerable<string> extraExcludePaths = null)
         {
-            JsonNode output = GetSyftOutput("package-info", imageData, imageRepo, dockerHelper, extraExcludePaths);
+            JsonNode output = SyftHelper.Scan(
+                imageData,
+                imageRepo,
+                dockerHelper,
+                outputHelper,
+                extraExcludePaths
+            );
+
             return ((JsonArray)output["artifacts"])
                 .Select(artifact => artifact["name"]?.ToString())
                 // Syft can sometimes detect duplicates of packages if they have a distro-specific version suffix. Syft
@@ -229,65 +242,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 //
                 // So we need to remove duplicates.
                 .Distinct();
-        }
-
-        protected static JsonNode GetSyftOutput(
-            string syftContainerName,
-            ProductImageData imageData,
-            DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper,
-            IEnumerable<string> extraExcludePaths = null)
-        {
-            string syftImage = $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}";
-            syftImage = dockerHelper.PullDockerHubImage(syftImage);
-
-            string imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
-
-            string outputContainerFilePath = "/artifacts/output.json";
-            string tempDir = null;
-            string outputContents = null;
-
-            // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime. We only care
-            // about the packages from the linux distro for this test.
-            extraExcludePaths ??= [];
-            extraExcludePaths = extraExcludePaths.Append("/usr/share/dotnet");
-            IEnumerable<string> excludeArgs = extraExcludePaths.Select(path => $"--exclude {path}");
-
-            string[] args = [
-                "scan",
-                $"docker:{imageToInspect}",
-                $"-o json={outputContainerFilePath}",
-                ..excludeArgs
-            ];
-
-            try
-            {
-                dockerHelper.Run(
-                    syftImage,
-                    syftContainerName,
-                    string.Join(' ', args),
-                    skipAutoCleanup: true,
-                    useMountedDockerSocket: true);
-
-                tempDir = Directory.CreateDirectory(
-                    Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
-
-                dockerHelper.Copy($"{syftContainerName}:{outputContainerFilePath}", tempDir);
-
-                string outputLocalFilePath = Path.Join(tempDir, Path.GetFileName(outputContainerFilePath));
-                outputContents = File.ReadAllText(outputLocalFilePath);
-            }
-            finally
-            {
-                if (!string.IsNullOrEmpty(tempDir))
-                {
-                    Directory.Delete(tempDir, true);
-                }
-                dockerHelper.DeleteContainer(syftContainerName);
-            }
-
-            return JsonNode.Parse(outputContents)
-                    ?? throw new JsonException($"Unable to parse the output as JSON:{Environment.NewLine}{outputContents}");
         }
 
         internal static IEnumerable<string> GetExpectedPackages(ProductImageData imageData, DotNetImageRepo imageRepo)
