@@ -21,10 +21,12 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             DockerHelper = new DockerHelper(outputHelper);
             OutputHelper = outputHelper;
+            SyftHelper = new SyftHelper(DockerHelper, OutputHelper);
         }
 
         protected DockerHelper DockerHelper { get; }
         protected ITestOutputHelper OutputHelper { get; }
+        protected SyftHelper SyftHelper { get; }
         protected abstract DotNetImageRepo ImageRepo { get; }
 
         /// <summary>
@@ -174,24 +176,16 @@ namespace Microsoft.DotNet.Docker.Tests
         /// <summary>
         /// Verifies that the packages installed are correct and scannable by security tools.
         /// </summary>
-        internal static void VerifyInstalledPackagesBase(
+        internal void VerifyInstalledPackagesBase(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper,
-            ITestOutputHelper outputHelper,
             IEnumerable<string> extraExcludePaths = null)
         {
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
-            IEnumerable<string> actualPackages = GetInstalledPackages(
-                imageData,
-                imageRepo,
-                dockerHelper,
-                outputHelper,
-                extraExcludePaths
-            );
+            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
 
-            string imageName = imageData.GetImage(imageRepo, dockerHelper, skipPull: true);
-            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, outputHelper);
+            string imageName = imageData.GetImage(imageRepo, DockerHelper, skipPull: true);
+            ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, OutputHelper);
         }
 
         internal static void ComparePackages(
@@ -216,20 +210,12 @@ namespace Microsoft.DotNet.Docker.Tests
             expectedPackages.Should().BeSubsetOf(actualPackages, because: $"image {imageName} is not distroless");
         }
 
-        internal static IEnumerable<string> GetInstalledPackages(
+        internal IEnumerable<string> GetInstalledPackages(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper,
-            ITestOutputHelper outputHelper,
             IEnumerable<string> extraExcludePaths = null)
         {
-            JsonNode output = SyftHelper.Scan(
-                imageData,
-                imageRepo,
-                dockerHelper,
-                outputHelper,
-                extraExcludePaths
-            );
+            JsonNode output = SyftHelper.Scan(imageData, imageRepo, extraExcludePaths);
 
             return ((JsonArray)output["artifacts"])
                 .Select(artifact => artifact["name"]?.ToString())

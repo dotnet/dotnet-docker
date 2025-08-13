@@ -120,7 +120,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            var osReleaseInfo = GetOSReleaseInfo(imageData, ImageRepo, DockerHelper, OutputHelper);
+            var osReleaseInfo = GetOSReleaseInfo(imageData, ImageRepo);
             OutputHelper.WriteLine($"OS Release Info: {osReleaseInfo}");
             osReleaseInfo.ShouldNotBeEmpty();
         }
@@ -165,13 +165,11 @@ namespace Microsoft.DotNet.Docker.Tests
             }
         }
 
-        private static string GetOSReleaseInfo(
+        private string GetOSReleaseInfo(
             ProductImageData imageData,
-            DotNetImageRepo imageRepo,
-            DockerHelper dockerHelper,
-            ITestOutputHelper outputHelper)
+            DotNetImageRepo imageRepo)
         {
-            JsonNode output = SyftHelper.Scan(imageData, imageRepo, dockerHelper, outputHelper: outputHelper);
+            JsonNode output = SyftHelper.Scan(imageData, imageRepo);
             JsonObject distro = (JsonObject)output["distro"];
             return (string)distro["version"];
         }
@@ -181,7 +179,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyInstalledPackages(ProductImageData imageData)
         {
-            VerifyInstalledPackagesBase(imageData, ImageRepo, DockerHelper, OutputHelper);
+            VerifyInstalledPackagesBase(imageData, ImageRepo);
         }
     }
 }

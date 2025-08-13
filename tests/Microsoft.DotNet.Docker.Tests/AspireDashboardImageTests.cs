@@ -77,7 +77,7 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
         IEnumerable<string> expectedPackages =
             GetExpectedPackages(expectedPackagesImageData with { ImageVariant = DotNetImageVariant.Extra }, ImageRepo);
         IEnumerable<string> actualPackages =
-            GetInstalledPackages(imageData, ImageRepo, DockerHelper, OutputHelper, [ AppPath ]);
+            GetInstalledPackages(imageData, ImageRepo, [ AppPath ]);
 
         string imageName = imageData.GetImage(ImageRepo, DockerHelper, skipPull: true);
         ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, OutputHelper);

@@ -14,25 +14,26 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-internal sealed class SyftHelper
+public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outputHelper)
 {
     private static readonly Lazy<string> s_syftImageTag = new(() =>
         $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}"
     );
 
-    public static JsonNode Scan(
+    private readonly DockerHelper _dockerHelper = dockerHelper;
+    private readonly ITestOutputHelper _outputHelper = outputHelper;
+
+    public JsonNode Scan(
         ProductImageData imageData,
         DotNetImageRepo imageRepo,
-        DockerHelper dockerHelper,
-        ITestOutputHelper outputHelper,
         IEnumerable<string>? extraExcludePaths = null
     )
     {
         using var tempDir = FileHelper.UseTempFolder();
         var tempDirPath = tempDir.Path;
 
-        var syftImage = dockerHelper.PullDockerHubImage(s_syftImageTag.Value);
-        var imageToInspect = imageData.GetImage(imageRepo, dockerHelper);
+        var syftImage = _dockerHelper.PullDockerHubImage(s_syftImageTag.Value);
+        var imageToInspect = imageData.GetImage(imageRepo, _dockerHelper);
 
         // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime.
         // We only care about the packages from the linux distro for these tests.
@@ -45,7 +46,7 @@ internal sealed class SyftHelper
         var dockerfileContents = CreateDockerfileContents(syftImage, imageToInspect, extraExcludePaths);
         File.WriteAllText(dockerfilePath, dockerfileContents);
 
-        outputHelper.WriteLine(
+        _outputHelper.WriteLine(
             $"""
             Scanning image using generated Dockerfile content:
 
@@ -55,7 +56,7 @@ internal sealed class SyftHelper
         );
 
         // Run docker build with --output to write syft.json to the output directory
-        dockerHelper.Build(dockerfile: dockerfilePath, contextDir: tempDirPath, output: tempDirPath);
+        _dockerHelper.Build(dockerfile: dockerfilePath, contextDir: tempDirPath, output: tempDirPath);
 
         string syftOutputPath = Path.Combine(tempDirPath, "syft.json");
         if (!File.Exists(syftOutputPath))
