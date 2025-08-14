@@ -16,6 +16,8 @@ namespace Microsoft.DotNet.Docker.Tests;
 
 public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outputHelper)
 {
+    private const string OutputFileName = "syft-output.json";
+
     private static readonly Lazy<string> s_syftImageTag = new(() =>
         $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}"
     );
@@ -58,7 +60,7 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         // Run docker build with --output to write syft.json to the output directory
         _dockerHelper.Build(dockerfile: dockerfilePath, contextDir: tempDirPath, output: tempDirPath);
 
-        string syftOutputPath = Path.Combine(tempDirPath, "syft.json");
+        string syftOutputPath = Path.Combine(tempDirPath, OutputFileName);
         if (!File.Exists(syftOutputPath))
         {
             throw new FileNotFoundException($"Expected syft output file was not produced: {syftOutputPath}");
@@ -98,11 +100,10 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         IEnumerable<string> excludePaths
     )
     {
-        const string OutputFileName = "syft.json";
 
         IEnumerable<string> syftCommand =
         [
-            "/syft/syft",
+            "/syft",
             "scan",
             "/rootfs/",
             "--source-name",
