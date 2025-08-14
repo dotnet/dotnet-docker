@@ -210,6 +210,13 @@ namespace Microsoft.DotNet.Docker.Tests
             expectedPackages.Should().BeSubsetOf(actualPackages, because: $"image {imageName} is not distroless");
         }
 
+        /// <summary>
+        /// Gets a list of all unique linux packages in the image.
+        /// </summary>
+        /// <param name="excludePaths">
+        /// These paths will be excluded from image scanning.
+        /// </param>
+        /// <returns></returns>
         internal IEnumerable<string> GetInstalledPackages(
             ProductImageData imageData,
             DotNetImageRepo imageRepo,

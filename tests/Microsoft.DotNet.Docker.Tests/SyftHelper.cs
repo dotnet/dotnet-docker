@@ -28,7 +28,7 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
     public JsonNode Scan(
         ProductImageData imageData,
         DotNetImageRepo imageRepo,
-        IEnumerable<string>? extraExcludePaths = null
+        IEnumerable<string>? excludePaths = null
     )
     {
         using var tempDir = FileHelper.UseTempFolder();
@@ -39,13 +39,13 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
 
         // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime.
         // We only care about the packages from the linux distro for these tests.
-        extraExcludePaths ??= [];
-        extraExcludePaths = extraExcludePaths.Append("./usr/share/dotnet");
+        excludePaths ??= [];
+        excludePaths = excludePaths.Append("/usr/share/dotnet");
 
         // Create a Dockerfile tailored to this specific scan (allows us to inline the image name
         // in exec-form RUN)
         var dockerfilePath = Path.Combine(tempDirPath, "Dockerfile");
-        var dockerfileContents = CreateDockerfileContents(syftImage, imageToInspect, extraExcludePaths);
+        var dockerfileContents = CreateDockerfileContents(syftImage, imageToInspect, excludePaths);
         File.WriteAllText(dockerfilePath, dockerfileContents);
 
         _outputHelper.WriteLine(
@@ -83,6 +83,9 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
     /// </summary>
     /// <param name="syftImage">The Syft image tag to use for scanning</param>
     /// <param name="imageToScan">The image that will be scanned</param>
+    /// <param name="excludePaths">
+    /// Paths to exclude from the scan, relative to the root of <see cref="imageToScan"/>
+    /// </param>
     /// <returns>
     /// The contents of a Dockerfile that, when built, will scan <see cref="imageToScan"/> using
     /// Syft and output the results in a scratch image layer. When used in combination with the
@@ -100,7 +103,6 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         IEnumerable<string> excludePaths
     )
     {
-
         IEnumerable<string> syftCommand =
         [
             "/syft",
@@ -115,7 +117,15 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         ];
 
         excludePaths ??= [];
-        IEnumerable<string> excludeArgs = excludePaths.SelectMany(path => new[] { "--exclude", path });
+        IEnumerable<string> excludeArgs = excludePaths.SelectMany(path => {
+            // Syft expects relative paths. The paths are relative to the scan directory, which in
+            // this case is /rootfs/.
+            if (!path.StartsWith("./"))
+            {
+                path = "./" + path.TrimStart('/');
+            }
+            return new[] { "--exclude", path };
+        });
 
         syftCommand = [.. syftCommand, .. excludeArgs];
         var syftCommandString = string.Join(", ", syftCommand.Select(a => $"\"{a}\""));
