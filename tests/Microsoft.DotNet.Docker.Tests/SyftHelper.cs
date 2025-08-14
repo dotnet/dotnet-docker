@@ -112,19 +112,22 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         ];
 
         excludePaths ??= [];
-        IEnumerable<string> excludeArgs = excludePaths.SelectMany(path => new List<string> { "--exclude", path });
+        IEnumerable<string> excludeArgs = excludePaths.SelectMany(path => new[] { "--exclude", path });
 
         syftCommand = [.. syftCommand, .. excludeArgs];
-
         var syftCommandString = string.Join(", ", syftCommand.Select(a => $"\"{a}\""));
+
+        // Since syft is running outside its container, it can't access its copy of CA certificates,
+        // meaning it can't make a secure HTTPS connection to its update server, so we need to
+        // disable its update check. Also, we don't need it checking for updates during tests anyways.
+        const string DisableSyftUpdateCheck = "ENV SYFT_CHECK_FOR_APP_UPDATE=0";
 
         return $"""
             FROM {syftImage} AS syft
             FROM {imageToScan} AS scan-image
 
             FROM scratch AS run-scan
-            ARG SCAN_IMAGE
-            ENV SYFT_CHECK_FOR_APP_UPDATE=0
+            {DisableSyftUpdateCheck}
             RUN --mount=from=syft,source=/,target=/syft \
                 --mount=from=scan-image,source=/,target=/rootfs \
                 [{syftCommandString}]
