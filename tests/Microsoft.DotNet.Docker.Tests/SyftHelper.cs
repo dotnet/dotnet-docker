@@ -107,6 +107,8 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
             "/rootfs/",
             "--source-name",
             imageToScan,
+            "--select-catalogers",
+            "image",
             "--output",
             $"json=/{OutputFileName}",
         ];
@@ -126,10 +128,10 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
             FROM {syftImage} AS syft
             FROM {imageToScan} AS scan-image
 
-            FROM scratch AS run-scan
+            FROM syft AS run-scan
             {DisableSyftUpdateCheck}
-            RUN --mount=from=syft,source=/,target=/syft \
-                --mount=from=scan-image,source=/,target=/rootfs \
+            USER root
+            RUN --mount=from=scan-image,source=/,target=/rootfs \
                 [{syftCommandString}]
 
             FROM scratch AS output
