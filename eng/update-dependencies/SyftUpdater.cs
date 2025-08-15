@@ -14,7 +14,7 @@ internal static class SyftUpdater
 
     public const string ToolName = Repo;
 
-    public const string VariableName = "syft|tag";
+    public const string VariableName = "syft|version";
 
     public static async Task<GitHubReleaseInfo> GetBuildInfoAsync() =>
          new GitHubReleaseInfo(
