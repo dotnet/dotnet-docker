@@ -225,6 +225,6 @@
 
     "syft|repo": "anchore/syft",
     "syft|version": "v1.31.0",
-    "syft|tag": "$(syft|version)-debug"
+    "syft|tag": "v1.31.0"
   }
 }
