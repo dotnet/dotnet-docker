@@ -19,7 +19,7 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
     private const string OutputFileName = "syft-output.json";
 
     private static readonly Lazy<string> s_syftImageTag = new(() =>
-        $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|version")}"
+        $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}"
     );
 
     private readonly DockerHelper _dockerHelper = dockerHelper;
