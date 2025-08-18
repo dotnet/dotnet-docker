@@ -10,10 +10,10 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=10.0.0-preview.7.25380.108 \
+RUN aspnetcore_version=10.0.0-rc.1 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version.25416.112/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version.25416.112/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
     && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz --directory /usr/share/dotnet \
@@ -26,13 +26,13 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:10.0.0-preview.7-azurelinux3.0-distroless-extra-amd64
+FROM $REPO:10.0.0-rc.1-azurelinux3.0-distroless-extra-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-preview.7.25380.108 \
+    DOTNET_VERSION=10.0.0-rc.1.25416.112 \
     # ASP.NET Core version
-    ASPNET_VERSION=10.0.0-preview.7.25380.108
+    ASPNET_VERSION=10.0.0-rc.1.25416.112
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
