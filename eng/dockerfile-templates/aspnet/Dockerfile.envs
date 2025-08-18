@@ -5,8 +5,11 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
-    set isStableBranding to (find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0 ||
-        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0) ^
+    set isStableBranding to (
+        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0
+        || find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0
+        || find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rc") >= 0
+    ) ^
     set runtimeVersion to when(isStableBranding && ARGS["is-internal"],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]) ^
