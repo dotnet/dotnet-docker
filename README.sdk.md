@@ -88,12 +88,12 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-10.0.100-preview.7-noble-amd64, 10.0-preview-noble-amd64, 10.0.100-preview.7-noble, 10.0-preview-noble, 10.0.100-preview.7, 10.0-preview, latest | [Dockerfile](src/sdk/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-10.0.100-preview.7-noble-aot-amd64, 10.0-preview-noble-aot-amd64, 10.0.100-preview.7-noble-aot, 10.0-preview-noble-aot, 10.0.100-preview.7-aot, 10.0-preview-aot | [Dockerfile](src/sdk/10.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
-10.0.100-preview.7-alpine3.22-amd64, 10.0-preview-alpine3.22-amd64, 10.0-preview-alpine-amd64, 10.0.100-preview.7-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
-10.0.100-preview.7-alpine3.22-aot-amd64, 10.0-preview-alpine3.22-aot-amd64, 10.0-preview-alpine-aot-amd64, 10.0.100-preview.7-alpine3.22-aot, 10.0-preview-alpine3.22-aot, 10.0-preview-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.22-aot/amd64/Dockerfile) | Alpine 3.22
-10.0.100-preview.7-azurelinux3.0-amd64, 10.0-preview-azurelinux3.0-amd64, 10.0.100-preview.7-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-10.0.100-preview.7-azurelinux3.0-aot-amd64, 10.0-preview-azurelinux3.0-aot-amd64, 10.0.100-preview.7-azurelinux3.0-aot, 10.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+10.0.100-rc.1-noble-amd64, 10.0-preview-noble-amd64, 10.0.100-rc.1-noble, 10.0-preview-noble, 10.0.100-rc.1, 10.0-preview, latest | [Dockerfile](src/sdk/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+10.0.100-rc.1-noble-aot-amd64, 10.0-preview-noble-aot-amd64, 10.0.100-rc.1-noble-aot, 10.0-preview-noble-aot, 10.0.100-rc.1-aot, 10.0-preview-aot | [Dockerfile](src/sdk/10.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
+10.0.100-rc.1-alpine3.22-amd64, 10.0-preview-alpine3.22-amd64, 10.0-preview-alpine-amd64, 10.0.100-rc.1-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
+10.0.100-rc.1-alpine3.22-aot-amd64, 10.0-preview-alpine3.22-aot-amd64, 10.0-preview-alpine-aot-amd64, 10.0.100-rc.1-alpine3.22-aot, 10.0-preview-alpine3.22-aot, 10.0-preview-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.22-aot/amd64/Dockerfile) | Alpine 3.22
+10.0.100-rc.1-azurelinux3.0-amd64, 10.0-preview-azurelinux3.0-amd64, 10.0.100-rc.1-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+10.0.100-rc.1-azurelinux3.0-aot-amd64, 10.0-preview-azurelinux3.0-aot-amd64, 10.0.100-rc.1-azurelinux3.0-aot, 10.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
@@ -115,12 +115,12 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-10.0.100-preview.7-noble-arm64v8, 10.0-preview-noble-arm64v8, 10.0.100-preview.7-noble, 10.0-preview-noble, 10.0.100-preview.7, 10.0-preview, latest | [Dockerfile](src/sdk/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.100-preview.7-noble-aot-arm64v8, 10.0-preview-noble-aot-arm64v8, 10.0.100-preview.7-noble-aot, 10.0-preview-noble-aot, 10.0.100-preview.7-aot, 10.0-preview-aot | [Dockerfile](src/sdk/10.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.100-preview.7-alpine3.22-arm64v8, 10.0-preview-alpine3.22-arm64v8, 10.0-preview-alpine-arm64v8, 10.0.100-preview.7-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
-10.0.100-preview.7-alpine3.22-aot-arm64v8, 10.0-preview-alpine3.22-aot-arm64v8, 10.0-preview-alpine-aot-arm64v8, 10.0.100-preview.7-alpine3.22-aot, 10.0-preview-alpine3.22-aot, 10.0-preview-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.22-aot/arm64v8/Dockerfile) | Alpine 3.22
-10.0.100-preview.7-azurelinux3.0-arm64v8, 10.0-preview-azurelinux3.0-arm64v8, 10.0.100-preview.7-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.100-preview.7-azurelinux3.0-aot-arm64v8, 10.0-preview-azurelinux3.0-aot-arm64v8, 10.0.100-preview.7-azurelinux3.0-aot, 10.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.100-rc.1-noble-arm64v8, 10.0-preview-noble-arm64v8, 10.0.100-rc.1-noble, 10.0-preview-noble, 10.0.100-rc.1, 10.0-preview, latest | [Dockerfile](src/sdk/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.100-rc.1-noble-aot-arm64v8, 10.0-preview-noble-aot-arm64v8, 10.0.100-rc.1-noble-aot, 10.0-preview-noble-aot, 10.0.100-rc.1-aot, 10.0-preview-aot | [Dockerfile](src/sdk/10.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.100-rc.1-alpine3.22-arm64v8, 10.0-preview-alpine3.22-arm64v8, 10.0-preview-alpine-arm64v8, 10.0.100-rc.1-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
+10.0.100-rc.1-alpine3.22-aot-arm64v8, 10.0-preview-alpine3.22-aot-arm64v8, 10.0-preview-alpine-aot-arm64v8, 10.0.100-rc.1-alpine3.22-aot, 10.0-preview-alpine3.22-aot, 10.0-preview-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.22-aot/arm64v8/Dockerfile) | Alpine 3.22
+10.0.100-rc.1-azurelinux3.0-arm64v8, 10.0-preview-azurelinux3.0-arm64v8, 10.0.100-rc.1-azurelinux3.0, 10.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.100-rc.1-azurelinux3.0-aot-arm64v8, 10.0-preview-azurelinux3.0-aot-arm64v8, 10.0.100-rc.1-azurelinux3.0-aot, 10.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm32 Tags
 
@@ -139,8 +139,8 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-10.0.100-preview.7-noble-arm32v7, 10.0-preview-noble-arm32v7, 10.0.100-preview.7-noble, 10.0-preview-noble, 10.0.100-preview.7, 10.0-preview, latest | [Dockerfile](src/sdk/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.100-preview.7-alpine3.22-arm32v7, 10.0-preview-alpine3.22-arm32v7, 10.0-preview-alpine-arm32v7, 10.0.100-preview.7-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
+10.0.100-rc.1-noble-arm32v7, 10.0-preview-noble-arm32v7, 10.0.100-rc.1-noble, 10.0-preview-noble, 10.0.100-rc.1, 10.0-preview, latest | [Dockerfile](src/sdk/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.100-rc.1-alpine3.22-arm32v7, 10.0-preview-alpine3.22-arm32v7, 10.0-preview-alpine-arm32v7, 10.0.100-rc.1-alpine3.22, 10.0-preview-alpine3.22, 10.0-preview-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
 
 ### Nano Server 2025 amd64 Tags
 
@@ -153,7 +153,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-preview.7-nanoserver-ltsc2025, 10.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
+10.0.100-rc.1-nanoserver-ltsc2025, 10.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
 
 ### Windows Server Core 2025 amd64 Tags
 
@@ -166,7 +166,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-preview.7-windowsservercore-ltsc2025, 10.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+10.0.100-rc.1-windowsservercore-ltsc2025, 10.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 
 ### Nano Server 2022 amd64 Tags
 
@@ -179,7 +179,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-preview.7-nanoserver-ltsc2022, 10.0-preview-nanoserver-ltsc2022 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
+10.0.100-rc.1-nanoserver-ltsc2022, 10.0-preview-nanoserver-ltsc2022 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ### Windows Server Core 2022 amd64 Tags
 
@@ -192,7 +192,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-10.0.100-preview.7-windowsservercore-ltsc2022, 10.0-preview-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+10.0.100-rc.1-windowsservercore-ltsc2022, 10.0-preview-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ### Nano Server, version 1809 amd64 Tags
 

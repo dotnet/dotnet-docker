@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:10.0.0-preview.7-azurelinux3.0-amd64 AS installer
+FROM $REPO:10.0.0-rc.1-azurelinux3.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-preview.7.25380.108 \
+RUN aspnetcore_version=10.0.0-rc.1.25416.112 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz.sha512 \
@@ -21,9 +21,9 @@ RUN aspnetcore_version=10.0.0-preview.7.25380.108 \
 
 
 # ASP.NET Core image
-FROM $REPO:10.0.0-preview.7-azurelinux3.0-amd64
+FROM $REPO:10.0.0-rc.1-azurelinux3.0-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-preview.7.25380.108
+ENV ASPNET_VERSION=10.0.0-rc.1.25416.112
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
