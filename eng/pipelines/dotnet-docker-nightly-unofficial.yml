@@ -1,6 +1,3 @@
-# This pipeline is a work in progress.
-# See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details.
-
 trigger: none
 pr: none
 
@@ -14,13 +11,57 @@ parameters:
   type: string
   default: $(Build.BuildId)
 
+- name: publishRepoPrefix
+  displayName: >
+    Publish repo prefix. Final images will be pushed under this prefix in the
+    production ACR. Examples: `public/`, `test/`
+  type: string
+  default: "public/"
+
+- name: noCache
+  displayName: >
+    Run build with no cache. When this is unchecked, the build will use the
+    info in the dotnet/versions repo to build only the images which have had
+    Dockerfile changes or base images updates. When this is checked, all images
+    will be built.
+  type: boolean
+  default: false
+
 variables:
-- template: /eng/pipelines/variables/core.yml@self
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
-- name: officialBranches
-  # comma-delimited list of branch names
-  value: nightly
+- template: /eng/pipelines/variables/core-unofficial.yml@self
+# Comma-delimited list of branch names that are allowed to push to public/.
+# This remains here to keep the variables in sync with the nightly build.
+# However, since this is an unofficial pipeline, pushes to the non-production
+# ACR will be allowed from any branch.
+- name: "officialBranches"
+  value: "nightly"
+  readonly: true
+# Needed in order to use the correct image-info file from the versions repo
+- name: "publicSourceBranch"
+  value: "nightly"
+  readonly: true
+# Disable EOL annotations for unofficial build
+- name: "publishEolAnnotations"
+  value: false
+  readonly: true
+# Unofficial secrets group has no GitHub token for publishing image info, notifications, or readmes
+- name: "publishImageInfo"
+  value: false
+  readonly: true
+- name: "publishNotificationsEnabled"
+  value: false
+  readonly: true
+- name: "publishReadme"
+  value: false
+  readonly: true
+# There aren't test/unofficial Kusto tables for build telemetry yet
+- name: "ingestKustoImageInfo"
+  value: false
+  readonly: true
+# Always run unofficial pipelines in debug mode
+- name: "System.Debug"
+  value: true
+  readonly: true
 
 resources:
   repositories:
@@ -31,12 +72,16 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es-unofficial.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
+    reposToExcludeFromScanning:
+    - VersionsRepo
     stages:
-    - template: /eng/pipelines/stages/build-test-publish-repo.yml@self
+    - template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
       parameters:
-        internalProjectName: ${{ variables.internalProjectName }}
-        publicProjectName: ${{ variables.publicProjectName }}
-        versionsRepoRef: VersionsRepo
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
+        stagesTemplateParameters:
+          versionsRepoRef: VersionsRepo
+          sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+          noCache: ${{ parameters.noCache }}

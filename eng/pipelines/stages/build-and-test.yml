@@ -2,13 +2,29 @@
 # specific to the Dockerfiles in this repo.
 
 parameters:
-  noCache: false
-  internalProjectName: null
-  publicProjectName: null
-  linuxAmd64Pool: ""
-  isInternalServicingValidation: false
-  sourceBuildPipelineRunId: ""
-  versionsRepoRef: ""
+- name: publishConfig
+  type: object
+
+- name: internalProjectName
+  type: string
+
+- name: publicProjectName
+  type: string
+
+- name: sourceBuildPipelineRunId
+  type: string
+
+- name: noCache
+  type: boolean
+  default: false
+
+- name: versionsRepoRef
+  type: string
+  default: ""
+
+- name: isInternalServicingValidation
+  type: boolean
+  default: false
 
 stages:
 - template: /eng/common/templates/stages/dotnet/build-and-test.yml@self
@@ -33,8 +49,10 @@ stages:
         displayName: Set Custom Build Variables
     - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
       parameters:
+        publishConfig: ${{ parameters.publishConfig }}
         isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     customTestInitSteps:
     - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
       parameters:
+        publishConfig: ${{ parameters.publishConfig }}
         isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}

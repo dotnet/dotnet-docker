@@ -1,8 +1,5 @@
-# A simple wrapper around the build-and-test and publish templates so that both
-# templates can easily be called at the same time with the same parameters.
-
-# Any repo-specific overrides should be added in the individual build/publish
-# templates themselves, not in this file.
+# Build, test, and publish images based on the publishConfig parameter and what
+# variables are defined.
 
 parameters:
 - name: publishConfig
@@ -47,19 +44,14 @@ stages:
       - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
         - name: ${{ serviceConnection.name }}
 
-- template: /eng/pipelines/stages/build-and-test.yml@self
+- template: /eng/common/templates/stages/dotnet/build-test-publish-repo.yml@self
   parameters:
-    publishConfig: ${{ parameters.publishConfig }}
-    internalProjectName: ${{ parameters.internalProjectName }}
-    publicProjectName: ${{ parameters.publicProjectName }}
-    versionsRepoRef: ${{ parameters.versionsRepoRef }}
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     noCache: ${{ parameters.noCache }}
-
-- template: /eng/pipelines/stages/publish.yml@self
-  parameters:
-    publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
-    versionsRepoRef: ${{ parameters.versionsRepoRef }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    publishConfig: ${{ parameters.publishConfig }}
+    ${{ if ne(parameters.versionsRepoRef, '') }}:
+      versionsRepoRef: ${{ parameters.versionsRepoRef }}
+    ${{ if parameters.isPullRequestValidation }}:
+      buildMatrixType: platformVersionedOs
