@@ -25,5 +25,4 @@ stages:
     stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
     stagesTemplateParameters:
       versionsRepoRef: VersionsRepo
-      isPullRequestValidation: true
       noCache: true

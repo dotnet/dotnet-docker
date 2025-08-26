@@ -26,10 +26,6 @@ parameters:
   type: boolean
   default: false
 
-- name: isPullRequestValidation
-  type: boolean
-  default: false
-
 # Additional service connections needed by this pipeline that are not included
 # in the publishConfig.
 - name: additionalServiceConnections
@@ -37,7 +33,7 @@ parameters:
   default: []
 
 stages:
-- ${{ if not(parameters.isPullRequestValidation) }}:
+- ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
   - template: /eng/common/templates/stages/setup-service-connections.yml@self
     parameters:
       serviceConnections:
