@@ -23,7 +23,7 @@ parameters:
     Run build with no cache. When this is unchecked, the build will use the
     info in the dotnet/versions repo to build only the images which have had
     Dockerfile changes or base images updates. When this is checked, all images
-    will be built.
+    will be built regardless of caching status.
   type: boolean
   default: false
 
