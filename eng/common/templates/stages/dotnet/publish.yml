@@ -4,6 +4,7 @@
 parameters:
   internalProjectName: null
   publicProjectName: null
+  publishConfig: null
   pool: ""
   isInternalServicingValidation: false
   isStandalonePublish: false
@@ -18,6 +19,7 @@ stages:
   parameters:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    publishConfig: ${{ parameters.publishConfig }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
@@ -44,10 +46,6 @@ stages:
         echo "##vso[task.setvariable variable=publishNotificationRepoName]$repoName"
       displayName: "Set Custom Repo Name Var"
     - ${{ parameters.customPublishInitSteps }}
-
-    ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
-      customPublishVariables:
-      - group: DotNet-AllOrgs-Darc-Pats
 
     pool:
       ${{ if ne(parameters.pool, '') }}:

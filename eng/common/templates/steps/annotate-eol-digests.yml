@@ -1,4 +1,5 @@
 parameters:
+  publishConfig: null
   dataFile: null
 steps:
   - script: mkdir -p $(Build.ArtifactStagingDirectory)/annotation-digests
@@ -9,16 +10,16 @@ steps:
       displayName: Annotate EOL Images
       serviceConnections:
       - name: acr
-        id: $(publish.serviceConnection.id)
-        tenantId: $(publish.serviceConnection.tenantId)
-        clientId: $(publish.serviceConnection.clientId)
+        id: ${{ parameters.publishConfig.publishAcr.id }}
+        tenantId: ${{ parameters.publishConfig.publishAcr.tenantId }}
+        clientId: ${{ parameters.publishConfig.publishAcr.clientId }}
       internalProjectName: internal
       condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
       args: >-
         annotateEolDigests
         ${{ parameters.dataFile }}
-        $(acr.server)
-        $(publishRepoPrefix)
+        ${{ parameters.publishConfig.publishAcr.server }}
+        ${{ parameters.publishConfig.publishAcr.repoPrefix }}
         $(artifactsPath)/annotation-digests/annotation-digests.txt
         $(dryRunArg)
   - template: /eng/common/templates/steps/publish-artifact.yml@self

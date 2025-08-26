@@ -10,6 +10,7 @@ parameters:
 
   # Build parameters
   noCache: false
+  publishConfig: null
   buildMatrixType: platformDependencyGraph
   buildMatrixCustomBuildLegGroupArgs: ""
   linuxAmdBuildJobTimeout: 60
@@ -32,8 +33,7 @@ parameters:
   # Other common parameters
   internalProjectName: null
   publicProjectName: null
-  versionsRepoRef: null
-
+  versionsRepoRef: ""
 
 stages:
 - template: /eng/common/templates/stages/dotnet/build-and-test.yml@self
@@ -45,6 +45,7 @@ stages:
     customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
     # Build
     noCache: ${{ parameters.noCache }}
+    publishConfig: ${{ parameters.publishConfig }}
     buildMatrixType: ${{ parameters.buildMatrixType }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     linuxAmdBuildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
@@ -71,5 +72,6 @@ stages:
     customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    publishConfig: ${{ parameters.publishConfig }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}

@@ -6,6 +6,7 @@ parameters:
   buildJobTimeout: 60
   commonInitStepsForMatrixAndBuild: []
   customInitSteps: []
+  publishConfig: null
   noCache: false
   internalProjectName: null
   publicProjectName: null
@@ -48,13 +49,13 @@ jobs:
       # to escape the single quotes that are in the string which would need to be done outside the context of PowerShell. Since
       # all we need is for that value to be in a PowerShell variable, we can get that by the fact that AzDO automatically creates
       # the environment variable for us.
-      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $(imageBuilder.queueArgs) --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json $(commonMatrixAndBuildOptions)"
+      $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $env:IMAGEBUILDER_QUEUEARGS --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json $(commonMatrixAndBuildOptions)"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --repo-prefix $(stagingRepoPrefix) --push"
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --repo-prefix ${{ parameters.publishConfig.buildAcr.repoPrefix }} --push"
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
-      if ("$(pipelineDisabledCache)" -ne "true" -and $env:NOCACHE -ne "true") {
+      if ("$(pipelineDisabledCache)" -ne "true" -and "${{ parameters.noCache }}" -ne "true") {
         $imageBuilderBuildArgs = "$imageBuilderBuildArgs --image-info-source-path $(versionsBasePath)$(imageInfoVersionsPath)"
       }
 
@@ -66,10 +67,12 @@ jobs:
       name: BuildImages
       displayName: Build Images
       serviceConnections:
+      # "name" here refers to the argument name, not the service connection name.
+      # It should probably be changed to "argName".
       - name: acr
-        id: $(build.serviceConnection.id)
-        tenantId: $(build.serviceConnection.tenantId)
-        clientId: $(build.serviceConnection.clientId)
+        id: ${{ parameters.publishConfig.buildAcr.serviceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.buildAcr.serviceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.buildAcr.serviceConnection.clientId }}
       - ${{ if eq(parameters.isInternalServicingValidation, true) }}:
         - name: storage
           id: $(dotnetstaging.serviceConnection.id)
@@ -86,8 +89,8 @@ jobs:
         --architecture $(architecture)
         --retry
         --digests-out-var 'builtImages'
-        --acr-subscription '$(acr-staging.subscription)'
-        --acr-resource-group '$(acr-staging.resourceGroup)'
+        --acr-subscription '${{ parameters.publishConfig.buildAcr.subscription }}'
+        --acr-resource-group '${{ parameters.publishConfig.buildAcr.resourceGroup }}'
         $(manifestVariables)
         $(imageBuilderBuildArgs)
   - template: /eng/common/templates/steps/publish-artifact.yml@self
@@ -134,7 +137,7 @@ jobs:
         # Manifest tool docs: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/secure-supply-chain/custom-sbom-generation-workflows
         $images -Split ',' | ForEach-Object {
           echo "Generating SBOM for $_";
-          $formattedImageName = $_.Replace('$(acr-staging.server)/$(stagingRepoPrefix)', "").Replace('/', '_').Replace(':', '_');
+          $formattedImageName = $_.Replace('${{ parameters.publishConfig.buildAcr.server }}/${{ parameters.publishConfig.buildAcr.repoPrefix }}', "").Replace('/', '_').Replace(':', '_');
           $sbomChildDir = "$(sbomDirectory)/$formattedImageName";
           New-Item -Type Directory -Path $sbomChildDir > $null;
           & $dotnetPath "$manifestToolDllPath" `

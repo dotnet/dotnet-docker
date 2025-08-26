@@ -1,16 +1,7 @@
 # Common variables for building/testing/publishing in the .NET team's pipelines
-parameters:
-# sourceBuildPipelineRunId should be overridden when skipping a build to run
-# tests or publish images that were produced in a different pipeline run.
-# Defaults to $(Build.BuildId) which refers to the current pipeline run.
-- name: sourceBuildPipelineRunId
-  type: string
-  default: ""
 
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
 
 - name: commonVersionsImageInfoPath
   value: build-info/docker
@@ -20,8 +11,10 @@ variables:
   value: ./tests/run-tests.ps1
 - name: testResultsDirectory
   value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
+
 - name: officialRepoPrefixes
   value: public/,internal/private/,unlisted/
+  readonly: true
 
 - name: mcrDocsRepoInfo.userName
   value: $(gitHubApp.marDocsUpdater.userName)

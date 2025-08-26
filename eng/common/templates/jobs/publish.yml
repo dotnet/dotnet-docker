@@ -1,6 +1,7 @@
 parameters:
   pool: {}
   internalProjectName: null
+  publishConfig: null
   customInitSteps: []
   customPublishVariables: []
   sourceBuildPipelineDefinitionId: ""
@@ -20,7 +21,7 @@ jobs:
   - name: imageBuilder.commonCmdArgs
     value: >-
       --manifest '$(manifest)'
-      --registry-override '$(acr.server)'
+      --registry-override '${{ parameters.publishConfig.publishAcr.server }}'
       $(manifestVariables)
       $(imageBuilder.queueArgs)
   - name: publishNotificationRepoName
@@ -46,7 +47,7 @@ jobs:
   steps:
   - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
     parameters:
-      cloneVersionsRepo: ${{ variables.publishImageInfo }}
+      publishConfig: ${{ parameters.publishConfig }}
       versionsRepoRef: ${{ parameters.versionsRepoRef }}
 
   - template: /eng/common/templates/steps/retain-build.yml@self
@@ -94,19 +95,19 @@ jobs:
       displayName: Copy Images
       serviceConnections:
       - name: acr
-        id: $(publish.serviceConnection.id)
-        tenantId: $(publish.serviceConnection.tenantId)
-        clientId: $(publish.serviceConnection.clientId)
+        id: ${{ parameters.publishConfig.publishAcr.serviceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.publishAcr.serviceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.publishAcr.serviceConnection.clientId }}
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >-
         copyAcrImages
-        '$(acr.subscription)'
-        '$(acr.resourceGroup)'
-        '$(stagingRepoPrefix)'
-        '$(acr-staging.server)'
+        '${{ parameters.publishConfig.buildAcr.subscription }}'
+        '${{ parameters.publishConfig.buildAcr.resourceGroup }}'
+        '${{ parameters.publishConfig.buildAcr.repoPrefix }}'
+        '${{ parameters.publishConfig.buildAcr.server }}'
         --os-type '*'
         --architecture '*'
-        --repo-prefix '$(publishRepoPrefix)'
+        --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
         --image-info '$(imageInfoContainerDir)/image-info.json'
         $(dryRunArg)
         $(imageBuilder.pathArgs)
@@ -117,15 +118,15 @@ jobs:
       displayName: Publish Manifest
       serviceConnections:
       - name: acr
-        id: $(publish.serviceConnection.id)
-        tenantId: $(publish.serviceConnection.tenantId)
-        clientId: $(publish.serviceConnection.clientId)
+        id: ${{ parameters.publishConfig.publishAcr.serviceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.publishAcr.serviceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.publishAcr.serviceConnection.clientId }}
       internalProjectName: ${{ parameters.internalProjectName }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       args: >-
         publishManifest
         '$(imageInfoContainerDir)/image-info.json'
-        --repo-prefix '$(publishRepoPrefix)'
+        --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
         --os-type '*'
         --architecture '*'
         $(dryRunArg)
@@ -206,9 +207,9 @@ jobs:
       displayName: Generate EOL Annotation Data
       serviceConnections:
       - name: acr
-        id: $(publish.serviceConnection.id)
-        tenantId: $(publish.serviceConnection.tenantId)
-        clientId: $(publish.serviceConnection.clientId)
+        id: ${{ parameters.publishConfig.publishAcr.serviceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.publishAcr.serviceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.publishAcr.serviceConnection.clientId }}
       internalProjectName: internal
       condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
       args: >-
@@ -216,8 +217,8 @@ jobs:
         '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
         '$(imageInfoContainerDir)/full-image-info-orig.json'
         '$(imageInfoContainerDir)/full-image-info-new.json'
-        '$(acr.server)'
-        '$(publishRepoPrefix)'
+        '${{ parameters.publishConfig.publishAcr.server }}'
+        '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
         $(generateEolAnnotationDataExtraOptions)
         $(dryRunArg)
 
@@ -233,6 +234,7 @@ jobs:
   - template: /eng/common/templates/steps/annotate-eol-digests.yml@self
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
+      publishConfig: ${{ parameters.publishConfig }}
       dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
 
   - script: >
@@ -271,7 +273,7 @@ jobs:
       $(gitHubNotificationsRepoInfo.authArgs)
       '$(gitHubNotificationsRepoInfo.org)'
       '$(gitHubNotificationsRepoInfo.repo)'
-      --repo-prefix '$(publishRepoPrefix)'
+      --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
       --task "🟪 Copy Images"
       --task "🟪 Publish Manifest"
       --task "🟪 Wait for Image Ingestion"

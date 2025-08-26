@@ -18,6 +18,7 @@ parameters:
   windowsAmdTestJobTimeout: 60
 
   noCache: false
+  publishConfig: null
 
   internalProjectName: null
   publicProjectName: null
@@ -58,21 +59,23 @@ stages:
       testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
       preBuildValidation: true
       internalProjectName: ${{ parameters.internalProjectName }}
+      publishConfig: ${{ parameters.publishConfig }}
       customInitSteps:
-        - ${{ parameters.customTestInitSteps }}
-        # These variables are normally set by the matrix. Since this test job is not generated
-        # by a matrix, we need to set them manually. They can be set to empty values since their
-        # values aren't actually used for the pre-build tests.
-        - powershell: |
-            echo "##vso[task.setvariable variable=productVersion]"
-            echo "##vso[task.setvariable variable=imageBuilderPaths]"
-            echo "##vso[task.setvariable variable=osVersions]"
-            echo "##vso[task.setvariable variable=architecture]"
-          displayName: Initialize Test Variables
+      - ${{ parameters.customTestInitSteps }}
+      # These variables are normally set by the matrix. Since this test job is not generated
+      # by a matrix, we need to set them manually. They can be set to empty values since their
+      # values aren't actually used for the pre-build tests.
+      - powershell: |
+          echo "##vso[task.setvariable variable=productVersion]"
+          echo "##vso[task.setvariable variable=imageBuilderPaths]"
+          echo "##vso[task.setvariable variable=osVersions]"
+          echo "##vso[task.setvariable variable=architecture]"
+        displayName: Initialize Test Variables
 
   - template: /eng/common/templates/jobs/copy-base-images-staging.yml@self
     parameters:
       name: CopyBaseImages
+      publishConfig: ${{ parameters.publishConfig }}
       pool: ${{ parameters.linuxAmd64Pool }}
       additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
       customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
@@ -85,10 +88,12 @@ stages:
       customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
       internalProjectName: ${{ parameters.internalProjectName }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       customInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
 
   - template: /eng/common/templates/jobs/build-images.yml@self
@@ -101,9 +106,11 @@ stages:
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
@@ -117,9 +124,11 @@ stages:
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
@@ -133,9 +142,11 @@ stages:
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
@@ -149,9 +160,11 @@ stages:
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
@@ -165,9 +178,11 @@ stages:
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
@@ -181,9 +196,11 @@ stages:
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       versionsRepoRef: ${{ parameters.versionsRepoRef }}
@@ -198,9 +215,11 @@ stages:
       commonInitStepsForMatrixAndBuild:
       - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
         parameters:
+          publishConfig: ${{ parameters.publishConfig }}
           versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customBuildInitSteps }}
       noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
@@ -251,6 +270,7 @@ stages:
         - template: /eng/common/templates/steps/init-matrix-build-publish.yml@self
           parameters:
             versionsRepoRef: ${{ parameters.versionsRepoRef }}
+            publishConfig: ${{ parameters.publishConfig }}
     - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
       parameters:
         name: Linux_amd64
@@ -258,6 +278,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxAmd64']
         testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
@@ -267,6 +288,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     - template: /eng/common/templates/jobs/test-images-linux-client.yml@self
@@ -276,6 +298,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32']
         testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
@@ -285,6 +308,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
@@ -294,6 +318,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2022Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
@@ -303,6 +328,7 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2025Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     - template: /eng/common/templates/jobs/test-images-windows-client.yml@self
@@ -312,5 +338,6 @@ stages:
         matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2016Amd64']
         testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
         internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
         customInitSteps: ${{ parameters.customTestInitSteps }}
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
