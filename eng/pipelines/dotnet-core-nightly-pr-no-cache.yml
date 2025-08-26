@@ -22,7 +22,6 @@ resources:
 stages:
 - template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
   parameters:
-    sourceBuildPipelineRunId: $(Build.BuildId)
     stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
     stagesTemplateParameters:
       versionsRepoRef: VersionsRepo
