@@ -1,19 +1,17 @@
-parameters:
-# sourceBuildPipelineRunId should be overridden when skipping a build to run
-# tests or publish images that were produced in a different pipeline run.
-- name: sourceBuildPipelineRunId
-  type: string
-  default: ""
-
 variables:
-- template: ../../common/templates/variables/dotnet/build-test-publish.yml
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+- template: /eng/common/templates/variables/dotnet/build-test-publish.yml@self
+
+# Cannot be readonly because it's currently overridden by eng/common/templates/steps/init-matrix-build-publish.yml
+# `manifest` is overloaded, since it is used both for this definition and also
+# to refer to the precise path of the manifest file in multi-repo builds (e.g.
+# when we are using a versions repo)
 - name: manifest
   value: manifest.samples.json
+
 - name: testCategoriesOverride
   value: sample
+  readonly: true
+
 - name: imageInfoVariant
   value: "-samples"
-- name: publishEolAnnotations
-  value: true
+  readonly: true

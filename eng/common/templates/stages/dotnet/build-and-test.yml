@@ -11,6 +11,7 @@ parameters:
 
   # Build parameters
   noCache: false
+  publishConfig: null
   buildMatrixType: platformDependencyGraph
   buildMatrixCustomBuildLegGroupArgs: ""
   linuxAmdBuildJobTimeout: 60
@@ -36,6 +37,7 @@ stages:
 - template: /eng/common/templates/stages/build-and-test.yml@self
   parameters:
     noCache: ${{ parameters.noCache }}
+    publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}

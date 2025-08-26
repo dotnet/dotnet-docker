@@ -1,23 +1,6 @@
-parameters:
-# sourceBuildPipelineRunId should be overridden when skipping a build to run
-# tests or publish images that were produced in a different pipeline run.
-# Defaults to $(Build.BuildId) which refers to the current pipeline run.
-- name: sourceBuildPipelineRunId
-  type: string
-  default: ""
-
 variables:
 - template: /eng/common/templates/variables/docker-images.yml@self
 - template: /eng/common/templates/variables/common-paths.yml@self
-
-# stagingRepoPrefix defines where images will be pushed to in the staging repo,
-# which is defined in the $(acr-staging.server) variable.
-- ${{ if ne(parameters.sourceBuildPipelineRunId, '') }}:
-  - name: stagingRepoPrefix
-    value: build-staging/${{ parameters.sourceBuildPipelineRunId }}/
-- ${{ else }}:
-  - name: stagingRepoPrefix
-    value: build-staging/$(Build.BuildId)/
 
 - name: publishReadme
   value: true
