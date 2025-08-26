@@ -20,14 +20,21 @@ parameters:
   type: string
   default: $(Build.BuildId)
 
+- name: noCache
+  displayName: >
+    Run build with no cache. When this is unchecked, the build will use the
+    info in the dotnet/versions repo to build only the images which have had
+    Dockerfile changes or base images updates. When this is checked, all images
+    will be built.
+  type: boolean
+  default: false
+
 variables:
-- template: /eng/pipelines/variables/core.yml@self
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+- template: /eng/pipelines/variables/core-official.yml@self
+# Comma-delimited list of branch names that are allowed to push to public/.
 - name: officialBranches
-  # comma-delimited list of branch names
   value: nightly
-- template: /eng/common/templates/variables/dotnet/secrets.yml@self
+  readonly: true
 
 resources:
   repositories:
@@ -38,18 +45,19 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es-official.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
-    serviceConnections:
-    - name: $(internal-mirror.serviceConnectionName)
-    - name: $(build.serviceConnectionName)
-    - name: $(publish.serviceConnectionName)
-    - name: $(kusto.serviceConnectionName)
-    - name: $(marStatus.serviceConnectionName)
+    reposToExcludeFromScanning:
+    - VersionsRepo
     stages:
-    - template: /eng/pipelines/stages/build-test-publish-repo.yml@self
+    - template: /eng/common/templates/stages/dotnet/publish-config-prod.yml@self
       parameters:
-        internalProjectName: ${{ variables.internalProjectName }}
-        publicProjectName: ${{ variables.publicProjectName }}
-        versionsRepoRef: VersionsRepo
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
+        stagesTemplateParameters:
+          versionsRepoRef: VersionsRepo
+          sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+          noCache: ${{ parameters.noCache }}
+          additionalServiceConnections:
+          - name: $(kusto.serviceConnectionName)
+          - name: $(marStatus.serviceConnectionName)
