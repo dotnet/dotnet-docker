@@ -40,28 +40,6 @@ variables:
 - name: "publicSourceBranch"
   value: "nightly"
   readonly: true
-# Disable EOL annotations for unofficial build
-- name: "publishEolAnnotations"
-  value: false
-  readonly: true
-# Unofficial secrets group has no GitHub token for publishing image info, notifications, or readmes
-- name: "publishImageInfo"
-  value: false
-  readonly: true
-- name: "publishNotificationsEnabled"
-  value: false
-  readonly: true
-- name: "publishReadme"
-  value: false
-  readonly: true
-# There aren't test/unofficial Kusto tables for build telemetry yet
-- name: "ingestKustoImageInfo"
-  value: false
-  readonly: true
-# Always run unofficial pipelines in debug mode
-- name: "System.Debug"
-  value: true
-  readonly: true
 
 resources:
   repositories:

@@ -12,11 +12,14 @@ variables:
   value: false
   readonly: true
 
-# Unofficial secrets group has no GitHub token for publishing image info or notifications
+# Unofficial secrets group has no GitHub token for publishing image info, notifications, or readmes
 - name: "publishImageInfo"
   value: false
   readonly: true
 - name: "publishNotificationsEnabled"
+  value: false
+  readonly: true
+- name: "publishReadme"
   value: false
   readonly: true
 
