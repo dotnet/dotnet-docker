@@ -1,19 +1,18 @@
-parameters:
-# sourceBuildPipelineRunId should be overridden when skipping a build to run
-# tests or publish images that were produced in a different pipeline run.
-- name: sourceBuildPipelineRunId
-  type: string
-  default: ""
-
 variables:
-- template: ../../common/templates/variables/dotnet/build-test-publish.yml
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+- template: /eng/common/templates/variables/dotnet/build-test-publish.yml@self
+
 - name: manifest
   value: manifest.samples.json
+  readonly: true
+
 - name: testCategoriesOverride
   value: sample
+  readonly: true
+
 - name: imageInfoVariant
   value: "-samples"
+  readonly: true
+
 - name: publishEolAnnotations
   value: true
+  readonly: true

@@ -12,7 +12,7 @@ pr:
     - tests/*
 
 variables:
-- template: variables/samples.yml
+- template: /eng/pipelines/variables/samples.yml@self
 
 resources:
   repositories:
@@ -23,8 +23,9 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 stages:
-- template: stages/build-test-publish-repo.yml
+- template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
   parameters:
-    internalProjectName: ${{ variables.internalProjectName }}
-    publicProjectName: ${{ variables.publicProjectName }}
-    versionsRepoRef: VersionsRepo
+    stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
+    stagesTemplateParameters:
+      versionsRepoRef: VersionsRepo
+      isPullRequestValidation: true
