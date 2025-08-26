@@ -15,7 +15,3 @@ variables:
 - name: imageInfoVariant
   value: "-samples"
   readonly: true
-
-- name: publishEolAnnotations
-  value: true
-  readonly: true

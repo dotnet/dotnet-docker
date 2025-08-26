@@ -13,6 +13,9 @@ pr:
 
 variables:
 - template: /eng/pipelines/variables/samples.yml@self
+- name: publishEolAnnotations
+  value: false
+  readonly: true
 
 resources:
   repositories:
