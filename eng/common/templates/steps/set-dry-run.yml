@@ -1,7 +1,6 @@
 parameters:
   name: publishConfig
   type: object
-  default: null
 
 steps:
 - powershell: |
