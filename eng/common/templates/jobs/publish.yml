@@ -81,6 +81,8 @@ jobs:
       publicSourceBranch: $(publicSourceBranch)
 
   - template: /eng/common/templates/steps/set-dry-run.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
 
   - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
     displayName: Set Publish Variables
@@ -143,6 +145,7 @@ jobs:
 
   - template: /eng/common/templates/steps/wait-for-mcr-image-ingestion.yml@self
     parameters:
+      publishConfig: ${{ parameters.publishConfig }}
       imageInfoPath: '$(imageinfoContainerDir)/image-info.json'
       minQueueTime: $(imageQueueTime)
       dryRunArg: $(dryRunArg)
@@ -213,12 +216,12 @@ jobs:
       internalProjectName: internal
       condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
       args: >-
-        generateEolAnnotationData
+        generateEolAnnotationDataForPublish
+        '${{ parameters.publishConfig.publishAcr.server }}'
+        '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
         '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
         '$(imageInfoContainerDir)/full-image-info-orig.json'
         '$(imageInfoContainerDir)/full-image-info-new.json'
-        '${{ parameters.publishConfig.publishAcr.server }}'
-        '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
         $(generateEolAnnotationDataExtraOptions)
         $(dryRunArg)
 
@@ -233,7 +236,6 @@ jobs:
 
   - template: /eng/common/templates/steps/annotate-eol-digests.yml@self
     parameters:
-      internalProjectName: ${{ parameters.internalProjectName }}
       publishConfig: ${{ parameters.publishConfig }}
       dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
 

@@ -1,9 +1,19 @@
 parameters:
-  publishConfig: null
-  imageInfoPath: null
-  minQueueTime: null
-  condition: true
-  dryRunArg: ""
+- name: publishConfig
+  type: object
+
+- name: imageInfoPath
+  type: string
+
+- name: minQueueTime
+  type: string
+
+- name: dryRunArg
+  type: string
+
+- name: condition
+  type: string
+  default: "true"
 
 steps:
 - template: /eng/common/templates/steps/run-imagebuilder.yml@self
