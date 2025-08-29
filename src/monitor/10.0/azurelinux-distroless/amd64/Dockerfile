@@ -14,8 +14,8 @@ RUN dotnet_monitor_extension_version=10.0.0-rc.1.25426.3 \
     && curl --fail --show-error --location \
         --output dotnet-monitor-egress-azureblobstorage.tar.gz https://ci.dot.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
         --output dotnet-monitor-egress-s3storage.tar.gz https://ci.dot.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-        --output dotnet-monitor-egress-azureblobstorage.tar.gz.sha512 https://ci.dot.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz.sha512 \
-        --output dotnet-monitor-egress-s3storage.tar.gz.sha512 https://ci.dot.net/public/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz.sha512 \
+        --output dotnet-monitor-egress-azureblobstorage.tar.gz.sha512 https://ci.dot.net/public-checksums/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz.sha512 \
+        --output dotnet-monitor-egress-s3storage.tar.gz.sha512 https://ci.dot.net/public-checksums/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz.sha512 \
     && echo "$(cat dotnet-monitor-egress-azureblobstorage.tar.gz.sha512)  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     && echo "$(cat dotnet-monitor-egress-s3storage.tar.gz.sha512)  dotnet-monitor-egress-s3storage.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
