@@ -1,0 +1,18 @@
+{{
+    set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
+    set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
+    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$dotnet_monitor_version') ^
+    set monitorBaseUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
+    set monitorBaseChecksumUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|checksums|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/")
+
+}}RUN dotnet_monitor_version={{monitorVersion}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
+        "product": "dotnet_monitor_base",
+        "download-url": cat(monitorBaseUrl, "dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz"),
+        "file-name": cat("dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz"),
+        "extract-to": "/app",
+        "sha-url": cat(monitorBaseChecksumUrl, "dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz.sha512"),
+        "sha-url-is-bare": "true"
+    ], "    ")}}

@@ -15,7 +15,9 @@
             when(find(OS_VERSION, "3.0") >= 0, "azurelinux", "cbl-mariner"),
             "/base/core:",
             OS_VERSION_NUMBER),
-        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))
+        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
+    set isVersion10OrLater to monitorMajor = "10" ^
+    set extensionsTemplate to when(isVersion10OrLater, "Dockerfile.linux.install-extensions.10", "Dockerfile.linux.install-extensions")
 }}ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
@@ -24,7 +26,7 @@ FROM {{installerImageTag}} AS installer
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 }}
 # Retrieve .NET Monitor extensions
-{{InsertTemplate("Dockerfile.linux.install-extensions")}}
+{{InsertTemplate(extensionsTemplate)}}
 
 
 # .NET Monitor image
