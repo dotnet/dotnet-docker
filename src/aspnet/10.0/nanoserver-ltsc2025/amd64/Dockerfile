@@ -10,7 +10,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '10.0.0-rc.1.25425.114'; `
+        $aspnetcore_version = '10.0.0-rc.1.25429.105'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
         `
@@ -33,6 +33,6 @@ RUN powershell -Command `
 FROM $REPO:10.0.0-rc.1-nanoserver-ltsc2025
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-rc.1.25425.114
+ENV ASPNET_VERSION=10.0.0-rc.1.25429.105
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
