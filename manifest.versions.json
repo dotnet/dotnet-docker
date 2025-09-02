@@ -76,7 +76,7 @@
 
     "dotnet|10.0|product-version": "10.0.0-preview.7",
     "dotnet|10.0|fixed-tag": "$(dotnet|10.0|product-version)",
-    "dotnet|10.0|minor-tag": "10.0-preview",
+    "dotnet|10.0|minor-tag": "10.0",
     "dotnet|10.0|base-url|main": "$(base-url|public|preview|main)",
     "dotnet|10.0|base-url|nightly": "$(base-url|public|preview|nightly)",
     "dotnet|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|main)",
