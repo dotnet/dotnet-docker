@@ -28,7 +28,7 @@ public class YarpImageTests(ITestOutputHelper outputHelper) : CommonRuntimeImage
     [MemberData(nameof(GetImageData))]
     public async Task VerifyBasicScenario(ProductImageData imageData)
     {
-        OutputHelper.WriteLine("Skipping VerifyInsecureFiles test due to known issues."
+        OutputHelper.WriteLine("Skipping VerifyBasicScenario test due to known issues."
             + " Re-enable this test once the following issue is resolved:"
             + " https://github.com/dotnet/dotnet-docker/issues/6639");
 
