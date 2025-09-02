@@ -349,18 +349,18 @@ namespace Microsoft.DotNet.Docker.Tests
         };
 
         private static readonly ProductImageData[] s_linuxMonitorTestData =
-        {
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
+        [
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
             // OSTag does not correspond to OS because platform tags for Azure Linux were not added to the images
             // Use CBL-Mariner distroless for OSTag since those platform tags exist and won't require tests to understand the difference in tagging.
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.AzureLinux30Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.AzureLinux30Distroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V9_1_Preview, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor },
-            new ProductImageData { Version = V9_1_Preview, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor }
-        };
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OS.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V9_1_Preview, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V9_1_Preview, VersionFamily = V9_0, OS = OS.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+        ];
 
         private static readonly ProductImageData[] s_windowsMonitorTestData =
         {
@@ -395,7 +395,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 VersionFamily = V9_0,
                 OS = OS.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.AzureLinux30Distroless,
+                OSDir = OS.AzureLinuxDistroless,
                 Arch = Arch.Amd64,
                 SupportedImageRepos = DotNetImageRepo.Yarp,
             },
@@ -404,7 +404,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 VersionFamily = V9_0,
                 OS = OS.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.AzureLinux30Distroless,
+                OSDir = OS.AzureLinuxDistroless,
                 Arch = Arch.Arm64,
                 SupportedImageRepos = DotNetImageRepo.Yarp
             },
