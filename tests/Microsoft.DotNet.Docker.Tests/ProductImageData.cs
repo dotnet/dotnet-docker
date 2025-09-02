@@ -196,22 +196,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
             switch (imageRepo)
             {
-                case DotNetImageRepo.Runtime:
-                case DotNetImageRepo.Aspnet:
-                case DotNetImageRepo.Runtime_Deps:
-                case DotNetImageRepo.Monitor:
-                case DotNetImageRepo.Aspire_Dashboard:
-                case DotNetImageRepo.Yarp:
-                    imageVersion = Version;
-                    os = OSTag;
-                    break;
                 case DotNetImageRepo.SDK:
                     imageVersion = Version;
                     os = SdkOS;
                     variant = GetImageVariantName(SdkImageVariant);
                     break;
                 default:
-                    throw new NotSupportedException($"Unsupported image type '{imageRepo}'");
+                    imageVersion = Version;
+                    os = OSTag;
+                    break;
             }
 
             return GetTagName(imageVersion.GetTagName(), os, variant);
