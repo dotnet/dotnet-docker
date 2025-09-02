@@ -76,6 +76,13 @@ They contain the following features:
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+10.0.0-rc.1-noble-amd64, 10.0-noble-amd64, 10.0.0-rc.1-noble, 10.0-noble, 10.0.0-rc.1, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.0-rc.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.0-rc.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-alpine3.22-amd64, 10.0-alpine3.22-amd64, 10.0-alpine-amd64, 10.0.0-rc.1-alpine3.22, 10.0-alpine3.22, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
+10.0.0-rc.1-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.0-rc.1-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+10.0.0-rc.1-azurelinux3.0-distroless-amd64, 10.0-azurelinux3.0-distroless-amd64, 10.0.0-rc.1-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+10.0.0-rc.1-azurelinux3.0-distroless-extra-amd64, 10.0-azurelinux3.0-distroless-extra-amd64, 10.0.0-rc.1-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
 9.0.8-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.8-bookworm-slim, 9.0-bookworm-slim, 9.0.8, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.8-alpine3.21-amd64, 9.0-alpine3.21-amd64, 9.0-alpine-amd64, 9.0.8-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
 9.0.8-alpine3.22-amd64, 9.0-alpine3.22-amd64, 9.0.8-alpine3.22, 9.0-alpine3.22 | [Dockerfile](src/runtime/9.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
@@ -98,22 +105,17 @@ Tags | Dockerfile | OS Version
 8.0.19-azurelinux3.0-distroless-amd64, 8.0-azurelinux3.0-distroless-amd64, 8.0.19-azurelinux3.0-distroless, 8.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/8.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.0.19-azurelinux3.0-distroless-extra-amd64, 8.0-azurelinux3.0-distroless-extra-amd64, 8.0.19-azurelinux3.0-distroless-extra, 8.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/8.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
 
-#### .NET 10 Preview Tags
-
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-10.0.0-rc.1-noble-amd64, 10.0-noble-amd64, 10.0.0-rc.1-noble, 10.0-noble, 10.0.0-rc.1, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.0-rc.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.0-rc.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-alpine3.22-amd64, 10.0-alpine3.22-amd64, 10.0-alpine-amd64, 10.0.0-rc.1-alpine3.22, 10.0-alpine3.22, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
-10.0.0-rc.1-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.0-rc.1-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-10.0.0-rc.1-azurelinux3.0-distroless-amd64, 10.0-azurelinux3.0-distroless-amd64, 10.0.0-rc.1-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-10.0.0-rc.1-azurelinux3.0-distroless-extra-amd64, 10.0-azurelinux3.0-distroless-extra-amd64, 10.0.0-rc.1-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+10.0.0-rc.1-noble-arm64v8, 10.0-noble-arm64v8, 10.0.0-rc.1-noble, 10.0-noble, 10.0.0-rc.1, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.0-rc.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.0-rc.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-alpine3.22-arm64v8, 10.0-alpine3.22-arm64v8, 10.0-alpine-arm64v8, 10.0.0-rc.1-alpine3.22, 10.0-alpine3.22, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
+10.0.0-rc.1-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.0-rc.1-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.0-rc.1-azurelinux3.0-distroless-arm64v8, 10.0-azurelinux3.0-distroless-arm64v8, 10.0.0-rc.1-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.0-rc.1-azurelinux3.0-distroless-extra-arm64v8, 10.0-azurelinux3.0-distroless-extra-arm64v8, 10.0.0-rc.1-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.8-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.8-bookworm-slim, 9.0-bookworm-slim, 9.0.8, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.8-alpine3.21-arm64v8, 9.0-alpine3.21-arm64v8, 9.0-alpine-arm64v8, 9.0.8-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
 9.0.8-alpine3.22-arm64v8, 9.0-alpine3.22-arm64v8, 9.0.8-alpine3.22, 9.0-alpine3.22 | [Dockerfile](src/runtime/9.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
@@ -136,22 +138,14 @@ Tags | Dockerfile | OS Version
 8.0.19-azurelinux3.0-distroless-arm64v8, 8.0-azurelinux3.0-distroless-arm64v8, 8.0.19-azurelinux3.0-distroless, 8.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/8.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.19-azurelinux3.0-distroless-extra-arm64v8, 8.0-azurelinux3.0-distroless-extra-arm64v8, 8.0.19-azurelinux3.0-distroless-extra, 8.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/8.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 
-#### .NET 10 Preview Tags
-
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-10.0.0-rc.1-noble-arm64v8, 10.0-noble-arm64v8, 10.0.0-rc.1-noble, 10.0-noble, 10.0.0-rc.1, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.0-rc.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.0-rc.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-alpine3.22-arm64v8, 10.0-alpine3.22-arm64v8, 10.0-alpine-arm64v8, 10.0.0-rc.1-alpine3.22, 10.0-alpine3.22, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
-10.0.0-rc.1-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.0-rc.1-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.0-rc.1-azurelinux3.0-distroless-arm64v8, 10.0-azurelinux3.0-distroless-arm64v8, 10.0.0-rc.1-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.0-rc.1-azurelinux3.0-distroless-extra-arm64v8, 10.0-azurelinux3.0-distroless-extra-arm64v8, 10.0.0-rc.1-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+10.0.0-rc.1-noble-arm32v7, 10.0-noble-arm32v7, 10.0.0-rc.1-noble, 10.0-noble, 10.0.0-rc.1, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.0-rc.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.0-rc.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.0-rc.1-alpine3.22-arm32v7, 10.0-alpine3.22-arm32v7, 10.0-alpine-arm32v7, 10.0.0-rc.1-alpine3.22, 10.0-alpine3.22, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
 9.0.8-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.8-bookworm-slim, 9.0-bookworm-slim, 9.0.8, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.8-alpine3.21-arm32v7, 9.0-alpine3.21-arm32v7, 9.0-alpine-arm32v7, 9.0.8-alpine3.21, 9.0-alpine3.21, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 9.0.8-alpine3.22-arm32v7, 9.0-alpine3.22-arm32v7, 9.0.8-alpine3.22, 9.0-alpine3.22 | [Dockerfile](src/runtime/9.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
@@ -165,66 +159,37 @@ Tags | Dockerfile | OS Version
 8.0.19-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.19-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/runtime/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.19-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.19-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/runtime/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 
-#### .NET 10 Preview Tags
-
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-10.0.0-rc.1-noble-arm32v7, 10.0-noble-arm32v7, 10.0.0-rc.1-noble, 10.0-noble, 10.0.0-rc.1, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.0-rc.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.0-rc.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.0-rc.1-alpine3.22-arm32v7, 10.0-alpine3.22-arm32v7, 10.0-alpine-arm32v7, 10.0.0-rc.1-alpine3.22, 10.0-alpine3.22, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
-
 ### Nano Server 2025 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
+10.0.0-rc.1-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
 9.0.8-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
 8.0.19-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
-
-#### .NET 10 Preview Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.0-rc.1-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
 
 ### Windows Server Core 2025 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
+10.0.0-rc.1-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 9.0.8-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 8.0.19-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-
-#### .NET 10 Preview Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.0-rc.1-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 
 ### Nano Server 2022 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
+10.0.0-rc.1-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
 9.0.8-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 8.0.19-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
-
-#### .NET 10 Preview Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.0-rc.1-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
 
 ### Windows Server Core 2022 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
+10.0.0-rc.1-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 9.0.8-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 8.0.19-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-
-#### .NET 10 Preview Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.0-rc.1-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 
 ### Nano Server, version 1809 amd64 Tags
 
