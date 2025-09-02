@@ -12,6 +12,10 @@ These images offer dramatically smaller deployment sizes and attack surface comp
 
 ## Featured Tags
 
+* `10.0-noble-chiseled`
+  * `docker pull mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled`
+  * `docker pull mcr.microsoft.com/dotnet/runtime:10.0-noble-chiseled`
+  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled`
 * `8.0-noble-chiseled`
   * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0-noble-chiseled`
   * `docker pull mcr.microsoft.com/dotnet/runtime:8.0-noble-chiseled`
@@ -46,7 +50,7 @@ First, acquire `chisel` and `chisel-wrapper`.
 `chisel-wrapper` (from [rocks-toolbox](https://github.com/canonical/rocks-toolbox/)) is used to generate a dpkg status file documenting which packages are installed, which is used by many vulnerability scanning tools.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-preview-noble AS chisel
+FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-noble AS chisel
 
 # Docker build arg documentation: https://docs.docker.com/build/building/variables/
 # Find the latest chisel releases: https://github.com/canonical/chisel/releases
@@ -73,7 +77,7 @@ Then, copy over the filesystem from your desired base image and use `chisel` and
 See [canonical/chisel-releases](https://github.com/canonical/chisel-releases) for available slices.
 
 ```Dockerfile
-COPY --from=mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-preview-noble-chiseled / /rootfs/
+COPY --from=mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-noble-chiseled / /rootfs/
 
 RUN chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
         --release ubuntu-24.04 --root /rootfs/ \
