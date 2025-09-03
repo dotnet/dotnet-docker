@@ -44,7 +44,10 @@ extends:
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
         stagesTemplate: /eng/pipelines/stages/build-and-test.yml@self
         stagesTemplateParameters:
+          isStandaloneBuild: true
+          buildInternalVersions: true
           versionsRepoRef: VersionsRepo
           sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
-          isInternalServicingValidation: true
           noCache: ${{ parameters.noCache }}
+          additionalServiceConnections:
+          - name: $(dotnetstagingtest.serviceConnectionName)

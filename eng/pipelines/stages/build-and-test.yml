@@ -22,14 +22,44 @@ parameters:
   type: string
   default: ""
 
-- name: isInternalServicingValidation
+# Whether this pipeline is building internal/unreleased .NET versions (not true
+# for every internal build - "internal" builds just refer to those that happen
+# in the internal Azure DevOps project)
+- name: buildInternalVersions
   type: boolean
   default: false
 
+# Whether this is a standalone build. This should be set to false if this stage
+# will be followed by a publish in the same pipeline run.
+- name: isStandaloneBuild
+  type: boolean
+  default: false
+
+# Additional service connections needed by this pipeline that are not included
+# in the publishConfig. Only required if 'isStandaloneBuild' is true.
+- name: additionalServiceConnections
+  type: object
+  default: []
+
 stages:
+- ${{ if parameters.isStandaloneBuild }}:
+  - template: /eng/common/templates/stages/setup-service-connections.yml@self
+    parameters:
+      serviceConnections:
+      - name: ${{ parameters.publishConfig.internalMirrorAcr.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.buildAcr.serviceConnection.name }}
+      - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
+        - name: ${{ serviceConnection.name }}
+
 - template: /eng/common/templates/stages/dotnet/build-and-test.yml@self
   parameters:
-    ${{ insert }}: ${{ parameters }}
+    publishConfig: ${{ parameters.publishConfig }}
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    noCache: ${{ parameters.noCache }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
+    isInternalServicingValidation: ${{ parameters.buildInternalVersions }}
 
     ${{ if or(eq(variables['System.TeamProject'], parameters.publicProjectName), and(eq(variables['System.TeamProject'], parameters.internalProjectName), eq(variables['Build.Reason'], 'PullRequest'))) }}:
       buildMatrixType: platformVersionedOs
@@ -42,7 +72,7 @@ stages:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
     customBuildInitSteps:
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
-    - ${{ if eq(parameters.isInternalServicingValidation, true) }}:
+    - ${{ if eq(parameters.buildInternalVersions, true) }}:
       - powershell: |
           $imageBuilderBuildArgs = "$IMAGEBUILDERBUILDARGS --internal"
           echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$imageBuilderBuildArgs"
@@ -50,9 +80,9 @@ stages:
     - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
       parameters:
         publishConfig: ${{ parameters.publishConfig }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+        isInternalServicingValidation: ${{ parameters.buildInternalVersions }}
     customTestInitSteps:
     - template: /eng/pipelines/steps/set-custom-test-variables.yml@self
       parameters:
         publishConfig: ${{ parameters.publishConfig }}
-        isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+        isInternalServicingValidation: ${{ parameters.buildInternalVersions }}
