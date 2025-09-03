@@ -20,9 +20,10 @@ parameters:
   default: false
 
 variables:
-- template: /eng/pipelines/variables/core.yml@self
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+- template: /eng/pipelines/variables/core-unofficial.yml@self
+- name: "publicSourceBranch"
+  value: "main"
+  readonly: true
 
 resources:
   repositories:
@@ -33,16 +34,17 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es-unofficial.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
+    reposToExcludeFromScanning:
+    - VersionsRepo
     stages:
-    - stage: DotNet
-      jobs:
-      - job: BuildDotNet
-        displayName: Build .NET images
-        pool:
-          vmImage: $(defaultLinuxAmd64PoolImage)
-        steps:
-        - powershell: |-
-            Write-Host "This pipeline is a work in progress.
-            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."
+    - template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
+      parameters:
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        stagesTemplate: /eng/pipelines/stages/build-and-test.yml@self
+        stagesTemplateParameters:
+          versionsRepoRef: VersionsRepo
+          sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+          isInternalServicingValidation: true
+          noCache: ${{ parameters.noCache }}
