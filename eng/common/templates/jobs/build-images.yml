@@ -10,7 +10,7 @@ parameters:
   noCache: false
   internalProjectName: null
   publicProjectName: null
-  isInternalServicingValidation: false
+  storageAccountServiceConnection: null
 
 jobs:
 - job: ${{ parameters.name }}
@@ -73,11 +73,11 @@ jobs:
         id: ${{ parameters.publishConfig.buildAcr.serviceConnection.id }}
         tenantId: ${{ parameters.publishConfig.buildAcr.serviceConnection.tenantId }}
         clientId: ${{ parameters.publishConfig.buildAcr.serviceConnection.clientId }}
-      - ${{ if eq(parameters.isInternalServicingValidation, true) }}:
+      - ${{ if parameters.storageAccountServiceConnection }}:
         - name: storage
-          id: $(dotnetstaging.serviceConnection.id)
-          tenantId: $(dotnetstaging.serviceConnection.tenantId)
-          clientId: $(dotnetstaging.serviceConnection.clientId)
+          id: ${{ parameters.storageAccountServiceConnection.id }}
+          tenantId: ${{ parameters.storageAccountServiceConnection.tenantId }}
+          clientId: ${{ parameters.storageAccountServiceConnection.clientId }}
       internalProjectName: ${{ parameters.internalProjectName }}
       dockerClientOS: ${{ parameters.dockerClientOS }}
       args: >-
