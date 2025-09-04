@@ -3,7 +3,13 @@
 
 parameters:
   linuxAmd64Pool: ""
-  isInternalServicingValidation: false
+
+  # (Optional) This service connection should be an Azure Resource Manager
+  # service connection to a storage account that's needed during image builds.
+  # It can be used to build images with access to private/internal bits.
+  # If specified, this service connection will be used to pass a storage
+  # account access token as `--build-arg ACCESSTOKEN=***` to all image builds.
+  storageAccountServiceConnection: null
 
   # Parameters for pre-build jobs
   customGenerateMatrixInitSteps: []
@@ -40,7 +46,7 @@ stages:
     publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
     customGenerateMatrixInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}

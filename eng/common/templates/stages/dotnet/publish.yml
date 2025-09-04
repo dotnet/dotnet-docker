@@ -6,7 +6,6 @@ parameters:
   publicProjectName: null
   publishConfig: null
   pool: ""
-  isInternalServicingValidation: false
   isStandalonePublish: false
   customPublishInitSteps: []
   sourceBuildPipelineDefinitionId: ''
@@ -20,7 +19,6 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     publishConfig: ${{ parameters.publishConfig }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

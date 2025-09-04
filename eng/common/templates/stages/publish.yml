@@ -7,7 +7,6 @@ parameters:
 
   publishConfig: null
 
-  isInternalServicingValidation: false
   isStandalonePublish: false
 
   pool:
@@ -29,54 +28,53 @@ parameters:
 # Publish Images
 ################################################################################
 stages:
-- ${{ if eq(parameters.isInternalServicingValidation, 'false') }}:
-  - stage: Publish
-    ${{ if eq(parameters.isStandalonePublish, true) }}:
-      dependsOn: []
+- stage: Publish
+  ${{ if eq(parameters.isStandalonePublish, true) }}:
+    dependsOn: []
+  ${{ else }}:
+    ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+      dependsOn: Test
     ${{ else }}:
-      ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-        dependsOn: Test
-      ${{ else }}:
-        dependsOn: Post_Build
-    condition: "
+      dependsOn: Post_Build
+  condition: "
+    and(
+      not(canceled()),
       and(
-        not(canceled()),
-        and(
-          contains(variables['stages'], 'publish'),
+        contains(variables['stages'], 'publish'),
+        or(
           or(
+            and(
+              and(
+                contains(variables['stages'], 'build'),
+                succeeded('Post_Build')),
+              and(
+                contains(variables['stages'], 'test'),
+                in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
             or(
               and(
-                and(
-                  contains(variables['stages'], 'build'),
-                  succeeded('Post_Build')),
+                not(contains(variables['stages'], 'build')),
                 and(
                   contains(variables['stages'], 'test'),
                   in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
-              or(
+              and(
+                not(contains(variables['stages'], 'test')),
                 and(
-                  not(contains(variables['stages'], 'build')),
-                  and(
-                    contains(variables['stages'], 'test'),
-                    in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
-                and(
-                  not(contains(variables['stages'], 'test')),
-                  and(
-                    contains(variables['stages'], 'build'),
-                    succeeded('Post_Build'))))),
-            not(
-              or(
-                contains(variables['stages'], 'build'),
-                contains(variables['stages'], 'test'))))))"
-    jobs:
-    - template: /eng/common/templates/jobs/publish.yml@self
-      parameters:
-        pool: ${{ parameters.pool }}
-        internalProjectName: ${{ parameters.internalProjectName }}
-        publishConfig: ${{ parameters.publishConfig }}
-        customPublishVariables: ${{ parameters.customPublishVariables }}
-        customInitSteps: ${{ parameters.customPublishInitSteps }}
-        sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
-        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
-        versionsRepoRef: ${{ parameters.versionsRepoRef }}
-        versionsRepoPath: ${{ parameters.versionsRepoPath }}
-        overrideImageInfoCommit: ${{ parameters.overrideImageInfoCommit }}
+                  contains(variables['stages'], 'build'),
+                  succeeded('Post_Build'))))),
+          not(
+            or(
+              contains(variables['stages'], 'build'),
+              contains(variables['stages'], 'test'))))))"
+  jobs:
+  - template: /eng/common/templates/jobs/publish.yml@self
+    parameters:
+      pool: ${{ parameters.pool }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publishConfig: ${{ parameters.publishConfig }}
+      customPublishVariables: ${{ parameters.customPublishVariables }}
+      customInitSteps: ${{ parameters.customPublishInitSteps }}
+      sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
+      sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+      versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      versionsRepoPath: ${{ parameters.versionsRepoPath }}
+      overrideImageInfoCommit: ${{ parameters.overrideImageInfoCommit }}

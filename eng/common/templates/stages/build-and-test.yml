@@ -25,7 +25,7 @@ parameters:
 
   versionsRepoRef: ""
 
-  isInternalServicingValidation: false
+  storageAccountServiceConnection: null
 
   linuxAmd64Pool:
     vmImage: $(defaultLinuxAmd64PoolImage)
@@ -113,7 +113,7 @@ stages:
       publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_arm64
@@ -131,7 +131,7 @@ stages:
       publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Linux_arm32
@@ -149,7 +149,7 @@ stages:
       publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows1809_amd64
@@ -167,7 +167,7 @@ stages:
       publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows2022_amd64
@@ -185,7 +185,7 @@ stages:
       publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: Windows2025_amd64
@@ -204,7 +204,7 @@ stages:
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       versionsRepoRef: ${{ parameters.versionsRepoRef }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
   - template: /eng/common/templates/jobs/build-images.yml@self
     parameters:
       name: WindowsLtsc2016_amd64
@@ -222,7 +222,7 @@ stages:
       publishConfig: ${{ parameters.publishConfig }}
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-      isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
 
 ################################################################################
 # Post-Build

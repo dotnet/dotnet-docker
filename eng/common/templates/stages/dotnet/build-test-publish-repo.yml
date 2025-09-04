@@ -2,7 +2,6 @@
 
 parameters:
   linuxAmd64Pool: ""
-  isInternalServicingValidation: false
 
   # Parameters for pre-build jobs
   customGenerateMatrixInitSteps: []
@@ -39,7 +38,6 @@ stages:
 - template: /eng/common/templates/stages/dotnet/build-and-test.yml@self
   parameters:
     linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     # Pre-build
     customGenerateMatrixInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
     customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
@@ -68,7 +66,6 @@ stages:
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
     pool: ${{ parameters.linuxAmd64Pool }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
