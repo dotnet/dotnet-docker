@@ -43,9 +43,6 @@ extends:
         stagesTemplateParameters:
           versionsRepoRef: VersionsRepo
           isStandalonePublish: true
-          additionalServiceConnections:
-          - name: $(kusto.serviceConnectionName)
-          - name: $(marStatus.serviceConnectionName)
           # Whenever staged images are published, we need to override the commit SHA since they were
           # staged from an earlier, internal commit. We want the image info's commit URLs to point to
           # the commit that this pipeline is running on, which should be the latest commit on the
