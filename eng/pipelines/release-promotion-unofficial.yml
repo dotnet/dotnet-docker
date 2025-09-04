@@ -3,6 +3,10 @@ pr: none
 
 variables:
 - template: /eng/pipelines/variables/core-unofficial.yml@self
+# Always run only the publish stage
+- name: stages
+  value: "publish"
+  readonly: true
 # Set pathArgs to empty in order to publish all images
 - name: imageBuilder.pathArgs
   value: ""
