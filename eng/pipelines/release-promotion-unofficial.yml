@@ -21,7 +21,7 @@ variables:
 
 resources:
   pipelines:
-  - pipeline: dotnet-docker-release-staging-unofficial
+  - pipeline: release-staging
     source: dotnet-docker-release-staging-unofficial
   repositories:
   - repository: VersionsRepo
@@ -38,7 +38,7 @@ extends:
     stages:
     - template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
       parameters:
-        sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging-unofficial.runID)"
+        sourceBuildPipelineRunId: "$(resources.pipeline.release-staging.runID)"
         stagesTemplate: /eng/pipelines/stages/publish.yml@self
         stagesTemplateParameters:
           versionsRepoRef: VersionsRepo
@@ -48,8 +48,8 @@ extends:
           # the commit that this pipeline is running on, which should be the latest commit on the
           # main branch.
           overrideImageInfoCommit: true
-          sourceBuildPipelineDefinitionId: "$(resources.pipeline.dotnet-docker-release-staging.pipelineID)"
-          sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
+          sourceBuildPipelineDefinitionId: "$(resources.pipeline.release-staging.pipelineID)"
+          sourceBuildPipelineRunId: "$(resources.pipeline.release-staging.runID)"
           customPublishInitSteps:
-          - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.dotnet-docker-release-staging.runID)"
+          - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.release-staging.runID)"
             displayName: Set sourceBuildId
