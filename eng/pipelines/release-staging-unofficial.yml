@@ -18,11 +18,18 @@ parameters:
     path arguments).
   type: boolean
   default: false
+- name: publicSourceBranch
+  displayName: Public source branch (the branch that this build is based on)
+  type: string
+  default: main
+  values:
+  - main
+  - nightly
 
 variables:
 - template: /eng/pipelines/variables/core-unofficial.yml@self
 - name: "publicSourceBranch"
-  value: "main"
+  value: ${{ parameters.publicSourceBranch }}
   readonly: true
 
 resources:
