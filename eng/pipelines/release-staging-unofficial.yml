@@ -18,11 +18,19 @@ parameters:
     path arguments).
   type: boolean
   default: false
+- name: publicSourceBranch
+  displayName: Public source branch (the branch that this build is based on)
+  type: string
+  default: main
+  values:
+  - main
+  - nightly
 
 variables:
-- template: /eng/pipelines/variables/core.yml@self
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+- template: /eng/pipelines/variables/core-unofficial.yml@self
+- name: "publicSourceBranch"
+  value: ${{ parameters.publicSourceBranch }}
+  readonly: true
 
 resources:
   repositories:
@@ -33,16 +41,22 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es-unofficial.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
+    reposToExcludeFromScanning:
+    - VersionsRepo
     stages:
-    - stage: DotNet
-      jobs:
-      - job: BuildDotNet
-        displayName: Build .NET images
-        pool:
-          vmImage: $(defaultLinuxAmd64PoolImage)
-        steps:
-        - powershell: |-
-            Write-Host "This pipeline is a work in progress.
-            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."
+    - template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
+      parameters:
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        stagesTemplate: /eng/pipelines/stages/build-and-test.yml@self
+        stagesTemplateParameters:
+          isStandaloneBuild: true
+          versionsRepoRef: VersionsRepo
+          sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+          noCache: ${{ parameters.noCache }}
+          storageAccountServiceConnection:
+            name: $(dotnetstagingtest.serviceConnectionName)
+            id: $(dotnetstagingtest.serviceConnection.id)
+            tenantId: $(dotnetstagingtest.serviceConnection.tenantId)
+            clientId: $(dotnetstagingtest.serviceConnection.clientId)

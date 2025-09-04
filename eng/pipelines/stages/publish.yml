@@ -11,9 +11,6 @@ parameters:
   - name: linuxAmd64Pool
     type: string
     default: ""
-  - name: isInternalServicingValidation
-    type: boolean
-    default: false
   - name: isStandalonePublish
     type: boolean
     default: false
@@ -39,7 +36,6 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     pool: ${{ parameters.linuxAmd64Pool }}
     customPublishInitSteps:
