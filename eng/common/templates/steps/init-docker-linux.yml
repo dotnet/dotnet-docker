@@ -25,7 +25,7 @@ steps:
   ################################################################################
 - ${{ if eq(parameters.setupImageBuilder, 'true') }}:
 
-  - script: $(engCommonPath)/pull-image.sh $(imageNames.imageBuilder)
+  - powershell: $(engCommonPath)/Pull-Image.ps1 $(imageNames.imageBuilder)
     displayName: Pull Image Builder
     condition: and(succeeded(), ${{ parameters.condition }})
 
@@ -78,7 +78,7 @@ steps:
   # Setup Test Runner (Optional)
   ################################################################################
 - ${{ if eq(parameters.setupTestRunner, 'true') }}:
-  - script: $(engCommonPath)/pull-image.sh $(imageNames.testrunner)
+  - powershell: $(engCommonPath)/Pull-Image.ps1 $(imageNames.testrunner)
     displayName: Pull Test Runner
     condition: and(succeeded(), ${{ parameters.condition }})
   - script: >
