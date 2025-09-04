@@ -100,55 +100,19 @@ jobs:
       displayName: Publish Image Info File Artifact
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
-  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-    # The following task depends on the SBOM Manifest Generator task installed on the agent.
-    # This task is auto-injected by 1ES Pipeline Templates so we don't need to install it ourselves.
+  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.dockerClientOS, 'linux')) }}:
     - powershell: |
         $images = "$(BuildImages.builtImages)"
         if (-not $images) { return 0 }
-
-        # There can be leftover versions of the task left on the agent if it's not fresh. So find the latest version.
-        $taskDir = $(Get-ChildItem -Recurse -Directory -Filter "ManifestGeneratorTask*" -Path '$(Agent.WorkFolder)')[-1].FullName
-
-        # There may be multiple version directories within the task directory. Use the latest.
-        $taskVersionDir = $(Get-ChildItem -Directory $taskDir | Sort-Object)[-1].FullName
-
-        $manifestToolDllPath = $(Get-ChildItem -Recurse -File -Filter "Microsoft.ManifestTool.dll" -Path $taskVersionDir).FullName
-
-        # Check whether the manifest task installed its own version of .NET.
-        # To be more robust, we'll handle varying implementations that it's had.
-        # First check for a dotnet folder in the task location
-        $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "dotnet-*" -Path $taskVersionDir).FullName
-        if (-not $dotnetDir) {
-          # If it's not there, check in the agent tools location
-          $dotnetDir = $(Get-ChildItem -Recurse -Directory -Filter "*dotnet-*" -Path "$(Agent.ToolsDirectory)").FullName
-        }
-
-        # If the manifest task installed its own version of .NET use that; otherwise it's reusing an existing install of .NET
-        # which is executable by default.
-        if ($dotnetDir) {
-          $dotnetPath = "$dotnetDir/dotnet"
-        }
-        else {
-          $dotnetPath = "dotnet"
-        }
-
-        # Call the manifest tool for each image to produce seperate SBOMs
-        # Manifest tool docs: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/secure-supply-chain/custom-sbom-generation-workflows
+        $syftImageName = "${{ parameters.publishConfig.publicMirrorAcr.server }}/$(imageNames.syft)"
+        & $(engCommonPath)/Pull-Image.ps1 $syftImageName
         $images -Split ',' | ForEach-Object {
           echo "Generating SBOM for $_";
-          $formattedImageName = $_.Replace('${{ parameters.publishConfig.buildAcr.server }}/${{ parameters.publishConfig.buildAcr.repoPrefix }}', "").Replace('/', '_').Replace(':', '_');
+          $targetImageName = "$_";
+          $formattedImageName = $targetImageName.Replace('${{ parameters.publishConfig.buildAcr.server }}/${{ parameters.publishConfig.buildAcr.repoPrefix }}', "").Replace('/', '_').Replace(':', '_');
           $sbomChildDir = "$(sbomDirectory)/$formattedImageName";
           New-Item -Type Directory -Path $sbomChildDir > $null;
-          & $dotnetPath "$manifestToolDllPath" `
-            Generate `
-            -BuildDropPath '$(Build.ArtifactStagingDirectory)' `
-            -BuildComponentPath '$(Agent.BuildDirectory)' `
-            -PackageName '.NET' `
-            -PackageVersion '$(Build.BuildNumber)' `
-            -ManifestDirPath $sbomChildDir `
-            -DockerImagesToScan $_ `
-            -Verbosity Information
+          docker build --output=$sbomChildDir -f $(engCommonPath)/Dockerfile.syft --build-arg SYFT_IMAGE_NAME=$syftImageName --build-arg TARGET_IMAGE_NAME=$targetImageName -t syft-sbom $(engCommonPath);
         }
       displayName: Generate SBOMs
       condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
@@ -156,7 +120,7 @@ jobs:
     - template: /eng/common/templates/jobs/${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}@self
       parameters:
         condition: ne(variables.testScriptPath, '')
-  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+  - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.dockerClientOS, 'linux')) }}:
     - template: /eng/common/templates/steps/publish-artifact.yml@self
       parameters:
         path: $(sbomDirectory)
