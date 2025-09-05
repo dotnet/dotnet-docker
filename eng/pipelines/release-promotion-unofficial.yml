@@ -2,9 +2,11 @@ trigger: none
 pr: none
 
 variables:
-- template: /eng/pipelines/variables/core.yml@self
-  parameters:
-    sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging-unofficial.runID)"
+- template: /eng/pipelines/variables/core-unofficial.yml@self
+# Always run only the publish stage
+- name: stages
+  value: "publish"
+  readonly: true
 # Set pathArgs to empty in order to publish all images
 - name: imageBuilder.pathArgs
   value: ""
@@ -19,7 +21,7 @@ variables:
 
 resources:
   pipelines:
-  - pipeline: dotnet-docker-release-staging-unofficial
+  - pipeline: release-staging
     source: dotnet-docker-release-staging-unofficial
   repositories:
   - repository: VersionsRepo
@@ -29,16 +31,25 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es-unofficial.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
+    reposToExcludeFromScanning:
+    - VersionsRepo
     stages:
-    - stage: DotNet
-      jobs:
-      - job: PublishDotNet
-        displayName: Publish .NET images
-        pool:
-          vmImage: $(defaultLinuxAmd64PoolImage)
-        steps:
-        - powershell: |-
-            Write-Host "This pipeline is a work in progress.
-            Write-Host "See https://github.com/dotnet/dotnet-docker-internal/issues/8566 for more details."
+    - template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
+      parameters:
+        sourceBuildPipelineRunId: "$(resources.pipeline.release-staging.runID)"
+        stagesTemplate: /eng/pipelines/stages/publish.yml@self
+        stagesTemplateParameters:
+          versionsRepoRef: VersionsRepo
+          isStandalonePublish: true
+          # Whenever staged images are published, we need to override the commit SHA since they were
+          # staged from an earlier, internal commit. We want the image info's commit URLs to point to
+          # the commit that this pipeline is running on, which should be the latest commit on the
+          # main branch.
+          overrideImageInfoCommit: true
+          sourceBuildPipelineDefinitionId: "$(resources.pipeline.release-staging.pipelineID)"
+          sourceBuildPipelineRunId: "$(resources.pipeline.release-staging.runID)"
+          customPublishInitSteps:
+          - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.release-staging.runID)"
+            displayName: Set sourceBuildId
