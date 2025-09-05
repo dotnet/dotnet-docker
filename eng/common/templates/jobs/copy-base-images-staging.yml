@@ -5,6 +5,9 @@ parameters:
 - name: pool
   type: object
   default: {}
+- name: publishConfig
+  type: object
+  default: null
 - name: customInitSteps
   type: stepList
   default: []
@@ -22,12 +25,5 @@ jobs:
     pool: ${{ parameters.pool }}
     customInitSteps: ${{ parameters.customInitSteps }}
     additionalOptions: ${{ parameters.additionalOptions }}
-    acr:
-      server: $(acr-staging.server)
-      serviceConnection:
-        tenantId: $(internal-mirror.serviceConnection.tenantId)
-        clientId: $(internal-mirror.serviceConnection.clientId)
-        id: $(internal-mirror.serviceConnection.id)
-      subscription: $(acr-staging.subscription)
-      resourceGroup: $(acr-staging.resourceGroup)
-    repoPrefix: $(mirrorRepoPrefix)
+    acr: ${{ parameters.publishConfig.internalMirrorAcr }}
+    repoPrefix: ${{ parameters.publishConfig.internalMirrorAcr.repoPrefix }}

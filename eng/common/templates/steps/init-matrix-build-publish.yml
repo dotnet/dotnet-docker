@@ -5,6 +5,7 @@
 # - Publishing images
 
 parameters:
+  publishConfig: null
   versionsRepoRef: ""
   versionsRepoPath: "versions"
 
@@ -15,11 +16,11 @@ steps:
     path: s/${{ parameters.versionsRepoPath }}
     persistCredentials: true
     fetchDepth: 1
-    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    condition: succeeded()
 - powershell: |
     $commonMatrixAndBuildOptions = "--source-repo $(publicGitRepoUri)"
     if ("$(System.TeamProject)" -eq "internal" -and "$(Build.Reason)" -ne "PullRequest") {
-      $commonMatrixAndBuildOptions = "$commonMatrixAndBuildOptions --source-repo-prefix $(mirrorRepoPrefix) --registry-override $(acr-staging.server)"
+      $commonMatrixAndBuildOptions = "$commonMatrixAndBuildOptions --source-repo-prefix ${{ parameters.publishConfig.internalMirrorAcr.repoPrefix }} --registry-override ${{ parameters.publishConfig.buildAcr.server }}"
     }
 
     if ("$(System.TeamProject)" -eq "public" -and "$(public-mirror.server)" -ne "") {

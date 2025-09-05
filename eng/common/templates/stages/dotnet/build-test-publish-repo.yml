@@ -2,7 +2,6 @@
 
 parameters:
   linuxAmd64Pool: ""
-  isInternalServicingValidation: false
 
   # Parameters for pre-build jobs
   customGenerateMatrixInitSteps: []
@@ -10,6 +9,7 @@ parameters:
 
   # Build parameters
   noCache: false
+  publishConfig: null
   buildMatrixType: platformDependencyGraph
   buildMatrixCustomBuildLegGroupArgs: ""
   linuxAmdBuildJobTimeout: 60
@@ -32,19 +32,18 @@ parameters:
   # Other common parameters
   internalProjectName: null
   publicProjectName: null
-  versionsRepoRef: null
-
+  versionsRepoRef: ""
 
 stages:
 - template: /eng/common/templates/stages/dotnet/build-and-test.yml@self
   parameters:
     linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     # Pre-build
     customGenerateMatrixInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
     customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
     # Build
     noCache: ${{ parameters.noCache }}
+    publishConfig: ${{ parameters.publishConfig }}
     buildMatrixType: ${{ parameters.buildMatrixType }}
     buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
     linuxAmdBuildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
@@ -67,9 +66,9 @@ stages:
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
     pool: ${{ parameters.linuxAmd64Pool }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
+    publishConfig: ${{ parameters.publishConfig }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}

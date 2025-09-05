@@ -1,4 +1,4 @@
-# This Azure Pipelines template is adds a prefix to the display name of each
+# This Azure Pipelines template adds a prefix to the display name of each
 # task passed through the `stages` parameter. When used in conjunction with
 # an "extends" template which injects a lot of tasks into the pipeline, the
 # added prefix helps to identify which tasks were passed through this template
@@ -20,7 +20,7 @@ parameters:
   default: null
 
 # These stages will be modified and passed to the `baseTemplate` as the
-# `stages` parameter. The
+# `stages` parameter.
 - name: stages
   type: stageList
   default: []
