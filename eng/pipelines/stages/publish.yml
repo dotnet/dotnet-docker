@@ -14,6 +14,11 @@ parameters:
   - name: isStandalonePublish
     type: boolean
     default: false
+  # Additional service connections needed by this pipeline that are not included
+  # in the publishConfig. Only used when `isStandalonePublish` is true.
+  - name: additionalServiceConnections
+    type: object
+    default: []
   - name: customPublishInitSteps
     type: stepList
     default: []
@@ -31,6 +36,14 @@ parameters:
     default: false
 
 stages:
+- ${{ if parameters.isStandalonePublish }}:
+  - template: /eng/common/templates/stages/setup-service-connections.yml@self
+    parameters:
+      serviceConnections:
+      - name: ${{ parameters.publishConfig.publishAcr.serviceConnection.name }}
+      - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
+        - name: ${{ serviceConnection.name }}
+
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
     publishConfig: ${{ parameters.publishConfig }}
