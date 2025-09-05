@@ -15,7 +15,7 @@ variables:
 resources:
   pipelines:
   # https://dev.azure.com/dnceng/internal/_build?definitionId=1434
-  - pipeline: dotnet-docker-release-staging
+  - pipeline: release-staging
     source: dotnet-docker-release-staging-official
   repositories:
   - repository: VersionsRepo
@@ -25,27 +25,28 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es-official.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
-    serviceConnections:
-    - name: $(internal-mirror.serviceConnectionName)
-    - name: $(publish.serviceConnectionName)
-    - name: $(kusto.serviceConnectionName)
-    - name: $(marStatus.serviceConnectionName)
+    reposToExcludeFromScanning:
+    - VersionsRepo
     stages:
-    - template: /eng/pipelines/stages/publish.yml@self
+    - template: /eng/common/templates/stages/dotnet/publish-config-prod.yml@self
       parameters:
-        internalProjectName: ${{ variables.internalProjectName }}
-        publicProjectName: ${{ variables.publicProjectName }}
-        versionsRepoRef: VersionsRepo
-        isStandalonePublish: true
-        # Whenever staged images are published, we need to override the commit SHA since they were
-        # staged from an earlier, internal commit. We want the image info's commit URLs to point to
-        # the commit that this pipeline is running on, which should be the latest commit on the
-        # main branch.
-        overrideImageInfoCommit: true
-        sourceBuildPipelineDefinitionId: "$(resources.pipeline.dotnet-docker-release-staging.pipelineID)"
-        sourceBuildPipelineRunId: "$(resources.pipeline.dotnet-docker-release-staging.runID)"
-        customPublishInitSteps:
-        - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.dotnet-docker-release-staging.runID)"
-          displayName: Set sourceBuildId
+        sourceBuildPipelineRunId: "$(resources.pipeline.release-staging.runID)"
+        stagesTemplate: /eng/pipelines/stages/publish.yml@self
+        stagesTemplateParameters:
+          versionsRepoRef: VersionsRepo
+          isStandalonePublish: true
+          # Whenever staged images are published, we need to override the commit SHA since they were
+          # staged from an earlier, internal commit. We want the image info's commit URLs to point to
+          # the commit that this pipeline is running on, which should be the latest commit on the
+          # main branch.
+          overrideImageInfoCommit: true
+          sourceBuildPipelineDefinitionId: "$(resources.pipeline.release-staging.pipelineID)"
+          sourceBuildPipelineRunId: "$(resources.pipeline.release-staging.runID)"
+          customPublishInitSteps:
+          - script: echo "##vso[task.setvariable variable=sourceBuildId]$(resources.pipeline.release-staging.runID)"
+            displayName: Set sourceBuildId
+          additionalServiceConnections:
+          - name: $(kusto.serviceConnectionName)
+          - name: $(marStatus.serviceConnectionName)
