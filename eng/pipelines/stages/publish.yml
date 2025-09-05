@@ -2,12 +2,12 @@
 # specific to the Dockerfiles in this repo.
 
 parameters:
+  - name: publishConfig
+    type: object
   - name: internalProjectName
     type: string
-    default: null
   - name: publicProjectName
     type: string
-    default: null
   - name: linuxAmd64Pool
     type: string
     default: ""
@@ -46,6 +46,7 @@ stages:
 
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
+    publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}

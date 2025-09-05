@@ -5,23 +5,57 @@
 # templates themselves, not in this file.
 
 parameters:
-  noCache: false
-  internalProjectName: null
-  publicProjectName: null
-  linuxAmd64Pool: ""
-  isInternalServicingValidation: false
-  sourceBuildPipelineRunId: ""
-  versionsRepoRef: ""
+- name: publishConfig
+  type: object
+
+- name: internalProjectName
+  type: string
+
+- name: publicProjectName
+  type: string
+
+- name: sourceBuildPipelineRunId
+  type: string
+  default: $(Build.BuildId)
+
+- name: versionsRepoRef
+  type: string
+  default: ""
+
+- name: noCache
+  type: boolean
+  default: false
+
+# Additional service connections needed by this pipeline that are not included
+# in the publishConfig.
+- name: additionalServiceConnections
+  type: object
+  default: []
 
 stages:
+- ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+  - template: /eng/common/templates/stages/setup-service-connections.yml@self
+    parameters:
+      serviceConnections:
+      - name: ${{ parameters.publishConfig.internalMirrorAcr.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.buildAcr.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.publishAcr.serviceConnection.name }}
+      - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
+        - name: ${{ serviceConnection.name }}
+
 - template: /eng/pipelines/stages/build-and-test.yml@self
   parameters:
-    ${{ insert }}: ${{ parameters }}
-- template: /eng/pipelines/stages/publish.yml@self
-  parameters:
+    publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}
-    linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    noCache: ${{ parameters.noCache }}
+
+- template: /eng/pipelines/stages/publish.yml@self
+  parameters:
+    publishConfig: ${{ parameters.publishConfig }}
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
