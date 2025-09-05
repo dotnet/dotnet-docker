@@ -29,6 +29,9 @@ variables:
   parameters:
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
 - template: /eng/common/templates/variables/dotnet/secrets.yml@self
+- name: "publicSourceBranch"
+  value: "main"
+  readonly: true
 
 resources:
   repositories:
@@ -39,18 +42,22 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es-official.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
-    serviceConnections:
-    - name: $(internal-mirror.serviceConnectionName)
-    - name: $(build.serviceConnectionName)
-    - name: $(dotnetstaging.serviceConnectionName)
+    reposToExcludeFromScanning:
+    - VersionsRepo
     stages:
-    - template: /eng/pipelines/stages/build-and-test.yml@self
+    - template: /eng/common/templates/stages/dotnet/publish-config-prod.yml@self
       parameters:
-        internalProjectName: ${{ variables.internalProjectName }}
-        publicProjectName: ${{ variables.publicProjectName }}
-        versionsRepoRef: VersionsRepo
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
-        isInternalServicingValidation: true
-        noCache: ${{ parameters.noCache }}
+        stagesTemplate: /eng/pipelines/stages/build-and-test.yml@self
+        stagesTemplateParameters:
+          isStandaloneBuild: true
+          versionsRepoRef: VersionsRepo
+          sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+          noCache: ${{ parameters.noCache }}
+          storageAccountServiceConnection:
+            name: $(dotnetstaging.serviceConnectionName)
+            id: $(dotnetstaging.serviceConnection.id)
+            tenantId: $(dotnetstaging.serviceConnection.tenantId)
+            clientId: $(dotnetstaging.serviceConnection.clientId)
