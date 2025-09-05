@@ -123,7 +123,8 @@
 
     "monitor|9|major-tag": "9",
     "monitor|9|major-preview-tag": "9-preview",
-    "monitor|10|major-preview-tag": "10-rc",
+
+    "monitor|10|major-preview-tag": "10-preview",
 
     "monitor|9.0|build-version": "9.0.4",
     "monitor|9.0|product-version": "9.0.4",
