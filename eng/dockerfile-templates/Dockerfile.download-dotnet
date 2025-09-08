@@ -41,7 +41,7 @@
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
     )^
     set buildVersion to VARIABLES[cat(product, "|", dotnetVersion, "|build-version")] ^
-    set isStableVersion to find(buildVersion, "preview") < 0 ^
+    set isStableVersion to find(buildVersion, "preview") < 0 && find(buildVersion, "rc.") < 0 ^
     set fileVersion to when(isStableVersion, productVersion, buildVersion) ^
 
     set archiveExtension to when(isWindows, ".zip", ".tar.gz") ^

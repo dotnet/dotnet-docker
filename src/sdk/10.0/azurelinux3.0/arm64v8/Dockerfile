@@ -7,10 +7,10 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.100-rc.1 \
+RUN dotnet_sdk_version=10.0.100-rc.1.25451.107 \
     && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version.25451.107/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version.25451.107/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
     && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

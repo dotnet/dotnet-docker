@@ -4,10 +4,10 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:10.0.0-rc.1-alpine3.22-arm64v8 AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-rc.1 \
+RUN aspnetcore_version=10.0.0-rc.1.25451.107 \
     && wget \
-        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version.25451.107/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version.25451.107/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512 \
+        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512 \
     && sha512sum -c aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \

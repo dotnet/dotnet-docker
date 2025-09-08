@@ -8,10 +8,10 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-rc.1 \
+RUN dotnet_version=10.0.0-rc.1.25451.107 \
     && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version.25451.107/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version.25451.107/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
     && sha512sum -c dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-x64.tar.gz --directory /dotnet \

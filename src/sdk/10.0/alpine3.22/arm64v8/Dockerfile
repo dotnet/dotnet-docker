@@ -3,10 +3,10 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:10.0.0-rc.1-alpine3.22-arm64v8 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.100-rc.1 \
+RUN dotnet_sdk_version=10.0.100-rc.1.25451.107 \
     && wget \
-        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version.25451.107/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version.25451.107/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
+        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
     && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \

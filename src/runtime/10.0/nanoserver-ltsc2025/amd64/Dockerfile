@@ -8,12 +8,12 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '10.0.0-rc.1'; `
+        $dotnet_version = '10.0.0-rc.1.25451.107'; `
         $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512-bare'; `
         `
-        Invoke-WebRequest -OutFile $dotnet_file https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version.25451.107/$dotnet_file; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version.25451.107/$dotnet_sha512_file; `
+        Invoke-WebRequest -OutFile $dotnet_file https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/$dotnet_sha512_file; `
         `
         if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
