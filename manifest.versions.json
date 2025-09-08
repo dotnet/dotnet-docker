@@ -65,7 +65,7 @@
     "dotnet|8.0|base-url|checksums|nightly": "$(dotnet|8.0|base-url|nightly)",
     "dotnet|8.0|aggregate-checksums": "/checksums/$(dotnet|8.0|product-version)-sha.txt",
 
-    "dotnet|9.0|product-version": "9.0.8",
+    "dotnet|9.0|product-version": "9.0.9",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0",
     "dotnet|9.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -196,9 +196,9 @@
     "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
 
-    "runtime|9.0|build-version": "9.0.8",
     "runtime|10.0|build-version": "10.0.0-preview.7.25380.108",
     "runtime|8.0|build-version": "8.0.20",
+    "runtime|9.0|build-version": "9.0.9",
 
     "sdk|8.0|build-version": "8.0.414",
     "sdk|8.0|product-version": "8.0.414",
@@ -209,8 +209,8 @@
     "sdk|8.0|fixed-tag": "$(sdk|8.0|product-version)",
     "sdk|8.0|minor-tag": "$(dotnet|8.0|minor-tag)",
 
-    "sdk|9.0|build-version": "9.0.304",
-    "sdk|9.0|product-version": "9.0.304",
+    "sdk|9.0|build-version": "9.0.305",
+    "sdk|9.0|product-version": "9.0.305",
     "sdk|9.0|base-url|main": "$(dotnet|9.0|base-url|main)",
     "sdk|9.0|base-url|nightly": "$(dotnet|9.0|base-url|nightly)",
     "sdk|9.0|base-url|checksums|main": "$(sdk|9.0|base-url|main)",
