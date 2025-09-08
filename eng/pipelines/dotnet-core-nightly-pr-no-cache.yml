@@ -9,7 +9,7 @@ pr:
     - tests/*
 
 variables:
-- template: variables/core.yml
+- template: /eng/pipelines/variables/core-unofficial.yml
 
 resources:
   repositories:
@@ -20,9 +20,9 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 stages:
-- template: stages/build-test-publish-repo.yml
+- template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
   parameters:
-    internalProjectName: ${{ variables.internalProjectName }}
-    publicProjectName: ${{ variables.publicProjectName }}
-    versionsRepoRef: VersionsRepo
-    noCache: true
+    stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
+    stagesTemplateParameters:
+      versionsRepoRef: VersionsRepo
+      noCache: true

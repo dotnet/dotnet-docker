@@ -1,0 +1,65 @@
+trigger: none
+pr: none
+
+parameters:
+- name: sourceBuildPipelineRunId
+  displayName: >
+    Source build pipeline run ID. This refers to runs of *this pipeline*.
+    Override this parameter in combination with disabling the `Build` stage to
+    test or publish images that were built in a different pipeline run. When
+    building new images, leave this value alone.
+  type: string
+  default: $(Build.BuildId)
+
+- name: publishRepoPrefix
+  displayName: >
+    Publish repo prefix. Final images will be pushed under this prefix in the
+    production ACR. Examples: `public/`, `test/`
+  type: string
+  default: "public/"
+
+- name: noCache
+  displayName: >
+    Run build with no cache. When this is unchecked, the build will use the
+    info in the dotnet/versions repo to build only the images which have had
+    Dockerfile changes or base images updates. When this is checked, all images
+    will be built regardless of caching status.
+  type: boolean
+  default: false
+
+variables:
+- template: /eng/pipelines/variables/core-unofficial.yml@self
+# Comma-delimited list of branch names that are allowed to push to public/.
+# This remains here to keep the variables in sync with the nightly build.
+# However, since this is an unofficial pipeline, pushes to the non-production
+# ACR will be allowed from any branch.
+- name: "officialBranches"
+  value: "nightly"
+  readonly: true
+# Needed in order to use the correct image-info file from the versions repo
+- name: "publicSourceBranch"
+  value: "nightly"
+  readonly: true
+
+resources:
+  repositories:
+  - repository: VersionsRepo
+    type: github
+    endpoint: dotnet
+    name: dotnet/versions
+    ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
+
+extends:
+  template: /eng/common/templates/1es.yml@self
+  parameters:
+    reposToExcludeFromScanning:
+    - VersionsRepo
+    stages:
+    - template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
+      parameters:
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
+        stagesTemplateParameters:
+          versionsRepoRef: VersionsRepo
+          sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+          noCache: ${{ parameters.noCache }}

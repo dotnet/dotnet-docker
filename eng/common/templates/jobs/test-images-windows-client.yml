@@ -4,6 +4,7 @@ parameters:
   matrix: {}
   testJobTimeout: 60
   internalProjectName: null
+  publishConfig: null
   customInitSteps: []
   sourceBuildPipelineRunId: ""
 
@@ -19,5 +20,6 @@ jobs:
   - template: /eng/common/templates/steps/test-images-windows-client.yml@self
     parameters:
       internalProjectName: ${{ parameters.internalProjectName }}
+      publishConfig: ${{ parameters.publishConfig }}
       customInitSteps: ${{ parameters.customInitSteps }}
       sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

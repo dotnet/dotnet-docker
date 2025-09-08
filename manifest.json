@@ -651,8 +651,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner": {
               "docType": "Undocumented"
             }
@@ -664,8 +668,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
@@ -678,8 +686,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -691,8 +703,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
@@ -704,8 +720,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
@@ -734,8 +754,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -763,8 +787,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-extra": {
               "docType": "Undocumented"
             }
@@ -776,8 +804,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-extra-amd64": {
                   "docType": "Undocumented"
                 }
@@ -799,8 +831,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-extra-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -2618,8 +2654,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner": {
               "docType": "Undocumented"
             }
@@ -2634,8 +2674,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
@@ -2651,8 +2695,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -2664,8 +2712,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
@@ -2680,8 +2732,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
@@ -2706,8 +2762,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -2728,8 +2788,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra": {}
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -2741,8 +2805,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {}
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
@@ -2764,8 +2832,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {}
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -5036,8 +5108,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner": {
               "docType": "Undocumented"
             }
@@ -5052,8 +5128,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
@@ -5069,8 +5149,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -5082,8 +5166,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless": {
               "docType": "Undocumented"
             }
@@ -5098,8 +5186,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-amd64": {
                   "docType": "Undocumented"
                 }
@@ -5124,8 +5216,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -5146,8 +5242,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra": {}
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra": {
+              "docType": "Undocumented"
+            }
           },
           "platforms": [
             {
@@ -5159,8 +5259,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {}
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-amd64": {
+                  "docType": "Undocumented"
+                }
               },
               "customBuildLegGroups": [
                 {
@@ -5182,8 +5286,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {}
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-extra-arm64v8": {
+                  "docType": "Undocumented"
+                }
               },
               "variant": "v8",
               "customBuildLegGroups": [
@@ -5201,8 +5309,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-composite": {
               "docType": "Undocumented"
             }
@@ -5217,8 +5329,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-composite-amd64": {
                   "docType": "Undocumented"
                 }
@@ -5243,8 +5359,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-composite-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -5265,8 +5385,12 @@
         {
           "productVersion": "$(dotnet|8.0|product-version)",
           "sharedTags": {
-            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra": {},
-            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra": {},
+            "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra": {
+              "docType": "Undocumented"
+            },
+            "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra": {
+              "docType": "Undocumented"
+            },
             "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-composite-extra": {
               "docType": "Undocumented"
             }
@@ -5281,8 +5405,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-composite-extra-amd64": {
                   "docType": "Undocumented"
                 }
@@ -5307,8 +5435,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0-distroless",
               "tags": {
-                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {},
-                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {},
+                "$(dotnet|8.0|fixed-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(dotnet|8.0|minor-tag)-cbl-mariner2.0-distroless-composite-extra-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(dotnet|8.0|minor-tag)-cbl-mariner-distroless-composite-extra-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -7827,8 +7959,12 @@
         {
           "productVersion": "$(sdk|8.0|product-version)",
           "sharedTags": {
-            "$(sdk|8.0|fixed-tag)-cbl-mariner2.0": {},
-            "$(sdk|8.0|minor-tag)-cbl-mariner2.0": {},
+            "$(sdk|8.0|fixed-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
+            "$(sdk|8.0|minor-tag)-cbl-mariner2.0": {
+              "docType": "Undocumented"
+            },
             "$(sdk|8.0|minor-tag)-cbl-mariner": {
               "docType": "Undocumented"
             }
@@ -7843,8 +7979,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|8.0|fixed-tag)-cbl-mariner2.0-amd64": {},
-                "$(sdk|8.0|minor-tag)-cbl-mariner2.0-amd64": {},
+                "$(sdk|8.0|fixed-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(sdk|8.0|minor-tag)-cbl-mariner2.0-amd64": {
+                  "docType": "Undocumented"
+                },
                 "$(sdk|8.0|minor-tag)-cbl-mariner-amd64": {
                   "docType": "Undocumented"
                 }
@@ -7860,8 +8000,12 @@
               "os": "linux",
               "osVersion": "cbl-mariner2.0",
               "tags": {
-                "$(sdk|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {},
-                "$(sdk|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {},
+                "$(sdk|8.0|fixed-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(sdk|8.0|minor-tag)-cbl-mariner2.0-arm64v8": {
+                  "docType": "Undocumented"
+                },
                 "$(sdk|8.0|minor-tag)-cbl-mariner-arm64v8": {
                   "docType": "Undocumented"
                 }
@@ -8935,6 +9079,44 @@
               "variant": "v8"
             }
           ]
+        },
+        {
+          "productVersion": "$(monitor|10.0|product-version)",
+          "sharedTags": {
+            "$(monitor|10.0|fixed-tag)": {},
+            "$(monitor|10.0|minor-tag)": {},
+            "$(monitor|10|major-preview-tag)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/10.0/azurelinux-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|10.0|fixed-tag)-amd64": {},
+                "$(monitor|10.0|minor-tag)-amd64": {}
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:aspnet)"
+              },
+              "dockerfile": "src/monitor-base/10.0/azurelinux-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor-base/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|10.0|fixed-tag)-arm64v8": {},
+                "$(monitor|10.0|minor-tag)-arm64v8": {}
+              },
+              "variant": "v8"
+            }
+          ]
         }
       ]
     },
@@ -9159,6 +9341,52 @@
                   "docType": "Undocumented"
                 },
                 "$(monitor|9.1|minor-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                }
+              },
+              "variant": "v8"
+            }
+          ]
+        },
+        {
+          "productVersion": "$(monitor|10.0|product-version)",
+          "sharedTags": {
+            "$(monitor|10.0|fixed-tag)": {},
+            "$(monitor|10.0|minor-tag)": {},
+            "$(monitor|10|major-preview-tag)": {}
+          },
+          "platforms": [
+            {
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/10.0/azurelinux-distroless/amd64",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|10.0|fixed-tag)-amd64": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|10.0|minor-tag)-amd64": {
+                  "docType": "Undocumented"
+                }
+              }
+            },
+            {
+              "architecture": "arm64",
+              "buildArgs": {
+                "REPO": "$(Repo:monitor-base)"
+              },
+              "dockerfile": "src/monitor/10.0/azurelinux-distroless/arm64v8",
+              "dockerfileTemplate": "eng/dockerfile-templates/monitor/Dockerfile.linux",
+              "os": "linux",
+              "osVersion": "azurelinux3.0-distroless",
+              "tags": {
+                "$(monitor|10.0|fixed-tag)-arm64v8": {
+                  "docType": "Undocumented"
+                },
+                "$(monitor|10.0|minor-tag)-arm64v8": {
                   "docType": "Undocumented"
                 }
               },

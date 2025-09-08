@@ -30,36 +30,74 @@ namespace Microsoft.DotNet.Docker.Tests
             OutputHelper = outputHelper;
         }
 
+        #nullable enable
         public void Build(
-            string tag,
-            string dockerfile = null,
-            string target = null,
+            string tag = "",
+            string dockerfile = "",
+            string target = "",
             string contextDir = ".",
             bool pull = false,
-            string platform = null,
-            params string[] buildArgs)
+            string platform = "",
+            string output = "",
+            params string[] buildArgs
+        )
         {
-            string buildArgsOption = string.Empty;
-            if (buildArgs != null)
+            var args = new List<string>();
+
+            // Optional basic flags
+            if (!string.IsNullOrWhiteSpace(tag))
             {
-                foreach (string arg in buildArgs)
+                args.Add("-t");
+                args.Add(tag);
+            }
+
+            if (!string.IsNullOrWhiteSpace(dockerfile))
+            {
+                args.Add("-f");
+                args.Add(dockerfile);
+            }
+
+            if (!string.IsNullOrWhiteSpace(target))
+            {
+                args.Add("--target");
+                args.Add(target);
+            }
+
+            // Build args
+            if (buildArgs is not null)
+            {
+                foreach (string buildArg in buildArgs)
                 {
-                    buildArgsOption += $" --build-arg {arg}";
+                    if (!string.IsNullOrWhiteSpace(buildArg))
+                    {
+                        args.Add("--build-arg");
+                        args.Add(buildArg);
+                    }
                 }
             }
 
-            string platformOption = string.Empty;
-            if (platform is not null)
+            if (!string.IsNullOrWhiteSpace(platform))
             {
-                platformOption = $" --platform {platform}";
+                args.Add("--platform");
+                args.Add(platform);
             }
 
-            string targetArg = target == null ? string.Empty : $" --target {target}";
-            string dockerfileArg = dockerfile == null ? string.Empty : $" -f {dockerfile}";
-            string pullArg = pull ? " --pull" : string.Empty;
+            if (!string.IsNullOrWhiteSpace(output))
+            {
+                args.Add("--output");
+                args.Add(output);
+            }
 
-            ExecuteWithLogging($"build -t {tag}{targetArg}{buildArgsOption}{dockerfileArg}{pullArg}{platformOption} {contextDir}");
+            if (pull)
+            {
+                args.Add("--pull");
+            }
+
+            args.Add(contextDir);
+
+            ExecuteWithLogging($"build {string.Join(' ', args)}");
         }
+        #nullable disable
 
         /// <summary>
         /// Builds a helper image intended to test distroless scenarios.

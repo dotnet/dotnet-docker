@@ -1,0 +1,35 @@
+variables:
+- template: /eng/common/templates/variables/dotnet/build-test-publish.yml@self
+
+- ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
+  # Uses DockerHub registry creds to avoid rate limiting during CopyBaseImages job
+  - template: /eng/common/templates/variables/dotnet/secrets-unofficial.yml@self
+
+- name: manifest
+  value: manifest.json
+
+# Disable EOL annotations for unofficial build
+- name: "publishEolAnnotations"
+  value: false
+  readonly: true
+
+# Unofficial secrets group has no GitHub token for publishing image info, notifications, or readmes
+- name: "publishImageInfo"
+  value: false
+  readonly: true
+- name: "publishNotificationsEnabled"
+  value: false
+  readonly: true
+- name: "publishReadme"
+  value: false
+  readonly: true
+
+# There aren't test/unofficial Kusto tables for build telemetry yet
+- name: "ingestKustoImageInfo"
+  value: false
+  readonly: true
+
+# Always run unofficial pipelines in debug mode
+- name: "System.Debug"
+  value: true
+  readonly: true

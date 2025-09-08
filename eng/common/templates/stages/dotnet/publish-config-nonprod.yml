@@ -1,0 +1,91 @@
+# This pipeline template injects the publish config for the dotnet-docker
+# non-production (unofficial) environment.
+# The overall structure of this file should stay mostly in-sync with the
+# publish-config-prod.yml template.
+
+parameters:
+# By default, images are staged in repos that are prefixed with this pipeline
+# build ID. This is makes it easy to look up which pipeline images were built
+# from and vice versa.
+- name: sourceBuildPipelineRunId
+  type: string
+  default: $(Build.BuildId)
+
+# This prefix is added to the staging repo when pushing images. If the trailing
+# slash is omitted, it will not be added automatically.
+- name: stagingRepoPrefix
+  type: string
+  default: "build-staging/"
+
+# Images will have this prefix added to their repo name when pushed to the
+# publishing ACR. If the trailing slash is omitted, it will not be added
+# automatically.
+- name: publishRepoPrefix
+  type: string
+  default: "public/"
+
+# This template will have the publishConfig, internalProjectName, and
+# publicProjectName parameters passed to it automatically.
+- name: stagesTemplate
+  type: string
+
+# These parameters will be passed to the template referred to by the
+# stagesTemplate parameter.
+# Note: publishConfig, internalProjectName, and publicProjectName are passed
+# automatically by this template. Don't define them in this parameter - they
+# will get overwritten.
+- name: stagesTemplateParameters
+  type: object
+  default: {}
+
+
+stages:
+- template: ${{ parameters.stagesTemplate }}
+  parameters:
+    ${{ insert }}: ${{ parameters.stagesTemplateParameters }}
+
+    internalProjectName: "internal"
+    publicProjectName: "public"
+
+    publishConfig:
+      internalMirrorAcr:
+        server: $(acr-staging-test.server)
+        repoPrefix: $(mirrorRepoPrefix)
+        resourceGroup: $(testResourceGroup)
+        subscription: $(testSubscription)
+        serviceConnection:
+          name: $(internal-mirror-test.serviceConnectionName)
+          id: $(internal-mirror-test.serviceConnection.id)
+          clientId: $(internal-mirror-test.serviceConnection.clientId)
+          tenantId: $(testTenant)
+
+      publicMirrorAcr:
+        server: $(public-mirror.server)
+
+      buildAcr:
+        server: $(acr-staging-test.server)
+        resourceGroup: $(testResourceGroup)
+        subscription: $(testSubscription)
+        repoPrefix: "${{ parameters.stagingRepoPrefix }}${{ parameters.sourceBuildPipelineRunId }}/"
+        serviceConnection:
+          name: $(build-test.serviceConnectionName)
+          id: $(build-test.serviceConnection.id)
+          clientId: $(build-test.serviceConnection.clientId)
+          tenantId: $(testTenant)
+
+      testServiceConnection:
+        name: $(test-nonprod.serviceConnectionName)
+        id: $(test-nonprod.serviceConnection.id)
+        clientId: $(test-nonprod.serviceConnection.clientId)
+        tenantId: $(testTenant)
+
+      publishAcr:
+        server: $(acr-test.server)
+        resourceGroup: $(testResourceGroup)
+        subscription: $(testSubscription)
+        repoPrefix: "${{ parameters.publishRepoPrefix }}"
+        serviceConnection:
+          name: $(publish-test.serviceConnectionName)
+          id: $(publish-test.serviceConnection.id)
+          clientId: $(publish-test.serviceConnection.clientId)
+          tenantId: $(testTenant)

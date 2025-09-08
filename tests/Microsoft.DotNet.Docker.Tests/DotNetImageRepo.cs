@@ -14,6 +14,7 @@ public enum DotNetImageRepo
     Runtime_Deps     = 1 << 2,
     Aspnet           = 1 << 3,
     Monitor          = 1 << 4,
-    Aspire_Dashboard = 1 << 5,
-    Yarp             = 1 << 6,
+    Monitor_Base     = 1 << 5,
+    Aspire_Dashboard = 1 << 6,
+    Yarp             = 1 << 7,
 }
