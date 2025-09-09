@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=8.0.19 \
+RUN aspnetcore_version=8.0.20 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
@@ -21,13 +21,13 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:8.0.19-jammy-chiseled-arm64v8
+FROM $REPO:8.0.20-jammy-chiseled-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=8.0.19 \
+    DOTNET_VERSION=8.0.20 \
     # ASP.NET Core version
-    ASPNET_VERSION=8.0.19
+    ASPNET_VERSION=8.0.20
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

@@ -10,7 +10,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=9.0.8 \
+RUN aspnetcore_version=9.0.9 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
@@ -24,9 +24,9 @@ RUN aspnetcore_version=9.0.8 \
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.8-azurelinux3.0-distroless-amd64
+FROM $REPO:9.0.9-azurelinux3.0-distroless-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.8
+ENV ASPNET_VERSION=9.0.9
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
