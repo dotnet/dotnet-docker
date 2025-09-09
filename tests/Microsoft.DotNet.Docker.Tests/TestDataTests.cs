@@ -33,7 +33,7 @@ public class TestDataTests(ITestOutputHelper outputHelper)
     {
         var testData = GetTestData(imageRepo);
 
-        string repoName = ImageData.GetRepoName(ProductImageData.GetDotNetImageRepoName(imageRepo));
+        string repoName = ImageData.GetRepoName(ProductImageData.GetRepoName(imageRepo));
         Repo? manifestRepo = _manifest.Repos.FirstOrDefault(r => r.Name == repoName);
 
         if (manifestRepo == null)

@@ -1,18 +1,24 @@
 trigger: none
 pr: none
 
-parameters:
-- name: buildId
-  type: string
-  default: ""
-
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
+
+resources:
+  pipelines:
+  # All release pipelines are located at: https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Crelease
+  # Stage-DotNet-Prepare-Artifacts: https://dev.azure.com/dnceng/internal/_build?definitionId=1300
+  # Stage-DotNet-Prepare-Artifacts-Test: https://dev.azure.com/dnceng/internal/_build?definitionId=1286
+  - pipeline: "dotnet-staging-pipeline"
+    # Although this pipeline is "unofficial", it uses the production staging pipeline as a resource
+    # since we don't actually need to download any .NET artifacts from it in order to update this
+    # repo, so there's no risk in using the real versions.
+    source: "Stage-DotNet-Prepare-Artifacts"
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
   parameters:
-    buildId: ${{ parameters.buildId }}
+    buildId: "$(resources.pipeline.dotnet-staging-pipeline.runID)"
     stagingStorageAccount: "dotnetstage"
     sourceBranch: "nightly"
     targetBranch: "unofficial/pipeline-$(Build.BuildId)"

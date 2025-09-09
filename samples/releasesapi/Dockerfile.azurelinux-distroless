@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:10.0-preview-azurelinux3.0-aot AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0-aot AS build
 WORKDIR /source
 
 # Build the app
@@ -13,7 +13,7 @@ RUN --mount=type=cache,target=/root/.nuget \
         && rm /app/*.dbg /app/*.Development.json
 
 # Final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-preview-azurelinux3.0-distroless
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-azurelinux3.0-distroless
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID

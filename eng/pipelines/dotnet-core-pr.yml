@@ -3,6 +3,7 @@ pr:
   branches:
     include:
     - main
+    - release/*
   paths:
     include:
     - manifest.json
@@ -12,7 +13,7 @@ pr:
     - tests/*
 
 variables:
-- template: variables/core.yml
+- template: /eng/pipelines/variables/core-official.yml@self
 
 resources:
   repositories:
@@ -23,8 +24,8 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 stages:
-- template: stages/build-test-publish-repo.yml
+- template: /eng/common/templates/stages/dotnet/publish-config-prod.yml@self
   parameters:
-    internalProjectName: ${{ variables.internalProjectName }}
-    publicProjectName: ${{ variables.publicProjectName }}
-    versionsRepoRef: VersionsRepo
+    stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
+    stagesTemplateParameters:
+      versionsRepoRef: VersionsRepo

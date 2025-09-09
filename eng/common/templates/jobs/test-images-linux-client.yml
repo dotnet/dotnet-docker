@@ -5,6 +5,7 @@ parameters:
   testJobTimeout: 60
   preBuildValidation: false
   internalProjectName: null
+  publishConfig: null
   customInitSteps: []
   sourceBuildPipelineRunId: ""
 
@@ -24,5 +25,6 @@ jobs:
     parameters:
       preBuildValidation: ${{ parameters.preBuildValidation }}
       internalProjectName: ${{ parameters.internalProjectName }}
+      publishConfig: ${{ parameters.publishConfig }}
       customInitSteps: ${{ parameters.customInitSteps }}
       sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

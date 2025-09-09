@@ -6,6 +6,10 @@
 parameters:
 - name: pool
   type: object
+  default:
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
+    os: linux
 # serviceConnections object shape:
 # - name: string
 - name: serviceConnections

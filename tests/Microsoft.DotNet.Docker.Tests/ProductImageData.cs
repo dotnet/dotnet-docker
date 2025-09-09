@@ -79,8 +79,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             IEnumerable<string> pathComponents =
             [
-                "src",
-                GetDotNetImageRepoName(imageRepo),
+                GetRepoSrcPath(imageRepo),
                 Version.ToString(),
                 OSDir + GetVariantSuffix(),
                 GetArchLabel()
@@ -95,8 +94,17 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
 
-        public static string GetDotNetImageRepoName(DotNetImageRepo imageRepo) =>
-            Enum.GetName(typeof(DotNetImageRepo), imageRepo).ToLowerInvariant().Replace('_', '-');
+        public static string GetRepoName(DotNetImageRepo imageRepo) => imageRepo switch
+        {
+            DotNetImageRepo.Monitor_Base => "monitor/base",
+            _ => Enum.GetName(imageRepo).ToLowerInvariant().Replace('_', '-')
+        };
+
+        private static string GetRepoSrcPath(DotNetImageRepo imageRepo) => "src/" + imageRepo switch
+        {
+            DotNetImageRepo.Monitor_Base => "monitor-base",
+            _ => GetRepoName(imageRepo)
+        };
 
         public static string GetImageVariantName(DotNetImageVariant imageVariant)
         {
@@ -126,7 +134,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             string tag = GetTagName(imageRepo);
-            string imageName = GetImageName(tag, GetDotNetImageRepoName(imageRepo));
+            string imageName = GetImageName(tag, GetRepoName(imageRepo));
 
             if (!skipPull)
             {
@@ -188,22 +196,15 @@ namespace Microsoft.DotNet.Docker.Tests
 
             switch (imageRepo)
             {
-                case DotNetImageRepo.Runtime:
-                case DotNetImageRepo.Aspnet:
-                case DotNetImageRepo.Runtime_Deps:
-                case DotNetImageRepo.Monitor:
-                case DotNetImageRepo.Aspire_Dashboard:
-                case DotNetImageRepo.Yarp:
-                    imageVersion = Version;
-                    os = OSTag;
-                    break;
                 case DotNetImageRepo.SDK:
                     imageVersion = Version;
                     os = SdkOS;
                     variant = GetImageVariantName(SdkImageVariant);
                     break;
                 default:
-                    throw new NotSupportedException($"Unsupported image type '{imageRepo}'");
+                    imageVersion = Version;
+                    os = OSTag;
+                    break;
             }
 
             return GetTagName(imageVersion.GetTagName(), os, variant);

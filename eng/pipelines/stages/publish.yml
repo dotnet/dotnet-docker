@@ -2,21 +2,23 @@
 # specific to the Dockerfiles in this repo.
 
 parameters:
+  - name: publishConfig
+    type: object
   - name: internalProjectName
     type: string
-    default: null
   - name: publicProjectName
     type: string
-    default: null
   - name: linuxAmd64Pool
     type: string
     default: ""
-  - name: isInternalServicingValidation
-    type: boolean
-    default: false
   - name: isStandalonePublish
     type: boolean
     default: false
+  # Additional service connections needed by this pipeline that are not included
+  # in the publishConfig. Only used when `isStandalonePublish` is true.
+  - name: additionalServiceConnections
+    type: object
+    default: []
   - name: customPublishInitSteps
     type: stepList
     default: []
@@ -34,12 +36,20 @@ parameters:
     default: false
 
 stages:
+- ${{ if parameters.isStandalonePublish }}:
+  - template: /eng/common/templates/stages/setup-service-connections.yml@self
+    parameters:
+      serviceConnections:
+      - name: ${{ parameters.publishConfig.publishAcr.serviceConnection.name }}
+      - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
+        - name: ${{ serviceConnection.name }}
+
 - template: /eng/common/templates/stages/dotnet/publish.yml@self
   parameters:
+    publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}
-    isInternalServicingValidation: ${{ parameters.isInternalServicingValidation }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     pool: ${{ parameters.linuxAmd64Pool }}
     customPublishInitSteps:

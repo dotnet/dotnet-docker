@@ -21,7 +21,7 @@ parameters:
   default: ""
 
 extends:
-  template: /eng/common/templates/1es-${{ iif(parameters.official, 'official', 'unofficial') }}.yml@self
+  template: /eng/common/templates/1es.yml@self
   parameters:
     stages:
     - stage: UpdateDepsStage
