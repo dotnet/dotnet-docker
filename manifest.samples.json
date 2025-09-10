@@ -67,18 +67,6 @@
             },
             {
               "buildArgs": {
-                "TAG": "1809"
-              },
-              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "dotnetapp-10.0-nanoserver-1809": {},
-                "dotnetapp-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
                 "TAG": "ltsc2022"
               },
               "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
@@ -212,16 +200,7 @@
               "tags": {
                 "aspnetapp-9.0-nanoserver-1809": {},
                 "aspnetapp-nanoserver-1809": {}
-              },
-              "customBuildLegGroups": [
-                {
-                  "name": "test-dependencies",
-                  "type": "Integral",
-                  "dependencies": [
-                    "$(Repo:samples):dotnetapp-10.0-nanoserver-1809"
-                  ]
-                }
-              ]
+              }
             },
             {
               "buildArgs": {
