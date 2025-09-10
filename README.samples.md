@@ -86,8 +86,8 @@ They contain the following features:
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-9.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-9.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
+dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-10.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
 aspnetapp-9.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
 aspnetapp-chiseled-9.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
 
@@ -95,8 +95,8 @@ aspnetapp-chiseled-9.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dock
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-9.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-9.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
+dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-10.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
 aspnetapp-9.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
 aspnetapp-chiseled-9.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
 
@@ -104,8 +104,8 @@ aspnetapp-chiseled-9.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dock
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-dotnetapp-9.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-9.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
+dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-10.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
 aspnetapp-9.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
 aspnetapp-chiseled-9.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
 
@@ -113,14 +113,13 @@ aspnetapp-chiseled-9.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dock
 
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-9.0-nanoserver-ltsc2022, dotnetapp-nanoserver-ltsc2022, dotnetapp-9.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.nanoserver)
+dotnetapp-10.0-nanoserver-ltsc2022, dotnetapp-nanoserver-ltsc2022, dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.nanoserver)
 aspnetapp-9.0-nanoserver-ltsc2022, aspnetapp-nanoserver-ltsc2022, aspnetapp-9.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.nanoserver)
 
 ### Nano Server, version 1809 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-dotnetapp-9.0-nanoserver-1809, dotnetapp-nanoserver-1809, dotnetapp-9.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.nanoserver)
 aspnetapp-9.0-nanoserver-1809, aspnetapp-nanoserver-1809, aspnetapp-9.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.nanoserver)
 <!--End of generated tags-->
 
