@@ -120,9 +120,9 @@
           ]
         },
         {
-          "productVersion": "$(dotnet|9.0|product-version)",
+          "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
-            "aspnetapp-9.0": {},
+            "aspnetapp-10.0": {},
             "aspnetapp": {}
           },
           "platforms": [
@@ -131,7 +131,7 @@
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
-                "aspnetapp-9.0-alpine-amd64": {
+                "aspnetapp-10.0-alpine-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -151,7 +151,7 @@
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
-                "aspnetapp-9.0-alpine-arm32v7": {
+                "aspnetapp-10.0-alpine-arm32v7": {
                   "docType": "Undocumented"
                 }
               },
@@ -172,7 +172,7 @@
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
-                "aspnetapp-9.0-alpine-arm64v8": {
+                "aspnetapp-10.0-alpine-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
@@ -188,26 +188,11 @@
               ]
             },
             {
-              "buildArgs": {
-                "TAG": "1809"
-              },
-              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
-              "os": "windows",
-              "osVersion": "nanoserver-1809",
-              "tags": {
-                "aspnetapp-9.0-nanoserver-1809": {},
-                "aspnetapp-nanoserver-1809": {}
-              }
-            },
-            {
-              "buildArgs": {
-                "TAG": "ltsc2022"
-              },
               "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
-                "aspnetapp-9.0-nanoserver-ltsc2022": {},
+                "aspnetapp-10.0-nanoserver-ltsc2022": {},
                 "aspnetapp-nanoserver-ltsc2022": {}
               },
               "customBuildLegGroups": [
@@ -225,7 +210,7 @@
         {
           "productVersion": "$(dotnet|10.0|product-version)",
           "sharedTags": {
-            "aspnetapp-chiseled-9.0": {},
+            "aspnetapp-chiseled-10.0": {},
             "aspnetapp-chiseled": {}
           },
           "platforms": [
@@ -234,7 +219,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "aspnetapp-chiseled-9.0-amd64": {
+                "aspnetapp-chiseled-10.0-amd64": {
                   "docType": "Undocumented"
                 }
               },
@@ -254,7 +239,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "aspnetapp-chiseled-9.0-arm32v7": {
+                "aspnetapp-chiseled-10.0-arm32v7": {
                   "docType": "Undocumented"
                 }
               },
@@ -275,7 +260,7 @@
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
-                "aspnetapp-chiseled-9.0-arm64v8": {
+                "aspnetapp-chiseled-10.0-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
