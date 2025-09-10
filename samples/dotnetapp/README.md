@@ -30,11 +30,12 @@ docker build --pull -t dotnetapp -f Dockerfile.chiseled 'https://github.com/dotn
 
 The .NET Team publishes images for [multiple distros](../../documentation/supported-platforms.md).
 
-Samples are provided for:
+Sample Dockerfiles are provided for:
 
 - [Alpine](Dockerfile.alpine)
 - [Alpine with ICU installed](Dockerfile.alpine-icu)
-- [Debian](Dockerfile.debian)
+- [Azure Linux](Dockerfile.azurelinux)
+- [Azure Linux Distroless](Dockerfile.azurelinux-distroless)
 - [Ubuntu](Dockerfile.ubuntu)
 - [Ubuntu Chiseled](Dockerfile.chiseled)
 
@@ -47,8 +48,6 @@ Samples are provided for
 - [Nano Server](Dockerfile.nanoserver)
 - [Windows Server Core](Dockerfile.windowsservercore)
 
-Windows variants of the sample can be pulled via one the following image names:
+You can pull a pre-built Windows sample image using the following tag:
 
-- `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-1809`
 - `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-ltsc2022`
-- `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-ltsc2025`
