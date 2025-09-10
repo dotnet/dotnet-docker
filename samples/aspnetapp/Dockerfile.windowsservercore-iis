@@ -2,8 +2,7 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 # Runtime stage
-ARG TAG=ltsc2025
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-windowsservercore-$TAG AS final
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-windowsservercore-ltsc2022 AS final
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
@@ -25,7 +24,7 @@ RUN powershell -Command `
         Remove-Item -Force C:\dotnet-hosting-win.exe; `
         Remove-Item -Force -Recurse $Env:Temp\*
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0-windowsservercore-$TAG AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # Copy project file and restore as distinct layers
