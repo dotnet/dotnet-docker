@@ -39,19 +39,19 @@ WriteLine();
 WriteLine($"{nameof(Environment.ProcessorCount)}: {Environment.ProcessorCount}");
 WriteLine($"{nameof(GCMemoryInfo.TotalAvailableMemoryBytes)}: {totalMemoryBytes} ({GetInBestUnit(totalMemoryBytes)})");
 
-string[] memoryLimitPaths = new string[] 
-{
+string[] memoryLimitPaths =
+[
     "/sys/fs/cgroup/memory.max",
     "/sys/fs/cgroup/memory.high",
     "/sys/fs/cgroup/memory.low",
     "/sys/fs/cgroup/memory/memory.limit_in_bytes",
-};
+];
 
-string[] currentMemoryPaths = new string[] 
-{
+string[] currentMemoryPaths =
+[
     "/sys/fs/cgroup/memory.current",
     "/sys/fs/cgroup/memory/memory.usage_in_bytes",
-};
+];
 
 // cgroup information
 if (OperatingSystem.IsLinux() &&
