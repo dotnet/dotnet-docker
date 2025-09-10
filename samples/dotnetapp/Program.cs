@@ -21,8 +21,9 @@ a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42
 
 const double Mebi = 1024 * 1024;
 const double Gibi = Mebi * 1024;
-GCMemoryInfo gcInfo = GC.GetGCMemoryInfo();
-long totalMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
+
+var gcInfo = GC.GetGCMemoryInfo();
+var totalMemoryBytes = gcInfo.TotalAvailableMemoryBytes;
 
 // OS and .NET information
 WriteLine($"{nameof(RuntimeInformation.OSArchitecture)}: {RuntimeInformation.OSArchitecture}");
@@ -54,17 +55,17 @@ string[] currentMemoryPaths =
 ];
 
 // cgroup information
-if (OperatingSystem.IsLinux() &&
-    GetBestValue(memoryLimitPaths, out long memoryLimit, out string? bestMemoryLimitPath) &&
-    memoryLimit > 0)
+if (OperatingSystem.IsLinux()
+    && TryReadFirstLongFromPaths(memoryLimitPaths, out long memoryLimit, out string? bestMemoryLimitPath)
+    && memoryLimit > 0)
 {
     // get memory cgroup information
-    GetBestValue(currentMemoryPaths, out long currentMemory, out string? memoryPath);
+    TryReadFirstLongFromPaths(currentMemoryPaths, out long currentMemory, out _);
 
     WriteLine($"cgroup memory constraint: {bestMemoryLimitPath}");
     WriteLine($"cgroup memory limit: {memoryLimit} ({GetInBestUnit(memoryLimit)})");
     WriteLine($"cgroup memory usage: {currentMemory} ({GetInBestUnit(currentMemory)})");
-    WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
+    WriteLine($"GC Hard limit %: {(double)totalMemoryBytes / memoryLimit * 100:N0}");
 }
 
 static string GetInBestUnit(long size) => size switch
@@ -74,12 +75,11 @@ static string GetInBestUnit(long size) => size switch
     _ => $"{size / Gibi:F} GiB"
 };
 
-static bool GetBestValue(string[] paths, out long limit, [NotNullWhen(true)] out string? bestPath)
+static bool TryReadFirstLongFromPaths(string[] paths, out long limit, [NotNullWhen(true)] out string? bestPath)
 {
     foreach (string path in paths)
     {
-        if (Path.Exists(path) &&
-            long.TryParse(File.ReadAllText(path), out limit))
+        if (File.Exists(path) && long.TryParse(File.ReadAllText(path), out limit))
         {
             bestPath = path;
             return true;
