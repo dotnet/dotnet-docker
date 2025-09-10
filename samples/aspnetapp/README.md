@@ -144,7 +144,8 @@ Samples are provided for:
 - [Alpine](Dockerfile.alpine)
 - [Alpine with Composite ready-to-run image](Dockerfile.alpine-composite)
 - [Alpine with ICU installed](Dockerfile.alpine-icu)
-- [Debian](Dockerfile.debian)
+- [Azure Linux](Dockerfile.azurelinux)
+- [Azure Linux Distroless](Dockerfile.azurelinux-distroless)
 - [Ubuntu](Dockerfile.ubuntu)
 - [Ubuntu Chiseled](Dockerfile.chiseled)
 - [Ubuntu Chiseled with Composite ready-to-run image](Dockerfile.chiseled-composite)
@@ -159,8 +160,6 @@ Samples are provided for
 - [Windows Server Core](Dockerfile.windowsservercore)
 - [Windows Server Core with IIS](Dockerfile.windowsservercore-iis)
 
-Windows variants of the sample can be pulled via one the following registry addresses:
+You can pull a pre-built Windows sample image using the following tag:
 
-- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-1809`
 - `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-ltsc2022`
-- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-ltsc2025`
