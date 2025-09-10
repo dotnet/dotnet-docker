@@ -67,7 +67,7 @@ if (OperatingSystem.IsLinux() &&
     WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
 }
 
-string GetInBestUnit(long size)
+static string GetInBestUnit(long size)
 {
     if (size < Mebi)
     {
@@ -85,7 +85,7 @@ string GetInBestUnit(long size)
     }
 }
 
-bool GetBestValue(string[] paths, out long limit, [NotNullWhen(true)] out string? bestPath)
+static bool GetBestValue(string[] paths, out long limit, [NotNullWhen(true)] out string? bestPath)
 {
     foreach (string path in paths)
     {
