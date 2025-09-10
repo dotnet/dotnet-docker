@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net;
@@ -7,16 +7,15 @@ using static System.Console;
 
 // Variant of https://github.com/dotnet/core/tree/main/samples/dotnet-runtimeinfo
 // Ascii text: https://ascii.co.uk/text (Univers font)
-
 WriteLine("""
-         42                                                    
-         42              ,d                             ,d     
-         42              42                             42     
- ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM  
-a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42     
-8b       42 8b       d8  42    42       42 8PP!!!!!!!   42     
-"8a,   ,d42 "8a,   ,a8"  42,   42       42 "8b,   ,aa   42,    
- `"8bbdP"Y8  `"YbbdP"'   "Y428 42       42  `"Ybbd8"'   "Y428  
+         42
+         42              ,d                             ,d
+         42              42                             42
+ ,adPPYb,42  ,adPPYba, MM42MMM 8b,dPPYba,   ,adPPYba, MM42MMM
+a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42
+8b       42 8b       d8  42    42       42 8PP!!!!!!!   42
+"8a,   ,d42 "8a,   ,a8"  42,   42       42 "8b,   ,aa   42,
+ `"8bbdP"Y8  `"YbbdP"'   "Y428 42       42  `"Ybbd8"'   "Y428
 
 """);
 
