@@ -67,23 +67,12 @@ if (OperatingSystem.IsLinux() &&
     WriteLine($"GC Hard limit %: {(double)totalMemoryBytes/memoryLimit * 100:N0}");
 }
 
-static string GetInBestUnit(long size)
+static string GetInBestUnit(long size) => size switch
 {
-    if (size < Mebi)
-    {
-        return $"{size} bytes";
-    }
-    else if (size < Gibi)
-    {
-        double mebibytes = size / Mebi;
-        return $"{mebibytes:F} MiB";
-    }
-    else
-    {
-        double gibibytes = size / Gibi;
-        return $"{gibibytes:F} GiB";
-    }
-}
+    < (long)Mebi => $"{size} bytes",
+    < (long)Gibi => $"{size / Mebi:F} MiB",
+    _ => $"{size / Gibi:F} GiB"
+};
 
 static bool GetBestValue(string[] paths, out long limit, [NotNullWhen(true)] out string? bestPath)
 {
