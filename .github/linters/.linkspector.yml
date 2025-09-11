@@ -14,4 +14,6 @@ ignorePatterns:
   - pattern: "^https://github.com/microsoft/mcr.*$"
   - pattern: "^https://github.com/dotnet/release.*$"
   - pattern: "^https://aka.ms/$"
+  # This link often fails with a 504 error - it's known good, though.
+  - pattern: "^https://canonical.com/blog/canonical-releases-ubuntu-24-04-noble-numbat$"
 useGitIgnore: true
