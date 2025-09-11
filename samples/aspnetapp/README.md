@@ -171,7 +171,7 @@ Samples are provided for
 
 - [Nano Server](Dockerfile.nanoserver)
 - [Windows Server Core](Dockerfile.windowsservercore)
-- [Windows Server Core with IIS](Dockerfile.windowsservercore-iis)
+- [Windows Server Core with IIS](Dockerfile.windowsservercore-iis) (Note: the IIS sample listens on port `80`, not `8080`)
 
 You can pull a pre-built Windows sample image using the following tag:
 
