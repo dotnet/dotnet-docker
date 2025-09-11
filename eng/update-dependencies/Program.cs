@@ -8,10 +8,15 @@ using System.CommandLine.Hosting;
 using System.IO;
 using Dotnet.Docker;
 using Dotnet.Docker.Sync;
+using Maestro.Common;
+using Maestro.Common.AzureDevOpsTokens;
 using Microsoft.DotNet.DarcLib;
+using Microsoft.DotNet.DarcLib.Helpers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Abstractions;
 
 var rootCommand = new RootCommand()
 {
@@ -56,16 +61,42 @@ config.UseHost(
             {
                 logging.ClearProviders();
                 logging.AddSimpleConsole(options =>
-                {
-                    options.IncludeScopes = true;
-                    options.SingleLine = true;
-                });
-            })
+                    {
+                        options.IncludeScopes = true;
+                        options.SingleLine = true;
+                    }
+                );
+            }
+        )
         .ConfigureServices(services =>
             {
                 services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
+
                 services.AddSingleton<IBasicBarClient>(_ =>
-                    new BarApiClient(null, null, disableInteractiveAuth: true));
+                        new BarApiClient(null, null, disableInteractiveAuth: true));
+
+                // services.AddSingleton<ILocalGitClient, LocalGitClient>();
+
+                services.AddSingleton<ITelemetryRecorder, NoTelemetryRecorder>();
+                services.AddSingleton<IProcessManager>(sp => new ProcessManager(sp.GetRequiredService<ILogger<ProcessManager>>(), "git"));
+                services.AddTransient<IFileSystem, FileSystem>();
+                services.AddSingleton<IRemoteTokenProvider>(new RemoteTokenProvider());
+                services.AddSingleton<IAzureDevOpsTokenProvider, AzureDevOpsTokenProvider>();
+                services.AddSingleton<IGitRepoFactory>(sp => ActivatorUtilities.CreateInstance<GitRepoFactory>(sp, Path.GetTempPath()));
+                services.Configure<AzureDevOpsTokenProviderOptions>(options =>
+                    {
+                        options["dotnet"] = new()
+                        {
+                            Token = "foo"
+                        };
+                    }
+                );
+                services.AddSingleton<ILocalGitRepoFactory, LocalGitRepoFactory>();
+                services.AddSingleton<ILocalGitClient, LocalGitClient>();
+                // LocalGitClient wants a non-generic ILogger, for some reason.
+                services.AddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
+
+
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
 
                 services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
@@ -82,7 +113,8 @@ config.UseHost(
                 services.AddCommand<FromComponentCommand, FromComponentOptions>();
                 services.AddCommand<SpecificCommand, SpecificCommandOptions>();
                 services.AddCommand<SyncInternalReleaseCommand, SyncInternalReleaseOptions>();
-            })
+            }
+        )
     );
 
 return await config.InvokeAsync(args);
