@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
 using System.Collections.Generic;
 using System.CommandLine;
 using System.Threading.Tasks;
@@ -10,8 +11,10 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Sync;
 
-internal sealed class SyncInternalReleaseOptions : IOptions
+public sealed class SyncInternalReleaseOptions : IOptions
 {
+    public string SourceBranch { get; set; } = string.Empty;
+
     public static List<Option> Options => [];
 
     public static List<Argument> Arguments => [
@@ -24,21 +27,32 @@ internal sealed class SyncInternalReleaseOptions : IOptions
     ];
 }
 
-internal sealed class SyncInternalReleaseCommand(
-    IGitRepoFactory gitRepoFactory,
+public sealed class SyncInternalReleaseCommand(
+    // IGitRepoFactory gitRepoFactory,
     ILocalGitRepoFactory localGitRepoFactory,
     ILogger<SyncInternalReleaseCommand> logger) : BaseCommand<SyncInternalReleaseOptions>
 {
-    private readonly IGitRepoFactory _gitRepoFactory = gitRepoFactory;
+    // private readonly IGitRepoFactory _gitRepoFactory = gitRepoFactory;
     private readonly ILocalGitRepoFactory _localGitRepoFactory = localGitRepoFactory;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
     {
-        var repo = _gitRepoFactory.CreateClient(".");
+        // var repo = _gitRepoFactory.CreateClient(".");
+
         var localRepo = _localGitRepoFactory.Create(new NativePath("."));
+
         var thisCommit = await localRepo.GetGitCommitAsync();
+        var thisBranch = await localRepo.GetCheckedOutBranchAsync();
+
+        if (!thisBranch.StartsWith("release/"))
+        {
+            throw new WrongBranchException($"Current branch '{thisBranch}' is not a release branch.");
+        }
+
         _logger.LogInformation("Current commit: {thisCommit}", thisCommit);
         return 0;
     }
 }
+
+public sealed class WrongBranchException(string message) : InvalidOperationException(message);
