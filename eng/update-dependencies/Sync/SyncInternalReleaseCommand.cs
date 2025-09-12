@@ -10,11 +10,9 @@ using Microsoft.Extensions.Logging;
 namespace Dotnet.Docker.Sync;
 
 public sealed class SyncInternalReleaseCommand(
-    // IGitRepoFactory gitRepoFactory,
     ILocalGitRepoFactory localGitRepoFactory,
     ILogger<SyncInternalReleaseCommand> logger) : BaseCommand<SyncInternalReleaseOptions>
 {
-    // private readonly IGitRepoFactory _gitRepoFactory = gitRepoFactory;
     private readonly ILocalGitRepoFactory _localGitRepoFactory = localGitRepoFactory;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 

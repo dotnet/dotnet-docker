@@ -75,8 +75,6 @@ config.UseHost(
                 services.AddSingleton<IBasicBarClient>(_ =>
                         new BarApiClient(null, null, disableInteractiveAuth: true));
 
-                // services.AddSingleton<ILocalGitClient, LocalGitClient>();
-
                 services.AddSingleton<ITelemetryRecorder, NoTelemetryRecorder>();
                 services.AddSingleton<IProcessManager>(sp => new ProcessManager(sp.GetRequiredService<ILogger<ProcessManager>>(), "git"));
                 services.AddTransient<IFileSystem, FileSystem>();
