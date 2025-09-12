@@ -20,9 +20,7 @@ public sealed class SyncInternalReleaseOptions : IOptions
     public static List<Argument> Arguments => [
         new Argument<string>("source-branch")
         {
-            Description = "The source branch to sync from (e.g. release/foo)."
-                + " Must match the pattern 'release/*'."
-                + " It will be synced to internal/release/*.",
+            Description = "The source branch to sync from. Must match the currently checked out branch."
         },
     ];
 }
@@ -38,21 +36,86 @@ public sealed class SyncInternalReleaseCommand(
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
     {
-        // var repo = _gitRepoFactory.CreateClient(".");
+        var repo = _localGitRepoFactory.Create(new NativePath("."));
 
-        var localRepo = _localGitRepoFactory.Create(new NativePath("."));
+        var currentBranch = await repo.GetCheckedOutBranchAsync();
+        ValidateCurrentBranch(currentBranch, options);
 
-        var thisCommit = await localRepo.GetGitCommitAsync();
-        var thisBranch = await localRepo.GetCheckedOutBranchAsync();
+        _logger.LogInformation(
+            "Syncing internal branch for source branch {Branch}", currentBranch);
 
-        if (!thisBranch.StartsWith("release/"))
+        var sourceCommit = await repo.GetGitCommitAsync();
+        _logger.LogDebug("Source branch {Branch} at commit {Commit}", currentBranch, sourceCommit);
+
+        var internalBranch = $"internal/{currentBranch}";
+        var internalCommit = await repo.TryGetShaForBranchAsync(internalBranch);
+
+        if (internalCommit is null)
         {
-            throw new WrongBranchException($"Current branch '{thisBranch}' is not a release branch.");
+            await CreateInternalBranchAsync(repo, internalBranch, sourceCommit);
+            _logger.LogInformation(
+                "Created internal branch {InternalBranch} at {Commit}",
+                internalBranch, sourceCommit);
+            return 0;
         }
 
-        _logger.LogInformation("Current commit: {thisCommit}", thisCommit);
+        if (string.Equals(internalCommit, sourceCommit, StringComparison.Ordinal))
+        {
+            _logger.LogInformation("Internal branch already up to date. Nothing to do.");
+            return 0;
+        }
+
+        // Determine if fast-forward is possible
+        bool canFastForward = await repo.IsAncestorCommit(internalCommit, sourceCommit);
+        if (!canFastForward)
+        {
+            throw new InvalidOperationException("Internal branch has diverged: "
+                + $"{internalBranch}@{internalCommit} is not an ancestor of {currentBranch}@{sourceCommit}.");
+        }
+
+        await repo.UpdateRefAsync($"refs/heads/{internalBranch}", sourceCommit);
+        _logger.LogInformation(
+            "Fast-forwarded {InternalBranch} to {NewCommit} (was {OldCommit})",
+            internalBranch, sourceCommit, internalCommit);
         return 0;
     }
-}
 
-public sealed class WrongBranchException(string message) : InvalidOperationException(message);
+    private static async Task CreateInternalBranchAsync(ILocalGitRepo repo, string branch, string commit)
+    {
+        await repo.CreateBranchAsync(branch, overwriteExistingBranch: false);
+        var headSha = await repo.GetShaForRefAsync($"refs/heads/{branch}");
+        if (!string.Equals(headSha, commit, StringComparison.Ordinal))
+        {
+            await repo.ExecuteGitCommand("update-ref", $"refs/heads/{branch}", commit);
+        }
+    }
+
+    private static void ValidateCurrentBranch(string currentBranch, SyncInternalReleaseOptions options)
+    {
+        if (string.IsNullOrWhiteSpace(currentBranch))
+        {
+            throw new InvalidOperationException("Cannot determine checked out branch.");
+        }
+
+        if (currentBranch == "HEAD")
+        {
+            throw new InvalidOperationException("Cannot sync while HEAD is detached.");
+        }
+
+        if (currentBranch.StartsWith("internal/", StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException("Cannot sync while checked out to an internal/* branch.");
+        }
+
+        if (string.IsNullOrWhiteSpace(options.SourceBranch))
+        {
+            throw new InvalidOperationException("source-branch argument is required.");
+        }
+
+        if (!string.Equals(currentBranch, options.SourceBranch, StringComparison.Ordinal))
+        {
+            throw new InvalidOperationException($"Specified source branch '{options.SourceBranch}'"
+                + $" does not match the currently checked out branch '{currentBranch}'.");
+        }
+    }
+}
