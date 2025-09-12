@@ -6,7 +6,7 @@ using Microsoft.DotNet.DarcLib;
 
 namespace Dotnet.Docker.Sync;
 
-internal static class DarcLibExtensions
+public static class DarcLibExtensions
 {
     public static Task<string?> TryGetShaForBranchAsync(this ILocalGitRepo repo, string branch) =>
         repo.TryGetShaForRefAsync($"refs/heads/{branch}");
