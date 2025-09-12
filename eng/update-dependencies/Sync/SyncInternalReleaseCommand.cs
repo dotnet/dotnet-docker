@@ -2,28 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.Collections.Generic;
-using System.CommandLine;
 using System.Threading.Tasks;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Sync;
-
-public sealed class SyncInternalReleaseOptions : IOptions
-{
-    public string SourceBranch { get; set; } = string.Empty;
-
-    public static List<Option> Options => [];
-
-    public static List<Argument> Arguments => [
-        new Argument<string>("source-branch")
-        {
-            Description = "The source branch to sync from. Must match the currently checked out branch."
-        },
-    ];
-}
 
 public sealed class SyncInternalReleaseCommand(
     // IGitRepoFactory gitRepoFactory,
@@ -39,7 +23,7 @@ public sealed class SyncInternalReleaseCommand(
         var repo = _localGitRepoFactory.Create(new NativePath("."));
 
         var currentBranch = await repo.GetCheckedOutBranchAsync();
-        ValidateCurrentBranch(currentBranch, options);
+        ValidateCurrentBranch(currentBranch, options.SourceBranch);
 
         _logger.LogInformation(
             "Syncing internal branch for source branch {Branch}", currentBranch);
@@ -90,31 +74,31 @@ public sealed class SyncInternalReleaseCommand(
         }
     }
 
-    private static void ValidateCurrentBranch(string currentBranch, SyncInternalReleaseOptions options)
+    private static void ValidateCurrentBranch(string? currentBranch, string? sourceBranch)
     {
+        if (string.IsNullOrWhiteSpace(sourceBranch))
+        {
+            throw new ArgumentException("argument 'source-branch' is required.");
+        }
+
         if (string.IsNullOrWhiteSpace(currentBranch))
         {
-            throw new InvalidOperationException("Cannot determine checked out branch.");
+            throw new IncorrectBranchException("Cannot determine checked out branch.");
         }
 
         if (currentBranch == "HEAD")
         {
-            throw new InvalidOperationException("Cannot sync while HEAD is detached.");
+            throw new DetachedHeadException("Cannot sync while HEAD is detached.");
         }
 
         if (currentBranch.StartsWith("internal/", StringComparison.Ordinal))
         {
-            throw new InvalidOperationException("Cannot sync while checked out to an internal/* branch.");
+            throw new IncorrectBranchException("Cannot sync while checked out to an internal/* branch.");
         }
 
-        if (string.IsNullOrWhiteSpace(options.SourceBranch))
+        if (currentBranch != sourceBranch)
         {
-            throw new InvalidOperationException("source-branch argument is required.");
-        }
-
-        if (!string.Equals(currentBranch, options.SourceBranch, StringComparison.Ordinal))
-        {
-            throw new InvalidOperationException($"Specified source branch '{options.SourceBranch}'"
+            throw new IncorrectBranchException($"Specified source branch '{sourceBranch}'"
                 + $" does not match the currently checked out branch '{currentBranch}'.");
         }
     }
