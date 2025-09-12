@@ -34,7 +34,7 @@ public sealed class SyncInternalReleaseTests
         var harness = scenario.CreateHarness();
 
         var options = new SyncInternalReleaseOptions { SourceBranch = "feature/other" };
-        await Assert.ThrowsAsync<InvalidOperationException>(() => harness.Command.ExecuteAsync(options));
+        await Assert.ThrowsAsync<IncorrectBranchException>(() => harness.Command.ExecuteAsync(options));
     }
 
     [Fact]
@@ -44,7 +44,7 @@ public sealed class SyncInternalReleaseTests
         var harness = scenario.CreateHarness();
 
         var options = new SyncInternalReleaseOptions { SourceBranch = "internal/main" };
-        await Assert.ThrowsAsync<InvalidOperationException>(() => harness.Command.ExecuteAsync(options));
+        await Assert.ThrowsAsync<IncorrectBranchException>(() => harness.Command.ExecuteAsync(options));
     }
 
     [Fact]
