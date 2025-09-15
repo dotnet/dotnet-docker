@@ -27,7 +27,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(SourceBranchMismatchFails),
             async repo =>
             {
-                await InitBranchAsync(repo, MainBranch);
+                await repo.InitBranchAsync(MainBranch);
             }
         );
 
@@ -51,7 +51,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(InternalSourceBranchFails),
             async repo =>
             {
-                await InitBranchAsync(repo, StartingBranch);
+                await repo.InitBranchAsync(StartingBranch);
                 await repo.CheckoutAsync(StartingBranch);
             }
         );
@@ -79,7 +79,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(CreateInternalBranch),
             async repo =>
             {
-                await InitBranchAsync(repo, SourceBranch);
+                await repo.InitBranchAsync(SourceBranch);
             }
         );
 
@@ -112,7 +112,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(AlreadyUpToDate),
             async repo =>
             {
-                await InitBranchAsync(repo, ReleaseBranch);
+                await repo.InitBranchAsync(ReleaseBranch);
                 await repo.CreateBranchAsync(InternalReleaseBranch);
                 await repo.CheckoutAsync(ReleaseBranch);
             }
@@ -147,13 +147,13 @@ public sealed class SyncInternalReleaseIntegrationTests
             async repo =>
             {
                 // Start with release branch and internal release branch in sync
-                await InitBranchAsync(repo, MainBranch);
+                await repo.InitBranchAsync(MainBranch);
                 await repo.CreateBranchAsync(ReleaseBranch);
                 await repo.CreateBranchAsync(InternalReleaseBranch);
 
                 // Add a new commit to release branch
                 await repo.CheckoutAsync(ReleaseBranch);
-                await CreateFileWithCommitAsync(repo, "new-from-release");
+                await repo.CreateFileWithCommitAsync("new-from-release");
             }
         );
 
@@ -194,14 +194,14 @@ public sealed class SyncInternalReleaseIntegrationTests
             async repo =>
             {
                 // Start with both branches in sync
-                await InitBranchAsync(repo, ReleaseBranch);
+                await repo.InitBranchAsync(ReleaseBranch);
                 await repo.CreateBranchAsync(InternalReleaseBranch);
 
                 // Then create a different new commit on each branch
                 await repo.CheckoutAsync(InternalReleaseBranch);
-                await CreateFileWithCommitAsync(repo, "new-internal");
+                await repo.CreateFileWithCommitAsync("new-internal");
                 await repo.CheckoutAsync(ReleaseBranch);
-                await CreateFileWithCommitAsync(repo, "new-release");
+                await repo.CreateFileWithCommitAsync("new-release");
             }
         );
 
@@ -211,31 +211,6 @@ public sealed class SyncInternalReleaseIntegrationTests
             Mock.Of<ILogger<SyncInternalReleaseCommand>>());
 
         await command.ExecuteAsync(options).ShouldThrowAsync<InvalidOperationException>();
-    }
-
-    /// <summary>
-    /// Create a branch with an initial commit and ensure it is checked out.
-    /// </summary>
-    private static async Task InitBranchAsync(ILocalGitRepo repo, string name = MainBranch)
-    {
-        await repo.RunGitCommandAsync(["init"]);
-        await repo.CreateBranchAsync(name);
-        await CreateInitialCommitAsync(repo);
-        await repo.CheckoutAsync(name);
-    }
-
-    /// <summary>
-    /// Creates an initial commit in the specified repo.
-    /// </summary>
-    /// <remarks>
-    /// A lot of git commands don't work properly unless there's at least one commit in the repo.
-    /// </remarks>
-    private static async Task CreateInitialCommitAsync(ILocalGitRepo repo)
-    {
-        var filePath = Path.Join(repo.Path, "file.txt");
-        await File.WriteAllTextAsync(filePath, "Hello world");
-        await repo.StageAsync([filePath]);
-        await repo.CommitAsync("Initial commit", allowEmpty: false);
     }
 
     /// <summary>
@@ -262,25 +237,5 @@ public sealed class SyncInternalReleaseIntegrationTests
         var tempRepo = new TempRepo(tempRepoPath);
         await setup(tempRepo.Repo);
         return tempRepo;
-    }
-
-    /// <summary>
-    /// Creates a new file with the specified content, stages it, and commits it to the repository.
-    /// </summary>
-    /// <param name="fileName">If not specified, a random file name will be generated.</param>
-    /// <param name="fileContent"></param>
-    /// <returns></returns>
-    private static async Task CreateFileWithCommitAsync(
-        ILocalGitRepo repo,
-        string? fileName = null,
-        string fileContent = "")
-    {
-        fileName ??= Path.GetRandomFileName();
-        var commitMessage = $"Add {fileName}";
-        var filePath = Path.Join(repo.Path, fileName);
-
-        await File.WriteAllTextAsync(filePath, fileContent);
-        await repo.StageAsync([filePath]);
-        await repo.CommitAsync(commitMessage, allowEmpty: false);
     }
 }
