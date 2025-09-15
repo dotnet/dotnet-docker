@@ -29,6 +29,7 @@
   <ItemGroup>
     <Using Include="Xunit" />
     <Using Include="Moq" />
+    <Using Include="Shouldly" />
   </ItemGroup>
 
   <ItemGroup>
