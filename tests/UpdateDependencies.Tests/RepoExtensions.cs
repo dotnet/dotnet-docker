@@ -8,14 +8,15 @@ namespace UpdateDependencies.Tests;
 public static class RepoExtensions
 {
     /// <summary>
-    /// Create a branch with an initial commit and ensure it is checked out.
+    /// Create a repo with an initial branch and commit and ensure it is checked out.
+    /// The repo will be initialized in the <see cref="repo"/>'s path.
     /// </summary>
-    public static async Task InitBranchAsync(this ILocalGitRepo repo, string name)
+    public static async Task InitAsync(this ILocalGitRepo repo, string branchName)
     {
         await repo.RunGitCommandAsync(["init"]);
-        await repo.CreateBranchAsync(name);
+        await repo.CreateBranchAsync(branchName);
         await repo.CreateInitialCommitAsync();
-        await repo.CheckoutAsync(name);
+        await repo.CheckoutAsync(branchName);
     }
 
     /// <summary>
@@ -36,8 +37,6 @@ public static class RepoExtensions
     /// Creates a new file with the specified content, stages it, and commits it to the repository.
     /// </summary>
     /// <param name="fileName">If not specified, a random file name will be generated.</param>
-    /// <param name="fileContent"></param>
-    /// <returns></returns>
     public static async Task CreateFileWithCommitAsync(
         this ILocalGitRepo repo,
         string? fileName = null,

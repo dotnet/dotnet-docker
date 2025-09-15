@@ -27,7 +27,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(SourceBranchMismatchFails),
             async repo =>
             {
-                await repo.InitBranchAsync(MainBranch);
+                await repo.InitAsync(MainBranch);
             }
         );
 
@@ -51,7 +51,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(InternalSourceBranchFails),
             async repo =>
             {
-                await repo.InitBranchAsync(StartingBranch);
+                await repo.InitAsync(StartingBranch);
                 await repo.CheckoutAsync(StartingBranch);
             }
         );
@@ -79,7 +79,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(CreateInternalBranch),
             async repo =>
             {
-                await repo.InitBranchAsync(SourceBranch);
+                await repo.InitAsync(SourceBranch);
             }
         );
 
@@ -112,7 +112,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             nameof(AlreadyUpToDate),
             async repo =>
             {
-                await repo.InitBranchAsync(ReleaseBranch);
+                await repo.InitAsync(ReleaseBranch);
                 await repo.CreateBranchAsync(InternalReleaseBranch);
                 await repo.CheckoutAsync(ReleaseBranch);
             }
@@ -147,7 +147,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             async repo =>
             {
                 // Start with release branch and internal release branch in sync
-                await repo.InitBranchAsync(MainBranch);
+                await repo.InitAsync(MainBranch);
                 await repo.CreateBranchAsync(ReleaseBranch);
                 await repo.CreateBranchAsync(InternalReleaseBranch);
 
@@ -194,7 +194,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             async repo =>
             {
                 // Start with both branches in sync
-                await repo.InitBranchAsync(ReleaseBranch);
+                await repo.InitAsync(ReleaseBranch);
                 await repo.CreateBranchAsync(InternalReleaseBranch);
 
                 // Then create a different new commit on each branch
