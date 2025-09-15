@@ -122,7 +122,7 @@ public sealed class SyncInternalReleaseIntegrationTests
         var repo = tempRepo.Repo;
         var releaseCommitBefore = await repo.TryGetShaForBranchAsync(ReleaseBranch);
         var internalCommitBefore = await repo.TryGetShaForBranchAsync(InternalReleaseBranch);
-        Assert.Equal(releaseCommitBefore, internalCommitBefore);
+        internalCommitBefore.ShouldBe(releaseCommitBefore);
 
         var options = new SyncInternalReleaseOptions { SourceBranch = ReleaseBranch };
         var command = new SyncInternalReleaseCommand(
@@ -211,7 +211,7 @@ public sealed class SyncInternalReleaseIntegrationTests
             tempRepo.CreateLocalGitRepoFactory(),
             Mock.Of<ILogger<SyncInternalReleaseCommand>>());
 
-        await Assert.ThrowsAsync<InvalidOperationException>(() => command.ExecuteAsync(options));
+        await command.ExecuteAsync(options).ShouldThrowAsync<InvalidOperationException>();
     }
 
     /// <summary>
