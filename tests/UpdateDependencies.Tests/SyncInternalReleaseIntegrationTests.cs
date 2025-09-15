@@ -4,7 +4,6 @@
 using Dotnet.Docker.Sync;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.Logging;
-using Shouldly;
 
 namespace UpdateDependencies.Tests;
 
