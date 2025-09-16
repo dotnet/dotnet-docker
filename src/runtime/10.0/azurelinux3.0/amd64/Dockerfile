@@ -8,7 +8,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-rc.2.25461.112 \
+RUN dotnet_version=10.0.0-rc.2.25465.102 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
@@ -24,7 +24,7 @@ RUN dotnet_version=10.0.0-rc.2.25461.112 \
 FROM $REPO:10.0.0-rc.2-azurelinux3.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-rc.2.25461.112
+ENV DOTNET_VERSION=10.0.0-rc.2.25465.102
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
