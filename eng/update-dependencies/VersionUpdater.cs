@@ -101,6 +101,6 @@ namespace Dotnet.Docker
         private static Regex GetVersionVariableRegex(string versionVariableName) =>
             ManifestHelper.GetManifestVariableRegex(
                 versionVariableName,
-                $"(?<{s_versionGroupName}>[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)*)?)");
+                $"(?<{s_versionGroupName}>v?[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)*)?)");
     }
 }

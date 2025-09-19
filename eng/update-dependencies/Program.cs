@@ -23,6 +23,9 @@ var rootCommand = new RootCommand()
     FromStagingPipelineCommand.Create(
         name: "from-staging-pipeline",
         description: "Update dependencies using a specific staging pipeline run"),
+    FromComponentCommand.Create(
+        name: "from-component",
+        description: "Update a single image component"),
     SpecificCommand.Create(
         name: "specific",
         description: "Update dependencies using specific product versions"),
@@ -61,6 +64,8 @@ config.UseHost(
                     new BarApiClient(null, null, disableInteractiveAuth: true));
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
 
+                services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
+
                 services.AddHttpClient();
                 services.AddHttpClient<AzdoHttpClient>();
 
@@ -70,6 +75,7 @@ config.UseHost(
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();
                 services.AddCommand<FromChannelCommand, FromChannelOptions>();
                 services.AddCommand<FromStagingPipelineCommand, FromStagingPipelineOptions>();
+                services.AddCommand<FromComponentCommand, FromComponentOptions>();
                 services.AddCommand<SpecificCommand, SpecificCommandOptions>();
             })
     );
