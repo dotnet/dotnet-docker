@@ -8,7 +8,7 @@ assignees: lbussell
 
 ## ImageBuilder Tasks
 
-- [ ] Ensure that the ImageBuilder supports the new distro version in the [code](https://github.com/dotnet/docker-tools/blob/main/src/Microsoft.DotNet.ImageBuilder/src/McrTagsMetadataGenerator.cs) to generate the correct README display name from the version specified in the manifest
+- [ ] Ensure that the ImageBuilder supports the new distro version in the [code](https://github.com/dotnet/docker-tools/blob/main/src/ImageBuilder/McrTagsMetadataGenerator.cs) to generate the correct README display name from the version specified in the manifest
 
 ## Nightly Branch Tasks
 
