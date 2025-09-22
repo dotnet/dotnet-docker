@@ -383,7 +383,7 @@ namespace Dotnet.Docker
             List<IDependencyUpdater> updaters =
             [
                 new NuGetConfigUpdater(RepoRoot, Options),
-                new BaseUrlUpdater(RepoRoot, Options),
+                BaseUrlUpdater.Create(RepoRoot, Options)
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
