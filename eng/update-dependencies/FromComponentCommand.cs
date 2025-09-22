@@ -35,7 +35,7 @@ internal sealed class FromComponentCommand(
 
         if (!versionSourceExists || versionSource is null)
         {
-            throw new InvalidOperationException("No version source registered for component '{Component}'");
+            throw new InvalidOperationException($"No version source registered for component '{options.Component}'");
         }
 
         var channel = options.Channel is not null
