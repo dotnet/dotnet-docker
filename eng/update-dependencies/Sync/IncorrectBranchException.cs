@@ -5,4 +5,7 @@ using System;
 
 namespace Dotnet.Docker.Sync;
 
+/// <summary>
+/// Indicates that an incorrect branch was specified for a git operation.
+/// </summary>
 public sealed class IncorrectBranchException(string message) : InvalidOperationException(message);

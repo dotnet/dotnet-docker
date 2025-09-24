@@ -16,8 +16,17 @@ public sealed record SyncInternalReleaseOptions : IOptions
 
     public static List<Argument> Arguments =>
     [
-        new Argument<string>("remote-url"),
-        new Argument<string>("source-branch"),
-        new Argument<string>("target-branch"),
+        new Argument<string>("remote-url")
+        {
+            Description = "The URL of the remote git repository to sync (e.g., https://dev.azure.com/org/project/_git/repo)"
+        },
+        new Argument<string>("source-branch")
+        {
+            Description = "The source branch to sync from (typically a release/* branch)"
+        },
+        new Argument<string>("target-branch")
+        {
+            Description = "The target branch to sync to (typically an internal/release/* branch)"
+        },
     ];
 }

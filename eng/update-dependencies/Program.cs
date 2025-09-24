@@ -69,15 +69,14 @@ config.UseHost(
         )
         .ConfigureServices(services =>
             {
-                services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
 
-                services.AddSingleton<IBasicBarClient>(_ =>
-                        new BarApiClient(null, null, disableInteractiveAuth: true));
-
+                // Local services needed for DarcLib git operations
                 services.AddSingleton<ITelemetryRecorder, NoTelemetryRecorder>();
-                services.AddSingleton<IProcessManager>(sp => new ProcessManager(sp.GetRequiredService<ILogger<ProcessManager>>(), "git"));
+                services.AddSingleton<IProcessManager>(sp =>
+                    new ProcessManager(sp.GetRequiredService<ILogger<ProcessManager>>(), "git"));
                 services.AddTransient<IFileSystem, FileSystem>();
 
+                // Auth services needed for DarcLib remote git operations
                 services.AddSingleton<IRemoteTokenProvider>(sp =>
                 {
                     var azdoTokenProvider = sp.GetRequiredService<IAzureDevOpsTokenProvider>();
@@ -86,40 +85,45 @@ config.UseHost(
                         azdoTokenProvider: azdoTokenProvider,
                         gitHubTokenProvider: gitHubTokenProvider);
                 });
-
                 services.AddSingleton<IAzureDevOpsTokenProvider, AzureDevOpsTokenProvider>();
-
-                services.AddKeyedSingleton<IRemoteGitRepo, AzureDevOpsClient>(GitRemote.AzureDevOps);
-                services.AddKeyedSingleton<IRemoteGitRepo, GitHubClient>(GitRemote.GitHub);
-                services.AddSingleton<IRemoteGitRepoFactory, RemoteGitRepoFactory>();
-
                 services.Configure<AzureDevOpsTokenProviderOptions>(options =>
                     {
+                        // TODO: Find a way to use the same Azure DevOps token/auth between here and CreatePullRequestOptions
                         options["default"] = new AzureDevOpsCredentialResolverOptions
                         {
+                            // Interactive auth can be enabled in order to run locally using your own user identity.
+                            // Use with caution. Disable by default since this tool runs in CI.
                             DisableInteractiveAuth = true
                         };
                     }
                 );
 
+                services.AddKeyedSingleton<IRemoteGitRepo, AzureDevOpsClient>(GitRemote.AzureDevOps);
+                services.AddKeyedSingleton<IRemoteGitRepo, GitHubClient>(GitRemote.GitHub);
+                services.AddSingleton<IRemoteGitRepoFactory, RemoteGitRepoFactory>();
+
                 // Process-based git client
                 services.AddSingleton<ILocalGitClient, LocalGitClient>();
-                // Clones repos by calling out to the `git` executable.
-                // Lighter on memory than LibGit2Sharp-based implementation.
+                // LocalGitClient wants a non-generic ILogger, for some reason.
+                services.AddSingleton<ILogger>(sp =>
+                    sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
+                // Git repo cloner that calls out to the `git` executable. It is lighter on memory
+                // than the LibGit2Sharp-based implementation.
                 services.AddSingleton<IGitRepoCloner, GitNativeRepoCloner>();
-                // LibGit2Sharp-based git client
+                // LibGit2Sharp-based git client - has some operations that are not supported by
+                // the process-based client (namely "push" operations).
                 services.AddSingleton<ILocalLibGit2Client, LocalLibGit2Client>();
                 services.AddSingleton<ILocalGitRepoFactory, LocalGitRepoFactory>();
 
-                // LocalGitClient wants a non-generic ILogger, for some reason.
-                services.AddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
-
-                // Our own Git client abstraction
+                // Finally, this project's own Git client abstraction that abstracts over the
+                // various DarcLib implementations
                 services.AddSingleton<GitRepoHelperFactory>();
 
+                // Services needed for BAR build access/updates
+                services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
+                services.AddSingleton<IBasicBarClient>(_ =>
+                        new BarApiClient(null, null, disableInteractiveAuth: true));
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
-
-                services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
 
                 services.AddHttpClient();
                 services.AddHttpClient<AzdoHttpClient>();
@@ -127,6 +131,10 @@ config.UseHost(
                 services.AddSingleton<AzdoAuthProvider>();
                 services.AddSingleton<PipelineArtifactProvider>();
 
+                // Dependencies that can be updated using the FromComponentCommand
+                services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
+
+                // Commands
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();
                 services.AddCommand<FromChannelCommand, FromChannelOptions>();
                 services.AddCommand<FromStagingPipelineCommand, FromStagingPipelineOptions>();
