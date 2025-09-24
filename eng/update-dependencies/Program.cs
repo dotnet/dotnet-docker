@@ -7,16 +7,15 @@ using System.CommandLine.Help;
 using System.CommandLine.Hosting;
 using System.IO;
 using Dotnet.Docker;
+using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
 using Maestro.Common;
 using Maestro.Common.AzureDevOpsTokens;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Abstractions;
 
 var rootCommand = new RootCommand()
 {
@@ -78,22 +77,45 @@ config.UseHost(
                 services.AddSingleton<ITelemetryRecorder, NoTelemetryRecorder>();
                 services.AddSingleton<IProcessManager>(sp => new ProcessManager(sp.GetRequiredService<ILogger<ProcessManager>>(), "git"));
                 services.AddTransient<IFileSystem, FileSystem>();
-                services.AddSingleton<IRemoteTokenProvider>(new RemoteTokenProvider());
+
+                services.AddSingleton<IRemoteTokenProvider>(sp =>
+                {
+                    var azdoTokenProvider = sp.GetRequiredService<IAzureDevOpsTokenProvider>();
+                    var gitHubTokenProvider = new ResolvedTokenProvider(null);
+                    return new RemoteTokenProvider(
+                        azdoTokenProvider: azdoTokenProvider,
+                        gitHubTokenProvider: gitHubTokenProvider);
+                });
+
                 services.AddSingleton<IAzureDevOpsTokenProvider, AzureDevOpsTokenProvider>();
-                services.AddSingleton<IGitRepoFactory>(sp => ActivatorUtilities.CreateInstance<GitRepoFactory>(sp, Path.GetTempPath()));
+
+                services.AddKeyedSingleton<IRemoteGitRepo, AzureDevOpsClient>(GitRemote.AzureDevOps);
+                services.AddKeyedSingleton<IRemoteGitRepo, GitHubClient>(GitRemote.GitHub);
+                services.AddSingleton<IRemoteGitRepoFactory, RemoteGitRepoFactory>();
+
                 services.Configure<AzureDevOpsTokenProviderOptions>(options =>
                     {
-                        options["dotnet"] = new()
+                        options["default"] = new AzureDevOpsCredentialResolverOptions
                         {
-                            Token = "foo"
+                            DisableInteractiveAuth = true
                         };
                     }
                 );
-                services.AddSingleton<ILocalGitRepoFactory, LocalGitRepoFactory>();
+
+                // Process-based git client
                 services.AddSingleton<ILocalGitClient, LocalGitClient>();
+                // Clones repos by calling out to the `git` executable.
+                // Lighter on memory than LibGit2Sharp-based implementation.
+                services.AddSingleton<IGitRepoCloner, GitNativeRepoCloner>();
+                // LibGit2Sharp-based git client
+                services.AddSingleton<ILocalLibGit2Client, LocalLibGit2Client>();
+                services.AddSingleton<ILocalGitRepoFactory, LocalGitRepoFactory>();
+
                 // LocalGitClient wants a non-generic ILogger, for some reason.
                 services.AddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
 
+                // Our own Git client abstraction
+                services.AddSingleton<GitRepoHelperFactory>();
 
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
 

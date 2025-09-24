@@ -6,16 +6,18 @@ using System.CommandLine;
 
 namespace Dotnet.Docker.Sync;
 
-public sealed class SyncInternalReleaseOptions : IOptions
+public sealed record SyncInternalReleaseOptions : IOptions
 {
+    public string RemoteUrl { get; set; } = string.Empty;
     public string SourceBranch { get; set; } = string.Empty;
+    public string TargetBranch { get; set; } = string.Empty;
 
     public static List<Option> Options => [];
 
-    public static List<Argument> Arguments => [
-        new Argument<string>("source-branch")
-        {
-            Description = "The source branch to sync from. Must match the currently checked out branch."
-        },
+    public static List<Argument> Arguments =>
+    [
+        new Argument<string>("remote-url"),
+        new Argument<string>("source-branch"),
+        new Argument<string>("target-branch"),
     ];
 }
