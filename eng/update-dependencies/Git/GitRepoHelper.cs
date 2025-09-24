@@ -285,24 +285,3 @@ public sealed class GitRepoHelper(
             .Distinct();
     }
 }
-
-/// <summary>
-/// Represents information about a Git remote repository.
-/// </summary>
-/// <param name="Name">The name of the remote (e.g., "origin").</param>
-/// <param name="Url">The URL of the remote repository.</param>
-public record GitRemoteInfo(string Name, string Url);
-
-/// <summary>
-/// Contains information needed to create a pull request.
-/// </summary>
-/// <param name="Title">The title of the pull request.</param>
-/// <param name="Body">The description/body of the pull request.</param>
-/// <param name="BaseBranch">The target branch that changes will be merged into.</param>
-/// <param name="HeadBranch">The source branch containing the changes.</param>
-public record PullRequestCreationInfo(string Title, string Body, string BaseBranch, string HeadBranch);
-
-/// <summary>
-/// Represents an existing pull request.
-/// </summary>
-public record ExistingPullRequest();
