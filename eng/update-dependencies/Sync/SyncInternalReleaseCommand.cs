@@ -8,6 +8,16 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Sync;
 
+/// <summary>
+/// This command is intended to update the state of an internal/release/* branch with the state of
+/// the corresponding release/* branch. It does so by submitting pull requests to update the
+/// internal/release/* branch with the latest changes to the release/* branch.
+/// </summary>
+/// <remarks>
+/// To be "in sync" means that the content of both branches is identical, except that the
+/// internal/release/* branch may contain .NET versions that are not yet publicly available.
+/// "In sync" does not necessarily mean that the commit SHAs of both branches are identical.
+/// </remarks>
 public sealed class SyncInternalReleaseCommand(
     IGitRepoHelperFactory gitRepoHelperFactory,
     ILogger<SyncInternalReleaseCommand> logger
