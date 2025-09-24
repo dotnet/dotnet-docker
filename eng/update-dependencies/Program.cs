@@ -60,13 +60,11 @@ config.UseHost(
             {
                 logging.ClearProviders();
                 logging.AddSimpleConsole(options =>
-                    {
-                        options.IncludeScopes = true;
-                        options.SingleLine = true;
-                    }
-                );
-            }
-        )
+                {
+                    options.IncludeScopes = true;
+                    options.SingleLine = true;
+                });
+            })
         .ConfigureServices(services =>
             {
 
