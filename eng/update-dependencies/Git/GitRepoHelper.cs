@@ -132,9 +132,6 @@ public sealed class GitRepoHelper(
 
     private readonly ILogger<GitRepoHelper> _logger = logger;
 
-    // Keep track of changes made to the local repository that have not been pushed to the remote.
-    private readonly List<UnsyncedChange> _unsyncedChanges = [];
-
     private readonly string _repoUri = remoteRepoUrl;
 
     /// <inheritdoc />
@@ -156,8 +153,6 @@ public sealed class GitRepoHelper(
 
         _logger.LogInformation("Creating branch {BranchName} locally", branchName);
         await _localGitRepo.CreateBranchAsync(branchName, overwriteExistingBranch: false);
-
-        _unsyncedChanges.Add(new UnsyncedChange(ChangeType.NewBranch, branchName));
     }
 
     /// <inheritdoc />
@@ -211,7 +206,6 @@ public sealed class GitRepoHelper(
     public async Task StageAsync(params IEnumerable<string> paths)
     {
         await _localGitRepo.StageAsync(paths);
-        _unsyncedChanges.Add(new UnsyncedChange(ChangeType.StagedFiles, string.Join(", ", paths)));
     }
 
     /// <inheritdoc />
@@ -219,11 +213,6 @@ public sealed class GitRepoHelper(
     {
         await _localGitRepo.CommitAsync(message, allowEmpty: false, author);
         var commitSha = await _localGitRepo.GetShaForRefAsync("HEAD");
-
-        // All staged changes were committed, so they can be removed from the change list
-        _unsyncedChanges.RemoveAll(change => change.Type == ChangeType.StagedFiles);
-        _unsyncedChanges.Add(new UnsyncedChange(ChangeType.Commit, commitSha));
-
         return commitSha;
     }
 
@@ -264,15 +253,6 @@ public sealed class GitRepoHelper(
     {
         _logger.LogInformation("Cleaning up repo in {LocalPath}", LocalPath);
 
-        if (_unsyncedChanges.Count > 0)
-        {
-            _logger.LogWarning(
-                "There are unsynced changes in the repository for {RepoUri}: {UnsyncedChanges}",
-                _repoUri,
-                string.Join(", ", _unsyncedChanges.Select(change => change.ToString()))
-            );
-        }
-
         try
         {
             if (Directory.Exists(LocalPath))
@@ -303,15 +283,6 @@ public sealed class GitRepoHelper(
             .Select(parts => new GitRemoteInfo(parts[0], parts[1]))
             // There are typically two entries per remote (fetch and push); we only want one
             .Distinct();
-    }
-
-    private sealed record UnsyncedChange(ChangeType Type, string Description);
-
-    private enum ChangeType
-    {
-        NewBranch,
-        StagedFiles,
-        Commit,
     }
 }
 
