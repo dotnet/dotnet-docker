@@ -40,10 +40,16 @@ public sealed class SyncInternalReleaseIntegrationTests
     /// <summary>
     /// If the currently checked out branch is an internal branch (i.e. "internal/foo"), the command should fail.
     /// </summary>
-    // [Fact]
+    [Fact]
     public async Task InternalSourceBranchFails()
     {
-        throw new NotImplementedException();
+        var options = DefaultOptions with { SourceBranch = ArbitraryInternalBranch };
+
+        var command = new SyncInternalReleaseCommand(
+            Mock.Of<IGitRepoHelperFactory>(),
+            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+
+        await Should.ThrowAsync<IncorrectBranchException>(() => command.ExecuteAsync(options));
     }
 
     /// <summary>

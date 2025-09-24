@@ -2,10 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Dotnet.Docker.Git;
-using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Sync;
@@ -23,6 +21,13 @@ public sealed class SyncInternalReleaseCommand(
         ArgumentException.ThrowIfNullOrWhiteSpace(options.RemoteUrl);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.TargetBranch);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.SourceBranch);
+
+        // Do not allow syncing starting from an internal branch.
+        if (options.SourceBranch.StartsWith("internal/", StringComparison.OrdinalIgnoreCase))
+        {
+            throw new IncorrectBranchException(
+                $"The source branch '{options.SourceBranch}' cannot be an internal branch.");
+        }
 
         using var repo = await _gitRepoHelperFactory.CreateAsync(options.RemoteUrl);
 
