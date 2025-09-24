@@ -105,31 +105,4 @@ public sealed class SyncInternalReleaseIntegrationTests
     {
         throw new NotImplementedException();
     }
-
-    /// <summary>
-    /// Creates a temporary Git repository, applies the specified setup actions, and returns the configured repository
-    /// instance.
-    /// </summary>
-    /// <remarks>
-    /// The caller is responsible for disposing the returned <see cref="TempRepo"/> instance when it is no longer
-    /// needed. The temporary repository is created in the system's temporary directory and will be deleted when the
-    /// TempRepo is disposed.
-    /// </remarks>
-    /// <param name="name">
-    /// The name to use for the temporary repository directory. This value is appended to a randomly generated path.
-    /// </param>
-    /// <param name="setup">
-    /// A delegate that performs setup actions on the newly created local Git repository.
-    /// </param>
-    /// <returns>
-    /// A <see cref="TempRepo"/> instance representing the configured repository.
-    /// </returns>
-    private static async Task<TempRepo> SetupScenarioAsync(string name, Func<ILocalGitRepo, Task> setup)
-    {
-        var tempRepoPath = Path.Join(Path.GetTempPath(), Path.GetRandomFileName(), name);
-        var tempRepo = new TempRepo(tempRepoPath);
-
-        await setup(tempRepo.DirectGitRepo);
-        return tempRepo;
-    }
 }
