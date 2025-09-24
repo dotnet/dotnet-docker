@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
 
-public sealed class SyncInternalReleaseIntegrationTests
+public sealed class SyncInternalReleaseTests
 {
     private const string MainBranch = "main";
     private const string ReleaseBranch = "release/1";
