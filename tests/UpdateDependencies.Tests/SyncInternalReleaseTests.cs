@@ -28,16 +28,6 @@ public sealed class SyncInternalReleaseTests
     };
 
     /// <summary>
-    /// If the argument passed in <see cref="SyncInternalReleaseOptions.SourceBranch"/> does not match the currently
-    /// checked out branch, the command should fail.
-    /// </summary>
-    // [Fact]
-    public async Task SourceBranchMismatchFails()
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
     /// If the currently checked out branch is an internal branch (i.e. "internal/foo"), the command should fail.
     /// </summary>
     [Fact]
