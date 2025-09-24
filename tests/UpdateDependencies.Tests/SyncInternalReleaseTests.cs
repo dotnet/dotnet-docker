@@ -9,7 +9,6 @@ namespace UpdateDependencies.Tests;
 
 public sealed class SyncInternalReleaseTests
 {
-    private const string MainBranch = "main";
     private const string ReleaseBranch = "release/1";
     private const string InternalReleaseBranch = $"internal/{ReleaseBranch}";
     private const string ArbitraryInternalBranch = "internal/foo";
@@ -105,24 +104,5 @@ public sealed class SyncInternalReleaseTests
         exitCode.ShouldBe(0);
         // Command should not have done anything else that we didn't expect.
         repoMock.VerifyAll();
-    }
-
-    /// <summary>
-    /// If the internal release branch already exists, and it is behind the release branch, it should be
-    /// fast-forwarded to match the release branch.
-    /// </summary>
-    // [Fact]
-    public async Task FastForwardInternalBranch()
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <summary>
-    /// If the source and destination branches have diverged, then the command should fail.
-    /// </summary>
-    // [Fact]
-    public async Task DivergingBranchesFails()
-    {
-        throw new NotImplementedException();
     }
 }
