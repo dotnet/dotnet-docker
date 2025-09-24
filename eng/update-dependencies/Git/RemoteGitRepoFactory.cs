@@ -7,15 +7,25 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Dotnet.Docker.Git;
 
+/// <summary>
+/// Factory for creating <see cref="IRemoteGitRepo"/> instances based on repository URLs.
+/// </summary>
 public interface IRemoteGitRepoFactory
 {
+    /// <summary>
+    /// Creates a remote Git repository client appropriate for the given repository URL.
+    /// </summary>
+    /// <param name="repoUrl">The URL of the remote repository.</param>
+    /// <returns>A configured <see cref="IRemoteGitRepo"/> instance.</returns>
     IRemoteGitRepo CreateRemoteGitRepo(string repoUrl);
 }
 
+/// <inheritdoc />
 public sealed class RemoteGitRepoFactory(IServiceProvider serviceProvider) : IRemoteGitRepoFactory
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
+    /// <inheritdoc />
     public IRemoteGitRepo CreateRemoteGitRepo(string remoteUrl)
     {
         var gitRemoteKind = ParseGitRemoteFromUrl(remoteUrl);
@@ -28,6 +38,11 @@ public sealed class RemoteGitRepoFactory(IServiceProvider serviceProvider) : IRe
         };
     }
 
+    /// <summary>
+    /// Determines the type of Git remote (GitHub, Azure DevOps, etc.) from a repository URL.
+    /// </summary>
+    /// <param name="repoUrl">The repository URL to parse.</param>
+    /// <returns>The type of Git remote, or <see cref="GitRemote.None"/> if not supported.</returns>
     private static GitRemote ParseGitRemoteFromUrl(string repoUrl)
     {
         if (!Uri.TryCreate(repoUrl, UriKind.RelativeOrAbsolute, out Uri? parsedUri))

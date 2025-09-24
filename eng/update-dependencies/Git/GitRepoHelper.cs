@@ -13,23 +13,105 @@ namespace Dotnet.Docker.Git;
 
 public interface IGitRepoHelper : IDisposable
 {
+    /// <summary>
+    /// The local path where the repository is cloned.
+    /// </summary>
     string LocalPath { get; }
 
+    /// <summary>
+    /// Checks if a branch exists on the remote repository.
+    /// </summary>
     Task<bool> RemoteBranchExistsAsync(string branchName);
+
+    /// <summary>
+    /// Checks out a remote branch locally.
+    /// </summary>
     Task CheckoutRemoteBranchAsync(string branchName);
+
+    /// <summary>
+    /// Commits all staged changes to the current branch.
+    /// </summary>
+    /// <param name="message">The commit message.</param>
+    /// <param name="author">The author information (name and email).</param>
+    /// <returns>The SHA of the created commit.</returns>
     Task<string> CommitAsync(string message, (string Name, string Email) author);
+
+    /// <summary>
+    /// Create a new local branch. This does not push the branch to the remote.
+    /// The branch will be based off of the currently checked out branch.
+    /// </summary>
     Task CreateAndCheckoutLocalBranchAsync(string branchName);
+
+    /// <summary>
+    /// Create a new branch in the remote repository. The <see cref="newBranch"/>
+    /// will be based off of the <see cref="baseBranch"/>.
+    /// </summary>
+    /// <param name="newBranch">
+    /// This branch will be created on the remote repository.
+    /// </param>
+    /// <param name="baseBranch">
+    /// The base branch must already exist on the remote repository.
+    /// </param>
     Task CreateRemoteBranchAsync(string newBranch, string baseBranch);
+
+    /// <summary>
+    /// Create a pull request in the remote repository.
+    /// </summary>
+    /// <param name="request">
+    /// Information about the pull request to create. The <see cref="PullRequestCreationInfo.HeadBranch"/> and
+    /// <see cref="PullRequestCreationInfo.BaseBranch"/> must both already exist on the remote.
+    /// </param>
+    /// <returns>
+    /// Pull request API URL.
+    /// </returns>
     Task<string> CreatePullRequestAsync(PullRequestCreationInfo request);
+
+    /// <summary>
+    /// Gets the name of the currently checked out branch.
+    /// </summary>
+    /// <returns>The name of the current branch.</returns>
     Task<string> GetCurrentBranchAsync();
+
+    /// <summary>
+    /// Gets information about a pull request from its URL.
+    /// </summary>
+    /// <param name="pullRequestUrl">The URL of the pull request.</param>
+    /// <returns>Pull request information.</returns>
     Task<PullRequest> GetPullRequestInfoAsync(string pullRequestUrl);
+
+    /// <summary>
+    /// Get the commit SHA of a branch that exists locally.
+    /// </summary>
+    /// <returns>
+    /// The commit SHA, or null if the branch doesn't exist locally.
+    /// </returns>
     Task<string?> GetLocalBranchShaAsync(string branch);
+
+    /// <summary>
+    /// Gets the commit SHA of a remote branch.
+    /// </summary>
+    /// <param name="branch">The name of the remote branch.</param>
+    /// <returns>
+    /// The commit SHA, or null if the branch doesn't exist on the remote.
+    /// </returns>
     Task<string?> GetRemoteBranchShaAsync(string branch);
+
+    /// <summary>
+    /// Push a local branch to the specified remote.
+    /// </summary>
+    /// <param name="branchName">A local branch that already exists.</param>
     Task PushLocalBranchAsync(string branchName);
+
+    /// <summary>
+    /// Adds local files to the index/staging area
+    /// </summary>
+    /// <param name="paths">The file paths to stage.</param>
     Task StageAsync(params IEnumerable<string> paths);
-    Task UpdateRefAsync(string gitRef, string commit);
 }
 
+/// <remarks>
+/// Use <see cref="IGitRepoHelperFactory"/> to instantiate this.
+/// </remarks>
 public sealed class GitRepoHelper(
     string remoteRepoUrl,
     string localPath,
@@ -50,21 +132,18 @@ public sealed class GitRepoHelper(
 
     private readonly ILogger<GitRepoHelper> _logger = logger;
 
-    /// <summary>
-    /// Keep track of changes made to the local repository that have not been pushed to the remote.
-    /// </summary>
+    // Keep track of changes made to the local repository that have not been pushed to the remote.
     private readonly List<UnsyncedChange> _unsyncedChanges = [];
 
     private readonly string _repoUri = remoteRepoUrl;
 
+    /// <inheritdoc />
     public string LocalPath { get; } = localPath;
 
+    /// <inheritdoc />
     public Task<string> GetCurrentBranchAsync() => _localGitRepo.GetCheckedOutBranchAsync();
 
-    /// <summary>
-    /// Create a new local branch. This does not push the branch to the remote.
-    /// The branch will be based off of the currently checked out branch.
-    /// </summary>
+    /// <inheritdoc />
     public async Task CreateAndCheckoutLocalBranchAsync(string branchName)
     {
         var branchExists = await _remoteGitRepo.DoesBranchExistAsync(_repoUri, branchName);
@@ -81,16 +160,7 @@ public sealed class GitRepoHelper(
         _unsyncedChanges.Add(new UnsyncedChange(ChangeType.NewBranch, branchName));
     }
 
-    /// <summary>
-    /// Create a new branch in the remote repository. The <see cref="newBranch"/>
-    /// will be based off of the <see cref="baseBranch"/>.
-    /// </summary>
-    /// <param name="newBranch">
-    /// This branch will be created on the remote repository.
-    /// </param>
-    /// <param name="baseBranch">
-    /// The base branch must already exist on the remote repository.
-    /// </param>
+    /// <inheritdoc />
     public Task CreateRemoteBranchAsync(string newBranch, string baseBranch)
     {
         _logger.LogInformation(
@@ -100,9 +170,7 @@ public sealed class GitRepoHelper(
         return _remoteGitRepo.CreateBranchAsync(_repoUri, newBranch, baseBranch);
     }
 
-    /// <summary>
-    /// Checkout a remote branch locally.
-    /// </summary>
+    /// <inheritdoc />
     public async Task CheckoutRemoteBranchAsync(string branchName)
     {
         var currentBranch = await _localGitRepo.GetCheckedOutBranchAsync();
@@ -121,9 +189,7 @@ public sealed class GitRepoHelper(
         await _localGitRepo.CheckoutAsync(branchName);
     }
 
-    /// <summary>
-    /// Get the commit SHA of a branch that exists locally.
-    /// </summary>
+    /// <inheritdoc />
     public async Task<string?> GetLocalBranchShaAsync(string branch)
     {
         try
@@ -137,15 +203,18 @@ public sealed class GitRepoHelper(
         }
     }
 
+    /// <inheritdoc />
     public Task<string?> GetRemoteBranchShaAsync(string branch) =>
         _remoteGitRepo.GetLastCommitShaAsync(_repoUri, branch);
 
+    /// <inheritdoc />
     public async Task StageAsync(params IEnumerable<string> paths)
     {
         await _localGitRepo.StageAsync(paths);
         _unsyncedChanges.Add(new UnsyncedChange(ChangeType.StagedFiles, string.Join(", ", paths)));
     }
 
+    /// <inheritdoc />
     public async Task<string> CommitAsync(string message, (string Name, string Email) author)
     {
         await _localGitRepo.CommitAsync(message, allowEmpty: false, author);
@@ -158,32 +227,7 @@ public sealed class GitRepoHelper(
         return commitSha;
     }
 
-    private async Task<IEnumerable<GitRemoteInfo>> ListAllRemotesAsync()
-    {
-        var remotesOutput = await _localGitRepo.ExecuteGitCommand("remote", "-v");
-
-        /* Example output of `git remote -v`:
-        origin  https://github.com/dotnet/runtime (fetch)
-        origin  https://github.com/dotnet/runtime (push)
-        */
-
-        return remotesOutput.GetOutputLines()
-            .Select(line =>
-                line.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
-            .Select(parts => new GitRemoteInfo(parts[0], parts[1]))
-            // There are typically two entries per remote (fetch and push); we only want one
-            .Distinct();
-    }
-
-    /// <summary>
-    /// Push a local branch to the specified remote.
-    /// </summary>
-    /// <param name="branchName">
-    /// A local branch that already exists.
-    /// </param>
-    /// <param name="remote">
-    /// The local branch will be pushed to this remote.
-    /// </param>
+    /// <inheritdoc />
     public async Task PushLocalBranchAsync(string branchName)
     {
         // Get all remotes and find the one that matches the target repo.
@@ -194,16 +238,7 @@ public sealed class GitRepoHelper(
         await _libGit2Client.Push(LocalPath, branchName, targetRemote.Url);
     }
 
-    /// <summary>
-    /// Create a pull request in the remote repository.
-    /// </summary>
-    /// <param name="request">
-    /// Information about the pull request to create. The <see cref="PullRequestCreationInfo.HeadBranch"/> and
-    /// <see cref="PullRequestCreationInfo.BaseBranch"/> must both already exist on the remote.
-    /// </param>
-    /// <returns>
-    /// Pull request API URL.
-    /// </returns>
+    /// <inheritdoc />
     public Task<string> CreatePullRequestAsync(PullRequestCreationInfo request)
     {
         var darcPullRequest = new PullRequest
@@ -217,11 +252,13 @@ public sealed class GitRepoHelper(
         return _remoteGitRepo.CreatePullRequestAsync(_repoUri, darcPullRequest);
     }
 
+    /// <inheritdoc />
     public Task<PullRequest> GetPullRequestInfoAsync(string pullRequestUrl) =>
         _remoteGitRepo.GetPullRequestAsync(pullRequestUrl);
 
-    public Task UpdateRefAsync(string gitRef, string commit) =>
-        _localGitRepo.ExecuteGitCommand("update-ref", gitRef, commit);
+    /// <inheritdoc />
+    public Task<bool> RemoteBranchExistsAsync(string branchName) =>
+        _remoteGitRepo.DoesBranchExistAsync(_repoUri, branchName);
 
     public void Dispose()
     {
@@ -251,8 +288,22 @@ public sealed class GitRepoHelper(
         }
     }
 
-    public Task<bool> RemoteBranchExistsAsync(string branchName) =>
-        _remoteGitRepo.DoesBranchExistAsync(_repoUri, branchName);
+    private async Task<IEnumerable<GitRemoteInfo>> ListAllRemotesAsync()
+    {
+        var remotesOutput = await _localGitRepo.ExecuteGitCommand("remote", "-v");
+
+        /* Example output of `git remote -v`:
+        origin  https://github.com/dotnet/runtime (fetch)
+        origin  https://github.com/dotnet/runtime (push)
+        */
+
+        return remotesOutput.GetOutputLines()
+            .Select(line =>
+                line.Split([' ', '\t'], StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries))
+            .Select(parts => new GitRemoteInfo(parts[0], parts[1]))
+            // There are typically two entries per remote (fetch and push); we only want one
+            .Distinct();
+    }
 
     private sealed record UnsyncedChange(ChangeType Type, string Description);
 
@@ -264,6 +315,23 @@ public sealed class GitRepoHelper(
     }
 }
 
+/// <summary>
+/// Represents information about a Git remote repository.
+/// </summary>
+/// <param name="Name">The name of the remote (e.g., "origin").</param>
+/// <param name="Url">The URL of the remote repository.</param>
 public record GitRemoteInfo(string Name, string Url);
+
+/// <summary>
+/// Contains information needed to create a pull request.
+/// </summary>
+/// <param name="Title">The title of the pull request.</param>
+/// <param name="Body">The description/body of the pull request.</param>
+/// <param name="BaseBranch">The target branch that changes will be merged into.</param>
+/// <param name="HeadBranch">The source branch containing the changes.</param>
 public record PullRequestCreationInfo(string Title, string Body, string BaseBranch, string HeadBranch);
+
+/// <summary>
+/// Represents an existing pull request.
+/// </summary>
 public record ExistingPullRequest();
