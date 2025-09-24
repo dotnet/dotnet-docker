@@ -31,8 +31,13 @@ public sealed class SyncInternalReleaseCommand(
 
         using var repo = await _gitRepoHelperFactory.CreateAsync(options.RemoteUrl);
 
-        var currentBranch = await repo.GetCurrentBranchAsync();
-        _logger.LogInformation("Current branch is {CurrentBranch}", currentBranch);
+        // Verify that the source branch exists on the remote.
+        var sourceBranchExists = await repo.RemoteBranchExistsAsync(options.SourceBranch);
+        if (!sourceBranchExists)
+        {
+            throw new InvalidOperationException(
+                $"The source branch '{options.SourceBranch}' does not exist on the remote repository.");
+        }
 
         // If the target branch doesn't exist, then create it based on the source branch.
         var targetBranchExists = await repo.RemoteBranchExistsAsync(options.TargetBranch);
@@ -41,10 +46,20 @@ public sealed class SyncInternalReleaseCommand(
             await repo.CreateRemoteBranchAsync(
                 newBranch: options.TargetBranch,
                 baseBranch: options.SourceBranch);
-
             return 0;
         }
 
-        return 0;
+        // If both branches are at the same commit, then there is nothing to do.
+        var sourceSha = await repo.GetRemoteBranchShaAsync(options.SourceBranch);
+        var targetSha = await repo.GetRemoteBranchShaAsync(options.TargetBranch);
+        if (sourceSha == targetSha)
+        {
+            _logger.LogInformation(
+                "The source branch '{SourceBranch}' and target branch '{TargetBranch}' are already in sync.",
+                options.SourceBranch, options.TargetBranch);
+            return 0;
+        }
+
+        throw new NotImplementedException("Scenario is not yet implemented.");
     }
 }

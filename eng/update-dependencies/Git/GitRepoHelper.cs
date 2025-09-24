@@ -23,7 +23,8 @@ public interface IGitRepoHelper : IDisposable
     Task<string> CreatePullRequestAsync(PullRequestCreationInfo request);
     Task<string> GetCurrentBranchAsync();
     Task<PullRequest> GetPullRequestInfoAsync(string pullRequestUrl);
-    Task<string?> GetShaForBranchAsync(string branch);
+    Task<string?> GetLocalBranchShaAsync(string branch);
+    Task<string?> GetRemoteBranchShaAsync(string branch);
     Task PushLocalBranchAsync(string branchName);
     Task StageAsync(params IEnumerable<string> paths);
     Task UpdateRefAsync(string gitRef, string commit);
@@ -102,9 +103,6 @@ public sealed class GitRepoHelper(
     /// <summary>
     /// Checkout a remote branch locally.
     /// </summary>
-    /// <exception cref="InvalidOperationException">
-    ///
-    /// </exception>
     public async Task CheckoutRemoteBranchAsync(string branchName)
     {
         var currentBranch = await _localGitRepo.GetCheckedOutBranchAsync();
@@ -123,7 +121,10 @@ public sealed class GitRepoHelper(
         await _localGitRepo.CheckoutAsync(branchName);
     }
 
-    public async Task<string?> GetShaForBranchAsync(string branch)
+    /// <summary>
+    /// Get the commit SHA of a branch that exists locally.
+    /// </summary>
+    public async Task<string?> GetLocalBranchShaAsync(string branch)
     {
         try
         {
@@ -135,6 +136,9 @@ public sealed class GitRepoHelper(
             return null;
         }
     }
+
+    public Task<string?> GetRemoteBranchShaAsync(string branch) =>
+        _remoteGitRepo.GetLastCommitShaAsync(_repoUri, branch);
 
     public async Task StageAsync(params IEnumerable<string> paths)
     {
