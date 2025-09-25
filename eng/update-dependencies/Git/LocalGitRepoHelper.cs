@@ -35,17 +35,17 @@ public sealed class LocalGitRepoHelper(
     /// <inheritdoc />
     public Task CheckoutBranchAsync(string branchName)
     {
-        var branchRef = BranchToRef(branchName);
+        var branchRef = $"refs/heads/{branchName}";
         _logger.LogInformation("Checking out ref {BranchRef}", branchRef);
         return _localGitRepo.CheckoutAsync(branchRef);
     }
 
     /// <inheritdoc />
-    public async Task<string?> GetLocalBranchShaAsync(string branch)
+    public async Task<string?> GetShaForRefAsync(string gitRef)
     {
         try
         {
-            var result = await _localGitRepo.GetShaForRefAsync($"refs/heads/{branch}");
+            var result = await _localGitRepo.GetShaForRefAsync(gitRef);
             return result;
         }
         catch
@@ -69,10 +69,10 @@ public sealed class LocalGitRepoHelper(
     }
     
     /// <inheritdoc />
-    public async Task<bool> IsBranchAncestorAsync(string ancestorBranch, string descendantBranch)
+    public async Task<bool> IsAncestorAsync(string ancestorRef, string descendantRef)
     {
-        var ancestorCommit = await GetLocalBranchShaAsync(ancestorBranch);
-        var descendantCommit = await GetLocalBranchShaAsync(descendantBranch);
+        var ancestorCommit = await GetShaForRefAsync(ancestorRef);
+        var descendantCommit = await GetShaForRefAsync(descendantRef);
 
         if (ancestorCommit is null || descendantCommit is null)
         {

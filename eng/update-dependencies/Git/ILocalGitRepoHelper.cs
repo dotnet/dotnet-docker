@@ -45,7 +45,7 @@ public interface ILocalGitRepoHelper
     /// <returns>
     /// The commit SHA, or null if the branch doesn't exist locally.
     /// </returns>
-    Task<string?> GetLocalBranchShaAsync(string branch);
+    Task<string?> GetShaForRefAsync(string gitRef);
 
     /// <summary>
     /// Adds local files to the index/staging area
@@ -54,16 +54,16 @@ public interface ILocalGitRepoHelper
     Task StageAsync(params IEnumerable<string> paths);
 
     /// <summary>
-    /// Determines whether <paramref name="ancestorBranch"/> is an ancestor of
-    /// <paramref name="descendantBranch"/> in the remote repository.
+    /// Determines whether <paramref name="ancestorRef"/> is an ancestor of
+    /// <paramref name="descendantRef"/> in the local repository.
     /// </summary>
-    /// <param name="ancestorBranch">Branch that exists locally or on the remote.</param>
-    /// <param name="descendantBranch">Branch that exists locally or on the remote.</param>
+    /// <param name="ancestorRef">Ref that exists locally.</param>
+    /// <param name="descendantRef">Ref that exists locally.</param>
     /// <returns>
-    /// True if <paramref name="ancestorBranch"/>'s current commit is in the
-    /// history of <paramref name="descendantBranch"/>.
+    /// True if <paramref name="ancestorRef"/>'s current commit is in the
+    /// history of <paramref name="descendantRef"/>.
     /// </returns>
-    Task<bool> IsBranchAncestorAsync(string ancestorBranch, string descendantBranch);
+    Task<bool> IsAncestorAsync(string ancestorRef, string descendantRef);
 
     /// <summary>
     /// List all remotes for the local repository.
