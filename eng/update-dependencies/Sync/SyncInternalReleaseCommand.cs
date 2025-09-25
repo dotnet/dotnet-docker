@@ -59,14 +59,27 @@ public sealed class SyncInternalReleaseCommand(
             return 0;
         }
 
-        // If both branches are at the same commit, then there is nothing to do.
         var sourceSha = await repo.GetRemoteBranchShaAsync(options.SourceBranch);
         var targetSha = await repo.GetRemoteBranchShaAsync(options.TargetBranch);
+
+        // If both branches are at the same commit, then there is nothing to do.
         if (sourceSha == targetSha)
         {
             _logger.LogInformation(
                 "The source branch '{SourceBranch}' and target branch '{TargetBranch}' are already in sync.",
                 options.SourceBranch, options.TargetBranch);
+            return 0;
+        }
+
+        // Determine if the target branch is an ancestor of the source branch.
+        // If so, then we can submit a fast-forward/merge pull request.
+        var targetIsAncestorOfSource = await repo.IsBranchAncestorAsync(
+            ancestorBranch: options.TargetBranch,
+            descendantBranch: options.SourceBranch);
+
+        if (targetIsAncestorOfSource)
+        {
+            // TODO: Implement fast-forward/merge PR logic.
             return 0;
         }
 

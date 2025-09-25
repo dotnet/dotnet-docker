@@ -137,5 +137,32 @@ public sealed class SyncInternalReleaseTests
     [Fact]
     public async Task FastForward()
     {
+        var options = s_defaultOptions;
+
+        // Strict mock behavior ensures that no extra calls are made that are
+        // not explicitly set up in this test.
+        var repoMock = new Mock<IGitRepoHelper>();
+        var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
+        repoFactoryMock.Setup(f => f.CreateAsync(options.RemoteUrl)).ReturnsAsync(repoMock.Object);
+
+        // Setup: Both target and source branches exist on remote.
+        repoMock.Setup(r => r.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
+        repoMock.Setup(r => r.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
+
+        // They point to different commits. The target branch is behind the source branch.
+        const string OldSha = "0000000000000000000000000000000000000001";
+        const string NewSha = "0000000000000000000000000000000000000002";
+        repoMock.Setup(r => r.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(OldSha);
+        repoMock.Setup(r => r.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(NewSha);
+        repoMock.Setup(r => r.IsBranchAncestorAsync(options.TargetBranch, options.SourceBranch))
+            .ReturnsAsync(true);
+
+        var command = new SyncInternalReleaseCommand(
+            repoFactoryMock.Object,
+            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+
+        // Command should succeed.
+        var exitCode = await command.ExecuteAsync(options);
+        exitCode.ShouldBe(0);
     }
 }

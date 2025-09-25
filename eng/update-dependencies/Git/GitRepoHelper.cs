@@ -110,6 +110,18 @@ public interface IGitRepoHelper : IDisposable
     /// </summary>
     /// <param name="paths">The file paths to stage.</param>
     Task StageAsync(params IEnumerable<string> paths);
+
+    /// <summary>
+    /// Determines whether <paramref name="ancestorBranch"/> is an ancestor of
+    /// <paramref name="descendantBranch"/> in the remote repository.
+    /// </summary>
+    /// <param name="ancestorBranch">Branch that exists locally or on the remote.</param>
+    /// <param name="descendantBranch">Branch that exists locally or on the remote.</param>
+    /// <returns>
+    /// True if <paramref name="ancestorBranch"/>'s current commit is in the
+    /// history of <paramref name="descendantBranch"/>.
+    /// </returns>
+    Task<bool> IsBranchAncestorAsync(string ancestorBranch, string descendantBranch);
 }
 
 /// <remarks>
@@ -252,6 +264,23 @@ public sealed class GitRepoHelper(
     /// <inheritdoc />
     public Task<bool> RemoteBranchExistsAsync(string branchName) =>
         _remoteGitRepo.DoesBranchExistAsync(_repoUri, branchName);
+    
+    /// <inheritdoc />
+    public async Task<bool> IsBranchAncestorAsync(string ancestorBranch, string descendantBranch)
+    {
+        await _localGitRepo.FetchAllAsync([_repoUri]);
+
+        var ancestorCommit = await GetLocalBranchShaAsync(ancestorBranch);
+        var descendantCommit = await GetLocalBranchShaAsync(descendantBranch);
+
+        if (ancestorCommit is null || descendantCommit is null)
+        {
+            return false;
+        }
+
+        var isAncestor = await _localGitRepo.IsAncestorCommit(ancestorCommit, descendantCommit);
+        return isAncestor;
+    }
 
     public void Dispose()
     {
