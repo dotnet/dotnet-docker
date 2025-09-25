@@ -129,4 +129,13 @@ public sealed class SyncInternalReleaseTests
         // Command should not have done anything else that we didn't expect.
         repoMock.VerifyAll();
     }
+
+    /// <summary>
+    /// If the target branch is a direct ancestor of source branch, then we
+    /// should submit a pull request containing the missing commits.
+    /// </summary>
+    [Fact]
+    public async Task FastForward()
+    {
+    }
 }
