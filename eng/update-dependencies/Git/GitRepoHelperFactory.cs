@@ -40,13 +40,21 @@ public sealed class GitRepoHelperFactory(
             gitDirectory: null);
 
         var localGitRepo = _localGitRepoFactory.Create(new NativePath(localCloneDir));
-        var remoteGitRepo = _remoteFactory.CreateRemoteGitRepo(repoUri);
+        var localGitRepoHelper = new LocalGitRepoHelper(
+            localPath: localCloneDir,
+            localGitRepo: localGitRepo,
+            logger: _serviceProvider.GetRequiredService<ILogger<LocalGitRepoHelper>>());
+
+        var remoteGitRepoHelper = new RemoteGitRepoHelper(
+            repoUri,
+            _remoteFactory.CreateRemoteGitRepo(repoUri),
+            localGitRepo: localGitRepo,
+            logger: _serviceProvider.GetRequiredService<ILogger<RemoteGitRepoHelper>>());
 
         return new GitRepoHelper(
             remoteRepoUrl: repoUri,
-            localPath: localCloneDir,
-            localGitRepo: localGitRepo,
-            remoteGitRepo: remoteGitRepo,
+            localGitRepoHelper: localGitRepoHelper,
+            remoteGitRepoHelper: remoteGitRepoHelper,
             libGit2Client: _serviceProvider.GetRequiredService<ILocalLibGit2Client>(),
             logger: _serviceProvider.GetRequiredService<ILogger<GitRepoHelper>>());
     }
