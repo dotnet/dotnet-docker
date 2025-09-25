@@ -29,6 +29,26 @@ public sealed class SyncInternalReleaseTests
     };
 
     /// <summary>
+    /// Calling the command with null or whitespace for any of the arguments should fail.
+    /// </summary>
+    [Fact]
+    public async Task WhitespaceArgumentsFails()
+    {
+        var options = new SyncInternalReleaseOptions
+        {
+            RemoteUrl = "   ",
+            SourceBranch = "   ",
+            TargetBranch = "   "
+        };
+
+        var command = new SyncInternalReleaseCommand(
+            Mock.Of<IGitRepoHelperFactory>(),
+            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+
+        await Should.ThrowAsync<ArgumentException>(() => command.ExecuteAsync(options));
+    }
+
+    /// <summary>
     /// If the source branch is an internal branch (i.e. "internal/foo"), the command should fail.
     /// Internal branches should always be the target branch of a sync operation, never the source
     /// branch.
