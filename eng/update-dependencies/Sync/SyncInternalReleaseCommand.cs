@@ -42,7 +42,7 @@ public sealed class SyncInternalReleaseCommand(
         using var repo = await _gitRepoHelperFactory.CreateAsync(options.RemoteUrl);
 
         // Verify that the source branch exists on the remote.
-        var sourceBranchExists = await repo.RemoteBranchExistsAsync(options.SourceBranch);
+        var sourceBranchExists = await repo.Remote.RemoteBranchExistsAsync(options.SourceBranch);
         if (!sourceBranchExists)
         {
             throw new InvalidOperationException(
@@ -50,17 +50,17 @@ public sealed class SyncInternalReleaseCommand(
         }
 
         // If the target branch doesn't exist, then create it based on the source branch.
-        var targetBranchExists = await repo.RemoteBranchExistsAsync(options.TargetBranch);
+        var targetBranchExists = await repo.Remote.RemoteBranchExistsAsync(options.TargetBranch);
         if (!targetBranchExists)
         {
-            await repo.CreateRemoteBranchAsync(
+            await repo.Remote.CreateRemoteBranchAsync(
                 newBranch: options.TargetBranch,
                 baseBranch: options.SourceBranch);
             return 0;
         }
 
-        var sourceSha = await repo.GetRemoteBranchShaAsync(options.SourceBranch);
-        var targetSha = await repo.GetRemoteBranchShaAsync(options.TargetBranch);
+        var sourceSha = await repo.Remote.GetRemoteBranchShaAsync(options.SourceBranch);
+        var targetSha = await repo.Remote.GetRemoteBranchShaAsync(options.TargetBranch);
 
         // If both branches are at the same commit, then there is nothing to do.
         if (sourceSha == targetSha)
@@ -73,16 +73,50 @@ public sealed class SyncInternalReleaseCommand(
 
         // Determine if the target branch is an ancestor of the source branch.
         // If so, then we can submit a fast-forward/merge pull request.
-        var targetIsAncestorOfSource = await repo.IsBranchAncestorAsync(
-            ancestorBranch: options.TargetBranch,
-            descendantBranch: options.SourceBranch);
+        await repo.Remote.FetchAsync();
+
+        // We haven't pulled either branch into our working tree yet, so we
+        // reference them with the usual "refs/heads/..." prefix. Assume that
+        // both branches exist on the "origin" remote.
+        var targetIsAncestorOfSource = await repo.Local.IsAncestorAsync(
+            ancestorRef: $"origin/{options.TargetBranch}",
+            descendantRef: $"origin/{options.SourceBranch}");
 
         if (targetIsAncestorOfSource)
         {
-            // TODO: Implement fast-forward/merge PR logic.
+            _logger.LogInformation(
+                "Branch {TargetBranch} is an ancestor of {SourceBranch}",
+                options.TargetBranch, options.SourceBranch);
+
+            // "ff" here is an abbreviation for "fast-forward" - just want to keep branch names short
+            var pullRequestBranch = GetPrBranchName(action: "ff", options);
+
+            var pullRequestCreationInfo = new PullRequestCreationInfo(
+                Title: $"Fast-forward {options.TargetBranch} to {options.SourceBranch}",
+                Body: "",
+                BaseBranch: options.TargetBranch,
+                HeadBranch: pullRequestBranch);
+
+            await repo.Remote.CreateRemoteBranchAsync(newBranch: pullRequestBranch, baseBranch: options.SourceBranch);
+            var pullRequestApiUrl = await repo.Remote.CreatePullRequestAsync(pullRequestCreationInfo);
+            var pullRequestInfo = await repo.Remote.GetPullRequestInfoAsync(pullRequestApiUrl);
+
+            _logger.LogInformation(
+                "Created pull request {PrTitle} at {PrUrl}",
+                pullRequestInfo.Title, pullRequestApiUrl);
             return 0;
         }
 
+        _logger.LogInformation(
+            "Branch {TargetBranch} is not an ancestor of {SourceBranch}",
+            options.TargetBranch, options.SourceBranch);
+
         throw new NotImplementedException("Scenario is not yet implemented.");
+    }
+
+    private static string GetPrBranchName(string action, SyncInternalReleaseOptions options)
+    {
+        var sanitizedTargetBranch = options.TargetBranch.Replace('/', '-');
+        return $"{options.PrBranchPrefix}/{action}-{sanitizedTargetBranch}";
     }
 }
