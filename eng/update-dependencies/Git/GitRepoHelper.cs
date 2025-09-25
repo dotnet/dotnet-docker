@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.DotNet.DarcLib;
@@ -28,6 +30,8 @@ public sealed class GitRepoHelper(
     private readonly ILogger<GitRepoHelper> _logger = logger;
 
     private readonly string _repoUri = remoteRepoUrl;
+
+    private bool _disposed;
 
     /// <inheritdoc />
     public ILocalGitRepoHelper Local { get; } = localGitRepoHelper;
@@ -63,5 +67,33 @@ public sealed class GitRepoHelper(
 
         _logger.LogInformation("Pushing branch {BranchName} to remote {RemoteUrl}", branchName, targetRemote.Url);
         await _libGit2Client.Push(Local.LocalPath, branchName, targetRemote.Url);
+    }
+
+    public void Dispose()
+    {
+        if (_disposed)
+        {
+            return;
+        }
+
+        try
+        {
+            Directory.Delete(Local.LocalPath, recursive: true);
+        }
+        catch (DirectoryNotFoundException)
+        {
+            // Directory is already gone
+        }
+        catch (UnauthorizedAccessException)
+        {
+        }
+        catch (Exception e)
+        {
+            _logger.LogWarning(
+                "Failed to delete temporary directory {LocalPath}: {ExceptionMessage}",
+                Local.LocalPath, e.Message);
+        }
+
+        _disposed = true;
     }
 }

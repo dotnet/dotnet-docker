@@ -3,7 +3,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.DotNet.DarcLib;
@@ -15,7 +14,7 @@ public sealed class LocalGitRepoHelper(
     string localPath,
     ILocalGitRepo localGitRepo,
     ILogger<LocalGitRepoHelper> logger
-) : ILocalGitRepoHelper, IDisposable
+) : ILocalGitRepoHelper
 {
     private readonly ILocalGitRepo _localGitRepo = localGitRepo;
     private readonly ILogger<LocalGitRepoHelper> _logger = logger;
@@ -100,25 +99,4 @@ public sealed class LocalGitRepoHelper(
             // There are typically two entries per remote (fetch and push); we only want one
             .Distinct();
     }
-
-    public void Dispose()
-    {
-        _logger.LogInformation("Cleaning up repo in {LocalPath}", LocalPath);
-
-        try
-        {
-            if (Directory.Exists(LocalPath))
-            {
-                Directory.Delete(LocalPath, recursive: true);
-            }
-        }
-        catch (Exception e)
-        {
-            _logger.LogWarning(
-                "Failed to delete temporary directory {LocalPath}: {ExceptionMessage}",
-                LocalPath, e.Message);
-        }
-    }
-
-    private static string BranchToRef(string branch) => $"refs/heads/{branch}";
 }
