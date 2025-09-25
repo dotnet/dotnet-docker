@@ -121,13 +121,14 @@ public sealed class GitRepoHelper(
     ILogger<GitRepoHelper> logger
 ) : IGitRepoHelper
 {
-    // Process-based git client - use where possible
     private readonly ILocalGitRepo _localGitRepo = localGitRepo;
 
-    // Remote git client - use for pushing, creating pull requests, etc.
     private readonly IRemoteGitRepo _remoteGitRepo = remoteGitRepo;
 
-    // LibGit2Sharp-based git client - use only where _localGitRepo cannot be used, e.g for "push" operations
+    /// <summary>
+    /// Use this client for "push" operations only, all other local git
+    /// operations should use <see cref="_localGitRepo"/>.
+    /// </summary>
     private readonly ILocalLibGit2Client _libGit2Client = libGit2Client;
 
     private readonly ILogger<GitRepoHelper> _logger = logger;
