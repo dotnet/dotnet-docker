@@ -35,7 +35,7 @@ public sealed class SyncInternalReleaseCommand(
         // Do not allow syncing starting from an internal branch.
         if (options.SourceBranch.StartsWith("internal/", StringComparison.OrdinalIgnoreCase))
         {
-            throw new IncorrectBranchException(
+            throw new InvalidBranchException(
                 $"The source branch '{options.SourceBranch}' cannot be an internal branch.");
         }
 

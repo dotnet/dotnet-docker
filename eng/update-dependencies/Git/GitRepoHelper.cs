@@ -26,6 +26,9 @@ public interface IGitRepoHelper : IDisposable
     /// <summary>
     /// Checks out a remote branch locally.
     /// </summary>
+    /// <throws cref="InvalidBranchException">
+    /// Thrown if the branch does not exist on the remote.
+    /// </throws>
     Task CheckoutRemoteBranchAsync(string branchName);
 
     /// <summary>

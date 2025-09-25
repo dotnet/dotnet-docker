@@ -42,7 +42,7 @@ public sealed class SyncInternalReleaseTests
             Mock.Of<IGitRepoHelperFactory>(),
             Mock.Of<ILogger<SyncInternalReleaseCommand>>());
 
-        await Should.ThrowAsync<IncorrectBranchException>(() => command.ExecuteAsync(options));
+        await Should.ThrowAsync<InvalidBranchException>(() => command.ExecuteAsync(options));
     }
 
     /// <summary>
