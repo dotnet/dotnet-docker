@@ -27,7 +27,7 @@ hands them over to the `SpecificCommand` class to perform file updates. New
 features should only be added to the modern CLI front-end. `SpecificCommand`
 will be removed/re-implemented eventually since it is tightly coupled to an
 unsupported package dependency (`Microsoft.DotNet.VersionTools.Automation` -
-removal tracked by https://github.com/dotnet/docker-tools/issues/1658).
+removal tracked by [this GitHub issue](https://github.com/dotnet/docker-tools/issues/1658)).
 
 ## Adding support for new dependencies
 
