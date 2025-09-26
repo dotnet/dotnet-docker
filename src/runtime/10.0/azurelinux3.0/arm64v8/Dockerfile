@@ -1,17 +1,17 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:10.0.0-rc.2-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:10.0.0-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-rc.2.25474.113 \
+RUN dotnet_version=10.0.0 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/Runtime/$dotnet_version-rtm.25475.111/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version-rtm.25475.111/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
     && echo "$(cat dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-arm64.tar.gz --directory /dotnet \
@@ -21,10 +21,10 @@ RUN dotnet_version=10.0.0-rc.2.25474.113 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-rc.2-azurelinux3.0-arm64v8
+FROM $REPO:10.0.0-azurelinux3.0-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-rc.2.25474.113
+ENV DOTNET_VERSION=10.0.0-rtm.25475.111
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
