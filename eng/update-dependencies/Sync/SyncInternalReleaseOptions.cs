@@ -11,8 +11,15 @@ public sealed record SyncInternalReleaseOptions : IOptions
     public string RemoteUrl { get; set; } = string.Empty;
     public string SourceBranch { get; set; } = string.Empty;
     public string TargetBranch { get; set; } = string.Empty;
+    public string PrBranchPrefix { get; set; } = "pr";
 
-    public static List<Option> Options => [];
+    public static List<Option> Options =>
+    [
+        new Option<string>("--pr-branch-prefix")
+        {
+            Description = "Prefix to use for branches created for pull requests",
+        }
+    ];
 
     public static List<Argument> Arguments =>
     [
