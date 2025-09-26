@@ -15,6 +15,9 @@ public sealed class LocalGitRepoHelperTests
         const string AncestorBranch = "ancestor";
         const string DescendantBranch = "descendant";
 
+        // example.com is safe for use in testing - it is reserved per RFC2606
+        var testIdentity = (Name: "Automation", Email: "test@example.com");
+
         var repo = await CreateLocalRepoHelperAsync(
             async localRepo =>
             {
@@ -24,7 +27,7 @@ public sealed class LocalGitRepoHelperTests
                 var initialFilePath = Path.Join(localRepo.Path, "initialFile.txt");
                 File.WriteAllText(initialFilePath, "");
                 await localRepo.StageAsync([initialFilePath]);
-                await localRepo.CommitAsync("Initial commit", allowEmpty: false);
+                await localRepo.CommitAsync("Initial commit", allowEmpty: false, author: testIdentity);
 
                 // Create ancestor branch
                 await localRepo.CreateBranchAsync(AncestorBranch);
@@ -34,7 +37,7 @@ public sealed class LocalGitRepoHelperTests
                 var newFilePath = Path.Join(localRepo.Path, "newFile.txt");
                 File.WriteAllText(newFilePath, "");
                 await localRepo.StageAsync([newFilePath]);
-                await localRepo.CommitAsync("New commit", allowEmpty: false);
+                await localRepo.CommitAsync("New commit", allowEmpty: false, author: testIdentity);
             });
 
         // Validate that repo helper correctly identifies ancestor/descendant relationship
