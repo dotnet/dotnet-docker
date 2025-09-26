@@ -5,6 +5,7 @@ namespace Dotnet.Docker;
 
 internal enum GitRemote
 {
+    None,
     AzureDevOps,
-    GitHub
+    GitHub,
 }
