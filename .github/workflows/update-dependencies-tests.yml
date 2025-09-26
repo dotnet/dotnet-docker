@@ -26,10 +26,19 @@ jobs:
           dotnet-version: '9.0.x'
 
       - name: Restore dependencies
-        run: dotnet restore tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj --verbosity normal
+        run: >
+          dotnet restore
+          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          --verbosity normal
 
       - name: Build tests
-        run: dotnet build tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj --no-restore
+        run: >
+          dotnet build
+          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          --no-restore
 
       - name: Run tests
-        run: dotnet test tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj --no-build --verbosity normal
+        run: >
+          dotnet test
+          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          --no-build --verbosity normal
