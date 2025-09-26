@@ -15,6 +15,8 @@ jobs:
 
     permissions:
       contents: read
+      actions: read
+      checks: write
 
     steps:
       - name: Checkout code
@@ -41,4 +43,20 @@ jobs:
         run: >
           dotnet test
           tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
-          --no-build --verbosity normal
+          --no-build --verbosity normal --logger trx
+          --results-directory TestResults
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: TestResults/*.trx
+
+      - name: Publish test results
+        uses: dorny/test-reporter@v1
+        if: always()
+        with:
+          name: Update Dependencies Tests
+          path: TestResults/*.trx
+          reporter: dotnet-trx
