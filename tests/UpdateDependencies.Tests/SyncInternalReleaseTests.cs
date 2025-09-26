@@ -3,6 +3,7 @@
 
 using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
+using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
@@ -27,6 +28,26 @@ public sealed class SyncInternalReleaseTests
         SourceBranch = ReleaseBranch,
         TargetBranch = InternalReleaseBranch
     };
+
+    /// <summary>
+    /// Calling the command with null or whitespace for any of the arguments should fail.
+    /// </summary>
+    [Fact]
+    public async Task WhitespaceArgumentsFails()
+    {
+        var options = new SyncInternalReleaseOptions
+        {
+            RemoteUrl = "   ",
+            SourceBranch = "   ",
+            TargetBranch = "   "
+        };
+
+        var command = new SyncInternalReleaseCommand(
+            Mock.Of<IGitRepoHelperFactory>(),
+            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+
+        await Should.ThrowAsync<ArgumentException>(() => command.ExecuteAsync(options));
+    }
 
     /// <summary>
     /// If the source branch is an internal branch (i.e. "internal/foo"), the command should fail.
@@ -60,9 +81,9 @@ public sealed class SyncInternalReleaseTests
 
         // Setup:
         // Target branch does not exist on remote
-        repoMock.Setup(r => r.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(false);
+        repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(false);
         // Source branch exists on remote
-        repoMock.Setup(r => r.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
+        repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
 
         var command = new SyncInternalReleaseCommand(
             repoFactoryMock.Object,
@@ -72,7 +93,7 @@ public sealed class SyncInternalReleaseTests
         exitCode.ShouldBe(0);
 
         // The command should have created the target branch based off of the source branch.
-        repoMock.Verify(r => r.CreateRemoteBranchAsync(options.TargetBranch, options.SourceBranch), Times.Once);
+        repoMock.Verify(r => r.Remote.CreateRemoteBranchAsync(options.TargetBranch, options.SourceBranch), Times.Once);
     }
 
     /// <summary>
@@ -91,12 +112,12 @@ public sealed class SyncInternalReleaseTests
         repoFactoryMock.Setup(f => f.CreateAsync(options.RemoteUrl)).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
-        repoMock.Setup(r => r.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
-        repoMock.Setup(r => r.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
+        repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
+        repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
         // They point to the same commit.
         const string Sha = "0000000000000000000000000000000000000001";
-        repoMock.Setup(r => r.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(Sha);
-        repoMock.Setup(r => r.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(Sha);
+        repoMock.Setup(r => r.Remote.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(Sha);
+        repoMock.Setup(r => r.Remote.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(Sha);
         repoMock.Setup(r => r.Dispose());
 
         var command = new SyncInternalReleaseCommand(
@@ -108,5 +129,63 @@ public sealed class SyncInternalReleaseTests
         exitCode.ShouldBe(0);
         // Command should not have done anything else that we didn't expect.
         repoMock.VerifyAll();
+    }
+
+    /// <summary>
+    /// If the target branch is a direct ancestor of source branch, then submit a pull request
+    /// containing the missing commits.
+    /// </summary>
+    [Fact]
+    public async Task FastForward()
+    {
+        var options = s_defaultOptions;
+
+        var localRepoMock = new Mock<ILocalGitRepoHelper>();
+        var remoteRepoMock = new Mock<IRemoteGitRepoHelper>();
+
+        var repoMock = new Mock<IGitRepoHelper>();
+        repoMock.Setup(r => r.Local).Returns(localRepoMock.Object);
+        repoMock.Setup(r => r.Remote).Returns(remoteRepoMock.Object);
+
+        var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
+        repoFactoryMock.Setup(f => f.CreateAsync(options.RemoteUrl)).ReturnsAsync(repoMock.Object);
+
+        // Setup: Both target and source branches exist on remote.
+        repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
+        repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
+
+        // They point to different commits.
+        const string OldSha = "0000000000000000000000000000000000000001";
+        const string NewSha = "0000000000000000000000000000000000000002";
+        remoteRepoMock.Setup(r => r.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(OldSha);
+        remoteRepoMock.Setup(r => r.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(NewSha);
+
+        // The target branch is behind the source branch.
+        localRepoMock
+            .Setup(r => r.IsAncestorAsync($"origin/{options.TargetBranch}", $"origin/{options.SourceBranch}"))
+            .ReturnsAsync(true);
+
+        // Probably going to check the created PR
+        remoteRepoMock
+            .Setup(r => r.GetPullRequestInfoAsync(It.IsAny<string>()))
+            .ReturnsAsync(Mock.Of<PullRequest>());
+
+        var command = new SyncInternalReleaseCommand(
+            repoFactoryMock.Object,
+            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+
+        // Command should succeed.
+        var exitCode = await command.ExecuteAsync(options);
+        exitCode.ShouldBe(0);
+
+        // Should have created a pull request.
+        remoteRepoMock.Verify(r =>
+            r.CreatePullRequestAsync(It.Is<PullRequestCreationInfo>(p =>
+                p.BaseBranch == options.TargetBranch
+                && p.HeadBranch.StartsWith(options.PrBranchPrefix)
+                && p.Title.Contains("fast-forward", StringComparison.OrdinalIgnoreCase))
+            ),
+            Times.Once
+        );
     }
 }
