@@ -8,7 +8,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-rc.2.25474.113 \
+RUN aspnetcore_version=10.0.0-rc.2.25475.109 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz.sha512 \
@@ -24,6 +24,6 @@ RUN aspnetcore_version=10.0.0-rc.2.25474.113 \
 FROM $REPO:10.0.0-rc.2-azurelinux3.0-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-rc.2.25474.113
+ENV ASPNET_VERSION=10.0.0-rc.2.25475.109
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
