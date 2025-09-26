@@ -115,7 +115,7 @@ config.UseHost(
 
                 // Finally, this project's own Git client abstraction that abstracts over the
                 // various DarcLib implementations
-                services.AddSingleton<GitRepoHelperFactory>();
+                services.AddSingleton<IGitRepoHelperFactory, GitRepoHelperFactory>();
 
                 // Services needed for BAR build access/updates
                 services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
