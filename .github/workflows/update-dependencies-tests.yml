@@ -15,8 +15,6 @@ jobs:
 
     permissions:
       contents: read
-      actions: read
-      checks: write
 
     steps:
       - name: Checkout code
@@ -52,11 +50,3 @@ jobs:
         with:
           name: test-results
           path: TestResults/*.trx
-
-      - name: Publish test results
-        uses: dorny/test-reporter@v1
-        if: always()
-        with:
-          name: Update Dependencies Tests
-          path: TestResults/*.trx
-          reporter: dotnet-trx
