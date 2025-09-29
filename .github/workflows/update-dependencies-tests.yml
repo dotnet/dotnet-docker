@@ -1,0 +1,52 @@
+name: Update Dependencies Tests
+
+on:
+  pull_request:
+    paths:
+      - 'eng/update-dependencies/**'
+      - 'tests/UpdateDependencies.Tests/**'
+      - '.github/workflows/update-dependencies-tests.yml'
+
+permissions: {}
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+
+      - name: Restore dependencies
+        run: >
+          dotnet restore
+          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          --verbosity normal
+
+      - name: Build tests
+        run: >
+          dotnet build
+          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          --no-restore
+
+      - name: Run tests
+        run: >
+          dotnet test
+          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          --no-build --verbosity normal --logger trx
+          --results-directory TestResults
+
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: TestResults/*.trx
