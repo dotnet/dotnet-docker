@@ -43,6 +43,7 @@ extends:
             inlineScript: >-
               dotnet run --project eng/update-dependencies/update-dependencies.csproj --
               sync-internal-release
+              --pr-branch-prefix pr/unofficial
               $(Build.Repository.Uri)
               ${{ parameters.sourceBranch }}
               ${{ parameters.targetBranch }}
