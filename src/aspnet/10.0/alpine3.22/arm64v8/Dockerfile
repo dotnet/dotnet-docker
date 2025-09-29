@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM $REPO:10.0.0-rc.2-alpine3.22-arm64v8 AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.0-rc.2.25475.109 \
+RUN aspnetcore_version=10.0.0-rc.2.25476.108 \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz \
         https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512 \
@@ -20,6 +20,6 @@ RUN aspnetcore_version=10.0.0-rc.2.25475.109 \
 FROM $REPO:10.0.0-rc.2-alpine3.22-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-rc.2.25475.109
+ENV ASPNET_VERSION=10.0.0-rc.2.25476.108
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
