@@ -58,6 +58,5 @@ Other patterns:
 ### Code comments
 
 - Comments inside methods should explain "why," not "what".
-- The code itself should be clear enough to show what it's doing.
 - Comments should provide context and rationale behind the code.
 - Avoid redundant comments that restate the code - not all code needs comments.
