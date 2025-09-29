@@ -1,0 +1,48 @@
+trigger: none
+pr: none
+
+parameters:
+- name: sourceBranch
+  displayName: Source Branch (public)
+  type: string
+- name: targetBranch
+  displayName: Target Branch (internal)
+  type: string
+
+variables:
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+- group: DotNet-Docker-Common-2
+
+extends:
+  template: /eng/common/templates/1es.yml@self
+  parameters:
+    stages:
+    - stage: SyncReleaseBranchesStage
+      displayName: Sync Release Branches
+
+      jobs:
+      - job: SyncReleaseBranchesJob
+        displayName: Sync Release Branches
+        pool:
+          name: $(default1ESInternalPoolName)
+          image: $(default1ESInternalPoolImage)
+          os: linux
+
+        steps:
+        - checkout: self
+          fetchDepth: 0
+
+        - template: /eng/pipelines/steps/install-dotnet.yml@self
+
+        - task: AzureCLI@2
+          displayName: Sync Release Branches
+          inputs:
+            azureSubscription: "$(updateDepsInt-test.serviceConnectionName)"
+            scriptType: "pscore"
+            scriptLocation: "inlineScript"
+            inlineScript: >-
+              dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+              sync-internal-release
+              $(Build.Repository.Uri)
+              ${{ parameters.sourceBranch }}
+              ${{ parameters.targetBranch }}
