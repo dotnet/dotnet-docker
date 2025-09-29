@@ -2,7 +2,7 @@
 applyTo: "**/*.cs"
 ---
 
-## General Guidelines
+# C# Guidelines
 
 - Make only high confidence suggestions when reviewing code changes.
 - Always use the latest C# version features (currently C# 14).

@@ -47,19 +47,19 @@ Boolean expressions:
 
 If statement:
 
-```
+```cottle
 {{if condition:VALUE}}
 ```
 
 Compound conditionals:
 
-```
+```cottle
 {{if ((condition1 && condition2) || condition3):VALUE}}
 ```
 
 Multiple conditions:
 
-```
+```cottle
 {{if condition1:VALUE1^
 elif condition2:VALUE2^
 else:VALUE3}}
@@ -69,6 +69,6 @@ After the colon `:`, all whitespace is treated as literal until the next line en
 
 You can also nest template blocks:
 
-```
+```cottle
 {{if condition1:{{if condition2:VALUE}}}}
 ```
