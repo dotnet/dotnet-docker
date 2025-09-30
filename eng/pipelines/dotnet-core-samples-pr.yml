@@ -10,6 +10,8 @@ pr:
     - eng/*
     - samples/*
     - tests/*
+    exclude:
+    - eng/update-dependencies
 
 variables:
 - template: /eng/pipelines/variables/samples.yml@self
