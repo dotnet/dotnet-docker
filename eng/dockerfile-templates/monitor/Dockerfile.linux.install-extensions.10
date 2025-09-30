@@ -1,0 +1,65 @@
+{{
+    set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
+    set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
+    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$dotnet_monitor_extension_version') ^
+    set monitorBaseUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
+    set monitorBaseChecksumUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|checksums|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
+
+    set installDir to "/app" ^
+
+    set azBlobFileName to "dotnet-monitor-egress-azureblobstorage.tar.gz" ^
+    set s3FileName to "dotnet-monitor-egress-s3storage.tar.gz" ^
+    set azBlobShaUrl to cat(monitorBaseChecksumUrl, "dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz.sha512") ^
+    set s3ShaUrl to cat(monitorBaseChecksumUrl, "dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz.sha512")
+
+}}RUN dotnet_monitor_extension_version={{monitorVersion}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-files", [
+        "files": [
+            [
+                "url": cat(monitorBaseUrl, "dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz"),
+                "out-file": azBlobFileName
+            ],
+            [
+                "url": cat(monitorBaseUrl, "dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz"),
+                "out-file": s3FileName
+            ],
+            [
+                "url": azBlobShaUrl,
+                "out-file": cat(azBlobFileName, ".sha512")
+            ],
+            [
+                "url": s3ShaUrl,
+                "out-file": cat(s3FileName, ".sha512")
+            ]
+        ]
+    ], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": azBlobFileName,
+        "sha-file": cat(azBlobFileName, ".sha512"),
+        "sha-file-is-bare": "true",
+        "sha-function": "512"
+    ], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": s3FileName,
+        "sha-file": cat(s3FileName, ".sha512"),
+        "sha-file-is-bare": "true",
+        "sha-function": "512"
+    ], "    ")}} \
+    && mkdir --parents {{installDir}} \
+    && {{InsertTemplate("../Dockerfile.linux.extract-file", [
+        "file": azBlobFileName,
+        "dest-dir": installDir,
+        "extract-paths": ARGS["extract-paths"]
+    ], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.extract-file", [
+        "file": s3FileName,
+        "dest-dir": installDir,
+        "extract-paths": ARGS["extract-paths"]
+    ], "    ")}} \
+    && rm \
+        {{azBlobFileName}} \
+        {{s3FileName}} \
+        {{cat(azBlobFileName, ".sha512")}} \
+        {{cat(s3FileName, ".sha512")}}
