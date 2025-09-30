@@ -5,6 +5,8 @@
     <TargetFramework>net9.0</TargetFramework>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Dotnet.Docker</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
