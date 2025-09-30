@@ -1,7 +1,45 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Collections.Immutable;
+
 namespace Dotnet.Docker.Sync;
+
+/// <summary>
+/// Records information about what internal staging pipeline run IDs were used
+/// for which .NET Dockerfile versions.
+/// </summary>
+/// <param name="Versions">
+/// Mapping of Major.Minor .NET version to staging pipeline run ID.
+/// </param>
+internal sealed record InternalStagingBuilds(ImmutableDictionary<string, int> Versions)
+{
+    /// <summary>
+    /// Parses <see cref=" InternalStagingBuilds"/> from lines of text.
+    /// </summary>
+    /// <remarks>
+    /// Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
+    /// </remarks>
+    public static InternalStagingBuilds Parse(IEnumerable<string> lines)
+    {
+        var versions = lines
+            .Select(line => line.Split('=', 2))
+            .Where(parts => parts.Length == 2)
+            .ToImmutableDictionary(parts => parts[0], parts => int.Parse(parts[1]));
+
+        return new InternalStagingBuilds(versions);
+    }
+
+    /// <summary>
+    /// Returns a new <see cref="InternalStagingBuilds"/> with the specified
+    /// version added.
+    /// </summary>
+    public InternalStagingBuilds Add(string dockerfileVersion, int stagingPipelineRunId) =>
+        this with { Versions = Versions.SetItem(dockerfileVersion, stagingPipelineRunId) };
+
+    public override string ToString() =>
+        string.Join(Environment.NewLine, Versions.Select(kv => $"{kv.Key}={kv.Value}"));
+}
 
 internal static class InternalVersionsHelper
 {
@@ -16,7 +54,7 @@ internal static class InternalVersionsHelper
     /// </remarks>
     /// <param name="dockerfileVersion">major-minor version</param>
     /// <param name="stagingPipelineRunId">the build ID of the staging pipeline run</param>
-    public static void RecordInternalVersion(string dockerfileVersion, string stagingPipelineRunId)
+    public static void RecordInternalVersion(string dockerfileVersion, int stagingPipelineRunId)
     {
         const string InternalVersionsFile = "internal-versions.txt";
 
@@ -34,23 +72,21 @@ internal static class InternalVersionsHelper
         var versionsFilePath = Path.GetFullPath(SpecificCommand.VersionsFilename);
         var versionsFileDir = Path.GetDirectoryName(versionsFilePath) ?? "";
         var internalVersionFile = Path.Combine(versionsFileDir, InternalVersionsFile);
-        Dictionary<string, string> versions = [];
 
+        InternalStagingBuilds builds;
         try
         {
             // File already exists - read existing versions
-            versions = File.ReadAllLines(internalVersionFile)
-                .Select(line => line.Split('=', 2))
-                .Where(parts => parts.Length == 2)
-                .ToDictionary(parts => parts[0], parts => parts[1]);
+            var fileContents = File.ReadAllLines(internalVersionFile);
+            builds = InternalStagingBuilds.Parse(fileContents);
         }
         catch (FileNotFoundException)
         {
             // File doesn't exist - it will be created
+            builds = new InternalStagingBuilds(ImmutableDictionary<string, int>.Empty);
         }
 
-        versions[dockerfileVersion] = stagingPipelineRunId;
-        var versionLines = versions.Select(kv => $"{kv.Key}={kv.Value}");
-        File.WriteAllLines(internalVersionFile, versionLines);
+        builds = builds.Add(dockerfileVersion, stagingPipelineRunId);
+        File.WriteAllText(internalVersionFile, builds.ToString());
     }
 }

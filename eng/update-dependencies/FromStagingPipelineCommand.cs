@@ -45,7 +45,7 @@ internal partial class FromStagingPipelineCommand(
         string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(releaseConfig.RuntimeBuild).ToString();
 
         // Record pipeline run ID for this dockerfileVersion, for later use by sync-internal-release command
-        InternalVersionsHelper.RecordInternalVersion(dockerfileVersion, options.StagingPipelineRunId.ToString());
+        InternalVersionsHelper.RecordInternalVersion(dockerfileVersion, options.StagingPipelineRunId);
 
         var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
         {
