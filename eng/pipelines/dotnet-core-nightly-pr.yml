@@ -10,6 +10,8 @@ pr:
     - eng/*
     - src/*
     - tests/*
+    exclude:
+    - eng/update-dependencies
 
 variables:
 - template: /eng/pipelines/variables/core-unofficial.yml
