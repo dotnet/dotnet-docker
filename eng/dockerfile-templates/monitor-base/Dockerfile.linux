@@ -14,8 +14,7 @@
             "/base/core:",
             OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
-    set isVersion10OrLater to monitorMajor = "10" ^
-    set monitorBaseTemplate to when(isVersion10OrLater, "Dockerfile.linux.install-monitor-base.10", "Dockerfile.linux.install-monitor-base")
+    set monitorBaseTemplate to when(monitorMajor != "8" && monitorMajor != "9", "Dockerfile.linux.install-monitor-base.10", "Dockerfile.linux.install-monitor-base")
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image

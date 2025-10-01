@@ -16,8 +16,7 @@
             "/base/core:",
             OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
-    set isVersion10OrLater to monitorMajor = "10" ^
-    set extensionsTemplate to when(isVersion10OrLater, "Dockerfile.linux.install-extensions.10", "Dockerfile.linux.install-extensions")
+    set extensionsTemplate to when(monitorMajor != "8" && monitorMajor != "9", "Dockerfile.linux.install-extensions.10", "Dockerfile.linux.install-extensions")
 }}ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
