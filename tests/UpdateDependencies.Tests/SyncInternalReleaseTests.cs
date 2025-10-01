@@ -30,6 +30,21 @@ public sealed class SyncInternalReleaseTests
     };
 
     /// <summary>
+    /// Helper method to create a <see cref="SyncInternalReleaseCommand"/> instance with optional
+    /// mocked dependencies. If dependencies are not provided, default mocks will be used.
+    /// </summary>
+    private SyncInternalReleaseCommand CreateCommand(
+        IGitRepoHelperFactory? repoFactory = null,
+        ILogger<SyncInternalReleaseCommand>? logger = null)
+    {
+        // New parameters should be null by default and initialized with mocks if not specified.
+        return new(
+            repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
+            logger ?? Mock.Of<ILogger<SyncInternalReleaseCommand>>()
+        );
+    }
+
+    /// <summary>
     /// Calling the command with null or whitespace for any of the arguments should fail.
     /// </summary>
     [Fact]
@@ -42,9 +57,7 @@ public sealed class SyncInternalReleaseTests
             TargetBranch = "   "
         };
 
-        var command = new SyncInternalReleaseCommand(
-            Mock.Of<IGitRepoHelperFactory>(),
-            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+        var command = CreateCommand();
 
         await Should.ThrowAsync<ArgumentException>(() => command.ExecuteAsync(options));
     }
@@ -59,9 +72,7 @@ public sealed class SyncInternalReleaseTests
     {
         var options = s_defaultOptions with { SourceBranch = "internal/foo" };
 
-        var command = new SyncInternalReleaseCommand(
-            Mock.Of<IGitRepoHelperFactory>(),
-            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+        var command = CreateCommand();
 
         await Should.ThrowAsync<InvalidBranchException>(() => command.ExecuteAsync(options));
     }
@@ -85,9 +96,7 @@ public sealed class SyncInternalReleaseTests
         // Source branch exists on remote
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
 
-        var command = new SyncInternalReleaseCommand(
-            repoFactoryMock.Object,
-            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+        var command = CreateCommand(repoFactory: repoFactoryMock.Object);
 
         var exitCode = await command.ExecuteAsync(options);
         exitCode.ShouldBe(0);
@@ -120,9 +129,7 @@ public sealed class SyncInternalReleaseTests
         repoMock.Setup(r => r.Remote.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(Sha);
         repoMock.Setup(r => r.Dispose());
 
-        var command = new SyncInternalReleaseCommand(
-            repoFactoryMock.Object,
-            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+        var command = CreateCommand(repoFactory: repoFactoryMock.Object);
 
         // Command should succeed.
         var exitCode = await command.ExecuteAsync(options);
@@ -170,9 +177,7 @@ public sealed class SyncInternalReleaseTests
             .Setup(r => r.GetPullRequestInfoAsync(It.IsAny<string>()))
             .ReturnsAsync(Mock.Of<PullRequest>());
 
-        var command = new SyncInternalReleaseCommand(
-            repoFactoryMock.Object,
-            Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+        var command = CreateCommand(repoFactory: repoFactoryMock.Object);
 
         // Command should succeed.
         var exitCode = await command.ExecuteAsync(options);
