@@ -17,7 +17,7 @@ RUN dotnet_monitor_version=10.0.0-rc.1.25453.1 \
     && echo "$(cat dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512)  dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
     && tar --gzip --extract --no-same-owner --file dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz --directory /app \
-    && rm  \
+    && rm \
         dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
         dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512
 
