@@ -11,12 +11,12 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Git;
 
-public interface IGitRepoHelperFactory
+internal interface IGitRepoHelperFactory
 {
     Task<IGitRepoHelper> CreateAsync(string repoUri);
 }
 
-public sealed class GitRepoHelperFactory(
+internal sealed class GitRepoHelperFactory(
     IGitRepoCloner gitRepoCloner,
     ILocalGitRepoFactory localGitRepoFactory,
     IRemoteGitRepoFactory remoteFactory,

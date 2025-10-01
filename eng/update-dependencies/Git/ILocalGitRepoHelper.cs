@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dotnet.Docker.Git;
 
-public interface ILocalGitRepoHelper
+internal interface ILocalGitRepoHelper
 {
     /// <summary>
     /// The local path where the repository is cloned.

@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Git;
 
-public sealed class LocalGitRepoHelper(
+internal sealed class LocalGitRepoHelper(
     string localPath,
     ILocalGitRepo localGitRepo,
     ILogger<LocalGitRepoHelper> logger
@@ -67,7 +67,7 @@ public sealed class LocalGitRepoHelper(
         var commitSha = await _localGitRepo.GetShaForRefAsync("HEAD");
         return commitSha;
     }
-    
+
     /// <inheritdoc />
     public async Task<bool> IsAncestorAsync(string ancestorRef, string descendantRef)
     {

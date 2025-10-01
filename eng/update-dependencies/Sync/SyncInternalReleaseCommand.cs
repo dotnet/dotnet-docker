@@ -18,7 +18,7 @@ namespace Dotnet.Docker.Sync;
 /// internal/release/* branch may contain .NET versions that are not yet publicly available.
 /// "In sync" does not necessarily mean that the commit SHAs of both branches are identical.
 /// </remarks>
-public sealed class SyncInternalReleaseCommand(
+internal sealed class SyncInternalReleaseCommand(
     IGitRepoHelperFactory gitRepoHelperFactory,
     ILogger<SyncInternalReleaseCommand> logger
 ) : BaseCommand<SyncInternalReleaseOptions>

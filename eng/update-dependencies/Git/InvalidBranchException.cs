@@ -10,4 +10,4 @@ namespace Dotnet.Docker.Git;
 /// such as attempting to use a non-existent branch or an incorrectly named branch.
 /// </summary>
 /// <param name="message">The error message describing the invalid branch condition.</param>
-public sealed class InvalidBranchException(string message) : InvalidOperationException(message);
+internal sealed class InvalidBranchException(string message) : InvalidOperationException(message);

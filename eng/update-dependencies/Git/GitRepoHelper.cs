@@ -13,7 +13,7 @@ namespace Dotnet.Docker.Git;
 /// <remarks>
 /// Use <see cref="IGitRepoHelperFactory"/> to instantiate this.
 /// </remarks>
-public sealed class GitRepoHelper(
+internal sealed class GitRepoHelper(
     string remoteRepoUrl,
     ILocalGitRepoHelper localGitRepoHelper,
     IRemoteGitRepoHelper remoteGitRepoHelper,
