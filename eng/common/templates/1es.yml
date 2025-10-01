@@ -32,6 +32,13 @@ parameters:
     name: $(defaultSourceAnalysisPoolName)
     image: $(defaultSourceAnalysisPoolImage)
     os: windows
+# Container image SBOMs are generated manually during the build job. 1ESPT's
+# automatic SBOM generation only adds unnecessary steps and artifacts to
+# builds. SBOM is not needed for JSON outputs. If a pipeline outputs binary
+# artifacts that ship to customers, then set this parameter to true.
+- name: enableSbom
+  type: boolean
+  default: false
 
 resources:
   repositories:
@@ -47,10 +54,8 @@ extends:
     templateParameters:
       pool: ${{ parameters.pool }}
       sdl:
-        # Required for unofficial pipelines because we rely on the ManifestGeneratorTask that is
-        # automatically installed by 1ES pipeline templates
         sbom:
-          enabled: true
+          enabled: ${{ parameters.enableSbom }}
         binskim:
           enabled: true
         componentgovernance:
