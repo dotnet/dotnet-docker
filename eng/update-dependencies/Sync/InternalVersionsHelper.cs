@@ -43,6 +43,8 @@ internal sealed record InternalStagingBuilds(ImmutableDictionary<string, int> Ve
 
 internal static class InternalVersionsHelper
 {
+    public const string InternalVersionsFileName = "internal-versions.txt";
+
     /// <summary>
     /// Records the staging pipeline run ID in an easy to parse format. This
     /// can be used by the sync-internal-release pipeline to record and
@@ -54,10 +56,8 @@ internal static class InternalVersionsHelper
     /// </remarks>
     /// <param name="dockerfileVersion">major-minor version</param>
     /// <param name="stagingPipelineRunId">the build ID of the staging pipeline run</param>
-    public static void RecordInternalVersion(string dockerfileVersion, int stagingPipelineRunId)
+    public static void RecordInternalVersion(string repoRoot, string dockerfileVersion, int stagingPipelineRunId)
     {
-        const string InternalVersionsFile = "internal-versions.txt";
-
         // Internal versions file should have one line per dockerfileVersion
         // Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
         //
@@ -69,9 +69,7 @@ internal static class InternalVersionsHelper
         //
         // So for now, the separate file and format is a compromise.
 
-        var versionsFilePath = Path.GetFullPath(SpecificCommand.VersionsFilename);
-        var versionsFileDir = Path.GetDirectoryName(versionsFilePath) ?? "";
-        var internalVersionFile = Path.Combine(versionsFileDir, InternalVersionsFile);
+        var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
 
         InternalStagingBuilds builds;
         try

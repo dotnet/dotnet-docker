@@ -72,11 +72,12 @@ namespace Dotnet.Docker
             _manifestVariables = new Lazy<JObject>(
                 () =>
                 {
+                    var versionsFile = options.GetManifestVersionsFilePath();
                     const string VariablesProperty = "variables";
-                    JToken? variables = ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename)[VariablesProperty];
+                    JToken? variables = ManifestHelper.LoadManifest(versionsFile)[VariablesProperty];
                     if (variables is null)
                     {
-                        throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{SpecificCommand.VersionsFilename}'");
+                        throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{versionsFile}'");
                     }
                     return (JObject)variables;
                 });
@@ -91,9 +92,9 @@ namespace Dotnet.Docker
         }
 
         public static IEnumerable<IDependencyUpdater> CreateUpdaters(
-            string productName, string dockerfileVersion, string repoRoot, SpecificCommandOptions options)
+            string productName, string dockerfileVersion, SpecificCommandOptions options)
         {
-            string versionsPath = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
+            string versionsPath = options.GetManifestVersionsFilePath();
             string versions = File.ReadAllText(versionsPath);
 
             // The format of the sha variable name is '<productName>|<dockerfileVersion>|<os>|<arch>|sha'.

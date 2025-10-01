@@ -18,8 +18,6 @@ namespace Dotnet.Docker
 {
     public class SpecificCommand : BaseCommand<SpecificCommandOptions>
     {
-        public const string ManifestFilename = "manifest.json";
-        public const string VersionsFilename = "manifest.versions.json";
 
         private static SpecificCommandOptions? s_options;
 
@@ -27,8 +25,6 @@ namespace Dotnet.Docker
             get => s_options ?? throw new InvalidOperationException($"{nameof(Options)} has not been set.");
             set => s_options = value;
         }
-
-        public static string RepoRoot { get; } = Directory.GetCurrentDirectory();
 
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
@@ -57,7 +53,7 @@ namespace Dotnet.Docker
 
                 if (toolBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(RepoRoot);
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(Options.GetManifestVersionsFilePath());
                     DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
                     updateResults.Add(toolUpdateResults);
                 }
@@ -151,7 +147,7 @@ namespace Dotnet.Docker
 
         private static void PushToAzdoBranch(string commitMessage, string targetBranch)
         {
-            using Repository repo = new(RepoRoot);
+            using Repository repo = new(Options.RepoRoot);
 
             // Commit the existing changes
             Commands.Stage(repo, "*");
@@ -382,16 +378,16 @@ namespace Dotnet.Docker
 
             List<IDependencyUpdater> updaters =
             [
-                new NuGetConfigUpdater(RepoRoot, Options),
-                BaseUrlUpdater.Create(RepoRoot, Options)
+                new NuGetConfigUpdater(Options),
+                BaseUrlUpdater.Create(Options)
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
             {
-                updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options));
-                updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options));
+                updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, Options));
+                updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, Options));
 
-                foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, RepoRoot, Options))
+                foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, Options))
                 {
                     updaters.Add(shaUpdater);
                 }
@@ -400,10 +396,10 @@ namespace Dotnet.Docker
             return updaters;
         }
 
-        private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
+        private IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
         [
-            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+            ScriptRunnerUpdater.GetDockerfileUpdater(Options.RepoRoot),
+            ScriptRunnerUpdater.GetReadMeUpdater(Options.RepoRoot)
         ];
     }
 }

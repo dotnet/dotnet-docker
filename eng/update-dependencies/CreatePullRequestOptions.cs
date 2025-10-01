@@ -10,6 +10,11 @@ public abstract record CreatePullRequestOptions
 {
     private string? _targetBranch = null;
 
+    /// <summary>
+    /// The root of the dotnet-docker repo to run against.
+    /// </summary>
+    public string RepoRoot { get; init; } = Directory.GetCurrentDirectory();
+
     public string User { get; init; } = "";
     public string Email { get; init; } = "";
     public string Password { get; init; } = "";
@@ -26,6 +31,7 @@ public abstract record CreatePullRequestOptions
 
     public static List<Option> Options =>
     [
+        new Option<string>("--repo-root") { Description = "The root of the dotnet-docker repo to run against (defaults to current working directory)" },
         new Option<string>("--user") { Description = "GitHub or AzDO user used to make PR (if not specified, a PR will not be created)" },
         new Option<string>("--email") { Description = "GitHub or AzDO email used to make PR (if not specified, a PR will not be created)" },
         new Option<string>("--password") { Description = "GitHub or AzDO password used to make PR (if not specified, a PR will not be created)" },

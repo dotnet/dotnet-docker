@@ -106,13 +106,12 @@ public static partial class ManifestHelper
             ?? throw new ArgumentException($"Manifest does not contain a value for {variableName}");
 
     /// <summary>
-    /// Loads the manifest from the given filename.
+    /// Loads the manifest from the given file path.
     /// </summary>
-    /// <param name="filename">Name, not path, of the manifest file located at the root of the repo.</param>
-    public static JObject LoadManifest(string filename)
+    /// <param name="filePath">Path of the manifest file located at the root of the repo.</param>
+    public static JObject LoadManifest(string filePath)
     {
-        string path = Path.Combine(SpecificCommand.RepoRoot, filename);
-        string contents = File.ReadAllText(path);
+        string contents = File.ReadAllText(filePath);
         return JObject.Parse(contents);
     }
 

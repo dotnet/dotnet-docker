@@ -12,10 +12,10 @@ internal abstract class VariableUpdaterBase : FileRegexUpdater
     protected string VariableName { get; }
     protected Lazy<JObject> ManifestVariables { get; }
 
-    public VariableUpdaterBase(string repoRoot, string variableName)
+    public VariableUpdaterBase(string manifestVersionsFilePath, string variableName)
     {
         VariableName = variableName;
-        Path = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
+        Path = manifestVersionsFilePath;
         VersionGroupName = "val";
         Regex = ManifestHelper.GetManifestVariableRegex(variableName, @$"(?<{VersionGroupName}>\S*)");
 
@@ -23,10 +23,10 @@ internal abstract class VariableUpdaterBase : FileRegexUpdater
             () =>
             {
                 const string VariablesProperty = "variables";
-                JToken? variables = ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename)[VariablesProperty];
+                JToken? variables = ManifestHelper.LoadManifest(manifestVersionsFilePath)[VariablesProperty];
                 if (variables is null)
                 {
-                    throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{SpecificCommand.VersionsFilename}'");
+                    throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{manifestVersionsFilePath}'");
                 }
                 return (JObject)variables;
             });

@@ -25,10 +25,10 @@ internal class BaseUrlUpdater : FileRegexUpdater
     /// If the base URL variable cannot be found in the manifest, the updater
     /// won't do anything.
     /// </summary>
-    public static IDependencyUpdater Create(string repoRoot, SpecificCommandOptions options)
+    public static IDependencyUpdater Create(SpecificCommandOptions options)
     {
         // Load manifest and extract variables once so the constructor doesn't duplicate this logic
-        var manifest = ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename);
+        var manifest = ManifestHelper.LoadManifest(options.GetManifestVersionsFilePath());
         var manifestVariables = (JObject?)manifest["variables"];
 
         if (manifestVariables is null)
@@ -49,16 +49,15 @@ internal class BaseUrlUpdater : FileRegexUpdater
             return new EmptyDependencyUpdater();
         }
 
-        return new BaseUrlUpdater(repoRoot, options, manifestVariables, baseUrlVarName);
+        return new BaseUrlUpdater(options, manifestVariables, baseUrlVarName);
     }
 
     private BaseUrlUpdater(
-        string repoRoot,
         SpecificCommandOptions options,
         JObject manifestVariables,
         string manifestVariableName)
     {
-        Path = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
+        Path = options.GetManifestVersionsFilePath();
         VersionGroupName = BaseUrlGroupName;
         _options = options;
         _manifestVariables = manifestVariables;

@@ -58,6 +58,11 @@ namespace Dotnet.Docker
 
             List<Option> options =
             [
+                new Option<string>("--repo-root")
+                {
+                    Description = "The root of the dotnet-docker repo to run against."
+                        + " If not specified, the current working directory will be used."
+                },
                 new Option<IDictionary<string, string?>>("--product-versions", "--product-version")
                 {
                     Description = "Product versions to update (<product-name>=<version>)",

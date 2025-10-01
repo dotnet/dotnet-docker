@@ -17,17 +17,15 @@ namespace Dotnet.Docker;
 internal class NuGetConfigUpdater : IDependencyUpdater
 {
     private const string PkgSrcSuffix = "_internal";
-    private readonly string _repoRoot;
     private readonly SpecificCommandOptions _options;
     private readonly string _configPath;
 
-    public NuGetConfigUpdater(string repoRoot, SpecificCommandOptions options)
+    public NuGetConfigUpdater(SpecificCommandOptions options)
     {
-        _repoRoot = repoRoot;
         _options = options;
 
         string configSuffix = _options.IsInternal ? ".internal" : _options.SourceBranch == "nightly" ? ".nightly" : string.Empty;
-        _configPath = Path.Combine(_repoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
+        _configPath = Path.Combine(_options.RepoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
     }
 
     public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
