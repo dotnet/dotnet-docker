@@ -37,12 +37,14 @@ public sealed class SyncInternalReleaseTests
     private SyncInternalReleaseCommand CreateCommand(
         IGitRepoHelperFactory? repoFactory = null,
         ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
+        IInternalVersionsService? internalVersionsService = null,
         ILogger<SyncInternalReleaseCommand>? logger = null)
     {
         // New parameters should be null by default and initialized with mocks if not specified.
         return new(
             repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
             fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
+            internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
             logger ?? Mock.Of<ILogger<SyncInternalReleaseCommand>>()
         );
     }

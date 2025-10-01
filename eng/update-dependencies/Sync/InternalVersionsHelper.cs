@@ -41,22 +41,57 @@ internal sealed record InternalStagingBuilds(ImmutableDictionary<string, int> Ve
         string.Join(Environment.NewLine, Versions.Select(kv => $"{kv.Key}={kv.Value}"));
 }
 
-internal static class InternalVersionsHelper
+/// <summary>
+/// Abstraction for recording and reading internal staging build information
+/// local to the repo.
+/// </summary>
+/// <remarks>
+/// This can be used by the sync-internal-release pipeline to record and
+/// re-apply the same staging builds after resetting the state of the repo to
+/// match the public release branch.
+/// </remarks>
+internal interface IInternalVersionsService
 {
-    public const string InternalVersionsFileName = "internal-versions.txt";
-
     /// <summary>
-    /// Records the staging pipeline run ID in an easy to parse format. This
-    /// can be used by the sync-internal-release pipeline to record and
-    /// re-apply the same staging builds after resetting the state of the repo
-    /// to match the public release branch.
+    /// Records a staging pipeline run ID in the repo.
     /// </summary>
     /// <remarks>
-    /// This will only store one staging pipeline run ID per dockerfileVersion
+    /// This will only store one staging pipeline run ID per dockerfileVersion.
+    /// If a version already exists for the same dockerfileVersion, it will be
+    /// overwritten.
     /// </remarks>
     /// <param name="dockerfileVersion">major-minor version</param>
     /// <param name="stagingPipelineRunId">the build ID of the staging pipeline run</param>
-    public static void RecordInternalVersion(string repoRoot, string dockerfileVersion, int stagingPipelineRunId)
+    void RecordInternalStagingBuild(string repoRoot, string dockerfileVersion, int stagingPipelineRunId);
+
+    /// <summary>
+    /// Gets any previously recorded internal staging builds in the repo.
+    /// </summary>
+    InternalStagingBuilds GetInternalStagingBuilds(string repoRoot);
+}
+
+/// <inheritdoc/>
+internal sealed class InternalVersionsService : IInternalVersionsService
+{
+    private const string InternalVersionsFileName = "internal-versions.txt";
+
+    /// <inheritdoc/>
+    public InternalStagingBuilds GetInternalStagingBuilds(string repoRoot)
+    {
+        var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
+        try
+        {
+            var fileContents = File.ReadAllLines(internalVersionFile);
+            return InternalStagingBuilds.Parse(fileContents);
+        }
+        catch (FileNotFoundException)
+        {
+            return new InternalStagingBuilds(ImmutableDictionary<string, int>.Empty);
+        }
+    }
+
+    /// <inheritdoc/>
+    public void RecordInternalStagingBuild(string repoRoot, string dockerfileVersion, int stagingPipelineRunId)
     {
         // Internal versions file should have one line per dockerfileVersion
         // Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
@@ -69,22 +104,10 @@ internal static class InternalVersionsHelper
         //
         // So for now, the separate file and format is a compromise.
 
+        // Internal versions file should have one line per dockerfileVersion
+        // Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
+        var builds = GetInternalStagingBuilds(repoRoot).Add(dockerfileVersion, stagingPipelineRunId);
         var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
-
-        InternalStagingBuilds builds;
-        try
-        {
-            // File already exists - read existing versions
-            var fileContents = File.ReadAllLines(internalVersionFile);
-            builds = InternalStagingBuilds.Parse(fileContents);
-        }
-        catch (FileNotFoundException)
-        {
-            // File doesn't exist - it will be created
-            builds = new InternalStagingBuilds(ImmutableDictionary<string, int>.Empty);
-        }
-
-        builds = builds.Add(dockerfileVersion, stagingPipelineRunId);
         File.WriteAllText(internalVersionFile, builds.ToString());
     }
 }

@@ -128,6 +128,7 @@ config.UseHost(
 
                 services.AddSingleton<AzdoAuthProvider>();
                 services.AddSingleton<PipelineArtifactProvider>();
+                services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
 
                 // Dependencies that can be updated using the FromComponentCommand
                 services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");

@@ -8,11 +8,13 @@ namespace Dotnet.Docker;
 
 internal partial class FromStagingPipelineCommand(
     ILogger<FromStagingPipelineCommand> logger,
-    PipelineArtifactProvider pipelineArtifactProvider)
+    PipelineArtifactProvider pipelineArtifactProvider,
+    IInternalVersionsService internalVersionsService)
     : BaseCommand<FromStagingPipelineOptions>
 {
     private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
     private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactProvider;
+    private readonly IInternalVersionsService _internalVersionsService = internalVersionsService;
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
@@ -45,7 +47,7 @@ internal partial class FromStagingPipelineCommand(
         string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(releaseConfig.RuntimeBuild).ToString();
 
         // Record pipeline run ID for this dockerfileVersion, for later use by sync-internal-release command
-        InternalVersionsHelper.RecordInternalVersion(
+        _internalVersionsService.RecordInternalStagingBuild(
             options.RepoRoot,
             dockerfileVersion,
             options.StagingPipelineRunId);
