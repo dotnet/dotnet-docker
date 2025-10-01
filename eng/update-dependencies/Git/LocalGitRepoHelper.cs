@@ -99,4 +99,10 @@ internal sealed class LocalGitRepoHelper(
             // There are typically two entries per remote (fetch and push); we only want one
             .Distinct();
     }
+
+    /// <inheritdoc />
+    public async Task RestoreAsync(string source)
+    {
+        await _localGitRepo.ExecuteGitCommand("restore", "--source", source);
+    }
 }

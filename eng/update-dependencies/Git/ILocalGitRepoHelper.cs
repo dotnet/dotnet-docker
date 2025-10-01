@@ -69,4 +69,20 @@ internal interface ILocalGitRepoHelper
     /// List all remotes for the local repository.
     /// </summary>
     Task<IEnumerable<GitRemoteInfo>> ListAllRemotesAsync();
+
+    /// <summary>
+    /// Restore the working tree with the contents from a restore source.
+    /// Uncommitted changes in the working tree will be lost.
+    /// </summary>
+    /// <remarks>
+    /// Because contents are restored to the working tree, they will not be
+    /// staged. If the changes resulting from this command need to be
+    /// committed, they must be staged first.
+    /// </remarks>
+    /// <param name="source">
+    /// Restore the working tree files with the content from this tree.
+    /// This can be a commit, branch or tag.
+    /// </param>
+    /// <see href="link">https://git-scm.com/docs/git-restore</see>
+    Task RestoreAsync(string source);
 }
