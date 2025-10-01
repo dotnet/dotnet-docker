@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Dotnet.Docker;
 using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
 using Microsoft.DotNet.DarcLib;
@@ -35,11 +36,13 @@ public sealed class SyncInternalReleaseTests
     /// </summary>
     private SyncInternalReleaseCommand CreateCommand(
         IGitRepoHelperFactory? repoFactory = null,
+        ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
         ILogger<SyncInternalReleaseCommand>? logger = null)
     {
         // New parameters should be null by default and initialized with mocks if not specified.
         return new(
             repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
+            fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
             logger ?? Mock.Of<ILogger<SyncInternalReleaseCommand>>()
         );
     }

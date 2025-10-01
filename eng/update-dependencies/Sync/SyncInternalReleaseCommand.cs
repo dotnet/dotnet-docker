@@ -20,10 +20,12 @@ namespace Dotnet.Docker.Sync;
 /// </remarks>
 internal sealed class SyncInternalReleaseCommand(
     IGitRepoHelperFactory gitRepoHelperFactory,
+    ICommand<FromStagingPipelineOptions> updateFromStagingPipeline,
     ILogger<SyncInternalReleaseCommand> logger
 ) : BaseCommand<SyncInternalReleaseOptions>
 {
     private readonly IGitRepoHelperFactory _gitRepoHelperFactory = gitRepoHelperFactory;
+    private readonly ICommand<FromStagingPipelineOptions> _updateFromStagingPipeline = updateFromStagingPipeline;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
