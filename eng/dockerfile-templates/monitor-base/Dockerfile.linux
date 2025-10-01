@@ -19,7 +19,9 @@
 
 # Installer image
 FROM {{installerImageTag}} AS installer
-{{if isAzureLinux:
+{{if isInternal:
+ARG ACCESSTOKEN
+}}{{if isAzureLinux:
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 }}
 # Retrieve .NET Monitor Base
