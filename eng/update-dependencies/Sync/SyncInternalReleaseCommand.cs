@@ -89,25 +89,22 @@ internal sealed class SyncInternalReleaseCommand(
         if (targetIsAncestorOfSource)
         {
             _logger.LogInformation(
-                "Branch {TargetBranch} is an ancestor of {SourceBranch}",
+                "Branch {TargetBranch} is an ancestor of {SourceBranch} - creating fast-forward PR",
                 options.TargetBranch, options.SourceBranch);
 
             // "ff" here is an abbreviation for "fast-forward" - just want to keep branch names short
-            var pullRequestBranch = GetPrBranchName(action: "ff", options);
+            var fastForwardPrBranch = GetPrBranchName(action: "ff", options);
+            await repo.Remote.CreateRemoteBranchAsync(
+                newBranch: fastForwardPrBranch,
+                baseBranch: options.SourceBranch);
 
-            var pullRequestCreationInfo = new PullRequestCreationInfo(
-                Title: $"Fast-forward {options.TargetBranch} to {options.SourceBranch}",
-                Body: "",
-                BaseBranch: options.TargetBranch,
-                HeadBranch: pullRequestBranch);
+            await CreatePullRequest(
+                repo: repo,
+                title: $"Fast-forward {options.TargetBranch} to {options.SourceBranch}",
+                body: "",
+                targetBranch: options.TargetBranch,
+                sourceBranch: fastForwardPrBranch);
 
-            await repo.Remote.CreateRemoteBranchAsync(newBranch: pullRequestBranch, baseBranch: options.SourceBranch);
-            var pullRequestApiUrl = await repo.Remote.CreatePullRequestAsync(pullRequestCreationInfo);
-            var pullRequestInfo = await repo.Remote.GetPullRequestInfoAsync(pullRequestApiUrl);
-
-            _logger.LogInformation(
-                "Created pull request {PrTitle} at {PrUrl}",
-                pullRequestInfo.Title, pullRequestApiUrl);
             return 0;
         }
 
@@ -115,7 +112,118 @@ internal sealed class SyncInternalReleaseCommand(
             "Branch {TargetBranch} is not an ancestor of {SourceBranch}",
             options.TargetBranch, options.SourceBranch);
 
-        throw new NotImplementedException("Scenario is not yet implemented.");
+        // If we reach this point, then we know that:
+        // 1. Both branches exist on the remote.
+        // 2. The branches are at different commits.
+        // 3. The branches have diverged.
+        //
+        // Now we need to:
+        // 1. Read the internal-versions.txt file from the target branch to determine the
+        //    staging pipeline run IDs that were used for each internal .NET version.
+        // 2. Reset the target branch to the state of the source branch.
+        // 3. Re-apply internal .NET version updates.
+
+        // At this point, we need to verify that we have everything we need to
+        // access internal builds, commit changes, and submit a pull request.
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.StagingStorageAccount);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.CommitterName);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.CommitterEmail);
+        var commitAuthor = (Name: options.CommitterName, Email: options.CommitterEmail);
+
+        // Checkout both branches locally so that we can work with them directly.
+        await repo.CheckoutRemoteBranchAsync(options.SourceBranch);
+        await repo.CheckoutRemoteBranchAsync(options.TargetBranch);
+
+        var internalBuilds = _internalVersionsService.GetInternalStagingBuilds(repo.Local.LocalPath);
+
+        // Reset the target branch to match the source branch.
+        var prBranchName = GetPrBranchName(action: "sync", options);
+        await repo.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
+        await repo.Local.RestoreAsync(source: options.SourceBranch);
+        await repo.Local.StageAsync(".");
+        await repo.Local.CommitAsync(
+            message: $"Reset {options.TargetBranch} to match {options.SourceBranch} commit {sourceSha}",
+            author: commitAuthor);
+
+        // Re-apply internal .NET version updates for each recorded staging pipeline run ID.
+        foreach (var (dockerfileVersion, stagingPipelineRunId) in internalBuilds.Versions)
+        {
+            _logger.LogInformation(
+                "Re-applying internal build {BuildNumber} for .NET {DockerfileVersion}",
+                stagingPipelineRunId, dockerfileVersion);
+
+            await ApplyInternalBuildAsync(
+                localRepo: repo.Local,
+                stagingPipelineRunId: stagingPipelineRunId,
+                stagingStorageAccount: options.StagingStorageAccount,
+                committerIdentity: commitAuthor);
+        }
+
+        // Finally, submit a pull request with all of the changes.
+        await repo.PushLocalBranchAsync(prBranchName);
+        await CreatePullRequest(
+            repo: repo,
+            title: $"Sync {options.TargetBranch} with {options.SourceBranch}",
+            body: "",
+            targetBranch: options.TargetBranch,
+            sourceBranch: prBranchName);
+
+        return 0;
+    }
+
+    /// <summary>
+    /// Helper method that creates a pull request and logs the result.
+    /// </summary>
+    private async Task CreatePullRequest(
+        IGitRepoHelper repo,
+        string title,
+        string body,
+        string targetBranch,
+        string sourceBranch)
+    {
+        var pullRequestCreationInfo = new PullRequestCreationInfo(
+            Title: title,
+            Body: body,
+            BaseBranch: targetBranch,
+            HeadBranch: sourceBranch);
+
+        _logger.LogInformation("Creating pull request {PullRequestInfo}", pullRequestCreationInfo);
+        var pullRequestApiUrl = await repo.Remote.CreatePullRequestAsync(pullRequestCreationInfo);
+        var pullRequestInfo = await repo.Remote.GetPullRequestInfoAsync(pullRequestApiUrl);
+
+        _logger.LogInformation(
+            "Created pull request {PullRequestTitle} at {PullRequestUrl}",
+            pullRequestInfo.Title, pullRequestApiUrl);
+    }
+
+    /// <summary>
+    /// Apply an internal build by invoking the FromStagingPipelineCommand.
+    /// </summary>
+    /// <param name="stagingPipelineRunId">
+    /// ID of the Azure DevOps pipeline run to get build information from.
+    /// </param>
+    /// <param name="committerIdentity">
+    /// The identity to use when committing changes.
+    /// </param>
+    private async Task ApplyInternalBuildAsync(
+        ILocalGitRepoHelper localRepo,
+        int stagingPipelineRunId,
+        string stagingStorageAccount,
+        (string Name, string Email) committerIdentity)
+    {
+        var fromStagingPipelineOptions = new FromStagingPipelineOptions
+        {
+            RepoRoot = localRepo.LocalPath,
+            Internal = true,
+            StagingPipelineRunId = stagingPipelineRunId,
+            StagingStorageAccount = stagingStorageAccount,
+        };
+
+        await _updateFromStagingPipeline.ExecuteAsync(fromStagingPipelineOptions);
+        _logger.LogInformation("Applied internal build {BuildNumber}", stagingPipelineRunId);
+
+        await localRepo.StageAsync(".");
+        await localRepo.CommitAsync($"Update dependencies from build {stagingPipelineRunId}", committerIdentity);
     }
 
     private static string GetPrBranchName(string action, SyncInternalReleaseOptions options)

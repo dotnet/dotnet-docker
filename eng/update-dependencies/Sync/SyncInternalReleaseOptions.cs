@@ -12,13 +12,25 @@ public sealed record SyncInternalReleaseOptions : IOptions
     public string SourceBranch { get; set; } = string.Empty;
     public string TargetBranch { get; set; } = string.Empty;
     public string PrBranchPrefix { get; set; } = "pr";
+    public string CommitterName { get; set; } = string.Empty;
+    public string CommitterEmail { get; set; } = string.Empty;
+    public string StagingStorageAccount { get; set; } = string.Empty;
 
     public static List<Option> Options =>
     [
         new Option<string>("--pr-branch-prefix")
         {
             Description = "Prefix to use for branches created for pull requests",
-        }
+        },
+        new Option<string>("--committer-name")
+        {
+            Description = "Name used for git commits",
+        },
+        new Option<string>("--committer-email")
+        {
+            Description = "Email used for git commits",
+        },
+        FromStagingPipelineOptions.StagingStorageAccountOption,
     ];
 
     public static List<Argument> Arguments =>
