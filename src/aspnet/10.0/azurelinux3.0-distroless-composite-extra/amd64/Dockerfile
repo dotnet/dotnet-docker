@@ -10,7 +10,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=10.0.0-rc.2.25480.115 \
+RUN aspnetcore_version=10.0.0-rc.2.25501.103 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
@@ -30,9 +30,9 @@ FROM $REPO:10.0.0-rc.2-azurelinux3.0-distroless-extra-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-rc.2.25480.115 \
+    DOTNET_VERSION=10.0.0-rc.2.25501.103 \
     # ASP.NET Core version
-    ASPNET_VERSION=10.0.0-rc.2.25480.115
+    ASPNET_VERSION=10.0.0-rc.2.25501.103
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
