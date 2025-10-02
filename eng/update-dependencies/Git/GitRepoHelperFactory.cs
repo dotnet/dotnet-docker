@@ -17,12 +17,14 @@ internal interface IGitRepoHelperFactory
 }
 
 internal sealed class GitRepoHelperFactory(
+    ILogger<GitRepoHelperFactory> logger,
     IGitRepoCloner gitRepoCloner,
     ILocalGitRepoFactory localGitRepoFactory,
     IRemoteGitRepoFactory remoteFactory,
     IServiceProvider serviceProvider
 ) : IGitRepoHelperFactory
 {
+    private readonly ILogger<GitRepoHelperFactory> _logger = logger;
     private readonly IGitRepoCloner _gitRepoCloner = gitRepoCloner;
     private readonly ILocalGitRepoFactory _localGitRepoFactory = localGitRepoFactory;
     private readonly IRemoteGitRepoFactory _remoteFactory = remoteFactory;
@@ -38,6 +40,7 @@ internal sealed class GitRepoHelperFactory(
             targetDirectory: localCloneDir,
             checkoutSubmodules: false,
             gitDirectory: null);
+        _logger.LogInformation("Cloned '{RepoUri}' to '{LocalCloneDir}'", repoUri, localCloneDir);
 
         var localGitRepo = _localGitRepoFactory.Create(new NativePath(localCloneDir));
         var localGitRepoHelper = new LocalGitRepoHelper(
