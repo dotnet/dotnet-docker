@@ -55,7 +55,7 @@ internal sealed class GitRepoHelper(
             throw new InvalidBranchException($"Branch '{branchName}' does not exist on remote.");
         }
 
-        await Local.CheckoutBranchAsync(branchName);
+        await Local.CheckoutRefAsync($"origin/{branchName}");
     }
 
     /// <inheritdoc />

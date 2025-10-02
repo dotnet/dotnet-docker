@@ -22,10 +22,10 @@ internal interface ILocalGitRepoHelper
     Task<string> CommitAsync(string message, (string Name, string Email) author);
 
     /// <summary>
-    /// Check out a local branch.
+    /// Check out a git ref locally.
     /// </summary>
-    /// <param name="branchName">A branch that exists locally.</param>
-    Task CheckoutBranchAsync(string branchName);
+    /// <param name="gitRef">A git ref that exists locally.</param>
+    Task CheckoutRefAsync(string gitRef);
 
     /// <summary>
     /// Create a new local branch. This does not push the branch to the remote.

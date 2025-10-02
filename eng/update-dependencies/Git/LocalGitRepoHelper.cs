@@ -33,11 +33,10 @@ internal sealed class LocalGitRepoHelper(
     }
 
     /// <inheritdoc />
-    public Task CheckoutBranchAsync(string branchName)
+    public Task CheckoutRefAsync(string gitRef)
     {
-        var branchRef = $"refs/heads/{branchName}";
-        _logger.LogInformation("Checking out ref {BranchRef}", branchRef);
-        return _localGitRepo.CheckoutAsync(branchRef);
+        _logger.LogInformation("Checking out ref {GitRef}", gitRef);
+        return _localGitRepo.CheckoutAsync(gitRef);
     }
 
     /// <inheritdoc />
