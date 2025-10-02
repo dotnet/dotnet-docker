@@ -18,7 +18,6 @@ namespace Dotnet.Docker
 {
     public class SpecificCommand : BaseCommand<SpecificCommandOptions>
     {
-
         private static SpecificCommandOptions? s_options;
 
         private static SpecificCommandOptions Options {
@@ -29,12 +28,15 @@ namespace Dotnet.Docker
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
             Options = options;
+            int exitCode = 0;
+
+            ErrorTraceListener errorTraceListener = new();
+            TextWriterTraceListener consoleTraceListener = new TextWriterTraceListener(Console.Out);
+            Trace.Listeners.Add(errorTraceListener);
+            Trace.Listeners.Add(consoleTraceListener);
 
             try
             {
-                ErrorTraceListener errorTraceListener = new();
-                Trace.Listeners.Add(errorTraceListener);
-                Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
 
                 IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
@@ -114,10 +116,18 @@ namespace Dotnet.Docker
             catch (Exception e)
             {
                 Console.Error.WriteLine($"Failed to update dependencies:{Environment.NewLine}{e}");
-                Environment.Exit(1);
+                exitCode = 1;
+            }
+            finally
+            {
+                Trace.Listeners.Remove(errorTraceListener);
+                Trace.Listeners.Remove(consoleTraceListener);
+                errorTraceListener.Dispose();
+                consoleTraceListener.Dispose();
+                s_options = null;
             }
 
-            return 0;
+            return exitCode;
         }
 
         private static DependencyUpdateResults UpdateFiles(
@@ -396,7 +406,7 @@ namespace Dotnet.Docker
             return updaters;
         }
 
-        private IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
+        private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
         [
             ScriptRunnerUpdater.GetDockerfileUpdater(Options.RepoRoot),
             ScriptRunnerUpdater.GetReadMeUpdater(Options.RepoRoot)
