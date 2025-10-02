@@ -32,9 +32,16 @@ internal sealed class SyncInternalReleaseCommand(
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.RemoteUrl);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoOrganization);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoProject);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoRepo);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.TargetBranch);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.SourceBranch);
+
+        // AzdoOrganization is a URL like https://dev.azure.com/<org>
+        // A valid Azure DevOps repository URL is formatted like https://dev.azure.com/<org>/<project>/_git/<repo>
+        var remoteUri = new Uri($"{options.AzdoOrganization.TrimEnd('/')}/{options.AzdoProject}/_git/{options.AzdoRepo}");
+        var remoteUrl = remoteUri.ToString();
 
         // Do not allow syncing starting from an internal branch.
         if (options.SourceBranch.StartsWith("internal/", StringComparison.OrdinalIgnoreCase))
@@ -43,7 +50,7 @@ internal sealed class SyncInternalReleaseCommand(
                 $"The source branch '{options.SourceBranch}' cannot be an internal branch.");
         }
 
-        using var repo = await _gitRepoHelperFactory.CreateAsync(options.RemoteUrl);
+        using var repo = await _gitRepoHelperFactory.CreateAsync(remoteUrl);
 
         // Verify that the source branch exists on the remote.
         var sourceBranchExists = await repo.Remote.RemoteBranchExistsAsync(options.SourceBranch);
@@ -126,9 +133,9 @@ internal sealed class SyncInternalReleaseCommand(
         // At this point, we need to verify that we have everything we need to
         // access internal builds, commit changes, and submit a pull request.
         ArgumentException.ThrowIfNullOrWhiteSpace(options.StagingStorageAccount);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.CommitterName);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.CommitterEmail);
-        var commitAuthor = (Name: options.CommitterName, Email: options.CommitterEmail);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.User);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.Email);
+        var commitAuthor = (Name: options.User, Email: options.Email);
 
         // Checkout both branches locally so that we can work with them directly.
         await repo.CheckoutRemoteBranchAsync(options.SourceBranch);
@@ -148,11 +155,8 @@ internal sealed class SyncInternalReleaseCommand(
         // Re-apply internal .NET version updates for each recorded staging pipeline run ID.
         foreach (var (dockerfileVersion, stagingPipelineRunId) in internalBuilds.Versions)
         {
-            _logger.LogInformation(
-                "Re-applying internal build {BuildNumber} for .NET {DockerfileVersion}",
-                stagingPipelineRunId, dockerfileVersion);
-
             await ApplyInternalBuildAsync(
+                options: options,
                 localRepo: repo.Local,
                 stagingPipelineRunId: stagingPipelineRunId,
                 stagingStorageAccount: options.StagingStorageAccount,
@@ -206,21 +210,37 @@ internal sealed class SyncInternalReleaseCommand(
     /// The identity to use when committing changes.
     /// </param>
     private async Task ApplyInternalBuildAsync(
+        SyncInternalReleaseOptions options,
         ILocalGitRepoHelper localRepo,
         int stagingPipelineRunId,
         string stagingStorageAccount,
         (string Name, string Email) committerIdentity)
     {
+        // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
+        var buildUrl = $"{options.AzdoOrganization.TrimEnd('/')}/{options.AzdoProject}/_build/results?buildId={stagingPipelineRunId}";
+
+        _logger.LogInformation(
+            "Applying internal build {BuildNumber} ({BuildUrl})",
+            stagingPipelineRunId, buildUrl);
+        _logger.LogInformation(
+            "Ignore any git-related logging output below, because git "
+            + "operations are being managed by a different command.");
+
         var fromStagingPipelineOptions = new FromStagingPipelineOptions
         {
             RepoRoot = localRepo.LocalPath,
             Internal = true,
             StagingPipelineRunId = stagingPipelineRunId,
             StagingStorageAccount = stagingStorageAccount,
+            AzdoOrganization = options.AzdoOrganization,
+            AzdoProject = options.AzdoProject,
+            AzdoRepo = options.AzdoRepo,
         };
 
         await _updateFromStagingPipeline.ExecuteAsync(fromStagingPipelineOptions);
-        _logger.LogInformation("Applied internal build {BuildNumber}", stagingPipelineRunId);
+        _logger.LogInformation(
+            "Finished applying internal build {BuildNumber} ({BuildUrl})",
+            stagingPipelineRunId, buildUrl);
 
         await localRepo.StageAsync(".");
         await localRepo.CommitAsync($"Update dependencies from build {stagingPipelineRunId}", committerIdentity);
