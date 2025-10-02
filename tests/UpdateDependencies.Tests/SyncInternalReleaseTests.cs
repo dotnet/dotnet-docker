@@ -33,25 +33,6 @@ public sealed class SyncInternalReleaseTests
     };
 
     /// <summary>
-    /// Helper method to create a <see cref="SyncInternalReleaseCommand"/> instance with optional
-    /// mocked dependencies. If dependencies are not provided, default mocks will be used.
-    /// </summary>
-    private SyncInternalReleaseCommand CreateCommand(
-        IGitRepoHelperFactory? repoFactory = null,
-        ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
-        IInternalVersionsService? internalVersionsService = null,
-        ILogger<SyncInternalReleaseCommand>? logger = null)
-    {
-        // New parameters should be null by default and initialized with mocks if not specified.
-        return new(
-            repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
-            fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
-            internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
-            logger ?? Mock.Of<ILogger<SyncInternalReleaseCommand>>()
-        );
-    }
-
-    /// <summary>
     /// Calling the command with null or whitespace for any of the arguments should fail.
     /// </summary>
     [Fact]
@@ -201,13 +182,19 @@ public sealed class SyncInternalReleaseTests
         );
     }
 
+    /// <summary>
+    /// If the target and source branches have diverged, then a pull request
+    /// should be created that resets the target branch to match the source
+    /// branch, re-applying any internal .NET version updates that already
+    /// existed on the target branch.
+    /// </summary>
     [Fact]
     public async Task Sync()
     {
         var options = s_defaultOptions with
         {
             CommitterName = "Test User",
-            CommitterEmail = "testuser@example.com",
+            CommitterEmail = "test@example.com",
             StagingStorageAccount = "dotnetstage"
         };
 
@@ -246,7 +233,7 @@ public sealed class SyncInternalReleaseTests
         var exitCode = await syncCommand.ExecuteAsync(options);
         exitCode.ShouldBe(0);
 
-        // Verify that we re-applied all internal versions
+        // Verify that we re-applied all internal versions by calling the downstream command.
         foreach ((string dotnetVersion, int buildId) in internalVersions)
         {
             fromStagingPipelineCommandMock.Verify(command =>
@@ -289,6 +276,21 @@ public sealed class SyncInternalReleaseTests
     }
 
     /// <summary>
+    /// Helper method to create a <see cref="SyncInternalReleaseCommand"/> instance with optional
+    /// mocked dependencies. If dependencies are not provided, default mocks will be used.
+    /// </summary>
+    private SyncInternalReleaseCommand CreateCommand(
+        IGitRepoHelperFactory? repoFactory = null,
+        ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
+        IInternalVersionsService? internalVersionsService = null,
+        ILogger<SyncInternalReleaseCommand>? logger = null) =>
+            // New parameters should be null by default and initialized with mocks if not specified.
+            new(repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
+                fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
+                internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
+                logger ?? Mock.Of<ILogger<SyncInternalReleaseCommand>>());
+
+    /// <summary>
     /// Helper method to create a mock version of <see cref="IInternalVersionsService"/>
     /// </summary>
     private static IInternalVersionsService CreateInternalVersionsService(
@@ -303,17 +305,31 @@ public sealed class SyncInternalReleaseTests
         return mock.Object;
     }
 
+    /// <summary>
+    /// Helper class for setting up scenarios on a <see cref="IGitRepoHelper"/> mock.
+    /// </summary>
     private class GitTestScenario
     {
         public Mock<IGitRepoHelper> RepoMock { get; } = new();
+
+        /// <summary>
+        /// Factory that returns <see cref="RepoMock"/> when
+        /// <see cref="IGitRepoHelperFactory.CreateAsync"/> is called.
+        /// </summary>
         public Mock<IGitRepoHelperFactory> RepoFactoryMock { get; } = new();
 
+        /// <summary>
+        /// Create a new scenario for the given local and remote repos.
+        /// </summary>
         public GitTestScenario(string localRepoPath, string remoteRepoUrl)
         {
             RepoMock.Setup(r => r.Local.LocalPath).Returns(localRepoPath);
             RepoFactoryMock.Setup(f => f.CreateAsync(remoteRepoUrl)).ReturnsAsync(RepoMock.Object);
         }
 
+        /// <summary>
+        /// Pretend that a branch exists on the remote with the given name and commit SHA.
+        /// </summary>
         public GitTestScenario AddRemoteBranch(string branchName, string commitSha)
         {
             RepoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(branchName)).ReturnsAsync(true);
@@ -321,6 +337,10 @@ public sealed class SyncInternalReleaseTests
             return this;
         }
 
+        /// <summary>
+        /// Declare that <paramref name="ancestorBranch"/> is an ancestor of
+        /// <paramref name="descendantBranch"/>.
+        /// </summary>
         public GitTestScenario SetAncestor(string descendantBranch, string ancestorBranch)
         {
             RepoMock.Setup(r => r.Local.IsAncestorAsync($"origin/{ancestorBranch}", $"origin/{descendantBranch}"))
