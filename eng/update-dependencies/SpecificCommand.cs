@@ -55,7 +55,7 @@ namespace Dotnet.Docker
 
                 if (toolBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(Options.GetManifestVersionsFilePath());
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(repoRoot: Options.RepoRoot);
                     DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
                     updateResults.Add(toolUpdateResults);
                 }

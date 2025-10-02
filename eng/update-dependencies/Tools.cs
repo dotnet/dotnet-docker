@@ -28,11 +28,11 @@ internal static class Tools
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 
-    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string manifestVersionsFilePath) =>
+    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string repoRoot) =>
     [
-        ..MinGitUpdater.GetUpdaters(manifestVersionsFilePath),
-        ..ChiselUpdater.GetUpdaters(manifestVersionsFilePath),
-        RocksToolboxUpdater.GetUpdater(manifestVersionsFilePath),
-        SyftUpdater.GetUpdater(manifestVersionsFilePath),
+        ..MinGitUpdater.GetUpdaters(repoRoot),
+        ..ChiselUpdater.GetUpdaters(repoRoot),
+        RocksToolboxUpdater.GetUpdater(repoRoot),
+        SyftUpdater.GetUpdater(repoRoot),
     ];
 }
