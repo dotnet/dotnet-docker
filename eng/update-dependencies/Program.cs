@@ -62,7 +62,7 @@ config.UseHost(
                 logging.AddSimpleConsole(options =>
                 {
                     options.IncludeScopes = true;
-                    options.SingleLine = true;
+                    options.SingleLine = false;
                 });
             })
         .ConfigureServices(services =>
