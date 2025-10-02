@@ -70,8 +70,10 @@ internal sealed class SyncInternalReleaseCommand(
             return 0;
         }
 
-        var sourceSha = await repo.Remote.GetRemoteBranchShaAsync(options.SourceBranch);
-        var targetSha = await repo.Remote.GetRemoteBranchShaAsync(options.TargetBranch);
+        var sourceSha = await repo.Remote.GetRemoteBranchShaAsync(options.SourceBranch)
+            ?? throw new Exception("Failed to get source branch SHA even though branch exists on remote.");
+        var targetSha = await repo.Remote.GetRemoteBranchShaAsync(options.TargetBranch)
+            ?? throw new Exception("Failed to get target branch SHA even though branch exists on remote.");
 
         // If both branches are at the same commit, then there is nothing to do.
         if (sourceSha == targetSha)
@@ -146,7 +148,7 @@ internal sealed class SyncInternalReleaseCommand(
         // Reset the target branch to match the source branch.
         var prBranchName = GetPrBranchName(action: "sync", options);
         await repo.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
-        await repo.Local.RestoreAsync(source: options.SourceBranch);
+        await repo.Local.RestoreAsync(source: sourceSha);
         await repo.Local.StageAsync(".");
         await repo.Local.CommitAsync(
             message: $"Reset {options.TargetBranch} to match {options.SourceBranch} commit {sourceSha}",
