@@ -8,6 +8,7 @@
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set installerImageTag to when(isAzureLinux,
         cat("mcr.microsoft.com/"
             when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinux", "cbl-mariner"),

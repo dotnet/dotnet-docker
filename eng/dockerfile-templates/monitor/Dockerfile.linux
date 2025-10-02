@@ -10,6 +10,7 @@
     set monitorBaseTag to
         cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], monitorBaseTagOsSuffix, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set installerImageTag to when(isAzureLinux,
         cat("mcr.microsoft.com/"
             when(find(OS_VERSION, "3.0") >= 0, "azurelinux", "cbl-mariner"),
