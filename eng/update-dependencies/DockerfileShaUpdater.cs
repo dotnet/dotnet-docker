@@ -40,10 +40,17 @@ namespace Dotnet.Docker
         private readonly SpecificCommandOptions _options;
         private readonly string _versions;
         private readonly Dictionary<string, string> _urls;
-        private readonly Lazy<JObject> _manifestVariables;
+        private readonly ManifestVariables _manifestVariables;
 
         public DockerfileShaUpdater(
-            string productName, string dockerfileVersion, string? buildVersion, string arch, string os, string versions, SpecificCommandOptions options)
+            string productName,
+            string dockerfileVersion,
+            string? buildVersion,
+            string arch,
+            string os,
+            string versions,
+            SpecificCommandOptions options,
+            ManifestVariables manifestVariables)
         {
             _productName = productName;
             _dockerfileVersion = new Version(dockerfileVersion);
@@ -52,6 +59,7 @@ namespace Dotnet.Docker
             _os = os;
             _versions = versions;
             _options = options;
+            _manifestVariables = manifestVariables;
 
             // Maps a product name to a set of one or more candidate URLs referencing the associated artifact. The order of the URLs
             // should be in priority order with each subsequent URL being the fallback.
@@ -69,19 +77,6 @@ namespace Dotnet.Docker
                 { "sdk",                            "$DOTNET_BASE_URL/Sdk/$VERSION_DIR/dotnet-sdk-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
             };
 
-            _manifestVariables = new Lazy<JObject>(
-                () =>
-                {
-                    var versionsFile = options.GetManifestVersionsFilePath();
-                    const string VariablesProperty = "variables";
-                    JToken? variables = ManifestHelper.LoadManifest(versionsFile)[VariablesProperty];
-                    if (variables is null)
-                    {
-                        throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{versionsFile}'");
-                    }
-                    return (JObject)variables;
-                });
-
             if (!string.IsNullOrEmpty(_options.InternalAccessToken))
             {
                 s_httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
@@ -92,7 +87,10 @@ namespace Dotnet.Docker
         }
 
         public static IEnumerable<IDependencyUpdater> CreateUpdaters(
-            string productName, string dockerfileVersion, SpecificCommandOptions options)
+            string productName,
+            string dockerfileVersion,
+            SpecificCommandOptions options,
+            ManifestVariables variables)
         {
             string versionsPath = options.GetManifestVersionsFilePath();
             string versions = File.ReadAllText(versionsPath);
@@ -117,7 +115,8 @@ namespace Dotnet.Docker
                         GetArch(parts),
                         GetOs(parts),
                         versions,
-                        options)
+                        options,
+                        variables)
                     {
                         Path = versionsPath,
                         VersionGroupName = ShaValueGroupName
@@ -138,7 +137,7 @@ namespace Dotnet.Docker
         {
             usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
 
-            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
+            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Variables, _options);
             // Remove Aspire Dashboard case once https://github.com/dotnet/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
@@ -276,7 +275,7 @@ namespace Dotnet.Docker
             // corresponding build in the daily build location, for example, will not be signed due. So when we're targeting
             // the daily build location, we wouldn't use the release checksums file and instead use the other means of
             // retrieving the checksums.
-            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Value, _options);
+            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Variables, _options);
             if (baseUrl != ReleaseDotnetBaseCdnUrl)
             {
                 return null;

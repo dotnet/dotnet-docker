@@ -1,8 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.IO;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
@@ -21,8 +19,19 @@ public static partial class ManifestHelper
     /// </summary>
     /// <param name="manifestVariables">JSON object of the variables from the manifest.</param>
     /// <param name="options">Configured options from the app.</param>
-    public static string GetBaseUrl(JObject manifestVariables, SpecificCommandOptions options) =>
-        ResolveVariableValue(GetBaseUrlVariableName(options.DockerfileVersion, options.SourceBranch, options.VersionSourceName), manifestVariables);
+    public static string GetBaseUrl(JObject manifestVariables, SpecificCommandOptions options)
+    {
+        // The upstream branch represents which GitHub branch the current
+        // branch branched off of. This is either "nightly" or "main".
+        var upstreamBranch = ResolveVariableValue("branch", manifestVariables);
+
+        var baseUrlVariableName = GetBaseUrlVariableName(
+            dockerfileVersion: options.DockerfileVersion,
+            branch: upstreamBranch,
+            versionSourceName: options.VersionSourceName);
+
+        return ResolveVariableValue(baseUrlVariableName, manifestVariables);
+    }
 
     /// <summary>
     /// Constructs the name of the product version base URL variable.
@@ -137,7 +146,7 @@ public static partial class ManifestHelper
     /// </summary>
     /// <param name="value">Variable value to be resolved.</param>
     /// <param name="variables">JSON object of the variables from the manifest.</param>
-    private static string ResolveVariables(string value, JObject variables)
+    public static string ResolveVariables(string value, JObject variables)
     {
         MatchCollection matches = Regex.Matches(value, VariablePattern);
         foreach (Match match in matches)

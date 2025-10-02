@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,6 +14,7 @@ using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
+using Newtonsoft.Json.Linq;
 
 namespace Dotnet.Docker
 {
@@ -37,18 +39,21 @@ namespace Dotnet.Docker
 
             try
             {
-
                 IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
                 IDependencyInfo[] toolBuildInfos =
                     await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
 
+                // Load manifest variables once, up front
+                var manifestFilePath = options.GetManifestVersionsFilePath();
+                var manifestVariables = ManifestVariables.FromFile(manifestFilePath);
+
                 List<DependencyUpdateResults> updateResults = [];
 
                 if (productBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters();
+                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters(manifestVariables);
                     DependencyUpdateResults productUpdateResults = UpdateFiles(productBuildInfos, productUpdaters);
                     updateResults.Add(productUpdateResults);
                 }
@@ -381,15 +386,15 @@ namespace Dotnet.Docker
             }
         }
 
-        private static IEnumerable<IDependencyUpdater> GetProductUpdaters()
+        private static IEnumerable<IDependencyUpdater> GetProductUpdaters(ManifestVariables manifestVariables)
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
 
             List<IDependencyUpdater> updaters =
             [
-                new NuGetConfigUpdater(Options),
-                BaseUrlUpdater.Create(Options)
+                new NuGetConfigUpdater(manifestVariables, Options),
+                BaseUrlUpdater.Create(manifestVariables, Options)
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
@@ -397,10 +402,13 @@ namespace Dotnet.Docker
                 updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, Options));
                 updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, Options));
 
-                foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, Options))
-                {
-                    updaters.Add(shaUpdater);
-                }
+                var shaUpdaters = DockerfileShaUpdater.CreateUpdaters(
+                    productName: productName,
+                    dockerfileVersion: Options.DockerfileVersion,
+                    options: Options,
+                    variables: manifestVariables);
+
+                updaters.AddRange(shaUpdaters);
             }
 
             return updaters;

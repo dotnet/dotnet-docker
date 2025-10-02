@@ -1,10 +1,6 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
@@ -20,11 +16,21 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     private readonly SpecificCommandOptions _options;
     private readonly string _configPath;
 
-    public NuGetConfigUpdater(SpecificCommandOptions options)
+    public NuGetConfigUpdater(ManifestVariables manifestVariables, SpecificCommandOptions options)
     {
         _options = options;
 
-        string configSuffix = _options.IsInternal ? ".internal" : _options.SourceBranch == "nightly" ? ".nightly" : string.Empty;
+        // The upstream branch represents which GitHub branch the current
+        // branch branched off of. This is either "nightly" or "main".
+        string upstreamBranch = manifestVariables.GetValue("branch");
+
+        string configSuffix = (_options.IsInternal, upstreamBranch) switch
+        {
+            (true, _) => ".internal",
+            (false, "nightly") => ".nightly",
+            _ => string.Empty
+        };
+
         _configPath = Path.Combine(_options.RepoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
     }
 
