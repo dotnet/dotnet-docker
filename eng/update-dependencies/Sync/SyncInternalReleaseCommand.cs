@@ -32,16 +32,7 @@ internal sealed class SyncInternalReleaseCommand(
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
     {
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoOrganization);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoProject);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoRepo);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.TargetBranch);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.SourceBranch);
-
-        // AzdoOrganization is a URL like https://dev.azure.com/<org>
-        // A valid Azure DevOps repository URL is formatted like https://dev.azure.com/<org>/<project>/_git/<repo>
-        var remoteUri = new Uri($"{options.AzdoOrganization.TrimEnd('/')}/{options.AzdoProject}/_git/{options.AzdoRepo}");
-        var remoteUrl = remoteUri.ToString();
+        var remoteUrl = options.GetAzdoRepoUrl();
 
         // Do not allow syncing starting from an internal branch.
         if (options.SourceBranch.StartsWith("internal/", StringComparison.OrdinalIgnoreCase))

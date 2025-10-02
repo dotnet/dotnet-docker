@@ -14,10 +14,11 @@ public sealed class SyncInternalReleaseTests
 {
     private const string ReleaseBranch = "release/1";
     private const string InternalReleaseBranch = $"internal/{ReleaseBranch}";
-    private const string AzdoOrg = "test-org";
+    private const string AzdoOrgName = "test-org";
+    private const string AzdoOrgUrl = $"https://dev.azure.com/{AzdoOrgName}";
     private const string AzdoProject = "test-project";
     private const string AzdoRepo = "test-repo";
-    private const string RemoteAzdoUrl = $"https://dev.azure.com/{AzdoOrg}/{AzdoProject}/_git/{AzdoRepo}";
+    private const string RemoteAzdoUrl = $"{AzdoOrgUrl}/{AzdoProject}/_git/{AzdoRepo}";
     private const string LocalRepoPath = "/path/to/local-repo";
 
     /// <summary>
@@ -27,7 +28,9 @@ public sealed class SyncInternalReleaseTests
     /// </summary>
     private static readonly SyncInternalReleaseOptions s_defaultOptions = new()
     {
-        RemoteUrl = RemoteAzdoUrl,
+        AzdoOrganization = AzdoOrgUrl,
+        AzdoProject = AzdoProject,
+        AzdoRepo = AzdoRepo,
         SourceBranch = ReleaseBranch,
         TargetBranch = InternalReleaseBranch
     };
@@ -40,7 +43,9 @@ public sealed class SyncInternalReleaseTests
     {
         var options = new SyncInternalReleaseOptions
         {
-            RemoteUrl = "   ",
+            AzdoOrganization = "   ",
+            AzdoProject = "   ",
+            AzdoRepo = "   ",
             SourceBranch = "   ",
             TargetBranch = "   "
         };
@@ -76,7 +81,7 @@ public sealed class SyncInternalReleaseTests
 
         var repoMock = new Mock<IGitRepoHelper>();
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAsync(options.RemoteUrl)).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAsync(options.GetAzdoRepoUrl())).ReturnsAsync(repoMock.Object);
 
         // Setup:
         // Target branch does not exist on remote
@@ -106,7 +111,7 @@ public sealed class SyncInternalReleaseTests
         // not explicitly set up in this test.
         var repoMock = new Mock<IGitRepoHelper>(MockBehavior.Strict);
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAsync(options.RemoteUrl)).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAsync(options.GetAzdoRepoUrl())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -143,7 +148,7 @@ public sealed class SyncInternalReleaseTests
         repoMock.Setup(r => r.Remote).Returns(remoteRepoMock.Object);
 
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAsync(options.RemoteUrl)).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAsync(options.GetAzdoRepoUrl())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -193,8 +198,8 @@ public sealed class SyncInternalReleaseTests
     {
         var options = s_defaultOptions with
         {
-            CommitterName = "Test User",
-            CommitterEmail = "test@example.com",
+            User = "Test User",
+            Email = "test@example.com",
             StagingStorageAccount = "dotnetstage"
         };
 
@@ -254,8 +259,8 @@ public sealed class SyncInternalReleaseTests
         gitScenario.RepoMock.Verify(
             repo => repo.Local.CommitAsync(
                 It.IsAny<string>(),
-                It.Is<(string Name, string Email)>(author =>
-                    author.Name == options.CommitterName && author.Email == options.CommitterEmail
+                It.Is<(string Name, string Email)>(
+                    author => author.Name == options.User && author.Email == options.Email
                 )
             ),
             Times.Exactly(numberOfCommits)
