@@ -62,8 +62,22 @@ internal sealed class LocalGitRepoHelper(
     /// <inheritdoc />
     public async Task<string> CommitAsync(string message, (string Name, string Email) author)
     {
+        var gitStatusLines = await _localGitRepo.RunGitCommandAsync(["status"]);
+        var gitStatus = string.Join(Environment.NewLine, gitStatusLines);
+        _logger.LogInformation(
+            """
+            Git status:
+            {gitStatus}
+            """,
+            gitStatus);
+
         await _localGitRepo.CommitAsync(message, allowEmpty: false, author);
         var commitSha = await _localGitRepo.GetShaForRefAsync("HEAD");
+
+        _logger.LogInformation(
+            "Created commit {commitSha}, message: '{commitMessage}' ({authorName} <{authorEmail}>)",
+            commitSha, message, author.Name, author.Email);
+
         return commitSha;
     }
 
@@ -100,8 +114,9 @@ internal sealed class LocalGitRepoHelper(
     }
 
     /// <inheritdoc />
-    public async Task RestoreAsync(string source)
+    public Task RestoreAsync(string source)
     {
-        await _localGitRepo.ExecuteGitCommand("restore", "--source", source);
+        _logger.LogInformation("Restoring working tree from source {Source}", source);
+        return _localGitRepo.ExecuteGitCommand("restore", "--source", source, ".");
     }
 }
