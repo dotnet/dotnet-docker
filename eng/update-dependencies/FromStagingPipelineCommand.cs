@@ -96,6 +96,7 @@ internal partial class FromStagingPipelineCommand(
         var updateDependencies = new SpecificCommand();
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
+            RepoRoot = options.RepoRoot,
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = productVersions,
 
