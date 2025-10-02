@@ -4,11 +4,17 @@
     set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
     set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
+    set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
+    set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$dotnet_monitor_version') ^
+    set monitorBaseUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
+    set monitorBaseChecksumUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|checksums|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
-    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
+    set isInternal to find(monitorBaseUrl, "dotnetstage") >= 0 ^
     set installerImageTag to when(isAzureLinux,
         cat("mcr.microsoft.com/"
             when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinux", "cbl-mariner"),
@@ -26,7 +32,12 @@ ARG ACCESSTOKEN
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 }}
 # Retrieve .NET Monitor Base
-{{InsertTemplate(monitorBaseTemplate)}}
+{{InsertTemplate(monitorBaseTemplate, [
+    "monitorVersion": monitorVersion,
+    "monitorMajorMinor": monitorMajorMinor,
+    "monitorBaseUrl": monitorBaseUrl,
+    "monitorBaseChecksumUrl": monitorBaseChecksumUrl
+])}}
 
 
 # .NET Monitor Base image
