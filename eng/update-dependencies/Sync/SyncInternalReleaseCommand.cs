@@ -239,7 +239,13 @@ internal sealed class SyncInternalReleaseCommand(
             AzdoRepo = options.AzdoRepo,
         };
 
-        await _updateFromStagingPipeline.ExecuteAsync(fromStagingPipelineOptions);
+        var exitCode = await _updateFromStagingPipeline.ExecuteAsync(fromStagingPipelineOptions);
+        if (exitCode != 0)
+        {
+            throw new InvalidOperationException(
+                $"Failed to apply internal build {stagingPipelineRunId}. Command exited with code {exitCode}.");
+        }
+
         _logger.LogInformation(
             "Finished applying internal build {BuildNumber} ({BuildUrl})",
             stagingPipelineRunId, buildUrl);
