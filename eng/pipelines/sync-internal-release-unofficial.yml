@@ -40,6 +40,7 @@ extends:
             azureSubscription: "$(updateDepsInt-test.serviceConnectionName)"
             scriptType: "pscore"
             scriptLocation: "inlineScript"
+            addSpnToEnvironment: true
             inlineScript: >-
               dotnet run --configuration Release --project ./eng/update-dependencies/update-dependencies.csproj --
               sync-internal-release
