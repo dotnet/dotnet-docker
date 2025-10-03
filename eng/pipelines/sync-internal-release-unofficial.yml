@@ -57,3 +57,6 @@ extends:
               --user "$env:DOTNETDOCKERBOT_USERNAME"
               --email "$env:DOTNETDOCKERBOT_EMAIL"
               --staging-storage-account "dotnetstage"
+          env:
+            # Used to authenticate to Azure DevOps
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
