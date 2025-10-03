@@ -10,7 +10,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0-rc.2.25501.103 \
+RUN dotnet_version=10.0.0-rc.2.25502.106 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
@@ -29,7 +29,7 @@ RUN mkdir /dotnet-symlink \
 FROM $REPO:10.0.0-rc.2-azurelinux3.0-distroless-extra-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-rc.2.25501.103
+ENV DOTNET_VERSION=10.0.0-rc.2.25502.106
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
