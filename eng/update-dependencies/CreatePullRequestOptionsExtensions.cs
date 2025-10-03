@@ -19,6 +19,6 @@ internal static class CreatePullRequestOptionsExtensions
 
         // AzdoOrganization is a URL like https://dev.azure.com/<org>
         // A valid Azure DevOps repository URL is formatted like https://dev.azure.com/<org>/<project>/_git/<repo>
-        return $"{options.AzdoOrganization.TrimEnd('/')}/{options.AzdoProject}/_git/{options.AzdoRepo}";
+        return $"{options.AzdoOrganization}/{options.AzdoProject}/_git/{options.AzdoRepo}";
     }
 }

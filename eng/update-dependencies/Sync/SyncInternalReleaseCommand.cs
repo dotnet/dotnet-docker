@@ -210,7 +210,7 @@ internal sealed class SyncInternalReleaseCommand(
         (string Name, string Email) committerIdentity)
     {
         // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
-        var buildUrl = $"{options.AzdoOrganization.TrimEnd('/')}/{options.AzdoProject}/_build/results?buildId={stagingPipelineRunId}";
+        var buildUrl = $"{options.AzdoOrganization}/{options.AzdoProject}/_build/results?buildId={stagingPipelineRunId}";
 
         _logger.LogInformation(
             "Applying internal build {BuildNumber} ({BuildUrl})",
