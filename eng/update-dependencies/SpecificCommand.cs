@@ -184,7 +184,7 @@ namespace Dotnet.Docker
                 "azuredevops"
             );
 
-            var url = $"{Options.AzdoOrganization}{Options.AzdoProject}/_git/{Options.AzdoRepo}";
+            var url = Options.GetAzdoRepoUrl();
             Trace.WriteLine($"Adding remote {remoteName} with URL {url}");
             Remote remote = repo.Network.Remotes.Add(remoteName, url);
 
