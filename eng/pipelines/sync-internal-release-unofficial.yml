@@ -41,9 +41,14 @@ extends:
             scriptType: "pscore"
             scriptLocation: "inlineScript"
             inlineScript: >-
-              dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+              dotnet run --configuration Release --project ./eng/update-dependencies/update-dependencies.csproj --
               sync-internal-release
-              --pr-branch-prefix pr/unofficial
-              $(Build.Repository.Uri)
-              ${{ parameters.sourceBranch }}
-              ${{ parameters.targetBranch }}
+              --azdo-organization "$env:SYSTEM_COLLECTIONURI"
+              --azdo-project "$env:SYSTEM_TEAMPROJECT"
+              --azdo-repo "$env:BUILD_REPOSITORY_NAME"
+              --source-branch "${{ parameters.sourceBranch }}"
+              --target-branch "${{ parameters.targetBranch }}"
+              --pr-branch-prefix "pr"
+              --user "$env:DOTNETDOCKERBOT_USERNAME"
+              --email "$env:DOTNETDOCKERBOT_EMAIL"
+              --staging-storage-account "dotnetstage"
