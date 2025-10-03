@@ -10,7 +10,7 @@ namespace Dotnet.Docker.Git;
 /// <summary>
 /// Factory for creating <see cref="IRemoteGitRepo"/> instances based on repository URLs.
 /// </summary>
-public interface IRemoteGitRepoFactory
+internal interface IRemoteGitRepoFactory
 {
     /// <summary>
     /// Creates a remote Git repository client appropriate for the given repository URL.
@@ -21,7 +21,7 @@ public interface IRemoteGitRepoFactory
 }
 
 /// <inheritdoc />
-public sealed class RemoteGitRepoFactory(IServiceProvider serviceProvider) : IRemoteGitRepoFactory
+internal sealed class RemoteGitRepoFactory(IServiceProvider serviceProvider) : IRemoteGitRepoFactory
 {
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 

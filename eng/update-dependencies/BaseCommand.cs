@@ -3,13 +3,12 @@
 
 using System.CommandLine;
 using System.CommandLine.NamingConventionBinder;
-using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Dotnet.Docker;
 
-public abstract class BaseCommand<TOptions>() where TOptions : IOptions
+public abstract class BaseCommand<TOptions>() : ICommand<TOptions> where TOptions : IOptions
 {
     public abstract Task<int> ExecuteAsync(TOptions options);
 
@@ -34,7 +33,7 @@ public abstract class BaseCommand<TOptions>() where TOptions : IOptions
     private static BindingHandler Handler =>
         CommandHandler.Create<TOptions, IHost>(async (options, host) =>
             {
-                var thisCommand = host.Services.GetRequiredService<BaseCommand<TOptions>>();
+                var thisCommand = host.Services.GetRequiredService<ICommand<TOptions>>();
                 return await thisCommand.ExecuteAsync(options);
             });
 }

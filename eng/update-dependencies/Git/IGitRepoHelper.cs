@@ -9,7 +9,7 @@ namespace Dotnet.Docker.Git;
 /// <summary>
 /// Handles operations that require interactions with both local and remote git repos.
 /// </summary>
-public interface IGitRepoHelper : IDisposable
+internal interface IGitRepoHelper : IDisposable
 {
     /// <summary>
     /// For any git operations that only affect the local repo.
