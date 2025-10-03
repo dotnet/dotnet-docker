@@ -17,7 +17,7 @@ internal class BaseUrlUpdater : FileRegexUpdater
 {
     private const string BaseUrlGroupName = "BaseUrlValue";
     private readonly SpecificCommandOptions _options;
-    private readonly JObject _manifestVariables;
+    private readonly ManifestVariables _manifestVariables;
     private readonly string _manifestVariableName;
 
     /// <summary>
@@ -25,40 +25,36 @@ internal class BaseUrlUpdater : FileRegexUpdater
     /// If the base URL variable cannot be found in the manifest, the updater
     /// won't do anything.
     /// </summary>
-    public static IDependencyUpdater Create(string repoRoot, SpecificCommandOptions options)
+    public static IDependencyUpdater Create(ManifestVariables manifestVariables, SpecificCommandOptions options)
     {
-        // Load manifest and extract variables once so the constructor doesn't duplicate this logic
-        var manifest = ManifestHelper.LoadManifest(SpecificCommand.VersionsFilename);
-        var manifestVariables = (JObject?)manifest["variables"];
-
         if (manifestVariables is null)
         {
             Trace.TraceWarning("BaseUrlUpdater: manifest variables missing - skipping base URL update.");
             return new EmptyDependencyUpdater();
         }
 
+        var upstreamBranch = manifestVariables.GetValue("branch");
         string baseUrlVarName = ManifestHelper.GetBaseUrlVariableName(
-            options.DockerfileVersion,
-            options.SourceBranch,
-            options.VersionSourceName,
-            options.IsSdkOnly);
+            dockerfileVersion: options.DockerfileVersion,
+            branch: upstreamBranch,
+            versionSourceName: options.VersionSourceName,
+            sdkOnlyRelease: options.IsSdkOnly);
 
-        if (!manifestVariables.ContainsKey(baseUrlVarName))
+        if (!manifestVariables.HasValue(baseUrlVarName))
         {
             Trace.TraceWarning($"BaseUrlUpdater: variable '{baseUrlVarName}' not found - skipping base URL update.");
             return new EmptyDependencyUpdater();
         }
 
-        return new BaseUrlUpdater(repoRoot, options, manifestVariables, baseUrlVarName);
+        return new BaseUrlUpdater(options, manifestVariables, baseUrlVarName);
     }
 
     private BaseUrlUpdater(
-        string repoRoot,
         SpecificCommandOptions options,
-        JObject manifestVariables,
+        ManifestVariables manifestVariables,
         string manifestVariableName)
     {
-        Path = System.IO.Path.Combine(repoRoot, SpecificCommand.VersionsFilename);
+        Path = options.GetManifestVersionsFilePath();
         VersionGroupName = BaseUrlGroupName;
         _options = options;
         _manifestVariables = manifestVariables;
@@ -72,7 +68,7 @@ internal class BaseUrlUpdater : FileRegexUpdater
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
 
         string baseUrlVersionVarName = _manifestVariableName;
-        string unresolvedBaseUrl = _manifestVariables[baseUrlVersionVarName]?.ToString() ??
+        string unresolvedBaseUrl = _manifestVariables.Variables[baseUrlVersionVarName]?.ToString() ??
             throw new InvalidOperationException($"Variable with name '{baseUrlVersionVarName}' is missing.");
 
         if (_options.IsInternal)

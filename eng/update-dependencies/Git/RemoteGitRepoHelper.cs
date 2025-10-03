@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Git;
 
-public sealed class RemoteGitRepoHelper(
+internal sealed class RemoteGitRepoHelper(
     string remoteRepoUrl,
     IRemoteGitRepo remoteGitRepo,
     ILocalGitRepo localGitRepo,

@@ -17,7 +17,7 @@ public static class DependencyInjectionExtensions
             where TCommand : BaseCommand<TOptions>
             where TOptions : IOptions
     {
-        serviceCollection.AddSingleton<BaseCommand<TOptions>, TCommand>();
+        serviceCollection.AddSingleton<ICommand<TOptions>, TCommand>();
     }
 
     /// <summary>

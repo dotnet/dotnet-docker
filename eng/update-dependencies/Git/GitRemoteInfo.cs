@@ -8,4 +8,4 @@ namespace Dotnet.Docker.Git;
 /// </summary>
 /// <param name="Name">The name of the remote (e.g., "origin").</param>
 /// <param name="Url">The URL of the remote repository.</param>
-public record GitRemoteInfo(string Name, string Url);
+internal sealed record GitRemoteInfo(string Name, string Url);
