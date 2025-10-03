@@ -34,7 +34,7 @@ extends:
 
         steps:
         - checkout: self
-          fetchDepth: 0
+          fetchDepth: 1
 
         - template: /eng/pipelines/steps/install-dotnet.yml@self
 
