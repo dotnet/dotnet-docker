@@ -12,6 +12,10 @@ parameters:
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
 - group: DotNet-Docker-Common-2
+# Always run unofficial pipelines in debug mode
+- name: "System.Debug"
+  value: true
+  readonly: true
 
 extends:
   template: /eng/common/templates/1es.yml@self
