@@ -1,0 +1,27 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - release/*
+pr: none
+
+variables:
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+- group: DotNet-Docker-Common-2
+# Always run unofficial pipelines in debug mode
+- name: "System.Debug"
+  value: true
+  readonly: true
+
+extends:
+  template: /eng/pipelines/pipelines/sync-internal-release.yml@self
+  parameters:
+    # Source branch will always be a release/* branch due to the pipeline trigger above
+    sourceBranch: "$(Build.SourceBranchName)"
+    # Target branch should be the internal version of the release branch
+    targetBranch: "internal/$(Build.SourceBranchName)"
+    # Service connection used to push new branches and submit pull requests.
+    # The "test" service connection works here in the official pipeline because
+    # we don't need to force push to protected branches. This pipeline only
+    # submits pull requests to them.
+    serviceConnection: "$(updateDepsInt-test.serviceConnectionName)"
