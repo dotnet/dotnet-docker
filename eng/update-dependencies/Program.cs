@@ -62,7 +62,7 @@ config.UseHost(
                 logging.AddSimpleConsole(options =>
                 {
                     options.IncludeScopes = true;
-                    options.SingleLine = true;
+                    options.SingleLine = false;
                 });
             })
         .ConfigureServices(services =>
@@ -128,6 +128,7 @@ config.UseHost(
 
                 services.AddSingleton<AzdoAuthProvider>();
                 services.AddSingleton<PipelineArtifactProvider>();
+                services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
 
                 // Dependencies that can be updated using the FromComponentCommand
                 services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");

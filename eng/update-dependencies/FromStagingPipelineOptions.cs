@@ -8,7 +8,7 @@ namespace Dotnet.Docker;
 
 internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
 {
-    public const string StagingStorageAccountOption = "--staging-storage-account";
+    public const string StagingStorageAccountOptionName = "--staging-storage-account";
     public const string InternalOption = "--internal";
 
     /// <summary>
@@ -37,14 +37,16 @@ internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
         ..CreatePullRequestOptions.Arguments,
     ];
 
+    public static Option<string> StagingStorageAccountOption = new(StagingStorageAccountOptionName)
+    {
+        Description = "The Azure Storage Account to use as a source for the update."
+            + " This should be one of two storage accounts: dotnetstagetest or dotnetstage."
+            + " For example: https://dotnetstagetest.blob.core.windows.net/"
+    };
+
     public static new List<Option> Options { get; } =
     [
-        new Option<string>(StagingStorageAccountOption)
-        {
-            Description = "The Azure Storage Account to use as a source for the update."
-                + " This should be one of two storage accounts: dotnetstagetest or dotnetstage."
-                + " For example: https://dotnetstagetest.blob.core.windows.net/"
-        },
+        StagingStorageAccountOption,
         new Option<bool>(InternalOption)
         {
             Description = "Whether or not to use the internal versions of the staged build. When not using an internal"

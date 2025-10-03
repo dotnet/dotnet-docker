@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker.Git;
 
-public sealed class LocalGitRepoHelper(
+internal sealed class LocalGitRepoHelper(
     string localPath,
     ILocalGitRepo localGitRepo,
     ILogger<LocalGitRepoHelper> logger
@@ -33,11 +33,10 @@ public sealed class LocalGitRepoHelper(
     }
 
     /// <inheritdoc />
-    public Task CheckoutBranchAsync(string branchName)
+    public Task CheckoutRefAsync(string gitRef)
     {
-        var branchRef = $"refs/heads/{branchName}";
-        _logger.LogInformation("Checking out ref {BranchRef}", branchRef);
-        return _localGitRepo.CheckoutAsync(branchRef);
+        _logger.LogInformation("Checking out ref {GitRef}", gitRef);
+        return _localGitRepo.CheckoutAsync(gitRef);
     }
 
     /// <inheritdoc />
@@ -63,11 +62,25 @@ public sealed class LocalGitRepoHelper(
     /// <inheritdoc />
     public async Task<string> CommitAsync(string message, (string Name, string Email) author)
     {
+        var gitStatusLines = await _localGitRepo.RunGitCommandAsync(["status"]);
+        var gitStatus = string.Join(Environment.NewLine, gitStatusLines);
+        _logger.LogInformation(
+            """
+            Git status:
+            {gitStatus}
+            """,
+            gitStatus);
+
         await _localGitRepo.CommitAsync(message, allowEmpty: false, author);
         var commitSha = await _localGitRepo.GetShaForRefAsync("HEAD");
+
+        _logger.LogInformation(
+            "Created commit {commitSha}, message: '{commitMessage}' ({authorName} <{authorEmail}>)",
+            commitSha, message, author.Name, author.Email);
+
         return commitSha;
     }
-    
+
     /// <inheritdoc />
     public async Task<bool> IsAncestorAsync(string ancestorRef, string descendantRef)
     {
@@ -98,5 +111,12 @@ public sealed class LocalGitRepoHelper(
             .Select(parts => new GitRemoteInfo(parts[0], parts[1]))
             // There are typically two entries per remote (fetch and push); we only want one
             .Distinct();
+    }
+
+    /// <inheritdoc />
+    public Task RestoreAsync(string source)
+    {
+        _logger.LogInformation("Restoring working tree from source {Source}", source);
+        return _localGitRepo.ExecuteGitCommand("restore", "--source", source, ".");
     }
 }

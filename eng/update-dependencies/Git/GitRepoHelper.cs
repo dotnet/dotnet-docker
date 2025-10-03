@@ -13,7 +13,7 @@ namespace Dotnet.Docker.Git;
 /// <remarks>
 /// Use <see cref="IGitRepoHelperFactory"/> to instantiate this.
 /// </remarks>
-public sealed class GitRepoHelper(
+internal sealed class GitRepoHelper(
     string remoteRepoUrl,
     ILocalGitRepoHelper localGitRepoHelper,
     IRemoteGitRepoHelper remoteGitRepoHelper,
@@ -55,7 +55,7 @@ public sealed class GitRepoHelper(
             throw new InvalidBranchException($"Branch '{branchName}' does not exist on remote.");
         }
 
-        await Local.CheckoutBranchAsync(branchName);
+        await Local.CheckoutRefAsync($"origin/{branchName}");
     }
 
     /// <inheritdoc />

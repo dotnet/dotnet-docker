@@ -6,7 +6,7 @@ using Microsoft.DotNet.DarcLib;
 
 namespace Dotnet.Docker.Git;
 
-public interface IRemoteGitRepoHelper
+internal interface IRemoteGitRepoHelper
 {
     /// <summary>
     /// Checks if a branch exists on the remote repository.
