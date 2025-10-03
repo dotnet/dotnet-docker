@@ -3,6 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM amd64/buildpack-deps:jammy-curl AS installer
 
+ARG ACCESSTOKEN
+
 # Retrieve .NET Monitor Base
 RUN dotnet_monitor_version=0.0.0 \
     && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output dotnet-monitor-base.tar.gz https://dotnetstage.blob.core.windows.net/diagnostics/monitor/0.0.0/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
