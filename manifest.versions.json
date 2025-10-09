@@ -1,6 +1,6 @@
 {
   "variables": {
-    "branch": "nightly",
+    "branch": "main",
 
     "base-url|public|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
