@@ -13,10 +13,17 @@ variables:
 - name: dockerHubRegistryCreds
   value: --registry-creds 'docker.io=placeholder;placeholder'
 
+# Build image definitions for dotnet repos that use docker-tools infrastructure.
+# Available images can be found at https://helix.dot.net/#1esPools
+
 - name: linuxAmd64InternalPoolImage
   value: 1es-ubuntu-2204
 - name: linuxAmd64InternalPoolName
   value: NetCore1ESPool-Internal
+- name: linuxAmd64PublicPoolImage
+  value: build.ubuntu.2204.amd64.open
+- name: linuxAmd64PublicPoolName
+  value: NetCore-Public
 
 - name: linuxArm64PoolImage
   value: Mariner-2-Docker-ARM64

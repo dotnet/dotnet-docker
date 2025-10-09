@@ -70,7 +70,9 @@ stages:
       ${{ if ne(parameters.linuxAmd64Pool, '') }}:
         ${{ parameters.linuxAmd64Pool }}
       ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        vmImage: $(defaultLinuxAmd64PoolImage)
+        name: $(linuxAmd64PublicPoolName)
+        image: $(linuxAmd64PublicPoolImage)
+        os: linux
       ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxAmd64InternalPoolName)
         image: $(linuxAmd64InternalPoolImage)
