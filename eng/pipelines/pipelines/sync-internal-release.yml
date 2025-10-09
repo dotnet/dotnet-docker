@@ -43,8 +43,8 @@ extends:
           inputs:
             # Used to push new, non-protected branches and submit pull requests.
             azureSubscription: "${{ parameters.serviceConnection }}"
-            scriptType: "pscore"
-            scriptLocation: "inlineScript"
+            scriptType: pscore
+            scriptLocation: inlineScript
             addSpnToEnvironment: true
             inlineScript: >-
               dotnet run --configuration Release --project ./eng/update-dependencies/update-dependencies.csproj --
