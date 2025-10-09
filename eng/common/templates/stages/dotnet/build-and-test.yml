@@ -70,10 +70,8 @@ stages:
       ${{ if ne(parameters.linuxAmd64Pool, '') }}:
         ${{ parameters.linuxAmd64Pool }}
       ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        name: $(linuxAmd64PublicPoolName)
-        demands:
-        - $(linuxAmd64PublicPoolDemands)
-        os: linux
+        name:  NetCore-Public
+        demands: ImageOverride -equals build.Ubuntu.2204.Amd64.Open
       ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxAmd64InternalPoolName)
         image: $(linuxAmd64InternalPoolImage)
