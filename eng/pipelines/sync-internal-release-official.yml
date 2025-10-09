@@ -17,7 +17,4 @@ extends:
     # Target branch should be the internal version of the release branch
     targetBranch: "internal/$(Build.SourceBranchName)"
     # Service connection used to push new branches and submit pull requests.
-    # The "test" service connection works here in the official pipeline because
-    # we don't need to force push to protected branches. This pipeline only
-    # submits pull requests to them.
-    serviceConnection: "$(updateDepsInt-test.serviceConnectionName)"
+    serviceConnection: "$(updateDepsInt.serviceConnectionName)"
