@@ -20,8 +20,8 @@ variables:
   value: 1es-ubuntu-2204
 - name: linuxAmd64InternalPoolName
   value: NetCore1ESPool-Internal
-- name: linuxAmd64PublicPoolImage
-  value: build.ubuntu.2204.amd64.open
+- name: linuxAmd64PublicPoolDemands
+  value: ImageOverride -equals build.ubuntu.2204.amd64.open
 - name: linuxAmd64PublicPoolName
   value: NetCore-Public
 
