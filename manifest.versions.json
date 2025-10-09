@@ -161,7 +161,7 @@
     "monitor|10.0|minor-tag": "10.0-preview",
     "monitor|10.0|base-url|main": "$(base-url|public|maintenance|main)",
     "monitor|10.0|base-url|nightly": "$(base-url|public|preview|nightly)",
-    "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|preview|nightly)",
+    "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|preview|main)",
     "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
 
     "powershell|8.0|build-version": "7.4.12",
