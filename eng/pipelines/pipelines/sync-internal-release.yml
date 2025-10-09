@@ -1,3 +1,9 @@
+# Base pipeline for the official/unofficial versions of the sync-internal-release
+# pipeline. This template is designed to be used as an "extends" template in the
+# following pipeline definitions:
+# - eng/pipelines/sync-internal-release-official.yml
+# - eng/pipelines/sync-internal-release-unofficial.yml
+
 parameters:
 # Service connection used to push new branches and submit pull requests.
 - name: serviceConnection
