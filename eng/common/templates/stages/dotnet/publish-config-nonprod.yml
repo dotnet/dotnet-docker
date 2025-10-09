@@ -61,6 +61,13 @@ stages:
 
       publicMirrorAcr:
         server: $(public-mirror.server)
+        resourceGroup: $(public-mirror.resourceGroup)
+        subscription: $(public-mirror.subscription)
+        serviceConnection:
+          name: $(public-mirror.serviceConnectionName)
+          id: $(public-mirror.serviceConnection.id)
+          tenantId: $(public-mirror.serviceConnection.tenantId)
+          clientId: $(public-mirror.serviceConnection.clientId)
 
       buildAcr:
         server: $(acr-staging-test.server)
@@ -72,6 +79,12 @@ stages:
           id: $(build-test.serviceConnection.id)
           clientId: $(build-test.serviceConnection.clientId)
           tenantId: $(testTenant)
+
+      cleanServiceConnection:
+        name: $(clean-test.serviceConnectionName)
+        id: $(clean-test.serviceConnection.id)
+        clientId: $(clean-test.serviceConnection.clientId)
+        tenantId: $(testTenant)
 
       testServiceConnection:
         name: $(test-nonprod.serviceConnectionName)
