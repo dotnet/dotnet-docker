@@ -33,6 +33,8 @@ variables:
 - name: officialBranches
   # comma-delimited list of branch names
   value: main
+- name: officialBranchPrefixes
+  value: internal/release/
 - name: mirrorRepoPrefix
   value: 'mirror/'
 - name: cgBuildGrepArgs

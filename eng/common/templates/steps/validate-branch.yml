@@ -11,7 +11,16 @@ steps:
         exit 0
       }
 
-      if ("$(officialBranches)".Split(',').Contains("$(sourceBranch)") `
+      $isOfficialBranch = "$(officialBranches)".Split(',').Contains("$(sourceBranch)")
+      $hasOfficialBranchPrefix = $false
+      foreach ($prefix in "$(officialBranchPrefixes)".Split(',')) {
+        if ("$(sourceBranch)".StartsWith($prefix)) {
+          $hasOfficialBranchPrefix = $true
+          break
+        }
+      }
+
+      if (($isOfficialBranch -or $hasOfficialBranchPrefix) `
           -and "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.publishAcr.repoPrefix }}"))
       {
         echo "Conditions met for official build, continuing..."
