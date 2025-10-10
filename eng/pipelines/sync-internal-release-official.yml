@@ -12,9 +12,14 @@ variables:
 extends:
   template: /eng/pipelines/pipelines/sync-internal-release.yml@self
   parameters:
-    # Source branch will always be a release/* branch due to the pipeline trigger above
-    sourceBranch: "$(Build.SourceBranchName)"
+    # Source branch will always be a release/* branch due to the pipeline trigger above.
+    # Build.SourceBranch has a refs/heads/ prefix when this pipeline is triggered from a branch.
+    # The update-dependencies tool doesn't expect the prefix, so we need to remove it. Removing it
+    # also makes constructing the target branch easier. We also can't use Build.SourceBranchName
+    # because it strips all branch prefixes, which would turn 'release/foo' into just 'foo' which
+    # also isn't what we want.
+    sourceBranch: "$[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]"
     # Target branch should be the internal version of the release branch
-    targetBranch: "internal/$(Build.SourceBranchName)"
+    targetBranch: "internal/$[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]"
     # Service connection used to push new branches and submit pull requests.
     serviceConnection: "$(updateDepsInt.serviceConnectionName)"
