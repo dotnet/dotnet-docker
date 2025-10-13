@@ -122,6 +122,7 @@ config.UseHost(
 
                 // Individual build updater services that support different repos
                 services.AddKeyedSingleton<IBuildUpdaterService, VmrBuildUpdaterService>(BuildRepo.Vmr);
+                services.AddKeyedSingleton<IBuildUpdaterService, AspireBuildUpdaterService>(BuildRepo.Aspire);
 
                 services.AddHttpClient();
                 services.AddHttpClient<AzdoHttpClient>();
