@@ -179,7 +179,7 @@ The following examples illustrate how to run `update-dependencies`:
 - Update the PowerShell version used in the 9.0 images
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- 9.0 --product-version powershell=7.5.0
+    > dotnet run --project .\eng\update-dependencies\ -- specific 9.0 --product-version powershell=7.5.0
     ```
 
 #### Checking Markdown links locally
