@@ -34,11 +34,10 @@ internal class VmrBuildUpdaterService(
         _logger.LogInformation("Updating to build {build.Id} with commit {options.Repo}@{build.Commit}",
             build.Id, build.AzureDevOpsRepository ?? build.GitHubRepository, build.Commit);
 
-        if (build.GetBuildRepo() != BuildRepo.Vmr)
+        var repo = build.GetBuildRepo();
+        if (repo != BuildRepo.Vmr)
         {
-            throw new InvalidOperationException(
-                $"Build {build.Id} is from unsupported repository {build.AzureDevOpsRepository ?? build.GitHubRepository}."
-            );
+            throw new InvalidOperationException($"Build {build.Id} is from unsupported repository {repo}.");
         }
 
         IEnumerable<Asset> assets = await _barClient.GetAssetsAsync(buildId: build.Id);
