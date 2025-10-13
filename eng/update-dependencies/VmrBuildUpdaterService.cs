@@ -7,19 +7,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker;
 
-internal interface IBuildUpdaterService
-{
-    Task<int> UpdateFrom(Build build, CreatePullRequestOptions pullRequestOptions);
-}
-
-internal class BuildUpdaterService(
+internal class VmrBuildUpdaterService(
     IBuildAssetService buildAssetService,
     IBasicBarClient barClient,
-    ILogger<BuildUpdaterService> logger) : IBuildUpdaterService
+    ILogger<VmrBuildUpdaterService> logger
+) : IBuildUpdaterService
 {
     private readonly IBuildAssetService _buildAssetService = buildAssetService;
     private readonly IBasicBarClient _barClient = barClient;
-    private readonly ILogger<BuildUpdaterService> _logger = logger;
+    private readonly ILogger<VmrBuildUpdaterService> _logger = logger;
 
     /// <summary>
     /// Updates product versions according to a specific BAR build of the VMR. This will update the
