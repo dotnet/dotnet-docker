@@ -1,11 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using System.CommandLine;
 using System.CommandLine.Help;
 using System.CommandLine.Hosting;
-using System.IO;
 using Dotnet.Docker;
 using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
@@ -118,10 +116,12 @@ config.UseHost(
                 services.AddSingleton<IGitRepoHelperFactory, GitRepoHelperFactory>();
 
                 // Services needed for BAR build access/updates
-                services.AddSingleton<IBuildUpdaterService, BuildUpdaterService>();
                 services.AddSingleton<IBasicBarClient>(_ =>
                         new BarApiClient(null, null, disableInteractiveAuth: true));
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
+
+                // Individual build updater services that support different repos
+                services.AddKeyedSingleton<IBuildUpdaterService, BuildUpdaterService>(BuildRepo.Vmr);
 
                 services.AddHttpClient();
                 services.AddHttpClient<AzdoHttpClient>();
