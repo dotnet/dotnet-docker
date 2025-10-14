@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:8.0.20-alpine3.21-amd64 AS installer
+FROM $REPO:8.0.21-alpine3.21-amd64 AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=8.0.20 \
+RUN aspnetcore_version=8.0.21 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-x64.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
@@ -17,9 +17,9 @@ RUN aspnetcore_version=8.0.20 \
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.20-alpine3.21-amd64
+FROM $REPO:8.0.21-alpine3.21-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.20
+ENV ASPNET_VERSION=8.0.21
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

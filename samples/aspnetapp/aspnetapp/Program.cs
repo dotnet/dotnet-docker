@@ -1,4 +1,5 @@
-using System.Text.Json.Serialization;
+using System.Text.Json.Serialization;
+using aspnetapp;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -6,11 +7,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
 
-// Uncomment if using System.Text.Json source generation
-// builder.Services.ConfigureHttpJsonOptions(options =>
-// {
-//     options.SerializerOptions.TypeInfoResolverChain.Insert(0, AppJsonSerializerContext.Default);
-// });
+// Enable source generated JSON serialization
+// https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation#source-generation-support-in-aspnet-core
+builder.Services.AddControllers().AddJsonOptions(options =>
+    options.JsonSerializerOptions.TypeInfoResolverChain.Add(SampleAppJsonSerializerContext.Default));
 
 var app = builder.Build();
 
@@ -25,35 +25,26 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
-
 app.UseRouting();
-
 app.UseAuthorization();
+app.MapStaticAssets();
+app.MapRazorPages()
+   .WithStaticAssets();
 
-app.MapRazorPages();
-
-CancellationTokenSource cancellation = new();
-app.Lifetime.ApplicationStopping.Register( () =>
-{
-    cancellation.Cancel();
-});
-
-app.MapGet("/Environment", () =>
-{
-    return new EnvironmentInfo();
-});
+app.MapGet("/Environment", () => new EnvironmentInfo());
 
 // This API demonstrates how to use task cancellation
 // to support graceful container shutdown via SIGTERM.
 // The method itself is an example and not useful.
+var cancellation = new CancellationTokenSource();
+app.Lifetime.ApplicationStopping.Register(cancellation.Cancel);
 app.MapGet("/Delay/{value}", async (int value) =>
 {
     try
     {
         await Task.Delay(value, cancellation.Token);
     }
-    catch(TaskCanceledException)
+    catch (TaskCanceledException)
     {
     }
 
@@ -62,10 +53,8 @@ app.MapGet("/Delay/{value}", async (int value) =>
 
 app.Run();
 
+// Enable source generated JSON serialization
+// https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation#source-generation-support-in-aspnet-core
 [JsonSerializable(typeof(EnvironmentInfo))]
 [JsonSerializable(typeof(Operation))]
-internal partial class AppJsonSerializerContext : JsonSerializerContext
-{
-}
-
-public record struct Operation(int Delay);
+internal partial class SampleAppJsonSerializerContext : JsonSerializerContext { }

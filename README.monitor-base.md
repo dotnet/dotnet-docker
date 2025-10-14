@@ -62,7 +62,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-10.0.0-rc.1-amd64, 10.0-preview-amd64, 10.0.0-rc.1, 10.0-preview, 10-preview, latest | [Dockerfile](src/monitor-base/10.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+10.0.0-rc.2-amd64, 10.0-preview-amd64, 10.0.0-rc.2, 10.0-preview, 10.0-preview, latest | [Dockerfile](src/monitor-base/10.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 9.1.0-preview.3-amd64, 9.1-preview-amd64, 9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor-base/9.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
@@ -77,7 +77,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-10.0.0-rc.1-arm64v8, 10.0-preview-arm64v8, 10.0.0-rc.1, 10.0-preview, 10-preview, latest | [Dockerfile](src/monitor-base/10.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.0-rc.2-arm64v8, 10.0-preview-arm64v8, 10.0.0-rc.2, 10.0-preview, 10.0-preview, latest | [Dockerfile](src/monitor-base/10.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 9.1.0-preview.3-arm64v8, 9.1-preview-arm64v8, 9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor-base/9.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 <!--End of generated tags-->
 
