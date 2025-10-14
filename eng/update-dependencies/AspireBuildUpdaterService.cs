@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.Logging;
 
@@ -84,7 +83,30 @@ internal class AspireBuildUpdaterService(
         var dependencyUpdaters = variableUpdates
             .Select(updateInfo => new VariableUpdater(manifestVersionsPath, updateInfo));
 
-        throw new NotImplementedException();
+        var updateDependencies = new SpecificCommand();
+        updateDependencies.CustomUpdateInfos.AddRange(variableUpdates);
+        updateDependencies.CustomUpdaters.AddRange(dependencyUpdaters);
+
+        // Code below here is mostly copied from VmrBuildUpdaterService.cs
+        var updateDependenciesOptions = new SpecificCommandOptions()
+        {
+            // Don't pass in any versions through options, since we calculated all of the variables
+            // and their new versions to update above. Everything is handled through CustomUpdateInfos.
+            // Passing in the rest of the options below allows us to create automated pull requests.
+
+            // Pass through all properties of CreatePullRequestOptions
+            User = pullRequestOptions.User,
+            Email = pullRequestOptions.Email,
+            Password = pullRequestOptions.Password,
+            AzdoOrganization = pullRequestOptions.AzdoOrganization,
+            AzdoProject = pullRequestOptions.AzdoProject,
+            AzdoRepo = pullRequestOptions.AzdoRepo,
+            VersionSourceName = pullRequestOptions.VersionSourceName,
+            SourceBranch = pullRequestOptions.SourceBranch,
+            TargetBranch = pullRequestOptions.TargetBranch,
+        };
+
+        return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
     }
 
     /// <summary>
