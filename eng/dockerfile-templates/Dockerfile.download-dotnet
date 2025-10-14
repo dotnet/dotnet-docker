@@ -61,25 +61,21 @@
     set urlParts to split(downloadUrl, "/") ^
     set fileName to urlParts[len(urlParts) - 1] ^
 
-    _ For now the aggregate and bare checksum files are mutually exclusive, but
-      in the future we expect .NET 10 to have non-aggregate, non-bare checksum
-      files before the other .NET versions, so it's necessary to have a
-      separate condition for bare checksum files. ^
-    _ Aggregate checksum files are also not available for internal builds. ^
-    set shaUrlIsAggregate to (!isInternal && (dotnetVersion = "8.0" || dotnetVersion = "9.0")) ^
-    _ Bare files don't exist internally yet, see https://github.com/dotnet/release/issues/1382 ^
-    set bareFileExists to (!isInternal && dotnetVersion != "8.0" && dotnetVersion != "9.0") ^
-    _ Checksum files can contain bare shas, even if the file doesn't have the .sha512-bare extension.
-      We basically want to use the bare file on Windows only. However, we're currently also forced to use bare files internally.
-      When https://github.com/dotnet/release/issues/1382 is fixed, internal sha files will not be bare by default. ^
-    set shaFileContentIsBare to (isInternal || (isWindows && bareFileExists)) ^
+    _ New checksum files have both bare and non-bare versions under different
+      file extensions. Old checksum files contain only bare shas. ^
+    _ We want to use the bare checksum files on Windows only. However, the new
+      checksum files aren't available for internal staging builds yet.
+      When https://github.com/dotnet/release/issues/1382 is fixed, internal sha
+      files should match the new format. ^
+    set isReleasedBuild to find(baseUrl, "builds.dotnet.microsoft.com") >= 0 ^
+    set useNewChecksumFiles to (isReleasedBuild && dotnetVersion != "8.0" && dotnetVersion != "9.0") ^
+    set shaUrlIsAggregate to ((dotnetVersion = "8.0" || dotnetVersion = "9.0") && !isInternal) ^
+    set shaFileContentIsBare to (useNewChecksumFiles && isWindows) || (!useNewChecksumFiles && !shaUrlIsAggregate) ^
+    set shaExtension to when(useNewChecksumFiles && isWindows, ".sha512-bare", ".sha512") ^
 
-    set shaUrlPath to
-        when(shaUrlIsAggregate,
-            VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
-        when(bareFileExists && shaFileContentIsBare,
-            cat(downloadPath, ".sha512-bare"),
-            cat(downloadPath, ".sha512"))) ^
+    set shaUrlPath to when(shaUrlIsAggregate,
+        VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
+        cat(downloadPath, shaExtension)) ^
     set shaUrl to cat(checksumsBaseUrl, shaUrlPath) ^
 
     set shaUrlParts to split(shaUrl, "/") ^
@@ -146,6 +142,7 @@
     )
 }}{{if (isInternal && isStableVersion):{{lineEnd}}
 {{continue}}{{
+    _ Internal builds and unreleased RC builds have separate build and product versions ^
     assign(
         when(product = "aspnet" || product = "aspnet-composite",
             "aspnetcore_build_version",

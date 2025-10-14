@@ -1,0 +1,10 @@
+
+RUN dotnet_monitor_version={{ARGS["monitorVersion"]}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
+        "product": "dotnet_monitor_base",
+        "download-url": cat(ARGS["monitorBaseUrl"], "dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz"),
+        "file-name": cat("dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz"),
+        "extract-to": "/app",
+        "sha-url": cat(ARGS["monitorBaseChecksumUrl"], "dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz.sha512"),
+        "sha-url-is-bare": "true"
+    ], "    ")}}

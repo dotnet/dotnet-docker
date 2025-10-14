@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>UpdateDependencies.Tests</RootNamespace>
+    <TargetFramework>net9.0</TargetFramework>
+    <!--
+    To enable the Microsoft Testing Platform 'dotnet test' experience, add property:
+      <TestingPlatformDotnetTestSupport>true</TestingPlatformDotnetTestSupport>
+
+    To enable the Microsoft Testing Platform native command line experience, add property:
+      <UseMicrosoftTestingPlatformRunner>true</UseMicrosoftTestingPlatformRunner>
+
+    For more information on Microsoft Testing Platform support in xUnit.net, please visit:
+      https://xunit.net/docs/getting-started/v3/microsoft-testing-platform
+    -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../../eng/update-dependencies/update-dependencies.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="xunit.runner.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+    <Using Include="Moq" />
+    <Using Include="Shouldly" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.13.0" />
+    <PackageReference Include="Moq" Version="4.20.72" />
+    <PackageReference Include="Shouldly" Version="4.3.0" />
+    <PackageReference Include="xunit.v3" Version="2.0.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.1" />
+  </ItemGroup>
+
+</Project>

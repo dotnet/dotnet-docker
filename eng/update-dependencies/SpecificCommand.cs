@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -13,14 +14,12 @@ using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
 using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
+using Newtonsoft.Json.Linq;
 
 namespace Dotnet.Docker
 {
     public class SpecificCommand : BaseCommand<SpecificCommandOptions>
     {
-        public const string ManifestFilename = "manifest.json";
-        public const string VersionsFilename = "manifest.versions.json";
-
         private static SpecificCommandOptions? s_options;
 
         private static SpecificCommandOptions Options {
@@ -28,36 +27,40 @@ namespace Dotnet.Docker
             set => s_options = value;
         }
 
-        public static string RepoRoot { get; } = Directory.GetCurrentDirectory();
-
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
             Options = options;
+            int exitCode = 0;
+
+            ErrorTraceListener errorTraceListener = new();
+            TextWriterTraceListener consoleTraceListener = new TextWriterTraceListener(Console.Out);
+            Trace.Listeners.Add(errorTraceListener);
+            Trace.Listeners.Add(consoleTraceListener);
 
             try
             {
-                ErrorTraceListener errorTraceListener = new();
-                Trace.Listeners.Add(errorTraceListener);
-                Trace.Listeners.Add(new TextWriterTraceListener(Console.Out));
-
                 IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
                 IDependencyInfo[] toolBuildInfos =
                     await Task.WhenAll(Options.Tools.Select(Tools.GetToolBuildInfoAsync));
 
+                // Load manifest variables once, up front
+                var manifestFilePath = options.GetManifestVersionsFilePath();
+                var manifestVariables = ManifestVariables.FromFile(manifestFilePath);
+
                 List<DependencyUpdateResults> updateResults = [];
 
                 if (productBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters();
+                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters(manifestVariables);
                     DependencyUpdateResults productUpdateResults = UpdateFiles(productBuildInfos, productUpdaters);
                     updateResults.Add(productUpdateResults);
                 }
 
                 if (toolBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(RepoRoot);
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(repoRoot: Options.RepoRoot);
                     DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
                     updateResults.Add(toolUpdateResults);
                 }
@@ -118,10 +121,18 @@ namespace Dotnet.Docker
             catch (Exception e)
             {
                 Console.Error.WriteLine($"Failed to update dependencies:{Environment.NewLine}{e}");
-                Environment.Exit(1);
+                exitCode = 1;
+            }
+            finally
+            {
+                Trace.Listeners.Remove(errorTraceListener);
+                Trace.Listeners.Remove(consoleTraceListener);
+                errorTraceListener.Dispose();
+                consoleTraceListener.Dispose();
+                s_options = null;
             }
 
-            return 0;
+            return exitCode;
         }
 
         private static DependencyUpdateResults UpdateFiles(
@@ -151,7 +162,7 @@ namespace Dotnet.Docker
 
         private static void PushToAzdoBranch(string commitMessage, string targetBranch)
         {
-            using Repository repo = new(RepoRoot);
+            using Repository repo = new(Options.RepoRoot);
 
             // Commit the existing changes
             Commands.Stage(repo, "*");
@@ -173,7 +184,7 @@ namespace Dotnet.Docker
                 "azuredevops"
             );
 
-            var url = $"{Options.AzdoOrganization}{Options.AzdoProject}/_git/{Options.AzdoRepo}";
+            var url = Options.GetAzdoRepoUrl();
             Trace.WriteLine($"Adding remote {remoteName} with URL {url}");
             Remote remote = repo.Network.Remotes.Add(remoteName, url);
 
@@ -375,26 +386,29 @@ namespace Dotnet.Docker
             }
         }
 
-        private static IEnumerable<IDependencyUpdater> GetProductUpdaters()
+        private static IEnumerable<IDependencyUpdater> GetProductUpdaters(ManifestVariables manifestVariables)
         {
             // NOTE: The order in which the updaters are returned/invoked is important as there are cross dependencies
             // (e.g. sha updater requires the version numbers to be updated within the Dockerfiles)
 
             List<IDependencyUpdater> updaters =
             [
-                new NuGetConfigUpdater(RepoRoot, Options),
-                new BaseUrlUpdater(RepoRoot, Options),
+                new NuGetConfigUpdater(manifestVariables, Options),
+                BaseUrlUpdater.Create(manifestVariables, Options)
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
             {
-                updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, RepoRoot, Options));
-                updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, RepoRoot, Options));
+                updaters.Add(new VersionUpdater(VersionType.Build, productName, Options.DockerfileVersion, Options));
+                updaters.Add(new VersionUpdater(VersionType.Product, productName, Options.DockerfileVersion, Options));
 
-                foreach (IDependencyUpdater shaUpdater in DockerfileShaUpdater.CreateUpdaters(productName, Options.DockerfileVersion, RepoRoot, Options))
-                {
-                    updaters.Add(shaUpdater);
-                }
+                var shaUpdaters = DockerfileShaUpdater.CreateUpdaters(
+                    productName: productName,
+                    dockerfileVersion: Options.DockerfileVersion,
+                    options: Options,
+                    variables: manifestVariables);
+
+                updaters.AddRange(shaUpdaters);
             }
 
             return updaters;
@@ -402,8 +416,8 @@ namespace Dotnet.Docker
 
         private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters() =>
         [
-            ScriptRunnerUpdater.GetDockerfileUpdater(RepoRoot),
-            ScriptRunnerUpdater.GetReadMeUpdater(RepoRoot)
+            ScriptRunnerUpdater.GetDockerfileUpdater(Options.RepoRoot),
+            ScriptRunnerUpdater.GetReadMeUpdater(Options.RepoRoot)
         ];
     }
 }

@@ -7,13 +7,13 @@ namespace Dotnet.Docker;
 /// Updates a variable to the latest GitHub Release tag
 /// </summary>
 internal class GitHubReleaseVersionUpdater(
-    string repoRoot,
+    string manifestVersionsFilePath,
     string toolName,
     string variableName,
     string owner,
     string repo)
     : GitHubReleaseUpdaterBase(
-        repoRoot,
+        manifestVersionsFilePath,
         toolName,
         variableName,
         owner,

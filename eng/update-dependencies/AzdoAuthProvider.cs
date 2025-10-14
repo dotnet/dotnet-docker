@@ -1,8 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
 using Azure.Identity;
+using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
 
@@ -18,7 +18,14 @@ public class AzdoAuthProvider
     /// </remarks
     private const string Scope = "499b84ac-1321-427f-aa17-267ca6975798/.default";
 
-    private readonly Lazy<string> _accessToken = new(GetAccessTokenInternal);
+    private readonly ILogger<AzdoAuthProvider> _logger;
+    private readonly Lazy<string> _accessToken;
+
+    public AzdoAuthProvider(ILogger<AzdoAuthProvider> logger)
+    {
+        _logger = logger;
+        _accessToken = new(GetAccessTokenInternal);
+    }
 
     /// <summary>
     /// Gets an Azure DevOps REST API access token.
@@ -45,13 +52,17 @@ public class AzdoAuthProvider
         return connection;
     }
 
-    private static string GetAccessTokenInternal()
+    private string GetAccessTokenInternal()
     {
         var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
         if (!string.IsNullOrWhiteSpace(accessToken))
         {
             return accessToken;
         }
+
+        _logger.LogInformation("Environment variable SYSTEM_ACCESSTOKEN was not set."
+            + " Did you forget to explicitly pass it in to your pipeline step?"
+            + " See https://learn.microsoft.com/azure/devops/pipelines/build/variables#systemaccesstoken");
 
         var credential = new AzureDeveloperCliCredential();
         var requestContext = new Azure.Core.TokenRequestContext([Scope]);
