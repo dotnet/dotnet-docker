@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace libbar;
+﻿namespace libbar;
 
 public class StringUtils
 {

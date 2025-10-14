@@ -9,8 +9,7 @@ Console.WriteLine(json);
 [JsonSourceGenerationOptions(
     GenerationMode = JsonSourceGenerationMode.Serialization,
     PropertyNamingPolicy = JsonKnownNamingPolicy.CamelCase,
-    WriteIndented = true
-    )]
+    WriteIndented = true)]
 [JsonSerializable(typeof(Report))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {

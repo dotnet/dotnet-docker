@@ -15,25 +15,33 @@ The behavior of these APIs is affected by:
 
 The recommended way to configure [tzdata](https://en.wikipedia.org/wiki/Tz_database) and [timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) is to set the container timezone by using the `TZ` environment variables, as is demonstrated below.
 
-```bash
-$ docker run --rm debian date
-Mon Sep 16 16:17:01 UTC 2024
-$ docker run --rm -e TZ="Etc/UTC" debian date
-Mon Sep 16 16:17:31 UTC 2024
-$ docker run --rm -e TZ=$"America/New_York" debian date
-Mon Sep 16 12:17:51 EDT 2024
-$ docker run --rm -e TZ=$"America/Los_Angeles" debian date
-Mon Sep 16 09:18:08 PDT 2024
-$ docker run --rm -e TZ=$(cat /etc/timezone) debian date
-Mon Sep 16 09:19:26 PDT 2024
+```console
+$ docker run -it --rm -e TZ=$(cat /etc/timezone) mcr.microsoft.com/dotnet/runtime-deps:10.0
+
+root@4770a50f643e# date
+Wed Sep 10 17:27:24 UTC 2025
+
+root@4770a50f643e# TZ="Etc/UTC" date
+Wed Sep 10 17:27:42 UTC 2025
+
+root@4770a50f643e# TZ="America/New_York" date
+Wed Sep 10 13:28:26 EDT 2025
+
+root@4770a50f643e# TZ="America/Los_Angeles" date
+Wed Sep 10 10:29:07 PDT 2025
+
+root@4771a50f643e# exit
+
+$ docker run --rm -e TZ=$(cat /etc/timezone) mcr.microsoft.com/dotnet/runtime-deps:10.0 date
+Wed Sep 10 10:29:07 PDT 2025
 ```
 
 The first approach uses the default timezone, which is [UTC](https://en.wikipedia.org/wiki/Coordinated_Universal_Time). The other examples pass specific timezones, including UTC. The last pattern passes the timezone of the host.
 
 A machine configured to UTC will produce the following:
 
-```bash
-# cat /etc/timezone
+```console
+$ cat /etc/timezone
 Etc/UTC
 ```
 
@@ -41,53 +49,53 @@ Etc/UTC
 
 The app produces the following output, for the "America/Los_Angeles" timezone:
 
-```bash
+```console
 $ docker build --pull -t globalapp .
 $ docker run --rm -it -e TZ="America/Los_Angeles" globalapp
 Hello, World!
 
 ****Print baseline timezones**
-Utc: (UTC) Coordinated Universal Time; 09/16/2024 16:22:03
-Local: (UTC-08:00) Pacific Time (Los Angeles); 09/16/2024 09:22:03
+Utc: (UTC) Coordinated Universal Time; 09/10/2025 17:35:50
+Local: (UTC-08:00) Pacific Time (Los Angeles); 09/10/2025 10:35:50
 
 ****Print specific timezone**
 Home timezone: America/Los_Angeles
-DateTime at home: 09/16/2024 09:22:03
+DateTime at home: 09/10/2025 10:35:50
 
 ****Culture-specific dates**
-Current: 09/16/2024
+Current: 09/10/2025
 English (United States) -- en-US:
-9/16/2024 4:22:03 PM
-9/16/2024
-4:22 PM
+9/10/2025 5:35:50 PM
+9/10/2025
+5:35 PM
 English (Canada) -- en-CA:
-9/16/2024 4:22:03 p.m.
-9/16/2024
-4:22 p.m.
+2025-09-10 5:35:50 p.m.
+2025-09-10
+5:35 p.m.
 French (Canada) -- fr-CA:
-2024-09-16 16 h 22 min 03 s
-2024-09-16
-16 h 22
+2025-09-10 17 h 35 min 50 s
+2025-09-10
+17 h 35
 Croatian (Croatia) -- hr-HR:
-16. 09. 2024. 16:22:03
-16. 09. 2024.
-16:22
+10. 09. 2025. 17:35:50
+10. 09. 2025.
+17:35
 jp (Japan) -- jp-JP:
-9/16/2024 16:22:03
-9/16/2024
-16:22
+9/10/2025 17:35:50
+9/10/2025
+17:35
 Korean (South Korea) -- ko-KR:
-2024. 9. 16. 오후 4:22:03
-2024. 9. 16.
-오후 4:22
+2025. 9. 10. 오후 5:35:50
+2025. 9. 10.
+오후 5:35
 Portuguese (Brazil) -- pt-BR:
-16/09/2024 16:22:03
-16/09/2024
-16:22
+10/09/2025 17:35:50
+10/09/2025
+17:35
 Chinese (China) -- zh-CN:
-2024/9/16 16:22:03
-2024/9/16
-16:22
+2025/9/10 17:35:50
+2025/9/10
+17:35
 
 ****Culture-specific currency:**
 Current: ¤1,337.00
