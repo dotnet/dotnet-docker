@@ -8,7 +8,7 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Object that holds variables defined in a manifest file.
 /// </summary>
-public class ManifestVariables(JObject variables)
+public class ManifestVariables(JObject variables) : IManifestVariables
 {
     public static ManifestVariables FromFile(string filePath)
     {
