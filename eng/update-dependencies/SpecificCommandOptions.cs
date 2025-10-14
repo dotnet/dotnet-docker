@@ -13,7 +13,7 @@ namespace Dotnet.Docker
         public string GitHubUpstreamOwner { get; } = "dotnet";
 
         // .NET Version options
-        public required string DockerfileVersion { get; init; } = "";
+        public string DockerfileVersion { get; init; } = "";
         public IDictionary<string, string?> ProductVersions { get; init; } = new Dictionary<string, string?>();
         public ReleaseState? ReleaseState { get; init; } = null;
         public bool StableBranding { get; init; } = false;
