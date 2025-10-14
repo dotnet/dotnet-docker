@@ -14,9 +14,9 @@ internal static class RocksToolboxUpdater
 
     private const string Repo = "rocks-toolbox";
 
-    public static IDependencyUpdater GetUpdater(string repoRoot) =>
+    public static IDependencyUpdater GetUpdater(string manifestVersionsFilePath) =>
         new GitHubReleaseVersionUpdater(
-            repoRoot: repoRoot,
+            manifestVersionsFilePath: manifestVersionsFilePath,
             toolName: ToolName,
             variableName: $"{ToolName}|latest|version",
             owner: Owner,

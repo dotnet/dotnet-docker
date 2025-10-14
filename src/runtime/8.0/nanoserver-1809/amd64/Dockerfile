@@ -8,7 +8,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '8.0.20'; `
+        $dotnet_version = '8.0.21'; `
         $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
@@ -45,7 +45,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=8.0.20
+    DOTNET_VERSION=8.0.21
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator

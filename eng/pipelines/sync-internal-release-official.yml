@@ -1,0 +1,20 @@
+trigger:
+  batch: true
+  branches:
+    include:
+    - release/*
+pr: none
+
+variables:
+- template: /eng/common/templates/variables/dotnet/common.yml@self
+- group: DotNet-Docker-Common-2
+
+extends:
+  template: /eng/pipelines/pipelines/sync-internal-release.yml@self
+  parameters:
+    # Source branch will always be a release/* branch due to the pipeline trigger above
+    sourceBranch: "$(Build.SourceBranchName)"
+    # Target branch should be the internal version of the release branch
+    targetBranch: "internal/$(Build.SourceBranchName)"
+    # Service connection used to push new branches and submit pull requests.
+    serviceConnection: "$(updateDepsInt.serviceConnectionName)"

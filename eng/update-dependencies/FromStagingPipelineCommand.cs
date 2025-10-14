@@ -1,22 +1,20 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+using Dotnet.Docker.Sync;
 using Microsoft.Extensions.Logging;
-using System.Text;
-using System.Linq;
 
 namespace Dotnet.Docker;
 
 internal partial class FromStagingPipelineCommand(
     ILogger<FromStagingPipelineCommand> logger,
-    PipelineArtifactProvider pipelineArtifactProvider)
+    PipelineArtifactProvider pipelineArtifactProvider,
+    IInternalVersionsService internalVersionsService)
     : BaseCommand<FromStagingPipelineOptions>
 {
     private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
     private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactProvider;
+    private readonly IInternalVersionsService _internalVersionsService = internalVersionsService;
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
@@ -47,6 +45,12 @@ internal partial class FromStagingPipelineCommand(
 
         string dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
         string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(releaseConfig.RuntimeBuild).ToString();
+
+        // Record pipeline run ID for this dockerfileVersion, for later use by sync-internal-release command
+        _internalVersionsService.RecordInternalStagingBuild(
+            options.RepoRoot,
+            dockerfileVersion,
+            options.StagingPipelineRunId);
 
         var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
         {
@@ -92,6 +96,7 @@ internal partial class FromStagingPipelineCommand(
         var updateDependencies = new SpecificCommand();
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
+            RepoRoot = options.RepoRoot,
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = productVersions,
 

@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:bookworm-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=8.0.414 \
-    && dotnet_version=8.0.20 \
+RUN dotnet_sdk_version=8.0.415 \
+    && dotnet_version=8.0.21 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -18,7 +18,7 @@ RUN dotnet_sdk_version=8.0.414 \
 
 
 # .NET SDK image
-FROM $REPO:8.0.20-bookworm-slim-amd64
+FROM $REPO:8.0.21-bookworm-slim-amd64
 
 ENV \
     # Do not generate certificate
@@ -26,7 +26,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.414 \
+    DOTNET_SDK_VERSION=8.0.415 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -48,9 +48,9 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.4.11 \
+RUN powershell_version=7.4.12 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='0fccce7c3182d6d273c66cb5188f9382e94f06fff7327874c032fc15c23995caecfd43ba0f136ecf7e0f1257deb17b1fe65665269211336304577ca518b17437' \
+    && powershell_sha512='97425b52250af514687f8bcc23cfefee7df60f5296bee31fb51a7c3ac09827908aa656716146d33e457a146211f508a0a1a60c0f26e6b55b060926eb0836f1bb' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \

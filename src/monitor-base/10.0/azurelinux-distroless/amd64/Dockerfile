@@ -10,17 +10,20 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor Base
-RUN dotnet_monitor_version=10.0.0-rc.1.25453.1 \
-    && curl --fail --show-error --location --output dotnet-monitor-base.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
-    && dotnet_monitor_base_sha512='6e1d775d1e8afddbb59eb6884b19d674fa3fdf72aba408aaa495a6d9de8ed7cb7d8918d23b6368122e359011fa96bd0232bf008ad1819c1c825647e685bc20df' \
-    && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
+RUN dotnet_monitor_version=10.0.0-rc.2.25503.6 \
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512)  dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
-    && tar --gzip --extract --no-same-owner --file dotnet-monitor-base.tar.gz --directory /app \
-    && rm dotnet-monitor-base.tar.gz
+    && tar --gzip --extract --no-same-owner --file dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz --directory /app \
+    && rm  \
+        dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
+        dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512
 
 
 # .NET Monitor Base image
-FROM $REPO:10.0.0-rc.1-azurelinux3.0-distroless-amd64
+FROM $REPO:10.0.0-rc.2-azurelinux3.0-distroless-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
