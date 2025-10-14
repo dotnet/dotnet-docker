@@ -9,13 +9,13 @@ namespace Dotnet.Docker;
 
 internal class AspireBuildUpdaterService(
     ILogger<AspireBuildUpdaterService> logger,
-    IBuildAssetService buildAssetService,
-    IBasicBarClient barClient
+    HttpClient httpClient,
+    Func<string, IManifestVariables> manifestVariablesFactory
 ) : IBuildUpdaterService
 {
     private readonly ILogger<AspireBuildUpdaterService> _logger = logger;
-    private readonly IBuildAssetService _buildAssetService = buildAssetService;
-    private readonly IBasicBarClient _barClient = barClient;
+    private readonly HttpClient _httpClient = httpClient;
+    private readonly Func<string, IManifestVariables> _createManifestVariables = manifestVariablesFactory;
 
     /// <summary>
     /// Given a BAR (https://aka.ms/bar) build of Aspire, updates the Aspire Dashboard build version.
@@ -28,14 +28,77 @@ internal class AspireBuildUpdaterService(
                 $"AspireBuildUpdaterService cannot process builds from repo: {build.GitHubRepository}");
         }
 
-        var buildAssets = await _barClient.GetAssetsAsync(buildId: build.Id);
-        var dashboardAsset = build.Assets.FirstOrDefault(asset => asset.Name.Contains("aspire-dashboard-linux-x64"));
-        if (dashboardAsset is null)
+        // Read manifest.versions.json early so that we can fail fast in case we have the wrong file path.
+        var manifestVariables = _createManifestVariables(pullRequestOptions.GetManifestVersionsFilePath());
+        var branch = manifestVariables.GetValue("branch");
+        var dashboardBaseUrl = manifestVariables.GetValue($"aspire-dashboard|base-url|{branch}");
+
+        var dashboardAssets = build.Assets.Where(asset =>
+            asset.Name.Contains("aspire-dashboard-linux-x64")
+            || asset.Name.Contains("aspire-dashboard-linux-arm64"));
+
+        if (!dashboardAssets.Any())
         {
-            throw new InvalidOperationException($"Could not find aspire-dashboard-linux-x64 asset in build {build.Id}");
+            throw new InvalidOperationException($"Could not find aspire-dashboard-linux-* assets in build {build.Id}");
         }
 
-        _logger.LogInformation("Aspire build version: {version}", dashboardAsset.Version);
+        _logger.LogInformation("Found Aspire build version: {version}", dashboardAssets.First().Version);
+
+        IEnumerable<string?> dashboardChecksums = await dashboardAssets
+            .Select(asset => GetDashboardUrl(dashboardBaseUrl, asset))
+            .ToAsyncEnumerable()
+            .SelectAwait(async url => await GetChecksumAsync(url))
+            // Null checksums indicate that they weren't found.
+            // An error should have been logged in the terminal if so.
+            // .Where(checksum => checksum is not null)
+            // .Select(checksum => checksum!)
+            .ToListAsync();
+
+        var dashboardChecksumInfos = dashboardAssets.Zip(dashboardChecksums);
+
+        var manifestVersionsPath = pullRequestOptions.GetManifestVersionsFilePath();
+
+        var version = dashboardAssets.First().Version;
+        var majorMinorVersion = VersionHelper.ResolveMajorMinorVersion(version);
+
+        List<VariableUpdateInfo> variableUpdates =
+        [
+            new VariableUpdateInfo("aspire-dashboard|build-version", version),
+            new VariableUpdateInfo("aspire-dashboard|product-version", VersionHelper.ResolveProductVersion(version)),
+            new VariableUpdateInfo("aspire-dashboard|fixed-tag", VersionHelper.ResolveProductVersion(version)),
+            new VariableUpdateInfo("aspire-dashboard|minor-tag", majorMinorVersion.ToString(2)),
+            new VariableUpdateInfo("aspire-dashboard|major-tag", majorMinorVersion.Major.ToString()),
+        ];
+
+        variableUpdates.AddRange(dashboardChecksumInfos
+            // Filter out null checksums (indicates the checksum was not found above)
+            .Where(info => info.Second is not null)
+            .Select(info =>
+            {
+                var (asset, checksum) = info;
+                var arch = asset.Name.Contains("arm64") ? "arm64" : "x64";
+                // Null-forgiving operator is OK since we filtered out null checksums above.
+                return new VariableUpdateInfo($"aspire-dashboard|linux|{arch}|sha", checksum!);
+            }));
+
+        var dependencyUpdaters = variableUpdates
+            .Select(updateInfo => new VariableUpdater(manifestVersionsPath, updateInfo));
+
         throw new NotImplementedException();
     }
+
+    /// <summary>
+    /// Gets the full download URL to an Aspire Dashboard asset given its base
+    /// URL and the BAR asset information.
+    /// </summary>
+    private string GetDashboardUrl(string baseUrl, Asset dashboardAsset) => $"{baseUrl}/{dashboardAsset.Name}";
+
+    /// <summary>
+    /// Manually compute the checksum of an Aspire Dashboard asset by downloading it from
+    /// <paramref name="url"/> and hashing the contents.
+    /// </summary>
+    /// <remarks>
+    /// Remove once https://github.com/dotnet/dotnet-docker/issues/6568 is completed.
+    /// </remarks>
+    private Task<string?> GetChecksumAsync(string url) => ChecksumHelper.ComputeChecksumShaAsync(_httpClient, url);
 }
