@@ -39,6 +39,8 @@ public sealed partial class DotNetVersion(SemanticVersion version) : SemanticVer
         // back to simple parsing when that happens.
         // A valid major.minor.patch version would have been handled above so
         // we don't need to account for that in our parsing.
+        // Don't use System.Version.Parse here, because it defaults unmatched
+        // minor/patch versions to -1, whereas we want them to default to 0.
         var matchGroups = MajorMinorVersionRegex.Match(versionString).Groups;
         int major = int.Parse(matchGroups["major"].Value);
         int minor = int.TryParse(matchGroups["minor"].Value.TrimStart('.'), out int minorValue) ? minorValue : 0;
