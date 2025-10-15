@@ -47,10 +47,6 @@ internal class AspireBuildUpdaterService(
             .Select(asset => GetDashboardUrl(dashboardBaseUrl, asset))
             .ToAsyncEnumerable()
             .SelectAwait(async url => await GetChecksumAsync(url))
-            // Null checksums indicate that they weren't found.
-            // An error should have been logged in the terminal if so.
-            // .Where(checksum => checksum is not null)
-            // .Select(checksum => checksum!)
             .ToListAsync();
 
         var dashboardChecksumInfos = dashboardAssets.Zip(dashboardChecksums);
@@ -122,5 +118,9 @@ internal class AspireBuildUpdaterService(
     /// <remarks>
     /// Remove once https://github.com/dotnet/dotnet-docker/issues/6568 is completed.
     /// </remarks>
+    /// <returns>
+    /// Null if the checksum could not be computed for any reason. An error will
+    /// be logged to the console if this happens.
+    /// </returns>
     private Task<string?> GetChecksumAsync(string url) => ChecksumHelper.ComputeChecksumShaAsync(_httpClient, url);
 }
