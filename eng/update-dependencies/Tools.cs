@@ -1,9 +1,6 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker;
@@ -28,11 +25,11 @@ internal static class Tools
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 
-    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string repoRoot) =>
+    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string manifestVersionsFilePath) =>
     [
-        ..MinGitUpdater.GetUpdaters(repoRoot),
-        ..ChiselUpdater.GetUpdaters(repoRoot),
-        RocksToolboxUpdater.GetUpdater(repoRoot),
-        SyftUpdater.GetUpdater(repoRoot),
+        ..MinGitUpdater.GetUpdaters(manifestVersionsFilePath),
+        ..ChiselUpdater.GetUpdaters(manifestVersionsFilePath),
+        RocksToolboxUpdater.GetUpdater(manifestVersionsFilePath),
+        SyftUpdater.GetUpdater(manifestVersionsFilePath),
     ];
 }
