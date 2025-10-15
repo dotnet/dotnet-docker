@@ -6,11 +6,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="../../eng/shared/Microsoft.DotNet.Docker.Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="AwesomeAssertions" Version="8.1.0" />
     <PackageReference Include="Microsoft.CodeAnalysis" Version="4.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.2.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-    <PackageReference Include="NuGet.Versioning" Version="6.14.0" />
     <PackageReference Include="Polly.Core" Version="8.4.1" />
     <PackageReference Include="SharpCompress" Version="0.32.1" />
     <PackageReference Include="Shouldly" Version="4.3.0" />

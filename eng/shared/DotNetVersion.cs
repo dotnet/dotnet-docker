@@ -2,14 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-#nullable enable
-
-using System;
-using System.Linq;
 using System.Text.RegularExpressions;
 using NuGet.Versioning;
 
-namespace Microsoft.DotNet.Docker.Tests;
+namespace Microsoft.DotNet.Docker.Shared;
 
 /// <summary>
 /// Represents the version of a .NET build artifact.
@@ -25,6 +21,11 @@ namespace Microsoft.DotNet.Docker.Tests;
 /// </remarks>
 public sealed partial class DotNetVersion(SemanticVersion version) : SemanticVersion(version)
 {
+    /// <summary>
+    /// Parse a string into a <see cref="DotNetVersion"/>. This is not a
+    /// "strict" parse. Major-only versions are allowed. Unspecified minor and
+    /// patch versions default to 0.
+    /// </summary>
     public static new DotNetVersion Parse(string versionString)
     {
         // SemanticVersion only handles full, strict semantic versions.

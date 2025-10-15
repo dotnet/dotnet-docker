@@ -6,6 +6,7 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Microsoft.DotNet.Docker.Shared;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
