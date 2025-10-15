@@ -1,9 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
 using System.CommandLine;
-using System.Linq;
 
 namespace Dotnet.Docker
 {
@@ -45,6 +43,27 @@ namespace Dotnet.Docker
             ..GetOptions(),
             ..CreatePullRequestOptions.Options,
         ];
+
+        /// <summary>
+        /// Create a new instance of <see cref="SpecificCommandOptions"/> that
+        /// includes all properties from <paramref name="pullRequestOptions"/>.
+        /// </summary>
+        public static SpecificCommandOptions FromPullRequestOptions(CreatePullRequestOptions pullRequestOptions)
+        {
+            return new SpecificCommandOptions()
+            {
+                // Pass through all properties of CreatePullRequestOptions
+                User = pullRequestOptions.User,
+                Email = pullRequestOptions.Email,
+                Password = pullRequestOptions.Password,
+                AzdoOrganization = pullRequestOptions.AzdoOrganization,
+                AzdoProject = pullRequestOptions.AzdoProject,
+                AzdoRepo = pullRequestOptions.AzdoRepo,
+                VersionSourceName = pullRequestOptions.VersionSourceName,
+                SourceBranch = pullRequestOptions.SourceBranch,
+                TargetBranch = pullRequestOptions.TargetBranch,
+            };
+        }
 
         private static List<Option> GetOptions()
         {

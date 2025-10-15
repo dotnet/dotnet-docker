@@ -83,25 +83,10 @@ internal class AspireBuildUpdaterService(
         updateDependencies.CustomUpdateInfos.AddRange(variableUpdates);
         updateDependencies.CustomUpdaters.AddRange(dependencyUpdaters);
 
-        // Code below here is mostly copied from VmrBuildUpdaterService.cs
-        var updateDependenciesOptions = new SpecificCommandOptions()
-        {
-            // Don't pass in any versions through options, since we calculated all of the variables
-            // and their new versions to update above. Everything is handled through CustomUpdateInfos.
-            // Passing in the rest of the options below allows us to create automated pull requests.
-
-            // Pass through all properties of CreatePullRequestOptions
-            User = pullRequestOptions.User,
-            Email = pullRequestOptions.Email,
-            Password = pullRequestOptions.Password,
-            AzdoOrganization = pullRequestOptions.AzdoOrganization,
-            AzdoProject = pullRequestOptions.AzdoProject,
-            AzdoRepo = pullRequestOptions.AzdoRepo,
-            VersionSourceName = pullRequestOptions.VersionSourceName,
-            SourceBranch = pullRequestOptions.SourceBranch,
-            TargetBranch = pullRequestOptions.TargetBranch,
-        };
-
+        // Don't pass in any  through options, since we calculated all of the variables
+        // and their new versions to update above. Everything is handled through CustomUpdateInfos.
+        // Using the SpecificCommand here just allows us to easily create automated pull requests.
+        var updateDependenciesOptions = SpecificCommandOptions.FromPullRequestOptions(pullRequestOptions);
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
     }
 

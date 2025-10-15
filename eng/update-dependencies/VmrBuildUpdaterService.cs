@@ -52,7 +52,7 @@ internal class VmrBuildUpdaterService(
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
-        var updateDependenciesOptions = new SpecificCommandOptions()
+        var updateDependenciesOptions = SpecificCommandOptions.FromPullRequestOptions(pullRequestOptions) with
         {
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = new Dictionary<string, string?>()
@@ -65,17 +65,6 @@ internal class VmrBuildUpdaterService(
                 { "aspnet-composite", productCommits.AspNetCore.Version },
                 { "sdk", productCommits.Sdk.Version },
             },
-
-            // Pass through all properties of CreatePullRequestOptions
-            User = pullRequestOptions.User,
-            Email = pullRequestOptions.Email,
-            Password = pullRequestOptions.Password,
-            AzdoOrganization = pullRequestOptions.AzdoOrganization,
-            AzdoProject = pullRequestOptions.AzdoProject,
-            AzdoRepo = pullRequestOptions.AzdoRepo,
-            VersionSourceName = pullRequestOptions.VersionSourceName,
-            SourceBranch = pullRequestOptions.SourceBranch,
-            TargetBranch = pullRequestOptions.TargetBranch,
         };
 
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);

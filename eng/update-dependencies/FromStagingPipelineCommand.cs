@@ -94,22 +94,11 @@ internal partial class FromStagingPipelineCommand(
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
-        var updateDependenciesOptions = new SpecificCommandOptions()
+        var updateDependenciesOptions = SpecificCommandOptions.FromPullRequestOptions(options) with
         {
             RepoRoot = options.RepoRoot,
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = productVersions,
-
-            // Pass through all properties of CreatePullRequestOptions
-            User = options.User,
-            Email = options.Email,
-            Password = options.Password,
-            AzdoOrganization = options.AzdoOrganization,
-            AzdoProject = options.AzdoProject,
-            AzdoRepo = options.AzdoRepo,
-            VersionSourceName = options.VersionSourceName,
-            SourceBranch = options.SourceBranch,
-            TargetBranch = options.TargetBranch,
             InternalBaseUrl = internalBaseUrl,
         };
 
