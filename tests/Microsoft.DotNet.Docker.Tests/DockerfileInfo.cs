@@ -12,21 +12,28 @@ namespace Microsoft.DotNet.Docker.Tests;
 /// <summary>
 /// Represents information about a specific Dockerfile's location.
 /// </summary>
-/// <param name="Repo">
+/// <param name="RepoDir">
 /// The repository directory where the Dockerfile is located.
 /// </param>
-/// <param name="MajorMinor">
+/// <param name="VersionDir">
 /// The version directory where the Dockerfile is located. Empty string if the
 /// Dockerfile is not contained in a version directory.
 /// </param>
-/// <param name="Os">
+/// <param name="OsDir">
 /// The operating system directory where the Dockerfile is located. Empty
 /// string if the Dockerfile is not contained in an OS-specific directory.
 /// </param>
-/// <param name="Architecture">
+/// <param name="ArchitectureDir">
 /// The architecture directory where the Dockerfile is located.
 /// </param>
-public partial record DockerfileInfo(string Repo, string MajorMinor, string Os, string Architecture)
+public sealed partial record DockerfileInfo(
+    string RepoDir,
+    string VersionDir,
+    string OsDir,
+    string ArchitectureDir,
+    Repo Repo,
+    Image Image,
+    Platform Platform)
 {
     [GeneratedRegex(
         @"^
@@ -43,7 +50,11 @@ public partial record DockerfileInfo(string Repo, string MajorMinor, string Os, 
     )]
     private static partial Regex DockerfileRegex { get; }
 
-    public static DockerfileInfo Create(string dockerfilePath)
+    public DotNetVersion ProductVersion => DotNetVersion.Parse(ProductVersionString);
+
+    private string ProductVersionString => ManifestHelper.GetResolvedProductVersion(Image);
+
+    public static DockerfileInfo Create(string dockerfilePath, Repo repo, Image image, Platform platform)
     {
         Match match = DockerfileRegex.Match(dockerfilePath);
         if (!match.Success)
@@ -52,9 +63,12 @@ public partial record DockerfileInfo(string Repo, string MajorMinor, string Os, 
         }
 
         return new DockerfileInfo(
-            Repo: match.Groups["repo"].Value.TrimStart('/'),
-            MajorMinor: match.Groups["major_minor"].Value.TrimStart('/'),
-            Os: match.Groups["os"].Value.TrimStart('/'),
-            Architecture: match.Groups["architecture"].Value.TrimStart('/'));
+            match.Groups["repo"].Value.TrimStart('/'),
+            match.Groups["major_minor"].Value.TrimStart('/'),
+            match.Groups["os"].Value.TrimStart('/'),
+            match.Groups["architecture"].Value.TrimStart('/'),
+            repo,
+            image,
+            platform);
     }
 }
