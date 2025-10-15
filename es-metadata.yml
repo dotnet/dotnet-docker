@@ -1,0 +1,8 @@
+schemaVersion: 0.0.1
+isProduction: true
+accountableOwners:
+  service: 33d7954d-0688-4e7b-9208-087c9e57f21a
+routing:
+  defaultAreaPath:
+    org: dnceng
+    path: internal\.NET Acquisition and Deployment

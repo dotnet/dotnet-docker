@@ -139,7 +139,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
             // Build and run app on SDK image
             string buildTag = Build(TestDockerfile.BuildStageName, customBuildArgs);
             tags.Add(buildTag);
-            await RunAsync(buildTag, command: "dotnet run");
+            await RunAsync(buildTag, command: "dotnet run --no-restore");
 
             // Build and run app stage
             string tag = Build(TestDockerfile.AppStageName, customBuildArgs);

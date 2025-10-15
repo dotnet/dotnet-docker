@@ -1,7 +1,9 @@
 using System.Net;
 using System.Runtime.InteropServices;
 
-public readonly struct EnvironmentInfo
+namespace aspnetapp;
+
+internal readonly struct EnvironmentInfo
 {
     public EnvironmentInfo()
     {
@@ -13,19 +15,19 @@ public readonly struct EnvironmentInfo
             return;
         }
 
-        string[] memoryLimitPaths = new string[] 
-        {
+        string[] memoryLimitPaths =
+        [
             "/sys/fs/cgroup/memory.max",
             "/sys/fs/cgroup/memory.high",
             "/sys/fs/cgroup/memory.low",
             "/sys/fs/cgroup/memory/memory.limit_in_bytes",
-        };
+        ];
 
-        string[] currentMemoryPaths = new string[] 
-        {
+        string[] currentMemoryPaths =
+        [
             "/sys/fs/cgroup/memory.current",
             "/sys/fs/cgroup/memory/memory.usage_in_bytes",
-        };
+        ];
 
         MemoryLimit = GetBestValue(memoryLimitPaths);
         MemoryUsage = GetBestValue(currentMemoryPaths);

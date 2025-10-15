@@ -13,6 +13,7 @@ parameters:
 
 variables:
 - template: /eng/pipelines/variables/samples.yml@self
+- template: /eng/common/templates/variables/dotnet/secrets.yml@self
 - name: publishEolAnnotations
   value: true
   readonly: true
