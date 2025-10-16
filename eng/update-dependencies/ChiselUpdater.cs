@@ -21,19 +21,19 @@ internal static class ChiselUpdater
 
     private static readonly string[] s_supportedArchitectures = ["amd64", "arm", "arm64"];
 
-    public static IEnumerable<IDependencyUpdater> GetUpdaters(string repoRoot) =>
+    public static IEnumerable<IDependencyUpdater> GetUpdaters(string manifestVersionsFilePath) =>
         s_supportedArchitectures
             .SelectMany<string, IDependencyUpdater>(arch =>
                 [
                     new GitHubReleaseUrlUpdater(
-                        repoRoot: repoRoot,
+                        manifestVersionsFilePath: manifestVersionsFilePath,
                         toolName: ToolName,
                         variableName: GetChiselManifestVariable(ToolName, arch, "url", "latest"),
                         owner: Owner,
                         repo: Repo,
                         assetRegex: GetAssetRegex(arch)),
                     new ChiselReleaseShaUpdater(
-                        repoRoot,
+                        manifestVersionsFilePath,
                         arch),
                 ]);
 
@@ -53,10 +53,10 @@ internal static class ChiselUpdater
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
 
     private class ChiselReleaseShaUpdater(
-        string repoRoot,
+        string manifestVersionsFilePath,
         string arch)
         : GitHubReleaseUrlUpdater(
-            repoRoot,
+            manifestVersionsFilePath,
             ChiselUpdater.ToolName,
             GetChiselManifestVariable("chisel", arch, ShaFunction, "latest"),
             ChiselUpdater.Owner,
