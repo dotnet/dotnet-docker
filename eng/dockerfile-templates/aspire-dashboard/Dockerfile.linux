@@ -13,19 +13,19 @@
             OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
 
-    set baseUrl to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|base-url|", VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("aspire-dashboard|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
 
-    set buildVersion to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|build-version")] ^
+    set buildVersion to VARIABLES["aspire-dashboard|build-version"] ^
     set aspireVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
-    set aspireVersion to VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|", aspireVersionVariable)] ^
+    set aspireVersion to VARIABLES[cat("aspire-dashboard|", aspireVersionVariable)] ^
     set versionFolder to when(buildVersion != aspireVersion, buildVersion, '$dotnet_aspire_version') ^
-    set aspireBaseUrl to cat(VARIABLES[cat("aspire-dashboard|", aspireMajorMinor, "|base-url|", VARIABLES["branch"])], "/aspire/", versionFolder, "/") ^
+    set aspireBaseUrl to cat(VARIABLES[cat("aspire-dashboard|base-url|", VARIABLES["branch"])], "/aspire/", versionFolder, "/") ^
 
     set downloadUrl to cat(aspireBaseUrl, "aspire-dashboard-linux-", ARCH_SHORT, ".zip") ^
     set outFile to "aspire_dashboard.zip" ^
     set appDir to "/app" ^
-    set sha to VARIABLES[join(["aspire-dashboard", aspireMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
+    set sha to VARIABLES[join(["aspire-dashboard", "linux", ARCH_SHORT, "sha"], "|")]
 
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 

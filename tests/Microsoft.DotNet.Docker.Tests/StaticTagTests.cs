@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
+using Microsoft.DotNet.Docker.Shared;
 using FluentAssertions;
 using FluentAssertions.Execution;
 using Xunit;
@@ -121,7 +122,6 @@ namespace Microsoft.DotNet.Docker.Tests
             bool checkArchitecture,
             Func<DockerfileInfo, bool> skipDockerFileOn)
         {
-
             if (!checkOs && !checkArchitecture)
             {
                 throw new ArgumentException("At least one of 'checkOs' or 'checkArchitecture' must be true. " +
@@ -129,15 +129,14 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             Dictionary<DockerfileInfo, List<string>> dockerfileTags = ManifestHelper.GetDockerfileTags(repo);
-            foreach (KeyValuePair<DockerfileInfo, List<string>> dockerfileTag in dockerfileTags)
+            foreach ((DockerfileInfo dockerfileInfo, List<string> tags) in dockerfileTags)
             {
-                DockerfileInfo dockerfileInfo = dockerfileTag.Key;
                 if (skipDockerFileOn(dockerfileInfo))
                 {
                     continue;
                 }
 
-                Version dockerfileVersion = GetVersion(dockerfileInfo.MajorMinor);
+                var dockerfileVersion = dockerfileInfo.ProductVersion;
 
                 bool hasPreviewInMajorVersionGroup = HasPreviewProductVersion(repo, dockerfileVersion.Major);
 
@@ -148,32 +147,34 @@ namespace Microsoft.DotNet.Docker.Tests
                 // due to combination of undocumenting platform tags for appliance images
                 // (which only .NET Monitor had at the time) and the update from CBL-Mariner
                 // to Azure Linux. Rewrite the OS to match CBL-Mariner in this instance.
-                string os = dockerfileInfo.Os;
+                string os = dockerfileInfo.OsDir;
                 if (repo.Name.EndsWith("monitor") &&
-                    dockerfileInfo.MajorMinor.StartsWith("8.") &&
+                    dockerfileInfo.VersionDir.StartsWith("8.") &&
                     OS.AzureLinuxDistroless.Equals(os))
                 {
                     os = OS.MarinerDistroless;
                 }
 
-                IEnumerable<string> tags = dockerfileTag.Value
-                    .Where(tag => IsTagOfFormat(
-                        tag,
-                        versionType,
-                        dockerfileInfo.MajorMinor,
-                        checkOs ? os : null,
-                        checkArchitecture ? dockerfileInfo.Architecture : null));
+                Regex expectedPattern = GetTagRegex(
+                    versionType,
+                    dockerfileInfo.ProductVersion,
+                    checkOs ? os : null,
+                    checkArchitecture ? dockerfileInfo.ArchitectureDir : null);
 
-                if (versionType == VersionType.Major && !IsLatestInMajorVersionGroup(repo, dockerfileInfo.MajorMinor, hasPreviewInMajorVersionGroup))
+                var matchingTags = tags.Where(tag => expectedPattern.IsMatch(tag));
+
+                if (versionType == VersionType.Major && !IsLatestInMajorVersionGroup(repo, dockerfileInfo.ProductVersion, hasPreviewInMajorVersionGroup))
                 {
                     // Special case for major version tags
                     // These tags should be on the latest Major.Minor GA version for the respective major version
-                    tags.Should().BeEmpty("expected tag to be on latest Major.Minor version for version " +
+                    matchingTags.Should().BeEmpty("expected tag to be on latest Major.Minor version for version " +
                         dockerfileVersion.Major + ", but found the tag on " + dockerfileInfo);
                 }
                 else
                 {
-                    tags.Should().ContainSingle(dockerfileInfo + " requires exactly one tag that matches the expected format");
+                    matchingTags
+                        .Should()
+                        .ContainSingle($"{dockerfileInfo} requires exactly one tag that matches the expected pattern {expectedPattern}");
                 }
             }
         }
@@ -190,7 +191,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             IEnumerable<KeyValuePair<DockerfileInfo, List<string>>> alpineDockerfileTags =
                 GetDockerfileTags(repo)
-                    .Where(p => p.Key.Os.Contains(OS.Alpine));
+                    .Where(p => p.Key.OsDir.Contains(OS.Alpine));
 
             using (new AssertionScope())
             {
@@ -198,7 +199,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 {
                     string alpineFloatingTagVersion = GetAlpineFloatingTagVersion(dockerfileInfo);
                     Regex pattern = GetFloatingTagRegex(dockerfileInfo);
-                    if (dockerfileInfo.Os == alpineFloatingTagVersion)
+                    if (dockerfileInfo.OsDir == alpineFloatingTagVersion)
                     {
                         tags.Should().ContainSingle(tag => pattern.IsMatch(tag),
                             because: $"image {dockerfileInfo} should have an {OS.Alpine} floating tag");
@@ -212,14 +213,14 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             string GetAlpineFloatingTagVersion(DockerfileInfo info) =>
-                Config.GetVariableValue($"alpine|{info.MajorMinor}|floating-tag-version");
+                Config.GetVariableValue($"alpine|{info.VersionDir}|floating-tag-version");
 
             Regex GetFloatingTagRegex(DockerfileInfo info) =>
                 GetTagRegex(
                     versionType,
-                    majorMinor: info.MajorMinor,
+                    productVersion: info.ProductVersion,
                     os: OS.Alpine,
-                    architecture: checkArchitecture ? info.Architecture : null);
+                    architecture: checkArchitecture ? info.ArchitectureDir : null);
         }
 
         // - <Major.Minor.Patch>
@@ -230,44 +231,49 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VersionTag_SameOsAndVersion(Repo repo, VersionType versionType)
         {
             // Group tags -> dockerfiles
-            Dictionary<string, List<DockerfileInfo>> tagsToDockerfiles = ManifestHelper.GetDockerfileTags(repo)
-                .SelectMany(pair => pair.Value
-                    .Where(tag => IsTagOfFormat(
-                        tag,
-                        versionType,
-                        majorMinor: pair.Key.MajorMinor,
-                        os: null,
-                        architecture: null))
-                    .Select(tag => (tag, pair.Key)))
-                .GroupBy(pair => pair.tag, pair => pair.Key)
-                .ToDictionary(group => group.Key, group => group.ToList());
+            Dictionary<string, List<DockerfileInfo>> tagsToDockerfiles =
+                GetDockerfileTags(repo)
+                    .SelectMany(pair =>
+                    {
+                        var (dockerfileInfo, allTags) = pair;
+                        return allTags
+                            .Where(tag => IsTagOfFormat(
+                                tag: tag,
+                                versionType: versionType,
+                                productVersion: dockerfileInfo.ProductVersion,
+                                os: null,
+                                architecture: null))
+                            .Select(tag => (tag, pair.Key));
+                    })
+                    .GroupBy(pair => pair.tag, pair => pair.Key)
+                    .ToDictionary(group => group.Key, group => group.ToList());
 
             foreach (KeyValuePair<string, List<DockerfileInfo>> tagToDockerfiles in tagsToDockerfiles)
             {
                 string tag = tagToDockerfiles.Key;
                 List<DockerfileInfo> dockerfiles = tagToDockerfiles.Value;
 
-                List<string> dockerfileVersions = dockerfiles
-                    .Select(dockerfile => dockerfile.MajorMinor)
+                var dockerfileProductVersions = dockerfiles
+                    .Select(dockerfile => dockerfile.ProductVersion)
                     .Distinct()
                     .ToList();
 
-                dockerfileVersions.Should().ContainSingle(
-                    "all dockerfiles for tag " + tag + " should have the same Major.Minor version");
+                dockerfileProductVersions.Should().ContainSingle(
+                    "all dockerfiles for tag " + tag + " should have the same version");
 
                 if (versionType == VersionType.Major)
                 {
-                    string dockerfileVersion = dockerfileVersions.First();
+                    var dockerfileVersion = dockerfileProductVersions.First();
 
                     // Special case for major version tags
                     // These tags should be on the most up-to-date Major.Minor version for the respective major version
                     IsLatestInMajorVersionGroup(repo, dockerfileVersion, tag.Contains("-preview")).Should().BeTrue(
                         "expected tag to be on the latest Major.Minor GA version for the major version " +
-                        GetVersion(dockerfileVersion).Major + ", but found the tag on " + dockerfileVersion);
+                        dockerfileVersion.Major + ", but found the tag on " + dockerfileVersion);
                 }
 
                 List<string> dockerfileOses = dockerfiles
-                    .Select(dockerfile => dockerfile.Os)
+                    .Select(dockerfile => dockerfile.OsDir)
                     .Distinct()
                     .ToList();
 
@@ -548,34 +554,33 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         private static bool IsWindows(DockerfileInfo dockerfileInfo) =>
-            dockerfileInfo.Os.Contains("windowsservercore") || dockerfileInfo.Os.Contains("nanoserver");
+            dockerfileInfo.OsDir.Contains("windowsservercore") || dockerfileInfo.OsDir.Contains("nanoserver");
 
         // Certain versions of appliance repos use a new tag schema.
         // This new schema excludes the OS from all tags.
         // The aspire-dashboard repo uses this schema for all versions.
         // The monitor and monitor-base repos use this schema for versions 9 and above.
         private static bool IsApplianceVersionUsingOldSchema(DockerfileInfo dockerfileInfo) =>
-            dockerfileInfo.Repo.Contains("monitor") && GetVersion(dockerfileInfo.MajorMinor).Major <= 8;
+            dockerfileInfo.RepoDir.Contains("monitor") && dockerfileInfo.ProductVersion.Major <= 8;
 
         // <cref="IsApplianceVersionUsingOldSchema"/>
         private static bool IsApplianceVersionUsingNewSchema(DockerfileInfo dockerfileInfo) =>
             !IsApplianceVersionUsingOldSchema(dockerfileInfo);
 
         /// <summary>
-        /// Determines if the <paramref name="majorMinorVersion"/> is the latest in its major version group.
+        /// Determines if the <paramref name="productVersion"/> is the latest in its major version group.
         /// </summary>
         /// <remarks>
         /// By default, this will only consider GA versions within the major version group (unless there are no GA versions).
         /// The <paramref name="includePreviewVersions"/> parameter can be set to include preview versions in the check.
         /// </remarks>
-        private static bool IsLatestInMajorVersionGroup(Repo repo, string majorMinorVersion, bool includePreviewVersions)
+        private static bool IsLatestInMajorVersionGroup(Repo repo, DotNetVersion productVersion, bool includePreviewVersions)
         {
-            IEnumerable<string> productVersions = ManifestHelper.GetResolvedProductVersions(repo);
-
+            IEnumerable<DotNetVersion> productVersions = GetResolvedProductVersions(repo).Select(DotNetVersion.Parse);
             Assert.NotEmpty(productVersions);
 
-            List<Version> majorMinorVersions = productVersions
-                .GroupBy(version => GetVersion(version).Major)
+            List<DotNetVersion> majorMinorVersions = productVersions
+                .GroupBy(version => version.Major)
                 .Select(group =>
                 {
                     if (includePreviewVersions)
@@ -586,21 +591,16 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         // Use the latest GA major version.
                         // If there are no GA versions, use the latest preview version.
-                        IEnumerable<string> gaVersions = group.Where(version => IsGAVersion(version));
+                        var gaVersions = group.Where(version => version.IsGA);
                         return gaVersions.Any() ? gaVersions : group;
                     }
                 })
-                .Select(group => group.Select(version =>
-                {
-                    // Product versions are in the form of <Major.Minor.Patch>
-                    // We only care about Major.Minor so we parse out the Patch
-                    Version parsedVersion = GetVersion(version);
-                    return new Version(parsedVersion.Major, parsedVersion.Minor);
-                }).OrderByDescending(version => version).First())
+                .Select(group => group
+                    .OrderByDescending(version => version)
+                    .First())
                 .ToList();
 
-            Version inputVersion = GetVersion(majorMinorVersion);
-            return majorMinorVersions.Contains(new Version(inputVersion.Major, inputVersion.Minor));
+            return majorMinorVersions.Contains(productVersion);
         }
 
         /// <summary>
@@ -608,54 +608,41 @@ namespace Microsoft.DotNet.Docker.Tests
         /// </summary>
         private static bool HasPreviewProductVersion(Repo repo, int majorVersion)
         {
-            IEnumerable<string> productVersions = ManifestHelper.GetResolvedProductVersions(repo);
+            var productVersions = GetResolvedProductVersions(repo).Select(DotNetVersion.Parse);
 
-            IGrouping<int, string>? matchingMajorVersionGroup = productVersions
-                .GroupBy(version => GetVersion(version).Major)
+            IGrouping<int, DotNetVersion>? matchingMajorVersionGroup = productVersions
+                .GroupBy(version => version.Major)
                 .SingleOrDefault(group => group.Key == majorVersion);
 
-            if (null == matchingMajorVersionGroup)
+            if (matchingMajorVersionGroup is null)
+            {
                 return false;
+            }
 
-            return matchingMajorVersionGroup.Any(version => !IsGAVersion(version));
-        }
-
-        /// <summary>
-        /// Determines if the version is considered a GA version.
-        /// </summary>
-        /// <remarks>
-        /// Assumes that non-GA versions have a hyphen in them
-        /// e.g. non-GA: 5.0.0-preview.1, GA: 5.0.0
-        /// RTM versions are also accepted as GA versions.
-        /// </remarks>
-        private static bool IsGAVersion(string version)
-        {
-            return !version.Contains('-') || version.Contains("rtm");
+            return matchingMajorVersionGroup.Any(version => !version.IsGA);
         }
 
         private static bool IsTagOfFormat(
             string tag,
             VersionType versionType,
-            string? majorMinor = null,
+            DotNetVersion? productVersion,
             string? os = null,
             string? architecture = null)
         {
-            Regex pattern = GetTagRegex(versionType, majorMinor, os, architecture);
+            Regex pattern = GetTagRegex(versionType, productVersion, os, architecture);
             return pattern.IsMatch(tag);
         }
 
-        private static Regex GetTagRegex(VersionType versionType, string? majorMinor, string? os, string? architecture)
+        private static Regex GetTagRegex(VersionType versionType, DotNetVersion? productVersion, string? os, string? architecture)
         {
             string tagRegex = versionType switch
             {
                 VersionType.Major =>
-                    majorMinor == null
-                        ? MajorVersionRegex
-                        : @$"{GetVersion(majorMinor).Major}(-preview)?",
+                    productVersion == null ? MajorVersionRegex : @$"{productVersion.Major}(-preview)?",
                 VersionType.MajorMinor =>
-                    @$"{majorMinor ?? MajorMinorVersionRegex}(-preview)?",
+                    @$"{productVersion?.ToString(2) ?? MajorMinorVersionRegex}(-preview)?",
                 VersionType.MajorMinorPatch =>
-                    @$"{majorMinor ?? MajorMinorVersionRegex}\.{SingleNumberRegex}(-{SingleNumberRegex})?(?:-(alpha|beta|preview|rc)\.{SingleNumberRegex})?",
+                    @$"{productVersion?.ToString(3) ?? @"\d+\.\d+\.\d+"}(?:-(alpha|beta|preview|rc)\.{SingleNumberRegex})?",
                 _ => throw new ArgumentException("Invalid version type", nameof(versionType)),
             };
 
@@ -664,46 +651,32 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static Version GetAlpineVersion(DockerfileInfo dockerfileInfo)
         {
-            string parsedOs = dockerfileInfo.Os.Replace(OS.Alpine, string.Empty);
+            string parsedOs = dockerfileInfo.OsDir.Replace(OS.Alpine, string.Empty);
             parsedOs.Should().NotBeNullOrWhiteSpace(
                 because: $"{dockerfileInfo} should have a specific Alpine version for osVersion");
-            return GetVersion(parsedOs);
+            return Version.Parse(parsedOs);
         }
 
         private static int GetExpectedLatestMajorVersion(Repo repo)
         {
-            IEnumerable<string> productVersions = ManifestHelper.GetResolvedProductVersions(repo);
+            var productVersions = GetResolvedProductVersions(repo).Select(DotNetVersion.Parse);
 
             Assert.NotEmpty(productVersions);
 
             if (productVersions.Count() == 1)
             {
                 // Use the first product version if there is only one
-                return GetVersion(productVersions.First()).Major;
+                return productVersions.First().Major;
             }
 
             // In non-nightly branches, preview versions should not have the latest tag
             if (!Config.IsNightlyRepo)
             {
                 productVersions = productVersions
-                    .Where(version => !version.Contains("-preview") && !version.Contains("-rc"));
+                    .Where(version => !version.Release.Contains("preview") && !version.Release.Contains("-rc"));
             }
 
-            return productVersions
-                .Select(version => GetVersion(version).Major)
-                .Max();
-        }
-
-        private static Version GetVersion(string input)
-        {
-            // Version in the input can be in the form of
-            // <Major>, <Major.Minor>, or <Major.Minor.Patch>
-            Match match = Regex.Match(input, @$"^({MajorVersionRegex})(\.{SingleNumberRegex})?(\.{SingleNumberRegex})?");
-            if (!match.Success)
-            {
-                throw new ArgumentException($"Failed to parse version from '{input}'", nameof(input));
-            }
-            return new Version(match.Value);
+            return productVersions.Select(version => version.Major).Max();
         }
     }
 }

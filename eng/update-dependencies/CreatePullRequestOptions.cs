@@ -29,6 +29,9 @@ public abstract record CreatePullRequestOptions
     public string SourceBranch { get; init; } = "";
     public string TargetBranch { get; init; } = "nightly";
 
+    // If new properties or options are added, they may need to be added to
+    // SpecificCommandOptions.FromPullRequestOptions(...)
+
     public static List<Option> Options =>
     [
         new Option<string>("--repo-root") { Description = "The root of the dotnet-docker repo to run against (defaults to current working directory)" },
