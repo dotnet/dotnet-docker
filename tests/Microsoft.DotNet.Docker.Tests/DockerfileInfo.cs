@@ -6,22 +6,56 @@
 
 using System;
 using System.Text.RegularExpressions;
+using Microsoft.DotNet.Docker.Shared;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
 /// <summary>
 /// Represents information about a specific Dockerfile's location.
 /// </summary>
-/// <param name="Repo">The repository directory where the Dockerfile is located.</param>
-/// <param name="MajorMinor">The version directory where the Dockerfile is located.</param>
-/// <param name="Os">The operating system directory where the Dockerfile is located.</param>
-/// <param name="Architecture">The architecture directory where the Dockerfile is located.</param>
-public partial record DockerfileInfo(string Repo, string MajorMinor, string Os, string Architecture)
+/// <param name="RepoDir">
+/// The repository directory where the Dockerfile is located.
+/// </param>
+/// <param name="VersionDir">
+/// The version directory where the Dockerfile is located. Empty string if the
+/// Dockerfile is not contained in a version directory.
+/// </param>
+/// <param name="OsDir">
+/// The operating system directory where the Dockerfile is located. Empty
+/// string if the Dockerfile is not contained in an OS-specific directory.
+/// </param>
+/// <param name="ArchitectureDir">
+/// The architecture directory where the Dockerfile is located.
+/// </param>
+public sealed partial record DockerfileInfo(
+    string RepoDir,
+    string VersionDir,
+    string OsDir,
+    string ArchitectureDir,
+    Repo Repo,
+    Image Image,
+    Platform Platform)
 {
-    [GeneratedRegex(@"src/(?<repo>.+)/(?<major_minor>\d+\.\d+)/(?<os>.+)/(?<architecture>.+)")]
+    [GeneratedRegex(
+        @"^
+            src
+            (?<repo>/[\w-]+)
+            # Optional version segment
+            (?<major_minor>/\d+\.\d+)?
+            # Optional OS segment with negative lookahead to exclude arch
+            (?<os>/(?!amd64$|arm64v8$|arm32v7$)[^/]+)?
+            # Required arch segment
+            (?<architecture>/(?:amd64|arm64v8|arm32v7))
+        $",
+        RegexOptions.IgnorePatternWhitespace
+    )]
     private static partial Regex DockerfileRegex { get; }
 
-    public static DockerfileInfo Create(string dockerfilePath)
+    public DotNetVersion ProductVersion => DotNetVersion.Parse(ProductVersionString);
+
+    private string ProductVersionString => ManifestHelper.GetResolvedProductVersion(Image);
+
+    public static DockerfileInfo Create(string dockerfilePath, Repo repo, Image image, Platform platform)
     {
         Match match = DockerfileRegex.Match(dockerfilePath);
         if (!match.Success)
@@ -30,9 +64,12 @@ public partial record DockerfileInfo(string Repo, string MajorMinor, string Os, 
         }
 
         return new DockerfileInfo(
-            match.Groups["repo"].Value,
-            match.Groups["major_minor"].Value,
-            match.Groups["os"].Value,
-            match.Groups["architecture"].Value);
+            match.Groups["repo"].Value.TrimStart('/'),
+            match.Groups["major_minor"].Value.TrimStart('/'),
+            match.Groups["os"].Value.TrimStart('/'),
+            match.Groups["architecture"].Value.TrimStart('/'),
+            repo,
+            image,
+            platform);
     }
 }

@@ -22,10 +22,22 @@ namespace Dotnet.Docker
     {
         private static SpecificCommandOptions? s_options;
 
-        private static SpecificCommandOptions Options {
+        private static SpecificCommandOptions Options
+        {
             get => s_options ?? throw new InvalidOperationException($"{nameof(Options)} has not been set.");
             set => s_options = value;
         }
+
+        /// <summary>
+        /// Custom dependency updaters to run in addition to what is
+        /// automatically ran based on <see cref="Options"/> .
+        /// </summary>
+        public List<IDependencyUpdater> CustomUpdaters { get; } = [];
+
+        /// <summary>
+        /// Custom build infos to use for the <see cref="CustomUpdaters"/>
+        /// </summary>
+        public List<IDependencyInfo> CustomUpdateInfos { get; } = [];
 
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
@@ -63,6 +75,12 @@ namespace Dotnet.Docker
                     IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(manifestFilePath);
                     DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
                     updateResults.Add(toolUpdateResults);
+                }
+
+                if (CustomUpdaters.Count != 0)
+                {
+                    DependencyUpdateResults customUpdateResults = UpdateFiles(CustomUpdateInfos, CustomUpdaters);
+                    updateResults.Add(customUpdateResults);
                 }
 
                 IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters();
