@@ -5,9 +5,10 @@ FROM $REPO:10.0.0-alpine3.22-arm32v7 AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0 \
+    && dotnet_build_version=$dotnet_version-rtm.25515.111 \
     && wget \
-        https://ci.dot.net/public/Runtime/$dotnet_version-rtm.25515.111/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz \
-        https://ci.dot.net/public-checksums/Runtime/$dotnet_version-rtm.25515.111/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512 \
+        https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz \
+        https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512 \
     && echo "$(cat dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz --directory /dotnet \
