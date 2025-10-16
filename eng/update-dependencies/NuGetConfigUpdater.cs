@@ -4,6 +4,7 @@
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
+using Microsoft.DotNet.Docker.Shared;
 
 namespace Dotnet.Docker;
 
