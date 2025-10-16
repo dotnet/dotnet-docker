@@ -8,12 +8,10 @@ using Microsoft.Extensions.Logging;
 namespace Dotnet.Docker;
 
 internal class VmrBuildUpdaterService(
-    IBuildAssetService buildAssetService,
     IBasicBarClient barClient,
     ILogger<VmrBuildUpdaterService> logger
 ) : IBuildUpdaterService
 {
-    private readonly IBuildAssetService _buildAssetService = buildAssetService;
     private readonly IBasicBarClient _barClient = barClient;
     private readonly ILogger<VmrBuildUpdaterService> _logger = logger;
 
@@ -41,14 +39,9 @@ internal class VmrBuildUpdaterService(
         }
 
         IEnumerable<Asset> assets = await _barClient.GetAssetsAsync(buildId: build.Id);
+        var productVersions = ProductVersions.FromVmrBuildAssets(assets);
 
-        Asset productCommitsAsset = assets.FirstOrDefault(a => ProductCommits.SdkAssetRegex.IsMatch(a.Name))
-            ?? throw new InvalidOperationException($"Could not find product version commit in assets.");
-
-        string productCommitsJson = await _buildAssetService.GetAssetTextContentsAsync(productCommitsAsset);
-        ProductCommits productCommits = ProductCommits.FromJson(productCommitsJson);
-
-        Version dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(productCommits.Sdk.Version);
+        Version dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(productVersions.Sdk.Version);
 
         // Run old update-dependencies command using the resolved versions
         var updateDependencies = new SpecificCommand();
@@ -59,11 +52,11 @@ internal class VmrBuildUpdaterService(
             {
                 // "dotnet" version is also required. It sets the "dotnet|*|product-version"
                 // variable which is used for runtime-deps, runtime, and aspnet tags.
-                { "dotnet", productCommits.Runtime.Version },
-                { "runtime", productCommits.Runtime.Version },
-                { "aspnet", productCommits.AspNetCore.Version },
-                { "aspnet-composite", productCommits.AspNetCore.Version },
-                { "sdk", productCommits.Sdk.Version },
+                { "dotnet", productVersions.Runtime.Version },
+                { "runtime", productVersions.Runtime.Version },
+                { "aspnet", productVersions.AspNetCore.Version },
+                { "aspnet-composite", productVersions.AspNetCore.Version },
+                { "sdk", productVersions.Sdk.Version },
             },
         };
 
