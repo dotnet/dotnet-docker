@@ -8,12 +8,10 @@ using Microsoft.Extensions.Logging;
 namespace Dotnet.Docker;
 
 internal class VmrBuildUpdaterService(
-    IBuildAssetService buildAssetService,
     IBasicBarClient barClient,
     ILogger<VmrBuildUpdaterService> logger
 ) : IBuildUpdaterService
 {
-    private readonly IBuildAssetService _buildAssetService = buildAssetService;
     private readonly IBasicBarClient _barClient = barClient;
     private readonly ILogger<VmrBuildUpdaterService> _logger = logger;
 
