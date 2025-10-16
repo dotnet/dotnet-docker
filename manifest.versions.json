@@ -83,7 +83,7 @@
     "dotnet|10.0|base-url|main": "$(base-url|public|preview|main)",
     "dotnet|10.0|base-url|nightly": "$(base-url|public|preview|nightly)",
     "dotnet|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|main)",
-    "dotnet|10.0|base-url|checksums|nightly": "$(dotnet|10.0|base-url|nightly)",
+    "dotnet|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
 
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,

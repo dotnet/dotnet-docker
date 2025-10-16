@@ -7,7 +7,7 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 RUN dotnet_version=10.0.0 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version-rtm.25515.111/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
-        --remote-name https://ci.dot.net/public/Runtime/$dotnet_version-rtm.25515.111/dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version-rtm.25515.111/dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512 \
     && echo "$(cat dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-arm.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-arm.tar.gz --directory /usr/share/dotnet \
