@@ -83,7 +83,7 @@ namespace Dotnet.Docker
 
                 if (toolBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(repoRoot: Options.RepoRoot);
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(manifestFilePath);
                     DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
                     updateResults.Add(toolUpdateResults);
                 }
