@@ -21,7 +21,7 @@ RUN dotnet_version=10.0.0 \
 FROM $REPO:10.0.0-noble-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0-rtm.25515.111
+ENV DOTNET_VERSION=10.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

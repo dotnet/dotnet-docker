@@ -33,6 +33,6 @@ RUN powershell -Command `
 # ASP.NET Core image
 FROM {{runtimeStageFromImage}}
 
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
+{{InsertTemplate("Dockerfile.envs")}}
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

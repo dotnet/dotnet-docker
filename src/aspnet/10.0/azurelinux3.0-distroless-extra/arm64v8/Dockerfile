@@ -27,6 +27,6 @@ RUN aspnetcore_version=10.0.0 \
 FROM $REPO:10.0.0-azurelinux3.0-distroless-extra-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-rtm.25515.111
+ENV ASPNET_VERSION=10.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

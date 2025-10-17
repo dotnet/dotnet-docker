@@ -34,6 +34,6 @@ RUN powershell -Command `
 FROM $REPO:10.0.0-windowsservercore-ltsc2022
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-rtm.25515.111
+ENV ASPNET_VERSION=10.0.0
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

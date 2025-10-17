@@ -22,9 +22,9 @@ FROM $REPO:10.0.0-alpine3.22-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0-rtm.25515.111 \
+    DOTNET_VERSION=10.0.0 \
     # ASP.NET Core version
-    ASPNET_VERSION=10.0.0-rtm.25515.111
+    ASPNET_VERSION=10.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

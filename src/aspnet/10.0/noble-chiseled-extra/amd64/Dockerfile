@@ -21,6 +21,6 @@ RUN aspnetcore_version=10.0.0 \
 FROM $REPO:10.0.0-noble-chiseled-extra-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.0-rtm.25515.111
+ENV ASPNET_VERSION=10.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
