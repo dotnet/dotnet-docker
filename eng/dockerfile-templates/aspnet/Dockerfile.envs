@@ -1,20 +1,20 @@
 {{
     _ ARGS:
-        is-composite-runtime (optional): Whether to include the runtime version
-        is-internal (optional): Whether the Dockerfile is targeting an internal build of the product ^
+        is-composite-runtime (optional): Whether to include the runtime version ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
-    set isStableBranding to (
-        find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-servicing") >= 0
-        || find(VARIABLES[cat("sdk|", dotnetVersion, "|build-version")], "-rtm") >= 0
-    ) ^
-    set runtimeVersion to when(isStableBranding && ARGS["is-internal"],
+    set buildVersion to VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")] ^
+    set isStableBranding to find(buildVersion, "preview") < 0 && find(buildVersion, "rc.") < 0 ^
+
+    set runtimeVersion to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]) ^
-    set aspnetVersion to when(isStableBranding && ARGS["is-internal"],
+
+    set aspnetVersion to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
         VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]) ^
+
+    set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\") ^
     set aspnetComment to "# ASP.NET Core version"
 }}{{if ARGS["is-composite-runtime"]:ENV {{lineContinuation}}

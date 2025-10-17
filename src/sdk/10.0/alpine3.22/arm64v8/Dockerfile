@@ -1,13 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:10.0.0-rc.2-alpine3.22-arm64v8 AS installer
+FROM $REPO:10.0.0-alpine3.22-arm64v8 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.100-rc.2.25502.107 \
+RUN dotnet_sdk_version=10.0.100 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.25515.111 \
     && wget \
-        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
-    && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
+        https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
+        https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
+    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
@@ -16,7 +17,7 @@ RUN dotnet_sdk_version=10.0.100-rc.2.25502.107 \
 
 
 # .NET SDK image
-FROM $REPO:10.0.0-rc.2-alpine3.22-arm64v8
+FROM $REPO:10.0.0-alpine3.22-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -24,7 +25,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100-rc.2.25502.107 \
+    DOTNET_SDK_VERSION=10.0.100 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
