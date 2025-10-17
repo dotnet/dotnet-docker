@@ -7,26 +7,39 @@ steps:
   - powershell: |
       if ("$env:ONEESPT_BUILDTYPE" -eq "Unofficial")
       {
-        echo "Build is from an unofficial pipeline, continuing..."
+        echo "Build is from an unofficial pipeline, continuing."
         exit 0
       }
 
-      if ("$(officialBranches)".Split(',').Contains("$(sourceBranch)") `
-          -and "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.publishAcr.repoPrefix }}"))
+      $isOfficialRepoPrefix = "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.publishAcr.repoPrefix }}")
+      if (-not $isOfficialRepoPrefix)
       {
-        echo "Conditions met for official build, continuing..."
+        echo "This build will not publish to an official repo prefix, continuing."
+        echo "Publish repo prefix: ${{ parameters.publishConfig.publishAcr.repoPrefix }}"
+        echo "Official repo prefixes: $(officialRepoPrefixes)"
         exit 0
       }
 
-      if (-not "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.publishAcr.repoPrefix }}"))
+      $isOfficialBranch = "$(officialBranches)".Split(',').Contains("$(sourceBranch)")
+      if ($isOfficialBranch)
       {
-        echo "This build is a test build, continuing..."
+        echo "$(sourceBranch) is an official branch, continuing."
+        echo "Official branches: $(officialBranches)"
         exit 0
       }
 
-      if ("${{ variables['overrideOfficialBranchValidation'] }}" -eq "true")
+      $hasOfficialBranchPrefix = $false
+      foreach ($prefix in "$(officialBranchPrefixes)".Split(',')) {
+        if ("$(sourceBranch)".StartsWith($prefix)) {
+          $hasOfficialBranchPrefix = $true
+          break
+        }
+      }
+
+      if ($hasOfficialBranchPrefix)
       {
-        echo "Variable overrideOfficialBranchValidation is set to true, continuing..."
+        echo "$(sourceBranch) has an official branch prefix, continuing."
+        echo "Official branch prefixes: $(officialBranchPrefixes)"
         exit 0
       }
 
