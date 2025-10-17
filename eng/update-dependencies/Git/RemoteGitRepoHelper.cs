@@ -1,8 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Threading.Tasks;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.Logging;
 
@@ -34,7 +32,7 @@ internal sealed class RemoteGitRepoHelper(
         _remoteGitRepo.GetLastCommitShaAsync(_repoUri, branch);
 
     /// <inheritdoc />
-    public Task<string> CreatePullRequestAsync(PullRequestCreationInfo request)
+    public async Task<string> CreatePullRequestAsync(PullRequestCreationInfo request)
     {
         var darcPullRequest = new PullRequest
         {
@@ -48,7 +46,14 @@ internal sealed class RemoteGitRepoHelper(
             "Creating pull request '{PrTitle}' from branch {PrHeadBranch} to {PrBaseBranch}",
             darcPullRequest.Title, darcPullRequest.HeadBranch, darcPullRequest.BaseBranch);
 
-        return _remoteGitRepo.CreatePullRequestAsync(_repoUri, darcPullRequest);
+        var pullRequestApiUrl = await _remoteGitRepo.CreatePullRequestAsync(_repoUri, darcPullRequest);
+        var pullRequestInfo = await GetPullRequestInfoAsync(pullRequestApiUrl);
+
+        _logger.LogInformation(
+            "Created pull request {PullRequestTitle} at {PullRequestUrl}",
+            pullRequestInfo.Title, pullRequestApiUrl);
+
+        return pullRequestApiUrl;
     }
 
     /// <inheritdoc />

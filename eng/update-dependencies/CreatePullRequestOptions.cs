@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
 using System.CommandLine;
 
 namespace Dotnet.Docker;
@@ -28,6 +27,7 @@ public abstract record CreatePullRequestOptions
     public string VersionSourceName { get; init; } = "";
     public string SourceBranch { get; init; } = "";
     public string TargetBranch { get; init; } = "nightly";
+    public string PrBranchPrefix { get; init; } = "pr";
 
     // If new properties or options are added, they may need to be added to
     // SpecificCommandOptions.FromPullRequestOptions(...)
@@ -48,6 +48,7 @@ public abstract record CreatePullRequestOptions
         new Option<string>("--version-source-name") { Description = "The name of the source from which the version information was acquired." },
         new Option<string>("--source-branch") { Description = "If synchronizing multiple branches, the branch to pull updates from" },
         new Option<string>("--target-branch") { Description = "Pull request will be submitted targeting this branch" },
+        new Option<string>("--pr-branch-prefix") { Description = "Prefix to use for branches created for pull requests" },
     ];
 
     public static List<Argument> Arguments => [];

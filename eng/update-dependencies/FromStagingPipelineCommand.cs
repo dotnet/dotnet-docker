@@ -1,20 +1,24 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
 using Microsoft.Extensions.Logging;
+using Octokit;
 
 namespace Dotnet.Docker;
 
 internal partial class FromStagingPipelineCommand(
     ILogger<FromStagingPipelineCommand> logger,
     PipelineArtifactProvider pipelineArtifactProvider,
-    IInternalVersionsService internalVersionsService)
+    IInternalVersionsService internalVersionsService,
+    IGitRepoHelperFactory gitRepoHelperFactory)
     : BaseCommand<FromStagingPipelineOptions>
 {
     private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
     private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactProvider;
     private readonly IInternalVersionsService _internalVersionsService = internalVersionsService;
+    private readonly IGitRepoHelperFactory _gitRepoHelperFactory = gitRepoHelperFactory;
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
@@ -92,17 +96,71 @@ internal partial class FromStagingPipelineCommand(
             "Resolved product versions: {productVersions}",
             string.Join(", ", productVersions.Select(kv => $"{kv.Key}: {kv.Value}")));
 
-        // Run old update-dependencies command using the resolved versions
+        // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
+        var buildUrl = $"{options.AzdoOrganization}/{options.AzdoProject}/_build/results?buildId={options.StagingPipelineRunId}";
+        _logger.LogInformation(
+            "Applying internal build {BuildNumber} ({BuildUrl})",
+            options.StagingPipelineRunId, buildUrl);
+
+        _logger.LogInformation(
+            "Ignore any git-related logging output below, because git "
+            + "operations are being managed by a different command.");
+
+        // Run old update-dependencies command using the resolved versions.
+        // Do not use the old command to submit a pull request.
         var updateDependencies = new SpecificCommand();
-        var updateDependenciesOptions = SpecificCommandOptions.FromPullRequestOptions(options) with
+        var updateDependenciesOptions = new SpecificCommandOptions()
         {
             RepoRoot = options.RepoRoot,
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = productVersions,
             InternalBaseUrl = internalBaseUrl,
         };
+        var exitCode = await updateDependencies.ExecuteAsync(updateDependenciesOptions);
+        if (exitCode != 0)
+        {
+            _logger.LogError(
+                "Failed to apply staging pipeline run ID {StagingPipelineRunId}. "
+                + "Command exited with code {ExitCode}.",
+                options.StagingPipelineRunId, exitCode);
+            return exitCode;
+        }
 
-        return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
+        if (options.TryGetCommitterIdentity(out var committer))
+        {
+            var remoteUrl = options.GetAzdoRepoUrl();
+            var git = _gitRepoHelperFactory.CreateFromLocal(remoteUrl);
+
+            var commitMessage = $"Update .NET {dockerfileVersion} to {productVersions["sdk"]} SDK"
+                + $" / {productVersions["runtime"]} Runtime";
+            var body = $"""
+                This pull request updates .NET {dockerfileVersion} to the following versions:
+
+                - SDK: {productVersions["sdk"]}
+                - Runtime: {productVersions["runtime"]}
+                - ASP.NET Core: {productVersions["aspnet"]}
+
+                These versions are from .NET staging pipeline run [#{options.StagingPipelineRunId}]({buildUrl}).
+                """;
+
+            var prBranchName = $"pr/{options.TargetBranch}-{options.StagingPipelineRunId}";
+            await git.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
+            await git.Local.StageAsync(".");
+            await git.Local.CommitAsync(commitMessage, committer);
+            await git.PushLocalBranchAsync(options.TargetBranch);
+            await git.Remote.CreatePullRequestAsync(new(
+                Title: $"[{options.TargetBranch}] {commitMessage}",
+                Body: body,
+                HeadBranch: prBranchName,
+                BaseBranch: options.TargetBranch
+            ));
+        }
+        else
+        {
+            _logger.LogInformation("No committer identity provided; skipping commit and pull request.");
+        }
+
+        return 0;
     }
 
     /// <summary>
