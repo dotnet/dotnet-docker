@@ -7,9 +7,10 @@ ARG ACCESSTOKEN
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=0.0.0 \
+    && aspnetcore_build_version=0.0.0 \
     && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" \
-        https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz \
-        https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz.sha512 \
+        https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz \
+        https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz.sha512 \
     && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz --directory /dotnet \

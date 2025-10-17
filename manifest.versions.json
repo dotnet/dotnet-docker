@@ -26,7 +26,7 @@
     "aspnet|8.0|build-version": "8.0.21",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
 
-    "aspnet|10.0|build-version": "10.0.0-rc.2.25502.107",
+    "aspnet|10.0|build-version": "10.0.0-rtm.25515.111",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
     "aspnet|9.0|build-version": "9.0.10",
@@ -77,12 +77,12 @@
     "dotnet|9.0|base-url|checksums|nightly": "$(dotnet|9.0|base-url|nightly)",
     "dotnet|9.0|aggregate-checksums": "/checksums/$(dotnet|9.0|product-version)-sha.txt",
 
-    "dotnet|10.0|product-version": "10.0.0-rc.2",
+    "dotnet|10.0|product-version": "10.0.0",
     "dotnet|10.0|fixed-tag": "$(dotnet|10.0|product-version)",
     "dotnet|10.0|minor-tag": "10.0",
-    "dotnet|10.0|base-url|main": "$(base-url|public|preview|main)",
+    "dotnet|10.0|base-url|main": "$(base-url|public|preview|nightly)",
     "dotnet|10.0|base-url|nightly": "$(base-url|public|preview|nightly)",
-    "dotnet|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|main)",
+    "dotnet|10.0|base-url|checksums|main": "$(base-url|public-checksums|preview|nightly)",
     "dotnet|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
 
     "libicu|bookworm": 72,
@@ -197,7 +197,7 @@
 
     "runtime|8.0|build-version": "8.0.21",
     "runtime|9.0|build-version": "9.0.10",
-    "runtime|10.0|build-version": "10.0.0-rc.2.25502.107",
+    "runtime|10.0|build-version": "10.0.0-rtm.25515.111",
 
     "sdk|8.0|build-version": "8.0.415",
     "sdk|8.0|product-version": "8.0.415",
@@ -217,11 +217,11 @@
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
 
-    "sdk|10.0|build-version": "10.0.100-rc.2.25502.107",
-    "sdk|10.0|product-version": "10.0.100-rc.2",
-    "sdk|10.0|base-url|main": "$(dotnet|10.0|base-url|main)",
+    "sdk|10.0|build-version": "10.0.100-rtm.25515.111",
+    "sdk|10.0|product-version": "10.0.100",
+    "sdk|10.0|base-url|main": "$(dotnet|10.0|base-url|nightly)",
     "sdk|10.0|base-url|nightly": "$(dotnet|10.0|base-url|nightly)",
-    "sdk|10.0|base-url|checksums|main": "$(sdk|10.0|base-url|main)",
+    "sdk|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|checksums|nightly)",
     "sdk|10.0|base-url|checksums|nightly": "$(dotnet|10.0|base-url|checksums|nightly)",
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",

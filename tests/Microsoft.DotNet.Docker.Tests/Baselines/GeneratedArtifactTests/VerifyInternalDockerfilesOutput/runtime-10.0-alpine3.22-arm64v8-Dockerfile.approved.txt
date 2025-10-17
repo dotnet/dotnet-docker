@@ -7,9 +7,10 @@ ARG ACCESSTOKEN
 
 # Retrieve .NET Runtime
 RUN dotnet_version=0.0.0 \
+    && dotnet_build_version=0.0.0 \
     && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" \
-        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
-        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz.sha512 \
+        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
+        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz.sha512 \
     && echo "$(cat dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz --directory /dotnet \

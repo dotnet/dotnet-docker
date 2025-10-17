@@ -34,7 +34,7 @@ ARG ACCESSTOKEN
 # SDK image
 FROM {{aspnetBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal, "include-powershell-vars": "true"])}}
+{{InsertTemplate("Dockerfile.envs", ["include-powershell-vars": "true"])}}
 
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": paths ])}}
 
