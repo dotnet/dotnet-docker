@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Generic;
 using System.CommandLine;
 
 namespace Dotnet.Docker;
@@ -20,6 +19,11 @@ internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
     /// Whether or not to use the internal versions of the staged build.
     /// </summary>
     public bool Internal { get; init; } = false;
+
+    /// <summary>
+    /// The mode in which to run the command.
+    /// </summary>
+    public ChangeMode Mode { get; init; } = ChangeMode.Local;
 
     /// <summary>
     /// This Azure Storage Account will be used as a source for the update.
@@ -53,6 +57,12 @@ internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
                 + " build, Dockerfiles will be updated as if the staged build has already been released. When using an"
                 + " internal build, Dockerfiles will be updated with internal download links and will only be buildable"
                 + " by using an internal Azure DevOps access token."
+        },
+        new Option<ChangeMode>("--mode")
+        {
+            Description = "The mode in which to run the command. Local mode makes changes directly to the local repo"
+                + " without running any Git operations. Remote mode makes changes to a remote repo and submits a pull"
+                + " request with the changes.",
         },
         ..CreatePullRequestOptions.Options,
     ];

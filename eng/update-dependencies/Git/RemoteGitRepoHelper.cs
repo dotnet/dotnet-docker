@@ -16,7 +16,9 @@ internal sealed class RemoteGitRepoHelper(
     private readonly IRemoteGitRepo _remoteGitRepo = remoteGitRepo;
     private readonly ILocalGitRepo _localGitRepo = localGitRepo;
     private readonly ILogger<RemoteGitRepoHelper> _logger = logger;
-    private readonly string _repoUri = remoteRepoUrl;
+
+    /// <inheritdoc />
+    public string RemoteUrl { get; } = remoteRepoUrl;
 
     /// <inheritdoc />
     public Task CreateRemoteBranchAsync(string newBranch, string baseBranch)
@@ -24,12 +26,12 @@ internal sealed class RemoteGitRepoHelper(
         _logger.LogInformation(
             "Creating new remote branch {BranchName} based on {BaseBranch} on remote",
             newBranch, baseBranch);
-        return _remoteGitRepo.CreateBranchAsync(_repoUri, newBranch, baseBranch);
+        return _remoteGitRepo.CreateBranchAsync(RemoteUrl, newBranch, baseBranch);
     }
 
     /// <inheritdoc />
     public Task<string?> GetRemoteBranchShaAsync(string branch) =>
-        _remoteGitRepo.GetLastCommitShaAsync(_repoUri, branch);
+        _remoteGitRepo.GetLastCommitShaAsync(RemoteUrl, branch);
 
     /// <inheritdoc />
     public async Task<string> CreatePullRequestAsync(PullRequestCreationInfo request)
@@ -46,7 +48,7 @@ internal sealed class RemoteGitRepoHelper(
             "Creating pull request '{PrTitle}' from branch {PrHeadBranch} to {PrBaseBranch}",
             darcPullRequest.Title, darcPullRequest.HeadBranch, darcPullRequest.BaseBranch);
 
-        var pullRequestApiUrl = await _remoteGitRepo.CreatePullRequestAsync(_repoUri, darcPullRequest);
+        var pullRequestApiUrl = await _remoteGitRepo.CreatePullRequestAsync(RemoteUrl, darcPullRequest);
         var pullRequestInfo = await GetPullRequestInfoAsync(pullRequestApiUrl);
 
         _logger.LogInformation(
@@ -62,8 +64,8 @@ internal sealed class RemoteGitRepoHelper(
 
     /// <inheritdoc />
     public Task<bool> RemoteBranchExistsAsync(string branchName) =>
-        _remoteGitRepo.DoesBranchExistAsync(_repoUri, branchName);
+        _remoteGitRepo.DoesBranchExistAsync(RemoteUrl, branchName);
 
     /// <inheritdoc />
-    public Task FetchAsync() => _localGitRepo.FetchAllAsync([_repoUri]);
+    public Task FetchAsync() => _localGitRepo.FetchAllAsync([RemoteUrl]);
 }

@@ -42,4 +42,24 @@ internal static class CreatePullRequestOptionsExtensions
         ArgumentException.ThrowIfNullOrEmpty(options.Email);
         return (options.User, options.Email);
     }
+
+    /// <summary>
+    /// Automatically generates a branch name for the pull request. Uses the target branch, prefix,
+    /// and <paramref name="name"/> to create a descriptive branch name.
+    /// </summary>
+    /// <param name="name">
+    /// Should be something short but descriptive, like "sync" or "update-deps-int-{buildNumber}".
+    /// </param>
+    /// <returns>
+    /// A valid branch name that is descriptive but not guaranteed to be unique.
+    /// </returns>
+    public static string CreatePrBranchName(this CreatePullRequestOptions options, string name)
+    {
+        ArgumentException.ThrowIfNullOrEmpty(options.PrBranchPrefix);
+        ArgumentException.ThrowIfNullOrEmpty(options.TargetBranch);
+
+        var sanitizedTargetBranch = options.TargetBranch.Replace('/', '-');
+        var prefix = options.PrBranchPrefix.TrimEnd('/');
+        return $"{prefix}/{sanitizedTargetBranch}/{name}";
+    }
 }

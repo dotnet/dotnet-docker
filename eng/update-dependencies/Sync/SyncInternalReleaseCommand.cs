@@ -93,7 +93,7 @@ internal sealed class SyncInternalReleaseCommand(
                 options.TargetBranch, options.SourceBranch);
 
             // "ff" here is an abbreviation for "fast-forward" - just want to keep branch names short
-            var fastForwardPrBranch = GetPrBranchName(action: "ff", options);
+            var fastForwardPrBranch = options.CreatePrBranchName("ff");
             await repo.Remote.CreateRemoteBranchAsync(
                 newBranch: fastForwardPrBranch,
                 baseBranch: options.SourceBranch);
@@ -135,7 +135,7 @@ internal sealed class SyncInternalReleaseCommand(
         var internalBuilds = _internalVersionsService.GetInternalStagingBuilds(repo.Local.LocalPath);
 
         // Reset the target branch to match the source branch.
-        var prBranchName = GetPrBranchName(action: "sync", options);
+        var prBranchName = options.CreatePrBranchName(name: "sync");
         await repo.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
         await repo.Local.RestoreAsync(source: sourceSha);
         await repo.Local.StageAsync(".");
@@ -208,11 +208,5 @@ internal sealed class SyncInternalReleaseCommand(
 
         await localRepo.StageAsync(".");
         await localRepo.CommitAsync($"Update dependencies from build {stagingPipelineRunId}", committerIdentity);
-    }
-
-    private static string GetPrBranchName(string action, SyncInternalReleaseOptions options)
-    {
-        var sanitizedTargetBranch = options.TargetBranch.Replace('/', '-');
-        return $"{options.PrBranchPrefix}/{action}-{sanitizedTargetBranch}";
     }
 }
