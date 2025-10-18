@@ -20,7 +20,5 @@ extends:
   parameters:
     buildId: "$(resources.pipeline.dotnet-staging-pipeline.runID)"
     stagingStorageAccount: "dotnetstage"
-    sourceBranch: "nightly"
-    targetBranch: "unofficial/pipeline-$(Build.BuildId)"
+    targetBranch: "nightly"
     gitServiceConnectionName: "$(updateDepsInt-test.serviceConnectionName)"
-    gitServiceConnectionClientId: "$(updateDepsInt-test.serviceConnection.clientId)"
