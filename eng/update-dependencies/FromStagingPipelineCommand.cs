@@ -66,9 +66,9 @@ internal partial class FromStagingPipelineCommand(
 
         // Record pipeline run ID for this dockerfileVersion, for later use by sync-internal-release command
         _internalVersionsService.RecordInternalStagingBuild(
-            options.RepoRoot,
-            dockerfileVersion,
-            options.StagingPipelineRunId);
+            repoRoot: repoContext.LocalRepoPath,
+            dockerfileVersion: dockerfileVersion,
+            stagingPipelineRunId: options.StagingPipelineRunId);
 
         var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
         {
