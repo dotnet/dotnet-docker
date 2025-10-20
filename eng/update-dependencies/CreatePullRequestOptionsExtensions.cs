@@ -14,8 +14,6 @@ internal static class CreatePullRequestOptionsExtensions
         ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoOrganization);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoProject);
         ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoRepo);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.TargetBranch);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.SourceBranch);
 
         // AzdoOrganization is a URL like https://dev.azure.com/<org>
         // A valid Azure DevOps repository URL is formatted like https://dev.azure.com/<org>/<project>/_git/<repo>
