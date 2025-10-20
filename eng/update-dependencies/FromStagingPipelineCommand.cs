@@ -185,19 +185,21 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     }
 
     /// <summary>
-    /// Sets up the remote/local git repository based on <paramref name="options"/>.
-    /// Call this before making changes to the repo at <paramref name="options.RepoRoot"/>, and
-    /// then use the returned delegate to commit all changes and create a pull request.
+    /// Holds context about the git repository where changes should be made.
     /// </summary>
-    /// <returns>
-    /// A delegate that can be used to commit changes and create a pull request.
-    /// </returns>
-    /// <remarks>
-    /// If <see cref="FromStagingPipelineOptions.Mode"/> is <see cref="ChangeMode.Local"/>,
-    /// no git operations will be performed.
-    /// </remarks>
+    /// <param name="LocalRepoPath">Root of the repo where all changes should be made.</param>
+    /// <param name="CommitAndCreatePullRequest">Callback that creates a pull request with all changes.</param>
     private record GitRepoContext(string LocalRepoPath, CommitAndCreatePullRequest CommitAndCreatePullRequest)
     {
+        /// <summary>
+        /// Sets up the remote/local git repository based on <paramref name="options"/>.
+        /// Call this before making any changes, then make changes to <see cref="LocalRepoPath"/>
+        /// and use <see cref="CommitAndCreatePullRequest"/> to create a pull request.
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="FromStagingPipelineOptions.Mode"/> is <see cref="ChangeMode.Local"/>,
+        /// no git operations will be performed.
+        /// </remarks>
         public static async Task<GitRepoContext> CreateAsync(
             ILogger logger,
             IGitRepoHelperFactory gitRepoFactory,
