@@ -5,7 +5,7 @@ FROM $REPO:10.0.0-alpine3.22-arm32v7 AS installer
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=10.0.0 \
-    && aspnetcore_build_version=$aspnetcore_version-rtm.25515.111 \
+    && aspnetcore_build_version=$aspnetcore_version-rtm.25519.102 \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm.tar.gz \
         https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm.tar.gz.sha512 \
