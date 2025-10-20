@@ -31,5 +31,10 @@
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25210.1" />
     <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.25210.1" />
     <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta5.25210.1" />
+
+    <!-- Fixes CVE-2025-55247 -->
+    <!-- Microsoft.Build.Utilities.Core is transitively referenced by Microsoft.DotNet.VersionTools -->
+    <!-- Remove when https://github.com/dotnet/docker-tools/issues/1658 is complete -->
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.43" />
   </ItemGroup>
 </Project>
