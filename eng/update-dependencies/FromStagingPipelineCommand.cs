@@ -7,12 +7,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker;
 
-internal partial class FromStagingPipelineCommand(
-    ILogger<FromStagingPipelineCommand> logger,
-    PipelineArtifactProvider pipelineArtifactProvider,
-    IInternalVersionsService internalVersionsService,
-    IGitRepoHelperFactory gitRepoHelperFactory)
-    : BaseCommand<FromStagingPipelineOptions>
+internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipelineOptions>
 {
     /// <summary>
     /// Callback that stages all changes, commits them, pushes them to the
@@ -20,21 +15,30 @@ internal partial class FromStagingPipelineCommand(
     /// </summary>
     private delegate Task CommitAndCreatePullRequest(string commitMessage, string prTitle, string prBody);
 
-    private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
-    private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactProvider;
-    private readonly IInternalVersionsService _internalVersionsService = internalVersionsService;
-    private readonly IGitRepoHelperFactory _gitRepoHelperFactory = gitRepoHelperFactory;
+    private readonly ILogger<FromStagingPipelineCommand> _logger;
+    private readonly PipelineArtifactProvider _pipelineArtifactProvider;
+    private readonly IInternalVersionsService _internalVersionsService;
+    private readonly Func<FromStagingPipelineOptions, Task<GitRepoContext>> _createGitRepoContextAsync;
+
+    public FromStagingPipelineCommand(
+        ILogger<FromStagingPipelineCommand> logger,
+        PipelineArtifactProvider pipelineArtifactProvider,
+        IInternalVersionsService internalVersionsService,
+        IGitRepoHelperFactory gitRepoHelperFactory)
+    {
+        _logger = logger;
+        _pipelineArtifactProvider = pipelineArtifactProvider;
+        _internalVersionsService = internalVersionsService;
+        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options);
+    }
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
-        // Delegate all git responsibilities to the SetupRepoAsync method.
-        // Depending on what options were passed in, we may or may not want to
-        // actually perform git operations. The setup method will decide that
-        // and return an appropriate delegate. This keeps all the git-related
-        // logic in one place.
-        // The key is to call the setup method before making any changes, and
-        // use the delegate when changes are ready to be committed/pushed.
-        var repoContext = await GitRepoContext.CreateAsync(_logger, _gitRepoHelperFactory, options);
+        // Delegate all git responsibilities to GitRepoContext. Depending on what options were
+        // passed in, we may or may not want to actually perform git operations. GitRepoContext
+        // decides what git operations to perform and tells us where to make changes. This keeps
+        // all the git-related logic in one place.
+        var gitRepoContext = await _createGitRepoContextAsync(options);
 
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
@@ -66,7 +70,7 @@ internal partial class FromStagingPipelineCommand(
 
         // Record pipeline run ID for this dockerfileVersion, for later use by sync-internal-release command
         _internalVersionsService.RecordInternalStagingBuild(
-            repoRoot: repoContext.LocalRepoPath,
+            repoRoot: gitRepoContext.LocalRepoPath,
             dockerfileVersion: dockerfileVersion,
             stagingPipelineRunId: options.StagingPipelineRunId);
 
@@ -125,7 +129,7 @@ internal partial class FromStagingPipelineCommand(
         var updateDependencies = new SpecificCommand();
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
-            RepoRoot = repoContext.LocalRepoPath,
+            RepoRoot = gitRepoContext.LocalRepoPath,
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = productVersions,
             InternalBaseUrl = internalBaseUrl,
@@ -151,7 +155,7 @@ internal partial class FromStagingPipelineCommand(
 
             These versions are from .NET staging pipeline run [#{options.StagingPipelineRunId}]({buildUrl}).
             """;
-        await repoContext.CreatePullRequest(commitMessage, prTitle, prBody);
+        await gitRepoContext.CommitAndCreatePullRequest(commitMessage, prTitle, prBody);
 
         return 0;
     }
@@ -192,7 +196,7 @@ internal partial class FromStagingPipelineCommand(
     /// If <see cref="FromStagingPipelineOptions.Mode"/> is <see cref="ChangeMode.Local"/>,
     /// no git operations will be performed.
     /// </remarks>
-    private record GitRepoContext(string LocalRepoPath, CommitAndCreatePullRequest CreatePullRequest)
+    private record GitRepoContext(string LocalRepoPath, CommitAndCreatePullRequest CommitAndCreatePullRequest)
     {
         public static async Task<GitRepoContext> CreateAsync(
             ILogger logger,
