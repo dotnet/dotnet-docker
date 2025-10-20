@@ -56,8 +56,12 @@ internal static class CreatePullRequestOptionsExtensions
         ArgumentException.ThrowIfNullOrEmpty(options.PrBranchPrefix);
         ArgumentException.ThrowIfNullOrEmpty(options.TargetBranch);
 
+        var buildIdSuffix = AzurePipelinesHelper.IsRunningInAzurePipelines()
+            ? $"-{AzurePipelinesHelper.GetBuildId()}"
+            : string.Empty;
+
         var sanitizedTargetBranch = options.TargetBranch.Replace('/', '-');
         var prefix = options.PrBranchPrefix.TrimEnd('/');
-        return $"{prefix}/{sanitizedTargetBranch}/{name}";
+        return $"{prefix}/{sanitizedTargetBranch}/{name}{buildIdSuffix}";
     }
 }
