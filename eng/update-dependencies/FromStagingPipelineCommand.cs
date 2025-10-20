@@ -34,7 +34,7 @@ internal partial class FromStagingPipelineCommand(
         // logic in one place.
         // The key is to call the setup method before making any changes, and
         // use the delegate when changes are ready to be committed/pushed.
-        CommitAndCreatePullRequest createPullRequest = await SetupRepoAsync(options);
+        var repoContext = await GitRepoContext.CreateAsync(_logger, _gitRepoHelperFactory, options);
 
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
@@ -125,7 +125,7 @@ internal partial class FromStagingPipelineCommand(
         var updateDependencies = new SpecificCommand();
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
-            RepoRoot = options.RepoRoot,
+            RepoRoot = repoContext.LocalRepoPath,
             DockerfileVersion = dockerfileVersion.ToString(),
             ProductVersions = productVersions,
             InternalBaseUrl = internalBaseUrl,
@@ -151,65 +151,9 @@ internal partial class FromStagingPipelineCommand(
 
             These versions are from .NET staging pipeline run [#{options.StagingPipelineRunId}]({buildUrl}).
             """;
-        await createPullRequest(commitMessage, prTitle, prBody);
+        await repoContext.CreatePullRequest(commitMessage, prTitle, prBody);
 
         return 0;
-    }
-
-    /// <summary>
-    /// Sets up the remote/local git repository based on <paramref name="options"/>.
-    /// Call this before making changes to the repo at <paramref name="options.RepoRoot"/>, and
-    /// then use the returned delegate to commit all changes and create a pull request.
-    /// </summary>
-    /// <returns>
-    /// A delegate that can be used to commit changes and create a pull request.
-    /// </returns>
-    /// <remarks>
-    /// If <see cref="FromStagingPipelineOptions.Mode"/> is <see cref="ChangeMode.Local"/>,
-    /// no git operations will be performed.
-    /// </remarks>
-    private async Task<CommitAndCreatePullRequest> SetupRepoAsync(FromStagingPipelineOptions options)
-    {
-        if (options.Mode == ChangeMode.Remote)
-        {
-            var remoteUrl = options.GetAzdoRepoUrl();
-            var targetBranch = options.TargetBranch;
-            var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StagingPipelineRunId}");
-            var committer = options.GetCommitterIdentity();
-
-            // Clone the repo
-            var git = await _gitRepoHelperFactory.CreateAndCloneAsync(remoteUrl);
-            // Ensure the branch we want to modify exists, then check it out
-            await git.Remote.EnsureBranchExistsAsync(targetBranch);
-            // Create a new branch to push changes to and create a PR from
-            await git.CheckoutRemoteBranchAsync(targetBranch);
-            await git.Local.CreateAndCheckoutLocalBranchAsync(prBranch);
-
-            // sync-internal-release --azdo-organization https://dev.azure.com/dnceng/ --azdo-project internal --azdo-repo dotnet-dotnet-docker --source-branch dev/loganbussell/fix-sync --target-branch internal/dev/loganbussell/fix-sync --pr-branch-prefix pr --user dotnet-docker-bot --email dotnet-docker-bot@microsoft.com --staging-storage-account dotnetstage
-
-            return async (commitMessage, prTitle, prBody) =>
-            {
-                await git.Local.StageAsync(".");
-                await git.Local.CommitAsync(commitMessage, committer);
-                await git.PushLocalBranchAsync(prBranch);
-                await git.Remote.CreatePullRequestAsync(new(
-                    Title: prTitle,
-                    Body: prBody,
-                    HeadBranch: prBranch,
-                    BaseBranch: targetBranch
-                ));
-            };
-        }
-        else if (options.Mode == ChangeMode.Local)
-        {
-            _logger.LogInformation("No git operations will be performed in {Mode} mode.", options.Mode);
-            return async (_, _, _) =>
-            {
-                _logger.LogInformation("Skipping commit and pull request creation in {Mode} mode.", options.Mode);
-            };
-        }
-
-        throw new InvalidOperationException($"Unsupported {nameof(ChangeMode)} '{options.Mode}'.");
     }
 
     /// <summary>
@@ -234,5 +178,70 @@ internal partial class FromStagingPipelineCommand(
 
         // If it's just the storage account name, construct the full URL
         return $"https://{storageAccount}.blob.core.windows.net";
+    }
+
+    /// <summary>
+    /// Sets up the remote/local git repository based on <paramref name="options"/>.
+    /// Call this before making changes to the repo at <paramref name="options.RepoRoot"/>, and
+    /// then use the returned delegate to commit all changes and create a pull request.
+    /// </summary>
+    /// <returns>
+    /// A delegate that can be used to commit changes and create a pull request.
+    /// </returns>
+    /// <remarks>
+    /// If <see cref="FromStagingPipelineOptions.Mode"/> is <see cref="ChangeMode.Local"/>,
+    /// no git operations will be performed.
+    /// </remarks>
+    private record GitRepoContext(string LocalRepoPath, CommitAndCreatePullRequest CreatePullRequest)
+    {
+        public static async Task<GitRepoContext> CreateAsync(
+            ILogger logger,
+            IGitRepoHelperFactory gitRepoFactory,
+            FromStagingPipelineOptions options)
+        {
+            CommitAndCreatePullRequest createPullRequest;
+            string localRepoPath;
+
+            if (options.Mode == ChangeMode.Remote)
+            {
+                var remoteUrl = options.GetAzdoRepoUrl();
+                var targetBranch = options.TargetBranch;
+                var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StagingPipelineRunId}");
+                var committer = options.GetCommitterIdentity();
+
+                // Clone the repo
+                var git = await gitRepoFactory.CreateAndCloneAsync(remoteUrl);
+                // Ensure the branch we want to modify exists, then check it out
+                await git.Remote.EnsureBranchExistsAsync(targetBranch);
+                // Create a new branch to push changes to and create a PR from
+                await git.CheckoutRemoteBranchAsync(targetBranch);
+                await git.Local.CreateAndCheckoutLocalBranchAsync(prBranch);
+
+                localRepoPath = git.Local.LocalPath;
+                createPullRequest = async (commitMessage, prTitle, prBody) =>
+                {
+                    await git.Local.StageAsync(".");
+                    await git.Local.CommitAsync(commitMessage, committer);
+                    await git.PushLocalBranchAsync(prBranch);
+                    await git.Remote.CreatePullRequestAsync(new(
+                        Title: prTitle,
+                        Body: prBody,
+                        HeadBranch: prBranch,
+                        BaseBranch: targetBranch
+                    ));
+                };
+            }
+            else
+            {
+                logger.LogInformation("No git operations will be performed in {Mode} mode.", options.Mode);
+                localRepoPath = options.RepoRoot;
+                createPullRequest = async (commitMessage, prTitle, prBody) =>
+                {
+                    logger.LogInformation("Skipping commit and pull request creation in {Mode} mode.", options.Mode);
+                };
+            }
+
+            return new GitRepoContext(localRepoPath, createPullRequest);
+        }
     }
 }
