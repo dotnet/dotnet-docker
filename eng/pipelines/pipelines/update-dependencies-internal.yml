@@ -43,6 +43,7 @@ extends:
                 dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                 from-staging-pipeline
                 ${{ parameters.buildId }}
+                --mode Remote
                 --azdo-organization "$(System.CollectionUri)"
                 --azdo-project "$(System.TeamProject)"
                 --azdo-repo "$(Build.Repository.Name)"
