@@ -51,6 +51,15 @@ namespace Dotnet.Docker
 
             try
             {
+                // We control what files Microsoft.DotNet.VersionTools updates via the updaters we
+                // provide, but it has no configuration options for what directory to run git
+                // commands from. If the working directory isn't the same as the repo we want to
+                // modify, then git commands might do unexpected things - for example, git might
+                // report no changes were made when in fact we changed files in a different repo.
+                // We need to explicitly change directories to the one passed in via options, then
+                // restore the previous working directory afterwards.
+                DirectoryStack.Push(options.RepoRoot);
+
                 IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
@@ -148,6 +157,9 @@ namespace Dotnet.Docker
                 errorTraceListener.Dispose();
                 consoleTraceListener.Dispose();
                 s_options = null;
+
+                // Restore the previous working directory.
+                DirectoryStack.Pop();
             }
 
             return exitCode;
