@@ -5,9 +5,19 @@ namespace Dotnet.Docker;
 
 internal static class CreatePullRequestOptionsExtensions
 {
+    /// <summary>
+    /// Gets the path to the manifest.versions.json file based on the
+    /// repository root specified in the options.
+    /// </summary>
     public static string GetManifestVersionsFilePath(this CreatePullRequestOptions options) =>
         Path.Combine(options.RepoRoot, "manifest.versions.json");
 
+    /// <summary>
+    /// Constructs the Azure DevOps repository URL from the options.
+    /// </summary>
+    /// <exception cref="ArgumentException">
+    /// Thrown if any of the required options are null or whitespace.
+    /// </exception>
     public static string GetAzdoRepoUrl(this CreatePullRequestOptions options)
     {
         // Validate that we have all the required pieces to construct the repo URL.
@@ -20,10 +30,16 @@ internal static class CreatePullRequestOptionsExtensions
         return $"{options.AzdoOrganization}/{options.AzdoProject}/_git/{options.AzdoRepo}";
     }
 
+    /// <summary>
+    /// Validates that the committer identity is present and returns it.
+    /// </summary>
+    /// <exception cref="ArgumentException">
+    /// Thrown if any of the required options are null or whitespace.
+    /// </exception>
     public static (string Name, string Email) GetCommitterIdentity(this CreatePullRequestOptions options)
     {
-        ArgumentException.ThrowIfNullOrEmpty(options.User);
-        ArgumentException.ThrowIfNullOrEmpty(options.Email);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.User);
+        ArgumentException.ThrowIfNullOrWhiteSpace(options.Email);
         return (options.User, options.Email);
     }
 
