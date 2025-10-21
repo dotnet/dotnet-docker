@@ -1,6 +1,12 @@
 trigger: none
 pr: none
 
+parameters:
+- name: targetBranch
+  type: string
+  default: "nightly"
+  displayName: Target branch for dependency update pull request.
+
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
 
@@ -20,5 +26,5 @@ extends:
   parameters:
     buildId: "$(resources.pipeline.dotnet-staging-pipeline.runID)"
     stagingStorageAccount: "dotnetstage"
-    targetBranch: "nightly"
+    targetBranch: "${{ parameters.targetBranch }}"
     gitServiceConnectionName: "$(updateDepsInt-test.serviceConnectionName)"
