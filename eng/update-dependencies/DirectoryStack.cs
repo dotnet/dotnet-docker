@@ -9,35 +9,65 @@ namespace Dotnet.Docker;
 /// </summary>
 internal static class DirectoryStack
 {
-    private static readonly Stack<string> s_directoryStack = new();
+    /// <summary>
+    /// Pushes the specified <paramref name="path"/> onto the top of the
+    /// directory stack and returns an <see cref="IDisposable"/> that
+    /// restores the previous working directory when disposed.
+    /// </summary>
+    public static IDisposable Push(string path) => new DirectoryContext(path);
 
     /// <summary>
-    /// Changes the current working directory to <paramref name="path"/>, and
-    /// pushes the previous working directory onto the stack. Equivalent to
-    /// bash's "pushd".
+    /// Restores (pops) the previous working directory off of the stack when disposed.
     /// </summary>
-    public static void Push(string path)
+    private sealed class DirectoryContext : IDisposable
     {
-        s_directoryStack.Push(Directory.GetCurrentDirectory());
-        Directory.SetCurrentDirectory(path);
-    }
+        private static readonly Stack<string> s_directoryStack = new();
 
-    /// <summary>
-    /// Restores the previous working directory by popping it from the stack.
-    /// If no directory was previously pushed, nothing happens. Equivalent to
-    /// bash's "popd".
-    /// </summary>
-    public static void Pop()
-    {
-        if (s_directoryStack.Count > 0)
+        private bool _disposed;
+
+        public DirectoryContext(string path)
         {
-            string previousDirectory = s_directoryStack.Pop();
-            Directory.SetCurrentDirectory(previousDirectory);
+            ArgumentException.ThrowIfNullOrEmpty(path);
+            Push(path);
         }
-        else
+
+        public void Dispose()
         {
-            // Stack is empty; nothing to do.
-            return;
+            if (!_disposed)
+            {
+                Pop();
+                _disposed = true;
+            }
+        }
+
+        /// <summary>
+        /// Changes the current working directory to <paramref name="path"/>, and
+        /// pushes the previous working directory onto the stack. Equivalent to
+        /// bash's "pushd".
+        /// </summary>
+        private static void Push(string path)
+        {
+            s_directoryStack.Push(Directory.GetCurrentDirectory());
+            Directory.SetCurrentDirectory(path);
+        }
+
+        /// <summary>
+        /// Restores the previous working directory by popping it from the stack.
+        /// If no directory was previously pushed, nothing happens. Equivalent to
+        /// bash's "popd".
+        /// </summary>
+        private static void Pop()
+        {
+            if (s_directoryStack.Count > 0)
+            {
+                string previousDirectory = s_directoryStack.Pop();
+                Directory.SetCurrentDirectory(previousDirectory);
+            }
+            else
+            {
+                // Stack is empty; nothing to do.
+                return;
+            }
         }
     }
 }

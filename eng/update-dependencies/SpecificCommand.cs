@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using LibGit2Sharp;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.DotNet.VersionTools;
 using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
@@ -56,9 +57,10 @@ namespace Dotnet.Docker
                 // commands from. If the working directory isn't the same as the repo we want to
                 // modify, then git commands might do unexpected things - for example, git might
                 // report no changes were made when in fact we changed files in a different repo.
-                // We need to explicitly change directories to the one passed in via options, then
-                // restore the previous working directory afterwards.
-                DirectoryStack.Push(options.RepoRoot);
+                // We need to explicitly change directories to the one passed in via options.
+                // The previous working directory will be restored at the end of the current scope,
+                // when context is disposed.
+                using var context = DirectoryStack.Push(options.RepoRoot);
 
                 IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
@@ -157,9 +159,6 @@ namespace Dotnet.Docker
                 errorTraceListener.Dispose();
                 consoleTraceListener.Dispose();
                 s_options = null;
-
-                // Restore the previous working directory.
-                DirectoryStack.Pop();
             }
 
             return exitCode;
