@@ -7,15 +7,10 @@ namespace Dotnet.Docker.Sync;
 
 public sealed record SyncInternalReleaseOptions : CreatePullRequestOptions, IOptions
 {
-    public string PrBranchPrefix { get; set; } = "pr";
     public string StagingStorageAccount { get; set; } = string.Empty;
 
     public static new List<Option> Options =>
     [
-        new Option<string>("--pr-branch-prefix")
-        {
-            Description = "Prefix to use for branches created for pull requests",
-        },
         FromStagingPipelineOptions.StagingStorageAccountOption,
         ..CreatePullRequestOptions.Options,
     ];

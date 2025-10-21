@@ -9,26 +9,13 @@ parameters:
 - name: stagingStorageAccount
   type: string
   default: ""
-# This must match what's in the manifest.json. This will determine which base
-# URLs get updated in manifest.versions.json.
-- name: sourceBranch
-  type: string
-  default: "nightly"
-# Name of the branch that the changes will be pushed to.
+# A pull request will be created targeting this branch.
 - name: targetBranch
-  type: string
-  default: ""
-# The password for git, used to push changes
-- name: gitPassword
   type: string
   default: ""
 # Service connection details to use for git operations. This must represent a
 # managed identity user that has "contributor" access to the target branch.
-# These are mutually exclusive with the "gitPassword" parameter.
 - name: gitServiceConnectionName
-  type: string
-  default: ""
-- name: gitServiceConnectionClientId
   type: string
   default: ""
 
@@ -44,43 +31,27 @@ extends:
         parameters:
           dependencyName: dotnet
           updateSteps:
-
-          - ${{ if ne(parameters.gitPassword, '') }}:
-            - powershell: >-
-                Write-Host "##vso[task.setvariable variable=gitPassword;isreadonly=true;issecret=true]${{ parameters.gitPassword }}"
-              displayName: Set git password
-          - ${{ else }}:
-            - task: AzureCLI@2
-              displayName: Set git password (MI)
-              continueOnError: False
-              condition: and(succeeded(), true)
-              inputs:
-                azureSubscription: "${{ parameters.gitServiceConnectionName }}"
-                scriptType: "pscore"
-                scriptLocation: "inlineScript"
-                inlineScript: >-
-                  az login --identity --client-id "${{ parameters.gitServiceConnectionClientId }}";
-                  $password = $(az account get-access-token --resource 499b84ac-1321-427f-aa17-267ca6975798 --query "accessToken" --output tsv);
-                  Write-Host "##vso[task.setvariable variable=gitPassword;isreadonly=true;issecret=true]$password"
-
-          - powershell: >-
-              dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-              from-staging-pipeline
-              ${{ parameters.buildId }}
-              --azdo-organization "$(System.CollectionUri)"
-              --azdo-project "$(System.TeamProject)"
-              --azdo-repo "$(Build.Repository.Name)"
-              --source-branch ${{ parameters.sourceBranch }}
-              --internal
-              --staging-storage-account ${{ parameters.stagingStorageAccount }}
-              --version-source-name "dotnet/dotnet"
-              --target-branch "${{ parameters.targetBranch }}"
-              --user "$(dotnetDockerBot.userName)"
-              --email "$(dotnetDockerBot.email)"
-              --password "$env:GIT_PASSWORD"
+          - task: AzureCLI@2
+            displayName: Update .NET
+            continueOnError: False
+            condition: and(succeeded(), true)
+            inputs:
+              azureSubscription: "${{ parameters.gitServiceConnectionName }}"
+              scriptType: "pscore"
+              scriptLocation: "inlineScript"
+              inlineScript: >-
+                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                from-staging-pipeline
+                ${{ parameters.buildId }}
+                --mode Remote
+                --azdo-organization "$(System.CollectionUri)"
+                --azdo-project "$(System.TeamProject)"
+                --azdo-repo "$(Build.Repository.Name)"
+                --internal
+                --staging-storage-account ${{ parameters.stagingStorageAccount }}
+                --target-branch "${{ parameters.targetBranch }}"
+                --user "$(dotnetDockerBot.userName)"
+                --email "$(dotnetDockerBot.email)"
             env:
               # Used to download build artifacts from .NET release staging pipeline
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-              # Used to push changes to the target branch
-              GIT_PASSWORD: $(gitPassword)
-            displayName: Update .NET
