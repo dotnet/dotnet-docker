@@ -62,6 +62,7 @@ namespace Dotnet.Docker
                 VersionSourceName = pullRequestOptions.VersionSourceName,
                 SourceBranch = pullRequestOptions.SourceBranch,
                 TargetBranch = pullRequestOptions.TargetBranch,
+                PrBranchPrefix = pullRequestOptions.PrBranchPrefix,
             };
         }
 
