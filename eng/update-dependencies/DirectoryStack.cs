@@ -14,6 +14,10 @@ internal static class DirectoryStack
     /// directory stack and returns an <see cref="IDisposable"/> that
     /// restores the previous working directory when disposed.
     /// </summary>
+    /// <remarks>
+    /// This method is not safe to use in multi-threaded scenarios. It affects
+    /// the current working directory of the entire process.
+    /// </remarks>
     public static IDisposable Push(string path) => new DirectoryContext(path);
 
     /// <summary>
