@@ -16,6 +16,7 @@ resources:
   # Stage-DotNet-Prepare-Artifacts-Test: https://dev.azure.com/dnceng/internal/_build?definitionId=1286
   - pipeline: "dotnet-staging-pipeline"
     source: "Stage-DotNet-Prepare-Artifacts"
+    trigger: true
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
