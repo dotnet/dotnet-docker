@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.2/MinGit-2.51.0.2-64-bit.zip; `
-        $mingit_sha256 = '314fc2b7425ca116ea201e493fcb72008376c64997e866e6c8b8a5b360b3b8a9'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.51.1.windows.1/MinGit-2.51.1-64-bit.zip; `
+        $mingit_sha256 = 'ce0360b2bfcb60472064de698c8a5b73e63067320701fcd51d30a6e33d7967fa'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -54,9 +54,9 @@ RUN powershell -Command " `
             $dotnet_checksums_file; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.4.12'; `
+        $powershell_version = '7.4.13'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '583484b22bbcd54de82a3389f4814ef519fe3e89782d4fa9e8e42067c87bec5791902b46dcf2bf78cdf713b3f573800de7c2e66578015d787990d6b3f216fdb4'; `
+        $powershell_sha512 = 'e819797e59c10e3da29e56184e4b6941bd731f7cfc79207a88ff3a5d42e913c2429d5cb28cdbb071b60061151c37395377d52d9e1e5f7c99e625a6f3be78efb7'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `

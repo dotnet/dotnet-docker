@@ -9,7 +9,7 @@ RUN tdnf install -y \
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0 \
-    && dotnet_build_version=$dotnet_version-rtm.25519.102 \
+    && dotnet_build_version=$dotnet_version-rtm.25520.117 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \

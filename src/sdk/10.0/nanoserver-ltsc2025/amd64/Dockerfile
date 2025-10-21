@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.51.0.windows.2/MinGit-2.51.0.2-64-bit.zip; `
-        $mingit_sha256 = '314fc2b7425ca116ea201e493fcb72008376c64997e866e6c8b8a5b360b3b8a9'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.51.1.windows.1/MinGit-2.51.1-64-bit.zip; `
+        $mingit_sha256 = 'ce0360b2bfcb60472064de698c8a5b73e63067320701fcd51d30a6e33d7967fa'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -26,7 +26,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         $dotnet_sdk_version = '10.0.100'; `
-        $dotnet_sdk_build_version = $dotnet_sdk_version + '-rtm.25519.102'; `
+        $dotnet_sdk_build_version = $dotnet_sdk_version + '-rtm.25520.117'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
