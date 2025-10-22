@@ -3,7 +3,11 @@
 #
 # The images can later be published by running the release-promotion pipeline.
 
-trigger: none
+trigger:
+  batch: true
+  branches:
+    include:
+    - internal/release/*
 pr: none
 
 parameters:
@@ -22,7 +26,7 @@ parameters:
     parameter to true forces all images to be built (except those excluded by
     path arguments).
   type: boolean
-  default: false
+  default: true
 
 variables:
 - template: /eng/pipelines/variables/core.yml@self
