@@ -5,7 +5,7 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0 \
-    && dotnet_build_version=$dotnet_version-rtm.25515.111 \
+    && dotnet_build_version=$dotnet_version-rtm.25521.107 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512 \

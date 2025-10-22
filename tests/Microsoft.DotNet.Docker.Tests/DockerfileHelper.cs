@@ -28,6 +28,11 @@ public static partial class DockerfileHelper
     [GeneratedRegex(@"\$[a-zA-Z0-9_]+((-[A-Za-z]+)?(\.\d+)+)")]
     public static partial Regex VersionWithVariableRegex { get; }
 
+    // Match unstable versions that have been partially replaced with variables
+    // using string addition, like `$dotnet_sdk_version + '-rtm.25515.111'`
+    [GeneratedRegex(@"\$[a-zA-Z0-9_]+\s*\+\s*'(-[A-Za-z]+(\.\d+)+)'")]
+    public static partial Regex StringVersionWithVariableRegex { get; }
+
     [GeneratedRegex(@"v\d+\.\d+\.\d+\.windows\.\d+")]
     public static partial Regex MinGitVersionRegex { get; }
 
