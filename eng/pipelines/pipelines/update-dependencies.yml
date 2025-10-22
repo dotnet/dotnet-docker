@@ -7,14 +7,12 @@ parameters:
 - name: channel
   type: string
   default: ""
-# .NET image components to update
+# .NET image components to update. This should be a list of strings.
+# 'stringList' is not a supported type for parameters in templates, so we need use 'object' instead.
+# https://learn.microsoft.com/azure/devops/pipelines/process/runtime-parameters#parameter-data-types
 - name: tools
   type: object
-  default:
-  - "chisel"
-  - "rocks-toolbox"
-  - "syft"
-  - "mingit"
+  default: []
 # Additional authentication arguments to pass to update-dependencies
 - name: gitHubAuthArgs
   type: string

@@ -6,6 +6,22 @@ parameters:
   displayName: BAR build channel to read .NET versions from (see aka.ms/bar)
   type: string
   default: ""
+# This parameter will show up as a multi-select dropdown when queueing the pipeline
+- name: tools
+  type: stringList
+  displayName: Tools to update
+  values:
+    - "chisel"
+    - "rocks-toolbox"
+    - "syft"
+    - "mingit"
+  # Keep the default values in sync with allowed values so that the scheduled
+  # pipeline runs always try to update all tools
+  default:
+    - "chisel"
+    - "rocks-toolbox"
+    - "syft"
+    - "mingit"
 
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
@@ -15,3 +31,4 @@ extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
     channel: ${{ parameters.channel }}
+    tools: ${{ parameters.tools }}
