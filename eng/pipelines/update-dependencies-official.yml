@@ -13,6 +13,10 @@ parameters:
     displayName: Skip Pull Request
     type: boolean
     default: false
+  - name: updateDotnet
+    displayName: Update .NET?
+    type: boolean
+    default: true
   # This parameter will show up as a multi-select dropdown when queueing the pipeline
   - name: tools
     type: stringList
@@ -40,6 +44,7 @@ extends:
   parameters:
     channel: $(channel)
     tools: ${{ parameters.tools }}
+    updateDotnet: ${{ parameters.updateDotnet }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
       gitHubAuthArgs: >-
         --user $(dotnetDockerBot.userName)
