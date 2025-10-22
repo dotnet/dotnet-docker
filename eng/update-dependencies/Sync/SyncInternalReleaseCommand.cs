@@ -41,7 +41,7 @@ internal sealed class SyncInternalReleaseCommand(
                 $"The source branch '{options.SourceBranch}' cannot be an internal branch.");
         }
 
-        using var repo = await _gitRepoHelperFactory.CreateAsync(remoteUrl);
+        using var repo = await _gitRepoHelperFactory.CreateAndCloneAsync(remoteUrl);
 
         // Verify that the source branch exists on the remote.
         var sourceBranchExists = await repo.Remote.RemoteBranchExistsAsync(options.SourceBranch);
@@ -93,17 +93,17 @@ internal sealed class SyncInternalReleaseCommand(
                 options.TargetBranch, options.SourceBranch);
 
             // "ff" here is an abbreviation for "fast-forward" - just want to keep branch names short
-            var fastForwardPrBranch = GetPrBranchName(action: "ff", options);
+            var fastForwardPrBranch = options.CreatePrBranchName("ff");
             await repo.Remote.CreateRemoteBranchAsync(
                 newBranch: fastForwardPrBranch,
                 baseBranch: options.SourceBranch);
 
-            await CreatePullRequest(
-                repo: repo,
-                title: $"Fast-forward {options.TargetBranch} to {options.SourceBranch}",
-                body: "",
-                targetBranch: options.TargetBranch,
-                sourceBranch: fastForwardPrBranch);
+            await repo.Remote.CreatePullRequestAsync(new(
+                Title: $"Fast-forward {options.TargetBranch} to {options.SourceBranch}",
+                Body: "",
+                HeadBranch: fastForwardPrBranch,
+                BaseBranch: options.TargetBranch
+            ));
 
             return 0;
         }
@@ -126,9 +126,7 @@ internal sealed class SyncInternalReleaseCommand(
         // At this point, we need to verify that we have everything we need to
         // access internal builds, commit changes, and submit a pull request.
         ArgumentException.ThrowIfNullOrWhiteSpace(options.StagingStorageAccount);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.User);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.Email);
-        var commitAuthor = (Name: options.User, Email: options.Email);
+        var commitAuthor = options.GetCommitterIdentity();
 
         // Checkout both branches locally so that we can work with them directly.
         await repo.CheckoutRemoteBranchAsync(options.SourceBranch);
@@ -137,7 +135,7 @@ internal sealed class SyncInternalReleaseCommand(
         var internalBuilds = _internalVersionsService.GetInternalStagingBuilds(repo.Local.LocalPath);
 
         // Reset the target branch to match the source branch.
-        var prBranchName = GetPrBranchName(action: "sync", options);
+        var prBranchName = options.CreatePrBranchName(name: "sync");
         await repo.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
         await repo.Local.RestoreAsync(source: sourceSha);
         await repo.Local.StageAsync(".");
@@ -158,39 +156,14 @@ internal sealed class SyncInternalReleaseCommand(
 
         // Finally, submit a pull request with all of the changes.
         await repo.PushLocalBranchAsync(prBranchName);
-        await CreatePullRequest(
-            repo: repo,
-            title: $"Sync {options.TargetBranch} with {options.SourceBranch}",
-            body: "",
-            targetBranch: options.TargetBranch,
-            sourceBranch: prBranchName);
+        await repo.Remote.CreatePullRequestAsync(new(
+            Title: $"Sync {options.TargetBranch} with {options.SourceBranch}",
+            Body: "",
+            HeadBranch: prBranchName,
+            BaseBranch: options.TargetBranch
+        ));
 
         return 0;
-    }
-
-    /// <summary>
-    /// Helper method that creates a pull request and logs the result.
-    /// </summary>
-    private async Task CreatePullRequest(
-        IGitRepoHelper repo,
-        string title,
-        string body,
-        string targetBranch,
-        string sourceBranch)
-    {
-        var pullRequestCreationInfo = new PullRequestCreationInfo(
-            Title: title,
-            Body: body,
-            BaseBranch: targetBranch,
-            HeadBranch: sourceBranch);
-
-        _logger.LogInformation("Creating pull request {PullRequestInfo}", pullRequestCreationInfo);
-        var pullRequestApiUrl = await repo.Remote.CreatePullRequestAsync(pullRequestCreationInfo);
-        var pullRequestInfo = await repo.Remote.GetPullRequestInfoAsync(pullRequestApiUrl);
-
-        _logger.LogInformation(
-            "Created pull request {PullRequestTitle} at {PullRequestUrl}",
-            pullRequestInfo.Title, pullRequestApiUrl);
     }
 
     /// <summary>
@@ -209,12 +182,6 @@ internal sealed class SyncInternalReleaseCommand(
         string stagingStorageAccount,
         (string Name, string Email) committerIdentity)
     {
-        // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
-        var buildUrl = $"{options.AzdoOrganization}/{options.AzdoProject}/_build/results?buildId={stagingPipelineRunId}";
-
-        _logger.LogInformation(
-            "Applying internal build {BuildNumber} ({BuildUrl})",
-            stagingPipelineRunId, buildUrl);
         _logger.LogInformation(
             "Ignore any git-related logging output below, because git "
             + "operations are being managed by a different command.");
@@ -237,17 +204,9 @@ internal sealed class SyncInternalReleaseCommand(
                 $"Failed to apply internal build {stagingPipelineRunId}. Command exited with code {exitCode}.");
         }
 
-        _logger.LogInformation(
-            "Finished applying internal build {BuildNumber} ({BuildUrl})",
-            stagingPipelineRunId, buildUrl);
+        _logger.LogInformation("Finished applying internal build {BuildNumber}", stagingPipelineRunId);
 
         await localRepo.StageAsync(".");
         await localRepo.CommitAsync($"Update dependencies from build {stagingPipelineRunId}", committerIdentity);
-    }
-
-    private static string GetPrBranchName(string action, SyncInternalReleaseOptions options)
-    {
-        var sanitizedTargetBranch = options.TargetBranch.Replace('/', '-');
-        return $"{options.PrBranchPrefix}/{action}-{sanitizedTargetBranch}";
     }
 }
