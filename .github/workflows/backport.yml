@@ -13,6 +13,7 @@ jobs:
   backport:
     uses: lbussell/arcade/.github/workflows/backport-base.yml@workflow-conflict-resolution
     with:
+      repository_owners: lbussell
       pr_description_template: |
         Backport of #%source_pr_number% to %target_branch%
 
