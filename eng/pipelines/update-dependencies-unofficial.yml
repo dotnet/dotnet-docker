@@ -6,6 +6,10 @@ parameters:
   displayName: BAR build channel to read .NET versions from (see aka.ms/bar)
   type: string
   default: ""
+- name: updateDotnet
+  displayName: Update .NET?
+  type: boolean
+  default: true
 # This parameter will show up as a multi-select dropdown when queueing the pipeline
 - name: tools
   type: stringList
@@ -31,4 +35,5 @@ extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
     channel: ${{ parameters.channel }}
+    updateDotnet: ${{ parameters.updateDotnet }}
     tools: ${{ parameters.tools }}
