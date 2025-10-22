@@ -7,14 +7,16 @@ parameters:
 - name: channel
   type: string
   default: ""
-# .NET image components to update
+# .NET image components to update. This should be a list of strings.
+# 'stringList' is not a supported type for parameters in templates, so we need use 'object' instead.
+# https://learn.microsoft.com/azure/devops/pipelines/process/runtime-parameters#parameter-data-types
 - name: tools
   type: object
-  default:
-  - "chisel"
-  - "rocks-toolbox"
-  - "syft"
-  - "mingit"
+  default: []
+# Whether or not to try and update .NET versions according to the channel parameter
+- name: updateDotnet
+  type: boolean
+  default: true
 # Additional authentication arguments to pass to update-dependencies
 - name: gitHubAuthArgs
   type: string
@@ -28,23 +30,24 @@ extends:
       displayName: Update dependencies
 
       jobs:
-      - template: /eng/pipelines/jobs/update-dependency.yml@self
-        parameters:
-          dependencyName: dotnet
-          updateSteps:
-          - task: AzureCLI@2
-            displayName: Update Dotnet
-            inputs:
-              azureSubscription: "Darc: Maestro Production"
-              scriptType: "pscore"
-              scriptLocation: "inlineScript"
-              inlineScript: >-
-                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                from-channel
-                ${{ parameters.channel }}
-                https://github.com/dotnet/dotnet
-                --version-source-name 'dotnet/dotnet'
-                ${{ parameters.gitHubAuthArgs }}
+      - ${{ if parameters.updateDotnet }}:
+        - template: /eng/pipelines/jobs/update-dependency.yml@self
+          parameters:
+            dependencyName: dotnet
+            updateSteps:
+            - task: AzureCLI@2
+              displayName: Update Dotnet
+              inputs:
+                azureSubscription: "Darc: Maestro Production"
+                scriptType: "pscore"
+                scriptLocation: "inlineScript"
+                inlineScript: >-
+                  dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                  from-channel
+                  ${{ parameters.channel }}
+                  https://github.com/dotnet/dotnet
+                  --version-source-name 'dotnet/dotnet'
+                  ${{ parameters.gitHubAuthArgs }}
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
