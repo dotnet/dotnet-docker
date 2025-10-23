@@ -5,7 +5,7 @@ FROM $REPO:10.0.0-alpine3.22-amd64 AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=10.0.0 \
-    && dotnet_build_version=$dotnet_version-rtm.25522.106 \
+    && dotnet_build_version=$dotnet_version-rtm.25523.103 \
     && wget \
         https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz \
         https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-musl-x64.tar.gz.sha512 \
