@@ -673,7 +673,7 @@ namespace Microsoft.DotNet.Docker.Tests
             if (!Config.IsNightlyRepo)
             {
                 productVersions = productVersions
-                    .Where(version => !version.Release.Contains("preview") && !version.Release.Contains("-rc"));
+                    .Where(version => !version.Release.Contains("preview") && !version.Release.Contains("rc"));
             }
 
             return productVersions.Select(version => version.Major).Max();
