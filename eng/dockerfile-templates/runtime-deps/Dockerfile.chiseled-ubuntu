@@ -7,13 +7,14 @@
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
 
-    set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|url")] ^
-    set chiselFileName to "chisel.tar.gz" ^
+    set chiselVersion to VARIABLES[cat("chisel|", dotnetVersion, "|build-version")] ^
+    set chiselArch to
+        when(ARCH_SHORT = "arm32", "arm",
+        when(ARCH_SHORT = "x64", "amd64",
+             ARCH_SHORT)) ^
+    set chiselFile to cat("chisel_${CHISEL_VERSION}_linux_", chiselArch, ".tar.gz") ^
+    set rocksToolboxVersion to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|build-version")] ^
     set shaFunction to "384" ^
-    set chiselSha to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|sha", shaFunction)] ^
-    set rocksToolboxBaseUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
-    set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|version")] ^
-    set rocksToolboxUrl to cat(rocksToolboxBaseUrl, "/", rocksToolboxRef, "/chisel-wrapper") ^
 
     set installerImageTag to cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl") ^
 
@@ -62,25 +63,29 @@
 
 }}FROM {{installerImageTag}} AS chisel
 
+# Find the latest chisel releases: https://github.com/canonical/chisel/releases
+ARG CHISEL_VERSION="{{chiselVersion}}"
+
+# Find the latest chisel-wrapper releases: https://github.com/canonical/rocks-toolbox/releases
+ARG ROCKS_TOOLBOX_VERSION="{{rocksToolboxVersion}}"
+
 RUN apt-get update && apt-get install -y file
 
-RUN {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
-        "url": chiselUrl,
-        "out-file": chiselFileName
+RUN chisel_url="https://github.com/canonical/chisel/releases/download/${CHISEL_VERSION}/chisel_${CHISEL_VERSION}_linux_{{chiselArch}}.tar.gz" \
+    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
+        "url": "${chisel_url}"
     ]]], "    ")}} \
-    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
-        "file": chiselFileName,
-        "sha-function": shaFunction,
-        "sha": chiselSha,
-        "sha-var-name": cat("chisel_sha", shaFunction)
+    && curl --fail --show-error --location ${chisel_url}.sha{{shaFunction}} | {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "stdin": "true",
+        "sha-function": shaFunction
     ], "    ")}} \
     && {{InsertTemplate("../Dockerfile.linux.extract-file", [
-        "file": chiselFileName,
+        "file": chiselFile,
         "dest-dir": "/usr/bin/"
     ], "    ")}} \
-    && rm {{chiselFileName}} \
+    && rm {{chiselFile}} \
     && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
-        "url": rocksToolboxUrl,
+        "url": "https://raw.githubusercontent.com/canonical/rocks-toolbox/${ROCKS_TOOLBOX_VERSION}/chisel-wrapper",
         "out-file": "/usr/bin/chisel-wrapper"
     ]]], "    ")}} \
     && chmod 755 /usr/bin/chisel-wrapper
