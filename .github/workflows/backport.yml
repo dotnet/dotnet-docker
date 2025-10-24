@@ -1,0 +1,20 @@
+name: Backport PR to branch
+on:
+  issue_comment:
+    types: [created]
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  backport:
+    uses: dotnet/arcade/.github/workflows/backport-base.yml@main
+    with:
+      pr_description_template: |
+        This PR is a backport of #%source_pr_number% to the %target_branch% branch.
+
+        /cc %cc_users%
+      conflict_resolution_command: pwsh ./eng/dockerfile-templates/Get-GeneratedDockerfiles.ps1 && pwsh ./eng/readme-templates/Get-GeneratedReadmes.ps1
