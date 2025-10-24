@@ -56,7 +56,7 @@ FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-noble AS chisel
 # Find the latest chisel releases: https://github.com/canonical/chisel/releases
 ARG CHISEL_VERSION="v1.X.X"
 # Find the latest chisel-wrapper releases: https://github.com/canonical/rocks-toolbox/releases
-ARG CHISEL_WRAPPER_VERSION="v1.X.X"
+ARG ROCKS_TOOLBOX_VERSION="v1.X.X"
 
 # Install chisel's dependencies
 RUN apt-get update \
@@ -69,7 +69,7 @@ RUN chisel_url=https://github.com/canonical/chisel/releases/download/${CHISEL_VE
     && curl -fSLOJ ${chisel_url} \
     && curl -fSL ${chisel_url}.sha384 | sha384sum -c - \
     && tar -xzf chisel_${CHISEL_VERSION}_linux_amd64.tar.gz -C /usr/bin/ chisel \
-    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/${CHISEL_WRAPPER_VERSION}/chisel-wrapper \
+    && curl -fSL --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/${ROCKS_TOOLBOX_VERSION}/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 ```
 

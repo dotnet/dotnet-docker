@@ -1,13 +1,19 @@
 FROM amd64/buildpack-deps:jammy-curl AS chisel
 
+# Find the latest chisel releases: https://github.com/canonical/chisel/releases
+ARG CHISEL_VERSION="v1.3.0"
+
+# Find the latest chisel-wrapper releases: https://github.com/canonical/rocks-toolbox/releases
+ARG ROCKS_TOOLBOX_VERSION="v1.2.0"
+
 RUN apt-get update && apt-get install -y file
 
-RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.3.0/chisel_v1.3.0_linux_amd64.tar.gz \
-    && chisel_sha384='8a5a6831251828fcd9ce8c9a47fca941d8763b7c80c16da784e2b1bf830ba606ab848f3886ce5945a3c2fc5e719c77e9' \
-    && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
-    && tar --gzip --extract --no-same-owner --file chisel.tar.gz --directory /usr/bin/ \
-    && rm chisel.tar.gz \
-    && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
+RUN chisel_url="https://github.com/canonical/chisel/releases/download/${CHISEL_VERSION}/chisel_${CHISEL_VERSION}_linux_amd64.tar.gz" \
+    && curl --fail --show-error --location --remote-name ${chisel_url} \
+    && curl --fail --show-error --location ${chisel_url}.sha384 | sha384sum -c - \
+    && tar --gzip --extract --no-same-owner --file chisel_${CHISEL_VERSION}_linux_amd64.tar.gz --directory /usr/bin/ \
+    && rm chisel_${CHISEL_VERSION}_linux_amd64.tar.gz \
+    && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/${ROCKS_TOOLBOX_VERSION}/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper
 
 RUN groupadd \
