@@ -11,7 +11,7 @@ RUN tdnf install -y \
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=10.0.0 \
-    && aspnetcore_build_version=$aspnetcore_version-rtm.25523.103 \
+    && aspnetcore_build_version=$aspnetcore_version-rtm.25523.113 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz.sha512 \
