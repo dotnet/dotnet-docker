@@ -46,8 +46,6 @@ public static class TestDockerfileBuilder
         ? DockerOS.Linux
         : DockerOS.Windows;
 
-    private static bool s_useNuGetConfig = Config.IsNightlyRepo || Config.IsInternal;
-
     private static string[] s_commonArgs = [
         "sdk_image",
         "runtime_image",
@@ -132,30 +130,21 @@ public static class TestDockerfileBuilder
 
     public static TestDockerfile GetBlazorWasmDockerfile(bool useWasmTools)
     {
-        string nugetConfigFileOption = s_useNuGetConfig
-            ? "--configfile NuGet.config"
-            : string.Empty;
-
         StringBuilder buildStageBuilder = new(
             $"""
             FROM $sdk_image AS {TestDockerfile.BuildStageName}
             ARG InternalAccessToken
             ARG port
             EXPOSE $port
+            {CopyNuGetConfigCommands}
             """);
-
-        if (s_useNuGetConfig)
-        {
-            buildStageBuilder.AppendLine();
-            buildStageBuilder.AppendLine(CopyNuGetConfigCommands);
-        }
 
         if (useWasmTools)
         {
             buildStageBuilder.AppendLine();
             buildStageBuilder.AppendLine(
                 $"""
-                RUN dotnet workload install {nugetConfigFileOption} wasm-tools \
+                RUN dotnet workload install --configfile NuGet.config wasm-tools \
                     && . /etc/os-release \
                     && case $ID in \
                         alpine) apk add --no-cache python3 ;; \
@@ -210,17 +199,7 @@ public static class TestDockerfileBuilder
             ARG InternalAccessToken
             ARG port
             EXPOSE $port
-            """);
-
-        if (s_useNuGetConfig)
-        {
-            buildStageBuilder.AppendLine();
-            buildStageBuilder.AppendLine(CopyNuGetConfigCommands);
-        }
-
-        buildStageBuilder.AppendLine();
-        buildStageBuilder.AppendLine(
-            $"""
+            {CopyNuGetConfigCommands}
             WORKDIR /source/app
             COPY app/*.csproj .
             RUN dotnet restore -r {FormatArg("rid")}
