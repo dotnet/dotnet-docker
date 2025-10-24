@@ -42,7 +42,8 @@ variables:
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
-    channel: $(channel)
+    vmrChannel: $(vmrChannel)
+    aspireChannel: $(aspireChannel)
     tools: ${{ parameters.tools }}
     updateDotnet: ${{ parameters.updateDotnet }}
     ${{ if ne(parameters.skipPullRequest, true) }}:

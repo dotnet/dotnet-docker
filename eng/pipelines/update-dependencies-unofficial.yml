@@ -2,8 +2,12 @@ trigger: none
 pr: none
 
 parameters:
-- name: channel
-  displayName: BAR build channel to read .NET versions from (see aka.ms/bar)
+- name: vmrChannel
+  displayName: .NET VMR build channel (see aka.ms/bar)
+  type: string
+  default: ""
+- name: aspireChannel
+  displayName: Aspire build channel (see aka.ms/bar)
   type: string
   default: ""
 - name: updateDotnet
@@ -34,6 +38,7 @@ variables:
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
-    channel: ${{ parameters.channel }}
+    vmrChannel: ${{ parameters.vmrChannel }}
+    aspireChannel: ${{ parameters.aspireChannel }}
     updateDotnet: ${{ parameters.updateDotnet }}
     tools: ${{ parameters.tools }}

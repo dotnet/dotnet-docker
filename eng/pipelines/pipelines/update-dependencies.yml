@@ -3,8 +3,13 @@ parameters:
 - name: official
   type: boolean
   default: false
-# BAR build channel to read .NET versions from
-- name: channel
+# BAR channel to read .NET VMR versions from
+# Find full list of channels at https://aka.ms/bar
+- name: vmrChannel
+  type: string
+  default: ""
+# BAR channel to read Aspire versions from
+- name: aspireChannel
   type: string
   default: ""
 # .NET image components to update. This should be a list of strings.
@@ -36,7 +41,7 @@ extends:
             dependencyName: dotnet
             updateSteps:
             - task: AzureCLI@2
-              displayName: Update Dotnet
+              displayName: Update .NET
               inputs:
                 azureSubscription: "Darc: Maestro Production"
                 scriptType: "pscore"
@@ -44,10 +49,28 @@ extends:
                 inlineScript: >-
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                   from-channel
-                  ${{ parameters.channel }}
+                  ${{ parameters.vmrChannel }}
                   https://github.com/dotnet/dotnet
                   --version-source-name 'dotnet/dotnet'
                   ${{ parameters.gitHubAuthArgs }}
+
+      - template: /eng/pipelines/jobs/update-dependency.yml@self
+        parameters:
+          dependencyName: aspire
+          updateSteps:
+          - task: AzureCLI@2
+            displayName: Update Aspire
+            inputs:
+              azureSubscription: "Darc: Maestro Production"
+              scriptType: "pscore"
+              scriptLocation: "inlineScript"
+              inlineScript: >-
+                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                from-channel
+                ${{ parameters.aspireChannel }}
+                https://github.com/dotnet/aspire
+                --version-source-name 'dotnet/aspire'
+                ${{ parameters.gitHubAuthArgs }}
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
