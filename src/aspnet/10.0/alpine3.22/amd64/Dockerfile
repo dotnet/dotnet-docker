@@ -5,7 +5,7 @@ FROM $REPO:10.0.0-alpine3.22-amd64 AS installer
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=10.0.0 \
-    && aspnetcore_build_version=$aspnetcore_version-rtm.25521.107 \
+    && aspnetcore_build_version=$aspnetcore_version-rtm.25523.103 \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-x64.tar.gz \
         https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-x64.tar.gz.sha512 \
