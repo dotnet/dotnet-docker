@@ -29,10 +29,7 @@ parameters:
   default: true
 
 variables:
-- template: /eng/pipelines/variables/core.yml@self
-  parameters:
-    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
-- template: /eng/common/templates/variables/dotnet/secrets.yml@self
+- template: /eng/pipelines/variables/core-official.yml@self
 - name: "publicSourceBranch"
   value: "main"
   readonly: true

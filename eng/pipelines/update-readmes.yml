@@ -2,8 +2,7 @@ trigger: none
 pr: none
 
 variables:
-- template: /eng/pipelines/variables/core.yml@self
-- template: /eng/common/templates/variables/dotnet/secrets.yml@self
+- template: /eng/pipelines/variables/core-official.yml@self
 
 extends:
   template: /eng/common/templates/1es-official.yml@self
