@@ -2,7 +2,7 @@
 
 ## Featured Tags
 
-* `10.0` (Release Candidate)
+* `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:10.0`
 * `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime:9.0`
