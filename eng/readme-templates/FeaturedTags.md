@@ -22,7 +22,7 @@ elif match(REPO, "aspire-dashboard"):* `9.5`
   * `docker pull {{FULL_REPO}}:9.5`^
 elif match(REPO, "yarp"):* `2.3-preview`
   * `docker pull {{FULL_REPO}}:2.3-preview`^
-else:* `10.0` (Release Candidate)
+else:* `10.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:10.0`
 * `9.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:9.0`
