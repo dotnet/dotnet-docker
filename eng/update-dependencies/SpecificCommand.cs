@@ -423,7 +423,7 @@ namespace Dotnet.Docker
             List<IDependencyUpdater> updaters =
             [
                 new NuGetConfigUpdater(manifestVariables, Options),
-                BaseUrlUpdater.Create(manifestVariables, Options)
+                ..BaseUrlUpdater.CreateUpdaters(manifestVariables, Options)
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)
