@@ -59,7 +59,7 @@ public class TestSolution : IDisposable
             string nuGetConfigFileName = "NuGet.config";
             if (Config.IsInternal)
             {
-                nuGetConfigFileName += "NuGet.config.internal";
+                nuGetConfigFileName = "NuGet.config.internal";
             }
             else if (Config.IsNightlyRepo)
             {
