@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Microsoft.DotNet.Docker.Shared;
+
 namespace Dotnet.Docker.Sync;
 
 /// <summary>
@@ -18,13 +20,13 @@ internal interface IInternalVersionsService
     /// Records a staging pipeline run ID in the repo.
     /// </summary>
     /// <remarks>
-    /// This will only store one staging pipeline run ID per dockerfileVersion.
+    /// This will only store one staging pipeline run ID per <paramref name="dotNetVersion"/>.
     /// If a version already exists for the same dockerfileVersion, it will be
     /// overwritten.
     /// </remarks>
-    /// <param name="dockerfileVersion">major-minor version</param>
+    /// <param name="dotNetVersion">.NET build or product version</param>
     /// <param name="stagingPipelineRunId">the build ID of the staging pipeline run</param>
-    void RecordInternalStagingBuild(string repoRoot, string dockerfileVersion, int stagingPipelineRunId);
+    void RecordInternalStagingBuild(string repoRoot, DotNetVersion dotNetVersion, int stagingPipelineRunId);
 
     /// <summary>
     /// Gets any previously recorded internal staging builds in the repo.
