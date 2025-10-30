@@ -3,6 +3,7 @@
 
 using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker;
@@ -66,12 +67,13 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             options.StagingPipelineRunId);
 
         string dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
-        string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(releaseConfig.RuntimeBuild).ToString();
+        DotNetVersion dotNetVersion = DotNetVersion.Parse(releaseConfig.RuntimeBuild);
+        string majorMinorVersionString = dotNetVersion.ToString(2);
 
-        // Record pipeline run ID for this dockerfileVersion, for later use by sync-internal-release command
+        // Record pipeline run ID for this internal version, for later use by sync-internal-release command
         _internalVersionsService.RecordInternalStagingBuild(
             repoRoot: gitRepoContext.LocalRepoPath,
-            dockerfileVersion: dockerfileVersion,
+            dotNetVersion: dotNetVersion,
             stagingPipelineRunId: options.StagingPipelineRunId);
 
         var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
@@ -130,7 +132,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
             RepoRoot = gitRepoContext.LocalRepoPath,
-            DockerfileVersion = dockerfileVersion.ToString(),
+            DockerfileVersion = majorMinorVersionString,
             ProductVersions = productVersions,
             InternalBaseUrl = internalBaseUrl,
         };
@@ -144,10 +146,10 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             return exitCode;
         }
 
-        var commitMessage = $"Update .NET {dockerfileVersion} to {productVersions["sdk"]} SDK / {productVersions["runtime"]} Runtime";
+        var commitMessage = $"Update .NET {majorMinorVersionString} to {productVersions["sdk"]} SDK / {productVersions["runtime"]} Runtime";
         var prTitle = $"[{options.TargetBranch}] {commitMessage}";
         var prBody = $"""
-            This pull request updates .NET {dockerfileVersion} to the following versions:
+            This pull request updates .NET {majorMinorVersionString} to the following versions:
 
             - SDK: {productVersions["sdk"]}
             - Runtime: {productVersions["runtime"]}
