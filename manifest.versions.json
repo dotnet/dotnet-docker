@@ -111,7 +111,7 @@
 
     "monitor|8|major-tag": "8",
 
-    "monitor|8.1|build-version": "8.1.3-servicing.25556.1",
+    "monitor|8.1|build-version": "8.1.3",
     "monitor|8.1|product-version": "8.1.3",
     "monitor|8.1|fixed-tag": "$(monitor|8.1|product-version)",
     "monitor|8.1|minor-tag": "8.1",
