@@ -10,7 +10,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor extensions
-RUN dotnet_monitor_extension_version=9.0.4 \
+RUN dotnet_monitor_extension_version=9.0.5 \
     && curl --fail --show-error --location \
         --output dotnet-monitor-egress-azureblobstorage.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
         --output dotnet-monitor-egress-s3storage.tar.gz https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-arm64.tar.gz \
@@ -27,6 +27,6 @@ RUN dotnet_monitor_extension_version=9.0.4 \
 
 
 # .NET Monitor image
-FROM $REPO:9.0.4-arm64v8
+FROM $REPO:9.0.5-arm64v8
 
 COPY --from=installer ["/app", "/app"]

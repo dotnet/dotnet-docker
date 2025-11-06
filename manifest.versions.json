@@ -129,8 +129,8 @@
 
     "monitor|10|major-preview-tag": "10-preview",
 
-    "monitor|9.0|build-version": "9.0.4",
-    "monitor|9.0|product-version": "9.0.4",
+    "monitor|9.0|build-version": "9.0.5",
+    "monitor|9.0|product-version": "9.0.5",
     "monitor|9.0|fixed-tag": "$(monitor|9.0|product-version)",
     "monitor|9.0|minor-tag": "9.0",
     "monitor|9.0|base-url|main": "$(base-url|public|maintenance|main)",
