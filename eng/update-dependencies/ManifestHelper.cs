@@ -31,6 +31,7 @@ public static partial class ManifestHelper
             versionSourceName: options.VersionSourceName);
 
         var baseUrlValues = baseUrlVariableNames
+            .Where(manifestVariables.ContainsKey)
             .Select(variable => ResolveVariableValue(variable, manifestVariables));
 
         return baseUrlValues;
