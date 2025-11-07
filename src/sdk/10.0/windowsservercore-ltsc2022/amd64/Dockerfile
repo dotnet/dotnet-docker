@@ -25,8 +25,8 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '10.0.100'; `
-        $dotnet_sdk_build_version = $dotnet_sdk_version + '-rtm.25523.113'; `
+        $dotnet_sdk_version = '10.0.101'; `
+        $dotnet_sdk_build_version = $dotnet_sdk_version + '-servicing.25555.106'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
@@ -65,7 +65,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:10.0.0-windowsservercore-ltsc2022
+FROM $REPO:10.0.1-windowsservercore-ltsc2022
 
 ENV `
     # Do not generate certificate
@@ -73,7 +73,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=10.0.100 `
+    DOTNET_SDK_VERSION=10.0.101 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
