@@ -6,7 +6,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `10.0` (Release Candidate)
+* `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:10.0`
 * `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:9.0`
