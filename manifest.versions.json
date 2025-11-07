@@ -219,9 +219,9 @@
 
     "sdk|10.0|build-version": "10.0.100-rtm.25523.113",
     "sdk|10.0|product-version": "10.0.100",
-    "sdk|10.0|base-url|main": "$(dotnet|10.0|base-url|nightly)",
+    "sdk|10.0|base-url|main": "$(dotnet|10.0|base-url|main)",
     "sdk|10.0|base-url|nightly": "$(dotnet|10.0|base-url|nightly)",
-    "sdk|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|checksums|nightly)",
+    "sdk|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|checksums|main)",
     "sdk|10.0|base-url|checksums|nightly": "$(dotnet|10.0|base-url|checksums|nightly)",
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
