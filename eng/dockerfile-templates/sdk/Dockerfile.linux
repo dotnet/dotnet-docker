@@ -92,7 +92,7 @@ RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
 # .NET SDK image
 FROM {{baseImageTag}}
 
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal, "include-powershell-vars": includePowerShellVars])}}
+{{InsertTemplate("Dockerfile.envs", ["include-powershell-vars": includePowerShellVars])}}
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 [

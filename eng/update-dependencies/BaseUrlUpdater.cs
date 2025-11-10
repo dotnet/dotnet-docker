@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
@@ -25,28 +26,41 @@ internal class BaseUrlUpdater : FileRegexUpdater
     /// If the base URL variable cannot be found in the manifest, the updater
     /// won't do anything.
     /// </summary>
-    public static IDependencyUpdater Create(ManifestVariables manifestVariables, SpecificCommandOptions options)
+    public static IEnumerable<IDependencyUpdater> CreateUpdaters(ManifestVariables manifestVariables, SpecificCommandOptions options)
     {
         if (manifestVariables is null)
         {
             Trace.TraceWarning("BaseUrlUpdater: manifest variables missing - skipping base URL update.");
-            return new EmptyDependencyUpdater();
+            return [];
         }
 
         var upstreamBranch = manifestVariables.GetValue("branch");
-        string baseUrlVarName = ManifestHelper.GetBaseUrlVariableName(
+        var baseUrlVarNames = ManifestHelper.GetBaseUrlVariableNames(
             dockerfileVersion: options.DockerfileVersion,
             branch: upstreamBranch,
             versionSourceName: options.VersionSourceName,
             sdkOnlyRelease: options.IsSdkOnly);
 
-        if (!manifestVariables.HasValue(baseUrlVarName))
+        IEnumerable<IDependencyUpdater> updaters = baseUrlVarNames
+            .SelectMany(variable => CreateUpdater(variable, manifestVariables, options));
+
+        return updaters;
+    }
+
+    private static IEnumerable<IDependencyUpdater> CreateUpdater(
+        string baseUrlVarName,
+        ManifestVariables manifestVariables,
+        SpecificCommandOptions options)
+    {
+        var variableHasValue = manifestVariables.HasValue(baseUrlVarName);
+
+        if (!variableHasValue)
         {
             Trace.TraceWarning($"BaseUrlUpdater: variable '{baseUrlVarName}' not found - skipping base URL update.");
-            return new EmptyDependencyUpdater();
+            return [];
         }
 
-        return new BaseUrlUpdater(options, manifestVariables, baseUrlVarName);
+        return [new BaseUrlUpdater(options, manifestVariables, baseUrlVarName)];
     }
 
     private BaseUrlUpdater(

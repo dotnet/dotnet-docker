@@ -1,23 +1,46 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace Dotnet.Docker;
 
-internal partial class FromStagingPipelineCommand(
-    ILogger<FromStagingPipelineCommand> logger,
-    PipelineArtifactProvider pipelineArtifactProvider,
-    IInternalVersionsService internalVersionsService)
-    : BaseCommand<FromStagingPipelineOptions>
+internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipelineOptions>
 {
-    private readonly ILogger<FromStagingPipelineCommand> _logger = logger;
-    private readonly PipelineArtifactProvider _pipelineArtifactProvider = pipelineArtifactProvider;
-    private readonly IInternalVersionsService _internalVersionsService = internalVersionsService;
+    /// <summary>
+    /// Callback that stages all changes, commits them, pushes them to the
+    /// remote, and creates a pull request.
+    /// </summary>
+    private delegate Task CommitAndCreatePullRequest(string commitMessage, string prTitle, string prBody);
+
+    private readonly ILogger<FromStagingPipelineCommand> _logger;
+    private readonly PipelineArtifactProvider _pipelineArtifactProvider;
+    private readonly IInternalVersionsService _internalVersionsService;
+    private readonly Func<FromStagingPipelineOptions, Task<GitRepoContext>> _createGitRepoContextAsync;
+
+    public FromStagingPipelineCommand(
+        ILogger<FromStagingPipelineCommand> logger,
+        PipelineArtifactProvider pipelineArtifactProvider,
+        IInternalVersionsService internalVersionsService,
+        IGitRepoHelperFactory gitRepoHelperFactory)
+    {
+        _logger = logger;
+        _pipelineArtifactProvider = pipelineArtifactProvider;
+        _internalVersionsService = internalVersionsService;
+        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options);
+    }
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
+        // Delegate all git responsibilities to GitRepoContext. Depending on what options were
+        // passed in, we may or may not want to actually perform git operations. GitRepoContext
+        // decides what git operations to perform and tells us where to make changes. This keeps
+        // all the git-related logic in one place.
+        var gitRepoContext = await _createGitRepoContextAsync(options);
+
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
@@ -44,13 +67,14 @@ internal partial class FromStagingPipelineCommand(
             options.StagingPipelineRunId);
 
         string dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
-        string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(releaseConfig.RuntimeBuild).ToString();
+        DotNetVersion dotNetVersion = DotNetVersion.Parse(releaseConfig.RuntimeBuild);
+        string majorMinorVersionString = dotNetVersion.ToString(2);
 
-        // Record pipeline run ID for this dockerfileVersion, for later use by sync-internal-release command
+        // Record pipeline run ID for this internal version, for later use by sync-internal-release command
         _internalVersionsService.RecordInternalStagingBuild(
-            options.RepoRoot,
-            dockerfileVersion,
-            options.StagingPipelineRunId);
+            repoRoot: gitRepoContext.LocalRepoPath,
+            dotNetVersion: dotNetVersion,
+            stagingPipelineRunId: options.StagingPipelineRunId);
 
         var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
         {
@@ -92,28 +116,50 @@ internal partial class FromStagingPipelineCommand(
             "Resolved product versions: {productVersions}",
             string.Join(", ", productVersions.Select(kv => $"{kv.Key}: {kv.Value}")));
 
-        // Run old update-dependencies command using the resolved versions
+        // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
+        var buildUrl = $"{options.AzdoOrganization}/{options.AzdoProject}/_build/results?buildId={options.StagingPipelineRunId}";
+        _logger.LogInformation(
+            "Applying internal build {BuildNumber} ({BuildUrl})",
+            options.StagingPipelineRunId, buildUrl);
+
+        _logger.LogInformation(
+            "Ignore any git-related logging output below, because git "
+            + "operations are being managed by a different command.");
+
+        // Run old update-dependencies command using the resolved versions.
+        // Do not use the old command to submit a pull request.
         var updateDependencies = new SpecificCommand();
         var updateDependenciesOptions = new SpecificCommandOptions()
         {
-            RepoRoot = options.RepoRoot,
-            DockerfileVersion = dockerfileVersion.ToString(),
+            RepoRoot = gitRepoContext.LocalRepoPath,
+            DockerfileVersion = majorMinorVersionString,
             ProductVersions = productVersions,
-
-            // Pass through all properties of CreatePullRequestOptions
-            User = options.User,
-            Email = options.Email,
-            Password = options.Password,
-            AzdoOrganization = options.AzdoOrganization,
-            AzdoProject = options.AzdoProject,
-            AzdoRepo = options.AzdoRepo,
-            VersionSourceName = options.VersionSourceName,
-            SourceBranch = options.SourceBranch,
-            TargetBranch = options.TargetBranch,
             InternalBaseUrl = internalBaseUrl,
         };
+        var exitCode = await updateDependencies.ExecuteAsync(updateDependenciesOptions);
+        if (exitCode != 0)
+        {
+            _logger.LogError(
+                "Failed to apply staging pipeline run ID {StagingPipelineRunId}. "
+                + "Command exited with code {ExitCode}.",
+                options.StagingPipelineRunId, exitCode);
+            return exitCode;
+        }
 
-        return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
+        var commitMessage = $"Update .NET {majorMinorVersionString} to {productVersions["sdk"]} SDK / {productVersions["runtime"]} Runtime";
+        var prTitle = $"[{options.TargetBranch}] {commitMessage}";
+        var prBody = $"""
+            This pull request updates .NET {majorMinorVersionString} to the following versions:
+
+            - SDK: {productVersions["sdk"]}
+            - Runtime: {productVersions["runtime"]}
+            - ASP.NET Core: {productVersions["aspnet"]}
+
+            These versions are from .NET staging pipeline run [#{options.StagingPipelineRunId}]({buildUrl}).
+            """;
+        await gitRepoContext.CommitAndCreatePullRequest(commitMessage, prTitle, prBody);
+
+        return 0;
     }
 
     /// <summary>
@@ -138,5 +184,72 @@ internal partial class FromStagingPipelineCommand(
 
         // If it's just the storage account name, construct the full URL
         return $"https://{storageAccount}.blob.core.windows.net";
+    }
+
+    /// <summary>
+    /// Holds context about the git repository where changes should be made.
+    /// </summary>
+    /// <param name="LocalRepoPath">Root of the repo where all changes should be made.</param>
+    /// <param name="CommitAndCreatePullRequest">Callback that creates a pull request with all changes.</param>
+    private record GitRepoContext(string LocalRepoPath, CommitAndCreatePullRequest CommitAndCreatePullRequest)
+    {
+        /// <summary>
+        /// Sets up the remote/local git repository based on <paramref name="options"/>.
+        /// Call this before making any changes, then make changes to <see cref="LocalRepoPath"/>
+        /// and use <see cref="CommitAndCreatePullRequest"/> to create a pull request.
+        /// </summary>
+        /// <remarks>
+        /// If <see cref="FromStagingPipelineOptions.Mode"/> is <see cref="ChangeMode.Local"/>,
+        /// no git operations will be performed.
+        /// </remarks>
+        public static async Task<GitRepoContext> CreateAsync(
+            ILogger logger,
+            IGitRepoHelperFactory gitRepoFactory,
+            FromStagingPipelineOptions options)
+        {
+            CommitAndCreatePullRequest createPullRequest;
+            string localRepoPath;
+
+            if (options.Mode == ChangeMode.Remote)
+            {
+                var remoteUrl = options.GetAzdoRepoUrl();
+                var targetBranch = options.TargetBranch;
+                var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StagingPipelineRunId}");
+                var committer = options.GetCommitterIdentity();
+
+                // Clone the repo
+                var git = await gitRepoFactory.CreateAndCloneAsync(remoteUrl);
+                // Ensure the branch we want to modify exists, then check it out
+                await git.Remote.EnsureBranchExistsAsync(targetBranch);
+                // Create a new branch to push changes to and create a PR from
+                await git.CheckoutRemoteBranchAsync(targetBranch);
+                await git.Local.CreateAndCheckoutLocalBranchAsync(prBranch);
+
+                localRepoPath = git.Local.LocalPath;
+                createPullRequest = async (commitMessage, prTitle, prBody) =>
+                {
+                    await git.Local.StageAsync(".");
+                    await git.Local.CommitAsync(commitMessage, committer);
+                    await git.PushLocalBranchAsync(prBranch);
+                    await git.Remote.CreatePullRequestAsync(new(
+                        Title: prTitle,
+                        Body: prBody,
+                        HeadBranch: prBranch,
+                        BaseBranch: targetBranch
+                    ));
+                };
+            }
+            else
+            {
+                logger.LogInformation("No git operations will be performed in {Mode} mode.", options.Mode);
+                localRepoPath = options.RepoRoot;
+                createPullRequest = async (commitMessage, prTitle, prBody) =>
+                {
+                    logger.LogInformation("Skipping commit and pull request creation in {Mode} mode.", options.Mode);
+                };
+            }
+
+            return new GitRepoContext(localRepoPath, createPullRequest);
+        }
     }
 }

@@ -36,7 +36,7 @@ RUN powershell -Command `
 FROM {{runtimeStageFromImage}}
 
 {{InsertTemplate("../Dockerfile.common-dotnet-envs")}} `
-    {{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal], "    ")}}
+    {{InsertTemplate("Dockerfile.envs", [], "    ")}}
 
 {{InsertTemplate("../Dockerfile.windows.set-path", [ "path": "C:\Program Files\dotnet"])}}
 

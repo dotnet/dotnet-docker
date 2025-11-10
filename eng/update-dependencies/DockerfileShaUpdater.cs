@@ -137,7 +137,7 @@ namespace Dotnet.Docker
         {
             usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
 
-            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Variables, _options);
+            string baseUrl = ManifestHelper.GetBaseUrls(_manifestVariables.Variables, _options).First();
             // Remove Aspire Dashboard case once https://github.com/dotnet/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
@@ -275,8 +275,12 @@ namespace Dotnet.Docker
             // corresponding build in the daily build location, for example, will not be signed due. So when we're targeting
             // the daily build location, we wouldn't use the release checksums file and instead use the other means of
             // retrieving the checksums.
-            string baseUrl = ManifestHelper.GetBaseUrl(_manifestVariables.Variables, _options);
-            if (baseUrl != ReleaseDotnetBaseCdnUrl)
+            string? baseUrl = ManifestHelper
+                .GetBaseUrls(_manifestVariables.Variables, _options)
+                .Where(url => url == ReleaseDotnetBaseCdnUrl)
+                .FirstOrDefault();
+
+            if (string.IsNullOrWhiteSpace(baseUrl))
             {
                 return null;
             }

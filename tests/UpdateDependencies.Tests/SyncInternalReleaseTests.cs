@@ -6,6 +6,7 @@ using Dotnet.Docker;
 using Dotnet.Docker.Git;
 using Dotnet.Docker.Sync;
 using Microsoft.DotNet.DarcLib;
+using Microsoft.DotNet.Docker.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
@@ -81,7 +82,7 @@ public sealed class SyncInternalReleaseTests
 
         var repoMock = new Mock<IGitRepoHelper>();
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAsync(options.GetAzdoRepoUrl())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null)).ReturnsAsync(repoMock.Object);
 
         // Setup:
         // Target branch does not exist on remote
@@ -111,7 +112,7 @@ public sealed class SyncInternalReleaseTests
         // not explicitly set up in this test.
         var repoMock = new Mock<IGitRepoHelper>(MockBehavior.Strict);
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAsync(options.GetAzdoRepoUrl())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null)).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -148,7 +149,7 @@ public sealed class SyncInternalReleaseTests
         repoMock.Setup(r => r.Remote).Returns(remoteRepoMock.Object);
 
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAsync(options.GetAzdoRepoUrl())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null)).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -224,7 +225,11 @@ public sealed class SyncInternalReleaseTests
                 : throw new Exception($"PR {PullRequestUrl} was not created first"));
 
         // For this scenario, two internal versions have been checked in to this repo.
-        var internalVersions = new Dictionary<string, int> { { "8.0", 8000000 }, { "10.0", 1000000 } };
+        var internalVersions = new Dictionary<DotNetVersion, int>
+        {
+            { DotNetVersion.Parse("8.0"), 8000000 },
+            { DotNetVersion.Parse("10.0"), 1000000 }
+        };
         var internalVersionsService = CreateInternalVersionsService(LocalRepoPath, internalVersions);
 
         var fromStagingPipelineCommandMock = new Mock<ICommand<FromStagingPipelineOptions>>();
@@ -239,7 +244,7 @@ public sealed class SyncInternalReleaseTests
         exitCode.ShouldBe(0);
 
         // Verify that we re-applied all internal versions by calling the downstream command.
-        foreach ((string dotnetVersion, int buildId) in internalVersions)
+        foreach ((_, int buildId) in internalVersions)
         {
             fromStagingPipelineCommandMock.Verify(command =>
                 command.ExecuteAsync(It.Is<FromStagingPipelineOptions>(o =>
@@ -299,7 +304,7 @@ public sealed class SyncInternalReleaseTests
     /// Helper method to create a mock version of <see cref="IInternalVersionsService"/>
     /// </summary>
     private static IInternalVersionsService CreateInternalVersionsService(
-        string repoPath, Dictionary<string, int> versions)
+        string repoPath, Dictionary<DotNetVersion, int> versions)
     {
         var internalStagingBuilds = new InternalStagingBuilds(versions.ToImmutableDictionary());
 
@@ -319,7 +324,7 @@ public sealed class SyncInternalReleaseTests
 
         /// <summary>
         /// Factory that returns <see cref="RepoMock"/> when
-        /// <see cref="IGitRepoHelperFactory.CreateAsync"/> is called.
+        /// <see cref="IGitRepoHelperFactory.CreateAndCloneAsync"/> is called.
         /// </summary>
         public Mock<IGitRepoHelperFactory> RepoFactoryMock { get; } = new();
 
@@ -329,7 +334,7 @@ public sealed class SyncInternalReleaseTests
         public GitTestScenario(string localRepoPath, string remoteRepoUrl)
         {
             RepoMock.Setup(r => r.Local.LocalPath).Returns(localRepoPath);
-            RepoFactoryMock.Setup(f => f.CreateAsync(remoteRepoUrl)).ReturnsAsync(RepoMock.Object);
+            RepoFactoryMock.Setup(f => f.CreateAndCloneAsync(remoteRepoUrl, null)).ReturnsAsync(RepoMock.Object);
         }
 
         /// <summary>

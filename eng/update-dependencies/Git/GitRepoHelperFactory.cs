@@ -1,9 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.IO;
-using System.Threading.Tasks;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,7 +10,33 @@ namespace Dotnet.Docker.Git;
 
 internal interface IGitRepoHelperFactory
 {
-    Task<IGitRepoHelper> CreateAsync(string repoUri);
+    /// <summary>
+    /// Clones a Git repository from the <paramref name="repoUri"/> into a local
+    /// directory, and returns an <see cref="IGitRepoHelper"/> for interacting
+    /// with the repository.
+    /// </summary>
+    /// <param name="repoUri">
+    /// The URI of the Git repository to clone.
+    /// </param>
+    /// <param name="localCloneDir">
+    /// The local directory to clone the repository into. If not provided,
+    /// defaults to a temporary directory. The caller is responsible for
+    /// managing/cleaning up the temporary directory.
+    /// </param>
+    Task<IGitRepoHelper> CreateAndCloneAsync(string repoUri, string? localCloneDir = null);
+
+    /// <summary>
+    /// Creates an <see cref="IGitRepoHelper"/> that points to an existing
+    /// local Git repository.
+    /// </summary>
+    /// <param name="repoUri">
+    /// The repository URI for remote operations.
+    /// </param>
+    /// <param name="localPath">
+    /// The path where the repo is already checked out locally. Defaults to the
+    /// current working directory.
+    /// </param>
+    GitRepoHelper CreateFromLocal(string repoUri, string? localPath = null);
 }
 
 internal sealed class GitRepoHelperFactory(
@@ -30,9 +53,10 @@ internal sealed class GitRepoHelperFactory(
     private readonly IRemoteGitRepoFactory _remoteFactory = remoteFactory;
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
-    public async Task<IGitRepoHelper> CreateAsync(string repoUri)
+    /// <inheritdoc/>
+    public async Task<IGitRepoHelper> CreateAndCloneAsync(string repoUri, string? localCloneDir = null)
     {
-        var localCloneDir = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+        localCloneDir ??= Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 
         await _gitRepoCloner.CloneAsync(
             repoUri: repoUri,
@@ -42,9 +66,17 @@ internal sealed class GitRepoHelperFactory(
             gitDirectory: null);
         _logger.LogInformation("Cloned '{RepoUri}' to '{LocalCloneDir}'", repoUri, localCloneDir);
 
-        var localGitRepo = _localGitRepoFactory.Create(new NativePath(localCloneDir));
+        return CreateFromLocal(repoUri, localCloneDir);
+    }
+
+    /// <inheritdoc/>
+    public GitRepoHelper CreateFromLocal(string repoUri, string? localPath = null)
+    {
+        localPath ??= Directory.GetCurrentDirectory();
+
+        var localGitRepo = _localGitRepoFactory.Create(new NativePath(localPath));
         var localGitRepoHelper = new LocalGitRepoHelper(
-            localPath: localCloneDir,
+            localPath: localPath,
             localGitRepo: localGitRepo,
             logger: _serviceProvider.GetRequiredService<ILogger<LocalGitRepoHelper>>());
 

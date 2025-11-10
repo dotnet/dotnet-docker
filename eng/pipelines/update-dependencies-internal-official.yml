@@ -1,21 +1,27 @@
 trigger: none
 pr: none
 
-parameters:
-- name: buildId
-  type: string
-  default: ""
-
 variables:
 - template: /eng/common/templates/variables/dotnet/common.yml@self
-# Uses AzDO token to push changes internally
-- group: DotNet-AllOrgs-Darc-Pats
+# This pipeline expects there to be a variable named "targetBranch" defined
+# in the Azure Pipelines GUI. It should be able to be overridden at pipeline
+# queue time. A pull request will be created targeting that branch.
+# It is not a parameter since it needs to be permanent but also changed to the
+# next release branch every month without modifying the pipeline YAML.
+
+resources:
+  pipelines:
+  # All release pipelines are located at: https://dev.azure.com/dnceng/internal/_build?definitionScope=%5Cdotnet%5Crelease
+  # Stage-DotNet-Prepare-Artifacts: https://dev.azure.com/dnceng/internal/_build?definitionId=1300
+  # Stage-DotNet-Prepare-Artifacts-Test: https://dev.azure.com/dnceng/internal/_build?definitionId=1286
+  - pipeline: "dotnet-staging-pipeline"
+    source: "Stage-DotNet-Prepare-Artifacts"
+    trigger: true
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
   parameters:
-    buildId: ${{ parameters.buildId }}
+    buildId: "$(resources.pipeline.dotnet-staging-pipeline.runID)"
     stagingStorageAccount: "dotnetstage"
-    sourceBranch: "nightly"
-    targetBranch: "testing/pipeline-$(Build.BuildId)"
-    gitPassword: "$(dn-bot-devdiv-dnceng-rw-code-pat)"
+    targetBranch: "$(targetBranch)"
+    gitServiceConnectionName: "$(updateDepsInt.serviceConnectionName)"

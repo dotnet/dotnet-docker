@@ -5,6 +5,7 @@
     <Platform Name="x86" />
   </Configurations>
   <Project Path="eng/update-dependencies/update-dependencies.csproj" />
+  <Project Path="eng/shared/Microsoft.DotNet.Docker.Shared.csproj" />
   <Project Path="tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj" />
   <Project Path="tests/Microsoft.DotNet.Docker.Tests/Microsoft.DotNet.Docker.Tests.csproj" />
 </Solution>

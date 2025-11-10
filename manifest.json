@@ -1002,8 +1002,7 @@
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
             "$(dotnet|9.0|minor-tag)-bookworm-slim": {},
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -1632,7 +1631,8 @@
             "$(dotnet|10.0|fixed-tag)-noble": {},
             "$(dotnet|10.0|minor-tag)-noble": {},
             "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {}
+            "$(dotnet|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -3094,8 +3094,7 @@
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
             "$(dotnet|9.0|minor-tag)-bookworm-slim": {},
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -3739,7 +3738,8 @@
             "$(dotnet|10.0|fixed-tag)-noble": {},
             "$(dotnet|10.0|minor-tag)-noble": {},
             "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {}
+            "$(dotnet|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -5828,8 +5828,7 @@
             "$(dotnet|9.0|fixed-tag)-bookworm-slim": {},
             "$(dotnet|9.0|minor-tag)-bookworm-slim": {},
             "$(dotnet|9.0|fixed-tag)": {},
-            "$(dotnet|9.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -6855,7 +6854,8 @@
             "$(dotnet|10.0|fixed-tag)-noble": {},
             "$(dotnet|10.0|minor-tag)-noble": {},
             "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {}
+            "$(dotnet|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -8164,8 +8164,7 @@
             "$(sdk|9.0|fixed-tag)-bookworm-slim": {},
             "$(sdk|9.0|minor-tag)-bookworm-slim": {},
             "$(sdk|9.0|fixed-tag)": {},
-            "$(sdk|9.0|minor-tag)": {},
-            "latest": {}
+            "$(sdk|9.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -8524,7 +8523,8 @@
             "$(sdk|10.0|fixed-tag)-noble": {},
             "$(sdk|10.0|minor-tag)-noble": {},
             "$(sdk|10.0|fixed-tag)": {},
-            "$(sdk|10.0|minor-tag)": {}
+            "$(sdk|10.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -9415,11 +9415,11 @@
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspire-dashboard-tags.yml",
       "images": [
         {
-          "productVersion": "$(aspire-dashboard|9.5|product-version)",
+          "productVersion": "$(aspire-dashboard|product-version)",
           "sharedTags": {
-            "$(aspire-dashboard|9.5|fixed-tag)": {},
-            "$(aspire-dashboard|9.5|minor-tag)": {},
-            "$(aspire-dashboard|9|major-tag)": {},
+            "$(aspire-dashboard|fixed-tag)": {},
+            "$(aspire-dashboard|minor-tag)": {},
+            "$(aspire-dashboard|major-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -9427,18 +9427,18 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/aspire-dashboard/9.5/azurelinux-distroless/amd64",
+              "dockerfile": "src/aspire-dashboard/amd64",
               "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(aspire-dashboard|9.5|fixed-tag)-amd64": {
+                "$(aspire-dashboard|fixed-tag)-amd64": {
                   "docType": "Undocumented"
                 },
-                "$(aspire-dashboard|9.5|minor-tag)-amd64": {
+                "$(aspire-dashboard|minor-tag)-amd64": {
                   "docType": "Undocumented"
                 },
-                "$(aspire-dashboard|9|major-tag)-amd64": {
+                "$(aspire-dashboard|major-tag)-amd64": {
                   "docType": "Undocumented"
                 }
               }
@@ -9448,18 +9448,18 @@
               "buildArgs": {
                 "REPO": "$(Repo:aspnet)"
               },
-              "dockerfile": "src/aspire-dashboard/9.5/azurelinux-distroless/arm64v8",
+              "dockerfile": "src/aspire-dashboard/arm64v8",
               "dockerfileTemplate": "eng/dockerfile-templates/aspire-dashboard/Dockerfile.linux",
               "os": "linux",
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
-                "$(aspire-dashboard|9.5|fixed-tag)-arm64v8": {
+                "$(aspire-dashboard|fixed-tag)-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "$(aspire-dashboard|9.5|minor-tag)-arm64v8": {
+                "$(aspire-dashboard|minor-tag)-arm64v8": {
                   "docType": "Undocumented"
                 },
-                "$(aspire-dashboard|9|major-tag)-arm64v8": {
+                "$(aspire-dashboard|major-tag)-arm64v8": {
                   "docType": "Undocumented"
                 }
               },
