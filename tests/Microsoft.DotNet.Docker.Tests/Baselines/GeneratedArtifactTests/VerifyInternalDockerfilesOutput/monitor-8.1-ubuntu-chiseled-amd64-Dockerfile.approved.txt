@@ -8,13 +8,8 @@ ARG ACCESSTOKEN
 # Retrieve .NET Monitor extensions
 RUN dotnet_monitor_extension_version=0.0.0 \
     && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
-<<<<<<< HEAD
-        --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetstage.blob.core.windows.net/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-        --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetstage.blob.core.windows.net/diagnostics/monitor/$dotnet_monitor_extension_version/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-=======
-        --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetstage.blob.core.windows.net/0.0.0/BlobAssets/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
-        --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetstage.blob.core.windows.net/0.0.0/BlobAssets/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
->>>>>>> Update internal Dockerfile baselines
+        --output dotnet-monitor-egress-azureblobstorage.tar.gz https://dotnetstage.blob.core.windows.net/$dotnet_monitor_extension_version/BlobAssets/dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
+        --output dotnet-monitor-egress-s3storage.tar.gz https://dotnetstage.blob.core.windows.net/$dotnet_monitor_extension_version/BlobAssets/dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-x64.tar.gz \
     && dotnet_monitor_azureblobstorage_sha512='{sha512_placeholder}' \
     && echo "$dotnet_monitor_azureblobstorage_sha512  dotnet-monitor-egress-azureblobstorage.tar.gz" | sha512sum -c - \
     && dotnet_monitor_s3storage_sha512='{sha512_placeholder}' \

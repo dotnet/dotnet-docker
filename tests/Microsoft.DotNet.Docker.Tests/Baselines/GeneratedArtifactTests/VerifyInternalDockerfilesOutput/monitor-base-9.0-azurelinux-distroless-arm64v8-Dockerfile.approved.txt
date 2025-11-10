@@ -13,11 +13,7 @@ RUN tdnf install -y \
 
 # Retrieve .NET Monitor Base
 RUN dotnet_monitor_version=0.0.0 \
-<<<<<<< HEAD
-    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output dotnet-monitor-base.tar.gz https://dotnetstage.blob.core.windows.net/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
-=======
-    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output dotnet-monitor-base.tar.gz https://dotnetstage.blob.core.windows.net/0.0.0/BlobAssets/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
->>>>>>> Update internal Dockerfile baselines
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output dotnet-monitor-base.tar.gz https://dotnetstage.blob.core.windows.net/$dotnet_monitor_version/BlobAssets/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
     && dotnet_monitor_base_sha512='{sha512_placeholder}' \
     && echo "$dotnet_monitor_base_sha512  dotnet-monitor-base.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
