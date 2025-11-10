@@ -5,8 +5,22 @@
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
     set monitorVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|", monitorVersionVariable)] ^
     set versionFolder to when(buildVersion != monitorVersion, buildVersion, '$dotnet_monitor_extension_version') ^
-    set monitorBaseUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
-    set monitorBaseChecksumUrl to cat(VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|checksums|", VARIABLES["branch"])], "/diagnostics/monitor/", versionFolder, "/") ^
+
+    _ This logic is duplicated in eng/dockerfile-templates/monitor-base/Dockerfile.linux ^
+    set monitorBaseUrl to VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|", VARIABLES["branch"])] ^
+    set monitorBaseChecksumUrl to VARIABLES[cat("monitor|", monitorMajorMinor, "|base-url|checksums|", VARIABLES["branch"])] ^
+    set isInternal to find(monitorBaseUrl, "dotnetstage") >= 0 ^
+
+    set publicMonitorPath to cat("/diagnostics/monitor/", versionFolder, "/") ^
+    _ Internal builds of monitor have a different download path. Example internal URL:
+      https://<staging account>.blob.core.windows.net/dotnet-monitor/<build version>/(BlobAssets|ChecksumAssets)/<file> ^
+    _ Assume that the base URL has the dotnet-monitor part of the path on it ^
+    set monitorPath to when(isInternal, cat("/", versionFolder, "/BlobAssets/"), publicMonitorPath) ^
+    set monitorChecksumPath to when(isInternal, cat("/", versionFolder, "/ChecksumAssets/"), publicMonitorPath) ^
+
+    set monitorBaseUrl to cat(monitorBaseUrl, monitorPath) ^
+    set monitorBaseChecksumUrl to cat(monitorBaseChecksumUrl, monitorChecksumPath) ^
+
     set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
     set monitorBaseTagOs to when(isAzureLinux,
         cat(when(find(OS_VERSION, "3.0") >= 0, "azurelinux-distroless", "cbl-mariner-distroless")),
@@ -16,7 +30,6 @@
     set monitorBaseTag to
         cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], monitorBaseTagOsSuffix, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
-    set isInternal to find(monitorBaseUrl, "dotnetstage") >= 0 ^
     set installerImageTag to when(isAzureLinux,
         cat("mcr.microsoft.com/"
             when(find(OS_VERSION, "3.0") >= 0, "azurelinux", "cbl-mariner"),
