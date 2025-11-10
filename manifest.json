@@ -9007,8 +9007,7 @@
           "sharedTags": {
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
-            "$(monitor|9|major-tag)": {},
-            "latest": {}
+            "$(monitor|9|major-tag)": {}
           },
           "platforms": [
             {
@@ -9084,7 +9083,8 @@
           "sharedTags": {
             "$(monitor|10.0|fixed-tag)": {},
             "$(monitor|10.0|minor-tag)": {},
-            "$(monitor|10|major-tag)": {}
+            "$(monitor|10|major-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -9259,8 +9259,7 @@
           "sharedTags": {
             "$(monitor|9.0|fixed-tag)": {},
             "$(monitor|9.0|minor-tag)": {},
-            "$(monitor|9|major-tag)": {},
-            "latest": {}
+            "$(monitor|9|major-tag)": {}
           },
           "platforms": [
             {
@@ -9352,7 +9351,8 @@
           "sharedTags": {
             "$(monitor|10.0|fixed-tag)": {},
             "$(monitor|10.0|minor-tag)": {},
-            "$(monitor|10|major-tag)": {}
+            "$(monitor|10|major-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
