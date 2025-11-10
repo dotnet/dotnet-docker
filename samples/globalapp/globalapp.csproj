@@ -5,7 +5,63 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    <RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(Alpine)' == 'true'">linux-musl-arm64;linux-musl-x64</RuntimeIdentifiers>
+
+    <!-- stuff that's only here because of non-public container packages -->
+    <RuntimeFrameworkVersion>10.0.0-rc.2.25502.107</RuntimeFrameworkVersion>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime:10.0.0-rc.2</ContainerBaseImage>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Chiseled)' == 'true' and '$(Alpine)' != 'true'">
+    <ContainerFamily>noble-chiseled-extra</ContainerFamily>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <ContainerImageTag>chiseled</ContainerImageTag>
+    <!-- stuff that's only here because of non-public container packages -->
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Chiseled)' == 'true' and '$(Alpine)' == 'true'">
+    <ContainerFamily>alpine3.22-extra</ContainerFamily>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <ContainerImageTag>alpine-chiseled</ContainerImageTag>
+    <!-- stuff that's only here because of non-public container packages -->
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-alpine3.22-extra</ContainerBaseImage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(SC)' == 'true'">
+    <PublishSelfContained Condition="'$(RuntimeIdentifier)' != ''">true</PublishSelfContained>
+    <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
+    <ContainerImageTag>sc</ContainerImageTag>
+    <AllowSelfContainedWithoutRuntimeIdentifier>true</AllowSelfContainedWithoutRuntimeIdentifier>
+    <ContainerBaseImage >mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Trimmed)' == 'true'">
+    <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
+    <AllowSelfContainedWithoutRuntimeIdentifier>true</AllowSelfContainedWithoutRuntimeIdentifier>
+    <PublishTrimmed>true</PublishTrimmed>
+    <ContainerImageTag>trimmed</ContainerImageTag>
+    <!-- stuff that's only here because of non-public container packages -->
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(AOT)' == 'true'">
+    <PublishAOT>true</PublishAOT>
+    <ContainerImageTag>aot</ContainerImageTag>
+    <!-- stuff that's only here because of non-public container packages -->
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(AOTInvariant)' == 'true'">
+    <PublishAOT>true</PublishAOT>
+    <ContainerImageTag>aot-invariant</ContainerImageTag>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- stuff that's only here because of non-public container packages -->
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled</ContainerBaseImage>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ContainerEntrypoint Include="/app/$(MSBuildThisFileName)" />
+  </ItemGroup>
 </Project>

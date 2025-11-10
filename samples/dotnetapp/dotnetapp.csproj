@@ -5,12 +5,18 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(Alpine)' == 'true'">linux-musl-arm64;linux-musl-x64</RuntimeIdentifiers>
 
-    <!-- This property is requried to enable .NET SDK container publishing for
-      console apps only. It's enabled by default for web apps. -->
-    <!-- Learn more about .NET SDK container creation:
-      https://learn.microsoft.com/en-us/dotnet/core/containers/overview?tabs=windows -->
-    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+    <!-- stuff that's only here because of non-public container packages -->
+    <RuntimeFrameworkVersion>10.0.0-rc.2.25502.107</RuntimeFrameworkVersion>
+    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime:10.0.0-rc.2</ContainerBaseImage>
+    <ContainerBaseImage Condition="'$(Alpine)' == 'true'">mcr.microsoft.com/dotnet/runtime:10.0.0-rc.2-alpine3.22</ContainerBaseImage>
+
   </PropertyGroup>
+
+  <ItemGroup>
+    <ContainerEntrypoint Include="/app/$(MSBuildThisFileName)" />
+  </ItemGroup>
 
 </Project>
