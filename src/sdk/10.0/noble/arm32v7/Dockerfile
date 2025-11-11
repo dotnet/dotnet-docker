@@ -4,11 +4,10 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
 RUN dotnet_sdk_version=10.0.100 \
-    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.25523.113 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512 \
-    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz" | sha512sum -c - \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512 \
+    && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \

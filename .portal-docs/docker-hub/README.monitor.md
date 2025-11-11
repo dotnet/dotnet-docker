@@ -4,6 +4,8 @@
 
 # Featured Tags
 
+* `10` (Long-Term Support)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:10`
 * `9` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:9`
 * `8` (Long-Term Support)

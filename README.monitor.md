@@ -6,6 +6,8 @@
 
 ## Featured Tags
 
+* `10` (Long-Term Support)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:10`
 * `9` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/monitor:9`
 * `8` (Long-Term Support)
@@ -53,6 +55,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+10.0.0, 10.0, 10, latest | [Dockerfile](src/monitor/10.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 9.0.5, 9.0, 9 | [Dockerfile](src/monitor/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 8.1.3-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.3, 8.1, 8 | [Dockerfile](src/monitor/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.1.3-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor/8.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
@@ -61,13 +64,13 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-10.0.0-rc.2, 10.0-preview, 10.0-preview, latest | [Dockerfile](src/monitor/10.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor/9.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
+10.0.0, 10.0, 10, latest | [Dockerfile](src/monitor/10.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.5, 9.0, 9 | [Dockerfile](src/monitor/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.1.3-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.3, 8.1, 8 | [Dockerfile](src/monitor/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.1.3-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor/8.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
@@ -76,7 +79,6 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-10.0.0-rc.2, 10.0-preview, 10.0-preview, latest | [Dockerfile](src/monitor/10.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor/9.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 <!--End of generated tags-->
 

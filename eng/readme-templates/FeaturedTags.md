@@ -10,7 +10,9 @@
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`^
-elif match(SHORT_REPO, "monitor"):* `9` (Standard Support)
+elif match(SHORT_REPO, "monitor"):* `10` (Long-Term Support)
+  * `docker pull {{FULL_REPO}}:10`
+* `9` (Standard Support)
   * `docker pull {{FULL_REPO}}:9`
 * `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`^

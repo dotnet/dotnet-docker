@@ -26,12 +26,11 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         $dotnet_sdk_version = '10.0.100'; `
-        $dotnet_sdk_build_version = $dotnet_sdk_version + '-rtm.25523.113'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
-        $dotnet_sha512_file = $dotnet_file + '.sha512'; `
+        $dotnet_sha512_file = $dotnet_file + '.sha512-bare'; `
         `
-        Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/$dotnet_file; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/$dotnet_sha512_file; `
+        Invoke-WebRequest -OutFile $dotnet_file https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/$dotnet_sha512_file; `
         `
         if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
