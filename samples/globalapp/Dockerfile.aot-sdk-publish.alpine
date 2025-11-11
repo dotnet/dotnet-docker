@@ -4,8 +4,5 @@
 # * mount the source code directory: `-v /path/to/source:/source`
 # * call `dotnet publish -t PublishContainer` with/on a project that 
 #   has been configured for AOT compilation 
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS builder
-ARG TARGETARCH
-RUN apk update \
-    && apk upgrade \
-    && apk add docker clang build-base zlib-dev
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-alpine-aot AS builder
+RUN apk add --no-cache docker
