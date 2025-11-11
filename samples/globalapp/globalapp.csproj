@@ -7,60 +7,51 @@
     <Nullable>enable</Nullable>
     <RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
     <RuntimeIdentifiers Condition="'$(Alpine)' == 'true'">linux-musl-arm64;linux-musl-x64</RuntimeIdentifiers>
-
-    <!-- stuff that's only here because of non-public container packages -->
-    <RuntimeFrameworkVersion>10.0.0-rc.2.25502.107</RuntimeFrameworkVersion>
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime:10.0.0-rc.2</ContainerBaseImage>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Chiseled)' == 'true' and '$(Alpine)' != 'true'">
-    <ContainerFamily>noble-chiseled-extra</ContainerFamily>
-    <InvariantGlobalization>true</InvariantGlobalization>
+  
+  <PropertyGroup Condition="'$(Chiseled)' == 'true'">
+    <ContainerFamily>noble-chiseled</ContainerFamily>
     <ContainerImageTag>chiseled</ContainerImageTag>
-    <!-- stuff that's only here because of non-public container packages -->
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(Chiseled)' == 'true' and '$(Alpine)' == 'true'">
-    <ContainerFamily>alpine3.22-extra</ContainerFamily>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <ContainerImageTag>alpine-chiseled</ContainerImageTag>
-    <!-- stuff that's only here because of non-public container packages -->
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-alpine3.22-extra</ContainerBaseImage>
+  <PropertyGroup Condition="'$(Alpine)' == 'true'">
+    <ContainerImageTag>alpine</ContainerImageTag>
+    <ContainerFamily>alpine</ContainerFamily>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Chiseled)' != 'true' and '$(Alpine)' != 'true'" >
+    <ContainerFamily>noble</ContainerFamily>
+    <ContainerImageTag>noble</ContainerImageTag>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(SC)' == 'true'">
-    <PublishSelfContained Condition="'$(RuntimeIdentifier)' != ''">true</PublishSelfContained>
+    <PublishSelfContained>true</PublishSelfContained>
     <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
-    <ContainerImageTag>sc</ContainerImageTag>
+    <ContainerImageTag>$(ContainerImageTag)-sc</ContainerImageTag>
     <AllowSelfContainedWithoutRuntimeIdentifier>true</AllowSelfContainedWithoutRuntimeIdentifier>
-    <ContainerBaseImage >mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Trimmed)' == 'true'">
     <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
     <AllowSelfContainedWithoutRuntimeIdentifier>true</AllowSelfContainedWithoutRuntimeIdentifier>
     <PublishTrimmed>true</PublishTrimmed>
-    <ContainerImageTag>trimmed</ContainerImageTag>
-    <!-- stuff that's only here because of non-public container packages -->
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
+    <ContainerImageTag>$(ContainerImageTag)-trimmed</ContainerImageTag>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(AOT)' == 'true'">
     <PublishAOT>true</PublishAOT>
-    <ContainerImageTag>aot</ContainerImageTag>
-    <!-- stuff that's only here because of non-public container packages -->
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled-extra</ContainerBaseImage>
+    <ContainerImageTag>$(ContainerImageTag)-aot</ContainerImageTag>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(AOTInvariant)' == 'true'">
-    <PublishAOT>true</PublishAOT>
-    <ContainerImageTag>aot-invariant</ContainerImageTag>
-    <InvariantGlobalization>true</InvariantGlobalization>
-    <!-- stuff that's only here because of non-public container packages -->
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime-deps:10.0.0-rc.2-noble-chiseled</ContainerBaseImage>
+  <PropertyGroup Condition="'$(InvariantGlobalization)' == 'true'">
+    <ContainerImageTag>$(ContainerImageTag)-invariant</ContainerImageTag>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(InvariantGlobalization)' != 'true' "> <!-- and ('$(PublishSelfContained)' == 'true' or '$(PublishTrimmed)' == 'true' or '$(PublishAOT)' == 'true')"> -->
+    <ContainerImageTag>$(ContainerImageTag)-variant</ContainerImageTag>
+    <ContainerFamily Condition="'$(Chiseled)' == 'true' or '$(Alpine)' == 'true'">$(ContainerFamily)-extra</ContainerFamily>
+  </PropertyGroup>
+  
   <ItemGroup>
     <ContainerEntrypoint Include="/app/$(MSBuildThisFileName)" />
   </ItemGroup>

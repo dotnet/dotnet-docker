@@ -7,12 +7,6 @@
     <Nullable>enable</Nullable>
     <RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
     <RuntimeIdentifiers Condition="'$(Alpine)' == 'true'">linux-musl-arm64;linux-musl-x64</RuntimeIdentifiers>
-
-    <!-- stuff that's only here because of non-public container packages -->
-    <RuntimeFrameworkVersion>10.0.0-rc.2.25502.107</RuntimeFrameworkVersion>
-    <ContainerBaseImage>mcr.microsoft.com/dotnet/runtime:10.0.0-rc.2</ContainerBaseImage>
-    <ContainerBaseImage Condition="'$(Alpine)' == 'true'">mcr.microsoft.com/dotnet/runtime:10.0.0-rc.2-alpine3.22</ContainerBaseImage>
-
   </PropertyGroup>
 
   <ItemGroup>
