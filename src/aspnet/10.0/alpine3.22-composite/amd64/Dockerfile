@@ -1,11 +1,11 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:10.0.0-alpine3.22-amd64 AS installer
+FROM $REPO:10.0.1-alpine3.22-amd64 AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=10.0.0 \
-    && aspnetcore_build_version=$aspnetcore_version-rtm.25523.113 \
+RUN aspnetcore_version=10.0.1 \
+    && aspnetcore_build_version=$aspnetcore_version-servicing.25555.106 \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz \
         https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-x64.tar.gz.sha512 \
@@ -18,13 +18,13 @@ RUN aspnetcore_version=10.0.0 \
 
 
 # ASP.NET Composite Image
-FROM $REPO:10.0.0-alpine3.22-amd64
+FROM $REPO:10.0.1-alpine3.22-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0 \
+    DOTNET_VERSION=10.0.1 \
     # ASP.NET Core version
-    ASPNET_VERSION=10.0.0
+    ASPNET_VERSION=10.0.1
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet

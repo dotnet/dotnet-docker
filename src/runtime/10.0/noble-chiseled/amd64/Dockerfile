@@ -4,8 +4,8 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.0 \
-    && dotnet_build_version=$dotnet_version-rtm.25523.113 \
+RUN dotnet_version=10.0.1 \
+    && dotnet_build_version=$dotnet_version-servicing.25555.106 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
@@ -21,10 +21,10 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:10.0.0-noble-chiseled-amd64
+FROM $REPO:10.0.1-noble-chiseled-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.0
+ENV DOTNET_VERSION=10.0.1
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
