@@ -23,9 +23,15 @@ public static partial class DockerfileHelper
     [GeneratedRegex(@"\d+\.\d+\.\d+(\.\d+)?(-[A-Za-z]+(\.\d+)+)?")]
     public static partial Regex VersionRegex { get; }
 
-    // Match unstable versions that have been partially replaced with variables, like `$aspnetcore_version.25326.107`
-    [GeneratedRegex(@"\$[a-zA-Z0-9_]+\.\d+\.\d+")]
+    // Match unstable versions that have been partially replaced with variables,
+    // like `$aspnetcore_version.25326.107` or `$aspnetcore_version-rtm.25326.107`
+    [GeneratedRegex(@"\$[a-zA-Z0-9_]+((-[A-Za-z]+)?(\.\d+)+)")]
     public static partial Regex VersionWithVariableRegex { get; }
+
+    // Match unstable versions that have been partially replaced with variables
+    // using string addition, like `$dotnet_sdk_version + '-rtm.25515.111'`
+    [GeneratedRegex(@"\$[a-zA-Z0-9_]+\s*\+\s*'(-[A-Za-z]+(\.\d+)+)'")]
+    public static partial Regex StringVersionWithVariableRegex { get; }
 
     [GeneratedRegex(@"v\d+\.\d+\.\d+\.windows\.\d+")]
     public static partial Regex MinGitVersionRegex { get; }

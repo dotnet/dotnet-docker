@@ -9,5 +9,8 @@ variables:
 - name: manifest
   value: manifest.json
 
+- name: officialBranchPrefixes
+  value: internal/release/
+
 - name: publishEolAnnotations
   value: true

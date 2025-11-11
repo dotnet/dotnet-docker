@@ -9,6 +9,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using LibGit2Sharp;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.DotNet.VersionTools;
 using Microsoft.DotNet.VersionTools.Automation;
 using Microsoft.DotNet.VersionTools.Automation.GitHubApi;
@@ -22,10 +23,22 @@ namespace Dotnet.Docker
     {
         private static SpecificCommandOptions? s_options;
 
-        private static SpecificCommandOptions Options {
+        private static SpecificCommandOptions Options
+        {
             get => s_options ?? throw new InvalidOperationException($"{nameof(Options)} has not been set.");
             set => s_options = value;
         }
+
+        /// <summary>
+        /// Custom dependency updaters to run in addition to what is
+        /// automatically ran based on <see cref="Options"/> .
+        /// </summary>
+        public List<IDependencyUpdater> CustomUpdaters { get; } = [];
+
+        /// <summary>
+        /// Custom build infos to use for the <see cref="CustomUpdaters"/>
+        /// </summary>
+        public List<IDependencyInfo> CustomUpdateInfos { get; } = [];
 
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
@@ -39,6 +52,16 @@ namespace Dotnet.Docker
 
             try
             {
+                // We control what files Microsoft.DotNet.VersionTools updates via the updaters we
+                // provide, but it has no configuration options for what directory to run git
+                // commands from. If the working directory isn't the same as the repo we want to
+                // modify, then git commands might do unexpected things - for example, git might
+                // report no changes were made when in fact we changed files in a different repo.
+                // We need to explicitly change directories to the one passed in via options.
+                // The previous working directory will be restored at the end of the current scope,
+                // when context is disposed.
+                using var context = DirectoryStack.Push(options.RepoRoot);
+
                 IDependencyInfo[] productBuildInfos = Options.ProductVersions
                     .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
                     .ToArray();
@@ -60,9 +83,15 @@ namespace Dotnet.Docker
 
                 if (toolBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(repoRoot: Options.RepoRoot);
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(manifestFilePath);
                     DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
                     updateResults.Add(toolUpdateResults);
+                }
+
+                if (CustomUpdaters.Count != 0)
+                {
+                    DependencyUpdateResults customUpdateResults = UpdateFiles(CustomUpdateInfos, CustomUpdaters);
+                    updateResults.Add(customUpdateResults);
                 }
 
                 IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters();
@@ -394,7 +423,7 @@ namespace Dotnet.Docker
             List<IDependencyUpdater> updaters =
             [
                 new NuGetConfigUpdater(manifestVariables, Options),
-                BaseUrlUpdater.Create(manifestVariables, Options)
+                ..BaseUrlUpdater.CreateUpdaters(manifestVariables, Options)
             ];
 
             foreach (string productName in Options.ProductVersions.Keys)

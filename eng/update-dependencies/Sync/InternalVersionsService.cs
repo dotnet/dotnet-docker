@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Immutable;
+using Microsoft.DotNet.Docker.Shared;
 
 namespace Dotnet.Docker.Sync;
 
@@ -21,12 +22,12 @@ internal sealed class InternalVersionsService : IInternalVersionsService
         }
         catch (FileNotFoundException)
         {
-            return new InternalStagingBuilds(ImmutableDictionary<string, int>.Empty);
+            return new InternalStagingBuilds(ImmutableDictionary<DotNetVersion, int>.Empty);
         }
     }
 
     /// <inheritdoc/>
-    public void RecordInternalStagingBuild(string repoRoot, string dockerfileVersion, int stagingPipelineRunId)
+    public void RecordInternalStagingBuild(string repoRoot, DotNetVersion dotNetVersion, int stagingPipelineRunId)
     {
         // Internal versions file should have one line per dockerfileVersion
         // Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
@@ -38,10 +39,7 @@ internal sealed class InternalVersionsService : IInternalVersionsService
         // 2) lots of regex JSON manipulation which is error-prone and harder to maintain
         //
         // So for now, the separate file and format is a compromise.
-
-        // Internal versions file should have one line per dockerfileVersion
-        // Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
-        var builds = GetInternalStagingBuilds(repoRoot).Add(dockerfileVersion, stagingPipelineRunId);
+        var builds = GetInternalStagingBuilds(repoRoot).Add(dotNetVersion, stagingPipelineRunId);
         var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
         File.WriteAllText(internalVersionFile, builds.ToString());
     }
