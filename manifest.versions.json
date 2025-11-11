@@ -6,7 +6,7 @@
     "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
-    "base-url|public-checksums|main": "https://ci.dot.net/public-checksums",
+    "base-url|public-checksums|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public-checksums|nightly": "https://ci.dot.net/public-checksums",
 
     "alpine|floating-tag-version": "alpine3.22",
