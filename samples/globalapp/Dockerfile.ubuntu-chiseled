@@ -6,7 +6,7 @@ WORKDIR /source
 
 # Copy project file and restore as distinct layers
 COPY --link *.csproj .
-RUN dotnet restore
+RUN dotnet restore -a $TARGETARCH
 
 # Copy source code and publish app
 COPY --link . .
