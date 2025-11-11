@@ -9281,7 +9281,7 @@
           "sharedTags": {
             "$(monitor|10.0|fixed-tag)": {},
             "$(monitor|10.0|minor-tag)": {},
-            "$(monitor|10|major-preview-tag)": {},
+            "$(monitor|10|major-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -9549,7 +9549,7 @@
           "sharedTags": {
             "$(monitor|10.0|fixed-tag)": {},
             "$(monitor|10.0|minor-tag)": {},
-            "$(monitor|10|major-preview-tag)": {},
+            "$(monitor|10|major-tag)": {},
             "latest": {}
           },
           "platforms": [
