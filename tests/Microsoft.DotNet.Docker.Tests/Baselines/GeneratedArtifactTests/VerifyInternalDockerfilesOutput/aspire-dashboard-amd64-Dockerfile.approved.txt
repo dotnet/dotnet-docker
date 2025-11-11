@@ -30,6 +30,7 @@ ENV \
     # Aspire Dashboard environment variables
     ASPNETCORE_URLS=http://+:18888 \
     DOTNET_DASHBOARD_OTLP_ENDPOINT_URL=http://+:18889 \
-    DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL=http://+:18890
+    DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL=http://+:18890 \
+    DOTNET_DASHBOARD_MCP_ENDPOINT_URL=http://+:18891
 
 ENTRYPOINT [ "dotnet", "/app/Aspire.Dashboard.dll" ]
