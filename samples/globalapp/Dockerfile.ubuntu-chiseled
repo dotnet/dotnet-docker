@@ -6,15 +6,15 @@ WORKDIR /source
 
 # Copy project file and restore as distinct layers
 COPY --link *.csproj .
-RUN dotnet restore -a $TARGETARCH
+RUN dotnet restore
 
 # Copy source code and publish app
 COPY --link . .
-RUN dotnet publish -a $TARGETARCH --no-restore -o /app
+RUN dotnet publish -a $TARGETARCH -o /app
 
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/runtime:10.0-noble-chiseled-extra
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled-extra
 
 # Enable globalization
 ENV \
