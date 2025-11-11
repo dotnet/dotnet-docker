@@ -12,9 +12,9 @@ RUN tdnf install -y \
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=10.0.0 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
-    && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz" | sha512sum -c - \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
+    && sha512sum -c aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz --directory /usr/share/dotnet \
     && rm \
