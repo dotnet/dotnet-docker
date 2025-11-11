@@ -13,7 +13,7 @@ RUN tdnf install -y \
 RUN dotnet_monitor_version=10.0.0 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512 \
     && echo "$(cat dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz.sha512)  dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /app \
     && tar --gzip --extract --no-same-owner --file dotnet-monitor-base-$dotnet_monitor_version-linux-x64.tar.gz --directory /app \
