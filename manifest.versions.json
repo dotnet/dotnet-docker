@@ -22,8 +22,8 @@
     "aspire-dashboard|fixed-tag": "$(aspire-dashboard|product-version)",
     "aspire-dashboard|minor-tag": "13.0",
     "aspire-dashboard|major-tag": "13",
-    "aspire-dashboard|linux|x64|sha": "5caf719d842b0935e5f8b5f8595cb4294ce4098a59bff0a714a5e9e4d6d046717a5779f88a5cb6dc8487a03bc73a070d6daad55f99e3aff9c83db490ca9082d2",
-    "aspire-dashboard|linux|arm64|sha": "652aaa62b97c97fd463055d903421ae52029c4636c9124db1bafd703928e02b19dcd754116791acb7e9d5850670b55026b8a7be988e087eb51bb0022023ff94c",
+    "aspire-dashboard|linux|x64|sha": "69333bdef491527a4437fe60b92c12e7a5a00f15cbcb3ae2c355cb6538b9905a34de1a38ef0b9552a1c6ccc94f1d37d0c1ff16b4170f4bbe97b5596a3ec0072f",
+    "aspire-dashboard|linux|arm64|sha": "82a85c4755da7a6d277eb6b284aa0d9c7aa9fc5be41596e77f63312aa62bdb35653fe6b6f3c917882c2936be5ea91f93eaa0310db18fe32bb9be2d8dc6a30b18",
     "aspire-dashboard|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|base-url|nightly": "$(base-url|public|preview|nightly)",
 
