@@ -31,34 +31,33 @@ You can use this in place of the default distroless images by appending the `-ex
 
 **Ubuntu**:
 
-- `mcr.microsoft.com/dotnet/runtime-deps:8.0-noble-chiseled-extra`
-- `mcr.microsoft.com/dotnet/runtime:8.0-noble-chiseled-extra`
-- `mcr.microsoft.com/dotnet/aspnet:8.0-noble-chiseled-extra`
+- `mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled-extra`
+- `mcr.microsoft.com/dotnet/runtime:10.0-noble-chiseled-extra`
+- `mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled-extra`
 
 **Azure Linux**:
 
-- `mcr.microsoft.com/dotnet/runtime-deps:8.0-cbl-mariner2.0-extra`
-- `mcr.microsoft.com/dotnet/runtime:8.0-cbl-mariner2.0-extra`
-- `mcr.microsoft.com/dotnet/aspnet:8.0-cbl-mariner2.0-extra`
+- `mcr.microsoft.com/dotnet/runtime-deps:10.0-azurelinux3.0-extra`
+- `mcr.microsoft.com/dotnet/runtime:10.0-azurelinux3.0-extra`
+- `mcr.microsoft.com/dotnet/aspnet:10.0-azurelinux3.0-extra`
 
 Please see ["Announcement: New approach for differentiating .NET 8+ images"](https://github.com/dotnet/dotnet-docker/discussions/4821) for more info.
 
 ### How can I scan distroless images for security vulnerabilities?
 
 Both Ubuntu Chiseled and Azure Linux .NET images contain package installation data and are supported by many major scanning tools such as Qualys, Trivy, Syft, etc.
-
 For example, you can scan for CVEs with [Docker Scout](https://docs.docker.com/scout/) using the following command:
 
 **Ubuntu**:
 
 ```bash
-docker scout cves mcr.microsoft.com/dotnet/runtime-deps:8.0-noble-chiseled
+docker scout cves mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled
 ```
 
 **Azure Linux**:
 
 ```bash
-docker scout cves mcr.microsoft.com/dotnet/runtime-deps:8.0-cbl-mariner2.0-distroless
+docker scout cves mcr.microsoft.com/dotnet/runtime-deps:10.0-cbl-mariner2.0-distroless
 ```
 
 ### How do I write my Dockerfile to work without a shell?
@@ -92,18 +91,18 @@ For example, you could download and extract an archive so that the files will be
 
 ```Dockerfile
 # build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0-noble AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-noble AS build
 # OR
-# FROM mcr.microsoft.com/dotnet/sdk:8.0-cbl-mariner2.0 AS build
+# FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0 AS build
 ...
 RUN wget -O somefile.tar.gz <URL> \
     && tar -oxzf aspnetcore.tar.gz -C /somefile-extracted
 ...
 
 # final stage/image
-FROM mcr.microsoft.com/dotnet/runtime-deps:8.0-noble-chiseled
+FROM mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled
 # OR
-# FROM mcr.microsoft.com/dotnet/sdk:8.0-cbl-mariner2.0-distroless AS build
+# FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0-distroless AS build
 ...
 COPY --from=build /somefile-extracted .
 ...
@@ -140,13 +139,13 @@ You can check the user ID that a container will use by running the following com
 **Ubuntu**:
 
 ```console
-docker image inspect mcr.microsoft.com/dotnet/runtime-deps:8.0-noble-chiseled -f "{{ .Config.User }}"
+docker image inspect mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled -f "{{ .Config.User }}"
 ```
 
 **Azure Linux**:
 
 ```console
-docker image inspect mcr.microsoft.com/dotnet/runtime-deps:8.0-cbl-mariner2.0-distroless -f "{{ .Config.User }}"
+docker image inspect mcr.microsoft.com/dotnet/runtime-deps:10.0-azurelinux3.0-distroless -f "{{ .Config.User }}"
 ```
 
 Additionally, from within the container, you can get the UID of the non-root user by reading the `APP_UID` environment variable.
