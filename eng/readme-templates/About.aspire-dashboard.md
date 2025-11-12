@@ -1,1 +1,1 @@
-This image contains the .NET Aspire Dashboard.
+This image contains the Aspire Dashboard.
