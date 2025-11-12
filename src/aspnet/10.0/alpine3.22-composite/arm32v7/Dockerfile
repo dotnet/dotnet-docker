@@ -1,13 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:10.0.0-alpine3.22-arm32v7 AS installer
+FROM $REPO:10.0.1-alpine3.22-arm32v7 AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=10.0.0 \
+RUN aspnetcore_version=10.0.1 \
+    && aspnetcore_build_version=$aspnetcore_version-servicing.25555.106 \
     && wget \
-        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz.sha512 \
+        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz.sha512 \
     && sha512sum -c aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz --directory /dotnet \
@@ -17,13 +18,13 @@ RUN aspnetcore_version=10.0.0 \
 
 
 # ASP.NET Composite Image
-FROM $REPO:10.0.0-alpine3.22-arm32v7
+FROM $REPO:10.0.1-alpine3.22-arm32v7
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=10.0.0 \
+    DOTNET_VERSION=10.0.1 \
     # ASP.NET Core version
-    ASPNET_VERSION=10.0.0
+    ASPNET_VERSION=10.0.1
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
