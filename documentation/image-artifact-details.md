@@ -72,7 +72,7 @@ docker build -t distroless-wrapper -f ./Dockerfile.distroless-wrapper --build-ar
 Now that you've got the wrapper image, you can execute the [commands that are documented](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md) targeting the wrapper image instead:
 
 ```console
-$ docker run --rm distroless-wrapper /bin/sh -c "find ./app | grep -i 'license\|third'"
+$ docker run --rm distroless-wrapper /bin/sh -c "find ./usr/share/dotnet | grep -i 'license\|third'"
 ./usr/share/dotnet/LICENSE.txt
 ./usr/share/dotnet/ThirdPartyNotices.txt
 ```
