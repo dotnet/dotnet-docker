@@ -14,7 +14,7 @@ public class AzdoAuthProvider
     /// This scope provides access to Azure DevOps Services REST API.
     /// </summary>
     /// <remarks>
-    /// See https://learn.microsoft.com/en-us/rest/api/azure/devops/tokens/?view=azure-devops-rest-7.1&tabs=powershell#personal-access-tokens-pats
+    /// See https://learn.microsoft.com/rest/api/azure/devops/tokens/?view=azure-devops-rest-7.1&tabs=powershell#personal-access-tokens-pats
     /// </remarks
     private const string Scope = "499b84ac-1321-427f-aa17-267ca6975798/.default";
 

@@ -4,7 +4,7 @@
 
 All images were produced from the ["releasesapi" sample](https://github.com/dotnet/dotnet-docker/tree/main/samples/releasesapi) using Ubuntu 22.04 ("jammy") images for amd64.
 Alpine images will be similar.
-The Baseline image is a standard [framework-dependent](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-framework-dependent) deployment on the ASP.NET runtime image.
+The Baseline image is a standard [framework-dependent](https://learn.microsoft.com/dotnet/core/deploying/#publish-framework-dependent) deployment on the ASP.NET runtime image.
 This is the largest image with the most functionality and flexibility.
 However, the new [Ubuntu Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) .NET base images can provide significantly smaller and more secure deployments for your application as demonstrated below.
 
@@ -23,15 +23,15 @@ However, the new [Ubuntu Chiseled](https://github.com/dotnet/dotnet-docker/blob/
 
 ## Self-Contained + Trimming Deployment
 
-[Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) deployments bundle the .NET Runtime with your app so that it's able to run without the full .NET Runtime installed.
-[IL Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) for self-contained apps removes unused code from the .NET Runtime and libraries to reduce application size.
-And [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) deployment produces an app that is completely compiled to native code at build time for the smallest deployment size that .NET allows for.
+[Self-contained](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) deployments bundle the .NET Runtime with your app so that it's able to run without the full .NET Runtime installed.
+[IL Trimming](https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained) for self-contained apps removes unused code from the .NET Runtime and libraries to reduce application size.
+And [Native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) deployment produces an app that is completely compiled to native code at build time for the smallest deployment size that .NET allows for.
 
 | Image Kind | Base Image | Uncompressed Image Size | Compressed Image Size | % Size Savings Over Baseline[^1] |
 | --- | --- |--- | --- | --- |
-| [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | 146 MB | 57.9 MB | 36% |
-| [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) + [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 39.3 MB | 16.4 MB | 82% |
-| [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 27.7 MB | 12.4 MB | 86% |
+| [Self-contained](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | 146 MB | 57.9 MB | 36% |
+| [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) + [Self-contained](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 39.3 MB | 16.4 MB | 82% |
+| [Native AOT](https://learn.microsoft.com/dotnet/core/deploying/native-aot/) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 27.7 MB | 12.4 MB | 86% |
 
 For more information on .NET image variants and AOT images, please see the following documentation:
 

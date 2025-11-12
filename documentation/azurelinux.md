@@ -153,7 +153,7 @@ COPY --from=installer /staging2/ /
 ## Debugging with Container Fast Mode
 
 In order to reduce image size and attack surface, Azure Linux .NET Runtime images do not contain the tools required to debug .NET apps using Visual Studio.
-The easiest way to enable local Visual Studio debugging while not modifying the production image is to use [Container Fast Mode](https://learn.microsoft.com/en-us/visualstudio/containers/container-build#debugging).
+The easiest way to enable local Visual Studio debugging while not modifying the production image is to use [Container Fast Mode](https://learn.microsoft.com/visualstudio/containers/container-build#debugging).
 
 To enable Container Fast Mode debugging without affecting your app's production image, you can create a new stage based off the `base` stage (called `debug` in the example) that contains the debugging tools, and then point the VS Fast Mode tools to that debug stage.
 
@@ -214,5 +214,5 @@ COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "aspnetapp.dll"]
 ```
 
-If this example doesn't work for your scenario, see [Container Tools build properties](https://docs.microsoft.com/en-us/visualstudio/containers/container-msbuild-properties?view=vs-2022) for more information on
+If this example doesn't work for your scenario, see [Container Tools build properties](https://docs.microsoft.com/visualstudio/containers/container-msbuild-properties) for more information on
 customizing the Fast Mode stage, or setting a custom `DockerDebuggeeKillProgram`.

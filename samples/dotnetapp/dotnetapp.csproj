@@ -9,7 +9,7 @@
     <!-- This property is requried to enable .NET SDK container publishing for
       console apps only. It's enabled by default for web apps. -->
     <!-- Learn more about .NET SDK container creation:
-      https://learn.microsoft.com/en-us/dotnet/core/containers/overview?tabs=windows -->
+      https://learn.microsoft.com/dotnet/core/containers/overview -->
     <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
   </PropertyGroup>
 
