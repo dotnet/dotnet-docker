@@ -1,7 +1,7 @@
 # Featured Tags
 
-* `9.5`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:9.5`
+* `13`
+  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:13`
 
 # About
 
