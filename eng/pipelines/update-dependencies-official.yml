@@ -13,6 +13,26 @@ parameters:
     displayName: Skip Pull Request
     type: boolean
     default: false
+  - name: updateDotnet
+    displayName: Update .NET?
+    type: boolean
+    default: true
+  # This parameter will show up as a multi-select dropdown when queueing the pipeline
+  - name: tools
+    type: stringList
+    displayName: Tools to update
+    values:
+      - "chisel"
+      - "rocks-toolbox"
+      - "syft"
+      - "mingit"
+    # Keep the default values in sync with allowed values so that the scheduled
+    # pipeline runs always try to update all tools
+    default:
+      - "chisel"
+      - "rocks-toolbox"
+      - "syft"
+      - "mingit"
 
 variables:
 - template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
@@ -23,6 +43,8 @@ extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
     channel: $(channel)
+    tools: ${{ parameters.tools }}
+    updateDotnet: ${{ parameters.updateDotnet }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
       gitHubAuthArgs: >-
         --user $(dotnetDockerBot.userName)
