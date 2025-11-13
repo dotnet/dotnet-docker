@@ -2,7 +2,7 @@
 
 ASP.NET Core uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
 
-See [Hosting ASP.NET Core images with Docker over HTTPS](https://learn.microsoft.com/en-us/aspnet/core/security/docker-https) for [HTTPS](https://en.wikipedia.org/wiki/HTTPS) scenarios
+See [Hosting ASP.NET Core images with Docker over HTTPS](https://learn.microsoft.com/aspnet/core/security/docker-https) for [HTTPS](https://en.wikipedia.org/wiki/HTTPS) scenarios
 
 ## Get certificates into a container
 

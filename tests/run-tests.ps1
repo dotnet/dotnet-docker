@@ -132,7 +132,7 @@ Try {
     if ($TestCategories) {
         # Construct an expression that filters the test to each of the
         # selected TestCategories (using an OR operator between each category).
-        # See https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests
+        # See https://docs.microsoft.com/dotnet/core/testing/selective-unit-tests
         $TestCategories | ForEach-Object {
             if ($testFilter) {
                 $testFilter += "|"
