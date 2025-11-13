@@ -8,7 +8,7 @@ There are two scenarios you should consider depending on how your Docker image i
 
 Before doing all the work of authoring and maintaining a Dockerfile that installs .NET, it's worthwhile to stop and thoroughly analyze whether you actually do need a different base image than those provided as part of the set of official [.NET Docker images](../../README.md).
 
-If there's a platform that you require that is available in its own Docker image, ask yourself whether it would be better to use that image and add .NET to it or would it be better to use the .NET image as the base and add the platform to it. An example scenario is using the .NET runtime with PowerShell; determine whether you would prefer to start with a [PowerShell](https://mcr.microsoft.com/product/powershell/about) image and install .NET runtime onto it or start with a [.NET runtime image](../../README.runtime.md) and install PowerShell Core onto it.
+If there's a platform that you require that is available in its own Docker image, ask yourself whether it would be better to use that image and add .NET to it or would it be better to use the .NET image as the base and add the platform to it.
 
 In some cases, you can work around the need for the .NET runtime by publishing your application as a [self-contained app](https://learn.microsoft.com/dotnet/core/deploying/), in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the [releasesapp sample](../../samples/releasesapp/README.md).
 
@@ -50,13 +50,13 @@ Example (Linux):
 ```Dockerfile
 # Latest .NET versions can be found in the relaeses-index:
 # https://github.com/dotnet/core/blob/main/release-notes/releases-index.json
-ARG DOTNET_VERSION="9.0.X"
+ARG DOTNET_VERSION="10.0.X"
 
 FROM amd64/ubuntu:noble AS runtime-deps
 
 # Install .NET Runtime dependencies. References:
-# - https://github.com/dotnet/core/blob/main/release-notes/9.0/os-packages.md#ubuntu-2404-noble-numbat
-# - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/9.0/noble/amd64/Dockerfile
+# - https://github.com/dotnet/core/blob/main/release-notes/10.0/os-packages.md#ubuntu-2404-noble-numbat
+# - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble/amd64/Dockerfile
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -98,13 +98,13 @@ Example (Windows):
 
 # Latest .NET versions can be found in the relaeses-index:
 # https://github.com/dotnet/core/blob/main/release-notes/releases-index.json
-ARG DOTNET_VERSION="9.0.X"
+ARG DOTNET_VERSION="10.0.X"
 
 FROM mcr.microsoft.com/windows/servercore:ltsc2025
 ARG DOTNET_VERSION
 
 # Reference:
-# - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/9.0/nanoserver-ltsc2025/amd64/Dockerfile
+# - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
@@ -143,7 +143,7 @@ By having the version of .NET you're installing explicitly defined in the Docker
 * .NET download URL (e.g. `ENV DOTNET_URL=https://download.visualstudio.microsoft.com/...`)
 * SHA value (e.g. `dotnet_sha512='d4d67df5ff5f6dde0d865a6e87559955bd57429df396cf7d05fe77f09e6220c67dc5e66439b1801ca4d301a62f81f666122bf4b623b31a46b861677dcafc62a4'`)
 
-You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://builds.dotnet.microsoft.com/dotnet/release-metadata/9.0/releases.json) for 9.0 contains all the metadata for the 9.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/main/release-notes/README.md) page.
+You can track these values by making use of the information contained in the `releases.json` of the relevant release. For example, the [`releases.json`](https://builds.dotnet.microsoft.com/dotnet/release-metadata/10.0/releases.json) for 10.0 contains all the metadata for the 10.0 releases including download links of the binary archives as well as their hash values. The release information is described on the main [release notes](https://github.com/dotnet/core/blob/main/release-notes/README.md) page.
 
 ### Installing from a Linux Package Manager
 
@@ -213,7 +213,7 @@ RUN apt-get update \
 
 ### Installing from dotnet-install script
 
-A set of [installation scripts](https://learn.microsoft.com/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 9.0.0, the latest of a release channel such as the latest 9.0 patch, etc.
+A set of [installation scripts](https://learn.microsoft.com/dotnet/core/tools/dotnet-install-script) are provided to conveniently install .NET on Linux with Bash or Windows with PowerShell. These scripts can be thought of as a happy medium between the two previously mentioned approaches (binary archive link and package manager). They fill a gap on systems where the desired .NET release is not available through a package manager and you don't want to deal with the cost of maintaining a direct link to a binary package. With the installation script, you have flexibility in specifying which version gets installed. You can install a specific version such as 10.0.0, the latest of a release channel such as the latest 10.0 patch, etc.
 
 In addition to installing .NET, you'll also need to ensure that the [prerequisites](https://github.com/dotnet/core/blob/main/linux.md#dependencies) are installed. The [.NET Dockerfiles](https://github.com/dotnet/dotnet-docker) also demonstrate how that can be done.
 
@@ -236,7 +236,7 @@ RUN apt-get update \
         tzdata \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -Channel 9.0 -Runtime dotnet -InstallDir /usr/share/dotnet \
+RUN curl -sSL https://dot.net/v1/dotnet-install.sh | bash /dev/stdin -Channel 10.0 -Runtime dotnet -InstallDir /usr/share/dotnet \
     && ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
 ```
 
@@ -245,7 +245,7 @@ Example (Windows):
 ```Dockerfile
 # escape=`
 
-FROM mcr.microsoft.com/windows/servercore:ltsc2022
+FROM mcr.microsoft.com/windows/servercore:ltsc2025
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
@@ -255,7 +255,7 @@ RUN powershell -Command `
             -OutFile dotnet-install.ps1; `
         ./dotnet-install.ps1 `
             -InstallDir '/Program Files/dotnet' `
-            -Channel 9.0 `
+            -Channel 10.0 `
             -Runtime dotnet; `
         Remove-Item -Force dotnet-install.ps1 `
     && setx /M PATH "%PATH%;C:\Program Files\dotnet"
