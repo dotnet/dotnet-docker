@@ -9,8 +9,8 @@ The table below shows how base image choice and publish type affects typical
 image sizes and for a simple .NET minimal web API. These images were produced
 from the ["releasesapi" sample](../samples/releasesapi).
 
-| Base Image                                        | Publish Type                  | Distroless | Globalization | Compressed Size |
-| -----------------------------------------------   | ----------------------------- | ---------- | ------------- | --------------: |
+| Base Image                                 | Publish Type                  | Distroless | Globalization | Compressed Size |
+| ------------------------------------------ | ----------------------------- | ---------- | ------------- | --------------: |
 | [`aspnet:10.0`]                            | [Framework-dependent]         | ✖️ No      | ✅ Yes         |        92.48 MB |
 | [`aspnet:10.0-noble-chiseled`]             | [Framework-dependent]         | ✅ Yes      | ✖️ No         |        52.81 MB |
 | [`aspnet:10.0-noble-chiseled-extra`]       | [Framework-dependent]         | ✅ Yes      | ✅ Yes         |        67.68 MB |
