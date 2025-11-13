@@ -14,18 +14,18 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
-* [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
-* [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
-* [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
-* [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
-* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
+* [dotnet/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/sdk/about): .NET SDK
+* [dotnet/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/aspnet/about): ASP.NET Core Runtime
+* [dotnet/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/runtime/about): .NET Runtime
+* [dotnet/runtime-deps](https://mcr.microsoft.com/artifact/mar/dotnet/runtime-deps/about): .NET Runtime Dependencies
+* [dotnet/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/about): .NET Monitor Tool
+* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 
 * [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
+* [dotnet/framework/samples](https://mcr.microsoft.com/artifact/mar/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
 
 ## Usage
 
