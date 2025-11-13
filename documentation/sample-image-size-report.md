@@ -11,22 +11,22 @@ from the ["releasesapi" sample](../samples/releasesapi).
 
 | Base Image                                        | Publish Type                  | Distroless | Globalization | Compressed Size |
 | -----------------------------------------------   | ----------------------------- | ---------- | ------------- | --------------: |
-| [`dotnet/aspnet:10.0`]                            | [Framework-dependent]         | ✖️ No      | ✅ Yes         |        92.48 MB |
-| [`dotnet/aspnet:10.0-noble-chiseled`]             | [Framework-dependent]         | ✅ Yes      | ✖️ No         |        52.81 MB |
-| [`dotnet/aspnet:10.0-noble-chiseled-extra`]       | [Framework-dependent]         | ✅ Yes      | ✅ Yes         |        67.68 MB |
-| [`dotnet/runtime-deps:10.0`]                      | [Self-contained] + [Trimming] | ✖️ No      | ✖️ No         |        61.53 MB |
-| [`dotnet/runtime-deps:10.0`]                      | [Self-contained] + [Trimming] | ✖️ No      | ✅ Yes         |        61.63 MB |
-| [`dotnet/runtime-deps:10.0-noble-chiseled`]       | [Self-contained] + [Trimming] | ✅ Yes      | ✖️ No         |        21.86 MB |
-| [`dotnet/runtime-deps:10.0-noble-chiseled-extra`] | [Self-contained] + [Trimming] | ✅ Yes      | ✅ Yes         |        36.82 MB |
-| [`dotnet/runtime-deps:10.0`]                      | [Native AOT]                  | ✖️ No      | ✖️ No         |        51.27 MB |
-| [`dotnet/runtime-deps:10.0`]                      | [Native AOT]                  | ✖️ No      | ✅ Yes         |        51.36 MB |
-| [`dotnet/runtime-deps:10.0-noble-chiseled`]       | [Native AOT]                  | ✅ Yes      | ✖️ No         |        11.60 MB |
-| [`dotnet/runtime-deps:10.0-noble-chiseled-extra`] | [Native AOT]                  | ✅ Yes      | ✅ Yes         |        26.56 MB |
-| [`dotnet/aspnet:10.0-alpine`]                     | [Framework-dependent]         | ✖️ No      | ✖️ No         |        51.93 MB |
-| [`dotnet/runtime-deps:10.0-alpine`]               | [Self-contained] + [Trimming] | ✖️ No      | ✖️ No         |        20.95 MB |
-| [`dotnet/runtime-deps:10.0-alpine-extra`]         | [Self-contained] + [Trimming] | ✖️ No      | ✅ Yes         |        35.52 MB |
-| [`dotnet/runtime-deps:10.0-alpine`]               | [Native AOT]                  | ✖️ No      | ✖️ No         |        10.69 MB |
-| [`dotnet/runtime-deps:10.0-alpine-extra`]         | [Native AOT]                  | ✖️ No      | ✅ Yes         |        25.25 MB |
+| [`aspnet:10.0`]                            | [Framework-dependent]         | ✖️ No      | ✅ Yes         |        92.48 MB |
+| [`aspnet:10.0-noble-chiseled`]             | [Framework-dependent]         | ✅ Yes      | ✖️ No         |        52.81 MB |
+| [`aspnet:10.0-noble-chiseled-extra`]       | [Framework-dependent]         | ✅ Yes      | ✅ Yes         |        67.68 MB |
+| [`runtime-deps:10.0`]                      | [Self-contained] + [Trimming] | ✖️ No      | ✖️ No         |        61.53 MB |
+| [`runtime-deps:10.0`]                      | [Self-contained] + [Trimming] | ✖️ No      | ✅ Yes         |        61.63 MB |
+| [`runtime-deps:10.0-noble-chiseled`]       | [Self-contained] + [Trimming] | ✅ Yes      | ✖️ No         |        21.86 MB |
+| [`runtime-deps:10.0-noble-chiseled-extra`] | [Self-contained] + [Trimming] | ✅ Yes      | ✅ Yes         |        36.82 MB |
+| [`runtime-deps:10.0`]                      | [Native AOT]                  | ✖️ No      | ✖️ No         |        51.27 MB |
+| [`runtime-deps:10.0`]                      | [Native AOT]                  | ✖️ No      | ✅ Yes         |        51.36 MB |
+| [`runtime-deps:10.0-noble-chiseled`]       | [Native AOT]                  | ✅ Yes      | ✖️ No         |        11.60 MB |
+| [`runtime-deps:10.0-noble-chiseled-extra`] | [Native AOT]                  | ✅ Yes      | ✅ Yes         |        26.56 MB |
+| [`aspnet:10.0-alpine`]                     | [Framework-dependent]         | ✖️ No      | ✖️ No         |        51.93 MB |
+| [`runtime-deps:10.0-alpine`]               | [Self-contained] + [Trimming] | ✖️ No      | ✖️ No         |        20.95 MB |
+| [`runtime-deps:10.0-alpine-extra`]         | [Self-contained] + [Trimming] | ✖️ No      | ✅ Yes         |        35.52 MB |
+| [`runtime-deps:10.0-alpine`]               | [Native AOT]                  | ✖️ No      | ✖️ No         |        10.69 MB |
+| [`runtime-deps:10.0-alpine-extra`]         | [Native AOT]                  | ✖️ No      | ✅ Yes         |        25.25 MB |
 
 > [!NOTE]
 > Please note that these image sizes are a snapshot of deployment sizes from
@@ -67,12 +67,12 @@ for more details on all of the supported options for publishing .NET apps.
 [Trimming]:                                        https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained
 [Native AOT]:                                      https://learn.microsoft.com/dotnet/core/deploying/native-aot/
 [Framework-dependent]:                             https://learn.microsoft.com/dotnet/core/deploying/#publish-framework-dependent
-[`dotnet/aspnet:10.0`]:                            https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble
-[`dotnet/aspnet:10.0-noble-chiseled`]:             https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled
-[`dotnet/aspnet:10.0-noble-chiseled-extra`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled-extra
-[`dotnet/runtime-deps:10.0`]:                      https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble
-[`dotnet/runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled
-[`dotnet/runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled-extra
-[`dotnet/aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.22
-[`dotnet/runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22
-[`dotnet/runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22-extra
+[`aspnet:10.0`]:                            https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble
+[`aspnet:10.0-noble-chiseled`]:             https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled
+[`aspnet:10.0-noble-chiseled-extra`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled-extra
+[`runtime-deps:10.0`]:                      https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble
+[`runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled
+[`runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled-extra
+[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.22
+[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22
+[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22-extra
