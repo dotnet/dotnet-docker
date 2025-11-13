@@ -105,7 +105,7 @@ You can skip HTTPS validation for the OTLP endpoint only by passing the environm
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/yarp/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.yarp.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/yarp/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.yarp.md#full-tag-listing).
 
 # Support
 

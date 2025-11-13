@@ -66,7 +66,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/sdk/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/sdk/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md#full-tag-listing).
 
 # Support
 

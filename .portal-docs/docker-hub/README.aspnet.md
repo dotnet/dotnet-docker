@@ -81,7 +81,7 @@ For more information, see the [composite images section in the Image Variants do
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md#full-tag-listing).
 
 # Support
 

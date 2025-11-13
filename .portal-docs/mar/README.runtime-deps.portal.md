@@ -2,7 +2,7 @@
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://mcr.microsoft.com/product/dotnet/runtime-deps/about) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [dotnet](https://mcr.microsoft.com/artifact/mar/dotnet/runtime-deps/about) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 This image contains the native dependencies needed by .NET. It does not include .NET. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
@@ -22,19 +22,19 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
-* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
-* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
-* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
-* [dotnet/nightly/yarp](https://mcr.microsoft.com/product/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
+* [dotnet/runtime-deps](https://mcr.microsoft.com/artifact/mar/dotnet/runtime-deps/about): .NET Runtime Dependencies
+* [dotnet/nightly/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime/about): .NET Runtime (Preview)
+* [dotnet/nightly/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
+* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
+* [dotnet/nightly/yarp](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 
 * [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
+* [dotnet/framework/samples](https://mcr.microsoft.com/artifact/mar/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
 
 ## Usage
 

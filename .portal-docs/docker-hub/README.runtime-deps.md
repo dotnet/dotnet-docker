@@ -63,7 +63,7 @@ They contain the following features:
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime-deps/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md#full-tag-listing).
 
 # Support
 

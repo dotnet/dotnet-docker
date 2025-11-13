@@ -22,7 +22,7 @@
 when(readmeHost = "mar",
     when(isProductFamily,
         cat("https://mcr.microsoft.com/catalog?search=", repo),
-        cat("https://mcr.microsoft.com/product/", repo, "/about")),
+        cat("https://mcr.microsoft.com/artifact/mar/", repo, "/about")),
     when(readmeHost = "github",
         when(useRelativeLink,
             cat("./", readmeFileName),
