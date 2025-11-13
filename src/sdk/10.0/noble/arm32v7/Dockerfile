@@ -4,7 +4,7 @@ FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
 RUN dotnet_sdk_version=10.0.101 \
-    && dotnet_sdk_build_version=$dotnet_sdk_version-servicing.25555.106 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version-servicing.25562.108 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512 \

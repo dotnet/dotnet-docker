@@ -22,6 +22,8 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
 
     private const int DashboardOtlpHttpPort = 18890;
 
+    private const int DashboardMcpPort = 18891;
+
     protected override DotNetImageRepo ImageRepo => DotNetImageRepo.Aspire_Dashboard;
 
     public static IEnumerable<object[]> GetImageData() =>
@@ -49,6 +51,7 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
             new EnvironmentVariableInfo("ASPNETCORE_URLS", $"{baseUrl}:{DashboardWebPort}"),
             new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpPort}"),
             new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpHttpPort}"),
+            new EnvironmentVariableInfo("DOTNET_DASHBOARD_MCP_ENDPOINT_URL", $"{baseUrl}:{DashboardMcpPort}"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);

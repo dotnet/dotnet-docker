@@ -17,20 +17,20 @@
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
-    "aspire-dashboard|build-version": "9.5.2-preview.1.25522.3",
-    "aspire-dashboard|product-version": "9.5.2",
+    "aspire-dashboard|build-version": "13.0.0-preview.1.25560.3",
+    "aspire-dashboard|product-version": "13.0.0",
     "aspire-dashboard|fixed-tag": "$(aspire-dashboard|product-version)",
-    "aspire-dashboard|minor-tag": "9.5",
-    "aspire-dashboard|major-tag": "9",
-    "aspire-dashboard|linux|x64|sha": "973831c1f98fbeb84e4f0df74290bc9a1e72bd6eec4253e07472ad448389f11963549c5ab95468c352be9ba56a3f19b17c6059ece53e1cfe248068799714b1f7",
-    "aspire-dashboard|linux|arm64|sha": "d54cf460043428ee7493582affaf993ed7e9933f618b336d75028b5c2f64b9ebd061fead7bbd4b63f56d1524c16aafa5c758df8e35e52d2a0c8b40d7f4d8d6c3",
+    "aspire-dashboard|minor-tag": "13.0",
+    "aspire-dashboard|major-tag": "13",
+    "aspire-dashboard|linux|x64|sha": "69333bdef491527a4437fe60b92c12e7a5a00f15cbcb3ae2c355cb6538b9905a34de1a38ef0b9552a1c6ccc94f1d37d0c1ff16b4170f4bbe97b5596a3ec0072f",
+    "aspire-dashboard|linux|arm64|sha": "82a85c4755da7a6d277eb6b284aa0d9c7aa9fc5be41596e77f63312aa62bdb35653fe6b6f3c917882c2936be5ea91f93eaa0310db18fe32bb9be2d8dc6a30b18",
     "aspire-dashboard|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|base-url|nightly": "$(base-url|public|preview|nightly)",
 
     "aspnet|8.0|build-version": "8.0.22",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
 
-    "aspnet|10.0|build-version": "10.0.1-servicing.25555.106",
+    "aspnet|10.0|build-version": "10.0.1-servicing.25562.108",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
     "aspnet|9.0|build-version": "9.0.11",
@@ -210,7 +210,7 @@
 
     "runtime|8.0|build-version": "8.0.22",
     "runtime|9.0|build-version": "9.0.11",
-    "runtime|10.0|build-version": "10.0.1-servicing.25555.106",
+    "runtime|10.0|build-version": "10.0.1-servicing.25562.108",
 
     "sdk|8.0|build-version": "8.0.416",
     "sdk|8.0|product-version": "8.0.416",
@@ -230,7 +230,7 @@
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
 
-    "sdk|10.0|build-version": "10.0.101-servicing.25555.106",
+    "sdk|10.0|build-version": "10.0.101-servicing.25562.108",
     "sdk|10.0|product-version": "10.0.101",
     "sdk|10.0|base-url|main": "$(dotnet|10.0|base-url|main)",
     "sdk|10.0|base-url|nightly": "$(dotnet|10.0|base-url|nightly)",
