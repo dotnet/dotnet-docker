@@ -31,7 +31,7 @@ param(
     [string]
     $MonitorVersion,
 
-    # Build verison of the .NET Aspire Dashboard
+    # Build verison of the Aspire Dashboard
     [Parameter(Mandatory = $false, ParameterSetName = 'DotnetAspireDashboard')]
     [string]
     $AspireVersion,
