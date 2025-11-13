@@ -22,6 +22,10 @@ parameters:
 - name: updateDotnet
   type: boolean
   default: true
+# Whether or not to try and update the Aspire Dashboard version according to the channel parameter
+- name: updateAspire
+  type: boolean
+  default: true
 # Additional authentication arguments to pass to update-dependencies
 - name: gitHubAuthArgs
   type: string
@@ -54,23 +58,24 @@ extends:
                   --version-source-name 'dotnet/dotnet'
                   ${{ parameters.gitHubAuthArgs }}
 
-      - template: /eng/pipelines/jobs/update-dependency.yml@self
-        parameters:
-          dependencyName: aspire
-          updateSteps:
-          - task: AzureCLI@2
-            displayName: Update Aspire
-            inputs:
-              azureSubscription: "Darc: Maestro Production"
-              scriptType: "pscore"
-              scriptLocation: "inlineScript"
-              inlineScript: >-
-                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                from-channel
-                ${{ parameters.aspireChannel }}
-                https://github.com/dotnet/aspire
-                --version-source-name 'dotnet/aspire'
-                ${{ parameters.gitHubAuthArgs }}
+      - ${{ if parameters.updateAspire }}:
+        - template: /eng/pipelines/jobs/update-dependency.yml@self
+          parameters:
+            dependencyName: aspire
+            updateSteps:
+            - task: AzureCLI@2
+              displayName: Update Aspire
+              inputs:
+                azureSubscription: "Darc: Maestro Production"
+                scriptType: "pscore"
+                scriptLocation: "inlineScript"
+                inlineScript: >-
+                  dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                  from-channel
+                  ${{ parameters.aspireChannel }}
+                  https://github.com/dotnet/aspire
+                  --version-source-name 'dotnet/aspire'
+                  ${{ parameters.gitHubAuthArgs }}
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self

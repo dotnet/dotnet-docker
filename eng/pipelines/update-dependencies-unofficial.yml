@@ -2,18 +2,22 @@ trigger: none
 pr: none
 
 parameters:
-- name: vmrChannel
-  displayName: .NET VMR build channel (see aka.ms/bar)
-  type: string
-  default: ""
-- name: aspireChannel
-  displayName: Aspire build channel (see aka.ms/bar)
-  type: string
-  default: ""
 - name: updateDotnet
   displayName: Update .NET?
   type: boolean
   default: true
+- name: vmrChannel
+  displayName: .NET VMR build channel (see aka.ms/bar)
+  type: string
+  default: ""
+- name: updateAspire
+  displayName: Update Aspire Dashboard?
+  type: boolean
+  default: false
+- name: aspireChannel
+  displayName: Aspire build channel (see aka.ms/bar)
+  type: string
+  default: ""
 # This parameter will show up as a multi-select dropdown when queueing the pipeline
 - name: tools
   type: stringList
