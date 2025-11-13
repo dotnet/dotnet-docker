@@ -44,7 +44,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/monitor/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md#full-tag-listing).
 
 # Support
 

@@ -43,7 +43,7 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/monitor/base/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor-base.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/base/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor-base.md#full-tag-listing).
 
 # Support
 
