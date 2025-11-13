@@ -10,7 +10,7 @@
         ^
 
     _ Documentation for using Managed Identity/OAuth tokens to access Azure storage accounts:
-        https://learn.microsoft.com/en-us/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
+        https://learn.microsoft.com/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
 
     for i, file in ARGS["files"]:{{
         if (find(file["url"], "dotnetstage") >= 0):{{

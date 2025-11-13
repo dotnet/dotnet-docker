@@ -15,7 +15,7 @@ if (icuMode != icuExpected)
     throw new Exception($"ICU mode detected as {icuMode}, expected {icuExpected}");
 }
 
-// https://learn.microsoft.com/en-us/dotnet/core/extensions/globalization-icu#stringendswith
+// https://learn.microsoft.com/dotnet/core/extensions/globalization-icu#stringendswith
 Assert(
     """ "abc".EndsWith("\0")""",
     "abc".EndsWith("\0").ToString(),
@@ -29,7 +29,7 @@ Assert(
     nlsResult: false.ToString(),
     icuMode);
 
-// https://learn.microsoft.com/en-us/dotnet/core/extensions/globalization-icu#stringstartswith
+// https://learn.microsoft.com/dotnet/core/extensions/globalization-icu#stringstartswith
 Assert(
     """ "foo".StartsWith("\0")""",
     "foo".StartsWith("\0").ToString(),
@@ -43,7 +43,7 @@ Assert(
     nlsResult: false.ToString(),
     icuMode);
 
-// https://learn.microsoft.com/en-us/dotnet/core/extensions/globalization-icu#stringindexof
+// https://learn.microsoft.com/dotnet/core/extensions/globalization-icu#stringindexof
 Assert(
     """ "Hel\0lo".IndexOf("\0")""",
     "Hel\0lo".IndexOf("\0").ToString(),
@@ -59,7 +59,7 @@ Assert(
 
 WriteLine("All assertions passed!");
 
-// https://learn.microsoft.com/en-us/dotnet/core/extensions/globalization-icu#determine-if-your-app-is-using-icu
+// https://learn.microsoft.com/dotnet/core/extensions/globalization-icu#determine-if-your-app-is-using-icu
 bool IsIcuMode()
 {
     SortVersion sortVersion = CultureInfo.InvariantCulture.CompareInfo.Version;

@@ -8,7 +8,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddHealthChecks();
 
 // Enable source generated JSON serialization
-// https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation#source-generation-support-in-aspnet-core
+// https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/source-generation#source-generation-support-in-aspnet-core
 builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.TypeInfoResolverChain.Add(SampleAppJsonSerializerContext.Default));
 
@@ -54,7 +54,7 @@ app.MapGet("/Delay/{value}", async (int value) =>
 app.Run();
 
 // Enable source generated JSON serialization
-// https://learn.microsoft.com/en-us/dotnet/standard/serialization/system-text-json/source-generation#source-generation-support-in-aspnet-core
+// https://learn.microsoft.com/dotnet/standard/serialization/system-text-json/source-generation#source-generation-support-in-aspnet-core
 [JsonSerializable(typeof(EnvironmentInfo))]
 [JsonSerializable(typeof(Operation))]
 internal partial class SampleAppJsonSerializerContext : JsonSerializerContext { }

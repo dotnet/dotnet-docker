@@ -146,7 +146,7 @@ dotnet publish \
 ```
 
 These properties can also be [specified in your project file](https://learn.microsoft.com/visualstudio/msbuild/property-element-msbuild).
-For a full list of supported properties, see the [.NET SDK publishing reference](https://learn.microsoft.com/en-us/dotnet/core/containers/publish-configuration).
+For a full list of supported properties, see the [.NET SDK publishing reference](https://learn.microsoft.com/dotnet/core/containers/publish-configuration).
 
 ## Supported Linux distros
 
