@@ -23,6 +23,8 @@
                                 names separated by one or two spaces. One line must have a filename
                                 matching the file you wish to validate. See `man cksum` or
                                 `man sha512sum` for details.
+
+        stdin                 : Run sha check on standard input
         ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
@@ -35,7 +37,8 @@
             ARGS["sha"]))
 
 }}{{
-if (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
+if (ARGS["stdin"]):sha{{ARGS["sha-function"]}}sum -c -^
+elif (ARGS["sha"] || (ARGS["sha-file"] && ARGS["sha-file-is-bare"])):{{
 if ARGS["sha-var-name"]:{{ARGS["sha-var-name"]}}='{{ARGS["sha"]}}' \
 && }}echo "{{shaValue}}  {{ARGS["file"]}}" | sha{{ARGS["sha-function"]}}sum -c -^
 elif (ARGS["file"]):{{
