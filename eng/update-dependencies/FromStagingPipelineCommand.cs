@@ -250,6 +250,9 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                 createPullRequest = async (commitMessage, prTitle, prBody) =>
                 {
                     logger.LogInformation("Skipping commit and pull request creation in {Mode} mode.", options.Mode);
+                    logger.LogInformation("Commit message: {CommitMessage}", commitMessage);
+                    logger.LogInformation("Pull request title: {PullRequestTitle}", prTitle);
+                    logger.LogInformation("Pull request body:\n{PullRequestBody}", prBody);
                 };
             }
 
