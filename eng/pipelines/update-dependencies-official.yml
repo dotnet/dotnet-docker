@@ -26,7 +26,8 @@ parameters:
     type: stringList
     displayName: Tools to update
     values:
-      - "chisel"
+      # Disabled due to https://github.com/dotnet/dotnet-docker/issues/6774 - re-enable when fixed.
+      # - "chisel"
       - "rocks-toolbox"
       - "syft"
       - "mingit"
