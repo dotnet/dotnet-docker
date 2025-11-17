@@ -16,7 +16,9 @@ parameters:
   - name: updateDotnet
     displayName: Update .NET?
     type: boolean
-    default: true
+    # Updates are disabled until .NET 11 Alpha images are added.
+    # Re-enable when https://github.com/dotnet/dotnet-docker/issues/6824 is resolved.
+    default: false
   - name: updateAspire
     displayName: Update Aspire Dashboard?
     type: boolean
