@@ -26,7 +26,6 @@ parameters:
     type: stringList
     displayName: Tools to update
     values:
-      - "chisel"
       - "rocks-toolbox"
       - "syft"
       - "mingit"
