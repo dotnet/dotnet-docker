@@ -33,7 +33,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor/base](https://hub.docker.com/r/microsoft/dotnet-monitor-base/): .NET Monitor Base
-* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): .NET Aspire Dashboard
+* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): Aspire Dashboard
 * [dotnet/nightly/monitor](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 

@@ -220,7 +220,7 @@ Examples:
 
 - [.NET Monitor](../README.monitor.md#full-tag-listing)
 - [.NET Monitor Base](../README.monitor-base.md#full-tag-listing)
-- [.NET Aspire Dashboard](../README.aspire-dashboard.md#full-tag-listing)
+- [Aspire Dashboard](../README.aspire-dashboard.md#full-tag-listing)
 
 These appliance images provide value based on the .NET apps they include.
 Their base operating system is an implementation detail and should not affect the intended use or behavior of these images.

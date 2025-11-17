@@ -1,17 +1,17 @@
 # Featured Tags
 
-* `9.5`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:9.5`
+* `13`
+  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:13`
 
 # About
 
-This image contains the .NET Aspire Dashboard.
+This image contains the Aspire Dashboard.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 # Usage
 
-The .NET Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
+The Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
 
 The dashboard shows:
 
@@ -24,9 +24,10 @@ The dashboard shows:
 The dashboard must be configured when it is started. The configuration is done via environment variables. The following environment variables are supported:
 
 * `ASPNETCORE_URLS` specifies one or more HTTP endpoints through which the dashboard frontend is served. The frontend endpoint is used to view the dashboard in a browser. Defaults to `http://localhost:18888`.
-* `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the .NET Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to `http://localhost:18889`.
+* `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to `http://localhost:18889`.
 * `DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL` specifies the [OTLP/HTTP](https://opentelemetry.io/docs/specs/otlp/#otlphttp) endpoint. This endpoint hosts an OTLP service and receives telemetry using Protobuf over HTTP. Defaults to `http://localhost:18890`.
-* `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode` and `Dashboard:Otlp:AuthMode` to `Unsecured`.
+* `ASPIRE_DASHBOARD_MCP_ENDPOINT_URL` specifies the Aspire MCP endpoint. When this value isn't specified then the MCP server is hosted with an `ASPNETCORE_URLS` endpoint. The MCP server can be disabled by configuring `Dashboard:Mcp:Disabled` to `true`. Defaults to `http://localhost:18891`.
+* `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode`, `Dashboard:Otlp:AuthMode` and `Dashboard:Mcp:AuthMode` to `Unsecured`.
 * `DOTNET_DASHBOARD_CONFIG_FILE_PATH` specifies the path for an optional JSON configuration file.
 
 ### Frontend authentication
@@ -97,7 +98,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor](https://hub.docker.com/r/microsoft/dotnet-monitor/): .NET Monitor Tool
-* [dotnet/nightly/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-nightly-aspire-dashboard/): .NET Aspire Dashboard (Preview)
+* [dotnet/nightly/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-nightly-aspire-dashboard/): Aspire Dashboard (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
 .NET Framework:

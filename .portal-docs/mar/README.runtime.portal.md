@@ -22,7 +22,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/aspnet](https://mcr.microsoft.com/product/dotnet/aspnet/about): ASP.NET Core Runtime
 * [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
 * [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
-* [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): .NET Aspire Dashboard
+* [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): Aspire Dashboard
 * [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
 * [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
 
