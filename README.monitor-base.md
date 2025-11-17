@@ -59,12 +59,6 @@ Tags | Dockerfile | OS Version
 8.1.3-ubuntu-chiseled-amd64, 8.1-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.3-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.3, 8.1, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
 8.1.3-azurelinux-distroless-amd64, 8.1-azurelinux-distroless-amd64, 8-azurelinux-distroless-amd64, 8.1.3-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor-base/8.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
-#### .NET Monitor Preview Tags
-
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-9.1.0-preview.3-amd64, 9.1-preview-amd64, 9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor-base/9.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
-
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
@@ -73,12 +67,6 @@ Tags | Dockerfile | OS Version
 9.0.5-arm64v8, 9.0-arm64v8, 9.0.5, 9.0, 9 | [Dockerfile](src/monitor-base/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 8.1.3-ubuntu-chiseled-arm64v8, 8.1-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.3-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.3, 8.1, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
 8.1.3-azurelinux-distroless-arm64v8, 8.1-azurelinux-distroless-arm64v8, 8-azurelinux-distroless-arm64v8, 8.1.3-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor-base/8.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-
-#### .NET Monitor Preview Tags
-
-Tags | Dockerfile | OS Version
------------| -------------| -------------
-9.1.0-preview.3-arm64v8, 9.1-preview-arm64v8, 9.1.0-preview.3, 9.1-preview, 9-preview | [Dockerfile](src/monitor-base/9.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/monitor/base/tags/list) for all supported and unsupported tags.*
