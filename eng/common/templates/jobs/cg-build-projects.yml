@@ -7,7 +7,7 @@ parameters:
   type: boolean
   default: false
   displayName: CG Dry Run
-# See https://learn.microsoft.com/dotnet/core/tools/dotnet-install-script#options for possible Channel values
+# See https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options for possible Channel values
 - name: dotnetVersionChannel
   type: string
   default: '9.0'
