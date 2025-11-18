@@ -28,15 +28,15 @@ parameters:
     type: stringList
     displayName: Tools to update
     values:
-      # Disabled due to https://github.com/dotnet/dotnet-docker/issues/6774 - re-enable when fixed.
-      # - "chisel"
+      - "chisel"
       - "rocks-toolbox"
       - "syft"
       - "mingit"
     # Keep the default values in sync with allowed values so that the scheduled
     # pipeline runs always try to update all tools
     default:
-      - "chisel"
+      # Disabled due to https://github.com/dotnet/dotnet-docker/issues/6774 - re-enable when fixed.
+      # - "chisel"
       - "rocks-toolbox"
       - "syft"
       - "mingit"
