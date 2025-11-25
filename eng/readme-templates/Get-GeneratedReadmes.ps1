@@ -57,7 +57,7 @@ $onDockerfilesGenerated = {
 function Invoke-GenerateReadme {
     param ([string] $Manifest, [string] $SourceBranch)
 
-    & $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
+    & $PSScriptRoot/../docker-tools/Invoke-ImageBuilder.ps1 `
         -ImageBuilderArgs `
             "generateReadmes --manifest $Manifest --source-branch $SourceBranch$customImageBuilderArgs --var branch=$SourceBranch 'https://github.com/dotnet/dotnet-docker' --no-version-logging" `
         -OnCommandExecuted $onDockerfilesGenerated

@@ -2,7 +2,7 @@ trigger: none
 pr: none
 
 variables:
-- template: /eng/common/templates/variables/dotnet/common.yml@self
+- template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
 # This pipeline expects there to be a variable named "targetBranch" defined
 # in the Azure Pipelines GUI. It should be able to be overridden at pipeline
 # queue time. A pull request will be created targeting that branch.
