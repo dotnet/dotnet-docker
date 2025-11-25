@@ -18,7 +18,7 @@ parameters:
   type: string
 
 extends:
-  template: /eng/common/templates/1es.yml@self
+  template: /eng/docker-tools/templates/1es.yml@self
   parameters:
     stages:
     - stage: SyncReleaseBranchesStage
