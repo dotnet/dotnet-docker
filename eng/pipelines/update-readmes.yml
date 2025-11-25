@@ -5,7 +5,7 @@ variables:
 - template: /eng/pipelines/variables/core-official.yml@self
 
 extends:
-  template: /eng/common/templates/1es-official.yml@self
+  template: /eng/docker-tools/templates/1es-official.yml@self
   parameters:
     stages:
     - stage: UpdateReadmes
@@ -14,11 +14,11 @@ extends:
       - job: UpdateReadmes
         displayName: Update Readmes
         steps:
-        - template: /eng/common/templates/steps/init-docker-linux.yml@self
+        - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
         - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self
-        - template: /eng/common/templates/steps/set-image-info-path-var.yml@self
+        - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml@self
           parameters:
             publicSourceBranch: $(publicSourceBranch)
         - template: /eng/pipelines/steps/set-publish-mcrdocs-args-var.yml@self
-        - template: /eng/common/templates/steps/publish-readmes.yml@self
-        - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
+        - template: /eng/docker-tools/templates/steps/publish-readmes.yml@self
+        - template: /eng/docker-tools/templates/steps/cleanup-docker-linux.yml@self

@@ -1,0 +1,74 @@
+# This template wraps the .NET-specific build-and-test and publish templates
+
+parameters:
+  linuxAmd64Pool: ""
+
+  # Parameters for pre-build jobs
+  customGenerateMatrixInitSteps: []
+  customCopyBaseImagesInitSteps: []
+
+  # Build parameters
+  noCache: false
+  publishConfig: null
+  buildMatrixType: platformDependencyGraph
+  buildMatrixCustomBuildLegGroupArgs: ""
+  linuxAmdBuildJobTimeout: 60
+  linuxArmBuildJobTimeout: 60
+  windowsAmdBuildJobTimeout: 60
+  customBuildInitSteps: []
+
+  # Test parameters
+  testMatrixType: platformVersionedOs
+  testMatrixCustomBuildLegGroupArgs: ""
+  linuxAmdTestJobTimeout: 60
+  linuxArmTestJobTimeout: 60
+  windowsAmdTestJobTimeout: 60
+  customTestInitSteps: []
+  sourceBuildPipelineRunId: ""
+
+  # Publish parameters
+  customPublishInitSteps: []
+
+  # Other common parameters
+  internalProjectName: null
+  publicProjectName: null
+  versionsRepoRef: ""
+
+stages:
+- template: /eng/docker-tools/templates/stages/dotnet/build-and-test.yml@self
+  parameters:
+    linuxAmd64Pool: ${{ parameters.linuxAmd64Pool }}
+    # Pre-build
+    customGenerateMatrixInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
+    customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
+    # Build
+    noCache: ${{ parameters.noCache }}
+    publishConfig: ${{ parameters.publishConfig }}
+    buildMatrixType: ${{ parameters.buildMatrixType }}
+    buildMatrixCustomBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
+    linuxAmdBuildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
+    linuxArmBuildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+    windowsAmdBuildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+    customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
+    # Test
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    testMatrixType: ${{ parameters.testMatrixType }}
+    testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
+    linuxAmdTestJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
+    linuxArmTestJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
+    windowsAmdTestJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+    customTestInitSteps: ${{ parameters.customTestInitSteps }}
+    # Other
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}
+
+- template: /eng/docker-tools/templates/stages/dotnet/publish.yml@self
+  parameters:
+    pool: ${{ parameters.linuxAmd64Pool }}
+    customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
+    internalProjectName: ${{ parameters.internalProjectName }}
+    publicProjectName: ${{ parameters.publicProjectName }}
+    publishConfig: ${{ parameters.publishConfig }}
+    sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    versionsRepoRef: ${{ parameters.versionsRepoRef }}

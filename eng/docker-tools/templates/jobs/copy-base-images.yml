@@ -1,0 +1,39 @@
+parameters:
+- name: name
+  type: string
+  default: null
+- name: pool
+  type: object
+  default: {}
+- name: acr
+  type: object
+  default: null
+- name: repoPrefix
+  type: string
+  default: null
+- name: customInitSteps
+  type: stepList
+  default: []
+- name: additionalOptions
+  type: string
+  default: ''
+- name: continueOnError
+  type: string
+  default: false
+- name: forceDryRun
+  type: boolean
+  default: false
+
+jobs:
+- job: ${{ parameters.name }}
+  pool: ${{ parameters.pool }}
+  steps:
+  - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+  - ${{ parameters.customInitSteps }}
+  - template: /eng/docker-tools/templates/steps/copy-base-images.yml@self
+    parameters:
+      acr: ${{ parameters.acr }}
+      repoPrefix: ${{ parameters.repoPrefix }}
+      additionalOptions: ${{ parameters.additionalOptions }}
+      continueOnError: ${{ parameters.continueOnError }}
+      forceDryRun: ${{ parameters.forceDryRun }}

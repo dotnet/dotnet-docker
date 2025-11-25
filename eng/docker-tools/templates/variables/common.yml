@@ -1,0 +1,82 @@
+variables:
+- template: /eng/docker-tools/templates/variables/docker-images.yml@self
+- template: /eng/docker-tools/templates/variables/common-paths.yml@self
+
+- name: publishReadme
+  value: true
+- name: publishImageInfo
+  value: true
+- name: ingestKustoImageInfo
+  value: true
+  # CG is disabled by default because projects are built within Dockerfiles and CG step do not scan artifacts
+  # that are built within Dockerfiles. A separate CG pipeline exists for this reason.
+- name: skipComponentGovernanceDetection
+  value: false
+- name: build.imageBuilderDockerRunExtraOptions
+  value: ""
+- name: imageBuilderDockerRunExtraOptions
+  value: ""
+- name: generateEolAnnotationDataExtraOptions
+  value: ""
+- name: productVersionComponents
+  value: 2
+- name: imageInfoVariant
+  value: ""
+- name: publishNotificationsEnabled
+  value: false
+- name: manifestVariables
+  value: ""
+- name: mcrImageIngestionTimeout
+  value: "00:20:00"
+- name: mcrDocIngestionTimeout
+  value: "00:05:00"
+- name: officialBranches
+  # comma-delimited list of branch names
+  value: main
+- name: mirrorRepoPrefix
+  value: 'mirror/'
+- name: cgBuildGrepArgs
+  value: "''"
+- name: test.init
+  value: ""
+- name: testRunner.options
+  value: ""
+- name: customCopyBaseImagesArgs
+  value: ""
+- name: additionalGenerateBuildMatrixOptions
+  value: ""
+- name: trimCachedImagesForMatrix
+  value: false
+
+- name: defaultLinuxAmd64PoolImage
+  value: ubuntu-latest
+- name: defaultLinuxArm32PoolImage
+  value: null
+- name: defaultLinuxArm64PoolImage
+  value: null
+- name: defaultWindows2016PoolImage
+  value: vs2017-win2016
+- name: defaultWindows1809PoolImage
+  value: windows-2019
+- name: defaultWindows2022PoolImage
+  value: windows-2022
+- name: defaultWindows2025PoolImage
+  value: windows-2025
+
+- name: default1ESInternalPoolName
+  value: NetCore1ESPool-Internal
+- name: default1ESInternalPoolImage
+  value: 1es-ubuntu-2204
+
+- name: defaultSourceAnalysisPoolName
+  value: NetCore1ESPool-Internal
+- name: defaultSourceAnalysisPoolImage
+  value: 1es-windows-2022
+
+# Define these as placeholder values to allow string validation to succeed since we don't have the
+# variable group with the actual values in public builds. For internal builds, the variable group
+# will cause these values to be overridden with the real values.
+- name: acr.subscription
+  value: 00000000-0000-0000-0000-000000000000
+- name: acr-staging.subscription
+  value: 00000000-0000-0000-0000-000000000000

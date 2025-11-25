@@ -42,9 +42,9 @@ parameters:
       - "mingit"
 
 variables:
-- template: /eng/common/templates/variables/dotnet/common.yml@self
+- template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
 # Uses GitHub token to create pull requests
-- template: /eng/common/templates/variables/dotnet/secrets.yml@self
+- template: /eng/docker-tools/templates/variables/dotnet/secrets.yml@self
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
