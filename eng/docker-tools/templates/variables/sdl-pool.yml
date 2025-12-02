@@ -1,0 +1,9 @@
+# This template provides default variables for the source analysis pool and
+# image used by 1ES pipeline templates for the "SDL Sources Analysis" stage.
+variables:
+- name: defaultSourceAnalysisPoolName
+  value: NetCore1ESPool-Internal
+  readonly: true
+- name: defaultSourceAnalysisPoolImage
+  value: 1es-windows-2022
+  readonly: true

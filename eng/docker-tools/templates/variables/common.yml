@@ -68,10 +68,7 @@ variables:
 - name: default1ESInternalPoolImage
   value: 1es-ubuntu-2204
 
-- name: defaultSourceAnalysisPoolName
-  value: NetCore1ESPool-Internal
-- name: defaultSourceAnalysisPoolImage
-  value: 1es-windows-2022
+- template: /eng/docker-tools/templates/variables/sdl-pool.yml@self
 
 # Define these as placeholder values to allow string validation to succeed since we don't have the
 # variable group with the actual values in public builds. For internal builds, the variable group
