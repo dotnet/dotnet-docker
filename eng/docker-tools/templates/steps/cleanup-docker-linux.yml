@@ -1,0 +1,15 @@
+parameters:
+  condition: true
+
+steps:
+  ################################################################################
+  # Cleanup local Docker server
+  ################################################################################
+- script: docker stop $(docker ps -q) || true
+  displayName: Stop Running Containers
+  condition: and(always(), ${{ parameters.condition }})
+  continueOnError: true
+- script: docker system prune -a -f --volumes
+  displayName: Cleanup Docker
+  condition: and(always(), ${{ parameters.condition }})
+  continueOnError: true

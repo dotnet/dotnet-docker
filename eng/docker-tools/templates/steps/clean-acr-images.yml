@@ -1,0 +1,33 @@
+parameters:
+  repo: null
+  acr: null
+  action: null
+  age: null
+  customArgs: "--dry-run"
+  internalProjectName: null
+  publishConfig: null
+steps:
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      # Options are documented in CleanAcrImagesOptions.cs
+      ${{ if eq(parameters.action, 'delete') }}:
+        displayName: "Delete ${{ parameters.repo }}"
+      ${{ elseif parameters.age }}:
+        displayName: "Clean ${{ parameters.repo }} (${{ parameters.action }} > ${{ parameters.age }}d)"
+      ${{ else }}:
+        displayName: "Clean ${{ parameters.repo }} (${{ parameters.action }})"
+      serviceConnections:
+      - name: acr
+        id: ${{ parameters.publishConfig.cleanServiceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.cleanServiceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.cleanServiceConnection.clientId }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      args: >-
+        cleanAcrImages
+        ${{ parameters.repo }}
+        ${{ parameters.acr.subscription }}
+        ${{ parameters.acr.resourceGroup }}
+        ${{ parameters.acr.server }}
+        --action ${{ parameters.action }}
+        --age ${{ parameters.age }}
+        ${{ parameters.customArgs }}
