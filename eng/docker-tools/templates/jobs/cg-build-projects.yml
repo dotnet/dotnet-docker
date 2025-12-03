@@ -1,0 +1,58 @@
+# This job builds all projects in the repository. It is intended to be used for CG purposes.
+# The 1ES CG step does not scan artifacts that are built within Dockerfiles therefore they
+# need to be built outside of Dockerfiles.
+parameters:
+# Setting cgDryRun will run CG but not submit the results
+- name: cgDryRun
+  type: boolean
+  default: false
+  displayName: CG Dry Run
+# See https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options for possible Channel values
+- name: dotnetVersionChannel
+  type: string
+  default: '9.0'
+  displayName: .NET Version
+
+jobs:
+- job: BuildProjects
+  displayName: Build Projects
+  pool:
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
+    os: linux
+  steps:
+  - powershell: >
+      ./eng/docker-tools/Install-DotNetSdk.ps1 -Channel ${{ parameters.dotnetVersionChannel }} -InstallPath "/usr/share/.dotnet"
+    displayName: Run Dotnet Install Script
+  - script: >
+      find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 /usr/share/.dotnet/dotnet build
+    displayName: Build Projects
+
+    # Component Detection is only automatically run on production branches.
+    # To run Component Detection on non-production branches, the task must be manually injected.
+  - ${{ if eq(parameters.cgDryRun, true) }}:
+    - powershell: |
+        Write-Host "##vso[build.updatebuildnumber]$env:BUILD_BUILDNUMBER (Dry run)"
+        Write-Host "##vso[build.addbuildtag]dry-run"
+
+        if ("$(officialBranches)".Split(',').Contains("$(Build.SourceBranch)"))
+        {
+          Write-Host "##vso[task.logissue type=error]Cannot run a CG dry-run build from an official branch ($(officialBranches))."
+          Write-Host "##vso[task.logissue type=error]Run the pipeline again from a different branch to avoid registering scan results."
+          exit 1
+        }
+      displayName: Update Build Number
+    - task: ComponentGovernanceComponentDetection@0
+      displayName: Component Detection (manually injected)
+      inputs:
+        # Running CG with `whatIf: true` or `scanType: LogOnly` outputs a list of detected components, but doesn't show
+        # which components would trigger an alert on a production build.
+        # As long as the build isn't ran on a tracked branch (typically main or nightly), it's OK to submit components
+        # to CG for analysis. Only the results for tracked branches matter.
+        scanType: Register
+        whatIf: false
+        alertWarningLevel: Low
+        failOnAlert: false
+        ignoreDirectories: $(Build.SourcesDirectory)/versions
+        showAlertLink: true
+        timeoutInMinutes: 10

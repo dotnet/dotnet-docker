@@ -1,0 +1,52 @@
+parameters:
+  publishConfig: null
+  internalProjectName: null
+
+steps:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+  - powershell: |
+      if ("$env:ONEESPT_BUILDTYPE" -eq "Unofficial")
+      {
+        echo "Build is from an unofficial pipeline, continuing."
+        exit 0
+      }
+
+      $isOfficialRepoPrefix = "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.publishAcr.repoPrefix }}")
+      if (-not $isOfficialRepoPrefix)
+      {
+        echo "This build will not publish to an official repo prefix, continuing."
+        echo "Publish repo prefix: ${{ parameters.publishConfig.publishAcr.repoPrefix }}"
+        echo "Official repo prefixes: $(officialRepoPrefixes)"
+        exit 0
+      }
+
+      $isOfficialBranch = "$(officialBranches)".Split(',').Contains("$(sourceBranch)")
+      if ($isOfficialBranch)
+      {
+        echo "$(sourceBranch) is an official branch, continuing."
+        echo "Official branches: $(officialBranches)"
+        exit 0
+      }
+
+      $hasOfficialBranchPrefix = $false
+      foreach ($prefix in "$(officialBranchPrefixes)".Split(',')) {
+        if ("$(sourceBranch)".StartsWith($prefix)) {
+          $hasOfficialBranchPrefix = $true
+          break
+        }
+      }
+
+      if ($hasOfficialBranchPrefix)
+      {
+        echo "$(sourceBranch) has an official branch prefix, continuing."
+        echo "Official branch prefixes: $(officialBranchPrefixes)"
+        exit 0
+      }
+
+      echo "##vso[task.logissue type=error]Official builds must be done from an official branch ($(officialBranches)) and repo prefix ($(officialRepoPrefixes))."
+      echo "Build definition: $(Build.DefinitionName)"
+      echo "1ESPT build type: $(OneESPT.BuildType)"
+      echo "Current branch: $(sourceBranch)"
+      echo "Publish repo prefix: ${{ parameters.publishConfig.publishAcr.repoPrefix }}"
+      exit 1
+    displayName: Validate Branch

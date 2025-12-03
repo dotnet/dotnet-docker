@@ -1,0 +1,25 @@
+parameters:
+  name: null
+  pool: {}
+  matrix: {}
+  testJobTimeout: 60
+  internalProjectName: null
+  publishConfig: null
+  customInitSteps: []
+  sourceBuildPipelineRunId: ""
+
+jobs:
+- job: ${{ parameters.name }}
+  condition: and(succeeded(), ${{ parameters.matrix }})
+  dependsOn: GenerateTestMatrix
+  pool: ${{ parameters.pool }}
+  strategy:
+    matrix: $[ ${{ parameters.matrix }} ]
+  timeoutInMinutes: ${{ parameters.testJobTimeout }}
+  steps:
+  - template: /eng/docker-tools/templates/steps/test-images-windows-client.yml@self
+    parameters:
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publishConfig: ${{ parameters.publishConfig }}
+      customInitSteps: ${{ parameters.customInitSteps }}
+      sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

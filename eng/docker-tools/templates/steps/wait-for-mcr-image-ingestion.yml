@@ -1,0 +1,37 @@
+parameters:
+- name: publishConfig
+  type: object
+
+- name: imageInfoPath
+  type: string
+
+- name: minQueueTime
+  type: string
+
+- name: dryRunArg
+  type: string
+
+- name: condition
+  type: string
+  default: "true"
+
+steps:
+- template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+  parameters:
+    displayName: Wait for Image Ingestion
+    condition: and(${{ parameters.condition }}, eq(variables['waitForIngestionEnabled'], 'true'))
+    serviceConnections:
+    - name: mar
+      id: $(marStatus.serviceConnection.id)
+      tenantId: $(marStatus.serviceConnection.tenantId)
+      clientId: $(marStatus.serviceConnection.clientId)
+    internalProjectName: 'internal'
+    args: >-
+      waitForMcrImageIngestion
+      '${{ parameters.imageInfoPath }}'
+      --manifest '$(manifest)'
+      --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
+      --min-queue-time '${{ parameters.minQueueTime }}'
+      --timeout '$(mcrImageIngestionTimeout)'
+      $(manifestVariables)
+      ${{ parameters.dryRunArg }}

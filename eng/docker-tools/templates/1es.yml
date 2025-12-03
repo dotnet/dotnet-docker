@@ -1,0 +1,75 @@
+# When extending this template, pipelines using a repository resource containing versions files for image caching must
+# do the following:
+#
+# - Do not rely on any source code from the versions repo so as to not circumvent SDL and CG guidelines
+# - The versions repo resource must be named `VersionsRepo` to avoid SDL scans
+# - The versions repo must be checked out to `$(Build.SourcesDirectory)/versions` to avoid CG scans
+#
+# If the pipeline is not using a separate repository resource, ensure that there is no source code checked out in
+# `$(Build.SourcesDirectory)/versions`, as it will not be scanned.
+
+parameters:
+- name: stages
+  type: stageList
+  default: []
+# List of repositories that will be excluded from SDL scanning. This should
+# only be used when including other repos without building their source code.
+# E.g. for the dotnet/versions repo.
+- name: reposToExcludeFromScanning
+  type: object
+  default: []
+# The pool that will be used for initializing service connections.
+- name: pool
+  type: object
+  default:
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
+    os: linux
+# The pool that will be used for SDL jobs.
+- name: sourceAnalysisPool
+  type: object
+  default:
+    name: $(defaultSourceAnalysisPoolName)
+    image: $(defaultSourceAnalysisPoolImage)
+    os: windows
+# Container image SBOMs are generated manually during the build job. 1ESPT's
+# automatic SBOM generation only adds unnecessary steps and artifacts to
+# builds. SBOM is not needed for JSON outputs. If a pipeline outputs binary
+# artifacts that ship to customers, then set this parameter to true.
+- name: enableSbom
+  type: boolean
+  default: false
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+extends:
+  template: /eng/docker-tools/templates/task-prefix-decorator.yml@self
+  parameters:
+    baseTemplate: v1/1ES.${{ iif(contains(variables['Build.DefinitionName'], '-official'), 'Official', 'Unofficial') }}.PipelineTemplate.yml@1ESPipelineTemplates
+    templateParameters:
+      pool: ${{ parameters.pool }}
+      sdl:
+        sbom:
+          enabled: ${{ parameters.enableSbom }}
+        binskim:
+          enabled: true
+        componentgovernance:
+          ignoreDirectories: $(Build.SourcesDirectory)/versions
+          showAlertLink: true
+        policheck:
+          enabled: true
+        ${{ if ne(length(parameters.reposToExcludeFromScanning), 0) }}:
+          sourceRepositoriesToScan:
+            exclude:
+            - ${{ each repo in parameters.reposToExcludeFromScanning }}:
+              - repository: ${{ repo }}
+        sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
+        tsa:
+          enabled: true
+    stages:
+    - ${{ parameters.stages }}
