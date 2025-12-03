@@ -95,8 +95,6 @@
     "libicu|jammy": 70,
     "libicu|noble": 74,
 
-    "libssl|alpine3.20": "3",
-    "libssl|alpine3.21": "3",
     "libssl|alpine3.22": "3",
     "libssl|alpine3.23": "3",
     "libssl|bookworm": "3",

@@ -81,13 +81,11 @@ Tags | Dockerfile | OS Version
 10.0.100-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.100-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 10.0.100-azurelinux3.0-aot-amd64, 10.0-azurelinux3.0-aot-amd64, 10.0.100-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
 9.0.307-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.307-bookworm-slim, 9.0-bookworm-slim, 9.0.307, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.307-alpine3.21-amd64, 9.0-alpine3.21-amd64, 9.0.307-alpine3.21, 9.0-alpine3.21 | [Dockerfile](src/sdk/9.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
 9.0.307-alpine3.22-amd64, 9.0-alpine3.22-amd64, 9.0-alpine-amd64, 9.0.307-alpine3.22, 9.0-alpine3.22, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
 9.0.307-alpine3.23-amd64, 9.0-alpine3.23-amd64, 9.0.307-alpine3.23, 9.0-alpine3.23 | [Dockerfile](src/sdk/9.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 9.0.307-noble-amd64, 9.0-noble-amd64, 9.0.307-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.307-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.307-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 8.0.416-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.416-bookworm-slim, 8.0-bookworm-slim, 8.0.416, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.416-alpine3.21-amd64, 8.0-alpine3.21-amd64, 8.0.416-alpine3.21, 8.0-alpine3.21 | [Dockerfile](src/sdk/8.0/alpine3.21/amd64/Dockerfile) | Alpine 3.21
 8.0.416-alpine3.22-amd64, 8.0-alpine3.22-amd64, 8.0-alpine-amd64, 8.0.416-alpine3.22, 8.0-alpine3.22, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
 8.0.416-alpine3.23-amd64, 8.0-alpine3.23-amd64, 8.0.416-alpine3.23, 8.0-alpine3.23 | [Dockerfile](src/sdk/8.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 8.0.416-noble-amd64, 8.0-noble-amd64, 8.0.416-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
@@ -107,13 +105,11 @@ Tags | Dockerfile | OS Version
 10.0.100-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.100-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.100-azurelinux3.0-aot-arm64v8, 10.0-azurelinux3.0-aot-arm64v8, 10.0.100-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.307-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.307-bookworm-slim, 9.0-bookworm-slim, 9.0.307, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.307-alpine3.21-arm64v8, 9.0-alpine3.21-arm64v8, 9.0.307-alpine3.21, 9.0-alpine3.21 | [Dockerfile](src/sdk/9.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
 9.0.307-alpine3.22-arm64v8, 9.0-alpine3.22-arm64v8, 9.0-alpine-arm64v8, 9.0.307-alpine3.22, 9.0-alpine3.22, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
 9.0.307-alpine3.23-arm64v8, 9.0-alpine3.23-arm64v8, 9.0.307-alpine3.23, 9.0-alpine3.23 | [Dockerfile](src/sdk/9.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 9.0.307-noble-arm64v8, 9.0-noble-arm64v8, 9.0.307-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.307-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.307-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 8.0.416-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.416-bookworm-slim, 8.0-bookworm-slim, 8.0.416, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.416-alpine3.21-arm64v8, 8.0-alpine3.21-arm64v8, 8.0.416-alpine3.21, 8.0-alpine3.21 | [Dockerfile](src/sdk/8.0/alpine3.21/arm64v8/Dockerfile) | Alpine 3.21
 8.0.416-alpine3.22-arm64v8, 8.0-alpine3.22-arm64v8, 8.0-alpine-arm64v8, 8.0.416-alpine3.22, 8.0-alpine3.22, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
 8.0.416-alpine3.23-arm64v8, 8.0-alpine3.23-arm64v8, 8.0.416-alpine3.23, 8.0-alpine3.23 | [Dockerfile](src/sdk/8.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 8.0.416-noble-arm64v8, 8.0-noble-arm64v8, 8.0.416-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -128,12 +124,10 @@ Tags | Dockerfile | OS Version
 10.0.100-alpine3.22-arm32v7, 10.0-alpine3.22-arm32v7, 10.0-alpine-arm32v7, 10.0.100-alpine3.22, 10.0-alpine3.22, 10.0-alpine | [Dockerfile](src/sdk/10.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
 10.0.100-alpine3.23-arm32v7, 10.0-alpine3.23-arm32v7, 10.0.100-alpine3.23, 10.0-alpine3.23 | [Dockerfile](src/sdk/10.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
 9.0.307-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.307-bookworm-slim, 9.0-bookworm-slim, 9.0.307, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.307-alpine3.21-arm32v7, 9.0-alpine3.21-arm32v7, 9.0.307-alpine3.21, 9.0-alpine3.21 | [Dockerfile](src/sdk/9.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 9.0.307-alpine3.22-arm32v7, 9.0-alpine3.22-arm32v7, 9.0-alpine-arm32v7, 9.0.307-alpine3.22, 9.0-alpine3.22, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
 9.0.307-alpine3.23-arm32v7, 9.0-alpine3.23-arm32v7, 9.0.307-alpine3.23, 9.0-alpine3.23 | [Dockerfile](src/sdk/9.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
 9.0.307-noble-arm32v7, 9.0-noble-arm32v7, 9.0.307-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 8.0.416-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.416-bookworm-slim, 8.0-bookworm-slim, 8.0.416, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.416-alpine3.21-arm32v7, 8.0-alpine3.21-arm32v7, 8.0.416-alpine3.21, 8.0-alpine3.21 | [Dockerfile](src/sdk/8.0/alpine3.21/arm32v7/Dockerfile) | Alpine 3.21
 8.0.416-alpine3.22-arm32v7, 8.0-alpine3.22-arm32v7, 8.0-alpine-arm32v7, 8.0.416-alpine3.22, 8.0-alpine3.22, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
 8.0.416-alpine3.23-arm32v7, 8.0-alpine3.23-arm32v7, 8.0.416-alpine3.23, 8.0-alpine3.23 | [Dockerfile](src/sdk/8.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
 8.0.416-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.416-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
