@@ -45,12 +45,12 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 extends:
-  template: /eng/common/templates/1es.yml@self
+  template: /eng/docker-tools/templates/1es.yml@self
   parameters:
     reposToExcludeFromScanning:
     - VersionsRepo
     stages:
-    - template: /eng/common/templates/stages/dotnet/publish-config-prod.yml@self
+    - template: /eng/docker-tools/templates/stages/dotnet/publish-config-prod.yml@self
       parameters:
         sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
         stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self

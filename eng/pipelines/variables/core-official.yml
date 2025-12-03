@@ -1,10 +1,10 @@
 variables:
-- template: /eng/common/templates/variables/dotnet/build-test-publish.yml@self
+- template: /eng/docker-tools/templates/variables/dotnet/build-test-publish.yml@self
 
 - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
   # Uses DockerHub registry creds to avoid rate limiting during CopyBaseImages job.
   # Uses GitHub token to push image-info updates to dotnet/versions repo.
-  - template: /eng/common/templates/variables/dotnet/secrets.yml@self
+  - template: /eng/docker-tools/templates/variables/dotnet/secrets.yml@self
 
 - name: manifest
   value: manifest.json

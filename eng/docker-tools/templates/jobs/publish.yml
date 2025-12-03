@@ -1,0 +1,312 @@
+parameters:
+  pool: {}
+  internalProjectName: null
+  publishConfig: null
+  customInitSteps: []
+  customPublishVariables: []
+  sourceBuildPipelineDefinitionId: ""
+  sourceBuildPipelineRunId: ""
+  versionsRepoRef: null
+  versionsRepoPath: ""
+  # When true, overrides the commit SHA in merged image info files to use the current repository commit.
+  # This ensures that updated images reference the correct commit in their commitUrl properties.
+  overrideImageInfoCommit: false
+
+jobs:
+- job: Publish
+  pool: ${{ parameters.pool }}
+  timeoutInMinutes: 90
+
+  variables:
+  - name: imageBuilder.commonCmdArgs
+    value: >-
+      --manifest '$(manifest)'
+      --registry-override '${{ parameters.publishConfig.publishAcr.server }}'
+      $(manifestVariables)
+      $(imageBuilder.queueArgs)
+  - name: publishNotificationRepoName
+    value: $(Build.Repository.Name)
+  - name: branchName
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/heads/') }}:
+      value: $[ replace(variables['Build.SourceBranch'], 'refs/heads/', '') ]
+    ${{ if startsWith(variables['Build.SourceBranch'], 'refs/pull/') }}:
+      value: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
+  - name: imageInfoHostDir
+    value: $(Build.ArtifactStagingDirectory)/imageInfo
+  - name: imageInfoContainerDir
+    value: $(artifactsPath)/imageInfo
+  - name: sourceBuildIdOutputDir
+    value: $(Build.ArtifactStagingDirectory)/sourceBuildId
+  - name: commitOverrideArg
+    ${{ if eq(parameters.overrideImageInfoCommit, true) }}:
+      value: --commit-override $(Build.SourceVersion)
+    ${{ else }}:
+      value: ''
+  - ${{ parameters.customPublishVariables }}
+
+  steps:
+  - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      versionsRepoRef: ${{ parameters.versionsRepoRef }}
+
+  - template: /eng/docker-tools/templates/steps/retain-build.yml@self
+
+  - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+
+  - pwsh: |
+      $azdoOrgName = Split-Path -Leaf $Env:SYSTEM_COLLECTIONURI
+      echo "##vso[task.setvariable variable=azdoOrgName]$azdoOrgName"
+      $versionsRepoRoot = "$(Pipeline.Workspace)/s/${{ parameters.versionsRepoPath }}"
+      echo "##vso[task.setvariable variable=versionsRepoRoot]$versionsRepoRoot"
+    displayName: Set Publish Variables
+
+  - ${{ parameters.customInitSteps }}
+
+  - template: /eng/docker-tools/templates/steps/validate-branch.yml@self
+    parameters:
+      internalProjectName: ${{ parameters.internalProjectName }}
+
+  - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
+    parameters:
+      targetPath: $(imageInfoHostDir)
+      artifactName: image-info
+      piplineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
+      pipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+      # This can fail in scenarios where no build jobs have run to produce any artifacts
+      continueOnError: true
+
+  - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml@self
+    parameters:
+      publicSourceBranch: $(publicSourceBranch)
+
+  - template: /eng/docker-tools/templates/steps/set-dry-run.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+
+  - script: echo "##vso[task.setvariable variable=imageQueueTime]$(date --rfc-2822)"
+    displayName: Set Publish Variables
+
+  - script: >
+      $(runImageBuilderCmd) trimUnchangedPlatforms
+      '$(imageInfoContainerDir)/image-info.json'
+    displayName: Trim Unchanged Images
+
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Copy Images
+      serviceConnections:
+      - name: acr
+        id: ${{ parameters.publishConfig.publishAcr.serviceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.publishAcr.serviceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.publishAcr.serviceConnection.clientId }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      args: >-
+        copyAcrImages
+        '${{ parameters.publishConfig.buildAcr.subscription }}'
+        '${{ parameters.publishConfig.buildAcr.resourceGroup }}'
+        '${{ parameters.publishConfig.buildAcr.repoPrefix }}'
+        '${{ parameters.publishConfig.buildAcr.server }}'
+        --os-type '*'
+        --architecture '*'
+        --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
+        --image-info '$(imageInfoContainerDir)/image-info.json'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
+
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Publish Manifest
+      serviceConnections:
+      - name: acr
+        id: ${{ parameters.publishConfig.publishAcr.serviceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.publishAcr.serviceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.publishAcr.serviceConnection.clientId }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      args: >-
+        publishManifest
+        '$(imageInfoContainerDir)/image-info.json'
+        --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.pathArgs)
+        $(imageBuilder.commonCmdArgs)
+
+  - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(imageInfoHostDir)
+      artifactName: image-info-final-$(System.JobAttempt)
+      displayName: Publish Image Info File Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+
+  - template: /eng/docker-tools/templates/steps/wait-for-mcr-image-ingestion.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      imageInfoPath: '$(imageinfoContainerDir)/image-info.json'
+      minQueueTime: $(imageQueueTime)
+      dryRunArg: $(dryRunArg)
+      condition: succeeded()
+
+  - template: /eng/docker-tools/templates/steps/publish-readmes.yml@self
+    parameters:
+      dryRunArg: $(dryRunArg)
+      condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
+
+  - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
+    displayName: Create EOL Annotation Data Directory
+
+  - script: |-
+      cd $(versionsRepoRoot)
+      git pull origin $(gitHubVersionsRepoInfo.branch)
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: Pull Latest Changes from Versions Repo
+
+  - script: >-
+      cp $(versionsRepoRoot)/$(gitHubImageInfoVersionsPath) $(imageInfoHostDir)/full-image-info-orig.json
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: Copy Latest Image Info from Versions Repo
+
+  - script: >
+      $(runImageBuilderCmd) mergeImageInfo
+      $(imageInfoContainerDir)
+      $(imageInfoContainerDir)/full-image-info-new.json
+      $(manifestVariables)
+      $(dryRunArg)
+      --manifest $(manifest)
+      --publish
+      --initial-image-info-path $(imageInfoContainerDir)/full-image-info-orig.json
+      $(commitOverrideArg)
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: Merge Image Info
+
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Ingest Kusto Image Info
+      serviceConnections:
+      - name: kusto
+        id: $(kusto.serviceConnection.id)
+        tenantId: $(kusto.serviceConnection.tenantId)
+        clientId: $(kusto.serviceConnection.clientId)
+      internalProjectName: ${{ parameters.internalProjectName }}
+      condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
+      args: >-
+        ingestKustoImageInfo
+        '$(imageInfoContainerDir)/image-info.json'
+        '$(kusto.cluster)'
+        '$(kusto.database)'
+        '$(kusto.imageTable)'
+        '$(kusto.layerTable)'
+        --os-type '*'
+        --architecture '*'
+        $(dryRunArg)
+        $(imageBuilder.commonCmdArgs)
+
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: Generate EOL Annotation Data
+      serviceConnections:
+      - name: acr
+        id: ${{ parameters.publishConfig.publishAcr.serviceConnection.id }}
+        tenantId: ${{ parameters.publishConfig.publishAcr.serviceConnection.tenantId }}
+        clientId: ${{ parameters.publishConfig.publishAcr.serviceConnection.clientId }}
+      internalProjectName: internal
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
+      args: >-
+        generateEolAnnotationDataForPublish
+        '${{ parameters.publishConfig.publishAcr.server }}'
+        '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
+        '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
+        '$(imageInfoContainerDir)/full-image-info-orig.json'
+        '$(imageInfoContainerDir)/full-image-info-new.json'
+        $(generateEolAnnotationDataExtraOptions)
+        $(dryRunArg)
+
+  - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(Build.ArtifactStagingDirectory)/eol-annotation-data
+      artifactName: eol-annotation-data-$(System.JobAttempt)
+      displayName: Publish EOL Annotation Data Artifact
+      internalProjectName: internal
+      publicProjectName: public
+      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
+
+  - template: /eng/docker-tools/templates/steps/annotate-eol-digests.yml@self
+    parameters:
+      acr: ${{ parameters.publishConfig.publishAcr }}
+      dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
+
+  - script: >
+      $(runImageBuilderCmd) publishImageInfo
+      '$(imageInfoContainerDir)/full-image-info-new.json'
+      '$(gitHubVersionsRepoInfo.userName)'
+      '$(gitHubVersionsRepoInfo.email)'
+      $(gitHubVersionsRepoInfo.authArgs)
+      --git-owner '$(gitHubVersionsRepoInfo.org)'
+      --git-repo '$(gitHubVersionsRepoInfo.repo)'
+      --git-branch '$(gitHubVersionsRepoInfo.branch)'
+      --git-path '$(gitHubImageInfoVersionsPath)'
+      $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
+    condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
+    displayName: Publish Image Info
+
+  # Task displayNames names are hardcoded to reference the task prefix used by 1ES official
+  # pipelines in eng/docker-tools/templates/1es-official.yml.
+  #
+  # These will fail if they are dependend on by an unofficial pipeline since they use a unique task
+  # prefix compared to official pipelines (see eng/docker-tools/templates/1es-unofficial.yml). This is
+  # acceptable because unofficial pipelines should not publish images.
+  #
+  # https://github.com/dotnet/docker-tools/issues/1698 tracks making this command no longer depend
+  # on individual step displayNames.
+  - script: >
+      $(runImageBuilderCmd) postPublishNotification
+      '$(publishNotificationRepoName)'
+      '$(branchName)'
+      '$(imageInfoContainerDir)/image-info.json'
+      $(Build.BuildId)
+      '$(System.AccessToken)'
+      '$(azdoOrgName)'
+      '$(System.TeamProject)'
+      $(gitHubNotificationsRepoInfo.authArgs)
+      '$(gitHubNotificationsRepoInfo.org)'
+      '$(gitHubNotificationsRepoInfo.repo)'
+      --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
+      --task "🟪 Copy Images"
+      --task "🟪 Publish Manifest"
+      --task "🟪 Wait for Image Ingestion"
+      --task "🟪 Publish Readmes"
+      --task "🟪 Wait for MCR Doc Ingestion"
+      --task "🟪 Publish Image Info"
+      --task "🟪 Ingest Kusto Image Info"
+      --task "🟪 Generate EOL Annotation Data"
+      --task "🟪 Annotate EOL Images (${{ parameters.publishConfig.publishAcr.server }})"
+      --task "🟪 Wait for Annotation Ingestion (${{ parameters.publishConfig.publishAcr.server }})"
+      $(dryRunArg)
+      $(imageBuilder.commonCmdArgs)
+    displayName: Post Publish Notification
+    condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
+
+  - powershell: |
+      # Default to current build number if parameter was not overridden
+      $buildId = "${{ parameters.sourceBuildPipelineRunId }}"
+      if ($buildId -eq "") {
+        $buildId = "$(Build.BuildNumber)"
+      }
+
+      New-Item -ItemType Directory -Path $(sourceBuildIdOutputDir)
+      Set-Content -Path $(sourceBuildIdOutputDir)/source-build-id.txt -Value "$buildId"
+    condition: succeeded()
+    displayName: Write Source Build ID to File
+
+  - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
+    parameters:
+      path: $(sourceBuildIdOutputDir)
+      artifactName: source-build-id
+      displayName: Publish Source Build ID Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}

@@ -25,7 +25,7 @@ resources:
     ref: ${{ variables['gitHubVersionsRepoInfo.branch'] }}
 
 stages:
-- template: /eng/common/templates/stages/dotnet/publish-config-nonprod.yml@self
+- template: /eng/docker-tools/templates/stages/dotnet/publish-config-nonprod.yml@self
   parameters:
     stagesTemplate: /eng/pipelines/stages/build-test-publish-repo.yml@self
     stagesTemplateParameters:
