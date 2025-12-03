@@ -1,0 +1,72 @@
+parameters:
+  matrixType: null
+  name: null
+  pool: {}
+  customBuildLegGroupArgs: ""
+  isTestStage: false
+  internalProjectName: null
+  noCache: false
+  publishConfig: null
+  customInitSteps: []
+  commonInitStepsForMatrixAndBuild: []
+  sourceBuildPipelineRunId: ""
+
+jobs:
+- job: ${{ parameters.name }}
+  pool: ${{ parameters.pool }}
+  steps:
+  - ${{ parameters.commonInitStepsForMatrixAndBuild }}
+  - template: /eng/docker-tools/templates/steps/retain-build.yml@self
+  - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+  - ${{ parameters.customInitSteps }}
+  - template: /eng/docker-tools/templates/steps/validate-branch.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+  - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml
+    parameters:
+      publicSourceBranch: $(publicSourceBranch)
+  - ${{ if eq(parameters.isTestStage, true) }}:
+    - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
+      parameters:
+        targetPath: $(Build.ArtifactStagingDirectory)
+        artifactName: image-info
+        pipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+  - powershell: |
+      $additionalGenerateBuildMatrixOptions = "$(additionalGenerateBuildMatrixOptions)"
+
+      if ("${{ parameters.isTestStage}}" -eq "true") {
+        $additionalGenerateBuildMatrixOptions = "$additionalGenerateBuildMatrixOptions --image-info $(artifactsPath)/image-info.json"
+      }
+      elseif ("$(pipelineDisabledCache)" -ne "true" -and "${{ parameters.noCache }}" -ne "true" -and "$(trimCachedImagesForMatrix)" -eq "true") {
+        # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
+        $additionalGenerateBuildMatrixOptions = "$additionalGenerateBuildMatrixOptions --image-info $(versionsBasePath)$(imageInfoVersionsPath) --trim-cached-images"
+      }
+
+      echo "##vso[task.setvariable variable=additionalGenerateBuildMatrixOptions]$additionalGenerateBuildMatrixOptions"
+    displayName: Set GenerateBuildMatrix Variables
+  - script: >
+      echo "##vso[task.setvariable variable=generateBuildMatrixCommand]
+      generateBuildMatrix
+      --manifest $(manifest)
+      --type ${{ parameters.matrixType }}
+      --os-type '*'
+      --architecture '*'
+      --product-version-components $(productVersionComponents)
+      ${{ parameters.customBuildLegGroupArgs }}
+      $(imageBuilder.pathArgs)
+      $(manifestVariables)
+      $(commonMatrixAndBuildOptions)
+      $(additionalGenerateBuildMatrixOptions)"
+    displayName: Set GenerateBuildMatrix Command
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      name: matrix
+      displayName: Generate ${{ parameters.matrixType }} Matrix
+      serviceConnections:
+      - name: acr
+        tenantId: $(build.serviceConnection.tenantId)
+        clientId: $(build.serviceConnection.clientId)
+        id: $(build.serviceConnection.id)
+      internalProjectName: internal
+      args: $(generateBuildMatrixCommand)

@@ -1,0 +1,343 @@
+parameters:
+  buildMatrixType: platformDependencyGraph
+  testMatrixType: platformVersionedOs
+  buildMatrixCustomBuildLegGroupArgs: ""
+  testMatrixCustomBuildLegGroupArgs: ""
+  customCopyBaseImagesInitSteps: []
+  customGenerateMatrixInitSteps: []
+  customBuildInitSteps: []
+  customTestInitSteps: []
+  sourceBuildPipelineRunId: ""
+
+  linuxAmdBuildJobTimeout: 60
+  linuxArmBuildJobTimeout: 60
+  windowsAmdBuildJobTimeout: 60
+
+  linuxAmdTestJobTimeout: 60
+  linuxArmTestJobTimeout: 60
+  windowsAmdTestJobTimeout: 60
+
+  noCache: false
+  publishConfig: null
+
+  internalProjectName: null
+  publicProjectName: null
+
+  versionsRepoRef: ""
+
+  storageAccountServiceConnection: null
+
+  linuxAmd64Pool:
+    vmImage: $(defaultLinuxAmd64PoolImage)
+  linuxArm32Pool:
+    vmImage: $(defaultLinuxArm32PoolImage)
+  linuxArm64Pool:
+    vmImage: $(defaultLinuxArm64PoolImage)
+  windows2016Pool:
+    vmImage: $(defaultWindows2016PoolImage)
+  windows1809Pool:
+    vmImage: $(defaultWindows1809PoolImage)
+  windows2022Pool:
+    vmImage: $(defaultWindows2022PoolImage)
+  windows2025Pool:
+    vmImage: $(defaultWindows2025PoolImage)
+
+
+################################################################################
+# Build Images
+################################################################################
+stages:
+- stage: Build
+  condition: and(succeeded(), contains(variables['stages'], 'build'))
+  dependsOn: []
+  jobs:
+
+  - template: /eng/docker-tools/templates/jobs/test-images-linux-client.yml@self
+    parameters:
+      name: PreBuildValidation
+      pool: ${{ parameters.linuxAmd64Pool }}
+      testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
+      preBuildValidation: true
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publishConfig: ${{ parameters.publishConfig }}
+      customInitSteps:
+      - ${{ parameters.customTestInitSteps }}
+      # These variables are normally set by the matrix. Since this test job is not generated
+      # by a matrix, we need to set them manually. They can be set to empty values since their
+      # values aren't actually used for the pre-build tests.
+      - powershell: |
+          echo "##vso[task.setvariable variable=productVersion]"
+          echo "##vso[task.setvariable variable=imageBuilderPaths]"
+          echo "##vso[task.setvariable variable=osVersions]"
+          echo "##vso[task.setvariable variable=architecture]"
+        displayName: Initialize Test Variables
+
+  - template: /eng/docker-tools/templates/jobs/copy-base-images-staging.yml@self
+    parameters:
+      name: CopyBaseImages
+      publishConfig: ${{ parameters.publishConfig }}
+      pool: ${{ parameters.linuxAmd64Pool }}
+      additionalOptions: "--manifest '$(manifest)' $(imageBuilder.pathArgs) $(manifestVariables)"
+      customInitSteps: ${{ parameters.customCopyBaseImagesInitSteps }}
+
+  - template: /eng/docker-tools/templates/jobs/generate-matrix.yml@self
+    parameters:
+      matrixType: ${{ parameters.buildMatrixType }}
+      name: GenerateBuildMatrix
+      pool: ${{ parameters.linuxAmd64Pool }}
+      customBuildLegGroupArgs: ${{ parameters.buildMatrixCustomBuildLegGroupArgs }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      customInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+
+  - template: /eng/docker-tools/templates/jobs/build-images.yml@self
+    parameters:
+      name: Linux_amd64
+      pool: ${{ parameters.linuxAmd64Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxAmd64']
+      dockerClientOS: linux
+      buildJobTimeout: ${{ parameters.linuxAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
+  - template: /eng/docker-tools/templates/jobs/build-images.yml@self
+    parameters:
+      name: Linux_arm64
+      pool: ${{ parameters.linuxArm64Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm64']
+      dockerClientOS: linux
+      buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
+  - template: /eng/docker-tools/templates/jobs/build-images.yml@self
+    parameters:
+      name: Linux_arm32
+      pool: ${{ parameters.linuxArm32Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.LinuxArm32']
+      dockerClientOS: linux
+      buildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
+  - template: /eng/docker-tools/templates/jobs/build-images.yml@self
+    parameters:
+      name: Windows1809_amd64
+      pool: ${{ parameters.windows1809Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.Windows1809Amd64']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
+  - template: /eng/docker-tools/templates/jobs/build-images.yml@self
+    parameters:
+      name: Windows2022_amd64
+      pool: ${{ parameters.windows2022Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2022Amd64']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
+  - template: /eng/docker-tools/templates/jobs/build-images.yml@self
+    parameters:
+      name: Windows2025_amd64
+      pool: ${{ parameters.windows2025Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2025Amd64']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
+  - template: /eng/docker-tools/templates/jobs/build-images.yml@self
+    parameters:
+      name: WindowsLtsc2016_amd64
+      pool: ${{ parameters.windows2016Pool }}
+      matrix: dependencies.GenerateBuildMatrix.outputs['matrix.WindowsLtsc2016Amd64']
+      dockerClientOS: windows
+      buildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
+      commonInitStepsForMatrixAndBuild:
+      - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+        parameters:
+          publishConfig: ${{ parameters.publishConfig }}
+          versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customBuildInitSteps }}
+      noCache: ${{ parameters.noCache }}
+      publishConfig: ${{ parameters.publishConfig }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+      storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
+
+################################################################################
+# Post-Build
+################################################################################
+- stage: Post_Build
+  dependsOn: Build
+  condition: and(succeeded(), contains(variables['stages'], 'build'))
+  jobs:
+  - template: /eng/docker-tools/templates/jobs/post-build.yml@self
+    parameters:
+      pool: ${{ parameters.linuxAmd64Pool }}
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+
+################################################################################
+# Test Images
+################################################################################
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+  - stage: Test
+    dependsOn: Post_Build
+    condition: "
+      and(
+        ne(stageDependencies.Post_Build.outputs['Build.MergeImageInfoFiles.noImageInfos'], 'true'),
+        ne(variables['testScriptPath'], ''),
+        and(
+          contains(variables['stages'], 'test'),
+          or(
+            and(
+              succeeded(),
+              contains(variables['stages'], 'build')),
+            not(contains(variables['stages'], 'build')))))"
+    jobs:
+    - template: /eng/docker-tools/templates/jobs/generate-matrix.yml@self
+      parameters:
+        matrixType: ${{ parameters.testMatrixType }}
+        name: GenerateTestMatrix
+        pool: ${{ parameters.linuxAmd64Pool }}
+        customBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
+        isTestStage: true
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publicProjectName: ${{ parameters.publicProjectName }}
+        customInitSteps: ${{ parameters.customGenerateMatrixInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+        commonInitStepsForMatrixAndBuild:
+        - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+          parameters:
+            versionsRepoRef: ${{ parameters.versionsRepoRef }}
+            publishConfig: ${{ parameters.publishConfig }}
+    - template: /eng/docker-tools/templates/jobs/test-images-linux-client.yml@self
+      parameters:
+        name: Linux_amd64
+        pool: ${{ parameters.linuxAmd64Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxAmd64']
+        testJobTimeout: ${{ parameters.linuxAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    - template: /eng/docker-tools/templates/jobs/test-images-linux-client.yml@self
+      parameters:
+        name: Linux_arm64
+        pool: ${{ parameters.linuxArm64Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm64']
+        testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    - template: /eng/docker-tools/templates/jobs/test-images-linux-client.yml@self
+      parameters:
+        name: Linux_arm32
+        pool: ${{ parameters.linuxArm32Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.LinuxArm32']
+        testJobTimeout: ${{ parameters.linuxArmTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    - template: /eng/docker-tools/templates/jobs/test-images-windows-client.yml@self
+      parameters:
+        name: Windows1809_amd64
+        pool: ${{ parameters.windows1809Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.Windows1809Amd64']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    - template: /eng/docker-tools/templates/jobs/test-images-windows-client.yml@self
+      parameters:
+        name: Windows2022_amd64
+        pool: ${{ parameters.windows2022Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2022Amd64']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    - template: /eng/docker-tools/templates/jobs/test-images-windows-client.yml@self
+      parameters:
+        name: Windows2025_amd64
+        pool: ${{ parameters.windows2025Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2025Amd64']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    - template: /eng/docker-tools/templates/jobs/test-images-windows-client.yml@self
+      parameters:
+        name: WindowsLtsc2016_amd64
+        pool: ${{ parameters.windows2016Pool }}
+        matrix: dependencies.GenerateTestMatrix.outputs['matrix.WindowsLtsc2016Amd64']
+        testJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publishConfig: ${{ parameters.publishConfig }}
+        customInitSteps: ${{ parameters.customTestInitSteps }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

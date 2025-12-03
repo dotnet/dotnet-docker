@@ -1,0 +1,48 @@
+# Common variables for building/testing/publishing in the .NET team's pipelines
+
+variables:
+- template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
+
+- name: commonVersionsImageInfoPath
+  value: build-info/docker
+- name: publicGitRepoUri
+  value: https://github.com/dotnet/dotnet-docker
+- name: testScriptPath
+  value: ./tests/run-tests.ps1
+- name: testResultsDirectory
+  value: tests/Microsoft.DotNet.Docker.Tests/TestResults/
+
+- name: officialRepoPrefixes
+  value: public/,internal/private/,unlisted/
+  readonly: true
+
+- name: mcrDocsRepoInfo.userName
+  value: $(gitHubApp.marDocsUpdater.userName)
+- name: mcrDocsRepoInfo.email
+  value: $(gitHubApp.marDocsUpdater.email)
+
+- name: publishNotificationsEnabled
+  value: true
+- name: gitHubNotificationsRepoInfo.org
+  value: dotnet
+- name: gitHubNotificationsRepoInfo.repo
+  value: dotnet-docker-internal
+# $(gitHubNotificationsRepoInfo.authArgs) is needed by the "Post Publish
+# Notification" step in eng/docker-tools/templates/jobs/publish.yml#L271, even during
+# a dry-run. This value is a placeholder that gets replaced when referencing
+# the secrets.yml variable template.
+- name: gitHubNotificationsRepoInfo.authArgs
+  value: --gh-token 'placeholder'
+
+- name: gitHubVersionsRepoInfo.org
+  value: dotnet
+- name: gitHubVersionsRepoInfo.repo
+  value: versions
+- name: gitHubVersionsRepoInfo.branch
+  value: main
+- name: gitHubVersionsRepoInfo.path
+  value: ${{ variables.commonVersionsImageInfoPath }}
+- name: gitHubVersionsRepoInfo.userName
+  value: $(dotnetDockerBot.userName)
+- name: gitHubVersionsRepoInfo.email
+  value: $(dotnetDockerBot.email)
