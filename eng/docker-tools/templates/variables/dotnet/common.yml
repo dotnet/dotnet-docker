@@ -1,0 +1,63 @@
+variables:
+- template: /eng/docker-tools/templates/variables/common.yml@self
+
+- name: publicProjectName
+  value: public
+- name: internalProjectName
+  value: internal
+
+# $(dockerHubRegistryCreds) is needed by the copy-base-images step in
+# eng/docker-tools/templates/stages/build-and-test.yml#L73-L78, even during a dry-run.
+# This is a placeholder that gets replaced when referencing the secrets.yml
+# variable template.
+- name: dockerHubRegistryCreds
+  value: --registry-creds 'docker.io=placeholder;placeholder'
+
+- name: linuxAmd64InternalPoolImage
+  value: 1es-ubuntu-2204
+- name: linuxAmd64InternalPoolName
+  value: NetCore1ESPool-Internal
+
+- name: linuxArm64PoolImage
+  value: Mariner-2-Docker-ARM64
+- name: linuxArm64PublicPoolName
+  value: Docker-Linux-Arm-Public
+- name: linuxArm64InternalPoolName
+  value: Docker-Linux-Arm-Internal
+
+- name: linuxArm32PoolImage
+  value: Mariner-2-Docker-ARM64
+- name: linuxArm32PublicPoolName
+  value: Docker-Linux-Arm-Public
+- name: linuxArm32InternalPoolName
+  value: Docker-Linux-Arm-Internal
+
+- name: windowsServer2016PublicPoolImage
+  value: Server2016-NESDockerBuilds
+- name: windowsServer2016InternalPoolImage
+  value: Server2016-NESDockerBuilds-1ESPT
+- name: windowsServer2016PoolName
+  value: Docker-2016-${{ variables['System.TeamProject'] }}
+
+- name: windowsServer2019PublicPoolImage
+  value: Server2019-1809-NESDockerBuilds
+- name: windowsServer2019InternalPoolImage
+  value: Server2019-1809-NESDockerBuilds-1ESPT
+- name: windowsServer2019PoolName
+  value: Docker-1809-${{ variables['System.TeamProject'] }}
+
+- name: windowsServer2022PublicPoolImage
+  value: Server2022-NESDockerBuilds
+- name: windowsServer2022InternalPoolImage
+  value: Server2022-NESDockerBuilds-1ESPT
+- name: windowsServer2022PoolName
+  value: Docker-2022-${{ variables['System.TeamProject'] }}
+
+- name: windowsServer2025PublicPoolImage
+  value: Server2025-NESDockerBuilds
+- name: windowsServer2025InternalPoolImage
+  value: Server2025-NESDockerBuilds-1ESPT
+- name: windowsServer2025PoolName
+  value: Docker-2025-${{ variables['System.TeamProject'] }}
+
+- group: DotNet-Docker-Common-2

@@ -1,0 +1,107 @@
+parameters:
+  preBuildValidation: false
+  internalProjectName: null
+  publishConfig: null
+  condition: true
+  customInitSteps: []
+  sourceBuildPipelineRunId: ""
+
+steps:
+- template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+  parameters:
+    setupImageBuilder: false
+    setupTestRunner: true
+    # Clean only up when we're running an internal build, not a PR, and not doing pre-build validation.
+    # i.e. when we're building something important.
+    cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.preBuildValidation, 'false')) }}
+    condition: ${{ parameters.condition }}
+- ${{ parameters.customInitSteps }}
+- script: |
+    echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
+
+    additionalTestArgs="$ADDITIONALTESTARGS"
+    if [ "${{ parameters.preBuildValidation }}" == "true" ]; then
+      additionalTestArgs="$additionalTestArgs -TestCategories pre-build"
+    else
+      if [ "${{ variables['System.TeamProject'] }}" == "${{ parameters.internalProjectName }}" ] && [ "${{ variables['Build.Reason'] }}" != "PullRequest" ]; then
+        additionalTestArgs="$additionalTestArgs -PullImages -Registry ${{ parameters.publishConfig.buildAcr.server }} -RepoPrefix ${{ parameters.publishConfig.buildAcr.repoPrefix }} -ImageInfoPath $(artifactsPath)/image-info.json"
+        if [ "$TESTCATEGORIESOVERRIDE" != "" ]; then
+          additionalTestArgs="$additionalTestArgs -TestCategories $TESTCATEGORIESOVERRIDE"
+        fi
+      fi
+    fi
+    echo "##vso[task.setvariable variable=additionalTestArgs]$additionalTestArgs"
+  displayName: Set Test Variables
+  condition: and(succeeded(), ${{ parameters.condition }})
+- script: >
+    docker run -t -d
+    -v /var/run/docker.sock:/var/run/docker.sock
+    -v $(Build.ArtifactStagingDirectory):$(artifactsPath)
+    -e DOCKER_BUILDKIT=1
+    -e RUNNING_TESTS_IN_CONTAINER=true
+    --name $(testRunner.container)
+    $(imageNames.testRunner.withrepo)
+  displayName: Start Test Runner Container
+  condition: and(succeeded(), ${{ parameters.condition }})
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+  - template: /eng/docker-tools/templates/steps/run-pwsh-with-auth.yml@self
+    parameters:
+      displayName: Docker login
+      serviceConnection: ${{ parameters.publishConfig.testServiceConnection.name }}
+      condition: and(succeeded(), ${{ parameters.condition }})
+      command: >-
+        $azLoginArgs = '--service-principal --tenant $env:AZURE_TENANT_ID -u $env:AZURE_CLIENT_ID --federated-token $env:AZURE_FEDERATED_TOKEN';
+        docker exec -e AZURE_TENANT_ID=$env:tenantId -e AZURE_CLIENT_ID=$env:servicePrincipalId -e AZURE_FEDERATED_TOKEN=$env:idToken $(testRunner.container) pwsh
+        -File $(engDockerToolsRelativePath)/Invoke-WithRetry.ps1
+        "az login $azLoginArgs; az acr login -n ${{ parameters.publishConfig.buildAcr.server }}"
+  - ${{ if eq(parameters.preBuildValidation, 'false') }}:
+    - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
+      parameters:
+        targetPath: $(Build.ArtifactStagingDirectory)
+        artifactName: image-info
+        condition: ${{ parameters.condition }}
+        pipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+- template: /eng/docker-tools/templates/steps/parse-test-arg-arrays.yml@self
+- powershell: >
+    $(test.init);
+    docker exec
+    $(testRunner.options)
+    $(testRunner.container)
+    pwsh
+    -Command "$(testScriptPath)
+    -Paths $(imageBuilderPathsArrayInitStr)
+    -OSVersions $(osVersionsArrayInitStr)
+    -Architecture '$(architecture)'
+    $(additionalTestArgs)"
+  displayName: Test Images
+  condition: and(succeeded(), ${{ parameters.condition }})
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+  - script: docker exec $(testRunner.container) docker logout ${{ parameters.publishConfig.buildAcr.server }}
+    displayName: Docker logout
+    condition: and(always(), ${{ parameters.condition }})
+    continueOnError: true
+- powershell: >
+    docker cp
+    $(testRunner.container):/repo/$(testResultsDirectory)
+    $(Common.TestResultsDirectory)/.
+  displayName: Copy Test Results
+  condition: and(always(), ${{ parameters.condition }})
+  continueOnError: true
+- task: PublishTestResults@2
+  displayName: Publish Test Results
+  condition: and(always(), ${{ parameters.condition }})
+  continueOnError: true
+  inputs:
+    testRunner: vSTest
+    testResultsFiles: '**/*.trx'
+    searchFolder: $(Common.TestResultsDirectory)
+    mergeTestResults: true
+    publishRunAttachments: true
+    ${{ if eq(parameters.preBuildValidation, 'false') }}:
+      testRunTitle: $(productVersion) $(osVersionsDisplayName) $(architecture)
+    ${{ if eq(parameters.preBuildValidation, 'true') }}:
+      testRunTitle: Pre-Build Validation
+- script: docker rm -f $(testRunner.container)
+  displayName: Cleanup TestRunner Container
+  condition: and(always(), ${{ parameters.condition }})
+  continueOnError: true

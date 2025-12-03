@@ -54,7 +54,7 @@ if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test")) {
 
 if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
     # Build the product images
-    & ./eng/common/build.ps1 `
+    & ./eng/docker-tools/build.ps1 `
         -Version $Version `
         -OS $OS `
         -Architecture $Architecture `
@@ -72,7 +72,7 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Build") {
     if ($buildSamples)
     {
         # Build the sample images
-        & ./eng/common/build.ps1 `
+        & ./eng/docker-tools/build.ps1 `
             -Version $Version `
             -OS @($OS) `
             -Architecture $Architecture `

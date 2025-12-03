@@ -1,0 +1,70 @@
+# When extending this template, pipelines using a repository resource containing versions files for image caching must
+# do the following:
+#
+# - Do not rely on any source code from the versions repo so as to not circumvent SDL and CG guidelines
+# - The versions repo resource must be named `VersionsRepo` to avoid SDL scans
+# - The versions repo must be checked out to `$(Build.SourcesDirectory)/versions` to avoid CG scans
+#
+# If the pipeline is not using a separate repository resource, ensure that there is no source code checked out in
+# `$(Build.SourcesDirectory)/versions`, as it will not be scanned.
+#
+# The `cgDryRun` parameter will run CG but not submit the results, for testing purposes.
+
+parameters:
+- name: cgDryRun
+  type: boolean
+  default: false
+- name: stages
+  type: stageList
+  default: []
+- name: serviceConnections
+  type: object
+  default: []
+- name: pool
+  type: object
+  default:
+    name: $(default1ESInternalPoolName)
+    image: $(default1ESInternalPoolImage)
+    os: linux
+- name: sourceAnalysisPool
+  type: object
+  default:
+    name: $(defaultSourceAnalysisPoolName)
+    image: $(defaultSourceAnalysisPoolImage)
+    os: windows
+
+resources:
+  repositories:
+  - repository: 1ESPipelineTemplates
+    type: git
+    name: 1ESPipelineTemplates/1ESPipelineTemplates
+    ref: refs/tags/release
+
+extends:
+  template: /eng/docker-tools/templates/task-prefix-decorator.yml@self
+  parameters:
+    baseTemplate: v1/1ES.Official.PipelineTemplate.yml@1ESPipelineTemplates
+    templateParameters:
+      pool: ${{ parameters.pool }}
+      sdl:
+        binskim:
+          enabled: true
+        componentgovernance:
+          ignoreDirectories: $(Build.SourcesDirectory)/versions
+          whatIf: ${{ parameters.cgDryRun }}
+          showAlertLink: true
+        policheck:
+          enabled: true
+        sourceRepositoriesToScan:
+          exclude:
+          - repository: VersionsRepo
+        sourceAnalysisPool: ${{ parameters.sourceAnalysisPool }}
+        tsa:
+          enabled: true
+    stages:
+    - ${{ if gt(length(parameters.serviceConnections), 0) }}:
+      - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
+        parameters:
+          pool: ${{ parameters.pool }}
+          serviceConnections: ${{ parameters.serviceConnections }}
+    - ${{ parameters.stages }}

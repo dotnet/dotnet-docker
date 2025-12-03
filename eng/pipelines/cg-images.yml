@@ -11,12 +11,12 @@ schedules:
   always: true
 
 variables:
-- template: /eng/common/templates/variables/common.yml@self
+- template: /eng/docker-tools/templates/variables/common.yml@self
 - name: ComponentDetection.Timeout
   value: 7200 # 2 hours in seconds
 
 extends:
-  template: /eng/common/templates/1es-official.yml@self
+  template: /eng/docker-tools/templates/1es-official.yml@self
   parameters:
     stages:
     - stage: cg
@@ -33,7 +33,7 @@ extends:
               arm64:
                 arch: arm64
         steps:
-        - template: /eng/common/templates/steps/init-docker-linux.yml@self
+        - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
           parameters:
             cleanupDocker: true
         - script: >
@@ -47,4 +47,4 @@ extends:
           inputs:
             dockerImagesToScan: $(PullImages.pulledImages)
           displayName: Detect Components
-        - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
+        - template: /eng/docker-tools/templates/steps/cleanup-docker-linux.yml@self
