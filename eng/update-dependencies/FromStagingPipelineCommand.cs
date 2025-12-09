@@ -146,14 +146,18 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             return exitCode;
         }
 
-        var commitMessage = $"Update .NET {majorMinorVersionString} to {productVersions["sdk"]} SDK / {productVersions["runtime"]} Runtime";
+        var commitMessage = releaseConfig switch
+        {
+            { SdkOnly: true } => $"Update .NET {majorMinorVersionString} SDK to {productVersions["sdk"]}",
+            _ => $"Update .NET {majorMinorVersionString} to {productVersions["sdk"]} SDK / {productVersions["runtime"]} Runtime",
+        };
+
         var prTitle = $"[{options.TargetBranch}] {commitMessage}";
+        var newVersionsList = productVersions.Select(kvp => $"- {kvp.Key.ToUpper()}: {kvp.Value}");
         var prBody = $"""
             This pull request updates .NET {majorMinorVersionString} to the following versions:
 
-            - SDK: {productVersions["sdk"]}
-            - Runtime: {productVersions["runtime"]}
-            - ASP.NET Core: {productVersions["aspnet"]}
+            {string.Join(Environment.NewLine, newVersionsList)}
 
             These versions are from .NET staging pipeline run [#{options.StagingPipelineRunId}]({buildUrl}).
             """;
@@ -246,6 +250,9 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                 createPullRequest = async (commitMessage, prTitle, prBody) =>
                 {
                     logger.LogInformation("Skipping commit and pull request creation in {Mode} mode.", options.Mode);
+                    logger.LogInformation("Commit message: {CommitMessage}", commitMessage);
+                    logger.LogInformation("Pull request title: {PullRequestTitle}", prTitle);
+                    logger.LogInformation("Pull request body:\n{PullRequestBody}", prBody);
                 };
             }
 

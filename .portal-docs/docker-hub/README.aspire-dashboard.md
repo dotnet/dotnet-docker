@@ -108,7 +108,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md#full-tag-listing).
 
 # Support
 

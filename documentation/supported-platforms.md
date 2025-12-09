@@ -44,7 +44,7 @@ Windows Server support timelines can be found here: [Windows Server release info
 - Nano Server - all versions in the [Mainstream Support](https://learn.microsoft.com/lifecycle/policies/fixed#mainstream-support) phase.
 - Windows Server Core - all versions in the [Mainstream Support](https://learn.microsoft.com/lifecycle/policies/fixed#mainstream-support) phase.
 
-For scenarios where the official .NET images don't meet your needs, you will need to manage your own custom .NET images based on [Windows Server Core](https://mcr.microsoft.com/product/windows/servercore/about) or [Windows Server](https://mcr.microsoft.com/product/windows/server/about).
+For scenarios where the official .NET images don't meet your needs, you will need to manage your own custom .NET images based on [Windows Server Core](https://mcr.microsoft.com/artifact/mar/windows/servercore/about) or [Windows Server](https://mcr.microsoft.com/artifact/mar/windows/server/about).
 
 ## Architectures
 

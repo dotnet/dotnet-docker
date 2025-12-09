@@ -13,6 +13,33 @@ parameters:
     displayName: Skip Pull Request
     type: boolean
     default: false
+  - name: updateDotnet
+    displayName: Update .NET?
+    type: boolean
+    # Updates are disabled until .NET 11 Alpha images are added.
+    # Re-enable when https://github.com/dotnet/dotnet-docker/issues/6824 is resolved.
+    default: false
+  - name: updateAspire
+    displayName: Update Aspire Dashboard?
+    type: boolean
+    default: true
+  # This parameter will show up as a multi-select dropdown when queueing the pipeline
+  - name: tools
+    type: stringList
+    displayName: Tools to update
+    values:
+      - "chisel"
+      - "rocks-toolbox"
+      - "syft"
+      - "mingit"
+    # Keep the default values in sync with allowed values so that the scheduled
+    # pipeline runs always try to update all tools
+    default:
+      # Disabled due to https://github.com/dotnet/dotnet-docker/issues/6774 - re-enable when fixed.
+      # - "chisel"
+      - "rocks-toolbox"
+      - "syft"
+      - "mingit"
 
 variables:
 - template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
@@ -22,7 +49,11 @@ variables:
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
-    channel: $(channel)
+    updateDotnet: ${{ parameters.updateDotnet }}
+    vmrChannel: $(vmrChannel)
+    updateAspire: ${{ parameters.updateAspire }}
+    aspireChannel: $(aspireChannel)
+    tools: ${{ parameters.tools }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
       gitHubAuthArgs: >-
         --user $(dotnetDockerBot.userName)

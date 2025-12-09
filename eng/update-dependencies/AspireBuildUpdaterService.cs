@@ -56,11 +56,16 @@ internal class AspireBuildUpdaterService(
         var version = dashboardAssets.First().Version;
         var majorMinorVersion = VersionHelper.ResolveMajorMinorVersion(version);
 
+        // Known issue: Aspire Dashboard builds are always "preview 1".
+        // Passing in isStableRelease here keeps us from setting the product
+        // version to the full build version with the "-preview.1" suffix.
+        var productVersion = VersionHelper.ResolveProductVersion(version, isStableRelease: true);
+
         List<VariableUpdateInfo> variableUpdates =
         [
             new VariableUpdateInfo("aspire-dashboard|build-version", version),
-            new VariableUpdateInfo("aspire-dashboard|product-version", VersionHelper.ResolveProductVersion(version)),
-            new VariableUpdateInfo("aspire-dashboard|fixed-tag", VersionHelper.ResolveProductVersion(version)),
+            new VariableUpdateInfo("aspire-dashboard|product-version", productVersion),
+            new VariableUpdateInfo("aspire-dashboard|fixed-tag", productVersion),
             new VariableUpdateInfo("aspire-dashboard|minor-tag", majorMinorVersion.ToString(2)),
             new VariableUpdateInfo("aspire-dashboard|major-tag", majorMinorVersion.Major.ToString()),
         ];
