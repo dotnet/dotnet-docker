@@ -4,6 +4,8 @@
 
 # Featured Tags
 
+* `11.0-preview` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:11.0-preview`
 * `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:10.0`
 * `9.0` (Standard Support)

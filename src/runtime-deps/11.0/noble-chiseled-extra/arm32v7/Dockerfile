@@ -1,0 +1,58 @@
+FROM arm32v7/buildpack-deps:noble-curl AS chisel
+
+RUN apt-get update && apt-get install -y file
+
+RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.3.0/chisel_v1.3.0_linux_arm.tar.gz \
+    && chisel_sha384='fbfabeea4adabd7c3f7fc5b9bd09636200d68091ad3fa4cf901fd5567285b60fb0c8a4bc54e558bac3921ecf9679e7fb' \
+    && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
+    && tar --gzip --extract --no-same-owner --file chisel.tar.gz --directory /usr/bin/ \
+    && rm chisel.tar.gz \
+    && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
+    && chmod 755 /usr/bin/chisel-wrapper
+
+RUN groupadd \
+        --gid=1654 \
+        app \
+    && useradd --no-log-init \
+        --uid=1654 \
+        --gid=1654 \
+        --shell /bin/false \
+        app \
+    && install --directory --mode 0755 --owner 1654 --group 1654 "/rootfs/home/app" \
+    && mkdir --parents "/rootfs/etc" \
+    && rootOrAppRegex='^\(root\|app\):' \
+    && cat /etc/passwd | grep $rootOrAppRegex > "/rootfs/etc/passwd" \
+    && cat /etc/group | grep $rootOrAppRegex > "/rootfs/etc/group"
+
+RUN mkdir --parents /rootfs/var/lib/dpkg/ \
+    && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
+        --release ubuntu-24.04 --root /rootfs \
+            base-files_base \
+            base-files_chisel \
+            base-files_release-info \
+            ca-certificates_data \
+            libc6_libs \
+            libgcc-s1_libs \
+            libicu74_libs \
+            libssl3t64_libs \
+            libstdc++6_libs \
+            tzdata-legacy_zoneinfo \
+            tzdata_zoneinfo
+
+
+FROM scratch
+
+COPY --from=chisel /rootfs /
+
+ENV \
+    # UID of the non-root user 'app'
+    APP_UID=1654 \
+    # Configure web servers to bind to port 8080 when present
+    ASPNETCORE_HTTP_PORTS=8080 \
+    # Enable detection of running in a container
+    DOTNET_RUNNING_IN_CONTAINER=true
+
+# Workaround for https://github.com/moby/moby/issues/38710
+COPY --from=chisel --chown=$APP_UID:$APP_UID /rootfs/home/app /home/app
+
+USER $APP_UID
