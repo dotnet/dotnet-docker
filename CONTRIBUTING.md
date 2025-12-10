@@ -13,7 +13,7 @@ Please keep in mind that the GitHub issue tracker is intended for reporting **no
 If you're reporting the presence of a disclosed security vulnerability, such as a CVE reported in one of our container images, please follow our documented [guidance on vulnerability reporting](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md).
 
 If you believe you have an issue that affects the security of .NET, please do NOT create an issue and instead email your issue details to <secure@microsoft.com>.
-Your report may be eligible for our [bug bounty](https://www.microsoft.com/en-us/msrc/bounty-dot-net-core), but ONLY if it is reported through email.
+Your report may be eligible for our [bug bounty](https://www.microsoft.com/msrc/bounty-dot-net-core), but ONLY if it is reported through email.
 
 ## Bugs and Feature Requests
 

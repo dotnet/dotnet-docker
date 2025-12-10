@@ -4,7 +4,7 @@ ASP.NET Core uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/secu
 
 This document demonstrates how to develop ASP.NET Core applications with HTTPS in Docker containers. It's recommended to try the [ASP.NET Core Docker Sample](README.md) first, which is simpler because the container only exposes HTTP. This more basic tutorial will help you validate that you have the sample working correctly, before adding the complication of certificates.
 
-See [Hosting ASP.NET Core images with Docker over HTTPS](https://learn.microsoft.com/en-us/aspnet/core/security/docker-https) for production scenarios.
+See [Hosting ASP.NET Core images with Docker over HTTPS](https://learn.microsoft.com/aspnet/core/security/docker-https) for production scenarios.
 
 Windows instructions are written for PowerShell. If you are using CMD, change the format of environment variables from `${env:USERPROFILE}` to `%USERPROFILE%`.
 

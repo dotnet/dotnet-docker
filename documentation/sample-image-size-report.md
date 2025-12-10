@@ -1,44 +1,78 @@
-# .NET Container Image Size Report
+# .NET image size comparison
 
-.NET offers a variety of deployment options for applications, which pair with container images that we offer. It's possible to produce very small container images. This document summarizes the available options to help you make the best choice for your apps and environment.
+.NET offers a variety of deployment options for applications which pair well
+with the container images that we publish. It's possible to produce very small
+container images. This document summarizes the available options to help you
+make the best base image choice for your apps and environment.
 
-All images were produced from the ["releasesapi" sample](https://github.com/dotnet/dotnet-docker/tree/main/samples/releasesapi) using Ubuntu 22.04 ("jammy") images for amd64.
-Alpine images will be similar.
-The Baseline image is a standard [framework-dependent](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-framework-dependent) deployment on the ASP.NET runtime image.
-This is the largest image with the most functionality and flexibility.
-However, the new [Ubuntu Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) .NET base images can provide significantly smaller and more secure deployments for your application as demonstrated below.
+The table below shows how base image choice and publish type affects typical
+image sizes and for a simple .NET minimal web API. These images were produced
+from the ["releasesapi" sample](../samples/releasesapi).
+
+| Base Image                                 | Publish Type                  | Distroless | Globalization | Compressed Size |
+| ------------------------------------------ | ----------------------------- | ---------- | ------------- | --------------: |
+| [`aspnet:10.0`]                            | [Framework-dependent]         | ✖️ No      | ✅ Yes         |        92.48 MB |
+| [`aspnet:10.0-noble-chiseled`]             | [Framework-dependent]         | ✅ Yes      | ✖️ No         |        52.81 MB |
+| [`aspnet:10.0-noble-chiseled-extra`]       | [Framework-dependent]         | ✅ Yes      | ✅ Yes         |        67.68 MB |
+| [`runtime-deps:10.0`]                      | [Self-contained] + [Trimming] | ✖️ No      | ✖️ No         |        61.53 MB |
+| [`runtime-deps:10.0`]                      | [Self-contained] + [Trimming] | ✖️ No      | ✅ Yes         |        61.63 MB |
+| [`runtime-deps:10.0-noble-chiseled`]       | [Self-contained] + [Trimming] | ✅ Yes      | ✖️ No         |        21.86 MB |
+| [`runtime-deps:10.0-noble-chiseled-extra`] | [Self-contained] + [Trimming] | ✅ Yes      | ✅ Yes         |        36.82 MB |
+| [`runtime-deps:10.0`]                      | [Native AOT]                  | ✖️ No      | ✖️ No         |        51.27 MB |
+| [`runtime-deps:10.0`]                      | [Native AOT]                  | ✖️ No      | ✅ Yes         |        51.36 MB |
+| [`runtime-deps:10.0-noble-chiseled`]       | [Native AOT]                  | ✅ Yes      | ✖️ No         |        11.60 MB |
+| [`runtime-deps:10.0-noble-chiseled-extra`] | [Native AOT]                  | ✅ Yes      | ✅ Yes         |        26.56 MB |
+| [`aspnet:10.0-alpine`]                     | [Framework-dependent]         | ✖️ No      | ✖️ No         |        51.93 MB |
+| [`runtime-deps:10.0-alpine`]               | [Self-contained] + [Trimming] | ✖️ No      | ✖️ No         |        20.95 MB |
+| [`runtime-deps:10.0-alpine-extra`]         | [Self-contained] + [Trimming] | ✖️ No      | ✅ Yes         |        35.52 MB |
+| [`runtime-deps:10.0-alpine`]               | [Native AOT]                  | ✖️ No      | ✖️ No         |        10.69 MB |
+| [`runtime-deps:10.0-alpine-extra`]         | [Native AOT]                  | ✖️ No      | ✅ Yes         |        25.25 MB |
 
 > [!NOTE]
-> The recorded image sizes are a snapshot of deployment sizes at the time of .NET 8.0 GA.
-> Image sizes will fluctuate over time due to base image updates and updated package installations.
-> This document will not be updated over time. The key takeaway is the size *difference* between the different models.
+> Please note that these image sizes are a snapshot of deployment sizes from
+> November 2025. Image sizes will fluctuate over time due to base image and
+> package updates.
 
-## Framework-Dependent Deployment
+Watch the [announcements page](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements)
+for the latest information on new features and changes in .NET container images.
 
-| Image Kind | Base Image | Uncompressed Image Size | Compressed Image Size | % Size Savings Over Baseline[^1] |
-| --- | --- |--- | --- | --- |
-| Baseline | [`aspnet:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy/amd64/Dockerfile)| 217 MB | 90.9 MB | |
-| [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) | [`aspnet:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile)| 111 MB | 49.3 MB | 46% |
-| [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) + [ASP.NET Composite Runtime](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md#composite-net-80) | [`aspnet:8.0-jammy-chiseled-composite`](https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/8.0/jammy-chiseled-composite/amd64/Dockerfile)| 103 MB | 40.8 MB | 55% |
+## About Publishing Options
 
-## Self-Contained + Trimming Deployment
+### .NET Image Variants
 
-[Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) deployments bundle the .NET Runtime with your app so that it's able to run without the full .NET Runtime installed.
-[IL Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) for self-contained apps removes unused code from the .NET Runtime and libraries to reduce application size.
-And [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) deployment produces an app that is completely compiled to native code at build time for the smallest deployment size that .NET allows for.
+- **[Ubuntu Chiseled] images** images are a type of [distroless container image](./distroless.md)
+  that contain only a minimal set of packages with everything else removed - no
+  shell, no package manager, and no globalization support by default. This
+  results in a dramatically smaller deployment size and attack surface.
+- **`extra` images** add `icu` and `tzdata` to Alpine and Chiseled/distroless
+  images for full globalization support in .NET apps.
 
-| Image Kind | Base Image | Uncompressed Image Size | Compressed Image Size | % Size Savings Over Baseline[^1] |
-| --- | --- |--- | --- | --- |
-| [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy/amd64/Dockerfile) | 146 MB | 57.9 MB | 36% |
-| [Chiseled](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md) + [Self-contained](https://learn.microsoft.com/en-us/dotnet/core/deploying/#publish-self-contained) + [Trimming](https://learn.microsoft.com/en-us/dotnet/core/deploying/trimming/trim-self-contained) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 39.3 MB | 16.4 MB | 82% |
-| [Native AOT](https://learn.microsoft.com/en-us/dotnet/core/deploying/native-aot/) | [`runtime-deps:8.0-jammy-chiseled`](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/8.0/jammy-chiseled/amd64/Dockerfile)| 27.7 MB | 12.4 MB | 86% |
+See [.NET Image Variants](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md)
+for more details.
 
-For more information on .NET image variants and AOT images, please see the following documentation:
+### Publishing Types
 
-- [.NET Image Variants](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md)
-- [Announcement: .NET 10 AOT container images](https://github.com/dotnet/dotnet-docker/discussions/6312)
-- [Announcement: New approach for differentiating .NET 8+ images](https://github.com/dotnet/dotnet-docker/discussions/4821)
+- **[Self-contained]** deployments bundle the .NET Runtime with your app so that
+  it can run without the .NET Runtime installed.
+- **[Trimming]** for self-contained apps removes unused code from the .NET
+  Runtime and libraries to reduce application size.
+- **[Native AOT]** deployment produces an app that is compiled ahead-of-time
+  (AOT) for the smallest deployment size and startup time.
 
-Watch the [announcements page](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for the latest information on new features and changes in .NET contanier images.
+See [".NET Application Publishing Overview"](https://learn.microsoft.com/dotnet/core/deploying)
+for more details on all of the supported options for publishing .NET apps.
 
-[^1]: Percentage of size savings is based on compressed image size.
+[Ubuntu Chiseled]:                                 https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md
+[Self-contained]:                                  https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained
+[Trimming]:                                        https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained
+[Native AOT]:                                      https://learn.microsoft.com/dotnet/core/deploying/native-aot/
+[Framework-dependent]:                             https://learn.microsoft.com/dotnet/core/deploying/#publish-framework-dependent
+[`aspnet:10.0`]:                            https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble
+[`aspnet:10.0-noble-chiseled`]:             https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled
+[`aspnet:10.0-noble-chiseled-extra`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled-extra
+[`runtime-deps:10.0`]:                      https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble
+[`runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled
+[`runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled-extra
+[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.22
+[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22
+[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22-extra
