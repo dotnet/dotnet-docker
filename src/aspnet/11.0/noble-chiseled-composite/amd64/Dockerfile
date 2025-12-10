@@ -4,10 +4,11 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=11.0.0-preview.1.00000.1 \
+RUN aspnetcore_version=11.0.0-alpha.1 \
+    && aspnetcore_build_version=$aspnetcore_version.25609.108 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512 \
     && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-x64.tar.gz --directory /usr/share/dotnet \
@@ -20,13 +21,13 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:11.0.0-preview.1.00000.1-noble-chiseled-amd64
+FROM $REPO:11.0.0-alpha.1-noble-chiseled-amd64
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-preview.1.00000.1 \
+    DOTNET_VERSION=11.0.0-alpha.1 \
     # ASP.NET Core version
-    ASPNET_VERSION=11.0.0-preview.1.00000.1
+    ASPNET_VERSION=11.0.0-alpha.1
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

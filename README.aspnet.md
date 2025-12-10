@@ -89,19 +89,19 @@ For more information, see the [composite images section in the Image Variants do
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-preview.1.00000.1-noble-chiseled-amd64, 11.0-preview-noble-chiseled-amd64, 11.0.0-preview.1.00000.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-extra-amd64, 11.0-preview-noble-chiseled-extra-amd64, 11.0.0-preview.1.00000.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-composite-amd64, 11.0-preview-noble-chiseled-composite-amd64, 11.0.0-preview.1.00000.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-composite-extra-amd64, 11.0-preview-noble-chiseled-composite-extra-amd64, 11.0.0-preview.1.00000.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-alpine3.22-amd64, 11.0-preview-alpine3.22-amd64, 11.0-preview-alpine-amd64, 11.0.0-preview.1.00000.1-alpine3.22, 11.0-preview-alpine3.22, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
-11.0.0-preview.1.00000.1-alpine3.22-composite-amd64, 11.0-preview-alpine3.22-composite-amd64, 11.0-preview-alpine-composite-amd64, 11.0.0-preview.1.00000.1-alpine3.22-composite, 11.0-preview-alpine3.22-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.22-composite/amd64/Dockerfile) | Alpine 3.22
-11.0.0-preview.1.00000.1-alpine3.23-amd64, 11.0-preview-alpine3.23-amd64, 11.0.0-preview.1.00000.1-alpine3.23, 11.0-preview-alpine3.23 | [Dockerfile](src/aspnet/11.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-11.0.0-preview.1.00000.1-alpine3.23-composite-amd64, 11.0-preview-alpine3.23-composite-amd64, 11.0.0-preview.1.00000.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
-11.0.0-preview.1.00000.1-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.0-preview.1.00000.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/aspnet/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-amd64, 11.0-preview-azurelinux3.0-distroless-amd64, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-extra-amd64, 11.0-preview-azurelinux3.0-distroless-extra-amd64, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite-amd64, 11.0-preview-azurelinux3.0-distroless-composite-amd64, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite, 11.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite-extra-amd64, 11.0-preview-azurelinux3.0-distroless-composite-extra-amd64, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite-extra, 11.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-noble-chiseled-amd64, 11.0-preview-noble-chiseled-amd64, 11.0.0-alpha.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-extra-amd64, 11.0-preview-noble-chiseled-extra-amd64, 11.0.0-alpha.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-composite-amd64, 11.0-preview-noble-chiseled-composite-amd64, 11.0.0-alpha.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-composite-extra-amd64, 11.0-preview-noble-chiseled-composite-extra-amd64, 11.0.0-alpha.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-alpine3.22-amd64, 11.0-preview-alpine3.22-amd64, 11.0-preview-alpine-amd64, 11.0.0-alpha.1-alpine3.22, 11.0-preview-alpine3.22, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.22/amd64/Dockerfile) | Alpine 3.22
+11.0.0-alpha.1-alpine3.22-composite-amd64, 11.0-preview-alpine3.22-composite-amd64, 11.0-preview-alpine-composite-amd64, 11.0.0-alpha.1-alpine3.22-composite, 11.0-preview-alpine3.22-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.22-composite/amd64/Dockerfile) | Alpine 3.22
+11.0.0-alpha.1-alpine3.23-amd64, 11.0-preview-alpine3.23-amd64, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23 | [Dockerfile](src/aspnet/11.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
+11.0.0-alpha.1-alpine3.23-composite-amd64, 11.0-preview-alpine3.23-composite-amd64, 11.0.0-alpha.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
+11.0.0-alpha.1-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.0-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/aspnet/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-amd64, 11.0-preview-azurelinux3.0-distroless-amd64, 11.0.0-alpha.1-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-extra-amd64, 11.0-preview-azurelinux3.0-distroless-extra-amd64, 11.0.0-alpha.1-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-composite-amd64, 11.0-preview-azurelinux3.0-distroless-composite-amd64, 11.0.0-alpha.1-azurelinux3.0-distroless-composite, 11.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-composite-extra-amd64, 11.0-preview-azurelinux3.0-distroless-composite-extra-amd64, 11.0.0-alpha.1-azurelinux3.0-distroless-composite-extra, 11.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
 10.0.1-noble-amd64, 10.0-noble-amd64, 10.0.1-noble, 10.0-noble, 10.0.1, 10.0 | [Dockerfile](src/aspnet/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 10.0.1-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
 10.0.1-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
@@ -156,25 +156,25 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-preview.1.00000.1-noble-amd64, 11.0-preview-noble-amd64, 11.0.0-preview.1.00000.1-noble, 11.0-preview-noble, 11.0.0-preview.1.00000.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-amd64, 11.0-preview-noble-amd64, 11.0.0-alpha.1-noble, 11.0-preview-noble, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-preview.1.00000.1-noble-chiseled-arm64v8, 11.0-preview-noble-chiseled-arm64v8, 11.0.0-preview.1.00000.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-extra-arm64v8, 11.0-preview-noble-chiseled-extra-arm64v8, 11.0.0-preview.1.00000.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-composite-arm64v8, 11.0-preview-noble-chiseled-composite-arm64v8, 11.0.0-preview.1.00000.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-composite-extra-arm64v8, 11.0-preview-noble-chiseled-composite-extra-arm64v8, 11.0.0-preview.1.00000.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-alpine3.22-arm64v8, 11.0-preview-alpine3.22-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.0-preview.1.00000.1-alpine3.22, 11.0-preview-alpine3.22, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
-11.0.0-preview.1.00000.1-alpine3.22-composite-arm64v8, 11.0-preview-alpine3.22-composite-arm64v8, 11.0-preview-alpine-composite-arm64v8, 11.0.0-preview.1.00000.1-alpine3.22-composite, 11.0-preview-alpine3.22-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.22-composite/arm64v8/Dockerfile) | Alpine 3.22
-11.0.0-preview.1.00000.1-alpine3.23-arm64v8, 11.0-preview-alpine3.23-arm64v8, 11.0.0-preview.1.00000.1-alpine3.23, 11.0-preview-alpine3.23 | [Dockerfile](src/aspnet/11.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-11.0.0-preview.1.00000.1-alpine3.23-composite-arm64v8, 11.0-preview-alpine3.23-composite-arm64v8, 11.0.0-preview.1.00000.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
-11.0.0-preview.1.00000.1-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.0-preview.1.00000.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/aspnet/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-arm64v8, 11.0-preview-azurelinux3.0-distroless-arm64v8, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-extra-arm64v8, 11.0-preview-azurelinux3.0-distroless-extra-arm64v8, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite-arm64v8, 11.0-preview-azurelinux3.0-distroless-composite-arm64v8, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite, 11.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite-extra-arm64v8, 11.0-preview-azurelinux3.0-distroless-composite-extra-arm64v8, 11.0.0-preview.1.00000.1-azurelinux3.0-distroless-composite-extra, 11.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-noble-chiseled-arm64v8, 11.0-preview-noble-chiseled-arm64v8, 11.0.0-alpha.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-extra-arm64v8, 11.0-preview-noble-chiseled-extra-arm64v8, 11.0.0-alpha.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-composite-arm64v8, 11.0-preview-noble-chiseled-composite-arm64v8, 11.0.0-alpha.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-composite-extra-arm64v8, 11.0-preview-noble-chiseled-composite-extra-arm64v8, 11.0.0-alpha.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-alpine3.22-arm64v8, 11.0-preview-alpine3.22-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.0-alpha.1-alpine3.22, 11.0-preview-alpine3.22, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.22/arm64v8/Dockerfile) | Alpine 3.22
+11.0.0-alpha.1-alpine3.22-composite-arm64v8, 11.0-preview-alpine3.22-composite-arm64v8, 11.0-preview-alpine-composite-arm64v8, 11.0.0-alpha.1-alpine3.22-composite, 11.0-preview-alpine3.22-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.22-composite/arm64v8/Dockerfile) | Alpine 3.22
+11.0.0-alpha.1-alpine3.23-arm64v8, 11.0-preview-alpine3.23-arm64v8, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23 | [Dockerfile](src/aspnet/11.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
+11.0.0-alpha.1-alpine3.23-composite-arm64v8, 11.0-preview-alpine3.23-composite-arm64v8, 11.0.0-alpha.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
+11.0.0-alpha.1-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.0-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/aspnet/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-arm64v8, 11.0-preview-azurelinux3.0-distroless-arm64v8, 11.0.0-alpha.1-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-extra-arm64v8, 11.0-preview-azurelinux3.0-distroless-extra-arm64v8, 11.0.0-alpha.1-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-composite-arm64v8, 11.0-preview-azurelinux3.0-distroless-composite-arm64v8, 11.0.0-alpha.1-azurelinux3.0-distroless-composite, 11.0-preview-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-alpha.1-azurelinux3.0-distroless-composite-extra-arm64v8, 11.0-preview-azurelinux3.0-distroless-composite-extra-arm64v8, 11.0.0-alpha.1-azurelinux3.0-distroless-composite-extra, 11.0-preview-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/11.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.1-noble-arm64v8, 10.0-noble-arm64v8, 10.0.1-noble, 10.0-noble, 10.0.1, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.1-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.1-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -229,20 +229,20 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-preview.1.00000.1-noble-arm64v8, 11.0-preview-noble-arm64v8, 11.0.0-preview.1.00000.1-noble, 11.0-preview-noble, 11.0.0-preview.1.00000.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-arm64v8, 11.0-preview-noble-arm64v8, 11.0.0-alpha.1-noble, 11.0-preview-noble, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-preview.1.00000.1-noble-chiseled-arm32v7, 11.0-preview-noble-chiseled-arm32v7, 11.0.0-preview.1.00000.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-extra-arm32v7, 11.0-preview-noble-chiseled-extra-arm32v7, 11.0.0-preview.1.00000.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-composite-arm32v7, 11.0-preview-noble-chiseled-composite-arm32v7, 11.0.0-preview.1.00000.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-noble-chiseled-composite-extra-arm32v7, 11.0-preview-noble-chiseled-composite-extra-arm32v7, 11.0.0-preview.1.00000.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-preview.1.00000.1-alpine3.22-arm32v7, 11.0-preview-alpine3.22-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.0-preview.1.00000.1-alpine3.22, 11.0-preview-alpine3.22, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
-11.0.0-preview.1.00000.1-alpine3.22-composite-arm32v7, 11.0-preview-alpine3.22-composite-arm32v7, 11.0-preview-alpine-composite-arm32v7, 11.0.0-preview.1.00000.1-alpine3.22-composite, 11.0-preview-alpine3.22-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.22-composite/arm32v7/Dockerfile) | Alpine 3.22
-11.0.0-preview.1.00000.1-alpine3.23-arm32v7, 11.0-preview-alpine3.23-arm32v7, 11.0.0-preview.1.00000.1-alpine3.23, 11.0-preview-alpine3.23 | [Dockerfile](src/aspnet/11.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-11.0.0-preview.1.00000.1-alpine3.23-composite-arm32v7, 11.0-preview-alpine3.23-composite-arm32v7, 11.0.0-preview.1.00000.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
+11.0.0-alpha.1-noble-chiseled-arm32v7, 11.0-preview-noble-chiseled-arm32v7, 11.0.0-alpha.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-extra-arm32v7, 11.0-preview-noble-chiseled-extra-arm32v7, 11.0.0-alpha.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-composite-arm32v7, 11.0-preview-noble-chiseled-composite-arm32v7, 11.0.0-alpha.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-chiseled-composite-extra-arm32v7, 11.0-preview-noble-chiseled-composite-extra-arm32v7, 11.0.0-alpha.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-alpine3.22-arm32v7, 11.0-preview-alpine3.22-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.0-alpha.1-alpine3.22, 11.0-preview-alpine3.22, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.22/arm32v7/Dockerfile) | Alpine 3.22
+11.0.0-alpha.1-alpine3.22-composite-arm32v7, 11.0-preview-alpine3.22-composite-arm32v7, 11.0-preview-alpine-composite-arm32v7, 11.0.0-alpha.1-alpine3.22-composite, 11.0-preview-alpine3.22-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.22-composite/arm32v7/Dockerfile) | Alpine 3.22
+11.0.0-alpha.1-alpine3.23-arm32v7, 11.0-preview-alpine3.23-arm32v7, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23 | [Dockerfile](src/aspnet/11.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
+11.0.0-alpha.1-alpine3.23-composite-arm32v7, 11.0-preview-alpine3.23-composite-arm32v7, 11.0.0-alpha.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
 10.0.1-noble-arm32v7, 10.0-noble-arm32v7, 10.0.1-noble, 10.0-noble, 10.0.1, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.1-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.1-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.1-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.1-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
@@ -277,13 +277,13 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-preview.1.00000.1-noble-arm32v7, 11.0-preview-noble-arm32v7, 11.0.0-preview.1.00000.1-noble, 11.0-preview-noble, 11.0.0-preview.1.00000.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-noble-arm32v7, 11.0-preview-noble-arm32v7, 11.0.0-alpha.1-noble, 11.0-preview-noble, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 
 ### Nano Server 2025 amd64 Tags
 
 Tag | Dockerfile
 ---------| ---------------
-11.0.0-preview.1.00000.1-nanoserver-ltsc2025, 11.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/11.0/nanoserver-ltsc2025/amd64/Dockerfile)
+11.0.0-alpha.1-nanoserver-ltsc2025, 11.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/11.0/nanoserver-ltsc2025/amd64/Dockerfile)
 10.0.1-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
 9.0.11-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
 8.0.22-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
@@ -292,7 +292,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-11.0.0-preview.1.00000.1-windowsservercore-ltsc2025, 11.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/11.0/windowsservercore-ltsc2025/amd64/Dockerfile)
+11.0.0-alpha.1-windowsservercore-ltsc2025, 11.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/11.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 10.0.1-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 9.0.11-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
 8.0.22-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
@@ -301,7 +301,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-11.0.0-preview.1.00000.1-nanoserver-ltsc2022, 11.0-preview-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/11.0/nanoserver-ltsc2022/amd64/Dockerfile)
+11.0.0-alpha.1-nanoserver-ltsc2022, 11.0-preview-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/11.0/nanoserver-ltsc2022/amd64/Dockerfile)
 10.0.1-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
 9.0.11-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
 8.0.22-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
@@ -310,7 +310,7 @@ Tag | Dockerfile
 
 Tag | Dockerfile
 ---------| ---------------
-11.0.0-preview.1.00000.1-windowsservercore-ltsc2022, 11.0-preview-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/11.0/windowsservercore-ltsc2022/amd64/Dockerfile)
+11.0.0-alpha.1-windowsservercore-ltsc2022, 11.0-preview-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/11.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 10.0.1-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 9.0.11-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
 8.0.22-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)

@@ -13,6 +13,7 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $aspnetcore_version = '0.0.0'; `
+        $aspnetcore_build_version = $aspnetcore_version + '.25609.108'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
         `
@@ -20,8 +21,8 @@ RUN powershell -Command `
             Authorization = \"Bearer $env:ACCESSTOKEN\"; `
             'x-ms-version' = '2017-11-09'; `
         }; `
-        Invoke-WebRequest -OutFile $aspnetcore_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file -Headers $Headers; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_version/$dotnet_sha512_file -Headers $Headers; `
+        Invoke-WebRequest -OutFile $aspnetcore_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/$aspnetcore_file -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/$dotnet_sha512_file -Headers $Headers; `
         `
         if ((Get-FileHash $aspnetcore_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
