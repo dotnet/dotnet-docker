@@ -143,11 +143,11 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-alpha.1-noble-amd64, 11.0-preview-noble-amd64, 11.0.0-alpha.1-noble, 11.0-preview-noble, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-amd64, 11.0-preview-noble-chiseled-amd64, 11.0.0-alpha.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-extra-amd64, 11.0-preview-noble-chiseled-extra-amd64, 11.0.0-alpha.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-composite-amd64, 11.0-preview-noble-chiseled-composite-amd64, 11.0.0-alpha.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-composite-extra-amd64, 11.0-preview-noble-chiseled-composite-extra-amd64, 11.0.0-alpha.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-amd64, 11.0-preview-resolute-amd64, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+11.0.0-alpha.1-resolute-chiseled-amd64, 11.0-preview-resolute-chiseled-amd64, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-extra-amd64, 11.0-preview-resolute-chiseled-extra-amd64, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-composite-amd64, 11.0-preview-resolute-chiseled-composite-amd64, 11.0.0-alpha.1-resolute-chiseled-composite, 11.0-preview-resolute-chiseled-composite | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-composite-extra-amd64, 11.0-preview-resolute-chiseled-composite-extra-amd64, 11.0.0-alpha.1-resolute-chiseled-composite-extra, 11.0-preview-resolute-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
 11.0.0-alpha.1-alpine3.23-amd64, 11.0-preview-alpine3.23-amd64, 11.0-preview-alpine-amd64, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-alpine3.23-composite-amd64, 11.0-preview-alpine3.23-composite-amd64, 11.0-preview-alpine-composite-amd64, 11.0.0-alpha.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.0-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/aspnet/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
@@ -214,11 +214,11 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-alpha.1-noble-arm64v8, 11.0-preview-noble-arm64v8, 11.0.0-alpha.1-noble, 11.0-preview-noble, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-arm64v8, 11.0-preview-noble-chiseled-arm64v8, 11.0.0-alpha.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-extra-arm64v8, 11.0-preview-noble-chiseled-extra-arm64v8, 11.0.0-alpha.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-composite-arm64v8, 11.0-preview-noble-chiseled-composite-arm64v8, 11.0.0-alpha.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-composite-extra-arm64v8, 11.0-preview-noble-chiseled-composite-extra-arm64v8, 11.0.0-alpha.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-arm64v8, 11.0-preview-resolute-arm64v8, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.0-alpha.1-resolute-chiseled-arm64v8, 11.0-preview-resolute-chiseled-arm64v8, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-extra-arm64v8, 11.0-preview-resolute-chiseled-extra-arm64v8, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-composite-arm64v8, 11.0-preview-resolute-chiseled-composite-arm64v8, 11.0.0-alpha.1-resolute-chiseled-composite, 11.0-preview-resolute-chiseled-composite | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-composite-extra-arm64v8, 11.0-preview-resolute-chiseled-composite-extra-arm64v8, 11.0.0-alpha.1-resolute-chiseled-composite-extra, 11.0-preview-resolute-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
 11.0.0-alpha.1-alpine3.23-arm64v8, 11.0-preview-alpine3.23-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-alpine3.23-composite-arm64v8, 11.0-preview-alpine3.23-composite-arm64v8, 11.0-preview-alpine-composite-arm64v8, 11.0.0-alpha.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.0-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/aspnet/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
@@ -265,11 +265,11 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.0-alpha.1-noble-arm32v7, 11.0-preview-noble-arm32v7, 11.0.0-alpha.1-noble, 11.0-preview-noble, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-arm32v7, 11.0-preview-noble-chiseled-arm32v7, 11.0.0-alpha.1-noble-chiseled, 11.0-preview-noble-chiseled | [Dockerfile](src/aspnet/11.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-extra-arm32v7, 11.0-preview-noble-chiseled-extra-arm32v7, 11.0.0-alpha.1-noble-chiseled-extra, 11.0-preview-noble-chiseled-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-composite-arm32v7, 11.0-preview-noble-chiseled-composite-arm32v7, 11.0.0-alpha.1-noble-chiseled-composite, 11.0-preview-noble-chiseled-composite | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-noble-chiseled-composite-extra-arm32v7, 11.0-preview-noble-chiseled-composite-extra-arm32v7, 11.0.0-alpha.1-noble-chiseled-composite-extra, 11.0-preview-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-arm32v7, 11.0-preview-resolute-arm32v7, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.0-alpha.1-resolute-chiseled-arm32v7, 11.0-preview-resolute-chiseled-arm32v7, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-extra-arm32v7, 11.0-preview-resolute-chiseled-extra-arm32v7, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-composite-arm32v7, 11.0-preview-resolute-chiseled-composite-arm32v7, 11.0.0-alpha.1-resolute-chiseled-composite, 11.0-preview-resolute-chiseled-composite | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-composite-extra-arm32v7, 11.0-preview-resolute-chiseled-composite-extra-arm32v7, 11.0.0-alpha.1-resolute-chiseled-composite-extra, 11.0-preview-resolute-chiseled-composite-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 11.0.0-alpha.1-alpine3.23-arm32v7, 11.0-preview-alpine3.23-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/aspnet/11.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-alpine3.23-composite-arm32v7, 11.0-preview-alpine3.23-composite-arm32v7, 11.0-preview-alpine-composite-arm32v7, 11.0.0-alpha.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
 

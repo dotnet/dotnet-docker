@@ -98,8 +98,8 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.100-alpha.1-noble-amd64, 11.0-preview-noble-amd64, 11.0.100-alpha.1-noble, 11.0-preview-noble, 11.0.100-alpha.1, 11.0-preview, latest | [Dockerfile](src/sdk/11.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-11.0.100-alpha.1-noble-aot-amd64, 11.0-preview-noble-aot-amd64, 11.0.100-alpha.1-noble-aot, 11.0-preview-noble-aot, 11.0.100-alpha.1-aot, 11.0-preview-aot | [Dockerfile](src/sdk/11.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
+11.0.100-alpha.1-resolute-amd64, 11.0-preview-resolute-amd64, 11.0.100-alpha.1-resolute, 11.0-preview-resolute, 11.0.100-alpha.1, 11.0-preview, latest | [Dockerfile](src/sdk/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+11.0.100-alpha.1-resolute-aot-amd64, 11.0-preview-resolute-aot-amd64, 11.0.100-alpha.1-resolute-aot, 11.0-preview-resolute-aot, 11.0.100-alpha.1-aot, 11.0-preview-aot | [Dockerfile](src/sdk/11.0/resolute-aot/amd64/Dockerfile) | Ubuntu 26.04
 11.0.100-alpha.1-alpine3.23-amd64, 11.0-preview-alpine3.23-amd64, 11.0-preview-alpine-amd64, 11.0.100-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/sdk/11.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 11.0.100-alpha.1-alpine3.23-aot-amd64, 11.0-preview-alpine3.23-aot-amd64, 11.0-preview-alpine-aot-amd64, 11.0.100-alpha.1-alpine3.23-aot, 11.0-preview-alpine3.23-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.23-aot/amd64/Dockerfile) | Alpine 3.23
 11.0.100-alpha.1-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.100-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
@@ -133,8 +133,8 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.100-alpha.1-noble-arm64v8, 11.0-preview-noble-arm64v8, 11.0.100-alpha.1-noble, 11.0-preview-noble, 11.0.100-alpha.1, 11.0-preview, latest | [Dockerfile](src/sdk/11.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.100-alpha.1-noble-aot-arm64v8, 11.0-preview-noble-aot-arm64v8, 11.0.100-alpha.1-noble-aot, 11.0-preview-noble-aot, 11.0.100-alpha.1-aot, 11.0-preview-aot | [Dockerfile](src/sdk/11.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.100-alpha.1-resolute-arm64v8, 11.0-preview-resolute-arm64v8, 11.0.100-alpha.1-resolute, 11.0-preview-resolute, 11.0.100-alpha.1, 11.0-preview, latest | [Dockerfile](src/sdk/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.100-alpha.1-resolute-aot-arm64v8, 11.0-preview-resolute-aot-arm64v8, 11.0.100-alpha.1-resolute-aot, 11.0-preview-resolute-aot, 11.0.100-alpha.1-aot, 11.0-preview-aot | [Dockerfile](src/sdk/11.0/resolute-aot/arm64v8/Dockerfile) | Ubuntu 26.04
 11.0.100-alpha.1-alpine3.23-arm64v8, 11.0-preview-alpine3.23-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.100-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/sdk/11.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 11.0.100-alpha.1-alpine3.23-aot-arm64v8, 11.0-preview-alpine3.23-aot-arm64v8, 11.0-preview-alpine-aot-arm64v8, 11.0.100-alpha.1-alpine3.23-aot, 11.0-preview-alpine3.23-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.23-aot/arm64v8/Dockerfile) | Alpine 3.23
 11.0.100-alpha.1-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.100-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
@@ -160,7 +160,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-11.0.100-alpha.1-noble-arm32v7, 11.0-preview-noble-arm32v7, 11.0.100-alpha.1-noble, 11.0-preview-noble, 11.0.100-alpha.1, 11.0-preview, latest | [Dockerfile](src/sdk/11.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.100-alpha.1-resolute-arm32v7, 11.0-preview-resolute-arm32v7, 11.0.100-alpha.1-resolute, 11.0-preview-resolute, 11.0.100-alpha.1, 11.0-preview, latest | [Dockerfile](src/sdk/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.100-alpha.1-alpine3.23-arm32v7, 11.0-preview-alpine3.23-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.100-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/sdk/11.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
 
 ### Nano Server 2025 amd64 Tags
