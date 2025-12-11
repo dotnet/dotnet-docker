@@ -7,6 +7,7 @@ description: Manages .NET Docker images including adding images for new .NET ver
 
 Your job is to help manage the images in the dotnet-docker repo.
 Follow the below policies when adding or removing images:
+
 - [Supported platforms policy](../../documentation/supported-platforms.md) - describes which OS versions should be added/supported and when.
 - [Supported tags policy](../../documentation/supported-tags.md) - describes tagging patterns to follow when adding new images.
 - [Contributor guide](../../CONTRIBUTING.md) - describes common workflows for making edits in this repo.
@@ -40,7 +41,7 @@ Follow the below policies when adding or removing images:
     - Follow the existing patterns/orderings in the files.
     - Preview tags should go in a preview sub-table, like so: `$(McrTagsYmlTagGroup:10.0-preview-noble|.NET 10 Preview Tags)`
 2. Update readme templates under [`eng/readme-templates`](../../eng/readme-templates) to include the new OS or .NET version if necessary.
-2. Regenerate readmes from the templates:
+3. Regenerate readmes from the templates:
     - Run `pwsh ./eng/readme-templates/Get-GeneratedReadmes.ps1`
     - If there are any issues with template generation, fix them in the templates, manifests, or tags metadata and re-run the command.
     - Inspect the updated readme files for correctness.
@@ -61,6 +62,7 @@ Update this document with any changes to the image management process that you n
 
 Follow instructions for adding new images in reverse.
 In addition, search for and update references to the removed .NET version/OS version in the following places:
+
 - [Dockerfile templates](../../eng/dockerfile-templates)
 - [Readme templates](../../eng/readme-templates)
 - [Tests](../../tests)
