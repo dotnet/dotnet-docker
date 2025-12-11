@@ -1,6 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM amd64/buildpack-deps:noble-curl AS installer
+FROM amd64/buildpack-deps:resolute-curl AS installer
 
 ARG ACCESSTOKEN
 
@@ -19,7 +19,7 @@ RUN dotnet_sdk_version=0.0.0 \
 
 
 # .NET SDK image
-FROM $REPO:0.0.0-noble-amd64
+FROM $REPO:0.0.0-resolute-amd64
 
 ENV \
     # Do not generate certificate
@@ -33,7 +33,7 @@ ENV \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-24.04 \
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-Ubuntu-26.04 \
     # Workaround for https://github.com/PowerShell/PowerShell/issues/20685
     DOTNET_ROLL_FORWARD=Major
 

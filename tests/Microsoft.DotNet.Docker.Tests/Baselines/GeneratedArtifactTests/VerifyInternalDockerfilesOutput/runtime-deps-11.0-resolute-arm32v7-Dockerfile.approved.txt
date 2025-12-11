@@ -1,4 +1,4 @@
-FROM ubuntu.azurecr.io/ubuntu:noble
+FROM ubuntu.azurecr.io/ubuntu:resolute
 
 ENV \
     # UID of the non-root user 'app'
@@ -15,11 +15,10 @@ RUN apt-get update \
         # .NET dependencies
         libc6 \
         libgcc-s1 \
-        libicu74 \
+        libicu76 \
         libssl3t64 \
         libstdc++6 \
         tzdata \
-        tzdata-legacy \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user and group
