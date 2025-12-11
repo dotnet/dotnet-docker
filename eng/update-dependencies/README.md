@@ -33,9 +33,16 @@ removal tracked by [this GitHub issue](https://github.com/dotnet/docker-tools/is
 
 ### .NET dependencies
 
-If the .NET dependency can be resolved from a BAR (build asset registry) build,
-you may be able to add support to the [BuildUpdaterService](./BuildUpdaterService.cs),
-or adapt its code for a similar use.
+To add support for new .NET repos to the `from-build` and `from-channel`
+commands:
+
+- Add the new repo to the [`BuildRepo`](./BuildRepo.cs) enum.
+- Update the [GetBuildRepo()](./BuildExtensions.cs) extension method to support
+  the new enum value.
+- Implement a new [`IBuildUpdaterService`](./IBuildUpdaterService.cs), using
+  existing implementations as a reference.
+- Register a new keyed singleton in [Program.cs](./Program.cs) using the new
+  repo enum value as the key.
 
 If the dependency can be resolved from a pipeline artifact, GitHub release,
 static file, or something similar, then you may be able to treat it like an

@@ -6,15 +6,16 @@ ARG ACCESSTOKEN
 
 # Install .NET SDK
 RUN dotnet_sdk_version=0.0.0 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version \
     && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
-        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
-    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz" | sha512sum -c - \
+        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
-        dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-        dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512
+        dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz \
+        dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz.sha512
 
 
 # .NET SDK image

@@ -1,6 +1,6 @@
 # Featured Tags
 
-* `10.0` (Release Candidate)
+* `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:10.0`
 * `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:9.0`
@@ -50,7 +50,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor](https://hub.docker.com/r/microsoft/dotnet-monitor/): .NET Monitor Tool
-* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): .NET Aspire Dashboard
+* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): Aspire Dashboard
 * [dotnet/nightly/sdk](https://hub.docker.com/r/microsoft/dotnet-nightly-sdk/): .NET SDK (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
@@ -61,7 +61,7 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/sdk/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.sdk.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/sdk/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.sdk.md#full-tag-listing).
 
 # Support
 

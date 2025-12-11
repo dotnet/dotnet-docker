@@ -32,7 +32,7 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor](https://hub.docker.com/r/microsoft/dotnet-monitor/): .NET Monitor Tool
-* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): .NET Aspire Dashboard
+* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): Aspire Dashboard
 * [dotnet/nightly/monitor/base](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor-base/): .NET Monitor Base (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
@@ -43,7 +43,7 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/monitor/base/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor-base.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/base/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor-base.md#full-tag-listing).
 
 # Support
 

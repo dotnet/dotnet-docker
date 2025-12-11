@@ -18,7 +18,7 @@ parameters:
   type: string
 
 extends:
-  template: /eng/common/templates/1es.yml@self
+  template: /eng/docker-tools/templates/1es.yml@self
   parameters:
     stages:
     - stage: SyncReleaseBranchesStage
@@ -46,14 +46,21 @@ extends:
             scriptType: pscore
             scriptLocation: inlineScript
             addSpnToEnvironment: true
+            # $(Build.SourceBranch) always has a refs/heads/ prefix when this pipeline is triggered from a branch.
+            # The update-dependencies tool doesn't expect the prefix, so we need to remove it.
             inlineScript: >-
+              $sourceBranch = "${{ parameters.sourceBranch }}";
+              $sourceBranch = $sourceBranch -replace "refs/heads/", "";
+              $targetBranch = "${{ parameters.targetBranch }}";
+              $targetBranch = $targetBranch -replace "refs/heads/", "";
+
               dotnet run --configuration Release --project ./eng/update-dependencies/update-dependencies.csproj --
               sync-internal-release
               --azdo-organization "$env:SYSTEM_COLLECTIONURI"
               --azdo-project "$env:SYSTEM_TEAMPROJECT"
               --azdo-repo "$env:BUILD_REPOSITORY_NAME"
-              --source-branch "${{ parameters.sourceBranch }}"
-              --target-branch "${{ parameters.targetBranch }}"
+              --source-branch "$sourceBranch"
+              --target-branch "$targetBranch"
               --pr-branch-prefix "pr"
               --user "$env:DOTNETDOCKERBOT_USERNAME"
               --email "$env:DOTNETDOCKERBOT_EMAIL"

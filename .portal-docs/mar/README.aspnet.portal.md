@@ -6,7 +6,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `10.0` (Release Candidate)
+* `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:10.0`
 * `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/aspnet:9.0`
@@ -18,18 +18,18 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/sdk](https://mcr.microsoft.com/product/dotnet/sdk/about): .NET SDK
-* [dotnet/runtime](https://mcr.microsoft.com/product/dotnet/runtime/about): .NET Runtime
-* [dotnet/runtime-deps](https://mcr.microsoft.com/product/dotnet/runtime-deps/about): .NET Runtime Dependencies
-* [dotnet/monitor](https://mcr.microsoft.com/product/dotnet/monitor/about): .NET Monitor Tool
-* [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): .NET Aspire Dashboard
-* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
+* [dotnet/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/sdk/about): .NET SDK
+* [dotnet/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/runtime/about): .NET Runtime
+* [dotnet/runtime-deps](https://mcr.microsoft.com/artifact/mar/dotnet/runtime-deps/about): .NET Runtime Dependencies
+* [dotnet/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/about): .NET Monitor Tool
+* [dotnet/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about): Aspire Dashboard
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 
 * [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
+* [dotnet/framework/samples](https://mcr.microsoft.com/artifact/mar/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
 
 ## Usage
 
@@ -37,7 +37,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 ### Container sample: Run a web application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://mcr.microsoft.com/product/dotnet/samples/about), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
 
 Type the following command to run a sample web application:
 

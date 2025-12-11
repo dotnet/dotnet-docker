@@ -1,0 +1,5 @@
+[*.cs]
+# CS1591: Missing XML comment for publicly visible type or member
+# https://learn.microsoft.com/dotnet/csharp/language-reference/compiler-messages/cs1591
+# Since this is a shared project, public members should be documented.
+dotnet_diagnostic.CS1591.severity = suggestion

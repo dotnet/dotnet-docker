@@ -2,16 +2,47 @@ trigger: none
 pr: none
 
 parameters:
-- name: channel
-  displayName: BAR build channel to read .NET versions from (see aka.ms/bar)
+- name: updateDotnet
+  displayName: Update .NET?
+  type: boolean
+  default: true
+- name: vmrChannel
+  displayName: .NET VMR build channel (see aka.ms/bar)
   type: string
   default: ""
+- name: updateAspire
+  displayName: Update Aspire Dashboard?
+  type: boolean
+  default: false
+- name: aspireChannel
+  displayName: Aspire build channel (see aka.ms/bar)
+  type: string
+  default: ""
+# This parameter will show up as a multi-select dropdown when queueing the pipeline
+- name: tools
+  type: stringList
+  displayName: Tools to update
+  values:
+    - "chisel"
+    - "rocks-toolbox"
+    - "syft"
+    - "mingit"
+  # Keep the default values in sync with allowed values so that the scheduled
+  # pipeline runs always try to update all tools
+  default:
+    - "chisel"
+    - "rocks-toolbox"
+    - "syft"
+    - "mingit"
 
 variables:
-- template: /eng/common/templates/variables/dotnet/common.yml@self
+- template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
 - group: DotNet-Docker-Common-2
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
-    channel: ${{ parameters.channel }}
+    vmrChannel: ${{ parameters.vmrChannel }}
+    aspireChannel: ${{ parameters.aspireChannel }}
+    updateDotnet: ${{ parameters.updateDotnet }}
+    tools: ${{ parameters.tools }}

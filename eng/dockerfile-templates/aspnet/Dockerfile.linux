@@ -57,6 +57,6 @@ RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
 # ASP.NET Core image
 FROM {{runtimeBaseTag}}
 
-{{InsertTemplate("Dockerfile.envs", ["is-internal": isInternal])}}
+{{InsertTemplate("Dockerfile.envs")}}
 
 COPY --from=installer ["{{copyFromSrcPath}}", "{{copyFromDstPath}}"]

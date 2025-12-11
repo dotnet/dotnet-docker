@@ -1,19 +1,19 @@
-# .NET Aspire Dashboard
+# Aspire Dashboard
 
 ## Featured Tags
 
-* `9.5`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:9.5`
+* `13`
+  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:13`
 
 ## About
 
-This image contains the .NET Aspire Dashboard.
+This image contains the Aspire Dashboard.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 ## Usage
 
-The .NET Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
+The Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
 
 The dashboard shows:
 
@@ -26,9 +26,10 @@ The dashboard shows:
 The dashboard must be configured when it is started. The configuration is done via environment variables. The following environment variables are supported:
 
 * `ASPNETCORE_URLS` specifies one or more HTTP endpoints through which the dashboard frontend is served. The frontend endpoint is used to view the dashboard in a browser. Defaults to `http://localhost:18888`.
-* `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the .NET Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to `http://localhost:18889`.
+* `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to `http://localhost:18889`.
 * `DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL` specifies the [OTLP/HTTP](https://opentelemetry.io/docs/specs/otlp/#otlphttp) endpoint. This endpoint hosts an OTLP service and receives telemetry using Protobuf over HTTP. Defaults to `http://localhost:18890`.
-* `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode` and `Dashboard:Otlp:AuthMode` to `Unsecured`.
+* `ASPIRE_DASHBOARD_MCP_ENDPOINT_URL` specifies the Aspire MCP endpoint. When this value isn't specified then the MCP server is hosted with an `ASPNETCORE_URLS` endpoint. The MCP server can be disabled by configuring `Dashboard:Mcp:Disabled` to `true`. Defaults to `http://localhost:18891`.
+* `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode`, `Dashboard:Otlp:AuthMode` and `Dashboard:Mcp:AuthMode` to `Unsecured`.
 * `DOTNET_DASHBOARD_CONFIG_FILE_PATH` specifies the path for an optional JSON configuration file.
 
 #### Frontend authentication
@@ -99,7 +100,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 * [dotnet/runtime](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime.md): .NET Runtime
 * [dotnet/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md): .NET Runtime Dependencies
 * [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md): .NET Monitor Tool
-* [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): .NET Aspire Dashboard (Preview)
+* [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): Aspire Dashboard (Preview)
 * [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
@@ -113,13 +114,13 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.5.0, 9.5, 9, latest | [Dockerfile](src/aspire-dashboard/9.5/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+13.0.0, 13.0, 13, latest | [Dockerfile](src/aspire-dashboard/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
-9.5.0, 9.5, 9, latest | [Dockerfile](src/aspire-dashboard/9.5/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+13.0.0, 13.0, 13, latest | [Dockerfile](src/aspire-dashboard/arm64v8/Dockerfile) | Azure Linux 3.0
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/aspire-dashboard/tags/list) for all supported and unsupported tags.*

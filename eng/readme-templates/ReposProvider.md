@@ -13,7 +13,7 @@
         ["dotnet/runtime-deps", ".NET Runtime Dependencies"],
         ["dotnet/monitor", ".NET Monitor Tool"],
         ["dotnet/monitor/base", ".NET Monitor Base"],
-        ["dotnet/aspire-dashboard", ".NET Aspire Dashboard"]
+        ["dotnet/aspire-dashboard", "Aspire Dashboard"]
     ] ^
     set productFamilyRepos to [
         ["dotnet", ".NET", 1],

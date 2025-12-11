@@ -35,6 +35,6 @@ if (!$Branch) {
     $Branch = Get-Branch
 }
 
-& $PSScriptRoot/../common/Invoke-ImageBuilder.ps1 `
+& $PSScriptRoot/../docker-tools/Invoke-ImageBuilder.ps1 `
     -ImageBuilderArgs "generateDockerfiles $CustomImageBuilderArgs --var branch=$Branch --no-version-logging" `
     -OnCommandExecuted $onDockerfilesGenerated

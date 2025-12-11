@@ -63,13 +63,13 @@ function GetPath {
 Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
-$EngCommonDir = "$PSScriptRoot/../eng/common"
+$DockerToolsDir = "$PSScriptRoot/../eng/docker-tools"
 
 $DotnetInstallDir = "$PSScriptRoot/../.dotnet"
-& $EngCommonDir/Install-DotNetSdk.ps1 -InstallPath $DotnetInstallDir
+& $DockerToolsDir/Install-DotNetSdk.ps1 -InstallPath $DotnetInstallDir
 
 # Ensure that ImageBuilder image is pulled because some tests require it
-& $EngCommonDir/Get-ImageBuilder.ps1
+& $DockerToolsDir/Get-ImageBuilder.ps1
 
 $activeOS = docker version -f "{{ .Server.Os }}"
 
@@ -132,7 +132,7 @@ Try {
     if ($TestCategories) {
         # Construct an expression that filters the test to each of the
         # selected TestCategories (using an OR operator between each category).
-        # See https://docs.microsoft.com/en-us/dotnet/core/testing/selective-unit-tests
+        # See https://docs.microsoft.com/dotnet/core/testing/selective-unit-tests
         $TestCategories | ForEach-Object {
             if ($testFilter) {
                 $testFilter += "|"

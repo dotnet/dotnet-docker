@@ -16,18 +16,18 @@ parameters:
   displayName: CG Dry Run
 
 variables:
-- template: /eng/common/templates/variables/common.yml@self
+- template: /eng/docker-tools/templates/variables/common.yml@self
 - name: skipComponentGovernanceDetection
   value: false
 
 extends:
-  template: /eng/common/templates/1es-official.yml@self
+  template: /eng/docker-tools/templates/1es-official.yml@self
   parameters:
     stages:
     - stage: CgDetection
       displayName: CG Detection
       jobs:
-      - template: /eng/common/templates/jobs/cg-build-projects.yml@self
+      - template: /eng/docker-tools/templates/jobs/cg-build-projects.yml@self
         parameters:
           # This should match the latest .NET version used across all projects in the repo, including samples.
           # Otherwise, the pipeline will fail to build projects.

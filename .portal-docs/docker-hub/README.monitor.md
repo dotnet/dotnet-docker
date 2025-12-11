@@ -1,5 +1,7 @@
 # Featured Tags
 
+* `10` (Long-Term Support)
+  * `docker pull mcr.microsoft.com/dotnet/monitor:10`
 * `9` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor:9`
 * `8` (Long-Term Support)
@@ -31,7 +33,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor/base](https://hub.docker.com/r/microsoft/dotnet-monitor-base/): .NET Monitor Base
-* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): .NET Aspire Dashboard
+* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): Aspire Dashboard
 * [dotnet/nightly/monitor](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
@@ -42,7 +44,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/monitor/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md#full-tag-listing).
 
 # Support
 

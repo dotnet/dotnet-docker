@@ -10,7 +10,9 @@
 * `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`^
-elif match(SHORT_REPO, "monitor"):* `9` (Standard Support)
+elif match(SHORT_REPO, "monitor"):* `10` (Long-Term Support)
+  * `docker pull {{FULL_REPO}}:10`
+* `9` (Standard Support)
   * `docker pull {{FULL_REPO}}:9`
 * `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`^
@@ -18,11 +20,11 @@ elif match(REPO, "monitor/base"):* `9` (Standard Support)
   * `docker pull {{FULL_REPO}}:9`
 * `8` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:8`^
-elif match(REPO, "aspire-dashboard"):* `9.5`
-  * `docker pull {{FULL_REPO}}:9.5`^
+elif match(REPO, "aspire-dashboard"):* `13`
+  * `docker pull {{FULL_REPO}}:13`^
 elif match(REPO, "yarp"):* `2.3-preview`
   * `docker pull {{FULL_REPO}}:2.3-preview`^
-else:* `10.0` (Release Candidate)
+else:* `10.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:10.0`
 * `9.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:9.0`
