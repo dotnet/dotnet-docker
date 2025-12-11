@@ -68,15 +68,15 @@ You can reference the various Dockerfiles in this repo for inspiration.
 
 ## Creating a new repo
 
-For general instructions for adding new images to this repo, follow the
-[New Image Release](/.github/ISSUE_TEMPLATE/releases/new-image-release.md) checklist.
+For general instructions for adding new images to this repo, use the
+[image management documentation](/.github/agents/image-manager.agent.md).
 
 1. - [ ] Create an issue for adding the new repo to the `nightly` branch.
          It should contain the contents of this checklist as well as the contents of the
-         [New Image Release](/.github/ISSUE_TEMPLATE/releases/new-image-release.md) checklist.
+         [image management documentation](/.github/agents/image-manager.agent.md).
 1. - [ ] Create a PR to add new repo and images to the `nightly` branch.
-         Follow the [New Image Release](/.github/ISSUE_TEMPLATE/releases/new-image-release.md)
-         checklist. The PR must include:
+         Follow the [image management documentation](/.github/agents/image-manager.agent.md).
+         The PR must include:
     1. - [ ] Unit tests.
     1. - [ ] Scenario tests.
     1. - [ ] README content. This content will show up on

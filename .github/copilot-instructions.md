@@ -25,8 +25,7 @@
 
 ## How to add images
 
-- To add new images, follow the instructions in the [new image checklist](./ISSUE_TEMPLATE/releases/new-image-release.md).
-- To add a new Linux distro, follow the instructions in the [new distro checklist](./ISSUE_TEMPLATE/releases/new-distro-release.md).
+- To add new images or a new Linux distro, use the [image management documentation](./agents/image-manager.agent.md).
 
 ## Samples
 
