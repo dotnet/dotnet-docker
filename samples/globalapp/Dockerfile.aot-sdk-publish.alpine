@@ -5,4 +5,4 @@
 # * call `dotnet publish -t PublishContainer` with/on a project that 
 #   has been configured for AOT compilation 
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:10.0-alpine-aot AS builder
-RUN apk add --no-cache docker
+RUN apk add --no-cache docker-cli
