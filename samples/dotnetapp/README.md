@@ -4,7 +4,7 @@ This sample demonstrates how to build container images for .NET console apps. Se
 
 ## Run the sample image
 
-You can start by launching a sample from our [container registry](https://mcr.microsoft.com/product/dotnet/samples/about).
+You can start by launching a sample from our [container registry](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about).
 
 ```console
 docker run --rm mcr.microsoft.com/dotnet/samples:dotnetapp-chiseled

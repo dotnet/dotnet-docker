@@ -18,7 +18,7 @@ Changing the `HostOptions.ShutdownTimeout` is the simplest way to modify the app
 
 In general, it is better to avoid situations where a network request takes a long time to process (several seconds or more). These kinds of requests tend to limit application scalability and are prone to failing due to network connection errors and client timeouts. It is better, if possible, to replace a long-running requests with a pair of related requests: the first request starts the operation, and the second request allows the client to ask for the result. If this is not feasible, you can make long-running requests cancel work promptly (and avoid being aborted by the ASP.NET host) by leveraging the `CancellationToken` that is associated with `ApplicationStopping` event.
 
-Any ASP.NET request handler [can take a `CancellationToken` as a parameter](https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/parameter-binding?view=aspnetcore-7.0#special-types). This `CancellationToken` is automatically created by ASP.NET and will be activated when the request is cancelled by the client. By default, the same `CancellationToken` will NOT be activated when `ApplicationStopping` event is raised, but you can create a "linked" `CancellationToken` to cover both cases. Here is how to do it with ASP.NET minimal API framework:
+Any ASP.NET request handler [can take a `CancellationToken` as a parameter](https://learn.microsoft.com/aspnet/core/fundamentals/minimal-apis/parameter-binding#special-types). This `CancellationToken` is automatically created by ASP.NET and will be activated when the request is cancelled by the client. By default, the same `CancellationToken` will NOT be activated when `ApplicationStopping` event is raised, but you can create a "linked" `CancellationToken` to cover both cases. Here is how to do it with ASP.NET minimal API framework:
 
 ```csharp
 app.Map("/longop/{value}", async Task<Results<StatusCodeHttpResult, Ok<String>>> (int value, CancellationToken requestCt, [FromServices] IHostApplicationLifetime hostLifetime) =>
@@ -29,13 +29,13 @@ app.Map("/longop/{value}", async Task<Results<StatusCodeHttpResult, Ok<String>>>
     {
         // Simulates long processing...
         await Task.Delay(value * 1000, effectiveCt);
-    } 
+    }
     catch (OperationCanceledException)
     {
         // Will happen if client cancels the request OR when the app is shutting down.
         return TypedResults.StatusCode(StatusCodes.Status503ServiceUnavailable);
     }
-    
+
     return TypedResults.Ok($"Worked {value} seconds, looks good");
 });
 ```
@@ -70,7 +70,7 @@ public class DelayedShutdownHostLifetime : IHostLifetime, IDisposable
     private TimeSpan _delay;
     private IEnumerable<IDisposable>? _disposables;
 
-    public DelayedShutdownHostLifetime(IHostApplicationLifetime applicationLifetime, TimeSpan delay) { 
+    public DelayedShutdownHostLifetime(IHostApplicationLifetime applicationLifetime, TimeSpan delay) {
         _applicationLifetime = applicationLifetime;
         _delay = delay;
     }
@@ -99,9 +99,9 @@ public class DelayedShutdownHostLifetime : IHostLifetime, IDisposable
 
     public void Dispose()
     {
-        foreach (var disposable in _disposables ?? Enumerable.Empty<IDisposable>()) 
+        foreach (var disposable in _disposables ?? Enumerable.Empty<IDisposable>())
         {
-            disposable.Dispose(); 
+            disposable.Dispose();
         }
     }
 }
@@ -114,7 +114,7 @@ Make ASP.NET use `DelayedShutdownHostLifetime` by adding it to the dependency in
 
 ```csharp
 builder.Services.AddSingleton<IHostLifetime>(sp => new DelayedShutdownHostLifetime(
-    sp.GetRequiredService<IHostApplicationLifetime>(), 
+    sp.GetRequiredService<IHostApplicationLifetime>(),
     TimeSpan.FromSeconds(5) // ... or whatever delay is appropriate for your service.
 ));
 ```
@@ -127,4 +127,4 @@ For background services ASP.NET provides [`IHostedService` interface and a `Back
 
 - If you are using `BackgroundService` base class, the `CancellationToken` passed to [`ExecuteAsync` method](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services?#backgroundservice-base-class) will be activated if `ApplicationStopping` event occurs. So as long as you are using this token, or a token derived from it, for all asynchronous calls, they will be automatically cancelled upon application shutdown.
 
-- If you are implementing `IHostedService` interface directly, make sure you cancel all background processing when the framework calls [`StopAsync` method](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services?#stopasync) on your service. This usually means you need to keep a reference, or a `CancellationTokenSource`, for all background tasks in progress, so that you can cancel them when `StopAsync` is called.
+- If you are implementing `IHostedService` interface directly, make sure you cancel all background processing when the framework calls [`StopAsync` method](https://learn.microsoft.com/aspnet/core/fundamentals/host/hosted-services#stopasync) on your service. This usually means you need to keep a reference, or a `CancellationTokenSource`, for all background tasks in progress, so that you can cancel them when `StopAsync` is called.
