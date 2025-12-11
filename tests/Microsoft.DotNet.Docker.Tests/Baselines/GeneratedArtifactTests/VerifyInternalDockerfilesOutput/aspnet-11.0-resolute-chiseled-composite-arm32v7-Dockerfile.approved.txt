@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM arm32v7/buildpack-deps:jammy-curl AS installer
+FROM arm32v7/buildpack-deps:resolute-curl AS installer
 
 ARG ACCESSTOKEN
 
@@ -23,7 +23,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:0.0.0-noble-chiseled-arm32v7
+FROM $REPO:0.0.0-resolute-chiseled-arm32v7
 
 ENV \
     # .NET Runtime version

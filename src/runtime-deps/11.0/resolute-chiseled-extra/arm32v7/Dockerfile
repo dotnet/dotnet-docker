@@ -1,4 +1,4 @@
-FROM arm32v7/buildpack-deps:noble-curl AS chisel
+FROM arm32v7/buildpack-deps:resolute-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
@@ -26,15 +26,15 @@ RUN groupadd \
 
 RUN mkdir --parents /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release ubuntu-24.04 --root /rootfs \
+        --release ubuntu-26.04 --root /rootfs \
             base-files_base \
             base-files_chisel \
             base-files_release-info \
             ca-certificates_data \
             libc6_libs \
             libgcc-s1_libs \
-            libicu74_libs \
-            libssl3t64_libs \
+            libicu76_libs \
+            libssl3_libs \
             libstdc++6_libs \
             tzdata-legacy_zoneinfo \
             tzdata_zoneinfo

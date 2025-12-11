@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM amd64/buildpack-deps:noble-curl AS installer
+FROM amd64/buildpack-deps:resolute-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=11.0.0-alpha.1 \
@@ -21,7 +21,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:11.0.0-alpha.1-noble-chiseled-amd64
+FROM $REPO:11.0.0-alpha.1-resolute-chiseled-amd64
 
 ENV \
     # .NET Runtime version
