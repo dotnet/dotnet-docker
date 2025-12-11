@@ -1,6 +1,16 @@
 steps:
 - powershell: |
-    $additionalPublishMcrDocsArgs = "--root /repo/.portal-docs"
+    # When multiple repos are checked out, the repo is in a subdirectory named after the repo.
+    # The buildRepoName variable is set in init-matrix-build-publish.yml, but only when mutiple
+    # repos are checked out.
+    $buildRepoName = "$env:BUILDREPONAME"
+    if ($buildRepoName) {
+        $portalDocsRoot = "/repo/$buildRepoName/.portal-docs"
+    } else {
+        $portalDocsRoot = "/repo/.portal-docs"
+    }
+
+    $additionalPublishMcrDocsArgs = "--root $portalDocsRoot"
     if ($env:SOURCEBRANCH -eq "nightly" -or $env:SYSTEM_PULLREQUEST_TARGETBRANCH -eq "nightly") {
         $additionalPublishMcrDocsArgs += " --exclude-product-family"
     }
