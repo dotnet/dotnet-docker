@@ -33,6 +33,8 @@ namespace Microsoft.DotNet.Docker.Tests
         public const string JammyChiseled = $"{Jammy}{ChiseledSuffix}";
         public const string Noble = "noble";
         public const string NobleChiseled = $"{Noble}{ChiseledSuffix}";
+        public const string Resolute = "resolute";
+        public const string ResoluteChiseled = $"{Resolute}{ChiseledSuffix}";
         public const string UbuntuChiseled = $"ubuntu{ChiseledSuffix}";
 
         // Windows
