@@ -4,11 +4,10 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:resolute-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=11.0.0-alpha.1 \
-    && aspnetcore_build_version=$aspnetcore_version.25609.108 \
+RUN aspnetcore_version=11.0.0-alpha.1.25609.108 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512 \
     && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz --directory /usr/share/dotnet \

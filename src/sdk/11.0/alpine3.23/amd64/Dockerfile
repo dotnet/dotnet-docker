@@ -3,11 +3,10 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:11.0.0-alpha.1-alpine3.23-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-alpha.1 \
-    && dotnet_sdk_build_version=$dotnet_sdk_version.25609.108 \
+RUN dotnet_sdk_version=11.0.100-alpha.1.25609.108 \
     && wget \
-        https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
-        https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
+        https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
+        https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
     && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
