@@ -112,8 +112,8 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 11.0.0-alpha.1-resolute-amd64, 11.0-preview-resolute-amd64, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
-11.0.0-alpha.1-resolute-chiseled-amd64, 11.0-preview-resolute-chiseled-amd64, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-resolute-chiseled-extra-amd64, 11.0-preview-resolute-chiseled-extra-amd64, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-amd64, 11.0-preview-resolute-chiseled-amd64, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 26.04
+11.0.0-alpha.1-resolute-chiseled-extra-amd64, 11.0-preview-resolute-chiseled-extra-amd64, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-alpine3.23-amd64, 11.0-preview-alpine3.23-amd64, 11.0-preview-alpine-amd64, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-alpine3.23-extra-amd64, 11.0-preview-alpine3.23-extra-amd64, 11.0-preview-alpine-extra-amd64, 11.0.0-alpha.1-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.0-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
@@ -165,8 +165,8 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 11.0.0-alpha.1-resolute-arm64v8, 11.0-preview-resolute-arm64v8, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.0-alpha.1-resolute-chiseled-arm64v8, 11.0-preview-resolute-chiseled-arm64v8, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-resolute-chiseled-extra-arm64v8, 11.0-preview-resolute-chiseled-extra-arm64v8, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-arm64v8, 11.0-preview-resolute-chiseled-arm64v8, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.0-alpha.1-resolute-chiseled-extra-arm64v8, 11.0-preview-resolute-chiseled-extra-arm64v8, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-alpine3.23-arm64v8, 11.0-preview-alpine3.23-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-alpine3.23-extra-arm64v8, 11.0-preview-alpine3.23-extra-arm64v8, 11.0-preview-alpine-extra-arm64v8, 11.0.0-alpha.1-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.0-alpha.1-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
@@ -206,8 +206,8 @@ Tags | Dockerfile | OS Version
 Tags | Dockerfile | OS Version
 -----------| -------------| -------------
 11.0.0-alpha.1-resolute-arm32v7, 11.0-preview-resolute-arm32v7, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
-11.0.0-alpha.1-resolute-chiseled-arm32v7, 11.0-preview-resolute-chiseled-arm32v7, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-11.0.0-alpha.1-resolute-chiseled-extra-arm32v7, 11.0-preview-resolute-chiseled-extra-arm32v7, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+11.0.0-alpha.1-resolute-chiseled-arm32v7, 11.0-preview-resolute-chiseled-arm32v7, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.0-alpha.1-resolute-chiseled-extra-arm32v7, 11.0-preview-resolute-chiseled-extra-arm32v7, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-alpine3.23-arm32v7, 11.0-preview-alpine3.23-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.0-alpha.1-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-alpine3.23-extra-arm32v7, 11.0-preview-alpine3.23-extra-arm32v7, 11.0-preview-alpine-extra-arm32v7, 11.0.0-alpha.1-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
 <!--End of generated tags-->
