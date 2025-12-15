@@ -45,13 +45,6 @@ public class TestSolution : IDisposable
 
     private string CreateTestSolutionWithSdkImage(string solutionDir, string appType)
     {
-        if (_imageData.Version.Major == 11)
-        {
-            // Project templates are not yet updated for .NET 11.
-            // Re-enable when https://github.com/dotnet/sdk/issues/50295 is resolved.
-            return "";
-        }
-
         Directory.CreateDirectory(solutionDir);
         string appProjectContainerName = _imageData.GetIdentifier($"create-{appType}");
         string testProjectContainerName = _imageData.GetIdentifier("create-test");

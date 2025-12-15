@@ -32,7 +32,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            using WebScenario scenario = new WebScenario.FxDependent(imageData, DockerHelper, OutputHelper);
+            WebScenario scenario = new WebScenario.FxDependent(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();
         }
 
