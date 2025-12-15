@@ -20,6 +20,6 @@ RUN aspnetcore_version=11.0.0-alpha.1.25609.108 \
 FROM $REPO:11.0.0-alpha.1-resolute-chiseled-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-alpha.1
+ENV ASPNET_VERSION=11.0.0-alpha.1.25609.108
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

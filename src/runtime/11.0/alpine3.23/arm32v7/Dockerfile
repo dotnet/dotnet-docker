@@ -20,7 +20,7 @@ RUN dotnet_version=11.0.0-alpha.1.25609.108 \
 FROM $REPO:11.0.0-alpha.1-alpine3.23-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-alpha.1
+ENV DOTNET_VERSION=11.0.0-alpha.1.25609.108
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

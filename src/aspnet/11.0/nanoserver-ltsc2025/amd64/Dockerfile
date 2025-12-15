@@ -33,6 +33,6 @@ RUN powershell -Command `
 FROM $REPO:11.0.0-alpha.1-nanoserver-ltsc2025
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-alpha.1
+ENV ASPNET_VERSION=11.0.0-alpha.1.25609.108
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]

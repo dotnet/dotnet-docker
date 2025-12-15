@@ -24,9 +24,9 @@ FROM $REPO:11.0.0-alpha.1-resolute-chiseled-extra-arm32v7
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-alpha.1 \
+    DOTNET_VERSION=11.0.0-alpha.1.25609.108 \
     # ASP.NET Core version
-    ASPNET_VERSION=11.0.0-alpha.1
+    ASPNET_VERSION=11.0.0-alpha.1.25609.108
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

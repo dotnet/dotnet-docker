@@ -29,7 +29,7 @@ RUN mkdir /dotnet-symlink \
 FROM $REPO:11.0.0-alpha.1-azurelinux3.0-distroless-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-alpha.1
+ENV DOTNET_VERSION=11.0.0-alpha.1.25609.108
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
