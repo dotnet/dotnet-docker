@@ -278,7 +278,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "base-files"
                     },
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException($"Unsupported distroless OS '{imageData.OS}'")
             };
 
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
@@ -340,7 +340,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "tzdata",
                         "libstdc++6"
                     ],
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException($"Unknown runtime-deps packages for OS '{imageData.OS}'")
             };
 
             // zlib is not required for .NET 9+

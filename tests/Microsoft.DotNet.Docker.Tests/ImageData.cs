@@ -162,7 +162,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 Arch.Amd64 => "amd64",
                 Arch.Arm => "arm32v7",
                 Arch.Arm64 => "arm64v8",
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException($"Unsupported architecture '{Arch}'")
             };
 
         private static string GetRegistryName(string repo, string tag)
