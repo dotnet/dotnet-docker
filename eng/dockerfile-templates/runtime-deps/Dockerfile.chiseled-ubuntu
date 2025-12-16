@@ -17,7 +17,7 @@
 
     set installerImageTag to cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl") ^
 
-    set opensslPkg to when(match(osVersionBase, "noble"), "libssl3t64", "libssl3") ^
+    set opensslPkg to when(match(osVersionBase, "jammy"), "libssl3", "libssl3t64") ^
 
     set basePkgs to [
             "base-files_base",

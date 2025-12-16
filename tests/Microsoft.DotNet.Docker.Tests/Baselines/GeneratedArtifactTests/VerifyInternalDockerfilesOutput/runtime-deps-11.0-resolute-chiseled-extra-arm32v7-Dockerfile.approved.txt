@@ -34,7 +34,7 @@ RUN mkdir --parents /rootfs/var/lib/dpkg/ \
             libc6_libs \
             libgcc-s1_libs \
             libicu76_libs \
-            libssl3_libs \
+            libssl3t64_libs \
             libstdc++6_libs \
             tzdata-legacy_zoneinfo \
             tzdata_zoneinfo
