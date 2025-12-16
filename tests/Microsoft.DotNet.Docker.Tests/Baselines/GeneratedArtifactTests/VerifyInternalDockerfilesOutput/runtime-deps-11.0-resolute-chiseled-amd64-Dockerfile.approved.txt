@@ -26,7 +26,7 @@ RUN groupadd \
 
 RUN mkdir --parents /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release ubuntu-26.04 --root /rootfs \
+        --release ubuntu-26.04 --ignore=unstable --root /rootfs \
             base-files_base \
             base-files_chisel \
             base-files_release-info \
