@@ -27,9 +27,13 @@
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
 
+    _ Ubuntu 26.04 (resolute) uses rust-based coreutils (uutils) which has case-sensitive hashsum functions ^
+    set isUUtils to find(OS_VERSION_BASE, "resolute") >= 0 ^
+    set normalizeCaseFn to when(isUUtils, "| tr 'A-F' 'a-f'", "") ^
+
     set shaValue to
         when(ARGS["sha-file"] && ARGS["sha-file-is-bare"],
-            cat("$(cat ", ARGS["sha-file"],")"),
+            cat("$(cat ", ARGS["sha-file"], normalizeCaseFn, ")"),
         when(ARGS["sha-var-name"],
             cat("$", ARGS["sha-var-name"]),
             ARGS["sha"]))

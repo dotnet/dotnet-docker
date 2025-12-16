@@ -7,7 +7,7 @@ RUN dotnet_sdk_version=11.0.100-alpha.1.25609.108 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
-    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz" | sha512sum -c - \
+    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512| tr 'A-F' 'a-f')  dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \

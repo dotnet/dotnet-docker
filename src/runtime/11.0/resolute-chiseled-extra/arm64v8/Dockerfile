@@ -8,7 +8,7 @@ RUN dotnet_version=11.0.0-alpha.1.25609.108 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
-    && echo "$(cat dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-arm64.tar.gz" | sha512sum -c - \
+    && echo "$(cat dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512| tr 'A-F' 'a-f')  dotnet-runtime-$dotnet_version-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-arm64.tar.gz --directory /usr/share/dotnet \
     && rm \
