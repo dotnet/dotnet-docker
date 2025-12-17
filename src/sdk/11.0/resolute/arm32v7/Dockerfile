@@ -1,6 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM arm32v7/buildpack-deps:resolute-curl AS installer
+FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
 RUN dotnet_sdk_version=11.0.100-alpha.1.25609.108 \
