@@ -365,8 +365,12 @@ namespace Microsoft.DotNet.Docker.Tests
             };
 
             // zlib is not required for .NET 9+
-            // https://github.com/dotnet/dotnet-docker/issues/5687
-            if (imageData.Version.Major == 8)
+            // - https://github.com/dotnet/dotnet-docker/issues/5687
+            // Starting with Ubuntu 25.04 (Plucky), zlib is a dependency of libssl3t64
+            // - https://packages.ubuntu.com/plucky/amd64/libssl3t64
+            // - https://packages.ubuntu.com/resolute/amd64/libssl3t64
+            // - https://github.com/canonical/chisel-releases/blob/ubuntu-26.04/slices/libssl3t64.yaml
+            if (imageData.Version.Major == 8 || imageData.OS.Contains(OS.Resolute))
             {
                 packages = [..packages, GetZLibPackage(imageData.OS)];
             }
