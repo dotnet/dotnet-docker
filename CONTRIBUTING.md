@@ -115,11 +115,11 @@ When editing Dockerfiles, please ensure the appropriate test changes are also ma
 
 If you want to test images that have already been built and published to a registry (e.g. official images from `mcr.microsoft.com`), you can run tests without building first by using the `-PullImages` argument with the `run-tests.ps1` script:
 
-``` console
-> ./tests/run-tests.ps1 -PullImages -Paths '*9.0*noble*'
-```
+- Run tests against published images without building locally:
 
-This will pull the images from the default registry rather than expecting them to be built locally.
+    ``` console
+    > ./tests/run-tests.ps1 -PullImages -Paths '*9.0*noble*'
+    ```
 
 #### Running Specific Tests
 
