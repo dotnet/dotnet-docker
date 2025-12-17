@@ -26,3 +26,5 @@
 !!! Changes made in this directory are subject to being overwritten by automation !!!
 
 The files in this directory are shared by all .NET Docker repos. If you need to make changes to these files, open an issue or submit a pull request in https://github.com/dotnet/docker-tools.
+
+For guidance on using this infrastructure, see the [Developer Guide](DEV-GUIDE.md).
