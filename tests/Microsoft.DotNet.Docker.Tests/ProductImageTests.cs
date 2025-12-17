@@ -313,6 +313,21 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
+                { OS: OS.ResoluteChiseled, Arch: Arch.Amd64 } =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        "gcc-15",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "libstdc++6",
+                        "libzstd",
+                        "libzstd1",
+                        "openssl",
+                        "openssl-provider-legacy",
+                        "zlib"
+                    ],
                 { OS: OS.ResoluteChiseled } =>
                     [
                         "ca-certificates",
