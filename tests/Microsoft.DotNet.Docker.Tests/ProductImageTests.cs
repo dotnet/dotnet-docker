@@ -317,12 +317,13 @@ namespace Microsoft.DotNet.Docker.Tests
                     [
                         "ca-certificates",
                         "gcc-14-base",
-                        "gcc-14",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
+                        "libstdc++6",
+                        "libzstd1",
                         "openssl",
-                        "libstdc++6"
+                        "zlib"
                     ],
                 { OS: string os } when os.Contains(OS.Noble) =>
                     [
@@ -337,7 +338,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 { OS: string os } when os.Contains(OS.Resolute) =>
                     [
                         "ca-certificates",
-                        "gcc-14-base",
+                        "gcc-15-base",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
@@ -399,8 +400,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     },
                 { OS: OS.ResoluteChiseled } => new[]
                     {
+                        "icu",
                         "libicu76",
-                        "tzdata-legacy",
                         "tzdata"
                     },
                 { OS: OS.JammyChiseled } => new[]
