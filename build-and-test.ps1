@@ -45,7 +45,7 @@ if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test")) {
 
     if ($TestCategories.Contains("pre-build"))
     {
-        & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*"
+        & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*" -CustomTestFilter $CustomTestFilter
         $TestCategories.Remove("pre-build")
     }
     else
