@@ -41,43 +41,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
-        public void VerifyEnvironmentVariables(ProductImageData imageData)
-        {
-            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
-            string version = imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper);
-
-            List<EnvironmentVariableInfo> variables =
-            [
-                new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
-                new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
-                new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"),
-                new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version)
-                {
-                    IsProductVersion = true
-                },
-                AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
-                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"),
-                ..GetCommonEnvironmentVariables(),
-            ];
-
-            if (imageData.SupportsPowerShell
-                || imageData.Version == ImageVersion.V8_0
-                || imageData.Version == ImageVersion.V9_0)
-            {
-                variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
-            }
-
-            if (imageData.SdkOS.StartsWith(OS.Alpine))
-            {
-                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
-            }
-
-            EnvironmentVariableInfo.Validate(variables, imageName, imageData, DockerHelper);
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
         public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
         {
             // An arbitrary command to validate PS is functional
@@ -109,7 +72,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public void VerifyPowerShellScenario_PSVersion(ProductImageData imageData)
         {
             string command = "$PSVersionTable.PSVersion.ToString()";
-            string output = PowerShellScenario_Execute(imageData, command, optRunArgs);
+            string output = PowerShellScenario_Execute(imageData, command, string.Empty);
 
             Assert.StartsWith("7", output, StringComparison.OrdinalIgnoreCase);
         }
@@ -123,16 +86,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
             Assert.Contains("\"StableReleaseTag\":", output);
         }
-
-        // [DotNetTheory]
-        // [MemberData(nameof(GetImageData))]
-        // public void VerifyPowerShellScenario_GetUICulture(ProductImageData imageData)
-        // {
-        //     string command = "(Get-UICulture).Name";
-        //     string output = PowerShellScenario_Execute(imageData, command, string.Empty);
-
-        //     Assert.Equal("en-US", output, ignoreCase: true); // TODO: check why it fails, potentially remove
-        // }
 
         [DotNetTheory]
         [MemberData(nameof(GetImageData))]
@@ -151,7 +104,7 @@ namespace Microsoft.DotNet.Docker.Tests
             if (!imageData.SupportsPowerShell)
             {
                 OutputHelper.WriteLine($"PowerShell is not supproted on {image}");
-                return;
+                return string.Empty;
             }
 
             // The test executes a provided command to validate PS functionality

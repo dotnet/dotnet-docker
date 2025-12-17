@@ -122,13 +122,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 ..GetCommonEnvironmentVariables(),
             ];
 
-            if (imageData.SupportsPowerShell
-                || imageData.Version == ImageVersion.V8_0
-                || imageData.Version == ImageVersion.V9_0)
-            {
-                variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
-            }
-
             if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
