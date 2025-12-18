@@ -12,17 +12,15 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
+public abstract class ProjectTemplateTestScenario : ITestScenario
 {
-    private bool _disposed;
-
+    protected static string OSDockerfileSuffix { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "windows";
     protected static string? AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : null;
     protected static string? NonRootUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
 
     protected DockerHelper DockerHelper { get; }
     protected ProductImageData ImageData { get; }
     protected ITestOutputHelper OutputHelper { get; }
-    protected TestSolution TestSolution { get; }
 
     protected virtual bool NonRootUserSupported => DockerHelper.IsLinuxContainerModeEnabled;
 
@@ -43,11 +41,9 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         DockerHelper = dockerHelper;
         ImageData = imageData;
         OutputHelper = outputHelper;
-
-        TestSolution = new(imageData, SampleName, dockerHelper, injectCustomTestCode: InjectCustomTestCode);
     }
 
-    protected string Build(string stageTarget, string[]? customBuildArgs)
+    private string Build(TestSolution testSolution, string stageTarget, string[]? customBuildArgs)
     {
         const string DockerfileName = "Dockerfile";
         string dockerfilePath = Path.Combine(DockerHelper.TestArtifactsDir, DockerfileName);
@@ -99,7 +95,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
                 tag: tag,
                 dockerfile: dockerfilePath,
                 target: stageTarget,
-                contextDir: TestSolution.SolutionDir,
+                contextDir: testSolution.SolutionDir,
                 platform: ImageData.Platform,
                 buildArgs: buildArgs.ToArray());
         }
@@ -116,10 +112,20 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
 
     public async Task ExecuteAsync()
     {
+        if (ImageData.Version.Major == 11)
+        {
+            OutputHelper.WriteLine("Skipping project template test scenario for .NET 11 since project templates are"
+                + " not updated yet. Re-enable when https://github.com/dotnet/sdk/issues/50295 is resolved.");
+            return;
+        }
+
         List<string> tags = [];
+        TestSolution? testSolution = null;
 
         try
         {
+            testSolution = new TestSolution(ImageData, SampleName, DockerHelper, InjectCustomTestCode);
+
             OutputHelper.WriteLine(
                 $"""
 
@@ -136,12 +142,12 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
             string[] customBuildArgs = [ ..CustomDockerBuildArgs, $"rid={ImageData.Rid}" ];
 
             // Build and run app on SDK image
-            string buildTag = Build(TestDockerfile.BuildStageName, customBuildArgs);
+            string buildTag = Build(testSolution, TestDockerfile.BuildStageName, customBuildArgs);
             tags.Add(buildTag);
             await RunAsync(buildTag, command: "dotnet run --no-restore");
 
             // Build and run app stage
-            string tag = Build(TestDockerfile.AppStageName, customBuildArgs);
+            string tag = Build(testSolution, TestDockerfile.AppStageName, customBuildArgs);
             tags.Add(tag);
 
             // Don't run the app if the build output is not executable
@@ -157,27 +163,9 @@ public abstract class ProjectTemplateTestScenario : ITestScenario, IDisposable
         finally
         {
             tags.ForEach(DockerHelper.DeleteImage);
+            testSolution?.Dispose();
         }
     }
 
     protected abstract Task RunAsync(string image, string? user = null, string? command = null);
-
-    protected virtual void Dispose(bool disposing)
-    {
-        if (!_disposed)
-        {
-            if (disposing)
-            {
-                TestSolution.Dispose();
-            }
-
-            _disposed = true;
-        }
-    }
-
-    public void Dispose()
-    {
-        Dispose(disposing: true);
-        GC.SuppressFinalize(this);
-    }
 }

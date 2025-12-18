@@ -28,8 +28,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyFxDependentAppScenario(ProductImageData imageData)
         {
-            using ConsoleAppScenario testScenario =
-                new ConsoleAppScenario.FxDependent(imageData, DockerHelper, OutputHelper);
+            ConsoleAppScenario testScenario = new ConsoleAppScenario.FxDependent(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
         }
 
@@ -37,8 +36,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public async Task VerifyTestProjectScenario(ProductImageData imageData)
         {
-            using ConsoleAppScenario testScenario =
-                new ConsoleAppScenario.TestProject(imageData, DockerHelper, OutputHelper);
+            ConsoleAppScenario testScenario = new ConsoleAppScenario.TestProject(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
         }
 

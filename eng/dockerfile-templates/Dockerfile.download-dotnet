@@ -45,7 +45,7 @@
       Internal/release stable builds will use product versions for both paths and filenames.
       Public stable builds still use build versions for paths but stable versions for filenames.
       Public unstable builds use build versions for both paths and filenames. ^
-    set isStableVersion to find(buildVersion, "preview") < 0 && find(buildVersion, "rc.") < 0 ^
+    set isStableVersion to find(buildVersion, "alpha") < 0 && find(buildVersion, "preview") < 0 && find(buildVersion, "rc.") < 0 ^
     set fileVersion to when(isStableVersion, productVersion, buildVersion) ^
 
     set archiveExtension to when(isWindows, ".zip", ".tar.gz") ^

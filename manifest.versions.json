@@ -91,6 +91,7 @@
     "libicu|focal": 66,
     "libicu|jammy": 70,
     "libicu|noble": 74,
+    "libicu|resolute": 76,
 
     "libssl|alpine3.22": "3",
     "libssl|alpine3.23": "3",
@@ -99,6 +100,7 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
     "libssl|noble": "3t64",
+    "libssl|resolute": "3t64",
 
     "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.52.0.windows.1/MinGit-2.52.0-64-bit.zip",
     "mingit|latest|x64|sha": "f42a561840627747ad48e6ece05a14093292d31f3393a401a7f7c780ee7695c2",
