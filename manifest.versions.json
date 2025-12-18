@@ -13,6 +13,7 @@
     "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
     "alpine|floating-tag-version": "alpine3.22",
+    "alpine|11.0|floating-tag-version": "alpine3.23",
     "alpine|10.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
@@ -30,6 +31,9 @@
     "aspnet|8.0|build-version": "8.0.22",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
 
+    "aspnet|11.0|build-version": "11.0.0-alpha.1.25609.108",
+    "aspnet-composite|11.0|build-version": "$(aspnet|11.0|build-version)",
+
     "aspnet|10.0|build-version": "10.0.1",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
@@ -43,6 +47,9 @@
     "chisel|10.0|x64|url": "$(chisel|latest|x64|url)",
     "chisel|10.0|arm|url": "$(chisel|latest|arm|url)",
     "chisel|10.0|arm64|url": "$(chisel|latest|arm64|url)",
+    "chisel|11.0|x64|url": "$(chisel|latest|x64|url)",
+    "chisel|11.0|arm|url": "$(chisel|latest|arm|url)",
+    "chisel|11.0|arm64|url": "$(chisel|latest|arm64|url)",
     "chisel|9.0|x64|url": "$(chisel|latest|x64|url)",
     "chisel|9.0|arm|url": "$(chisel|latest|arm|url)",
     "chisel|9.0|arm64|url": "$(chisel|latest|arm64|url)",
@@ -56,6 +63,9 @@
     "chisel|10.0|x64|sha384": "$(chisel|latest|x64|sha384)",
     "chisel|10.0|arm|sha384": "$(chisel|latest|arm|sha384)",
     "chisel|10.0|arm64|sha384": "$(chisel|latest|arm64|sha384)",
+    "chisel|11.0|x64|sha384": "$(chisel|latest|x64|sha384)",
+    "chisel|11.0|arm|sha384": "$(chisel|latest|arm|sha384)",
+    "chisel|11.0|arm64|sha384": "$(chisel|latest|arm64|sha384)",
     "chisel|9.0|x64|sha384": "$(chisel|latest|x64|sha384)",
     "chisel|9.0|arm|sha384": "$(chisel|latest|arm|sha384)",
     "chisel|9.0|arm64|sha384": "$(chisel|latest|arm64|sha384)",
@@ -89,11 +99,20 @@
     "dotnet|10.0|base-url|checksums|main": "$(base-url|public|maintenance|main)",
     "dotnet|10.0|base-url|checksums|nightly": "$(base-url|public|maintenance|nightly)",
 
+    "dotnet|11.0|product-version": "11.0.0-alpha.1",
+    "dotnet|11.0|fixed-tag": "$(dotnet|11.0|product-version)",
+    "dotnet|11.0|minor-tag": "11.0-preview",
+    "dotnet|11.0|base-url|main": "$(base-url|public|preview|main)",
+    "dotnet|11.0|base-url|nightly": "$(base-url|public|preview|nightly)",
+    "dotnet|11.0|base-url|checksums|main": "$(base-url|public-checksums|preview|main)",
+    "dotnet|11.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
+
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,
     "libicu|focal": 66,
     "libicu|jammy": 70,
     "libicu|noble": 74,
+    "libicu|resolute": 76,
 
     "libssl|alpine3.22": "3",
     "libssl|alpine3.23": "3",
@@ -102,6 +121,7 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
     "libssl|noble": "3t64",
+    "libssl|resolute": "3t64",
 
     "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.52.0.windows.1/MinGit-2.52.0-64-bit.zip",
     "mingit|latest|x64|sha": "f42a561840627747ad48e6ece05a14093292d31f3393a401a7f7c780ee7695c2",
@@ -111,6 +131,8 @@
     "mingit|9.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|10.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|10.0|x64|sha": "$(mingit|latest|x64|sha)",
+    "mingit|11.0|x64|url": "$(mingit|latest|x64|url)",
+    "mingit|11.0|x64|sha": "$(mingit|latest|x64|sha)",
 
     "monitor|8|major-tag": "8",
     "monitor|8.1|build-version": "8.1.3-servicing.25556.1",
@@ -172,6 +194,13 @@
     "powershell|10.0|Linux|x64|sha": "92ba2a8344f13d1c640f73d61488a582bae3ea82e4d00aad02efece3475f852855fb6f8ac37f72b4a14cdc1975af9f253d59ce72e36f3653e6b1ee87dc273f8f",
     "powershell|10.0|Windows|x64|sha": "a529408a93ca2be753d84137bff8ed95dc9301faf2da62fbd9d7bfb29fe502bfca9427736b1004884e839e3f2585ac613349f0fbbb97ea6f979b115dcf06aa0c",
 
+    "powershell|11.0|build-version": "7.6.0-preview.4",
+    "powershell|11.0|Linux.Alpine|sha": "$(powershell|10.0|Linux.Alpine|sha)",
+    "powershell|11.0|Linux|arm32|sha": "$(powershell|10.0|Linux|arm32|sha)",
+    "powershell|11.0|Linux|arm64|sha": "$(powershell|10.0|Linux|arm64|sha)",
+    "powershell|11.0|Linux|x64|sha": "$(powershell|10.0|Linux|x64|sha)",
+    "powershell|11.0|Windows|x64|sha": "$(powershell|10.0|Windows|x64|sha)",
+
     "yarp|2.3|build-version": "3.0.0-preview.1.25375.1",
     "yarp|2.3|product-version": "2.3.0-preview.5",
     "yarp|2.3|fixed-tag": "$(yarp|2.3|product-version)",
@@ -187,15 +216,18 @@
     "rocks-toolbox|8.0|url": "$(rocks-toolbox|latest|url)",
     "rocks-toolbox|9.0|url": "$(rocks-toolbox|latest|url)",
     "rocks-toolbox|10.0|url": "$(rocks-toolbox|latest|url)",
+    "rocks-toolbox|11.0|url": "$(rocks-toolbox|latest|url)",
 
     "rocks-toolbox|latest|version": "v1.2.0",
     "rocks-toolbox|8.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
+    "rocks-toolbox|11.0|version": "$(rocks-toolbox|latest|version)",
 
     "runtime|8.0|build-version": "8.0.22",
     "runtime|9.0|build-version": "9.0.11",
     "runtime|10.0|build-version": "10.0.1",
+    "runtime|11.0|build-version": "11.0.0-alpha.1.25609.108",
 
     "sdk|8.0|build-version": "8.0.416",
     "sdk|8.0|product-version": "8.0.416",
@@ -223,6 +255,15 @@
     "sdk|10.0|base-url|checksums|nightly": "$(dotnet|10.0|base-url|checksums|nightly)",
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
+
+    "sdk|11.0|build-version": "11.0.100-alpha.1.25609.108",
+    "sdk|11.0|product-version": "11.0.100-alpha.1",
+    "sdk|11.0|base-url|main": "$(dotnet|11.0|base-url|main)",
+    "sdk|11.0|base-url|nightly": "$(dotnet|11.0|base-url|nightly)",
+    "sdk|11.0|base-url|checksums|main": "$(dotnet|11.0|base-url|checksums|main)",
+    "sdk|11.0|base-url|checksums|nightly": "$(dotnet|11.0|base-url|checksums|nightly)",
+    "sdk|11.0|fixed-tag": "$(sdk|11.0|product-version)",
+    "sdk|11.0|minor-tag": "$(dotnet|11.0|minor-tag)",
 
     "syft|repo": "anchore/syft",
     "syft|version": "v1.38.2",

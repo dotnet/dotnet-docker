@@ -17,7 +17,7 @@
 
     set installerImageTag to cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl") ^
 
-    set opensslPkg to when(match(osVersionBase, "noble"), "libssl3t64", "libssl3") ^
+    set opensslPkg to when(match(osVersionBase, "jammy"), "libssl3", "libssl3t64") ^
 
     set basePkgs to [
             "base-files_base",
@@ -97,7 +97,7 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
 
 RUN mkdir --parents /rootfs/var/lib/dpkg/ \
     && chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
-        --release ubuntu-{{osVersionNumber}} --root /rootfs \{{for index, pkg in pkgs:
+        --release ubuntu-{{osVersionNumber}}{{if match(osVersionBase, "resolute"): --ignore=unstable}} --root /rootfs \{{for index, pkg in pkgs:
             {{pkg}}{{if index < len(pkgs) - 1: \}}}}
 
 

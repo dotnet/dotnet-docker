@@ -3,11 +3,14 @@
         is-standalone (optional): Whether the ENV instruction should be included ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
-    set runtimeVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
-    set isStableBranding to find(buildVersion, "preview") < 0 && find(buildVersion, "rc.") < 0 ^
+    set buildVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
+    set isStableBranding to
+        find(buildVersion, "alpha") < 0
+        && find(buildVersion, "preview") < 0
+        && find(buildVersion, "rc.") < 0 ^
     set runtimeVersion to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        VARIABLES[cat("runtime|", dotnetVersion, "|build-version")])
+        buildVersion)
 
 }}# .NET Runtime version
 {{if ARGS["is-standalone"]:ENV }}DOTNET_VERSION={{runtimeVersion}}

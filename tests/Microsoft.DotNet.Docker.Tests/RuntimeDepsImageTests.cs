@@ -38,7 +38,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            using ConsoleAppScenario testScenario =
+            ConsoleAppScenario testScenario =
                 new ConsoleAppScenario.SelfContained(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
         }
@@ -54,8 +54,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            using WebScenario testScenario =
-                new WebScenario.SelfContained(imageData, DockerHelper, OutputHelper);
+            WebScenario testScenario = new WebScenario.SelfContained(imageData, DockerHelper, OutputHelper);
             await testScenario.ExecuteAsync();
         }
 
@@ -71,7 +70,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            using WebScenario scenario = new WebScenario.Aot(imageData, DockerHelper, OutputHelper);
+            WebScenario scenario = new WebScenario.Aot(imageData, DockerHelper, OutputHelper);
             await scenario.ExecuteAsync();
         }
 
