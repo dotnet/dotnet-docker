@@ -35,7 +35,7 @@ namespace Microsoft.DotNet.Docker.Tests
         public static IEnumerable<object[]> GetImageData()
         {
             return TestData.GetImageData(DotNetImageRepo.SDK)
-                .Where(imageData => !imageData.IsDistroless)
+                .Where(imageData => imageData.SupportsPowerShell)
                 .Select(imageData => new object[] { imageData });
         }
 
