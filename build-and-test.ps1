@@ -21,7 +21,10 @@ param(
 
     # Categories of tests to run
     [ValidateSet("runtime", "runtime-deps", "aspnet", "sdk", "pre-build", "sample", "monitor", "aspire-dashboard", "yarp")]
-    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard", "yarp")
+    [string[]]$TestCategories = @("runtime", "runtime-deps", "aspnet", "sdk", "monitor", "aspire-dashboard", "yarp"),
+
+    # Custom test filter expression
+    [string]$CustomTestFilter
 )
 
 [System.Collections.ArrayList]$TestCategories = $TestCategories
@@ -42,7 +45,7 @@ if (($Mode -eq "BuildAndTest" -or $Mode -eq "Test")) {
 
     if ($TestCategories.Contains("pre-build"))
     {
-        & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*"
+        & ./tests/run-tests.ps1 -TestCategories "pre-build" -Version "*" -CustomTestFilter $CustomTestFilter
         $TestCategories.Remove("pre-build")
     }
     else
@@ -103,12 +106,14 @@ if ($Mode -eq "BuildAndTest" -or $Mode -eq "Test") {
         & ./tests/run-tests.ps1 `
             -Architecture $Architecture `
             -Paths $Paths `
-            -TestCategories $localTestCategories
+            -TestCategories $localTestCategories `
+            -CustomTestFilter $CustomTestFilter
     } else {
         & ./tests/run-tests.ps1 `
             -Version $TestVersion `
             -OSVersions @($OS) `
             -Architecture $Architecture `
-            -TestCategories @localTestCategories
+            -TestCategories @localTestCategories `
+            -CustomTestFilter $CustomTestFilter
     }
 }
