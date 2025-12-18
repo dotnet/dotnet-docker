@@ -82,10 +82,10 @@ public class PowerShellTests : ProductImageTests
     [MemberData(nameof(GetImageData))]
     public void VerifyPowerShellScenario_InvokeWebRequest(ProductImageData imageData)
     {
-        string command = "(Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/PowerShell/PowerShell/master/tools/metadata.json').Content";
+        string command = "(Invoke-WebRequest -Uri 'https://graph.microsoft.com').StatusCode";
         string output = PowerShellScenario_Execute(imageData, command, string.Empty);
 
-        Assert.Contains("\"StableReleaseTag\":", output);
+        Assert.Equal("200", output);
     }
 
     [DotNetTheory]
