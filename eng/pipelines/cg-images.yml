@@ -20,5 +20,3 @@ extends:
   parameters:
     stages:
     - template: /eng/pipelines/stages/cg-images.yml@self
-      parameters:
-        timeoutInMinutes: 120
