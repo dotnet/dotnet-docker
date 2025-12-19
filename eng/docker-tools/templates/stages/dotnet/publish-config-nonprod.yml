@@ -47,6 +47,8 @@ stages:
     internalProjectName: "internal"
     publicProjectName: "public"
 
+    # publishConfig schema is defined in src/ImageBuilder/Configuration/PublishConfiguration.cs.
+    # This will get converted to JSON and placed in appsettings.json to be loaded by ImageBuilder at runtime.
     publishConfig:
       internalMirrorAcr:
         server: $(acr-staging-test.server)
