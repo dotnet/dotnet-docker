@@ -278,7 +278,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "base-files"
                     },
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException($"Unsupported distroless OS '{imageData.OS}'")
             };
 
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
@@ -313,10 +313,47 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
+                { OS: OS.ResoluteChiseled, Arch: Arch.Amd64 } =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        "gcc-15",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "libstdc++6",
+                        "libzstd",
+                        "libzstd1",
+                        "openssl",
+                        "openssl-provider-legacy",
+                        "zlib"
+                    ],
+                { OS: OS.ResoluteChiseled } =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "libstdc++6",
+                        "libzstd1",
+                        "openssl",
+                        "zlib"
+                    ],
                 { OS: string os } when os.Contains(OS.Noble) =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "openssl",
+                        "libstdc++6"
+                    ],
+                { OS: string os } when os.Contains(OS.Resolute) =>
+                    [
+                        "ca-certificates",
+                        "gcc-15-base",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
@@ -340,12 +377,16 @@ namespace Microsoft.DotNet.Docker.Tests
                         "tzdata",
                         "libstdc++6"
                     ],
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException($"Unknown runtime-deps packages for OS '{imageData.OS}'")
             };
 
             // zlib is not required for .NET 9+
-            // https://github.com/dotnet/dotnet-docker/issues/5687
-            if (imageData.Version.Major == 8)
+            // - https://github.com/dotnet/dotnet-docker/issues/5687
+            // Starting with Ubuntu 25.04 (Plucky), zlib is a dependency of libssl3t64
+            // - https://packages.ubuntu.com/plucky/amd64/libssl3t64
+            // - https://packages.ubuntu.com/resolute/amd64/libssl3t64
+            // - https://github.com/canonical/chisel-releases/blob/ubuntu-26.04/slices/libssl3t64.yaml
+            if (imageData.Version.Major == 8 || imageData.OS.Contains(OS.Resolute))
             {
                 packages = [..packages, GetZLibPackage(imageData.OS)];
             }
@@ -370,6 +411,12 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "libicu74",
                         "tzdata-legacy",
+                        "tzdata"
+                    },
+                { OS: OS.ResoluteChiseled } => new[]
+                    {
+                        "icu",
+                        "libicu76",
                         "tzdata"
                     },
                 { OS: OS.JammyChiseled } => new[]
