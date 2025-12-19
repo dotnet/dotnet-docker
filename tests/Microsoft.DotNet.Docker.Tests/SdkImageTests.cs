@@ -122,40 +122,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 ..GetCommonEnvironmentVariables(),
             ];
 
-            if (imageData.SupportsPowerShell
-                || imageData.Version == ImageVersion.V8_0
-                || imageData.Version == ImageVersion.V9_0)
-            {
-                variables.Add(new EnvironmentVariableInfo("POWERSHELL_DISTRIBUTION_CHANNEL", allowAnyValue: true));
-            }
-
             if (imageData.SdkOS.StartsWith(OS.Alpine))
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
             }
 
             EnvironmentVariableInfo.Validate(variables, imageName, imageData, DockerHelper);
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyPowerShellScenario_DefaultUser(ProductImageData imageData)
-        {
-            PowerShellScenario_Execute(imageData, string.Empty);
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyPowerShellScenario_NonDefaultUser(ProductImageData imageData)
-        {
-            string optRunArgs = "-u 12345:12345"; // Linux containers test as non-root user
-            if (!DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                // windows containers test as Admin, default execution is as ContainerUser
-                optRunArgs = "-u ContainerAdministrator ";
-            }
-
-            PowerShellScenario_Execute(imageData, optRunArgs);
         }
 
         /// <summary>
@@ -392,27 +364,6 @@ namespace Microsoft.DotNet.Docker.Tests
             string url = $"{baseUrl}/Sdk/{sdkBuildVersion}/dotnet-sdk-{sdkFileVersionLabel}-{osType}-{architecture}.{fileType}";
 
             return url;
-        }
-
-        private void PowerShellScenario_Execute(ProductImageData imageData, string? optionalArgs = null)
-        {
-            string image = imageData.GetImage(DotNetImageRepo.SDK, DockerHelper);
-
-            if (!imageData.SupportsPowerShell)
-            {
-                OutputHelper.WriteLine($"PowerShell is not supproted on {image}");
-                return;
-            }
-
-            // A basic test which executes an arbitrary command to validate PS is functional
-            string output = DockerHelper.Run(
-                image: image,
-                name: imageData.GetIdentifier($"pwsh"),
-                optionalRunArgs: optionalArgs,
-                command: $"pwsh -c (Get-Childitem env:DOTNET_RUNNING_IN_CONTAINER).Value"
-            );
-
-            Assert.Equal(output, bool.TrueString, ignoreCase: true);
         }
 
         private record SdkContentFileInfo
