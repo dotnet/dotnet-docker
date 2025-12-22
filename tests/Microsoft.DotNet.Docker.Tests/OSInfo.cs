@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
+
 #nullable enable
 
 namespace Microsoft.DotNet.Docker.Tests;
@@ -36,7 +38,6 @@ public sealed record OSInfo(
     OSType Type,
     OSFamily Family,
     string Version,
-    string Codename,
     bool IsDistroless)
 {
     /// <summary>
@@ -50,12 +51,12 @@ public sealed record OSInfo(
             {
                 OSFamily.Alpine => string.IsNullOrEmpty(Version) ? "alpine" : $"alpine{Version}",
                 OSFamily.AzureLinux => $"azurelinux{Version}",
-                OSFamily.Debian => $"{Codename}-slim",
+                OSFamily.Debian => $"{GetDebianCodename(Version)}-slim",
                 OSFamily.Mariner => $"cbl-mariner{Version}",
-                OSFamily.Ubuntu => Codename,
+                OSFamily.Ubuntu => GetUbuntuCodename(Version),
                 OSFamily.NanoServer => $"nanoserver-{Version.ToLowerInvariant().Replace(" ", "")}",
                 OSFamily.WindowsServerCore => $"windowsservercore-{Version.ToLowerInvariant().Replace(" ", "")}",
-                _ => Codename
+                _ => throw new InvalidOperationException($"Unknown OS family: {Family}")
             };
 
             return (Family, IsDistroless) switch
@@ -66,6 +67,20 @@ public sealed record OSInfo(
             };
         }
     }
+
+    private static string GetDebianCodename(string version) => version switch
+    {
+        "12" => "bookworm",
+        _ => throw new InvalidOperationException($"Unknown Debian version: {version}")
+    };
+
+    private static string GetUbuntuCodename(string version) => version switch
+    {
+        "22.04" => "jammy",
+        "24.04" => "noble",
+        "26.04" => "resolute",
+        _ => throw new InvalidOperationException($"Unknown Ubuntu version: {version}")
+    };
 
     /// <summary>
     /// Gets the display name for this OS, combining family and version.
@@ -116,7 +131,7 @@ public sealed record OSInfo(
 
     // Alpine
     public static OSInfo AlpineFloating { get; } = new(
-        OSType.Linux, OSFamily.Alpine, "", Codename: "alpine", IsDistroless: false);
+        OSType.Linux, OSFamily.Alpine, "", IsDistroless: false);
 
     public static OSInfo Alpine321 { get; } = AlpineFloating with { Version = "3.21" };
 
@@ -126,39 +141,39 @@ public sealed record OSInfo(
 
     // Azure Linux
     public static OSInfo AzureLinux30 { get; } = new(
-        OSType.Linux, OSFamily.AzureLinux, "3.0", Codename: "azurelinux", IsDistroless: false);
+        OSType.Linux, OSFamily.AzureLinux, "3.0", IsDistroless: false);
 
     public static OSInfo AzureLinux30Distroless { get; } = AzureLinux30 with { IsDistroless = true };
 
     // Debian
     public static OSInfo BookwormSlim { get; } = new(
-        OSType.Linux, OSFamily.Debian, "12", Codename: "bookworm", IsDistroless: false);
+        OSType.Linux, OSFamily.Debian, "12", IsDistroless: false);
 
     // Mariner (CBL-Mariner)
     public static OSInfo Mariner20 { get; } = new(
-        OSType.Linux, OSFamily.Mariner, "2.0", Codename: "cbl-mariner", IsDistroless: false);
+        OSType.Linux, OSFamily.Mariner, "2.0", IsDistroless: false);
 
     public static OSInfo Mariner20Distroless { get; } = Mariner20 with { IsDistroless = true };
 
     // Ubuntu
     public static OSInfo Jammy { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "22.04", Codename: "jammy", IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "22.04", IsDistroless: false);
 
     public static OSInfo JammyChiseled { get; } = Jammy with { IsDistroless = true };
 
     public static OSInfo Noble { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "24.04", Codename: "noble", IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "24.04", IsDistroless: false);
 
     public static OSInfo NobleChiseled { get; } = Noble with { IsDistroless = true };
 
     public static OSInfo Resolute { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "26.04", Codename: "resolute", IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "26.04", IsDistroless: false);
 
     public static OSInfo ResoluteChiseled { get; } = Resolute with { IsDistroless = true };
 
     // Windows - Nano Server
     public static OSInfo NanoServer1809 { get; } = new(
-        OSType.Windows, OSFamily.NanoServer, "1809", Codename: "nanoserver", IsDistroless: false);
+        OSType.Windows, OSFamily.NanoServer, "1809", IsDistroless: false);
 
     public static OSInfo NanoServerLtsc2022 { get; } = NanoServer1809 with { Version = "LTSC 2022" };
 
@@ -166,7 +181,7 @@ public sealed record OSInfo(
 
     // Windows - Server Core
     public static OSInfo ServerCoreLtsc2019 { get; } = new(
-        OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019", Codename: "windowsservercore", IsDistroless: false);
+        OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019", IsDistroless: false);
 
     public static OSInfo ServerCoreLtsc2022 { get; } = ServerCoreLtsc2019 with { Version = "LTSC 2022" };
 
