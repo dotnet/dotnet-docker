@@ -35,7 +35,7 @@ public enum OSFamily
 public sealed record OSInfo(
     OSType Type,
     OSFamily Family,
-    string? Version,
+    string Version,
     string TagName,
     string DisplayName,
     bool IsDistroless)
@@ -75,8 +75,8 @@ public sealed record OSInfo(
     public override string ToString() => TagName;
 
     // Alpine
-    public static OSInfo Alpine { get; } = new(
-        OSType.Linux, OSFamily.Alpine, null, OS.Alpine, "Alpine", IsDistroless: false);
+    public static OSInfo AlpineFloating { get; } = new(
+        OSType.Linux, OSFamily.Alpine, "", OS.Alpine, "Alpine", IsDistroless: false);
 
     public static OSInfo Alpine321 { get; } = new(
         OSType.Linux, OSFamily.Alpine, "3.21", OS.Alpine321, "Alpine 3.21", IsDistroless: false);
@@ -88,12 +88,6 @@ public sealed record OSInfo(
         OSType.Linux, OSFamily.Alpine, "3.23", OS.Alpine323, "Alpine 3.23", IsDistroless: false);
 
     // Azure Linux
-    public static OSInfo AzureLinux { get; } = new(
-        OSType.Linux, OSFamily.AzureLinux, null, OS.AzureLinux, "Azure Linux", IsDistroless: false);
-
-    public static OSInfo AzureLinuxDistroless { get; } = new(
-        OSType.Linux, OSFamily.AzureLinux, null, OS.AzureLinuxDistroless, "Azure Linux (Distroless)", IsDistroless: true);
-
     public static OSInfo AzureLinux30 { get; } = new(
         OSType.Linux, OSFamily.AzureLinux, "3.0", OS.AzureLinux30, "Azure Linux 3.0", IsDistroless: false);
 
@@ -108,12 +102,6 @@ public sealed record OSInfo(
         OSType.Linux, OSFamily.Debian, "12", OS.BookwormSlim, "Debian 12 (Bookworm Slim)", IsDistroless: false);
 
     // Mariner (CBL-Mariner)
-    public static OSInfo Mariner { get; } = new(
-        OSType.Linux, OSFamily.Mariner, null, OS.Mariner, "CBL-Mariner", IsDistroless: false);
-
-    public static OSInfo MarinerDistroless { get; } = new(
-        OSType.Linux, OSFamily.Mariner, null, OS.MarinerDistroless, "CBL-Mariner (Distroless)", IsDistroless: true);
-
     public static OSInfo Mariner20 { get; } = new(
         OSType.Linux, OSFamily.Mariner, "2.0", OS.Mariner20, "CBL-Mariner 2.0", IsDistroless: false);
 
@@ -139,13 +127,7 @@ public sealed record OSInfo(
     public static OSInfo ResoluteChiseled { get; } = new(
         OSType.Linux, OSFamily.Ubuntu, "26.04", OS.ResoluteChiseled, "Ubuntu 26.04 (Resolute Chiseled)", IsDistroless: true);
 
-    public static OSInfo UbuntuChiseled { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, null, OS.UbuntuChiseled, "Ubuntu (Chiseled)", IsDistroless: true);
-
     // Windows - Nano Server
-    public static OSInfo NanoServer { get; } = new(
-        OSType.Windows, OSFamily.NanoServer, null, OS.NanoServer, "Nano Server", IsDistroless: false);
-
     public static OSInfo NanoServer1809 { get; } = new(
         OSType.Windows, OSFamily.NanoServer, "1809", OS.NanoServer1809, "Nano Server 1809", IsDistroless: false);
 
@@ -156,9 +138,6 @@ public sealed record OSInfo(
         OSType.Windows, OSFamily.NanoServer, "LTSC 2025", OS.NanoServerLtsc2025, "Nano Server LTSC 2025", IsDistroless: false);
 
     // Windows - Server Core
-    public static OSInfo ServerCore { get; } = new(
-        OSType.Windows, OSFamily.WindowsServerCore, null, OS.ServerCore, "Windows Server Core", IsDistroless: false);
-
     public static OSInfo ServerCoreLtsc2019 { get; } = new(
         OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019", OS.ServerCoreLtsc2019, "Windows Server Core LTSC 2019", IsDistroless: false);
 
