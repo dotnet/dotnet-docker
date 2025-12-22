@@ -35,7 +35,7 @@ internal static class OS
     public static OSInfo JammyChiseled { get; } = Jammy with { IsDistroless = true };
     public static OSInfo Noble { get; } = new(OSType.Linux, OSFamily.Ubuntu, "24.04");
     public static OSInfo NobleChiseled { get; } = Noble with { IsDistroless = true };
-    public static OSInfo Resolute { get; } = new(OSType.Linux, OSFamily.Ubuntu, "26.04");
+    public static OSInfo Resolute { get; } = new(OSType.Linux, OSFamily.Ubuntu, "26.04", IsUnstable: true);
     public static OSInfo ResoluteChiseled { get; } = Resolute with { IsDistroless = true };
 
     // Windows - Nano Server
