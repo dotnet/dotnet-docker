@@ -446,16 +446,16 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly ProductImageData[] s_linuxMonitorTestData =
         [
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.JammyChiseled,          OSTag = OS.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.JammyChiseled,          OSTag = OSInfo.UbuntuChiseled,    Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.JammyChiseled,          OSTag = OSInfo.UbuntuChiseled,    Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
             // OSTag does not correspond to OS because platform tags for Azure Linux were not added to the images
             // Use CBL-Mariner distroless for OSTag since those platform tags exist and won't require tests to understand the difference in tagging.
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = OS.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
-            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = OS.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
-            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
-            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
-            new ProductImageData { Version = V10_0, VersionFamily = V10_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
-            new ProductImageData { Version = V10_0, VersionFamily = V10_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OS.AzureLinuxDistroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OSInfo.AzureLinuxDistroless, OSTag = OSInfo.MarinerDistroless, Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V8_1, VersionFamily = V8_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OSInfo.AzureLinuxDistroless, OSTag = OSInfo.MarinerDistroless, Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OSInfo.AzureLinuxDistroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V9_0, VersionFamily = V9_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OSInfo.AzureLinuxDistroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V10_0, VersionFamily = V10_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OSInfo.AzureLinuxDistroless, OSTag = "", Arch = Arch.Amd64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
+            new ProductImageData { Version = V10_0, VersionFamily = V10_0, OS = OSInfo.AzureLinux30Distroless, OSDir = OSInfo.AzureLinuxDistroless, OSTag = "", Arch = Arch.Arm64,  SupportedImageRepos = DotNetImageRepo.Monitor | DotNetImageRepo.Monitor_Base },
         ];
 
         private static readonly ProductImageData[] s_windowsMonitorTestData =
@@ -469,7 +469,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 VersionFamily = V9_0,
                 OS = OSInfo.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.AzureLinuxDistroless,
+                OSDir = OSInfo.AzureLinuxDistroless,
                 Arch = Arch.Amd64,
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
             },
@@ -478,7 +478,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 VersionFamily = V9_0,
                 OS = OSInfo.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.AzureLinuxDistroless,
+                OSDir = OSInfo.AzureLinuxDistroless,
                 Arch = Arch.Arm64,
                 SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard
             },
@@ -491,7 +491,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 VersionFamily = V9_0,
                 OS = OSInfo.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.AzureLinuxDistroless,
+                OSDir = OSInfo.AzureLinuxDistroless,
                 Arch = Arch.Amd64,
                 SupportedImageRepos = DotNetImageRepo.Yarp,
             },
@@ -500,7 +500,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 VersionFamily = V9_0,
                 OS = OSInfo.AzureLinux30Distroless,
                 OSTag = "",
-                OSDir = OS.AzureLinuxDistroless,
+                OSDir = OSInfo.AzureLinuxDistroless,
                 Arch = Arch.Arm64,
                 SupportedImageRepos = DotNetImageRepo.Yarp
             },

@@ -109,7 +109,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string expectedUser;
             if (imageData.IsDistroless && ImageRepo != DotNetImageRepo.SDK)
             {
-                if (imageData.OS.StartsWith(OS.Mariner))
+                if (imageData.OS.Family == OSFamily.Mariner)
                 {
                     expectedUser = "app";
                 }
@@ -120,7 +120,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             // For Windows, only Nano Server defines a user, which seems wrong.
             // I've logged https://dev.azure.com/microsoft/OS/_workitems/edit/40146885 for this.
-            else if (imageData.OS.StartsWith(OS.NanoServer))
+            else if (imageData.OS.Family == OSFamily.NanoServer)
             {
                 expectedUser = "ContainerUser";
             }
@@ -256,7 +256,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
-                { OS: var os } when os.Contains(OS.AzureLinux) => new[]
+                { OS.Family: OSFamily.AzureLinux } => new[]
                     {
                         "SymCrypt",
                         "SymCrypt-OpenSSL",
@@ -266,7 +266,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: var os } when os.Contains(OS.Mariner) => new[]
+                { OS.Family: OSFamily.Mariner } => new[]
                     {
                         "distroless-packages-minimal",
                         "filesystem",
@@ -274,7 +274,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: var os } when os.Contains(OS.ChiseledSuffix) => new[]
+                { OS.Family: OSFamily.Ubuntu } => new[]
                     {
                         "base-files"
                     },
@@ -284,7 +284,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
             IEnumerable<string> packages = imageData switch
             {
-                { OS: var os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
+                { OS.Family: OSFamily.Mariner or OSFamily.AzureLinux } =>
                     [
                         "glibc",
                         "libgcc",
@@ -292,7 +292,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "libstdc++"
                     ],
-                { OS: var os } when os.Contains(OS.Jammy) =>
+                { OS: var os } when os == OSInfo.JammyChiseled =>
                     [
                         "ca-certificates",
                         "gcc-12-base",
@@ -340,7 +340,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "zlib"
                     ],
-                { OS: var os } when os.Contains(OS.Noble) =>
+                { OS: var os } when os == OSInfo.Noble =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -350,7 +350,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: var os } when os.Contains(OS.Resolute) =>
+                { OS: var os } when os == OSInfo.Resolute =>
                     [
                         "ca-certificates",
                         "gcc-15-base",
@@ -360,7 +360,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: var os } when os.Contains(OS.Alpine) =>
+                { OS.Family: OSFamily.Alpine } =>
                     [
                         "ca-certificates-bundle",
                         "libgcc",
@@ -386,7 +386,7 @@ namespace Microsoft.DotNet.Docker.Tests
             // - https://packages.ubuntu.com/plucky/amd64/libssl3t64
             // - https://packages.ubuntu.com/resolute/amd64/libssl3t64
             // - https://github.com/canonical/chisel-releases/blob/ubuntu-26.04/slices/libssl3t64.yaml
-            if (imageData.Version.Major == 8 || imageData.OS.Contains(OS.Resolute))
+            if (imageData.Version.Major == 8 || imageData.OS.Version == "26.04")
             {
                 packages = [..packages, GetZLibPackage(imageData.OS)];
             }
@@ -402,7 +402,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
-                { IsDistroless: true, OS: var os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
+                { IsDistroless: true, OS.Family: OSFamily.Mariner or OSFamily.AzureLinux } => new[]
                     {
                         "icu",
                         "tzdata"
@@ -424,7 +424,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libicu70",
                         "tzdata"
                     },
-                { OS: var os } when os.Contains(OS.Alpine) => new[]
+                { OS.Family: OSFamily.Alpine } => new[]
                     {
                         "icu-data-full",
                         "icu-libs",

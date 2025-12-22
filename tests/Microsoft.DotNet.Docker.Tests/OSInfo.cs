@@ -132,6 +132,12 @@ public sealed record OSInfo(
 
     public override string ToString() => TagName;
 
+    // String constants for special tagging cases (appliance images)
+    public const string Alpine = "alpine";
+    public const string AzureLinuxDistroless = "azurelinux-distroless";
+    public const string MarinerDistroless = "cbl-mariner-distroless";
+    public const string UbuntuChiseled = "ubuntu-chiseled";
+
     // Alpine
     public static OSInfo AlpineFloating { get; } = new(OSType.Linux, OSFamily.Alpine, "");
     public static OSInfo Alpine322 { get; } = AlpineFloating with { Version = "3.22" };
