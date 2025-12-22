@@ -11,17 +11,17 @@ namespace Microsoft.DotNet.Docker.Tests
 {
     public record ProductImageData : ImageData
     {
-        private string _sdkOS;
+        private OSInfo _sdkOS;
         private string _osTag;
         private string _osDir;
         private ImageVersion? _versionFamily;
 
-        public bool HasCustomSdk => _sdkOS != null;
+        public bool HasCustomSdk => _sdkOS is not null;
 
         public bool GlobalizationInvariantMode => !SupportsGlobalization;
 
         // PowerShell does not support Arm-based Alpine
-        public bool SupportsPowerShell => !(OS.Contains("alpine") && IsArm);
+        public bool SupportsPowerShell => !(OS.Family == OSFamily.Alpine && IsArm);
 
         /// <summary>
         /// Indicates whether the SDK version of the image supports `dnx` and
@@ -29,7 +29,7 @@ namespace Microsoft.DotNet.Docker.Tests
         /// </summary>
         public bool SupportsDnx => VersionFamily != ImageVersion.V8_0 && VersionFamily != ImageVersion.V9_0;
 
-        public string SdkOS
+        public OSInfo SdkOS
         {
             get => HasCustomSdk ? _sdkOS : OS;
             init => _sdkOS = value;
@@ -70,7 +70,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             get
             {
-                bool isSizeFocusedImage = IsDistroless || OS.Contains(Tests.OS.Alpine);
+                bool isSizeFocusedImage = IsDistroless || OS.Family == OSFamily.Alpine;
                 return ImageVariant.HasFlag(DotNetImageVariant.Extra) || !isSizeFocusedImage;
             }
         }
