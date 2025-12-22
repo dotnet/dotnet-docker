@@ -256,7 +256,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
-                { OS: string os } when os.Contains(OS.AzureLinux) => new[]
+                { OS: var os } when os.Contains(OS.AzureLinux) => new[]
                     {
                         "SymCrypt",
                         "SymCrypt-OpenSSL",
@@ -266,7 +266,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                { OS: var os } when os.Contains(OS.Mariner) => new[]
                     {
                         "distroless-packages-minimal",
                         "filesystem",
@@ -274,7 +274,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
+                { OS: var os } when os.Contains(OS.ChiseledSuffix) => new[]
                     {
                         "base-files"
                     },
@@ -284,7 +284,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
             IEnumerable<string> packages = imageData switch
             {
-                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
+                { OS: var os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
                     [
                         "glibc",
                         "libgcc",
@@ -292,7 +292,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "libstdc++"
                     ],
-                { OS: string os } when os.Contains(OS.Jammy) =>
+                { OS: var os } when os.Contains(OS.Jammy) =>
                     [
                         "ca-certificates",
                         "gcc-12-base",
@@ -302,7 +302,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: OS.NobleChiseled } =>
+                { OS: var os } when os == OSInfo.NobleChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -313,7 +313,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: OS.ResoluteChiseled, Arch: Arch.Amd64 } =>
+                { OS: var os, Arch: Arch.Amd64 } when os == OSInfo.ResoluteChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -328,7 +328,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-provider-legacy",
                         "zlib"
                     ],
-                { OS: OS.ResoluteChiseled } =>
+                { OS: var os } when os == OSInfo.ResoluteChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -340,7 +340,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "zlib"
                     ],
-                { OS: string os } when os.Contains(OS.Noble) =>
+                { OS: var os } when os.Contains(OS.Noble) =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -350,7 +350,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: string os } when os.Contains(OS.Resolute) =>
+                { OS: var os } when os.Contains(OS.Resolute) =>
                     [
                         "ca-certificates",
                         "gcc-15-base",
@@ -360,14 +360,14 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: string os } when os.Contains(OS.Alpine) =>
+                { OS: var os } when os.Contains(OS.Alpine) =>
                     [
                         "ca-certificates-bundle",
                         "libgcc",
                         "libssl3",
                         "libstdc++"
                     ],
-                { OS: OS.BookwormSlim } =>
+                { OS: var os } when os == OSInfo.BookwormSlim =>
                     [
                         "ca-certificates",
                         "libc6",
@@ -394,37 +394,37 @@ namespace Microsoft.DotNet.Docker.Tests
             return packages;
         }
 
-        private static string GetZLibPackage(string os)
+        private static string GetZLibPackage(OSInfo os)
         {
-            string[] unversionedZLibOSes = [OS.Alpine, OS.AzureLinux, OS.Mariner];
-            return unversionedZLibOSes.Where(os.Contains).Any() ? "zlib" : "zlib1g";
+            OSFamily[] unversionedZLibOSFamilies = [OSFamily.Alpine, OSFamily.AzureLinux, OSFamily.Mariner];
+            return unversionedZLibOSFamilies.Contains(os.Family) ? "zlib" : "zlib1g";
         }
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
-                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
+                { IsDistroless: true, OS: var os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
                     {
                         "icu",
                         "tzdata"
                     },
-                { OS: OS.NobleChiseled } => new[]
+                { OS: var os } when os == OSInfo.NobleChiseled => new[]
                     {
                         "libicu74",
                         "tzdata-legacy",
                         "tzdata"
                     },
-                { OS: OS.ResoluteChiseled } => new[]
+                { OS: var os } when os == OSInfo.ResoluteChiseled => new[]
                     {
                         "icu",
                         "libicu76",
                         "tzdata"
                     },
-                { OS: OS.JammyChiseled } => new[]
+                { OS: var os } when os == OSInfo.JammyChiseled => new[]
                     {
                         "libicu70",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.Alpine) => new[]
+                { OS: var os } when os.Contains(OS.Alpine) => new[]
                     {
                         "icu-data-full",
                         "icu-libs",

@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.Tests;
 /// <summary>
 /// Represents the type of operating system.
 /// </summary>
-internal enum OSType
+public enum OSType
 {
     Linux,
     Windows
@@ -18,7 +18,7 @@ internal enum OSType
 /// <summary>
 /// Represents the family or distribution of an operating system.
 /// </summary>
-internal enum OSFamily
+public enum OSFamily
 {
     Alpine,
     AzureLinux,
@@ -32,7 +32,7 @@ internal enum OSFamily
 /// <summary>
 /// Rich metadata about an operating system used in .NET Docker images.
 /// </summary>
-internal sealed record OSInfo(
+public sealed record OSInfo(
     OSType Type,
     OSFamily Family,
     string? Version,
@@ -54,6 +54,18 @@ internal sealed record OSInfo(
     /// Gets a value indicating whether this OS uses slim images.
     /// </summary>
     public bool IsSlim => TagName.Contains(OS.SlimSuffix);
+
+    /// <summary>
+    /// Checks if the TagName contains the specified value.
+    /// Provides backward compatibility with string-based OS checks.
+    /// </summary>
+    public bool Contains(string value) => TagName.Contains(value);
+
+    /// <summary>
+    /// Checks if the TagName starts with the specified value.
+    /// Provides backward compatibility with string-based OS checks.
+    /// </summary>
+    public bool StartsWith(string value) => TagName.StartsWith(value);
 
     /// <summary>
     /// Implicit conversion to string for backward compatibility with existing code.
