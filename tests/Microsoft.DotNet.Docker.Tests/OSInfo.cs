@@ -37,9 +37,31 @@ public sealed record OSInfo(
     OSFamily Family,
     string Version,
     string TagName,
-    string DisplayName,
     bool IsDistroless)
 {
+    /// <summary>
+    /// Gets the display name for this OS, combining family and version.
+    /// </summary>
+    public string DisplayName
+    {
+        get
+        {
+            string familyName = Family switch
+            {
+                OSFamily.Alpine => "Alpine",
+                OSFamily.AzureLinux => "Azure Linux",
+                OSFamily.Debian => "Debian",
+                OSFamily.Mariner => "CBL-Mariner",
+                OSFamily.Ubuntu => "Ubuntu",
+                OSFamily.NanoServer => "Nano Server",
+                OSFamily.WindowsServerCore => "Windows Server Core",
+                _ => Family.ToString()
+            };
+
+            return string.IsNullOrEmpty(Version) ? familyName : $"{familyName} {Version}";
+        }
+    }
+
     /// <summary>
     /// Gets a value indicating whether this OS is Windows-based.
     /// </summary>
@@ -76,74 +98,74 @@ public sealed record OSInfo(
 
     // Alpine
     public static OSInfo AlpineFloating { get; } = new(
-        OSType.Linux, OSFamily.Alpine, "", OS.Alpine, "Alpine", IsDistroless: false);
+        OSType.Linux, OSFamily.Alpine, "", OS.Alpine, IsDistroless: false);
 
     public static OSInfo Alpine321 { get; } = AlpineFloating with
-        { Version = "3.21", TagName = OS.Alpine321, DisplayName = "Alpine 3.21" };
+        { Version = "3.21", TagName = OS.Alpine321 };
 
     public static OSInfo Alpine322 { get; } = AlpineFloating with
-        { Version = "3.22", TagName = OS.Alpine322, DisplayName = "Alpine 3.22" };
+        { Version = "3.22", TagName = OS.Alpine322 };
 
     public static OSInfo Alpine323 { get; } = AlpineFloating with
-        { Version = "3.23", TagName = OS.Alpine323, DisplayName = "Alpine 3.23" };
+        { Version = "3.23", TagName = OS.Alpine323 };
 
     // Azure Linux
     public static OSInfo AzureLinux30 { get; } = new(
-        OSType.Linux, OSFamily.AzureLinux, "3.0", OS.AzureLinux30, "Azure Linux 3.0", IsDistroless: false);
+        OSType.Linux, OSFamily.AzureLinux, "3.0", OS.AzureLinux30, IsDistroless: false);
 
     public static OSInfo AzureLinux30Distroless { get; } = AzureLinux30 with
-        { TagName = OS.AzureLinux30Distroless, DisplayName = "Azure Linux 3.0 (Distroless)", IsDistroless = true };
+        { TagName = OS.AzureLinux30Distroless, IsDistroless = true };
 
     // Debian
     public static OSInfo Bookworm { get; } = new(
-        OSType.Linux, OSFamily.Debian, "12", OS.Bookworm, "Debian 12 (Bookworm)", IsDistroless: false);
+        OSType.Linux, OSFamily.Debian, "12", OS.Bookworm, IsDistroless: false);
 
     public static OSInfo BookwormSlim { get; } = Bookworm with
-        { TagName = OS.BookwormSlim, DisplayName = "Debian 12 (Bookworm Slim)" };
+        { TagName = OS.BookwormSlim };
 
     // Mariner (CBL-Mariner)
     public static OSInfo Mariner20 { get; } = new(
-        OSType.Linux, OSFamily.Mariner, "2.0", OS.Mariner20, "CBL-Mariner 2.0", IsDistroless: false);
+        OSType.Linux, OSFamily.Mariner, "2.0", OS.Mariner20, IsDistroless: false);
 
     public static OSInfo Mariner20Distroless { get; } = Mariner20 with
-        { TagName = OS.Mariner20Distroless, DisplayName = "CBL-Mariner 2.0 (Distroless)", IsDistroless = true };
+        { TagName = OS.Mariner20Distroless, IsDistroless = true };
 
     // Ubuntu
     public static OSInfo Jammy { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "22.04", OS.Jammy, "Ubuntu 22.04 (Jammy)", IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "22.04", OS.Jammy, IsDistroless: false);
 
     public static OSInfo JammyChiseled { get; } = Jammy with
-        { TagName = OS.JammyChiseled, DisplayName = "Ubuntu 22.04 (Jammy Chiseled)", IsDistroless = true };
+        { TagName = OS.JammyChiseled, IsDistroless = true };
 
     public static OSInfo Noble { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "24.04", OS.Noble, "Ubuntu 24.04 (Noble)", IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "24.04", OS.Noble, IsDistroless: false);
 
     public static OSInfo NobleChiseled { get; } = Noble with
-        { TagName = OS.NobleChiseled, DisplayName = "Ubuntu 24.04 (Noble Chiseled)", IsDistroless = true };
+        { TagName = OS.NobleChiseled, IsDistroless = true };
 
     public static OSInfo Resolute { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "26.04", OS.Resolute, "Ubuntu 26.04 (Resolute)", IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "26.04", OS.Resolute, IsDistroless: false);
 
     public static OSInfo ResoluteChiseled { get; } = Resolute with
-        { TagName = OS.ResoluteChiseled, DisplayName = "Ubuntu 26.04 (Resolute Chiseled)", IsDistroless = true };
+        { TagName = OS.ResoluteChiseled, IsDistroless = true };
 
     // Windows - Nano Server
     public static OSInfo NanoServer1809 { get; } = new(
-        OSType.Windows, OSFamily.NanoServer, "1809", OS.NanoServer1809, "Nano Server 1809", IsDistroless: false);
+        OSType.Windows, OSFamily.NanoServer, "1809", OS.NanoServer1809, IsDistroless: false);
 
     public static OSInfo NanoServerLtsc2022 { get; } = NanoServer1809 with
-        { Version = "LTSC 2022", TagName = OS.NanoServerLtsc2022, DisplayName = "Nano Server LTSC 2022" };
+        { Version = "LTSC 2022", TagName = OS.NanoServerLtsc2022 };
 
     public static OSInfo NanoServerLtsc2025 { get; } = NanoServer1809 with
-        { Version = "LTSC 2025", TagName = OS.NanoServerLtsc2025, DisplayName = "Nano Server LTSC 2025" };
+        { Version = "LTSC 2025", TagName = OS.NanoServerLtsc2025 };
 
     // Windows - Server Core
     public static OSInfo ServerCoreLtsc2019 { get; } = new(
-        OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019", OS.ServerCoreLtsc2019, "Windows Server Core LTSC 2019", IsDistroless: false);
+        OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019", OS.ServerCoreLtsc2019, IsDistroless: false);
 
     public static OSInfo ServerCoreLtsc2022 { get; } = ServerCoreLtsc2019 with
-        { Version = "LTSC 2022", TagName = OS.ServerCoreLtsc2022, DisplayName = "Windows Server Core LTSC 2022" };
+        { Version = "LTSC 2022", TagName = OS.ServerCoreLtsc2022 };
 
     public static OSInfo ServerCoreLtsc2025 { get; } = ServerCoreLtsc2019 with
-        { Version = "LTSC 2025", TagName = OS.ServerCoreLtsc2025, DisplayName = "Windows Server Core LTSC 2025" };
+        { Version = "LTSC 2025", TagName = OS.ServerCoreLtsc2025 };
 }
