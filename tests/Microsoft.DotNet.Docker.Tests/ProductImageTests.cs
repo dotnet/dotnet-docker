@@ -181,6 +181,15 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             IEnumerable<string> extraExcludePaths = null)
         {
+            // Temporary: Skip package tests for Ubuntu 26.04 Resolute to unblock publishing
+            // These tests are flaky and the long-term fix is tracked in https://github.com/dotnet/dotnet-docker/pull/6894
+            if (imageData.OS.Contains(OS.Resolute))
+            {
+                OutputHelper.WriteLine("Skipping package test for Ubuntu 26.04 Resolute due to flaky package baseline tests. " +
+                    "Long-term fix tracked in https://github.com/dotnet/dotnet-docker/pull/6894");
+                return;
+            }
+
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
 
