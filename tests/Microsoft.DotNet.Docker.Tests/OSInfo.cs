@@ -37,9 +37,7 @@ public sealed record OSInfo(
     OSFamily Family,
     string Version,
     string Codename,
-    bool IsDistroless,
-    bool IsChiseled = false,
-    bool IsSlim = false)
+    bool IsDistroless)
 {
     /// <summary>
     /// Gets the tag name for this OS, used in Docker image tags.
@@ -52,7 +50,7 @@ public sealed record OSInfo(
             {
                 OSFamily.Alpine => string.IsNullOrEmpty(Version) ? "alpine" : $"alpine{Version}",
                 OSFamily.AzureLinux => $"azurelinux{Version}",
-                OSFamily.Debian => Codename,
+                OSFamily.Debian => $"{Codename}-slim",
                 OSFamily.Mariner => $"cbl-mariner{Version}",
                 OSFamily.Ubuntu => Codename,
                 OSFamily.NanoServer => $"nanoserver-{Version.ToLowerInvariant().Replace(" ", "")}",
@@ -60,11 +58,10 @@ public sealed record OSInfo(
                 _ => Codename
             };
 
-            return (IsDistroless, IsChiseled, IsSlim) switch
+            return (Family, IsDistroless) switch
             {
-                (_, true, _) => $"{baseTag}-chiseled",
-                (true, _, _) => $"{baseTag}-distroless",
-                (_, _, true) => $"{baseTag}-slim",
+                (OSFamily.Ubuntu, true) => $"{baseTag}-chiseled",
+                (_, true) => $"{baseTag}-distroless",
                 _ => baseTag
             };
         }
@@ -134,10 +131,8 @@ public sealed record OSInfo(
     public static OSInfo AzureLinux30Distroless { get; } = AzureLinux30 with { IsDistroless = true };
 
     // Debian
-    public static OSInfo Bookworm { get; } = new(
+    public static OSInfo BookwormSlim { get; } = new(
         OSType.Linux, OSFamily.Debian, "12", Codename: "bookworm", IsDistroless: false);
-
-    public static OSInfo BookwormSlim { get; } = Bookworm with { IsSlim = true };
 
     // Mariner (CBL-Mariner)
     public static OSInfo Mariner20 { get; } = new(
@@ -149,17 +144,17 @@ public sealed record OSInfo(
     public static OSInfo Jammy { get; } = new(
         OSType.Linux, OSFamily.Ubuntu, "22.04", Codename: "jammy", IsDistroless: false);
 
-    public static OSInfo JammyChiseled { get; } = Jammy with { IsDistroless = true, IsChiseled = true };
+    public static OSInfo JammyChiseled { get; } = Jammy with { IsDistroless = true };
 
     public static OSInfo Noble { get; } = new(
         OSType.Linux, OSFamily.Ubuntu, "24.04", Codename: "noble", IsDistroless: false);
 
-    public static OSInfo NobleChiseled { get; } = Noble with { IsDistroless = true, IsChiseled = true };
+    public static OSInfo NobleChiseled { get; } = Noble with { IsDistroless = true };
 
     public static OSInfo Resolute { get; } = new(
         OSType.Linux, OSFamily.Ubuntu, "26.04", Codename: "resolute", IsDistroless: false);
 
-    public static OSInfo ResoluteChiseled { get; } = Resolute with { IsDistroless = true, IsChiseled = true };
+    public static OSInfo ResoluteChiseled { get; } = Resolute with { IsDistroless = true };
 
     // Windows - Nano Server
     public static OSInfo NanoServer1809 { get; } = new(
