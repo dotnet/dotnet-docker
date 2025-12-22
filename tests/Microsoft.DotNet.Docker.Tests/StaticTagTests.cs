@@ -150,9 +150,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 string os = dockerfileInfo.OsDir;
                 if (repo.Name.EndsWith("monitor") &&
                     dockerfileInfo.VersionDir.StartsWith("8.") &&
-                    OSInfo.AzureLinuxDistroless.Equals(os))
+                    OS.AzureLinuxDistroless.Equals(os))
                 {
-                    os = OSInfo.MarinerDistroless;
+                    os = OS.MarinerDistroless;
                 }
 
                 Regex expectedPattern = GetTagRegex(
@@ -191,7 +191,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             IEnumerable<KeyValuePair<DockerfileInfo, List<string>>> alpineDockerfileTags =
                 GetDockerfileTags(repo)
-                    .Where(p => p.Key.OsDir.Contains(OSInfo.Alpine));
+                    .Where(p => p.Key.OsDir.Contains(OS.Alpine));
 
             using (new AssertionScope())
             {
@@ -202,12 +202,12 @@ namespace Microsoft.DotNet.Docker.Tests
                     if (dockerfileInfo.OsDir == alpineFloatingTagVersion)
                     {
                         tags.Should().ContainSingle(tag => pattern.IsMatch(tag),
-                            because: $"image {dockerfileInfo} should have an {OSInfo.Alpine} floating tag");
+                            because: $"image {dockerfileInfo} should have an {OS.Alpine} floating tag");
                     }
                     else
                     {
                         tags.Should().NotContain(tag => pattern.IsMatch(tag),
-                            because: $"image {dockerfileInfo} should not have an {OSInfo.Alpine} floating tag");
+                            because: $"image {dockerfileInfo} should not have an {OS.Alpine} floating tag");
                     }
                 }
             }
@@ -219,7 +219,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 GetTagRegex(
                     versionType,
                     productVersion: info.ProductVersion,
-                    os: OSInfo.Alpine,
+                    os: OS.Alpine,
                     architecture: checkArchitecture ? info.ArchitectureDir : null);
         }
 
@@ -651,7 +651,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static Version GetAlpineVersion(DockerfileInfo dockerfileInfo)
         {
-            string parsedOs = dockerfileInfo.OsDir.Replace(OSInfo.Alpine, string.Empty);
+            string parsedOs = dockerfileInfo.OsDir.Replace(OS.Alpine, string.Empty);
             parsedOs.Should().NotBeNullOrWhiteSpace(
                 because: $"{dockerfileInfo} should have a specific Alpine version for osVersion");
             return Version.Parse(parsedOs);

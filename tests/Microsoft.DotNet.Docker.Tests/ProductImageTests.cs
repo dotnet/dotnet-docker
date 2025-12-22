@@ -292,7 +292,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "libstdc++"
                     ],
-                { OS: var os } when os == OSInfo.JammyChiseled =>
+                { OS: var os } when os == OS.JammyChiseled =>
                     [
                         "ca-certificates",
                         "gcc-12-base",
@@ -302,7 +302,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: var os } when os == OSInfo.NobleChiseled =>
+                { OS: var os } when os == OS.NobleChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -313,7 +313,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: var os, Arch: Arch.Amd64 } when os == OSInfo.ResoluteChiseled =>
+                { OS: var os, Arch: Arch.Amd64 } when os == OS.ResoluteChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -328,7 +328,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-provider-legacy",
                         "zlib"
                     ],
-                { OS: var os } when os == OSInfo.ResoluteChiseled =>
+                { OS: var os } when os == OS.ResoluteChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -340,7 +340,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "zlib"
                     ],
-                { OS: var os } when os == OSInfo.Noble =>
+                { OS: var os } when os == OS.Noble =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -350,7 +350,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: var os } when os == OSInfo.Resolute =>
+                { OS: var os } when os == OS.Resolute =>
                     [
                         "ca-certificates",
                         "gcc-15-base",
@@ -367,7 +367,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libssl3",
                         "libstdc++"
                     ],
-                { OS: var os } when os == OSInfo.BookwormSlim =>
+                { OS: var os } when os == OS.BookwormSlim =>
                     [
                         "ca-certificates",
                         "libc6",
@@ -407,19 +407,19 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "tzdata"
                     },
-                { OS: var os } when os == OSInfo.NobleChiseled => new[]
+                { OS: var os } when os == OS.NobleChiseled => new[]
                     {
                         "libicu74",
                         "tzdata-legacy",
                         "tzdata"
                     },
-                { OS: var os } when os == OSInfo.ResoluteChiseled => new[]
+                { OS: var os } when os == OS.ResoluteChiseled => new[]
                     {
                         "icu",
                         "libicu76",
                         "tzdata"
                     },
-                { OS: var os } when os == OSInfo.JammyChiseled => new[]
+                { OS: var os } when os == OS.JammyChiseled => new[]
                     {
                         "libicu70",
                         "tzdata"
