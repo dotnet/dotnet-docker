@@ -12,5 +12,7 @@ variables:
 - name: officialBranchPrefixes
   value: internal/release/
 
-- name: publishEolAnnotations
-  value: true
+# Temporarily disabled due to https://github.com/dotnet/docker-tools/issues/1905
+# Uncomment when the issue is resolved.
+# - name: publishEolAnnotations
+#   value: true
