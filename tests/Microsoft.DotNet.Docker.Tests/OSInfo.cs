@@ -51,9 +51,9 @@ public sealed record OSInfo(
             {
                 OSFamily.Alpine => string.IsNullOrEmpty(Version) ? "alpine" : $"alpine{Version}",
                 OSFamily.AzureLinux => $"azurelinux{Version}",
-                OSFamily.Debian => $"{GetDebianCodename(Version)}-slim",
+                OSFamily.Debian => $"{GetCodename(Family, Version)}-slim",
                 OSFamily.Mariner => $"cbl-mariner{Version}",
-                OSFamily.Ubuntu => GetUbuntuCodename(Version),
+                OSFamily.Ubuntu => GetCodename(Family, Version),
                 OSFamily.NanoServer => $"nanoserver-{Version.ToLowerInvariant().Replace(" ", "")}",
                 OSFamily.WindowsServerCore => $"windowsservercore-{Version.ToLowerInvariant().Replace(" ", "")}",
                 _ => throw new InvalidOperationException($"Unknown OS family: {Family}")
@@ -68,18 +68,13 @@ public sealed record OSInfo(
         }
     }
 
-    private static string GetDebianCodename(string version) => version switch
+    private static string GetCodename(OSFamily family, string version) => (family, version) switch
     {
-        "12" => "bookworm",
-        _ => throw new InvalidOperationException($"Unknown Debian version: {version}")
-    };
-
-    private static string GetUbuntuCodename(string version) => version switch
-    {
-        "22.04" => "jammy",
-        "24.04" => "noble",
-        "26.04" => "resolute",
-        _ => throw new InvalidOperationException($"Unknown Ubuntu version: {version}")
+        (OSFamily.Debian, "12") => "bookworm",
+        (OSFamily.Ubuntu, "22.04") => "jammy",
+        (OSFamily.Ubuntu, "24.04") => "noble",
+        (OSFamily.Ubuntu, "26.04") => "resolute",
+        _ => throw new InvalidOperationException($"Unknown {family} version: {version}")
     };
 
     /// <summary>
