@@ -42,11 +42,16 @@ public enum OSFamily
 /// "3.23" for Alpine, "26.04" for Ubuntu, "LTSC 2025" for Windows Server Core.
 /// </param>
 /// <param name="IsDistroless">Whether the OS is distroless.</param>
+/// <param name="IsUnstable">
+/// Whether the OS version is unstable (pre-release or not yet generally
+/// available).
+/// </param>
 public sealed record OSInfo(
     OSType Type,
     OSFamily Family,
     string Version,
-    bool IsDistroless = false)
+    bool IsDistroless = false,
+    bool IsUnstable = false)
 {
     /// <summary>
     /// Gets the tag name for this OS, used in Docker image tags.
