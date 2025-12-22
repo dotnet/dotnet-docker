@@ -36,9 +36,40 @@ public sealed record OSInfo(
     OSType Type,
     OSFamily Family,
     string Version,
-    string TagName,
-    bool IsDistroless)
+    string Codename,
+    bool IsDistroless,
+    bool IsChiseled = false,
+    bool IsSlim = false)
 {
+    /// <summary>
+    /// Gets the tag name for this OS, used in Docker image tags.
+    /// </summary>
+    public string TagName
+    {
+        get
+        {
+            string baseTag = Family switch
+            {
+                OSFamily.Alpine => string.IsNullOrEmpty(Version) ? "alpine" : $"alpine{Version}",
+                OSFamily.AzureLinux => $"azurelinux{Version}",
+                OSFamily.Debian => Codename,
+                OSFamily.Mariner => $"cbl-mariner{Version}",
+                OSFamily.Ubuntu => Codename,
+                OSFamily.NanoServer => $"nanoserver-{Version.ToLowerInvariant().Replace(" ", "")}",
+                OSFamily.WindowsServerCore => $"windowsservercore-{Version.ToLowerInvariant().Replace(" ", "")}",
+                _ => Codename
+            };
+
+            return (IsDistroless, IsChiseled, IsSlim) switch
+            {
+                (_, true, _) => $"{baseTag}-chiseled",
+                (true, _, _) => $"{baseTag}-distroless",
+                (_, _, true) => $"{baseTag}-slim",
+                _ => baseTag
+            };
+        }
+    }
+
     /// <summary>
     /// Gets the display name for this OS, combining family and version.
     /// </summary>
@@ -68,16 +99,6 @@ public sealed record OSInfo(
     public bool IsWindows => Type == OSType.Windows;
 
     /// <summary>
-    /// Gets a value indicating whether this OS uses Ubuntu Chiseled images.
-    /// </summary>
-    public bool IsChiseled => TagName.Contains(OS.ChiseledSuffix);
-
-    /// <summary>
-    /// Gets a value indicating whether this OS uses slim images.
-    /// </summary>
-    public bool IsSlim => TagName.Contains(OS.SlimSuffix);
-
-    /// <summary>
     /// Checks if the TagName contains the specified value.
     /// Provides backward compatibility with string-based OS checks.
     /// </summary>
@@ -98,74 +119,61 @@ public sealed record OSInfo(
 
     // Alpine
     public static OSInfo AlpineFloating { get; } = new(
-        OSType.Linux, OSFamily.Alpine, "", OS.Alpine, IsDistroless: false);
+        OSType.Linux, OSFamily.Alpine, "", Codename: "alpine", IsDistroless: false);
 
-    public static OSInfo Alpine321 { get; } = AlpineFloating with
-        { Version = "3.21", TagName = OS.Alpine321 };
+    public static OSInfo Alpine321 { get; } = AlpineFloating with { Version = "3.21" };
 
-    public static OSInfo Alpine322 { get; } = AlpineFloating with
-        { Version = "3.22", TagName = OS.Alpine322 };
+    public static OSInfo Alpine322 { get; } = AlpineFloating with { Version = "3.22" };
 
-    public static OSInfo Alpine323 { get; } = AlpineFloating with
-        { Version = "3.23", TagName = OS.Alpine323 };
+    public static OSInfo Alpine323 { get; } = AlpineFloating with { Version = "3.23" };
 
     // Azure Linux
     public static OSInfo AzureLinux30 { get; } = new(
-        OSType.Linux, OSFamily.AzureLinux, "3.0", OS.AzureLinux30, IsDistroless: false);
+        OSType.Linux, OSFamily.AzureLinux, "3.0", Codename: "azurelinux", IsDistroless: false);
 
-    public static OSInfo AzureLinux30Distroless { get; } = AzureLinux30 with
-        { TagName = OS.AzureLinux30Distroless, IsDistroless = true };
+    public static OSInfo AzureLinux30Distroless { get; } = AzureLinux30 with { IsDistroless = true };
 
     // Debian
     public static OSInfo Bookworm { get; } = new(
-        OSType.Linux, OSFamily.Debian, "12", OS.Bookworm, IsDistroless: false);
+        OSType.Linux, OSFamily.Debian, "12", Codename: "bookworm", IsDistroless: false);
 
-    public static OSInfo BookwormSlim { get; } = Bookworm with
-        { TagName = OS.BookwormSlim };
+    public static OSInfo BookwormSlim { get; } = Bookworm with { IsSlim = true };
 
     // Mariner (CBL-Mariner)
     public static OSInfo Mariner20 { get; } = new(
-        OSType.Linux, OSFamily.Mariner, "2.0", OS.Mariner20, IsDistroless: false);
+        OSType.Linux, OSFamily.Mariner, "2.0", Codename: "cbl-mariner", IsDistroless: false);
 
-    public static OSInfo Mariner20Distroless { get; } = Mariner20 with
-        { TagName = OS.Mariner20Distroless, IsDistroless = true };
+    public static OSInfo Mariner20Distroless { get; } = Mariner20 with { IsDistroless = true };
 
     // Ubuntu
     public static OSInfo Jammy { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "22.04", OS.Jammy, IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "22.04", Codename: "jammy", IsDistroless: false);
 
-    public static OSInfo JammyChiseled { get; } = Jammy with
-        { TagName = OS.JammyChiseled, IsDistroless = true };
+    public static OSInfo JammyChiseled { get; } = Jammy with { IsDistroless = true, IsChiseled = true };
 
     public static OSInfo Noble { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "24.04", OS.Noble, IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "24.04", Codename: "noble", IsDistroless: false);
 
-    public static OSInfo NobleChiseled { get; } = Noble with
-        { TagName = OS.NobleChiseled, IsDistroless = true };
+    public static OSInfo NobleChiseled { get; } = Noble with { IsDistroless = true, IsChiseled = true };
 
     public static OSInfo Resolute { get; } = new(
-        OSType.Linux, OSFamily.Ubuntu, "26.04", OS.Resolute, IsDistroless: false);
+        OSType.Linux, OSFamily.Ubuntu, "26.04", Codename: "resolute", IsDistroless: false);
 
-    public static OSInfo ResoluteChiseled { get; } = Resolute with
-        { TagName = OS.ResoluteChiseled, IsDistroless = true };
+    public static OSInfo ResoluteChiseled { get; } = Resolute with { IsDistroless = true, IsChiseled = true };
 
     // Windows - Nano Server
     public static OSInfo NanoServer1809 { get; } = new(
-        OSType.Windows, OSFamily.NanoServer, "1809", OS.NanoServer1809, IsDistroless: false);
+        OSType.Windows, OSFamily.NanoServer, "1809", Codename: "nanoserver", IsDistroless: false);
 
-    public static OSInfo NanoServerLtsc2022 { get; } = NanoServer1809 with
-        { Version = "LTSC 2022", TagName = OS.NanoServerLtsc2022 };
+    public static OSInfo NanoServerLtsc2022 { get; } = NanoServer1809 with { Version = "LTSC 2022" };
 
-    public static OSInfo NanoServerLtsc2025 { get; } = NanoServer1809 with
-        { Version = "LTSC 2025", TagName = OS.NanoServerLtsc2025 };
+    public static OSInfo NanoServerLtsc2025 { get; } = NanoServer1809 with { Version = "LTSC 2025" };
 
     // Windows - Server Core
     public static OSInfo ServerCoreLtsc2019 { get; } = new(
-        OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019", OS.ServerCoreLtsc2019, IsDistroless: false);
+        OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019", Codename: "windowsservercore", IsDistroless: false);
 
-    public static OSInfo ServerCoreLtsc2022 { get; } = ServerCoreLtsc2019 with
-        { Version = "LTSC 2022", TagName = OS.ServerCoreLtsc2022 };
+    public static OSInfo ServerCoreLtsc2022 { get; } = ServerCoreLtsc2019 with { Version = "LTSC 2022" };
 
-    public static OSInfo ServerCoreLtsc2025 { get; } = ServerCoreLtsc2019 with
-        { Version = "LTSC 2025", TagName = OS.ServerCoreLtsc2025 };
+    public static OSInfo ServerCoreLtsc2025 { get; } = ServerCoreLtsc2019 with { Version = "LTSC 2025" };
 }
