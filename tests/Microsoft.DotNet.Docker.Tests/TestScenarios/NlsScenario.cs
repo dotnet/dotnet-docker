@@ -35,7 +35,7 @@ public sealed class NlsScenario : ITestScenario, IDisposable
     }
 
     // ICU is not supported on Nano Server
-    private bool IsIcuSupported => _imageData.OS.Contains(OS.ServerCore);
+    private bool IsIcuSupported => _imageData.OS.Family == OSFamily.WindowsServerCore;
 
     public Task ExecuteAsync()
     {

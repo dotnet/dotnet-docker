@@ -70,7 +70,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
 
             // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-            if (imageData.OS.StartsWith(OS.Alpine) && imageData.Version.Major == 8)
+            if (imageData.OS.Family == OSFamily.Alpine && imageData.Version.Major == 8)
             {
                 useWasmTools = false;
             }
@@ -122,7 +122,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 ..GetCommonEnvironmentVariables(),
             ];
 
-            if (imageData.SdkOS.StartsWith(OS.Alpine))
+            if (imageData.SdkOS.Family == OSFamily.Alpine)
             {
                 variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
             }
@@ -346,7 +346,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 : GetSdkVersionFileLabel(sdkBuildVersion, imageData.VersionString);
 
             string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
-            if (imageData.SdkOS.StartsWith(OS.Alpine))
+            if (imageData.SdkOS.Family == OSFamily.Alpine)
             {
                 osType += "-musl";
             }
