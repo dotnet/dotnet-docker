@@ -6,7 +6,7 @@ steps:
 - script: >
     $(runImageBuilderCmd) publishMcrDocs
     --manifest '$(manifest)'
-    --registry-override '${{ parameters.publishConfig.publishAcr.server }}'
+    --registry-override '${{ parameters.publishConfig.PublishRegistry.server }}'
     '$(mcrDocsRepoInfo.userName)'
     '$(mcrDocsRepoInfo.email)'
     $(mcrDocsRepoInfo.authArgs)

@@ -39,6 +39,15 @@ parameters:
 - name: enableSbom
   type: boolean
   default: false
+# Network isolation policy that will be enabled for jobs. The default policy
+# allows all outbound connections except for public package feeds and known
+# malicious endpoints. If this policy breaks the build, then it can be set to
+# "Permissive" temporarily until external dependencies are resolved.
+# See the network isolation documentation for more details:
+# https://eng.ms/docs/coreai/devdiv/one-engineering-system-1es/1es-build/cloudbuild/security/1espt-network-isolation
+- name: networkIsolationPolicy
+  type: string
+  default: Permissive,CFSClean
 
 resources:
   repositories:
@@ -53,6 +62,8 @@ extends:
     baseTemplate: v1/1ES.${{ iif(contains(variables['Build.DefinitionName'], '-official'), 'Official', 'Unofficial') }}.PipelineTemplate.yml@1ESPipelineTemplates
     templateParameters:
       pool: ${{ parameters.pool }}
+      settings:
+        networkIsolationPolicy: ${{ parameters.networkIsolationPolicy }}
       sdl:
         sbom:
           enabled: ${{ parameters.enableSbom }}
