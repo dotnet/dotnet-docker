@@ -32,6 +32,7 @@ jobs:
   - ${{ parameters.commonInitStepsForMatrixAndBuild }}
   - template: /eng/docker-tools/templates/jobs/${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}@self
     parameters:
+      publishConfig: ${{ parameters.publishConfig }}
       cleanupDocker: true
   - ${{ parameters.customInitSteps }}
   - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml@self
@@ -51,7 +52,7 @@ jobs:
       # the environment variable for us.
       $imageBuilderBuildArgs = "$env:IMAGEBUILDERBUILDARGS $env:IMAGEBUILDER_QUEUEARGS --image-info-output-path $(imageInfoContainerDir)/$(legName)-image-info.json $(commonMatrixAndBuildOptions)"
       if ($env:SYSTEM_TEAMPROJECT -eq "${{ parameters.internalProjectName }}" -and $env:BUILD_REASON -ne "PullRequest") {
-        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --repo-prefix ${{ parameters.publishConfig.buildAcr.repoPrefix }} --push"
+        $imageBuilderBuildArgs = "$imageBuilderBuildArgs --repo-prefix ${{ parameters.publishConfig.BuildRegistry.repoPrefix }} --push"
       }
 
       # If the pipeline isn't configured to disable the cache and a build variable hasn't been set to disable the cache
@@ -66,14 +67,8 @@ jobs:
     parameters:
       name: BuildImages
       displayName: Build Images
-      serviceConnections:
-      # "name" here refers to the argument name, not the service connection name.
-      # It should probably be changed to "argName".
-      - name: acr
-        id: ${{ parameters.publishConfig.buildAcr.serviceConnection.id }}
-        tenantId: ${{ parameters.publishConfig.buildAcr.serviceConnection.tenantId }}
-        clientId: ${{ parameters.publishConfig.buildAcr.serviceConnection.clientId }}
-      - ${{ if parameters.storageAccountServiceConnection }}:
+      ${{ if parameters.storageAccountServiceConnection }}:
+        serviceConnections:
         - name: storage
           id: ${{ parameters.storageAccountServiceConnection.id }}
           tenantId: ${{ parameters.storageAccountServiceConnection.tenantId }}
@@ -89,8 +84,8 @@ jobs:
         --architecture $(architecture)
         --retry
         --digests-out-var 'builtImages'
-        --acr-subscription '${{ parameters.publishConfig.buildAcr.subscription }}'
-        --acr-resource-group '${{ parameters.publishConfig.buildAcr.resourceGroup }}'
+        --acr-subscription '${{ parameters.publishConfig.BuildRegistry.subscription }}'
+        --acr-resource-group '${{ parameters.publishConfig.BuildRegistry.resourceGroup }}'
         $(manifestVariables)
         $(imageBuilderBuildArgs)
   - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
@@ -104,12 +99,12 @@ jobs:
     - powershell: |
         $images = "$(BuildImages.builtImages)"
         if (-not $images) { return 0 }
-        $syftImageName = "${{ parameters.publishConfig.publicMirrorAcr.server }}/$(imageNames.syft)"
+        $syftImageName = "${{ parameters.publishConfig.PublicMirrorRegistry.server }}/$(imageNames.syft)"
         & $(engDockerToolsPath)/Pull-Image.ps1 $syftImageName
         $images -Split ',' | ForEach-Object {
           echo "Generating SBOM for $_";
           $targetImageName = "$_";
-          $formattedImageName = $targetImageName.Replace('${{ parameters.publishConfig.buildAcr.server }}/${{ parameters.publishConfig.buildAcr.repoPrefix }}', "").Replace('/', '_').Replace(':', '_');
+          $formattedImageName = $targetImageName.Replace('${{ parameters.publishConfig.BuildRegistry.server }}/${{ parameters.publishConfig.BuildRegistry.repoPrefix }}', "").Replace('/', '_').Replace(':', '_');
           $sbomChildDir = "$(sbomDirectory)/$formattedImageName";
           New-Item -Type Directory -Path $sbomChildDir > $null;
           docker build --output=$sbomChildDir -f $(engDockerToolsPath)/Dockerfile.syft --build-arg SYFT_IMAGE_NAME=$syftImageName --build-arg TARGET_IMAGE_NAME=$targetImageName -t syft-sbom $(engDockerToolsPath);

@@ -11,11 +11,6 @@ steps:
   - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
     parameters:
       displayName: Annotate EOL Images (${{ parameters.acr.server }})
-      serviceConnections:
-      - name: acr
-        id: ${{ parameters.acr.serviceConnection.id }}
-        tenantId: ${{ parameters.acr.serviceConnection.tenantId }}
-        clientId: ${{ parameters.acr.serviceConnection.clientId }}
       internalProjectName: internal
       condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
       args: >-

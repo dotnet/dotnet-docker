@@ -47,8 +47,10 @@ stages:
     internalProjectName: "internal"
     publicProjectName: "public"
 
+    # publishConfig schema is defined in src/ImageBuilder/Configuration/PublishConfiguration.cs.
+    # This will get converted to JSON and placed in appsettings.json to be loaded by ImageBuilder at runtime.
     publishConfig:
-      internalMirrorAcr:
+      InternalMirrorRegistry:
         server: $(acr-staging-test.server)
         repoPrefix: $(mirrorRepoPrefix)
         resourceGroup: $(testResourceGroup)
@@ -59,7 +61,7 @@ stages:
           clientId: $(internal-mirror-test.serviceConnection.clientId)
           tenantId: $(testTenant)
 
-      publicMirrorAcr:
+      PublicMirrorRegistry:
         server: $(public-mirror.server)
         resourceGroup: $(public-mirror.resourceGroup)
         subscription: $(public-mirror.subscription)
@@ -69,7 +71,7 @@ stages:
           tenantId: $(public-mirror.serviceConnection.tenantId)
           clientId: $(public-mirror.serviceConnection.clientId)
 
-      buildAcr:
+      BuildRegistry:
         server: $(acr-staging-test.server)
         resourceGroup: $(testResourceGroup)
         subscription: $(testSubscription)
@@ -92,7 +94,7 @@ stages:
         clientId: $(test-nonprod.serviceConnection.clientId)
         tenantId: $(testTenant)
 
-      publishAcr:
+      PublishRegistry:
         server: $(acr-test.server)
         resourceGroup: $(testResourceGroup)
         subscription: $(testSubscription)

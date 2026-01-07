@@ -20,7 +20,7 @@ steps:
 - powershell: |
     $commonMatrixAndBuildOptions = "--source-repo $(publicGitRepoUri)"
     if ("$(System.TeamProject)" -eq "internal" -and "$(Build.Reason)" -ne "PullRequest") {
-      $commonMatrixAndBuildOptions = "$commonMatrixAndBuildOptions --source-repo-prefix ${{ parameters.publishConfig.internalMirrorAcr.repoPrefix }} --registry-override ${{ parameters.publishConfig.buildAcr.server }}"
+      $commonMatrixAndBuildOptions = "$commonMatrixAndBuildOptions --source-repo-prefix ${{ parameters.publishConfig.InternalMirrorRegistry.repoPrefix }} --registry-override ${{ parameters.publishConfig.BuildRegistry.server }}"
     }
 
     if ("$(System.TeamProject)" -eq "public" -and "$(public-mirror.server)" -ne "") {

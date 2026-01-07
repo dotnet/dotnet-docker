@@ -160,7 +160,7 @@ Build Stage
                     └── Apply EOL annotations
 ```
 - Full pipeline with all stages
-- Images flow: `buildAcr` → `publishAcr` → MAR (see [`publish-config-prod.yml`](templates/stages/dotnet/publish-config-prod.yml) for ACR definitions)
+- Images flow: `BuildRegistry` → `PublishRegistry` → MAR (see [`publish-config-prod.yml`](templates/stages/dotnet/publish-config-prod.yml) for ACR definitions)
 - Tests run against staged images
 - Only successful builds get published
 

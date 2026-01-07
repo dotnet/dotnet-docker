@@ -16,11 +16,6 @@ steps:
         displayName: "Clean ${{ parameters.repo }} (${{ parameters.action }} > ${{ parameters.age }}d)"
       ${{ else }}:
         displayName: "Clean ${{ parameters.repo }} (${{ parameters.action }})"
-      serviceConnections:
-      - name: acr
-        id: ${{ parameters.publishConfig.cleanServiceConnection.id }}
-        tenantId: ${{ parameters.publishConfig.cleanServiceConnection.tenantId }}
-        clientId: ${{ parameters.publishConfig.cleanServiceConnection.clientId }}
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >-
         cleanAcrImages
