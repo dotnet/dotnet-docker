@@ -8,9 +8,6 @@ parameters:
 - name: acr
   type: object
   default: null
-- name: repoPrefix
-  type: string
-  default: null
 - name: customInitSteps
   type: stepList
   default: []
@@ -33,7 +30,6 @@ jobs:
   - template: /eng/docker-tools/templates/steps/copy-base-images.yml@self
     parameters:
       acr: ${{ parameters.acr }}
-      repoPrefix: ${{ parameters.repoPrefix }}
       additionalOptions: ${{ parameters.additionalOptions }}
       continueOnError: ${{ parameters.continueOnError }}
       forceDryRun: ${{ parameters.forceDryRun }}

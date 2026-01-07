@@ -30,7 +30,7 @@ steps:
       waitForMcrImageIngestion
       '${{ parameters.imageInfoPath }}'
       --manifest '$(manifest)'
-      --repo-prefix '${{ parameters.publishConfig.publishAcr.repoPrefix }}'
+      --repo-prefix '${{ parameters.publishConfig.PublishRegistry.repoPrefix }}'
       --min-queue-time '${{ parameters.minQueueTime }}'
       --timeout '$(mcrImageIngestionTimeout)'
       $(manifestVariables)

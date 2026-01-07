@@ -3,15 +3,9 @@ parameters:
   type: object
   default:
     server: ""
-    serviceConnection:
-      tenantId: ""
-      clientId: ""
-      id: ""
     subscription: ""
     resourceGroup: ""
-- name: repoPrefix
-  type: string
-  default: null
+    repoPrefix: ""
 - name: additionalOptions
   type: string
   default: ""
@@ -28,11 +22,6 @@ steps:
 - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
   parameters:
     displayName: Copy Base Images
-    serviceConnections:
-    - name: "acr"
-      tenantId: ${{ parameters.acr.serviceConnection.tenantId }}
-      clientId: ${{ parameters.acr.serviceConnection.clientId }}
-      id: ${{ parameters.acr.serviceConnection.id }}
     continueOnError: ${{ parameters.continueOnError }}
     internalProjectName: 'internal'
     # Use environment variable to reference $(dryRunArg). Since $(dryRunArg) might be undefined,
@@ -44,7 +33,7 @@ steps:
       '${{ parameters.acr.resourceGroup }}'
       $(dockerHubRegistryCreds)
       $(customCopyBaseImagesArgs)
-      --repo-prefix '${{ parameters.repoPrefix }}'
+      --repo-prefix '${{ parameters.acr.repoPrefix }}'
       --registry-override '${{ parameters.acr.server }}'
       --os-type 'linux'
       --architecture '*'

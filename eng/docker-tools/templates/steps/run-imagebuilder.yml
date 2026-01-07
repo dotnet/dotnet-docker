@@ -7,16 +7,12 @@ parameters:
   default: "Run ImageBuilder"
 - name: serviceConnections
   type: object
-  default:
-  # name: the name of the service connection argument that will be passed to the ImageBuilder command.
-  #   For example, if the argument is --acr-service-connection, the name would be "acr".
-  - name: ""
-    # The service connection's ID (GUID).
-    id: ""
-    # The client ID of the Managed Idendity backing the service connection (GUID).
-    clientId: ""
-    # The ID of the tenant that the Managed Identity is in (GUID).
-    tenantId: ""
+  default: []
+  # - name: The name of the service connection argument that will be passed to the ImageBuilder command.
+  #         For example, if the argument is --acr-service-connection, the name would be "acr".
+    # id: The service connection's ID (GUID).
+    # clientId: The client ID of the Managed Idendity backing the service connection (GUID).
+    # tenantId: The ID of the tenant that the Managed Identity is in (GUID).
 - name: internalProjectName
   type: string
   default: null
