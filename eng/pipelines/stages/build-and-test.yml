@@ -45,8 +45,8 @@ stages:
   - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
     parameters:
       serviceConnections:
-      - name: ${{ parameters.publishConfig.internalMirrorAcr.serviceConnection.name }}
-      - name: ${{ parameters.publishConfig.buildAcr.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.InternalMirrorRegistry.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.BuildRegistry.serviceConnection.name }}
       - ${{ if parameters.storageAccountServiceConnection }}:
         - name: ${{ parameters.storageAccountServiceConnection.name }}
 

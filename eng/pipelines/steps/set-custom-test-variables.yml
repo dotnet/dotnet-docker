@@ -14,7 +14,7 @@ steps:
     $testRunnerOptions="-e SYSTEM_TEAMPROJECT='$env:SYSTEM_TEAMPROJECT'"
     $testInit=""
 
-    if (("${{ parameters.publishConfig.publishAcr.repoPrefix }}".Contains("internal/")) -or $${{ parameters.isInternalServicingValidation }}) {
+    if (("${{ parameters.publishConfig.PublishRegistry.repoPrefix }}".Contains("internal/")) -or $${{ parameters.isInternalServicingValidation }}) {
       if ($Env:AGENT_OS -eq 'Linux') {
         $testRunnerOptions="$testRunnerOptions -e INTERNAL_TESTING='1' -e INTERNAL_ACCESS_TOKEN='$(System.AccessToken)'"
       }
