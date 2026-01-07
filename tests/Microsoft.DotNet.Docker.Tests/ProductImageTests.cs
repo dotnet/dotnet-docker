@@ -301,7 +301,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "libstdc++"
                     ],
-                { OS: var os } when os == OS.JammyChiseled =>
+                { OS: { Family: OSFamily.Ubuntu, Version: "22.04"} } =>
                     [
                         "ca-certificates",
                         "gcc-12-base",
@@ -349,7 +349,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "zlib"
                     ],
-                { OS: var os } when os == OS.Noble =>
+                { OS: { Family: OSFamily.Ubuntu, Version: "24.04" } } =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -359,7 +359,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: var os } when os == OS.Resolute =>
+                { OS: { Family: OSFamily.Ubuntu, Version: "26.04" } } =>
                     [
                         "ca-certificates",
                         "gcc-15-base",
