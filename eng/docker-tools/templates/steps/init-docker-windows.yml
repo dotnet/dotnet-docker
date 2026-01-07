@@ -1,6 +1,7 @@
 parameters:
   setupImageBuilder: true
-  condition: true
+  condition: "true"
+  publishConfig: null
 
 steps:
 - template: /eng/docker-tools/templates/steps/init-common.yml@self
@@ -37,6 +38,12 @@ steps:
     displayName: Cleanup Setup Container
     condition: and(always(), ${{ parameters.condition }})
     continueOnError: true
+
+  - template: /eng/docker-tools/templates/steps/generate-appsettings.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      condition: ${{ parameters.condition }}
+
   - task: PowerShell@2
     displayName: Define runImageBuilderCmd Variables
     condition: and(succeeded(), ${{ parameters.condition }})
