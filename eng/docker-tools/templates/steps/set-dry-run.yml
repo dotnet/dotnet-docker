@@ -15,7 +15,7 @@ steps:
       # Public builds need to use dry-run mode since they don't publish anywhere.
       $dryRunArg="--dry-run"
     }
-    elseif (-not "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.publishAcr.repoPrefix }}"))
+    elseif (-not "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.PublishRegistry.repoPrefix }}"))
     {
       # If we're running an internal build on an official pipeline but not
       # publishing to an official repo prefix, then use dry run mode.
