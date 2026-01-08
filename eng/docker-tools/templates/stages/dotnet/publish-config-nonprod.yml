@@ -52,7 +52,7 @@ stages:
     publishConfig:
       InternalMirrorRegistry:
         server: $(acr-staging-test.server)
-        repoPrefix: $(mirrorRepoPrefix)
+        repoPrefix: $(internalMirrorRepoPrefix)
         resourceGroup: $(testResourceGroup)
         subscription: $(testSubscription)
         serviceConnection:
@@ -63,6 +63,7 @@ stages:
 
       PublicMirrorRegistry:
         server: $(public-mirror.server)
+        repoPrefix: $(publicMirrorRepoPrefix)
         resourceGroup: $(public-mirror.resourceGroup)
         subscription: $(public-mirror.subscription)
         serviceConnection:
