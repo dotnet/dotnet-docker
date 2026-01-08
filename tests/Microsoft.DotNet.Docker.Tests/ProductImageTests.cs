@@ -181,12 +181,9 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             IEnumerable<string> extraExcludePaths = null)
         {
-            // Temporary: Skip package tests for Ubuntu 26.04 Resolute to unblock publishing
-            // These tests are flaky and the long-term fix is tracked in https://github.com/dotnet/dotnet-docker/pull/6894
-            if (imageData.OS.Contains(OS.Resolute))
+            if (imageData.OS.IsUnstable)
             {
-                OutputHelper.WriteLine("Skipping package test for Ubuntu 26.04 Resolute due to flaky package baseline tests. " +
-                    "Long-term fix tracked in https://github.com/dotnet/dotnet-docker/pull/6894");
+                OutputHelper.WriteLine("Skipping package verification for unstable OS");
                 return;
             }
 
@@ -322,47 +319,10 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: var os, Arch: Arch.Amd64 } when os == OS.ResoluteChiseled =>
-                    [
-                        "ca-certificates",
-                        "gcc-14-base",
-                        "gcc-15",
-                        "libc6",
-                        "libgcc-s1",
-                        "libssl3t64",
-                        "libstdc++6",
-                        "libzstd",
-                        "libzstd1",
-                        "openssl",
-                        "openssl-provider-legacy",
-                        "zlib"
-                    ],
-                { OS: var os } when os == OS.ResoluteChiseled =>
-                    [
-                        "ca-certificates",
-                        "gcc-14-base",
-                        "libc6",
-                        "libgcc-s1",
-                        "libssl3t64",
-                        "libstdc++6",
-                        "libzstd1",
-                        "openssl",
-                        "zlib"
-                    ],
                 { OS: { Family: OSFamily.Ubuntu, Version: "24.04" } } =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
-                        "libc6",
-                        "libgcc-s1",
-                        "libssl3t64",
-                        "openssl",
-                        "libstdc++6"
-                    ],
-                { OS: { Family: OSFamily.Ubuntu, Version: "26.04" } } =>
-                    [
-                        "ca-certificates",
-                        "gcc-15-base",
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
@@ -391,11 +351,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             // zlib is not required for .NET 9+
             // - https://github.com/dotnet/dotnet-docker/issues/5687
-            // Starting with Ubuntu 25.04 (Plucky), zlib is a dependency of libssl3t64
-            // - https://packages.ubuntu.com/plucky/amd64/libssl3t64
-            // - https://packages.ubuntu.com/resolute/amd64/libssl3t64
-            // - https://github.com/canonical/chisel-releases/blob/ubuntu-26.04/slices/libssl3t64.yaml
-            if (imageData.Version.Major == 8 || imageData.OS.Version == "26.04")
+            if (imageData.Version.Major == 8)
             {
                 packages = [..packages, GetZLibPackage(imageData.OS)];
             }
@@ -420,12 +376,6 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "libicu74",
                         "tzdata-legacy",
-                        "tzdata"
-                    },
-                { OS: var os } when os == OS.ResoluteChiseled => new[]
-                    {
-                        "icu",
-                        "libicu76",
                         "tzdata"
                     },
                 { OS: var os } when os == OS.JammyChiseled => new[]
