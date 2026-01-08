@@ -22,10 +22,10 @@ jobs:
     os: linux
   steps:
   - powershell: >
-      ./eng/docker-tools/Install-DotNetSdk.ps1 -Channel ${{ parameters.dotnetVersionChannel }} -InstallPath "/usr/share/.dotnet"
+      ./eng/docker-tools/Install-DotNetSdk.ps1 -Channel ${{ parameters.dotnetVersionChannel }} -InstallPath "$(Build.SourcesDirectory)/.dotnet"
     displayName: Run Dotnet Install Script
   - script: >
-      find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 /usr/share/.dotnet/dotnet build
+      find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 $(Build.SourcesDirectory)/.dotnet/dotnet build
     displayName: Build Projects
 
     # Component Detection is only automatically run on production branches.
