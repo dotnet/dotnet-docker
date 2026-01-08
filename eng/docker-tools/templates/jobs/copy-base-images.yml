@@ -5,6 +5,9 @@ parameters:
 - name: pool
   type: object
   default: {}
+- name: publishConfig
+  type: object
+  default: null
 - name: acr
   type: object
   default: null
@@ -26,6 +29,8 @@ jobs:
   pool: ${{ parameters.pool }}
   steps:
   - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
   - ${{ parameters.customInitSteps }}
   - template: /eng/docker-tools/templates/steps/copy-base-images.yml@self
     parameters:
