@@ -109,7 +109,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string expectedUser;
             if (imageData.IsDistroless && ImageRepo != DotNetImageRepo.SDK)
             {
-                if (imageData.OS.StartsWith(OS.Mariner))
+                if (imageData.OS.Family == OSFamily.Mariner)
                 {
                     expectedUser = "app";
                 }
@@ -120,7 +120,7 @@ namespace Microsoft.DotNet.Docker.Tests
             }
             // For Windows, only Nano Server defines a user, which seems wrong.
             // I've logged https://dev.azure.com/microsoft/OS/_workitems/edit/40146885 for this.
-            else if (imageData.OS.StartsWith(OS.NanoServer))
+            else if (imageData.OS.Family == OSFamily.NanoServer)
             {
                 expectedUser = "ContainerUser";
             }
@@ -265,7 +265,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
             {
-                { OS: string os } when os.Contains(OS.AzureLinux) => new[]
+                { OS.Family: OSFamily.AzureLinux } => new[]
                     {
                         "SymCrypt",
                         "SymCrypt-OpenSSL",
@@ -275,7 +275,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.Mariner) => new[]
+                { OS.Family: OSFamily.Mariner } => new[]
                     {
                         "distroless-packages-minimal",
                         "filesystem",
@@ -283,7 +283,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "prebuilt-ca-certificates",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.ChiseledSuffix) => new[]
+                { OS.Family: OSFamily.Ubuntu } => new[]
                     {
                         "base-files"
                     },
@@ -293,7 +293,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) {
             IEnumerable<string> packages = imageData switch
             {
-                { OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) =>
+                { OS.Family: OSFamily.Mariner or OSFamily.AzureLinux } =>
                     [
                         "glibc",
                         "libgcc",
@@ -301,7 +301,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-libs",
                         "libstdc++"
                     ],
-                { OS: string os } when os.Contains(OS.Jammy) =>
+                { OS: { Family: OSFamily.Ubuntu, Version: "22.04"} } =>
                     [
                         "ca-certificates",
                         "gcc-12-base",
@@ -311,7 +311,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: OS.NobleChiseled } =>
+                { OS: var os } when os == OS.NobleChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -322,7 +322,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: OS.ResoluteChiseled, Arch: Arch.Amd64 } =>
+                { OS: var os, Arch: Arch.Amd64 } when os == OS.ResoluteChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -337,7 +337,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl-provider-legacy",
                         "zlib"
                     ],
-                { OS: OS.ResoluteChiseled } =>
+                { OS: var os } when os == OS.ResoluteChiseled =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -349,7 +349,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "zlib"
                     ],
-                { OS: string os } when os.Contains(OS.Noble) =>
+                { OS: { Family: OSFamily.Ubuntu, Version: "24.04" } } =>
                     [
                         "ca-certificates",
                         "gcc-14-base",
@@ -359,7 +359,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: string os } when os.Contains(OS.Resolute) =>
+                { OS: { Family: OSFamily.Ubuntu, Version: "26.04" } } =>
                     [
                         "ca-certificates",
                         "gcc-15-base",
@@ -369,14 +369,14 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
-                { OS: string os } when os.Contains(OS.Alpine) =>
+                { OS.Family: OSFamily.Alpine } =>
                     [
                         "ca-certificates-bundle",
                         "libgcc",
                         "libssl3",
                         "libstdc++"
                     ],
-                { OS: OS.BookwormSlim } =>
+                { OS: var os } when os == OS.BookwormSlim =>
                     [
                         "ca-certificates",
                         "libc6",
@@ -395,7 +395,7 @@ namespace Microsoft.DotNet.Docker.Tests
             // - https://packages.ubuntu.com/plucky/amd64/libssl3t64
             // - https://packages.ubuntu.com/resolute/amd64/libssl3t64
             // - https://github.com/canonical/chisel-releases/blob/ubuntu-26.04/slices/libssl3t64.yaml
-            if (imageData.Version.Major == 8 || imageData.OS.Contains(OS.Resolute))
+            if (imageData.Version.Major == 8 || imageData.OS.Version == "26.04")
             {
                 packages = [..packages, GetZLibPackage(imageData.OS)];
             }
@@ -403,37 +403,37 @@ namespace Microsoft.DotNet.Docker.Tests
             return packages;
         }
 
-        private static string GetZLibPackage(string os)
+        private static string GetZLibPackage(OSInfo os)
         {
-            string[] unversionedZLibOSes = [OS.Alpine, OS.AzureLinux, OS.Mariner];
-            return unversionedZLibOSes.Where(os.Contains).Any() ? "zlib" : "zlib1g";
+            OSFamily[] unversionedZLibOSFamilies = [OSFamily.Alpine, OSFamily.AzureLinux, OSFamily.Mariner];
+            return unversionedZLibOSFamilies.Contains(os.Family) ? "zlib" : "zlib1g";
         }
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
-                { IsDistroless: true, OS: string os } when os.Contains(OS.Mariner) || os.Contains(OS.AzureLinux) => new[]
+                { IsDistroless: true, OS.Family: OSFamily.Mariner or OSFamily.AzureLinux } => new[]
                     {
                         "icu",
                         "tzdata"
                     },
-                { OS: OS.NobleChiseled } => new[]
+                { OS: var os } when os == OS.NobleChiseled => new[]
                     {
                         "libicu74",
                         "tzdata-legacy",
                         "tzdata"
                     },
-                { OS: OS.ResoluteChiseled } => new[]
+                { OS: var os } when os == OS.ResoluteChiseled => new[]
                     {
                         "icu",
                         "libicu76",
                         "tzdata"
                     },
-                { OS: OS.JammyChiseled } => new[]
+                { OS: var os } when os == OS.JammyChiseled => new[]
                     {
                         "libicu70",
                         "tzdata"
                     },
-                { OS: string os } when os.Contains(OS.Alpine) => new[]
+                { OS.Family: OSFamily.Alpine } => new[]
                     {
                         "icu-data-full",
                         "icu-libs",

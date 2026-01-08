@@ -442,9 +442,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static readonly SampleImageData[] s_linuxSampleTestData =
         {
-            new SampleImageData { OS = OS.Alpine,           Arch = Arch.Amd64, DockerfileSuffix = "alpine",   IsPublished = true },
-            new SampleImageData { OS = OS.Alpine,           Arch = Arch.Arm,   DockerfileSuffix = "alpine",   IsPublished = true },
-            new SampleImageData { OS = OS.Alpine,           Arch = Arch.Arm64, DockerfileSuffix = "alpine",   IsPublished = true },
+            new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Amd64, DockerfileSuffix = "alpine",   IsPublished = true },
+            new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm,   DockerfileSuffix = "alpine",   IsPublished = true },
+            new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm64, DockerfileSuffix = "alpine",   IsPublished = true },
             new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm,   DockerfileSuffix = "chiseled", IsPublished = true },
             new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm64, DockerfileSuffix = "chiseled", IsPublished = true },
             new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Amd64, DockerfileSuffix = "chiseled", IsPublished = true },
@@ -452,10 +452,10 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Amd64 },
             new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm },
             new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm64 },
-            new SampleImageData { OS = OS.Alpine,           Arch = Arch.Arm64, DockerfileSuffix = "alpine" },
-            new SampleImageData { OS = OS.Alpine,           Arch = Arch.Amd64, DockerfileSuffix = "alpine" },
-            new SampleImageData { OS = OS.Alpine,           Arch = Arch.Arm64, DockerfileSuffix = "alpine-icu" },
-            new SampleImageData { OS = OS.Alpine,           Arch = Arch.Amd64, DockerfileSuffix = "alpine-icu" },
+            new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm64, DockerfileSuffix = "alpine" },
+            new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Amd64, DockerfileSuffix = "alpine" },
+            new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm64, DockerfileSuffix = "alpine-icu" },
+            new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Amd64, DockerfileSuffix = "alpine-icu" },
             new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm,   DockerfileSuffix = "debian" },
             new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm64, DockerfileSuffix = "debian" },
             new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Amd64, DockerfileSuffix = "debian" },

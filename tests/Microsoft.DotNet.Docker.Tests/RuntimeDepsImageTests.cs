@@ -132,7 +132,7 @@ namespace Microsoft.DotNet.Docker.Tests
         [MemberData(nameof(GetImageData))]
         public void VerifyChiselManifest(ProductImageData imageData)
         {
-            if (!imageData.OS.Contains(OS.ChiseledSuffix))
+            if (!(imageData.OS.Family == OSFamily.Ubuntu && imageData.IsDistroless))
             {
                 OutputHelper.WriteLine("Test is only relevant to Ubuntu Chiseled images");
                 return;
