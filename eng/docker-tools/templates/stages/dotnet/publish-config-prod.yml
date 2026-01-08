@@ -63,6 +63,7 @@ stages:
 
       PublicMirrorRegistry:
         server: $(public-mirror.server)
+        repoPrefix: $(mirrorRepoPrefix)
         resourceGroup: $(public-mirror.resourceGroup)
         subscription: $(public-mirror.subscription)
         serviceConnection:
