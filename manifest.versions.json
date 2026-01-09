@@ -12,7 +12,7 @@
     "base-url|public-checksums|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
-    "alpine|floating-tag-version": "alpine3.22",
+    "alpine|floating-tag-version": "alpine3.23",
     "alpine|11.0|floating-tag-version": "alpine3.23",
     "alpine|10.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
