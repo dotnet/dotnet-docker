@@ -6,8 +6,11 @@
     "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
-    "base-url|public-checksums|main": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public-checksums|nightly": "https://ci.dot.net/public-checksums",
+
+    "base-url|public-checksums|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public-checksums|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public-checksums|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
     "alpine|floating-tag-version": "alpine3.22",
     "alpine|10.0|floating-tag-version": "$(alpine|floating-tag-version)",
@@ -147,8 +150,8 @@
     "monitor|10.0|minor-tag": "10.0",
     "monitor|10.0|base-url|main": "$(base-url|public|maintenance|main)",
     "monitor|10.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
-    "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|main)",
-    "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|nightly)",
+    "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|maintenance|main)",
+    "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|maintenance|nightly)",
 
     "powershell|8.0|build-version": "7.4.13",
     "powershell|8.0|Linux.Alpine|sha": "aad1256a8a29ae6646408a6bba00459745e4d676a4643541d55340fca0f311caecaa1f7a3490d49812d255d253d94ae06ba8134a5e5a304504decab556f58031",
