@@ -1,0 +1,54 @@
+parameters:
+# Do not modify the architectures parameter. It is only used to create a job
+# for each architecture at template expansion time.
+# Running a CG scan with some architectures turned off will result in
+# de-registration of all the images not scanned.
+#
+# Component governance snapshots are keyed by accountId/projectId/definitionId/phaseId.
+# Phase ID refers to jobs. Running CG with a matrix job results in duplicate
+# registrations for the same job since they will all have the same phaseId.
+# Whichever job finishes first will be registered, and the others will be
+# ignored as duplicated snapshots.
+#
+# We can avoid using a matrix job by looping over each arch to achieve the same
+# effect using the pipeline templating system.
+- name: architectures
+  type: object
+  default:
+  - name: amd64
+    arch: amd64
+  - name: arm32
+    arch: arm
+  - name: arm64
+    arch: arm64
+
+stages:
+- stage: cg
+  displayName: CG Detection (Docker Images)
+
+  jobs:
+  - ${{ each arch in parameters.architectures }}:
+    - job: ScanImages_${{ arch.name }}
+      displayName: Scan Images (${{ arch.name }})
+      variables:
+        arch: ${{ arch.arch }}
+
+      steps:
+      - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+        parameters:
+          cleanupDocker: true
+
+      - script: >
+          $(runImageBuilderCmd) pullImages
+          --architecture '$(arch)'
+          --manifest 'manifest.json'
+          --output-var 'pulledImages'
+        displayName: Pull Images
+        name: PullImages
+
+      - task: ComponentGovernanceComponentDetection@0
+        displayName: Detect Components
+        inputs:
+          dockerImagesToScan: $(PullImages.pulledImages)
+
+      - template: /eng/docker-tools/templates/steps/cleanup-docker-linux.yml@self

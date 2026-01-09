@@ -1,0 +1,20 @@
+# .NET Microsoft.Extensions.Configuration reads appsettings.json from the working directory
+# where ImageBuilder is run. Place it in the repo root so it will be available at runtime.
+parameters:
+- name: publishConfig
+  type: object
+- name: condition
+  type: string
+  default: "true"
+
+steps:
+- powershell: |-
+    $appsettingsJsonContent = @"
+    {
+      "PublishConfiguration": ${{ convertToJson(parameters.publishConfig) }}
+    }
+    "@
+    Set-Content -Path "appsettings.json" -Value $appsettingsJsonContent
+    Get-Content -Path "appsettings.json"
+  displayName: Output publish configuration
+  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ${{ parameters.condition }})

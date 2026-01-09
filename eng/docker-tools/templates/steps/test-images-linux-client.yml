@@ -24,7 +24,7 @@ steps:
       additionalTestArgs="$additionalTestArgs -TestCategories pre-build"
     else
       if [ "${{ variables['System.TeamProject'] }}" == "${{ parameters.internalProjectName }}" ] && [ "${{ variables['Build.Reason'] }}" != "PullRequest" ]; then
-        additionalTestArgs="$additionalTestArgs -PullImages -Registry ${{ parameters.publishConfig.buildAcr.server }} -RepoPrefix ${{ parameters.publishConfig.buildAcr.repoPrefix }} -ImageInfoPath $(artifactsPath)/image-info.json"
+        additionalTestArgs="$additionalTestArgs -PullImages -Registry ${{ parameters.publishConfig.BuildRegistry.server }} -RepoPrefix ${{ parameters.publishConfig.BuildRegistry.repoPrefix }} -ImageInfoPath $(artifactsPath)/image-info.json"
         if [ "$TESTCATEGORIESOVERRIDE" != "" ]; then
           additionalTestArgs="$additionalTestArgs -TestCategories $TESTCATEGORIESOVERRIDE"
         fi
@@ -53,7 +53,7 @@ steps:
         $azLoginArgs = '--service-principal --tenant $env:AZURE_TENANT_ID -u $env:AZURE_CLIENT_ID --federated-token $env:AZURE_FEDERATED_TOKEN';
         docker exec -e AZURE_TENANT_ID=$env:tenantId -e AZURE_CLIENT_ID=$env:servicePrincipalId -e AZURE_FEDERATED_TOKEN=$env:idToken $(testRunner.container) pwsh
         -File $(engDockerToolsRelativePath)/Invoke-WithRetry.ps1
-        "az login $azLoginArgs; az acr login -n ${{ parameters.publishConfig.buildAcr.server }}"
+        "az login $azLoginArgs; az acr login -n ${{ parameters.publishConfig.BuildRegistry.server }}"
   - ${{ if eq(parameters.preBuildValidation, 'false') }}:
     - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
       parameters:
@@ -76,7 +76,7 @@ steps:
   displayName: Test Images
   condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - script: docker exec $(testRunner.container) docker logout ${{ parameters.publishConfig.buildAcr.server }}
+  - script: docker exec $(testRunner.container) docker logout ${{ parameters.publishConfig.BuildRegistry.server }}
     displayName: Docker logout
     condition: and(always(), ${{ parameters.condition }})
     continueOnError: true

@@ -6,8 +6,11 @@
     "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
-    "base-url|public-checksums|main": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public-checksums|nightly": "https://ci.dot.net/public-checksums",
+
+    "base-url|public-checksums|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public-checksums|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public-checksums|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
     "alpine|floating-tag-version": "alpine3.22",
     "alpine|10.0|floating-tag-version": "$(alpine|floating-tag-version)",
@@ -91,6 +94,7 @@
     "libicu|focal": 66,
     "libicu|jammy": 70,
     "libicu|noble": 74,
+    "libicu|resolute": 76,
 
     "libssl|alpine3.22": "3",
     "libssl|alpine3.23": "3",
@@ -99,6 +103,7 @@
     "libssl|focal": "1.1",
     "libssl|jammy": "3",
     "libssl|noble": "3t64",
+    "libssl|resolute": "3t64",
 
     "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.52.0.windows.1/MinGit-2.52.0-64-bit.zip",
     "mingit|latest|x64|sha": "f42a561840627747ad48e6ece05a14093292d31f3393a401a7f7c780ee7695c2",
@@ -145,8 +150,8 @@
     "monitor|10.0|minor-tag": "10.0",
     "monitor|10.0|base-url|main": "$(base-url|public|maintenance|main)",
     "monitor|10.0|base-url|nightly": "$(base-url|public|maintenance|nightly)",
-    "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|main)",
-    "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|nightly)",
+    "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|maintenance|main)",
+    "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|maintenance|nightly)",
 
     "powershell|8.0|build-version": "7.4.13",
     "powershell|8.0|Linux.Alpine|sha": "aad1256a8a29ae6646408a6bba00459745e4d676a4643541d55340fca0f311caecaa1f7a3490d49812d255d253d94ae06ba8134a5e5a304504decab556f58031",
@@ -211,7 +216,7 @@
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
 
     "syft|repo": "anchore/syft",
-    "syft|version": "v1.38.2",
+    "syft|version": "v1.40.0",
     "syft|tag": "$(syft|version)-debug"
   }
 }
