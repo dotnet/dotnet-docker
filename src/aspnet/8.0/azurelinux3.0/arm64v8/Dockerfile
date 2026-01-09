@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:8.0.20-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:8.0.22-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=8.0.20 \
+RUN aspnetcore_version=8.0.22 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
@@ -22,9 +22,9 @@ RUN aspnetcore_version=8.0.20 \
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.20-azurelinux3.0-arm64v8
+FROM $REPO:8.0.22-azurelinux3.0-arm64v8
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.20
+ENV ASPNET_VERSION=8.0.22
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

@@ -72,6 +72,9 @@ public class GeneratedArtifactTests
             $" --var 'base-url|public|maintenance|nightly={InternalBaseUrl}'" +
             $" --var 'base-url|public|preview|main={InternalBaseUrl}'" +
             $" --var 'base-url|public|preview|nightly={InternalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|maintenance|main={InternalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|maintenance|nightly={InternalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|preview|main={InternalBaseUrl}'" +
             $" --var 'base-url|public-checksums|preview|nightly={InternalBaseUrl}'";
 
         // Generate internal Dockerfiles
@@ -90,6 +93,7 @@ public class GeneratedArtifactTests
             (DockerfileHelper.Sha256Regex, "{sha256_placeholder}"),
             (DockerfileHelper.VersionRegex, "0.0.0"),
             (DockerfileHelper.VersionWithVariableRegex, "0.0.0"),
+            (DockerfileHelper.StringVersionWithVariableRegex, "0.0.0"),
             (DockerfileHelper.MinGitVersionRegex, "v0.0.0.windows.0"),
             (DockerfileHelper.AlpineVersionRegex, "alpine3.XX"),
         ];

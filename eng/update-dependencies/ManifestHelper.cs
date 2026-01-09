@@ -15,26 +15,31 @@ public static partial class ManifestHelper
     private const string VariablePattern = $"\\$\\((?<{VariableGroupName}>[\\w:\\-.|]+)\\)";
 
     /// <summary>
-    /// Gets the base URL based on the configured context.
+    /// Gets the base URLs based on the configured context.
     /// </summary>
     /// <param name="manifestVariables">JSON object of the variables from the manifest.</param>
     /// <param name="options">Configured options from the app.</param>
-    public static string GetBaseUrl(JObject manifestVariables, SpecificCommandOptions options)
+    public static IEnumerable<string> GetBaseUrls(JObject manifestVariables, SpecificCommandOptions options)
     {
         // The upstream branch represents which GitHub branch the current
         // branch branched off of. This is either "nightly" or "main".
         var upstreamBranch = ResolveVariableValue("branch", manifestVariables);
 
-        var baseUrlVariableName = GetBaseUrlVariableName(
+        var baseUrlVariableNames = GetBaseUrlVariableNames(
             dockerfileVersion: options.DockerfileVersion,
             branch: upstreamBranch,
             versionSourceName: options.VersionSourceName);
 
-        return ResolveVariableValue(baseUrlVariableName, manifestVariables);
+        var baseUrlValues = baseUrlVariableNames
+            .Where(manifestVariables.ContainsKey)
+            .Select(variable => ResolveVariableValue(variable, manifestVariables));
+
+        return baseUrlValues;
     }
 
     /// <summary>
-    /// Constructs the name of the product version base URL variable.
+    /// Constructs the base URL variables for the given dockerfile, branch,
+    /// and product combination.
     /// </summary>
     /// <param name="dockerfileVersion">
     /// Dockerfile version. This should be a major.minor version e.g. "8.0",
@@ -43,12 +48,11 @@ public static partial class ManifestHelper
     /// <param name="branch">
     /// Name of the branch. This is typically "main" or "nightly".
     /// </param>
-    public static string GetBaseUrlVariableName(
+    public static IEnumerable<string> GetBaseUrlVariableNames(
         string dockerfileVersion,
         string branch,
         string versionSourceName = "",
-        bool sdkOnlyRelease = false
-    )
+        bool sdkOnlyRelease = false)
     {
         string product;
         if (sdkOnlyRelease)
@@ -65,7 +69,10 @@ public static partial class ManifestHelper
             };
         }
 
-        return $"{product}|{dockerfileVersion}|base-url|{branch}";
+        return [
+            $"{product}|{dockerfileVersion}|base-url|{branch}",
+            $"{product}|{dockerfileVersion}|base-url|checksums|{branch}",
+        ];
     }
 
     /// <summary>

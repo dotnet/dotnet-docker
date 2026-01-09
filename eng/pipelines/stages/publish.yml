@@ -37,14 +37,14 @@ parameters:
 
 stages:
 - ${{ if parameters.isStandalonePublish }}:
-  - template: /eng/common/templates/stages/setup-service-connections.yml@self
+  - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
     parameters:
       serviceConnections:
-      - name: ${{ parameters.publishConfig.publishAcr.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.PublishRegistry.serviceConnection.name }}
       - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
         - name: ${{ serviceConnection.name }}
 
-- template: /eng/common/templates/stages/dotnet/publish.yml@self
+- template: /eng/docker-tools/templates/stages/dotnet/publish.yml@self
   parameters:
     publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}

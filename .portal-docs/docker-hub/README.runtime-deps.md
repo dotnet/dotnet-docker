@@ -4,7 +4,9 @@
 
 # Featured Tags
 
-* `10.0` (Release Candidate)
+* `11.0-preview` (Preview)
+  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:11.0-preview`
+* `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0`
 * `9.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime-deps:9.0`
@@ -52,7 +54,7 @@ They contain the following features:
 * [dotnet/nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime/): .NET Runtime (Preview)
 * [dotnet/nightly/monitor](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
-* [dotnet/nightly/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-nightly-aspire-dashboard/): .NET Aspire Dashboard (Preview)
+* [dotnet/nightly/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-nightly-aspire-dashboard/): Aspire Dashboard (Preview)
 * [dotnet/nightly/yarp](https://hub.docker.com/r/microsoft/dotnet-nightly-yarp/): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
@@ -63,7 +65,7 @@ They contain the following features:
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime-deps/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md#full-tag-listing).
 
 # Support
 

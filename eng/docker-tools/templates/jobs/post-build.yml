@@ -1,0 +1,87 @@
+parameters:
+  pool: {}
+  internalProjectName: null
+  publicProjectName: null
+
+jobs:
+- job: Build
+  pool: ${{ parameters.pool }}
+  variables:
+    imageInfosSubDir: "/image-infos"
+    imageInfosHostDir: "$(Build.ArtifactStagingDirectory)$(imageInfosSubDir)"
+    imageInfosContainerDir: "$(artifactsPath)$(imageInfosSubDir)"
+    imageInfosOutputSubDir: "/output"
+    sbomOutputDir: "$(Build.ArtifactStagingDirectory)/sbom"
+  steps:
+  - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+  - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
+    parameters:
+      targetPath: $(Build.ArtifactStagingDirectory)
+      # This can fail if no build jobs ran to produce any artifacts
+      continueOnError: true
+  - powershell: |
+      # Move all image-info artifacts to their own directory
+      New-Item -ItemType Directory -Path $(imageInfosHostDir)
+      Get-ChildItem -Directory -Filter "*-image-info-*" $(Build.ArtifactStagingDirectory) |
+        Move-Item -Verbose -Destination $(imageInfosHostDir)
+    displayName: Collect Image Info Files
+  - powershell: |
+      # Move the contents of all the SBOM artifact directories to a single location
+      New-Item -ItemType Directory -Path $(sbomOutputDir)
+      Get-ChildItem -Directory -Filter "*-sboms" $(Build.ArtifactStagingDirectory) |
+        ForEach-Object {
+          Get-ChildItem $_ -Directory | Move-Item -Force -Verbose -Destination $(sbomOutputDir)
+        }
+    displayName: Consolidate SBOMs to Single Directory
+  - powershell: |
+      # Deletes the artifacts from all the unsuccessful jobs
+      Get-ChildItem $(imageInfosHostDir) -Directory |
+          ForEach-Object {
+              [pscustomobject]@{
+                  # Parse the artifact name to separate the base of the name from the job attempt number
+                  BaseName = $_.Name.Substring(0, $_.Name.LastIndexOf('-'));
+                  JobAttempt = $_.Name.Substring($_.Name.LastIndexOf('-') + 1)
+                  FullName = $_.FullName
+              }
+          } |
+          Group-Object BaseName |
+          # Delete all but the last artifact from each base name
+          ForEach-Object {
+              $_.Group |
+                  Sort-Object JobAttempt |
+                  Select-Object -ExpandProperty FullName -SkipLast 1 |
+                  Remove-Item -Recurse -Force
+          }
+    displayName: Prune Publish Artifacts
+  - powershell: |
+      $imageInfoFiles = Get-ChildItem "$(imageInfosHostDir)"
+      if ($imageInfoFiles.Count -eq 0) {
+        echo "No image info files found."
+        echo "##vso[task.setvariable variable=noImageInfos;isOutput=true]true"
+        exit 0
+      }
+
+      New-Item -ItemType Directory -Path $(imageInfosHostDir)$(imageInfosOutputSubDir) -Force
+      $(runImageBuilderCmd) mergeImageInfo `
+        --manifest $(manifest) `
+        $(imageInfosContainerDir) `
+        $(imageInfosContainerDir)$(imageInfosOutputSubDir)/image-info.json `
+        $(manifestVariables)
+    name: MergeImageInfoFiles
+    displayName: Merge Image Info Files
+  - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
+    parameters:
+      condition: and(succeeded(), ne(variables['MergeImageInfoFiles.noImageInfos'], 'true'))
+      path: $(sbomOutputDir)
+      artifactName: sboms
+      displayName: Publish SBOM Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}
+  - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
+    parameters:
+      condition: and(succeeded(), ne(variables['MergeImageInfoFiles.noImageInfos'], 'true'))
+      path: $(imageInfosHostDir)$(imageInfosOutputSubDir)
+      artifactName: image-info
+      displayName: Publish Image Info File Artifact
+      internalProjectName: ${{ parameters.internalProjectName }}
+      publicProjectName: ${{ parameters.publicProjectName }}

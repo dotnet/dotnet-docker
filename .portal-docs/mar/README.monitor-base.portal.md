@@ -2,11 +2,11 @@
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://mcr.microsoft.com/product/dotnet/monitor/base/about) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [dotnet](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/base/about) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 This image contains the base installation of .NET Monitor, a diagnostic tool for capturing diagnostic artifacts (such as dumps and traces) in an operator-driven or automated manner. This tool is an ASP.NET application that hosts a web API for inspecting .NET processes and collecting diagnostic artifacts.
 
-This image only provides the base functionality of the .NET Monitor tool; it is only meant to be used as a base image upon which .NET Monitor extensions are installed. If you are looking for the full feature set that is provided by the .NET Monitor global tool (including the egress capabilities), see the [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about) image.
+This image only provides the base functionality of the .NET Monitor tool; it is only meant to be used as a base image upon which .NET Monitor extensions are installed. If you are looking for the full feature set that is provided by the .NET Monitor global tool (including the egress capabilities), see the [dotnet/nightly/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/monitor/about) image.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
@@ -22,20 +22,20 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/monitor/base](https://mcr.microsoft.com/product/dotnet/monitor/base/about): .NET Monitor Base
-* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
-* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/nightly/aspire-dashboard/about): .NET Aspire Dashboard (Preview)
-* [dotnet/nightly/yarp](https://mcr.microsoft.com/product/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
+* [dotnet/monitor/base](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/base/about): .NET Monitor Base
+* [dotnet/nightly/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime/about): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
+* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
+* [dotnet/nightly/yarp](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 
 * [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
+* [dotnet/framework/samples](https://mcr.microsoft.com/artifact/mar/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
 
 ## Usage
 

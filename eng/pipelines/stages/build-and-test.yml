@@ -42,15 +42,15 @@ parameters:
 
 stages:
 - ${{ if parameters.isStandaloneBuild }}:
-  - template: /eng/common/templates/stages/setup-service-connections.yml@self
+  - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
     parameters:
       serviceConnections:
-      - name: ${{ parameters.publishConfig.internalMirrorAcr.serviceConnection.name }}
-      - name: ${{ parameters.publishConfig.buildAcr.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.InternalMirrorRegistry.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.BuildRegistry.serviceConnection.name }}
       - ${{ if parameters.storageAccountServiceConnection }}:
         - name: ${{ parameters.storageAccountServiceConnection.name }}
 
-- template: /eng/common/templates/stages/dotnet/build-and-test.yml@self
+- template: /eng/docker-tools/templates/stages/dotnet/build-and-test.yml@self
   parameters:
     publishConfig: ${{ parameters.publishConfig }}
     internalProjectName: ${{ parameters.internalProjectName }}

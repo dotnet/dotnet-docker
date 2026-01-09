@@ -11,40 +11,12 @@ schedules:
   always: true
 
 variables:
-- template: /eng/common/templates/variables/common.yml@self
+- template: /eng/docker-tools/templates/variables/common.yml@self
 - name: ComponentDetection.Timeout
   value: 7200 # 2 hours in seconds
 
 extends:
-  template: /eng/common/templates/1es-official.yml@self
+  template: /eng/docker-tools/templates/1es-official.yml@self
   parameters:
     stages:
-    - stage: cg
-      displayName: CG Detection (Docker Images)
-      jobs:
-      - job: ScanImages
-        displayName: Scan Images
-        strategy:
-            matrix:
-              amd64:
-                arch: amd64
-              arm32:
-                arch: arm
-              arm64:
-                arch: arm64
-        steps:
-        - template: /eng/common/templates/steps/init-docker-linux.yml@self
-          parameters:
-            cleanupDocker: true
-        - script: >
-            $(runImageBuilderCmd) pullImages
-            --architecture '$(arch)'
-            --manifest 'manifest.json'
-            --output-var 'pulledImages'
-          displayName: Pull Images
-          name: PullImages
-        - task: ComponentGovernanceComponentDetection@0
-          inputs:
-            dockerImagesToScan: $(PullImages.pulledImages)
-          displayName: Detect Components
-        - template: /eng/common/templates/steps/cleanup-docker-linux.yml@self
+    - template: /eng/pipelines/stages/cg-images.yml@self

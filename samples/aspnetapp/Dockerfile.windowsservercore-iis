@@ -2,8 +2,7 @@
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
 # Runtime stage
-ARG TAG=ltsc2025
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-windowsservercore-$TAG AS final
+FROM mcr.microsoft.com/dotnet/aspnet:10.0-windowsservercore-ltsc2022 AS final
 
 RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
@@ -17,7 +16,7 @@ RUN powershell -Command `
         Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://github.com/microsoft/IIS.ServiceMonitor/releases/download/v2.0.1.10/ServiceMonitor.exe; `
         `
         # Install the ASP.NET Core Module
-        Invoke-WebRequest -OutFile c:\dotnet-hosting-win.exe https://aka.ms/dotnet/9.0/dotnet-hosting-win.exe; `
+        Invoke-WebRequest -OutFile c:\dotnet-hosting-win.exe https://aka.ms/dotnet/10.0/dotnet-hosting-win.exe; `
         $process = Start-Process -Filepath C:\dotnet-hosting-win.exe -ArgumentList  @('/install', '/q', '/norestart', 'OPT_NO_RUNTIME=1', 'OPT_NO_X86=1', 'OPT_NO_SHAREDFX=1') -Wait -PassThru ; `
         if ($process.ExitCode -ne 0) { `
             exit $process.ExitCode; `
@@ -25,7 +24,7 @@ RUN powershell -Command `
         Remove-Item -Force C:\dotnet-hosting-win.exe; `
         Remove-Item -Force -Recurse $Env:Temp\*
 
-FROM mcr.microsoft.com/dotnet/sdk:9.0-windowsservercore-$TAG AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0-windowsservercore-ltsc2022 AS build
 WORKDIR /source
 
 # Copy project file and restore as distinct layers

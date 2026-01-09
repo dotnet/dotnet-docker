@@ -1,0 +1,41 @@
+parameters:
+- name: acr
+  type: object
+  default:
+    server: ""
+    subscription: ""
+    resourceGroup: ""
+    repoPrefix: ""
+- name: additionalOptions
+  type: string
+  default: ""
+- name: continueOnError
+  type: string
+  default: false
+- name: forceDryRun
+  type: boolean
+  default: false
+
+steps:
+- ${{ if or(eq(parameters.forceDryRun, true), eq(variables['System.TeamProject'], 'public'), eq(variables['Build.Reason'], 'PullRequest')) }}:
+  - script: echo "##vso[task.setvariable variable=dryRunArg]--dry-run"
+- template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+  parameters:
+    displayName: Copy Base Images
+    continueOnError: ${{ parameters.continueOnError }}
+    internalProjectName: 'internal'
+    # Use environment variable to reference $(dryRunArg). Since $(dryRunArg) might be undefined,
+    # PowerShell will treat the Azure Pipelines variable macro syntax as a command and throw an
+    # error
+    args: >-
+      copyBaseImages
+      '${{ parameters.acr.subscription }}'
+      '${{ parameters.acr.resourceGroup }}'
+      $(dockerHubRegistryCreds)
+      $(customCopyBaseImagesArgs)
+      --repo-prefix '${{ parameters.acr.repoPrefix }}'
+      --registry-override '${{ parameters.acr.server }}'
+      --os-type 'linux'
+      --architecture '*'
+      $env:DRYRUNARG
+      ${{ parameters.additionalOptions }}

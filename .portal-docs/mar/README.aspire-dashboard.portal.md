@@ -2,39 +2,39 @@
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [dotnet](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about) for images with official releases of [.NET](https://github.com/dotnet/core).
 
-This image contains the .NET Aspire Dashboard.
+This image contains the Aspire Dashboard.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 ## Featured Tags
 
-* `9.5`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:9.5`
+* `13`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:13`
 
 ## Related Repositories
 
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/aspire-dashboard](https://mcr.microsoft.com/product/dotnet/aspire-dashboard/about): .NET Aspire Dashboard
-* [dotnet/nightly/sdk](https://mcr.microsoft.com/product/dotnet/nightly/sdk/about): .NET SDK (Preview)
-* [dotnet/nightly/aspnet](https://mcr.microsoft.com/product/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
-* [dotnet/nightly/runtime](https://mcr.microsoft.com/product/dotnet/nightly/runtime/about): .NET Runtime (Preview)
-* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/product/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
-* [dotnet/nightly/monitor](https://mcr.microsoft.com/product/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
-* [dotnet/nightly/yarp](https://mcr.microsoft.com/product/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
-* [dotnet/samples](https://mcr.microsoft.com/product/dotnet/samples/about): .NET Samples
+* [dotnet/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about): Aspire Dashboard
+* [dotnet/nightly/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
+* [dotnet/nightly/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime/about): .NET Runtime (Preview)
+* [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
+* [dotnet/nightly/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
+* [dotnet/nightly/yarp](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
+* [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:
 
 * [dotnet/framework](https://mcr.microsoft.com/catalog?search=dotnet/framework): .NET Framework, ASP.NET and WCF
-* [dotnet/framework/samples](https://mcr.microsoft.com/product/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
+* [dotnet/framework/samples](https://mcr.microsoft.com/artifact/mar/dotnet/framework/samples/about): .NET Framework, ASP.NET and WCF Samples
 
 ## Usage
 
-The .NET Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
+The Aspire Dashboard is a browser-based app to view run-time information about your distributed application.
 
 The dashboard shows:
 
@@ -47,9 +47,10 @@ The dashboard shows:
 The dashboard must be configured when it is started. The configuration is done via environment variables. The following environment variables are supported:
 
 * `ASPNETCORE_URLS` specifies one or more HTTP endpoints through which the dashboard frontend is served. The frontend endpoint is used to view the dashboard in a browser. Defaults to `http://localhost:18888`.
-* `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the .NET Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to `http://localhost:18889`.
+* `DOTNET_DASHBOARD_OTLP_ENDPOINT_URL` specifies the [OTLP/gRPC](https://opentelemetry.io/docs/specs/otlp/#otlpgrpc) endpoint. This endpoint hosts an OTLP service and receives telemetry using gRPC. When the dashboard is launched by the Aspire app host this address is secured with HTTPS. Securing the dashboard with HTTPS is recommended. Defaults to `http://localhost:18889`.
 * `DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL` specifies the [OTLP/HTTP](https://opentelemetry.io/docs/specs/otlp/#otlphttp) endpoint. This endpoint hosts an OTLP service and receives telemetry using Protobuf over HTTP. Defaults to `http://localhost:18890`.
-* `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode` and `Dashboard:Otlp:AuthMode` to `Unsecured`.
+* `ASPIRE_DASHBOARD_MCP_ENDPOINT_URL` specifies the Aspire MCP endpoint. When this value isn't specified then the MCP server is hosted with an `ASPNETCORE_URLS` endpoint. The MCP server can be disabled by configuring `Dashboard:Mcp:Disabled` to `true`. Defaults to `http://localhost:18891`.
+* `DOTNET_DASHBOARD_UNSECURED_ALLOW_ANONYMOUS` specifies the dashboard doesn't use authentication and accepts anonymous access. This setting is a shortcut to configuring `Dashboard:Frontend:AuthMode`, `Dashboard:Otlp:AuthMode` and `Dashboard:Mcp:AuthMode` to `Unsecured`.
 * `DOTNET_DASHBOARD_CONFIG_FILE_PATH` specifies the path for an optional JSON configuration file.
 
 #### Frontend authentication

@@ -1,0 +1,70 @@
+# Base pipeline for the official/unofficial versions of the sync-internal-release
+# pipeline. This template is designed to be used as an "extends" template in the
+# following pipeline definitions:
+# - eng/pipelines/sync-internal-release-official.yml
+# - eng/pipelines/sync-internal-release-unofficial.yml
+
+parameters:
+# Service connection used to push new branches and submit pull requests.
+- name: serviceConnection
+  type: string
+# The branch that changes will be pulled from.
+- name: sourceBranch
+  type: string
+# The branch that needs to be updated with changes from sourceBranch.
+# If this branch doesn't exist, it will be created. Otherwise, a pull request
+# will be created targeting this branch.
+- name: targetBranch
+  type: string
+
+extends:
+  template: /eng/docker-tools/templates/1es.yml@self
+  parameters:
+    stages:
+    - stage: SyncReleaseBranchesStage
+      displayName: Sync Release Branches
+
+      jobs:
+      - job: SyncReleaseBranchesJob
+        displayName: Sync Release Branches
+        pool:
+          name: $(default1ESInternalPoolName)
+          image: $(default1ESInternalPoolImage)
+          os: linux
+
+        steps:
+        - checkout: self
+          fetchDepth: 1
+
+        - template: /eng/pipelines/steps/install-dotnet.yml@self
+
+        - task: AzureCLI@2
+          displayName: Sync Release Branches
+          inputs:
+            # Used to push new, non-protected branches and submit pull requests.
+            azureSubscription: "${{ parameters.serviceConnection }}"
+            scriptType: pscore
+            scriptLocation: inlineScript
+            addSpnToEnvironment: true
+            # $(Build.SourceBranch) always has a refs/heads/ prefix when this pipeline is triggered from a branch.
+            # The update-dependencies tool doesn't expect the prefix, so we need to remove it.
+            inlineScript: >-
+              $sourceBranch = "${{ parameters.sourceBranch }}";
+              $sourceBranch = $sourceBranch -replace "refs/heads/", "";
+              $targetBranch = "${{ parameters.targetBranch }}";
+              $targetBranch = $targetBranch -replace "refs/heads/", "";
+
+              dotnet run --configuration Release --project ./eng/update-dependencies/update-dependencies.csproj --
+              sync-internal-release
+              --azdo-organization "$env:SYSTEM_COLLECTIONURI"
+              --azdo-project "$env:SYSTEM_TEAMPROJECT"
+              --azdo-repo "$env:BUILD_REPOSITORY_NAME"
+              --source-branch "$sourceBranch"
+              --target-branch "$targetBranch"
+              --pr-branch-prefix "pr"
+              --user "$env:DOTNETDOCKERBOT_USERNAME"
+              --email "$env:DOTNETDOCKERBOT_EMAIL"
+              --staging-storage-account "dotnetstage"
+          env:
+            # Used to download build artifacts containing .NET version information.
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)

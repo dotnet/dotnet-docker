@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="complexapp/complexapp.csproj" />
+  <Project Path="libbar/libbar.csproj" />
+  <Project Path="libfoo/libfoo.csproj" />
+  <Project Path="tests/tests.csproj" />
+</Solution>

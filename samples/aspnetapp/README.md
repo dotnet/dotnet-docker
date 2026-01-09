@@ -2,12 +2,9 @@
 
 This sample demonstrates how to build container images for ASP.NET Core web apps. See [.NET Docker Samples](../README.md) for more samples.
 
-> [!NOTE]
-> .NET 8+ container images use port `8080`, by default. Previous .NET versions used port `80`. The instructions for the sample assume the use of port `8080`.
-
 ## Run the sample image
 
-You can start by launching a sample from our [container registry](https://mcr.microsoft.com/) and access it in your web browser at `http://localhost:8000`.
+You can start by launching a sample from our [container registry](https://mcr.microsoft.com/) and accessing it in your web browser at `http://localhost:8000`.
 
 ```console
 docker run --rm -it -p 8000:8080 -e ASPNETCORE_HTTP_PORTS=8080 mcr.microsoft.com/dotnet/samples:aspnetapp
@@ -23,41 +20,48 @@ info: Microsoft.Hosting.Lifetime[0]
       Application started. Press Ctrl+C to shut down.
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. You can also view the ASP.NET Core site running in the container from another machine with a local IP address such as `http://192.168.1.18:8000`.
-
-You can also reach the app's endpoint from the command line:
+After the application starts, navigate to `http://localhost:8000` in your web browser.
+You can also reach the app's API endpoint from the command line:
 
 ```bash
 $ curl http://localhost:8000/Environment
-{"runtimeVersion":".NET 9.0.0-rc.1.24431.7","osVersion":"Debian GNU/Linux 12 (bookworm)","osArchitecture":"X64","user":"app","processorCount":16,"totalAvailableMemoryBytes":33632370688,"memoryLimit":9223372036854771712,"memoryUsage":35770368,"hostName":"834f365bfcfa"}
+{
+  "runtimeVersion": ".NET 10.0.0-rc.1.25451.107",
+  "osVersion": "Ubuntu 24.04.3 LTS",
+  "osArchitecture": "X64",
+  "user": "app",
+  "processorCount": 32,
+  "totalAvailableMemoryBytes": 67396280320,
+  "memoryLimit": 0,
+  "memoryUsage": 62160896,
+  "hostName": "d021ffa2e15f"
+}
 ```
 
-> [!NOTE]
-> ASP.NET Core apps (in official images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7), starting with .NET 8. The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The container will not be accessible without this mapping. ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
-
-You can see the app running via `docker ps`.
-The sample includes a [health check](https://learn.microsoft.com/aspnet/core/host-and-deploy/health-checks) endpoint at `/healthz`, indicated in the "STATUS" column.
+You can see the app running via `docker ps`:
 
 ```bash
 $ docker ps
 CONTAINER ID   IMAGE                                        COMMAND         CREATED          STATUS                    PORTS                  NAMES
-d79edc6bfcb6   mcr.microsoft.com/dotnet/samples:aspnetapp   "./aspnetapp"   35 seconds ago   Up 34 seconds (healthy)   0.0.0.0:8080->8080/tcp   nice_curran
+CONTAINER ID   IMAGE       COMMAND         CREATED         STATUS         PORTS                                         NAMES
+d021ffa2e15f   aspnetapp   "./aspnetapp"   2 minutes ago   Up 2 minutes   0.0.0.0:8000->8080/tcp, [::]:8000->8080/tcp   reverent_aryabhata
 ```
 
 ## Change port
 
-You can change the port ASP.NET Core uses with one of the following environment variables.
-However, the default port `8080` is recommended.
+ASP.NET Core apps (in official .NET images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7). The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The web server hosted by the container will not be accessible without this mapping.
 
-Note that ports 1 to 1023 are restricted to root users only, and will not work when running as the non-root root user provided in .NET images.
-
-The following evnironment variables will change the port to port `80`.
+ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
+For example, setting either of the following evnironment variables will change the container port to `80`:
 
 - `ASPNETCORE_HTTP_PORTS=80`
 - `ASPNETCORE_URLS=http://+:80`
 
+> [!NOTE]
+> Ports 1 through 1023 are restricted to root users only, and will not work when running as the non-root root user provided in .NET images.
+
 `ASPNETCORE_URLS` overrides `ASPNETCORE_HTTP_PORTS` if set.
-The `ASPNETCORE_HTTP_PORTS` envrionment variable is used in the [ASP.NET Core](https://github.com/dotnet/dotnet-docker/blob/d90e7bd1d10c8781f0008f5ab1327ca3481e78de/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7C5-L7C31)
+The `ASPNETCORE_HTTP_PORTS` envrionment variable is used in the [ASP.NET Core](https://github.com/dotnet/dotnet-docker/blob/d033b1beda6bc9ac933dd88fcc572ec05c28f705/src/runtime-deps/10.0/noble/amd64/Dockerfile#L7)
 images to set the default port.
 
 ## Enable HTTPS
@@ -123,28 +127,38 @@ The app is then copied to the final stage without running any commands on the ta
 
 ## Build image with the SDK
 
-The easiest way to [build images is with the SDK](https://github.com/dotnet/sdk-container-builds).
+The easiest way to [build .NET images is using the SDK](https://learn.microsoft.com/dotnet/core/containers/overview).
 
 ```console
-dotnet publish /p:PublishProfile=DefaultContainer
+cd samples/aspnetapp
+dotnet publish -p PublishProfile=DefaultContainer
 ```
 
-That command can be further customized to use a different base image and publish to a container registry. You must first use `docker login` to login to the registry.
+You can control many aspects of the generated container through MSBuild properties.
+For example, the following command uses a different base image and publishes the final image to DockerHub:
 
 ```console
-dotnet publish /p:PublishProfile=DefaultContainer /p:ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:9.0-noble-chiseled /p:ContainerRegistry=docker.io /p:ContainerRepository=youraccount/aspnetapp
+dotnet publish \
+    -p PublishProfile=DefaultContainer \
+    -p ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled \
+    -p ContainerRegistry=docker.io \
+    -p ContainerRepository=youraccount/aspnetapp
 ```
+
+These properties can also be [specified in your project file](https://learn.microsoft.com/visualstudio/msbuild/property-element-msbuild).
+For a full list of supported properties, see the [.NET SDK publishing reference](https://learn.microsoft.com/dotnet/core/containers/publish-configuration).
 
 ## Supported Linux distros
 
 The .NET Team publishes images for [multiple distros](../../documentation/supported-platforms.md).
 
-Samples are provided for:
+Sample Dockerfiles are provided for:
 
 - [Alpine](Dockerfile.alpine)
 - [Alpine with Composite ready-to-run image](Dockerfile.alpine-composite)
 - [Alpine with ICU installed](Dockerfile.alpine-icu)
-- [Debian](Dockerfile.debian)
+- [Azure Linux](Dockerfile.azurelinux)
+- [Azure Linux Distroless](Dockerfile.azurelinux-distroless)
 - [Ubuntu](Dockerfile.ubuntu)
 - [Ubuntu Chiseled](Dockerfile.chiseled)
 - [Ubuntu Chiseled with Composite ready-to-run image](Dockerfile.chiseled-composite)
@@ -157,10 +171,8 @@ Samples are provided for
 
 - [Nano Server](Dockerfile.nanoserver)
 - [Windows Server Core](Dockerfile.windowsservercore)
-- [Windows Server Core with IIS](Dockerfile.windowsservercore-iis)
+- [Windows Server Core with IIS](Dockerfile.windowsservercore-iis) (Note: the IIS sample listens on port `80`, not `8080`)
 
-Windows variants of the sample can be pulled via one the following registry addresses:
+You can pull a pre-built Windows sample image using the following tag:
 
-- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-1809`
 - `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-ltsc2022`
-- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-ltsc2025`

@@ -34,12 +34,12 @@ parameters:
 
 stages:
 - ${{ if ne(variables['Build.Reason'], 'PullRequest') }}:
-  - template: /eng/common/templates/stages/setup-service-connections.yml@self
+  - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
     parameters:
       serviceConnections:
-      - name: ${{ parameters.publishConfig.internalMirrorAcr.serviceConnection.name }}
-      - name: ${{ parameters.publishConfig.buildAcr.serviceConnection.name }}
-      - name: ${{ parameters.publishConfig.publishAcr.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.InternalMirrorRegistry.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.BuildRegistry.serviceConnection.name }}
+      - name: ${{ parameters.publishConfig.PublishRegistry.serviceConnection.name }}
       - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
         - name: ${{ serviceConnection.name }}
 

@@ -1,0 +1,34 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+
+# Installer image
+FROM amd64/buildpack-deps:resolute-curl AS installer
+
+ARG ACCESSTOKEN
+
+# Retrieve .NET Runtime
+RUN dotnet_version=0.0.0 \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512| tr 'A-F' 'a-f')  dotnet-runtime-$dotnet_version-linux-x64.tar.gz" | sha512sum -c - \
+    && mkdir --parents /usr/share/dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-x64.tar.gz --directory /usr/share/dotnet \
+    && rm \
+        dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512
+
+RUN mkdir /dotnet-symlink \
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
+
+
+# .NET runtime image
+FROM $REPO:0.0.0-resolute-chiseled-amd64
+
+# .NET Runtime version
+ENV DOTNET_VERSION=0.0.0
+
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
+
+ENTRYPOINT ["/usr/bin/dotnet"]
+CMD ["--info"]

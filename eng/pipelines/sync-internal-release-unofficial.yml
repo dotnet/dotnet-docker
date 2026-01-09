@@ -10,40 +10,17 @@ parameters:
   type: string
 
 variables:
-- template: /eng/common/templates/variables/dotnet/common.yml@self
+- template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
 - group: DotNet-Docker-Common-2
+# Always run unofficial pipelines in debug mode
+- name: "System.Debug"
+  value: true
+  readonly: true
 
 extends:
-  template: /eng/common/templates/1es.yml@self
+  template: /eng/pipelines/pipelines/sync-internal-release.yml@self
   parameters:
-    stages:
-    - stage: SyncReleaseBranchesStage
-      displayName: Sync Release Branches
-
-      jobs:
-      - job: SyncReleaseBranchesJob
-        displayName: Sync Release Branches
-        pool:
-          name: $(default1ESInternalPoolName)
-          image: $(default1ESInternalPoolImage)
-          os: linux
-
-        steps:
-        - checkout: self
-          fetchDepth: 0
-
-        - template: /eng/pipelines/steps/install-dotnet.yml@self
-
-        - task: AzureCLI@2
-          displayName: Sync Release Branches
-          inputs:
-            azureSubscription: "$(updateDepsInt-test.serviceConnectionName)"
-            scriptType: "pscore"
-            scriptLocation: "inlineScript"
-            inlineScript: >-
-              dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-              sync-internal-release
-              --pr-branch-prefix pr/unofficial
-              $(Build.Repository.Uri)
-              ${{ parameters.sourceBranch }}
-              ${{ parameters.targetBranch }}
+    sourceBranch: ${{ parameters.sourceBranch }}
+    targetBranch: ${{ parameters.targetBranch }}
+    # Service connection used to push new branches and submit pull requests.
+    serviceConnection: "$(updateDepsInt-test.serviceConnectionName)"

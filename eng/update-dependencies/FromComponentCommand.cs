@@ -50,22 +50,14 @@ internal sealed class FromComponentCommand(
 
         // Bridge to legacy implementation via SpecificCommand
         var specific = new SpecificCommand();
-        var specificOptions = new SpecificCommandOptions
+        var specificOptions = SpecificCommandOptions.FromPullRequestOptions(options) with
         {
             DockerfileVersion = options.DockerfileVersion,
             ProductVersions = new Dictionary<string, string?>
             {
                 { options.Component, versionInfo.Version }
             },
-            User = options.User,
-            Email = options.Email,
-            Password = options.Password,
-            AzdoOrganization = options.AzdoOrganization,
-            AzdoProject = options.AzdoProject,
-            AzdoRepo = options.AzdoRepo,
             VersionSourceName = string.IsNullOrEmpty(options.VersionSourceName) ? options.Component : options.VersionSourceName,
-            SourceBranch = options.SourceBranch,
-            TargetBranch = options.TargetBranch,
         };
 
         return await specific.ExecuteAsync(specificOptions);

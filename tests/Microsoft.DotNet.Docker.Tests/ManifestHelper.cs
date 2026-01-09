@@ -37,7 +37,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 foreach (Platform platform in image.Platforms)
                 {
-                    DockerfileInfo dockerfileInfo = DockerfileInfo.Create(platform.Dockerfile);
+                    DockerfileInfo dockerfileInfo = DockerfileInfo.Create(platform.Dockerfile, repo, image, platform);
                     if (!dockerfileTags.TryGetValue(dockerfileInfo, out List<string>? value))
                     {
                         value = [];

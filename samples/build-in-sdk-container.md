@@ -65,7 +65,7 @@ These instructions assume that you have cloned the repository locally, and that 
 
 This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) (that's the `-v` argument) to make source available within the container (to build it). You may need to enable [shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
 
-`dotnet publish` (and `build`) produces native executables for applications. If you use a Linux container, you will build a Linux executable that will not run on Windows or macOS. You can use a [runtime argument](https://docs.microsoft.com/en-us/dotnet/core/rid-catalog) (`-r`) to specify the type of assets that you want to publish (if they don't match the SDK container). The following examples assume you want assets that match your host operating system, and use runtime arguments to ensure that.
+`dotnet publish` (and `build`) produces native executables for applications. If you use a Linux container, you will build a Linux executable that will not run on Windows or macOS. You can use a [runtime argument](https://docs.microsoft.com/dotnet/core/rid-catalog) (`-r`) to specify the type of assets that you want to publish (if they don't match the SDK container). The following examples assume you want assets that match your host operating system, and use runtime arguments to ensure that.
 
 ### Pull SDK image
 
@@ -137,7 +137,7 @@ docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:9.0-nano
 ```
 
 > [!WARNING]
-> From .NET 8 onwards, [.NET multi-platform images are Linux-only](https://learn.microsoft.com/en-us/dotnet/core/compatibility/containers/8.0/multi-platform-tags).
+> From .NET 8 onwards, [.NET multi-platform images are Linux-only](https://learn.microsoft.com/dotnet/core/compatibility/containers/8.0/multi-platform-tags).
 > This means Windows containers must all be referenced by a full tag name including the specific Windows version.
 
 You can see the built binaries with the following command:

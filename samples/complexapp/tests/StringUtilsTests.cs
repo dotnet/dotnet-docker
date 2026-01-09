@@ -1,4 +1,3 @@
-using System;
 using libbar;
 using Xunit;
 
@@ -9,8 +8,8 @@ public class StringUtilsTests
     [Fact]
     public void ReverseString_WhenInputIsNull_ThrowsCorrectException()
     {
-        string inputString = null;
-        Assert.Throws<ArgumentNullException>(() => StringUtils.ReverseString(inputString));
+        string? inputString = null;
+        Assert.Throws<ArgumentNullException>(() => StringUtils.ReverseString(inputString!));
     }
 
     [Fact]

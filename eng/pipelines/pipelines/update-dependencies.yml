@@ -3,48 +3,79 @@ parameters:
 - name: official
   type: boolean
   default: false
-# BAR build channel to read .NET versions from
-- name: channel
+# BAR channel to read .NET VMR versions from
+# Find full list of channels at https://aka.ms/bar
+- name: vmrChannel
   type: string
   default: ""
-# .NET image components to update
+# BAR channel to read Aspire versions from
+- name: aspireChannel
+  type: string
+  default: ""
+# .NET image components to update. This should be a list of strings.
+# 'stringList' is not a supported type for parameters in templates, so we need use 'object' instead.
+# https://learn.microsoft.com/azure/devops/pipelines/process/runtime-parameters#parameter-data-types
 - name: tools
   type: object
-  default:
-  - "chisel"
-  - "rocks-toolbox"
-  - "syft"
-  - "mingit"
+  default: []
+# Whether or not to try and update .NET versions according to the channel parameter
+- name: updateDotnet
+  type: boolean
+  default: true
+# Whether or not to try and update the Aspire Dashboard version according to the channel parameter
+- name: updateAspire
+  type: boolean
+  default: true
 # Additional authentication arguments to pass to update-dependencies
 - name: gitHubAuthArgs
   type: string
   default: ""
 
 extends:
-  template: /eng/common/templates/1es.yml@self
+  template: /eng/docker-tools/templates/1es.yml@self
   parameters:
     stages:
     - stage: UpdateDepsStage
       displayName: Update dependencies
 
       jobs:
-      - template: /eng/pipelines/jobs/update-dependency.yml@self
-        parameters:
-          dependencyName: dotnet
-          updateSteps:
-          - task: AzureCLI@2
-            displayName: Update Dotnet
-            inputs:
-              azureSubscription: "Darc: Maestro Production"
-              scriptType: "pscore"
-              scriptLocation: "inlineScript"
-              inlineScript: >-
-                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                from-channel
-                ${{ parameters.channel }}
-                https://github.com/dotnet/dotnet
-                --version-source-name 'dotnet/dotnet'
-                ${{ parameters.gitHubAuthArgs }}
+      - ${{ if parameters.updateDotnet }}:
+        - template: /eng/pipelines/jobs/update-dependency.yml@self
+          parameters:
+            dependencyName: dotnet
+            updateSteps:
+            - task: AzureCLI@2
+              displayName: Update .NET
+              inputs:
+                azureSubscription: "Darc: Maestro Production"
+                scriptType: "pscore"
+                scriptLocation: "inlineScript"
+                inlineScript: >-
+                  dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                  from-channel
+                  ${{ parameters.vmrChannel }}
+                  https://github.com/dotnet/dotnet
+                  --version-source-name 'dotnet/dotnet'
+                  ${{ parameters.gitHubAuthArgs }}
+
+      - ${{ if parameters.updateAspire }}:
+        - template: /eng/pipelines/jobs/update-dependency.yml@self
+          parameters:
+            dependencyName: aspire
+            updateSteps:
+            - task: AzureCLI@2
+              displayName: Update Aspire
+              inputs:
+                azureSubscription: "Darc: Maestro Production"
+                scriptType: "pscore"
+                scriptLocation: "inlineScript"
+                inlineScript: >-
+                  dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                  from-channel
+                  ${{ parameters.aspireChannel }}
+                  https://github.com/dotnet/aspire
+                  --version-source-name 'dotnet/aspire'
+                  ${{ parameters.gitHubAuthArgs }}
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self

@@ -20,8 +20,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public Arch Arch { get; set; }
         public bool IsArm => Arch == Arch.Arm || Arch == Arch.Arm64;
-        public string OS { get; set; }
-        public bool IsDistroless => OS.Contains(Tests.OS.DistrolessSuffix) || OS.Contains(Tests.OS.ChiseledSuffix);
+        public OSInfo OS { get; set; }
+        public bool IsDistroless => OS.IsDistroless;
         public virtual int DefaultPort => 8080;
         public virtual int? NonRootUID => IsWindows ? null : 1654;
 
@@ -66,7 +66,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 _ => throw new NotImplementedException()
             };
 
-        public bool IsWindows => OS.StartsWith(Tests.OS.NanoServer) || OS.StartsWith(Tests.OS.ServerCore);
+        public bool IsWindows => OS.IsWindows;
 
         public string Rid
         {
@@ -87,7 +87,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         Arch.Amd64 => "x64",
                         _ => throw new NotImplementedException()
                     };
-                    string modifier = OS.StartsWith(Tests.OS.Alpine) ? "musl-" : "";
+                    string modifier = OS.Family == OSFamily.Alpine ? "musl-" : "";
                     rid = $"linux-{modifier}{arch}";
                 }
 
@@ -162,7 +162,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 Arch.Amd64 => "amd64",
                 Arch.Arm => "arm32v7",
                 Arch.Arm64 => "arm64v8",
-                _ => throw new NotSupportedException()
+                _ => throw new NotSupportedException($"Unsupported architecture '{Arch}'")
             };
 
         private static string GetRegistryName(string repo, string tag)
