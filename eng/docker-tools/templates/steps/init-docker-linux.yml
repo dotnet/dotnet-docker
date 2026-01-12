@@ -1,8 +1,21 @@
 parameters:
-  setupImageBuilder: true
-  setupTestRunner: false
-  cleanupDocker: false
-  condition: true
+- name: setupImageBuilder
+  type: boolean
+  default: true
+- name: setupTestRunner
+  type: boolean
+  default: false
+# Whether existing Docker images will be deleted
+- name: cleanupDocker
+  type: boolean
+  default: false
+# Whether or not to run the steps in this template
+- name: condition
+  type: string
+  default: "true"
+- name: publishConfig
+  type: object
+  default: null
 
 steps:
 - template: /eng/docker-tools/templates/steps/init-common.yml@self
@@ -28,6 +41,11 @@ steps:
   - powershell: $(engDockerToolsPath)/Pull-Image.ps1 $(imageNames.imageBuilder)
     displayName: Pull Image Builder
     condition: and(succeeded(), ${{ parameters.condition }})
+
+  - template: /eng/docker-tools/templates/steps/generate-appsettings.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      condition: ${{ parameters.condition }}
 
   - script: >-
       docker build

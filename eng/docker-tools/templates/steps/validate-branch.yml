@@ -11,11 +11,11 @@ steps:
         exit 0
       }
 
-      $isOfficialRepoPrefix = "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.publishAcr.repoPrefix }}")
+      $isOfficialRepoPrefix = "$(officialRepoPrefixes)".Split(',').Contains("${{ parameters.publishConfig.PublishRegistry.repoPrefix }}")
       if (-not $isOfficialRepoPrefix)
       {
         echo "This build will not publish to an official repo prefix, continuing."
-        echo "Publish repo prefix: ${{ parameters.publishConfig.publishAcr.repoPrefix }}"
+        echo "Publish repo prefix: ${{ parameters.publishConfig.PublishRegistry.repoPrefix }}"
         echo "Official repo prefixes: $(officialRepoPrefixes)"
         exit 0
       }
@@ -47,6 +47,6 @@ steps:
       echo "Build definition: $(Build.DefinitionName)"
       echo "1ESPT build type: $(OneESPT.BuildType)"
       echo "Current branch: $(sourceBranch)"
-      echo "Publish repo prefix: ${{ parameters.publishConfig.publishAcr.repoPrefix }}"
+      echo "Publish repo prefix: ${{ parameters.publishConfig.PublishRegistry.repoPrefix }}"
       exit 1
     displayName: Validate Branch

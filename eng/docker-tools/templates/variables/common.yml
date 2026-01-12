@@ -33,8 +33,10 @@ variables:
 - name: officialBranches
   # comma-delimited list of branch names
   value: main
-- name: mirrorRepoPrefix
+- name: internalMirrorRepoPrefix
   value: 'mirror/'
+- name: publicMirrorRepoPrefix
+  value: ''
 - name: cgBuildGrepArgs
   value: "''"
 - name: test.init
