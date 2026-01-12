@@ -1,13 +1,13 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:10.0.1-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:10.0.2-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.101 \
+RUN dotnet_sdk_version=10.0.102 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
@@ -20,7 +20,7 @@ RUN dotnet_sdk_version=10.0.101 \
 
 
 # .NET SDK image
-FROM $REPO:10.0.1-azurelinux3.0-arm64v8
+FROM $REPO:10.0.2-azurelinux3.0-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -28,7 +28,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.101 \
+    DOTNET_SDK_VERSION=10.0.102 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
