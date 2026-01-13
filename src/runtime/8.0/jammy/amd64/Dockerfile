@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.22 \
+RUN dotnet_version=8.0.23 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -18,10 +18,10 @@ RUN dotnet_version=8.0.22 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.22-jammy-amd64
+FROM $REPO:8.0.23-jammy-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.22
+ENV DOTNET_VERSION=8.0.23
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

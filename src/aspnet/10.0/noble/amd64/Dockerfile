@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.1 \
+RUN aspnetcore_version=10.0.2 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz.sha512 \
@@ -17,9 +17,9 @@ RUN aspnetcore_version=10.0.1 \
 
 
 # ASP.NET Core image
-FROM $REPO:10.0.1-noble-amd64
+FROM $REPO:10.0.2-noble-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.1
+ENV ASPNET_VERSION=10.0.2
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]

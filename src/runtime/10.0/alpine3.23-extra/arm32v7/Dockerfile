@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:10.0.1-alpine3.23-extra-arm32v7 AS installer
+FROM $REPO:10.0.2-alpine3.23-extra-arm32v7 AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.1 \
+RUN dotnet_version=10.0.2 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512 \
@@ -17,10 +17,10 @@ RUN dotnet_version=10.0.1 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.1-alpine3.23-extra-arm32v7
+FROM $REPO:10.0.2-alpine3.23-extra-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.1
+ENV DOTNET_VERSION=10.0.2
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
