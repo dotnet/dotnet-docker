@@ -23,7 +23,7 @@ jobs:
   parameters:
     name: ${{ parameters.name }}
     pool: ${{ parameters.pool }}
+    publishConfig: ${{ parameters.publishConfig }}
     customInitSteps: ${{ parameters.customInitSteps }}
     additionalOptions: ${{ parameters.additionalOptions }}
-    acr: ${{ parameters.publishConfig.internalMirrorAcr }}
-    repoPrefix: ${{ parameters.publishConfig.internalMirrorAcr.repoPrefix }}
+    acr: ${{ parameters.publishConfig.InternalMirrorRegistry }}

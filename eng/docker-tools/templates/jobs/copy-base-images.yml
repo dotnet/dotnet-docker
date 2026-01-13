@@ -5,11 +5,11 @@ parameters:
 - name: pool
   type: object
   default: {}
-- name: acr
+- name: publishConfig
   type: object
   default: null
-- name: repoPrefix
-  type: string
+- name: acr
+  type: object
   default: null
 - name: customInitSteps
   type: stepList
@@ -29,11 +29,12 @@ jobs:
   pool: ${{ parameters.pool }}
   steps:
   - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
   - ${{ parameters.customInitSteps }}
   - template: /eng/docker-tools/templates/steps/copy-base-images.yml@self
     parameters:
       acr: ${{ parameters.acr }}
-      repoPrefix: ${{ parameters.repoPrefix }}
       additionalOptions: ${{ parameters.additionalOptions }}
       continueOnError: ${{ parameters.continueOnError }}
       forceDryRun: ${{ parameters.forceDryRun }}

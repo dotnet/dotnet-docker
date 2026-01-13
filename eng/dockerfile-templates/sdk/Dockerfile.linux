@@ -9,7 +9,8 @@
     set baseImageTag to cat("$REPO:", tagVersion, "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
-    set osVersionBase to when(ARCH_VERSIONED = "arm32v7" && OS_VERSION_BASE = "noble", "jammy", OS_VERSION_BASE) ^
+    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
+    set osVersionBase to when(isUbuntu && ARCH_VERSIONED = "arm32v7", "jammy", OS_VERSION_BASE) ^
 
     set internalInstallerBase to when(isAlpine || isAzureLinux,
         baseImageTag,

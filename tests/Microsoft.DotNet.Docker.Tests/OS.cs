@@ -2,52 +2,49 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
-namespace Microsoft.DotNet.Docker.Tests
+#nullable enable
+
+namespace Microsoft.DotNet.Docker.Tests;
+
+internal static class OS
 {
-    public static class OS
-    {
-        // Alpine
-        public const string Alpine = "alpine";
-        public const string Alpine321 = $"{Alpine}3.21";
-        public const string Alpine322 = $"{Alpine}3.22";
-        public const string Alpine323 = $"{Alpine}3.23";
+    // String constants for special tagging cases (appliance images)
+    public const string Alpine = "alpine";
+    public const string AzureLinuxDistroless = "azurelinux-distroless";
+    public const string MarinerDistroless = "cbl-mariner-distroless";
+    public const string UbuntuChiseled = "ubuntu-chiseled";
 
-        // AzureLinux
-        public const string AzureLinux = "azurelinux";
-        public const string AzureLinuxDistroless = $"{AzureLinux}-distroless";
-        public const string AzureLinux30 = $"{AzureLinux}3.0";
-        public const string AzureLinux30Distroless = $"{AzureLinux30}-distroless";
+    // Alpine
+    public static OSInfo AlpineFloating { get; } = new(OSType.Linux, OSFamily.Alpine, "");
+    public static OSInfo Alpine322 { get; } = AlpineFloating with { Version = "3.22" };
+    public static OSInfo Alpine323 { get; } = AlpineFloating with { Version = "3.23" };
 
-        // Debian
-        public const string Bookworm = "bookworm";
-        public const string BookwormSlim = $"{Bookworm}{SlimSuffix}";
+    // Azure Linux
+    public static OSInfo AzureLinux30 { get; } = new(OSType.Linux, OSFamily.AzureLinux, "3.0");
+    public static OSInfo AzureLinux30Distroless { get; } = AzureLinux30 with { IsDistroless = true };
 
-        // Mariner
-        public const string Mariner = "cbl-mariner";
-        public const string MarinerDistroless = $"{Mariner}-distroless";
-        public const string Mariner20 = $"{Mariner}2.0";
-        public const string Mariner20Distroless = $"{Mariner20}-distroless";
+    // Debian
+    public static OSInfo BookwormSlim { get; } = new(OSType.Linux, OSFamily.Debian, "12");
 
-        // Ubuntu
-        public const string Jammy = "jammy";
-        public const string JammyChiseled = $"{Jammy}{ChiseledSuffix}";
-        public const string Noble = "noble";
-        public const string NobleChiseled = $"{Noble}{ChiseledSuffix}";
-        public const string UbuntuChiseled = $"ubuntu{ChiseledSuffix}";
+    // Mariner (CBL-Mariner)
+    public static OSInfo Mariner20 { get; } = new(OSType.Linux, OSFamily.Mariner, "2.0");
+    public static OSInfo Mariner20Distroless { get; } = Mariner20 with { IsDistroless = true };
 
-        // Windows
-        public const string NanoServer = "nanoserver";
-        public const string NanoServer1809 = $"{NanoServer}-1809";
-        public const string NanoServerLtsc2022 = $"{NanoServer}-ltsc2022";
-        public const string NanoServerLtsc2025 = $"{NanoServer}-ltsc2025";
-        public const string ServerCore = "windowsservercore";
-        public const string ServerCoreLtsc2019 = $"{ServerCore}-ltsc2019";
-        public const string ServerCoreLtsc2022 = $"{ServerCore}-ltsc2022";
-        public const string ServerCoreLtsc2025 = $"{ServerCore}-ltsc2025";
+    // Ubuntu
+    public static OSInfo Jammy { get; } = new(OSType.Linux, OSFamily.Ubuntu, "22.04");
+    public static OSInfo JammyChiseled { get; } = Jammy with { IsDistroless = true };
+    public static OSInfo Noble { get; } = new(OSType.Linux, OSFamily.Ubuntu, "24.04");
+    public static OSInfo NobleChiseled { get; } = Noble with { IsDistroless = true };
+    public static OSInfo Resolute { get; } = new(OSType.Linux, OSFamily.Ubuntu, "26.04", IsUnstable: true);
+    public static OSInfo ResoluteChiseled { get; } = Resolute with { IsDistroless = true };
 
-        // Helpers
-        public const string DistrolessSuffix = "-distroless";
-        public const string ChiseledSuffix = "-chiseled";
-        public const string SlimSuffix = "-slim";
-    }
+    // Windows - Nano Server
+    public static OSInfo NanoServer1809 { get; } = new(OSType.Windows, OSFamily.NanoServer, "1809");
+    public static OSInfo NanoServerLtsc2022 { get; } = NanoServer1809 with { Version = "LTSC 2022" };
+    public static OSInfo NanoServerLtsc2025 { get; } = NanoServer1809 with { Version = "LTSC 2025" };
+
+    // Windows - Server Core
+    public static OSInfo ServerCoreLtsc2019 { get; } = new(OSType.Windows, OSFamily.WindowsServerCore, "LTSC 2019");
+    public static OSInfo ServerCoreLtsc2022 { get; } = ServerCoreLtsc2019 with { Version = "LTSC 2022" };
+    public static OSInfo ServerCoreLtsc2025 { get; } = ServerCoreLtsc2019 with { Version = "LTSC 2025" };
 }
