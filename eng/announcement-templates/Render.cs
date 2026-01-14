@@ -55,8 +55,6 @@ static IFluidTemplate ParseTemplate(FileInfo templateFile)
 
 static void DisplayPatchTuesdayReferenceText()
 {
-    var today = DateOnly.FromDateTime(DateTime.Today);
-
     AnsiConsole.WriteLine();
     AnsiConsole.MarkupLine("[grey]Patch Tuesdays Reference:[/]");
     for (int i = -4; i <= 4; i++)
