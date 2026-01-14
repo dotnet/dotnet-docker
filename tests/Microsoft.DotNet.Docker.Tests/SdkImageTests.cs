@@ -306,16 +306,23 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 string sdkFile = Path.GetTempFileName();
 
-                await s_sdkDownloadPipeline.ExecuteAsync(async cancellationToken =>
+                try
                 {
-                    await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
-                });
+                    await s_sdkDownloadPipeline.ExecuteAsync(async cancellationToken =>
+                    {
+                        await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
+                    });
 
-                files = EnumerateArchiveContents(sdkFile)
-                    .OrderBy(file => file.Path)
-                    .ToArray();
+                    files = EnumerateArchiveContents(sdkFile)
+                        .OrderBy(file => file.Path)
+                        .ToArray();
 
-                s_sdkContentsCache.Add(sdkUrl, files);
+                    s_sdkContentsCache.Add(sdkUrl, files);
+                }
+                finally
+                {
+                    File.Delete(sdkFile);
+                }
             }
 
             return files;
