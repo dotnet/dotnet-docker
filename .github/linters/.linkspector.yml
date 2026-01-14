@@ -9,6 +9,7 @@ dirs:
   - .
   - .github
 excludedDirs:
+  - eng/announcement-templates
   - eng/readme-templates
 ignorePatterns:
   - pattern: "^https://github.com/microsoft/mcr.*$"
