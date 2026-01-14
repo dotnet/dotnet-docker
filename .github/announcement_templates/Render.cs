@@ -45,16 +45,15 @@ var dotnetExampleVersion = AnsiConsole.Prompt(
     new TextPrompt<string>(".NET example version for tags:")
         .DefaultValue("10.0"));
 
-var context = new TemplateContext(new
-{
-    new_version = newVersion,
-    old_version = oldVersion,
-    publish_date = publishDate.ToDateTime(TimeOnly.MinValue),
-    release_date = releaseDate.ToDateTime(TimeOnly.MinValue),
-    eol_date = eolDate.ToDateTime(TimeOnly.MinValue),
-    publish_discussion_number = publishDiscussionUrl,
-    dotnet_example_version = dotnetExampleVersion
-});
+var context = new TemplateContext(new FloatingTagTemplateParameters(
+    NewVersion: newVersion,
+    OldVersion: oldVersion,
+    PublishDate: publishDate.ToDateTime(TimeOnly.MinValue),
+    ReleaseDate: releaseDate.ToDateTime(TimeOnly.MinValue),
+    EolDate: eolDate.ToDateTime(TimeOnly.MinValue),
+    PublishDiscussionUrl: publishDiscussionUrl,
+    DotnetExampleVersion: dotnetExampleVersion
+));
 
 var result = await template.RenderAsync(context);
 
@@ -102,3 +101,23 @@ static DateOnly GetPatchTuesday(int offset = 0)
     // Second Tuesday is 7 days later
     return firstTuesday.AddDays(7);
 }
+
+/// <summary>
+/// Parameters for the Alpine floating tag update announcement template.
+/// </summary>
+/// <param name="NewVersion">The new Alpine version (e.g., "3.22").</param>
+/// <param name="OldVersion">The previous Alpine version (e.g., "3.21").</param>
+/// <param name="PublishDate">Date when new Alpine images were published.</param>
+/// <param name="ReleaseDate">Date of the floating tag update release.</param>
+/// <param name="EolDate">End of life date for old Alpine version images.</param>
+/// <param name="PublishDiscussionUrl">URL to the GitHub discussion for the publish announcement.</param>
+/// <param name="DotnetExampleVersion">Example .NET version for tag examples (e.g., "10.0").</param>
+internal sealed record FloatingTagTemplateParameters(
+    string NewVersion,
+    string OldVersion,
+    DateTime PublishDate,
+    DateTime ReleaseDate,
+    DateTime EolDate,
+    string PublishDiscussionUrl,
+    string DotnetExampleVersion
+);
