@@ -2,9 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
+using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
-using Xunit;
 using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests;
@@ -15,7 +14,7 @@ namespace Microsoft.DotNet.Docker.Tests;
 /// completes. Each individual test method will have its images cleaned up
 /// after test completion.
 /// </summary>
-public abstract class DockerImageTestBase : IAsyncLifetime
+public abstract class DockerImageTestBase : IDisposable
 {
     private readonly List<string> _createdImageTags = [];
 
@@ -28,9 +27,7 @@ public abstract class DockerImageTestBase : IAsyncLifetime
         DockerHelper = new DockerHelper(outputHelper);
     }
 
-    public Task InitializeAsync() => Task.CompletedTask;
-
-    public Task DisposeAsync()
+    public void Dispose()
     {
         if (_createdImageTags.Count > 0)
         {
@@ -56,7 +53,7 @@ public abstract class DockerImageTestBase : IAsyncLifetime
             _createdImageTags.Clear();
         }
 
-        return Task.CompletedTask;
+        GC.SuppressFinalize(this);
     }
 
     /// <summary>
