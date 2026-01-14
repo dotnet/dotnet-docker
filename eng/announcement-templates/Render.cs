@@ -7,12 +7,6 @@ using System.CommandLine;
 using Fluid;
 using Spectre.Console;
 
-// All supported templates and their associated context factories.
-Dictionary<string, Func<TemplateContext>> templateContexts = new()
-{
-    ["alpine-floating-tag-update.md"] = FloatingTagTemplateParameters.ContextFactory,
-};
-
 var renderCommand = new RenderTemplateCommand(templateFileInfo =>
 {
     // Parse the template first, so any errors are caught before prompting for input
@@ -21,12 +15,16 @@ var renderCommand = new RenderTemplateCommand(templateFileInfo =>
     // Display some helpful reference information right before prompting the user for input.
     DisplayPatchTuesdayReferenceText();
 
-    // This will interactively prompt the user for the template parameters.
-    var contextFactory = templateContexts[templateFileInfo.Name];
-    var templateContext = contextFactory();
+    // This will prompt the user for the template parameters.
+    TemplateContext? context = GetTemplateContext(templateFileInfo);
+    if (context is null)
+    {
+        Console.Error.WriteLine("Failed to create template context.");
+        return 1;
+    }
 
     // Finally, render the template with the provided parameters.
-    var result = template.Render(templateContext);
+    var result = template.Render(context);
 
     AnsiConsole.WriteLine();
     AnsiConsole.Write(new Rule("[green]Generated Announcement[/]"));
@@ -38,6 +36,28 @@ var renderCommand = new RenderTemplateCommand(templateFileInfo =>
 
 var parseResult = renderCommand.Parse(args);
 return parseResult.Invoke();
+
+static TemplateContext? GetTemplateContext(FileInfo templateFileInfo)
+{
+    // All supported templates and their associated context factories.
+    Dictionary<string, Func<TemplateContext>> templateContexts = new()
+    {
+        ["alpine-floating-tag-update.md"] = FloatingTagTemplateParameters.ContextFactory,
+    };
+
+    if (!templateContexts.TryGetValue(templateFileInfo.Name, out var contextFactory))
+    {
+        AnsiConsole.MarkupLine($"[red]Unsupported template file: {templateFileInfo.Name}[/]");
+        AnsiConsole.MarkupLine("[yellow]Supported templates:[/]");
+        foreach (var supportedTemplate in templateContexts.Keys)
+            AnsiConsole.MarkupLine($"[grey]  - {supportedTemplate}[/]");
+
+        return null;
+    }
+
+    var templateContext = contextFactory();
+    return templateContext;
+}
 
 static IFluidTemplate ParseTemplate(FileInfo templateFile)
 {
