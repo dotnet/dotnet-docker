@@ -161,17 +161,17 @@ sealed record FloatingTagTemplateParameters(
 
 internal static class DateOnlyExtensions
 {
-    /// <summary>
-    /// Gets the Patch Tuesday (second Tuesday of the month) for a month relative
-    /// to this date's month.
-    /// </summary>
-    /// <param name="offset">
-    /// The number of months from the reference date's month.
-    /// 0 = same month, 1 = next month, -3 = three months ago.
-    /// </param>
-    /// <returns>The date of Patch Tuesday for the target month.</returns>
     extension(DateOnly date)
     {
+        /// <summary>
+        /// Gets the Patch Tuesday (second Tuesday of the month) for a month
+        /// relative to the current month.
+        /// </summary>
+        /// <param name="offset">
+        /// The number of months from the current month.
+        /// 0 = this month, 1 = next month, -3 = three months ago.
+        /// </param>
+        /// <returns>The date of Patch Tuesday for the target month.</returns>
         public static DateOnly GetPatchTuesday(int offset = 0)
         {
             var today = DateOnly.FromDateTime(DateTime.Today);
