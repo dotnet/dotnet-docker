@@ -304,25 +304,19 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo>? files))
             {
-                string sdkFile = Path.GetTempFileName();
+                using TempFolderContext tempFolder = FileHelper.UseTempFolder();
+                string sdkFile = Path.Combine(tempFolder.Path, "sdk-archive");
 
-                try
+                await s_sdkDownloadPipeline.ExecuteAsync(async cancellationToken =>
                 {
-                    await s_sdkDownloadPipeline.ExecuteAsync(async cancellationToken =>
-                    {
-                        await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
-                    });
+                    await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
+                });
 
-                    files = EnumerateArchiveContents(sdkFile)
-                        .OrderBy(file => file.Path)
-                        .ToArray();
+                files = EnumerateArchiveContents(sdkFile)
+                    .OrderBy(file => file.Path)
+                    .ToArray();
 
-                    s_sdkContentsCache.Add(sdkUrl, files);
-                }
-                finally
-                {
-                    File.Delete(sdkFile);
-                }
+                s_sdkContentsCache.Add(sdkUrl, files);
             }
 
             return files;
