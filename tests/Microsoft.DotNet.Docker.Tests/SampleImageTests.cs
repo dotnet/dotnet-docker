@@ -14,19 +14,14 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests
 {
     [Trait("Category", "sample")]
-    public class SampleImageTests
+    public class SampleImageTests : DockerImageTestBase
     {
         private static readonly string s_samplesPath = Path.Combine(Config.SourceRepoRoot, "samples");
 
         public SampleImageTests(ITestOutputHelper outputHelper)
+            : base(outputHelper)
         {
-            OutputHelper = outputHelper;
-            DockerHelper = new DockerHelper(outputHelper);
         }
-
-        protected DockerHelper DockerHelper { get; }
-
-        protected ITestOutputHelper OutputHelper { get; }
 
         public static IEnumerable<object[]> GetImageData()
         {
@@ -103,13 +98,13 @@ namespace Microsoft.DotNet.Docker.Tests
             try
             {
                 // Test that the app works
-                DockerHelper.Build(appTag, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
+                Build(appTag, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages);
                 string containerName = ImageData.GenerateContainerName("sample-complex");
                 string output = DockerHelper.Run(appTag, containerName);
                 Assert.StartsWith("string: The quick brown fox jumps over the lazy dog", output);
 
                 // Run the app's tests
-                DockerHelper.Build(testTag, dockerfilePath, target: "test", contextDir: sampleFolder);
+                Build(testTag, dockerfilePath, target: "test", contextDir: sampleFolder);
                 DockerHelper.Run(testTag, testContainerName, skipAutoCleanup: true);
 
                 // Copy the test log from the container to the host
@@ -134,8 +129,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 }
 
                 DockerHelper.DeleteContainer(testContainerName);
-                DockerHelper.DeleteImage(testTag);
-                DockerHelper.DeleteImage(appTag);
+                // Images are now cleaned up automatically by the base class
             }
         }
 
@@ -146,30 +140,21 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string image = imageData.GetImage(sampleImageType, DockerHelper);
             string imageType = Enum.GetName(typeof(SampleImageType), sampleImageType).ToLowerInvariant();
-            try
-            {
-                if (!imageData.IsPublished)
-                {
-                    string sampleFolder = Path.Combine(s_samplesPath, imageType);
-                    string dockerfilePath = $"{sampleFolder}/Dockerfile";
-                    if (!string.IsNullOrEmpty(imageData.DockerfileSuffix))
-                    {
-                        dockerfilePath += $".{imageData.DockerfileSuffix}";
-                    }
 
-                    DockerHelper.Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages, platform: imageData.Platform);
+            if (!imageData.IsPublished)
+            {
+                string sampleFolder = Path.Combine(s_samplesPath, imageType);
+                string dockerfilePath = $"{sampleFolder}/Dockerfile";
+                if (!string.IsNullOrEmpty(imageData.DockerfileSuffix))
+                {
+                    dockerfilePath += $".{imageData.DockerfileSuffix}";
                 }
 
-                string containerName = imageData.GetIdentifier($"sample-{imageType}");
-                await verifyImageAsync(image, containerName);
+                Build(image, dockerfilePath, contextDir: sampleFolder, pull: Config.PullImages, platform: imageData.Platform);
             }
-            finally
-            {
-                if (!imageData.IsPublished)
-                {
-                    DockerHelper.DeleteImage(image);
-                }
-            }
+
+            string containerName = imageData.GetIdentifier($"sample-{imageType}");
+            await verifyImageAsync(image, containerName);
         }
 
         private void ValidateEnvironmentVariables(SampleImageData imageData, string image, SampleImageType imageType)

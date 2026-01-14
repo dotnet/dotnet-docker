@@ -15,17 +15,13 @@ using Xunit.Abstractions;
 
 namespace Microsoft.DotNet.Docker.Tests
 {
-    public abstract class ProductImageTests
+    public abstract class ProductImageTests : DockerImageTestBase
     {
-        protected ProductImageTests(ITestOutputHelper outputHelper)
+        protected ProductImageTests(ITestOutputHelper outputHelper) : base(outputHelper)
         {
-            DockerHelper = new DockerHelper(outputHelper);
-            OutputHelper = outputHelper;
             SyftHelper = new SyftHelper(DockerHelper, OutputHelper);
         }
 
-        protected DockerHelper DockerHelper { get; }
-        protected ITestOutputHelper OutputHelper { get; }
         protected SyftHelper SyftHelper { get; }
         protected abstract DotNetImageRepo ImageRepo { get; }
 
@@ -67,7 +63,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string imageTag;
             if (imageData.IsDistroless)
             {
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, rootFsPath);
+                imageTag = BuildDistrolessHelper(ImageRepo, imageData, rootFsPath);
             }
             else
             {
@@ -148,7 +144,7 @@ namespace Microsoft.DotNet.Docker.Tests
             if (imageData.IsDistroless)
             {
                 rootPath = "/rootfs/";
-                imageTag = DockerHelper.BuildDistrolessHelper(ImageRepo, imageData, rootPath);
+                imageTag = BuildDistrolessHelper(ImageRepo, imageData, rootPath);
             }
 
             string command = $"-c \"grep '^app' {rootPath}etc/passwd | cut -d: -f3\"";

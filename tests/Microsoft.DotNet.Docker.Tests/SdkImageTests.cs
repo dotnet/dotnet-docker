@@ -251,8 +251,7 @@ namespace Microsoft.DotNet.Docker.Tests
             string baseImage = imageData.GetImage(ImageRepo, DockerHelper);
             string tag = imageData.GetIdentifier("SdkContents").ToLower();
 
-            DockerHelper.Build(
-                tag: tag,
+            Build(tag: tag,
                 dockerfile: Path.Combine(DockerHelper.TestArtifactsDir, "Dockerfile.copy"),
                 contextDir: DockerHelper.TestArtifactsDir,
                 platform: imageData.Platform,
