@@ -3,32 +3,55 @@
 #:package Spectre.Console@0.54.1-alpha.0.26
 #:package System.CommandLine@2.0.2
 
+using System.CommandLine;
 using Fluid;
 using Spectre.Console;
 
-var templatePath = "alpine-floating-tag-update.md";
-
-var parser = new FluidParser();
-var templateText = File.ReadAllText(templatePath);
-if (!parser.TryParse(templateText, out var template, out var error))
+// All supported templates and their associated context factories.
+Dictionary<string, Func<TemplateContext>> templateContexts = new()
 {
-    Console.Error.WriteLine($"Error parsing template: {error}");
-    return 1;
+    ["alpine-floating-tag-update.md"] = FloatingTagTemplateParameters.ContextFactory,
+};
+
+var renderCommand = new RenderTemplateCommand(templateFileInfo =>
+{
+    // Parse the template first, so any errors are caught before prompting for input
+    var template = ParseTemplate(templateFileInfo);
+
+    // Display some helpful reference information right before prompting the user for input.
+    DisplayPatchTuesdayReferenceText();
+
+    // This will interactively prompt the user for the template parameters.
+    var contextFactory = templateContexts[templateFileInfo.Name];
+    var templateContext = contextFactory();
+
+    // Finally, render the template with the provided parameters.
+    var result = template.Render(templateContext);
+
+    AnsiConsole.WriteLine();
+    AnsiConsole.Write(new Rule("[green]Generated Announcement[/]"));
+    AnsiConsole.WriteLine();
+    Console.WriteLine(result);
+
+    return 0;
+});
+
+var parseResult = renderCommand.Parse(args);
+return parseResult.Invoke();
+
+static IFluidTemplate ParseTemplate(FileInfo templateFile)
+{
+    var parser = new FluidParser();
+    var templateText = File.ReadAllText(templateFile.FullName);
+
+    if (!parser.TryParse(templateText, out var template, out var error))
+    {
+        Console.Error.WriteLine($"Error parsing template: {error}");
+        Environment.Exit(1);
+    }
+
+    return template;
 }
-
-DisplayPatchTuesdayReferenceText();
-
-var input = FloatingTagTemplateParameters.PromptForInput();
-var context = new TemplateContext(input);
-
-var result = await template.RenderAsync(context);
-
-AnsiConsole.WriteLine();
-AnsiConsole.Write(new Rule("[green]Generated Announcement[/]"));
-AnsiConsole.WriteLine();
-Console.WriteLine(result);
-
-return 0;
 
 static void DisplayPatchTuesdayReferenceText()
 {
@@ -46,7 +69,41 @@ static void DisplayPatchTuesdayReferenceText()
     AnsiConsole.WriteLine();
 }
 
-internal sealed record FloatingTagTemplateParameters(
+sealed class RenderTemplateCommand : RootCommand
+{
+    public RenderTemplateCommand(Func<FileInfo, int> handler) : base("Render announcement template")
+    {
+        var templateFileArgument = new Argument<FileInfo>("templateFile")
+        {
+            Description = "The template file to read and display on the console",
+        };
+        Arguments.Add(templateFileArgument);
+
+        SetAction(parseResult =>
+        {
+            var templateFileResult = parseResult.GetValue(templateFileArgument);
+            if (parseResult.Errors.Count == 0 && templateFileResult is FileInfo validTemplateFile)
+            {
+                return handler(validTemplateFile);
+            }
+
+            if (parseResult.Errors.Count > 0)
+            {
+                foreach (var error in parseResult.Errors)
+                    Console.Error.WriteLine(error.Message);
+
+                return 1;
+            }
+
+            // Show help text
+            Parse("-h").Invoke();
+
+            return 0;
+        });
+    }
+}
+
+sealed record FloatingTagTemplateParameters(
     string NewVersion,
     string OldVersion,
     DateTime PublishDate,
@@ -55,10 +112,14 @@ internal sealed record FloatingTagTemplateParameters(
     string PublishDiscussionUrl,
     string DotnetExampleVersion)
 {
+    public static Func<TemplateContext> ContextFactory { get; } = () =>
+    {
+        var model = PromptForInput();
+        return new TemplateContext(model);
+    };
+
     public static FloatingTagTemplateParameters PromptForInput()
     {
-        var today = DateOnly.FromDateTime(DateTime.Today);
-
         var newVersion = AnsiConsole.Prompt(
             new TextPrompt<string>("New Alpine version:")
                 .DefaultValue("3.XX"));
