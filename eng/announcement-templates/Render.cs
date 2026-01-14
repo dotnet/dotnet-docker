@@ -9,19 +9,31 @@ using Spectre.Console;
 
 var renderCommand = new RenderTemplateCommand(templateFileInfo =>
 {
+    if (!templateFileInfo.Exists)
+    {
+        Console.Error.WriteLine($"Template file not found: {templateFileInfo.FullName}");
+        return 1;
+    }
+
+    if (!TemplateDefinitions.TemplateIsSupported(templateFileInfo))
+    {
+        Console.Error.WriteLine($"Unsupported template file: {templateFileInfo.Name}");
+        return 1;
+    }
+
     // Parse the template first, so any errors are caught before prompting for input
-    var template = ParseTemplate(templateFileInfo);
+    var template = TemplateDefinitions.ParseTemplate(templateFileInfo, out var parseError);
+    if (template is null)
+    {
+        Console.Error.WriteLine($"Failed to parse template: {parseError}");
+        return 1;
+    }
 
     // Display some helpful reference information right before prompting the user for input.
     DisplayPatchTuesdayReferenceText();
 
     // This will prompt the user for the template parameters.
-    TemplateContext? context = GetTemplateContext(templateFileInfo);
-    if (context is null)
-    {
-        Console.Error.WriteLine("Failed to create template context.");
-        return 1;
-    }
+    TemplateContext context = TemplateDefinitions.GetTemplateContext(templateFileInfo);
 
     // Finally, render the template with the provided parameters.
     var result = template.Render(context);
@@ -37,41 +49,6 @@ var renderCommand = new RenderTemplateCommand(templateFileInfo =>
 var parseResult = renderCommand.Parse(args);
 return parseResult.Invoke();
 
-static TemplateContext? GetTemplateContext(FileInfo templateFileInfo)
-{
-    // All supported templates and their associated context factories.
-    Dictionary<string, Func<TemplateContext>> templateContexts = new()
-    {
-        ["alpine-floating-tag-update.md"] = FloatingTagTemplateParameters.ContextFactory,
-    };
-
-    if (!templateContexts.TryGetValue(templateFileInfo.Name, out var contextFactory))
-    {
-        AnsiConsole.MarkupLine($"[red]Unsupported template file: {templateFileInfo.Name}[/]");
-        AnsiConsole.MarkupLine("[yellow]Supported templates:[/]");
-        foreach (var supportedTemplate in templateContexts.Keys)
-            AnsiConsole.MarkupLine($"[grey]  - {supportedTemplate}[/]");
-
-        return null;
-    }
-
-    var templateContext = contextFactory();
-    return templateContext;
-}
-
-static IFluidTemplate ParseTemplate(FileInfo templateFile)
-{
-    var parser = new FluidParser();
-    var templateText = File.ReadAllText(templateFile.FullName);
-
-    if (!parser.TryParse(templateText, out var template, out var error))
-    {
-        Console.Error.WriteLine($"Error parsing template: {error}");
-        Environment.Exit(1);
-    }
-
-    return template;
-}
 
 static void DisplayPatchTuesdayReferenceText()
 {
@@ -85,6 +62,40 @@ static void DisplayPatchTuesdayReferenceText()
     }
 
     AnsiConsole.WriteLine();
+}
+
+static class TemplateDefinitions
+{
+    // All supported templates and their associated context factories.
+    private static readonly Dictionary<string, Func<TemplateContext>> s_templateContexts = new()
+    {
+        ["alpine-floating-tag-update.md"] = FloatingTagTemplateParameters.ContextFactory,
+    };
+
+    public static TemplateContext GetTemplateContext(FileInfo templateFileInfo)
+    {
+        var contextFactory = s_templateContexts[templateFileInfo.Name];
+        var templateContext = contextFactory();
+        return templateContext;
+    }
+
+    public static IFluidTemplate? ParseTemplate(FileInfo templateFile, out string? error)
+    {
+        var parser = new FluidParser();
+        var templateText = File.ReadAllText(templateFile.FullName);
+
+        if (!parser.TryParse(templateText, out var template, out string? internalError))
+        {
+            error = internalError;
+            return null;
+        }
+
+        error = null;
+        return template;
+    }
+
+    public static bool TemplateIsSupported(FileInfo templateFile) =>
+        s_templateContexts.ContainsKey(templateFile.Name);
 }
 
 sealed class RenderTemplateCommand : RootCommand
