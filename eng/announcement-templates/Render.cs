@@ -69,7 +69,7 @@ static class TemplateDefinitions
     // All supported templates and their associated context factories.
     private static readonly Dictionary<string, Func<TemplateContext>> s_templateContexts = new()
     {
-        ["alpine-floating-tag-update.md"] = FloatingTagTemplateParameters.ContextFactory,
+        ["alpine-floating-tag-update.md"] = AlpineFloatingTagTemplateParameters.ContextFactory,
     };
 
     public static TemplateContext GetTemplateContext(FileInfo templateFileInfo)
@@ -132,7 +132,7 @@ sealed class RenderTemplateCommand : RootCommand
     }
 }
 
-sealed record FloatingTagTemplateParameters(
+sealed record AlpineFloatingTagTemplateParameters(
     string NewVersion,
     string OldVersion,
     DateTime PublishDate,
@@ -147,7 +147,7 @@ sealed record FloatingTagTemplateParameters(
         return new TemplateContext(model);
     };
 
-    public static FloatingTagTemplateParameters PromptForInput()
+    public static AlpineFloatingTagTemplateParameters PromptForInput()
     {
         var newVersion = AnsiConsole.Prompt(
             new TextPrompt<string>("New Alpine version:")
@@ -177,7 +177,7 @@ sealed record FloatingTagTemplateParameters(
             new TextPrompt<string>(".NET example version for tags:")
                 .DefaultValue("10.0"));
 
-        return new FloatingTagTemplateParameters(
+        return new AlpineFloatingTagTemplateParameters(
             newVersion,
             oldVersion,
             publishDate.ToDateTime(TimeOnly.MinValue),
