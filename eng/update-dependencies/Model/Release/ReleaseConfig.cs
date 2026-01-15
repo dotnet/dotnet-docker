@@ -26,7 +26,7 @@ internal record ReleaseConfig
 
     public required string Runtime { get; init; }
 
-    public required string Asp { get; init; }
+    public string? Asp { get; init; }
 
     public required List<string> Sdks { get; init; }
 
@@ -34,13 +34,13 @@ internal record ReleaseConfig
     public required string RuntimeBuild { get; init; }
 
     [JsonPropertyName("Asp_Build")]
-    public required string AspBuild { get; init; }
+    public string? AspBuild { get; init; }
 
     [JsonPropertyName("Sdk_Builds")]
     public required List<string> SdkBuilds { get; init; }
 
     [JsonPropertyName("Release_Date")]
-    public required string ReleaseDate { get; init; }
+    public string? ReleaseDate { get; init; }
 
     public required bool Security { get; init; }
 
