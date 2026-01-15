@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:8.0.22-cbl-mariner2.0-amd64 AS installer
+FROM $REPO:8.0.23-cbl-mariner2.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=8.0.416 \
-    && dotnet_version=8.0.22 \
+RUN dotnet_sdk_version=8.0.417 \
+    && dotnet_version=8.0.23 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -22,7 +22,7 @@ RUN dotnet_sdk_version=8.0.416 \
 
 
 # .NET SDK image
-FROM $REPO:8.0.22-cbl-mariner2.0-amd64
+FROM $REPO:8.0.23-cbl-mariner2.0-amd64
 
 ENV \
     # Do not generate certificate
@@ -30,7 +30,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.416 \
+    DOTNET_SDK_VERSION=8.0.417 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
