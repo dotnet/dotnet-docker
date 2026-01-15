@@ -70,11 +70,14 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         DotNetVersion dotNetVersion = DotNetVersion.Parse(releaseConfig.RuntimeBuild);
         string majorMinorVersionString = dotNetVersion.ToString(2);
 
-        // Record pipeline run ID for this internal version, for later use by sync-internal-release command
-        _internalVersionsService.RecordInternalStagingBuild(
-            repoRoot: gitRepoContext.LocalRepoPath,
-            dotNetVersion: dotNetVersion,
-            stagingPipelineRunId: options.StagingPipelineRunId);
+        if (options.Internal)
+        {
+            // Record pipeline run ID for this internal version, for later use by sync-internal-release command
+            _internalVersionsService.RecordInternalStagingBuild(
+                repoRoot: gitRepoContext.LocalRepoPath,
+                dotNetVersion: dotNetVersion,
+                stagingPipelineRunId: options.StagingPipelineRunId);
+        }
 
         var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
         {

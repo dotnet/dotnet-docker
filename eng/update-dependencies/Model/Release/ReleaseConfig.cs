@@ -1,8 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -26,7 +25,7 @@ internal record ReleaseConfig
 
     public required string Runtime { get; init; }
 
-    public required string Asp { get; init; }
+    public string? Asp { get; init; }
 
     public required List<string> Sdks { get; init; }
 
@@ -34,13 +33,13 @@ internal record ReleaseConfig
     public required string RuntimeBuild { get; init; }
 
     [JsonPropertyName("Asp_Build")]
-    public required string AspBuild { get; init; }
+    public string? AspBuild { get; init; }
 
     [JsonPropertyName("Sdk_Builds")]
     public required List<string> SdkBuilds { get; init; }
 
     [JsonPropertyName("Release_Date")]
-    public required string ReleaseDate { get; init; }
+    public string? ReleaseDate { get; init; }
 
     public required bool Security { get; init; }
 
@@ -49,6 +48,8 @@ internal record ReleaseConfig
 
     public required bool Internal { get; init; }
 
+    [MemberNotNullWhen(false, nameof(Asp))]
+    [MemberNotNullWhen(false, nameof(AspBuild))]
     public required bool SdkOnly { get; init; }
 
     private static readonly JsonSerializerOptions s_jsonOptions = new()
