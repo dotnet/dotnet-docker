@@ -1,17 +1,18 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:10.0.2-azurelinux3.0-amd64 AS installer
+FROM $REPO:10.0.3-azurelinux3.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.2 \
+RUN dotnet_version=10.0.3 \
+    && dotnet_build_version=$dotnet_version-servicing.26065.102 \
     && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
     && sha512sum -c dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-x64.tar.gz --directory /dotnet \
@@ -21,10 +22,10 @@ RUN dotnet_version=10.0.2 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.2-azurelinux3.0-amd64
+FROM $REPO:10.0.3-azurelinux3.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.2
+ENV DOTNET_VERSION=10.0.3
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

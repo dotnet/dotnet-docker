@@ -10,10 +10,11 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.2 \
+RUN dotnet_version=10.0.3 \
+    && dotnet_build_version=$dotnet_version-servicing.26065.102 \
     && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
     && sha512sum -c dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-x64.tar.gz --directory /usr/share/dotnet \
@@ -26,10 +27,10 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:10.0.2-azurelinux3.0-distroless-extra-amd64
+FROM $REPO:10.0.3-azurelinux3.0-distroless-extra-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.2
+ENV DOTNET_VERSION=10.0.3
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
