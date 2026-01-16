@@ -88,7 +88,7 @@ For more information, see the [composite images section in the Image Variants do
 ### Linux amd64 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-amd64, 10.0-noble-amd64, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0 | [Dockerfile](src/aspnet/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
@@ -154,7 +154,7 @@ Tags | Dockerfile | OS Version
 #### .NET 11 Preview Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 11.0.0-alpha.1-resolute-amd64, 11.0-preview-resolute-amd64, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-resolute-chiseled-amd64, 11.0-preview-resolute-chiseled-amd64, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-resolute-chiseled-extra-amd64, 11.0-preview-resolute-chiseled-extra-amd64, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 26.04
@@ -173,7 +173,7 @@ Tags | Dockerfile | OS Version
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-arm64v8, 10.0-noble-arm64v8, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -239,7 +239,7 @@ Tags | Dockerfile | OS Version
 #### .NET 11 Preview Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 11.0.0-alpha.1-resolute-arm64v8, 11.0-preview-resolute-arm64v8, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-resolute-chiseled-arm64v8, 11.0-preview-resolute-chiseled-arm64v8, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-resolute-chiseled-extra-arm64v8, 11.0-preview-resolute-chiseled-extra-arm64v8, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 26.04
@@ -258,7 +258,7 @@ Tags | Dockerfile | OS Version
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-arm32v7, 10.0-noble-arm32v7, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
@@ -304,7 +304,7 @@ Tags | Dockerfile | OS Version
 #### .NET 11 Preview Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 11.0.0-alpha.1-resolute-arm32v7, 11.0-preview-resolute-arm32v7, 11.0.0-alpha.1-resolute, 11.0-preview-resolute, 11.0.0-alpha.1, 11.0-preview, latest | [Dockerfile](src/aspnet/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-resolute-chiseled-arm32v7, 11.0-preview-resolute-chiseled-arm32v7, 11.0.0-alpha.1-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.0-alpha.1-resolute-chiseled-extra-arm32v7, 11.0-preview-resolute-chiseled-extra-arm32v7, 11.0.0-alpha.1-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
@@ -315,63 +315,34 @@ Tags | Dockerfile | OS Version
 11.0.0-alpha.1-alpine3.23-composite-arm32v7, 11.0-preview-alpine3.23-composite-arm32v7, 11.0-preview-alpine-composite-arm32v7, 11.0.0-alpha.1-alpine3.23-composite, 11.0-preview-alpine3.23-composite, 11.0-preview-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
 11.0.0-alpha.1-alpine3.23-composite-extra-arm32v7, 11.0-preview-alpine3.23-composite-extra-arm32v7, 11.0-preview-alpine-composite-extra-arm32v7, 11.0.0-alpha.1-alpine3.23-composite-extra, 11.0-preview-alpine3.23-composite-extra, 11.0-preview-alpine-composite-extra | [Dockerfile](src/aspnet/11.0/alpine3.23-composite-extra/arm32v7/Dockerfile) | Alpine 3.23
 
-### Nano Server 2025 amd64 Tags
+### Windows amd64 Tags
 
-Tag | Dockerfile
----------| ---------------
-10.0.2-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
-9.0.12-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
-8.0.23-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
+Tags | Dockerfile | OS Version
+---- | ---------- | ----------
+10.0.2-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+10.0.2-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+9.0.12-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+9.0.12-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+8.0.23-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+8.0.23-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+10.0.2-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+10.0.2-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.12-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+9.0.12-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+8.0.23-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+8.0.23-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.12-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+9.0.12-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
+8.0.23-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+8.0.23-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
 
 #### .NET 11 Preview Tags
 
-Tag | Dockerfile
----------| ---------------
-11.0.0-alpha.1-nanoserver-ltsc2025, 11.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/11.0/nanoserver-ltsc2025/amd64/Dockerfile)
+Tags | Dockerfile | OS Version
+---- | ---------- | ----------
+11.0.0-alpha.1-nanoserver-ltsc2025, 11.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/11.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+11.0.0-alpha.1-windowsservercore-ltsc2025, 11.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/11.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 
-### Windows Server Core 2025 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.2-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-9.0.12-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-8.0.23-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-
-#### .NET 11 Preview Tags
-
-Tag | Dockerfile
----------| ---------------
-11.0.0-alpha.1-windowsservercore-ltsc2025, 11.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/11.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-
-### Nano Server 2022 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.2-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
-9.0.12-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
-8.0.23-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
-
-### Windows Server Core 2022 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.2-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-9.0.12-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-8.0.23-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-
-### Nano Server, version 1809 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-9.0.12-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile)
-8.0.23-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile)
-
-### Windows Server Core 2019 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-9.0.12-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-8.0.23-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspnet/tags/list) for all supported and unsupported tags.*
