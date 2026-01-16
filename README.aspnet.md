@@ -262,18 +262,18 @@ Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
 10.0.2-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
 10.0.2-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-9.0.12-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-9.0.12-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-8.0.23-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-8.0.23-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 10.0.2-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
 10.0.2-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.12-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+9.0.12-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 9.0.12-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
 9.0.12-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
-8.0.23-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-8.0.23-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
 9.0.12-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
 9.0.12-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
+8.0.23-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+8.0.23-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+8.0.23-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+8.0.23-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
 8.0.23-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
 8.0.23-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
 
