@@ -37,7 +37,7 @@ RUN powershell -Command `
 
 
 # Runtime image
-FROM mcr.microsoft.com/windows/nanoserver:1809-amd64
+FROM mcr.microsoft.com/windows/nanoserver:2009-amd64
 
 ENV `
     # Configure web servers to bind to port 8080 when present
