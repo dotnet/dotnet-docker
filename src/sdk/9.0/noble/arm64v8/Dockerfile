@@ -18,7 +18,7 @@ RUN dotnet_sdk_version=9.0.309 \
 
 
 # .NET SDK image
-FROM $REPO:9.0.12-noble-arm64v8
+FROM $REPO:10.0.2-noble-arm64v8
 
 ENV \
     # Do not generate certificate

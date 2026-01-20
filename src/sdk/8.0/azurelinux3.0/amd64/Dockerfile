@@ -1,6 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:8.0.23-azurelinux3.0-amd64 AS installer
+FROM $REPO:10.0.2-azurelinux3.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
@@ -22,7 +22,7 @@ RUN dotnet_sdk_version=8.0.417 \
 
 
 # .NET SDK image
-FROM $REPO:8.0.23-azurelinux3.0-amd64
+FROM $REPO:10.0.2-azurelinux3.0-amd64
 
 ENV \
     # Do not generate certificate

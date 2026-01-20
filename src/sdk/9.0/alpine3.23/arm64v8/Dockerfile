@@ -1,6 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:9.0.12-alpine3.23-arm64v8 AS installer
+FROM $REPO:10.0.2-alpine3.23-arm64v8 AS installer
 
 # Install .NET SDK
 RUN dotnet_sdk_version=9.0.309 \
@@ -17,7 +17,7 @@ RUN dotnet_sdk_version=9.0.309 \
 
 
 # .NET SDK image
-FROM $REPO:9.0.12-alpine3.23-arm64v8
+FROM $REPO:10.0.2-alpine3.23-arm64v8
 
 ENV \
     # Do not generate certificate
