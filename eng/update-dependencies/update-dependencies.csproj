@@ -29,7 +29,7 @@
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.232.0-preview" />
     <PackageReference Include="Octokit" Version="13.0.1" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25210.1" />
-    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.25210.1" />
+    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.25320.106" />
     <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta5.25210.1" />
 
     <!-- Fixes CVE-2025-55247 -->
