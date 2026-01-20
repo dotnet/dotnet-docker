@@ -35,6 +35,6 @@
     <!-- Fixes CVE-2025-55247 -->
     <!-- Microsoft.Build.Utilities.Core is transitively referenced by Microsoft.DotNet.VersionTools -->
     <!-- Remove when https://github.com/dotnet/docker-tools/issues/1658 is complete -->
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.43" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="18.0.2" />
   </ItemGroup>
 </Project>
