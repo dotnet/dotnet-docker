@@ -14,9 +14,6 @@ parameters:
 variables:
 - template: /eng/pipelines/variables/samples.yml@self
 - template: /eng/docker-tools/templates/variables/dotnet/secrets.yml@self
-- name: publishEolAnnotations
-  value: true
-  readonly: true
 
 resources:
   repositories:
