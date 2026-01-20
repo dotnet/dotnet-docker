@@ -39,7 +39,7 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.23-windowsservercore-ltsc2019
+FROM $REPO:9.0.12-windowsservercore-ltsc2019
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=8.0.23
