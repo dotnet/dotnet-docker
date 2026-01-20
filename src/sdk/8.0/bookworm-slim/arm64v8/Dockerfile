@@ -18,7 +18,7 @@ RUN dotnet_sdk_version=8.0.417 \
 
 
 # .NET SDK image
-FROM $REPO:8.0.23-bookworm-slim-arm64v8
+FROM $REPO:9.0.12-bookworm-slim-arm64v8
 
 ENV \
     # Do not generate certificate

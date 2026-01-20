@@ -74,7 +74,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:8.0.23-windowsservercore-ltsc2019
+FROM $REPO:9.0.12-windowsservercore-ltsc2019
 
 ENV `
     # Do not generate certificate
