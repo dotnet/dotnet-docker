@@ -21,7 +21,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:8.0.23-noble-chiseled-amd64
+FROM $REPO:10.0.2-noble-chiseled-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.23

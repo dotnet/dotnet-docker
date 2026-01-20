@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:9.0.12-alpine3.22-extra-arm64v8 AS installer
+FROM $REPO:10.0.2-alpine3.22-extra-arm64v8 AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=9.0.12 \
@@ -17,7 +17,7 @@ RUN dotnet_version=9.0.12 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.12-alpine3.22-extra-arm64v8
+FROM $REPO:10.0.2-alpine3.22-extra-arm64v8
 
 # .NET Runtime version
 ENV DOTNET_VERSION=9.0.12

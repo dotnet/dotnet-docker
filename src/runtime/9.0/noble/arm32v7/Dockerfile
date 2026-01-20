@@ -18,7 +18,7 @@ RUN dotnet_version=9.0.12 \
 
 
 # .NET runtime image
-FROM $REPO:9.0.12-noble-arm32v7
+FROM $REPO:10.0.2-noble-arm32v7
 
 # .NET Runtime version
 ENV DOTNET_VERSION=9.0.12

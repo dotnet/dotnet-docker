@@ -27,7 +27,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:8.0.23-azurelinux3.0-distroless-amd64
+FROM $REPO:10.0.2-azurelinux3.0-distroless-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.23

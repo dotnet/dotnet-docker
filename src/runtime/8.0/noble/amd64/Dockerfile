@@ -18,7 +18,7 @@ RUN dotnet_version=8.0.23 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.23-noble-amd64
+FROM $REPO:10.0.2-noble-amd64
 
 # .NET Runtime version
 ENV DOTNET_VERSION=8.0.23

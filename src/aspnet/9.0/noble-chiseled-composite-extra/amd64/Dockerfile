@@ -21,7 +21,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:9.0.12-noble-chiseled-extra-amd64
+FROM $REPO:10.0.2-noble-chiseled-extra-amd64
 
 ENV \
     # .NET Runtime version

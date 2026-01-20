@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:8.0.23-alpine3.23-amd64 AS installer
+FROM $REPO:10.0.2-alpine3.23-amd64 AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=8.0.23 \
@@ -17,7 +17,7 @@ RUN aspnetcore_version=8.0.23 \
 
 
 # ASP.NET Composite Image
-FROM $REPO:8.0.23-alpine3.23-amd64
+FROM $REPO:10.0.2-alpine3.23-amd64
 
 ENV \
     # .NET Runtime version
