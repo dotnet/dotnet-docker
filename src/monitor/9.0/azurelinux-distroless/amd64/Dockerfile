@@ -27,6 +27,6 @@ RUN dotnet_monitor_extension_version=9.0.5 \
 
 
 # .NET Monitor image
-FROM $REPO:9.0.5-amd64
+FROM $REPO:10.0.0-amd64
 
 COPY --from=installer ["/app", "/app"]
