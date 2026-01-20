@@ -24,7 +24,7 @@ RUN aspnetcore_version=9.0.12 \
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.12-azurelinux3.0-distroless-extra-amd64
+FROM $REPO:10.0.2-azurelinux3.0-distroless-extra-amd64
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=9.0.12

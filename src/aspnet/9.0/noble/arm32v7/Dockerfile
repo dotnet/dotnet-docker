@@ -18,7 +18,7 @@ RUN aspnetcore_version=9.0.12 \
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.12-noble-arm32v7
+FROM $REPO:10.0.2-noble-arm32v7
 
 # ASP.NET Core version
 ENV ASPNET_VERSION=9.0.12
