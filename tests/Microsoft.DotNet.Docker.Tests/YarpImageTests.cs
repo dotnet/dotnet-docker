@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -14,8 +15,6 @@ namespace Microsoft.DotNet.Docker.Tests;
 [Trait("Category", "yarp")]
 public class YarpImageTests(ITestOutputHelper outputHelper) : CommonRuntimeImageTests(outputHelper)
 {
-    private const string AppPath = "/app";
-
     private const int YarpWebPort = 5000;
 
 
