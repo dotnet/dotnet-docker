@@ -1,4 +1,4 @@
-FROM ubuntu.azurecr.io/ubuntu:jammy
+FROM ubuntu.azurecr.io/ubuntu:noble
 
 ENV \
     # UID of the non-root user 'app'
