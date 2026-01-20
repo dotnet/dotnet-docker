@@ -1,4 +1,4 @@
-FROM amd64/alpine:3.22
+FROM amd64/alpine:3.23
 
 ENV \
     # UID of the non-root user 'app'
