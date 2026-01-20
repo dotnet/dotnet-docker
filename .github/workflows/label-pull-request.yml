@@ -1,0 +1,20 @@
+name: "Label Pull Request"
+on:
+  # pull_request_target runs workflow code from the base branch with write permissions,
+  # while pull_request runs code from the PR branch with read-only permissions for forks.
+  # Use pull_request_target here to get write access for labeling fork PRs.
+  # Safe because actions/labeler only reads file paths and doesn't execute PR code.
+  pull_request_target:
+    types: [opened]
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  label:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/labeler@634933edcd8ababfe52f92936142cc22ac488b1b # v6.0.1
+      with:
+        configuration-path: .github/labeler-pull-request.yml
