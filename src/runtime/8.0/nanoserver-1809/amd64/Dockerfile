@@ -1,7 +1,7 @@
 # escape=`
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
+FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer
 
 # Retrieve .NET Runtime
 RUN powershell -Command `

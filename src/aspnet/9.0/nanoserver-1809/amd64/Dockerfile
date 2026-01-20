@@ -3,7 +3,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM mcr.microsoft.com/windows/servercore:1809-amd64 AS installer
+FROM mcr.microsoft.com/windows/servercore:2009-amd64 AS installer
 
 # Install ASP.NET Core Runtime
 RUN powershell -Command `
