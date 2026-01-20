@@ -1,0 +1,50 @@
+# Use this Dockerfile to create a runner image
+#     docker build -t image-builder .
+#     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v <local path to build>:/repo -w /repo image-builder <image-build args>
+
+# renovate: datasource=github-releases depName=oras-project/oras
+ARG ORAS_VERSION=1.2.0
+
+# build Microsoft.DotNet.ImageBuilder
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0 AS build-env
+ARG TARGETARCH
+ARG ORAS_VERSION
+
+# download oras package tarball
+WORKDIR /
+RUN curl -fSL --output oras_linux.tar.gz https://github.com/oras-project/oras/releases/download/v${ORAS_VERSION}/oras_${ORAS_VERSION}_linux_${TARGETARCH}.tar.gz \
+    && mkdir -p oras-install/ \
+    && tar -zxf oras_linux.tar.gz -C oras-install/ \
+    && rm -rf oras_linux.tar.gz
+
+WORKDIR /image-builder
+
+# restore packages before copying entire source - provides optimizations when rebuilding
+COPY NuGet.config ./
+COPY ImageBuilder/Microsoft.DotNet.ImageBuilder.csproj ./ImageBuilder/
+RUN dotnet restore -r linux-$TARGETARCH ./ImageBuilder/Microsoft.DotNet.ImageBuilder.csproj
+
+# copy everything else and publish
+COPY . ./
+RUN dotnet publish -r linux-$TARGETARCH ./ImageBuilder/Microsoft.DotNet.ImageBuilder.csproj --self-contained=true --no-restore -o out
+
+
+# build runtime image
+FROM mcr.microsoft.com/dotnet/runtime-deps:9.0-azurelinux3.0
+
+# install tooling
+RUN tdnf install -y \
+      moby-engine \
+      docker-cli \
+      docker-buildx \
+      git \
+    && tdnf clean all
+
+# install oras tool
+COPY --from=build-env ["/oras-install/oras", "/usr/local/bin"]
+
+# install image-builder
+WORKDIR /image-builder
+COPY --from=build-env /image-builder/out ./
+
+ENTRYPOINT ["/image-builder/Microsoft.DotNet.ImageBuilder"]
