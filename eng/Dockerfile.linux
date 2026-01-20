@@ -3,7 +3,7 @@
 #     docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v <local path to build>:/repo -w /repo image-builder <image-build args>
 
 # renovate: datasource=github-releases depName=oras-project/oras
-ARG ORAS_VERSION=1.2.0
+ARG ORAS_VERSION=1.3.0
 
 # build Microsoft.DotNet.ImageBuilder
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0 AS build-env
