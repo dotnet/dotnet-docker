@@ -30,7 +30,7 @@
     <PackageReference Include="Octokit" Version="13.0.1" />
     <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25210.1" />
     <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.25210.1" />
-    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta5.25210.1" />
+    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta6.25319.1" />
 
     <!-- Fixes CVE-2025-55247 -->
     <!-- Microsoft.Build.Utilities.Core is transitively referenced by Microsoft.DotNet.VersionTools -->
