@@ -64,12 +64,14 @@ public sealed class FromStagingPipelineCommandTests
     private static FromStagingPipelineCommand CreateCommand(
         ILogger<FromStagingPipelineCommand>? logger = null,
         IPipelineArtifactProvider? pipelineArtifactProvider = null,
+        IPipelinesService? pipelinesService = null,
         IInternalVersionsService? internalVersionsService = null,
         IEnvironmentService? environmentService = null,
         IBuildLabelService? buildLabelService = null,
         IGitRepoHelperFactory? gitRepoHelperFactory = null) =>
             new(logger ?? Mock.Of<ILogger<FromStagingPipelineCommand>>(),
                 pipelineArtifactProvider ?? CreateMockPipelineArtifactProvider(),
+                pipelinesService ?? CreateMockPipelinesService(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
                 environmentService ?? Mock.Of<IEnvironmentService>(),
                 buildLabelService ?? Mock.Of<IBuildLabelService>(),
@@ -80,6 +82,14 @@ public sealed class FromStagingPipelineCommandTests
         var mock = new Mock<IPipelineArtifactProvider>();
         mock.Setup(p => p.GetReleaseConfigAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
             .ReturnsAsync(CreateReleaseConfig());
+        return mock.Object;
+    }
+
+    private static IPipelinesService CreateMockPipelinesService()
+    {
+        var mock = new Mock<IPipelinesService>();
+        mock.Setup(p => p.GetBuildTagsAsync(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<int>()))
+            .ReturnsAsync(new List<string>());
         return mock.Object;
     }
 

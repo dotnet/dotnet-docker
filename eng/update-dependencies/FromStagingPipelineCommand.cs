@@ -18,6 +18,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
 
     private readonly ILogger<FromStagingPipelineCommand> _logger;
     private readonly IPipelineArtifactProvider _pipelineArtifactProvider;
+    private readonly IPipelinesService _pipelinesService;
     private readonly IInternalVersionsService _internalVersionsService;
     private readonly IEnvironmentService _environmentService;
     private readonly IBuildLabelService _buildLabelService;
@@ -26,6 +27,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     public FromStagingPipelineCommand(
         ILogger<FromStagingPipelineCommand> logger,
         IPipelineArtifactProvider pipelineArtifactProvider,
+        IPipelinesService pipelinesService,
         IInternalVersionsService internalVersionsService,
         IEnvironmentService environmentService,
         IBuildLabelService buildLabelService,
@@ -33,6 +35,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     {
         _logger = logger;
         _pipelineArtifactProvider = pipelineArtifactProvider;
+        _pipelinesService = pipelinesService;
         _internalVersionsService = internalVersionsService;
         _environmentService = environmentService;
         _buildLabelService = buildLabelService;
@@ -50,6 +53,12 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         _logger.LogInformation(
             "Updating dependencies based on staging pipeline run ID {options.StagingPipelineRunId}",
             options.StagingPipelineRunId);
+
+        var stagingPipelineTags = await _pipelinesService.GetBuildTagsAsync(
+            options.AzdoOrganization,
+            options.AzdoProject,
+            options.StagingPipelineRunId);
+        _logger.LogInformation("Staging pipeline tags: {Tags}", string.Join(", ", stagingPipelineTags));
 
         string internalBaseUrl = string.Empty;
         if (options.Internal)
