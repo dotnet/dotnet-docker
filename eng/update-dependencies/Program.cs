@@ -128,6 +128,7 @@ config.UseHost(
                 services.AddHttpClient<AzdoHttpClient>();
 
                 services.AddSingleton<AzdoAuthProvider>();
+                services.AddEnvironmentService();
                 services.AddSingleton<PipelineArtifactProvider>();
                 services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
 

@@ -19,11 +19,13 @@ public class AzdoAuthProvider
     private const string Scope = "499b84ac-1321-427f-aa17-267ca6975798/.default";
 
     private readonly ILogger<AzdoAuthProvider> _logger;
+    private readonly IEnvironmentService _environmentService;
     private readonly Lazy<string> _accessToken;
 
-    public AzdoAuthProvider(ILogger<AzdoAuthProvider> logger)
+    public AzdoAuthProvider(ILogger<AzdoAuthProvider> logger, IEnvironmentService environmentService)
     {
         _logger = logger;
+        _environmentService = environmentService;
         _accessToken = new(GetAccessTokenInternal);
     }
 
@@ -54,13 +56,13 @@ public class AzdoAuthProvider
 
     private string GetAccessTokenInternal()
     {
-        var accessToken = Environment.GetEnvironmentVariable("SYSTEM_ACCESSTOKEN");
+        var accessToken = _environmentService.GetSystemAccessToken();
         if (!string.IsNullOrWhiteSpace(accessToken))
         {
             return accessToken;
         }
 
-        _logger.LogInformation("Environment variable SYSTEM_ACCESSTOKEN was not set."
+        _logger.LogWarning("Environment variable SYSTEM_ACCESSTOKEN was not set."
             + " Did you forget to explicitly pass it in to your pipeline step?"
             + " See https://learn.microsoft.com/azure/devops/pipelines/build/variables#systemaccesstoken");
 

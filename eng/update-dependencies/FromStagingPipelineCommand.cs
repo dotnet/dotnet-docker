@@ -19,18 +19,21 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     private readonly ILogger<FromStagingPipelineCommand> _logger;
     private readonly PipelineArtifactProvider _pipelineArtifactProvider;
     private readonly IInternalVersionsService _internalVersionsService;
+    private readonly IEnvironmentService _environmentService;
     private readonly Func<FromStagingPipelineOptions, Task<GitRepoContext>> _createGitRepoContextAsync;
 
     public FromStagingPipelineCommand(
         ILogger<FromStagingPipelineCommand> logger,
         PipelineArtifactProvider pipelineArtifactProvider,
         IInternalVersionsService internalVersionsService,
+        IEnvironmentService environmentService,
         IGitRepoHelperFactory gitRepoHelperFactory)
     {
         _logger = logger;
         _pipelineArtifactProvider = pipelineArtifactProvider;
         _internalVersionsService = internalVersionsService;
-        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options);
+        _environmentService = environmentService;
+        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options, _environmentService);
     }
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
@@ -212,7 +215,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         public static async Task<GitRepoContext> CreateAsync(
             ILogger logger,
             IGitRepoHelperFactory gitRepoFactory,
-            FromStagingPipelineOptions options)
+            FromStagingPipelineOptions options,
+            IEnvironmentService environmentService)
         {
             CommitAndCreatePullRequest createPullRequest;
             string localRepoPath;
@@ -221,7 +225,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             {
                 var remoteUrl = options.GetAzdoRepoUrl();
                 var targetBranch = options.TargetBranch;
-                var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StagingPipelineRunId}");
+                var buildId = environmentService.GetBuildId() ?? "";
+                var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StagingPipelineRunId}", buildId);
                 var committer = options.GetCommitterIdentity();
 
                 // Clone the repo
