@@ -124,11 +124,9 @@ config.UseHost(
                 services.AddKeyedSingleton<IBuildUpdaterService, VmrBuildUpdaterService>(BuildRepo.Vmr);
                 services.AddKeyedSingleton<IBuildUpdaterService, AspireBuildUpdaterService>(BuildRepo.Aspire);
 
-                services.AddHttpClient();
-                services.AddHttpClient<AzdoHttpClient>();
-
-                services.AddSingleton<AzdoAuthProvider>();
-                services.AddSingleton<PipelineArtifactProvider>();
+                services.AddEnvironmentService();
+                services.AddBuildLabelService();
+                services.AddPipelineArtifactProvider();
                 services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
 
                 // Dependencies that can be updated using the FromComponentCommand

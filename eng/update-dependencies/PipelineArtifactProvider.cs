@@ -1,10 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Dotnet.Docker.Model.Release;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.TeamFoundation.Build.WebApi;
 
@@ -21,13 +20,24 @@ namespace Dotnet.Docker;
 /// </param>
 internal record PipelineArtifactFile(string ArtifactName, string SubPath);
 
-internal class PipelineArtifactProvider(
-    AzdoAuthProvider azdoAuthProvider,
-    ILogger<PipelineArtifactProvider> logger,
-    AzdoHttpClient azdoHttpClient
-)
+internal interface IPipelineArtifactProvider
 {
-    private readonly AzdoAuthProvider _azdoAuthProvider = azdoAuthProvider;
+    /// <summary>
+    /// Gets the .NET release config from a run of the staging pipeline.
+    /// </summary>
+    Task<ReleaseConfig> GetReleaseConfigAsync(
+        string azdoOrganization,
+        string azdoProject,
+        int stagingPipelineRunId);
+}
+
+internal class PipelineArtifactProvider(
+    IAzdoAuthProvider azdoAuthProvider,
+    ILogger<PipelineArtifactProvider> logger,
+    AzdoHttpClient azdoHttpClient)
+        : IPipelineArtifactProvider
+{
+    private readonly IAzdoAuthProvider _azdoAuthProvider = azdoAuthProvider;
     private readonly ILogger<PipelineArtifactProvider> _logger = logger;
     private readonly AzdoHttpClient _azdoHttpClient = azdoHttpClient;
 
@@ -125,5 +135,20 @@ internal class PipelineArtifactProvider(
 
         // If all attempts fail, throw an exception with the details
         throw new AggregateException("Failed to retrieve artifact content.", exceptions);
+    }
+}
+
+internal static class PipelineArtifactProviderExtensions
+{
+    public static IServiceCollection AddPipelineArtifactProvider(this IServiceCollection services)
+    {
+        // Add dependencies
+        services.AddAzdoAuthProvider();
+        services.AddAzdoHttpClient();
+
+        // Add self
+        services.TryAddSingleton<IPipelineArtifactProvider, PipelineArtifactProvider>();
+
+        return services;
     }
 }

@@ -17,20 +17,26 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     private delegate Task CommitAndCreatePullRequest(string commitMessage, string prTitle, string prBody);
 
     private readonly ILogger<FromStagingPipelineCommand> _logger;
-    private readonly PipelineArtifactProvider _pipelineArtifactProvider;
+    private readonly IPipelineArtifactProvider _pipelineArtifactProvider;
     private readonly IInternalVersionsService _internalVersionsService;
+    private readonly IEnvironmentService _environmentService;
+    private readonly IBuildLabelService _buildLabelService;
     private readonly Func<FromStagingPipelineOptions, Task<GitRepoContext>> _createGitRepoContextAsync;
 
     public FromStagingPipelineCommand(
         ILogger<FromStagingPipelineCommand> logger,
-        PipelineArtifactProvider pipelineArtifactProvider,
+        IPipelineArtifactProvider pipelineArtifactProvider,
         IInternalVersionsService internalVersionsService,
+        IEnvironmentService environmentService,
+        IBuildLabelService buildLabelService,
         IGitRepoHelperFactory gitRepoHelperFactory)
     {
         _logger = logger;
         _pipelineArtifactProvider = pipelineArtifactProvider;
         _internalVersionsService = internalVersionsService;
-        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options);
+        _environmentService = environmentService;
+        _buildLabelService = buildLabelService;
+        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options, _environmentService);
     }
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
@@ -57,8 +63,10 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             // Release metadata is stored in metadata/ReleaseManifest.json.
             // Release assets are stored individually under in assets/shipping/assets/[Sdk|Runtime|aspnetcore|...].
             // Full example: https://dotnetstagetest.blob.core.windows.net/stage-2XXXXXX/assets/shipping/assets/Runtime/10.0.0-preview.N.XXXXX.YYY/dotnet-runtime-10.0.0-preview.N.XXXXX.YYY-linux-arm64.tar.gz
+            var stageContainer = $"stage-{options.StagingPipelineRunId}";
+            _buildLabelService.AddBuildTags($"Container - {stageContainer}");
             internalBaseUrl = NormalizeStorageAccountUrl(options.StagingStorageAccount)
-                + $"/stage-{options.StagingPipelineRunId}/assets/shipping/assets";
+                + $"/{stageContainer}/assets/shipping/assets";
         }
 
         var releaseConfig = await _pipelineArtifactProvider.GetReleaseConfigAsync(
@@ -212,7 +220,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         public static async Task<GitRepoContext> CreateAsync(
             ILogger logger,
             IGitRepoHelperFactory gitRepoFactory,
-            FromStagingPipelineOptions options)
+            FromStagingPipelineOptions options,
+            IEnvironmentService environmentService)
         {
             CommitAndCreatePullRequest createPullRequest;
             string localRepoPath;
@@ -221,7 +230,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             {
                 var remoteUrl = options.GetAzdoRepoUrl();
                 var targetBranch = options.TargetBranch;
-                var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StagingPipelineRunId}");
+                var buildId = environmentService.GetBuildId() ?? "";
+                var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StagingPipelineRunId}", buildId);
                 var committer = options.GetCommitterIdentity();
 
                 // Clone the repo

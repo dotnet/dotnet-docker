@@ -22,12 +22,14 @@ internal sealed class SyncInternalReleaseCommand(
     IGitRepoHelperFactory gitRepoHelperFactory,
     ICommand<FromStagingPipelineOptions> updateFromStagingPipeline,
     IInternalVersionsService internalVersionsService,
+    IEnvironmentService environmentService,
     ILogger<SyncInternalReleaseCommand> logger
 ) : BaseCommand<SyncInternalReleaseOptions>
 {
     private readonly IGitRepoHelperFactory _gitRepoHelperFactory = gitRepoHelperFactory;
     private readonly ICommand<FromStagingPipelineOptions> _updateFromStagingPipeline = updateFromStagingPipeline;
     private readonly IInternalVersionsService _internalVersionsService = internalVersionsService;
+    private readonly IEnvironmentService _environmentService = environmentService;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
@@ -86,6 +88,8 @@ internal sealed class SyncInternalReleaseCommand(
             ancestorRef: $"origin/{options.TargetBranch}",
             descendantRef: $"origin/{options.SourceBranch}");
 
+        var buildId = _environmentService.GetBuildId() ?? "";
+
         if (targetIsAncestorOfSource)
         {
             _logger.LogInformation(
@@ -93,7 +97,7 @@ internal sealed class SyncInternalReleaseCommand(
                 options.TargetBranch, options.SourceBranch);
 
             // "ff" here is an abbreviation for "fast-forward" - just want to keep branch names short
-            var fastForwardPrBranch = options.CreatePrBranchName("ff");
+            var fastForwardPrBranch = options.CreatePrBranchName("ff", buildId);
             await repo.Remote.CreateRemoteBranchAsync(
                 newBranch: fastForwardPrBranch,
                 baseBranch: options.SourceBranch);
@@ -135,7 +139,7 @@ internal sealed class SyncInternalReleaseCommand(
         var internalBuilds = _internalVersionsService.GetInternalStagingBuilds(repo.Local.LocalPath);
 
         // Reset the target branch to match the source branch.
-        var prBranchName = options.CreatePrBranchName(name: "sync");
+        var prBranchName = options.CreatePrBranchName(name: "sync", buildId: buildId);
         await repo.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
         await repo.Local.RestoreAsync(source: sourceSha);
         await repo.Local.StageAsync(".");
