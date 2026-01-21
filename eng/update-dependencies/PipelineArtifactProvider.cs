@@ -2,6 +2,8 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Dotnet.Docker.Model.Release;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.TeamFoundation.Build.WebApi;
 
@@ -30,12 +32,12 @@ internal interface IPipelineArtifactProvider
 }
 
 internal class PipelineArtifactProvider(
-    AzdoAuthProvider azdoAuthProvider,
+    IAzdoAuthProvider azdoAuthProvider,
     ILogger<PipelineArtifactProvider> logger,
     AzdoHttpClient azdoHttpClient)
         : IPipelineArtifactProvider
 {
-    private readonly AzdoAuthProvider _azdoAuthProvider = azdoAuthProvider;
+    private readonly IAzdoAuthProvider _azdoAuthProvider = azdoAuthProvider;
     private readonly ILogger<PipelineArtifactProvider> _logger = logger;
     private readonly AzdoHttpClient _azdoHttpClient = azdoHttpClient;
 
@@ -133,5 +135,20 @@ internal class PipelineArtifactProvider(
 
         // If all attempts fail, throw an exception with the details
         throw new AggregateException("Failed to retrieve artifact content.", exceptions);
+    }
+}
+
+internal static class PipelineArtifactProviderExtensions
+{
+    public static IServiceCollection AddPipelineArtifactProvider(this IServiceCollection services)
+    {
+        // Add dependencies
+        services.AddAzdoAuthProvider();
+        services.AddAzdoHttpClient();
+
+        // Add self
+        services.TryAddSingleton<IPipelineArtifactProvider, PipelineArtifactProvider>();
+
+        return services;
     }
 }
