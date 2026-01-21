@@ -63,7 +63,7 @@ They contain the following features:
 ### Linux amd64 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-amd64, 10.0-noble-amd64, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0, latest | [Dockerfile](src/runtime-deps/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime-deps/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime-deps/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
@@ -103,7 +103,7 @@ Tags | Dockerfile | OS Version
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-arm64v8, 10.0-noble-arm64v8, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0, latest | [Dockerfile](src/runtime-deps/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime-deps/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime-deps/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -143,7 +143,7 @@ Tags | Dockerfile | OS Version
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-arm32v7, 10.0-noble-arm32v7, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0, latest | [Dockerfile](src/runtime-deps/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime-deps/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime-deps/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
@@ -167,6 +167,7 @@ Tags | Dockerfile | OS Version
 8.0.23-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.23-jammy, 8.0-jammy | [Dockerfile](src/runtime-deps/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.23-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.23-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/runtime-deps/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.23-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.23-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/runtime-deps/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
+
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/runtime-deps/tags/list) for all supported and unsupported tags.*

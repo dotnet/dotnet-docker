@@ -70,7 +70,9 @@ stages:
       ${{ if ne(parameters.linuxAmd64Pool, '') }}:
         ${{ parameters.linuxAmd64Pool }}
       ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
-        vmImage: $(defaultLinuxAmd64PoolImage)
+        name: $(linuxAmd64PublicPoolName)
+        demands: ImageOverride -equals $(linuxAmd64PublicPoolImage)
+        os: linux
       ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxAmd64InternalPoolName)
         image: $(linuxAmd64InternalPoolImage)
@@ -80,21 +82,23 @@ stages:
     linuxArm64Pool:
       os: linux
       hostArchitecture: Arm64
-      image: $(linuxArm64PoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: $(linuxArm64PublicPoolName)
+        demands: ImageOverride -equals $(linuxArm64PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxArm64InternalPoolName)
+        image: $(linuxArm64InternalPoolImage)
 
     # Linux Arm32
     linuxArm32Pool:
       os: linux
       hostArchitecture: Arm64
-      image: $(linuxArm32PoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: $(linuxArm32PublicPoolName)
+        demands: ImageOverride -equals $(linuxArm32PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxArm32InternalPoolName)
+        image: $(linuxArm32InternalPoolImage)
 
     # Windows Server 2016
     windows2016Pool:
