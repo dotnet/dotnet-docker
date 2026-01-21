@@ -70,7 +70,7 @@ They contain the following features:
 ### Linux amd64 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-amd64, 10.0-noble-amd64, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
@@ -110,7 +110,7 @@ Tags | Dockerfile | OS Version
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-arm64v8, 10.0-noble-arm64v8, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -150,7 +150,7 @@ Tags | Dockerfile | OS Version
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
------------| -------------| -------------
+---- | ---------- | ----------
 10.0.2-noble-arm32v7, 10.0-noble-arm32v7, 10.0.2-noble, 10.0-noble, 10.0.2, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.2-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.2-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.2-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
@@ -175,51 +175,27 @@ Tags | Dockerfile | OS Version
 8.0.23-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.23-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/runtime/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
 8.0.23-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.23-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/runtime/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 
-### Nano Server 2025 amd64 Tags
+### Windows amd64 Tags
 
-Tag | Dockerfile
----------| ---------------
-10.0.2-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile)
-9.0.12-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2025/amd64/Dockerfile)
-8.0.23-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/8.0/nanoserver-ltsc2025/amd64/Dockerfile)
+Tags | Dockerfile | OS Version
+---- | ---------- | ----------
+10.0.2-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+10.0.2-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+10.0.2-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+10.0.2-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.12-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+9.0.12-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+9.0.12-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+9.0.12-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.12-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/runtime/9.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+9.0.12-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
+8.0.23-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+8.0.23-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+8.0.23-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+8.0.23-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+8.0.23-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/runtime/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+8.0.23-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
 
-### Windows Server Core 2025 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.2-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-9.0.12-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-8.0.23-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2025/amd64/Dockerfile)
-
-### Nano Server 2022 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.2-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2022/amd64/Dockerfile)
-9.0.12-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2022/amd64/Dockerfile)
-8.0.23-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/8.0/nanoserver-ltsc2022/amd64/Dockerfile)
-
-### Windows Server Core 2022 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-10.0.2-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-9.0.12-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-8.0.23-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2022/amd64/Dockerfile)
-
-### Nano Server, version 1809 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-9.0.12-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/runtime/9.0/nanoserver-1809/amd64/Dockerfile)
-8.0.23-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/runtime/8.0/nanoserver-1809/amd64/Dockerfile)
-
-### Windows Server Core 2019 amd64 Tags
-
-Tag | Dockerfile
----------| ---------------
-9.0.12-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2019/amd64/Dockerfile)
-8.0.23-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/runtime/8.0/windowsservercore-ltsc2019/amd64/Dockerfile)
 <!--End of generated tags-->
 
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/runtime/tags/list) for all supported and unsupported tags.*
