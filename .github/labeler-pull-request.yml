@@ -1,3 +1,0 @@
-# Add 'needs-backport' label to PRs targeting the nightly branch
-needs-backport:
-  - base-branch: 'nightly'
