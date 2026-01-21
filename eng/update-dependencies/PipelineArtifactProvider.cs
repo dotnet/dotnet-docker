@@ -1,9 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Dotnet.Docker.Model.Release;
 using Microsoft.Extensions.Logging;
 using Microsoft.TeamFoundation.Build.WebApi;
@@ -21,11 +18,22 @@ namespace Dotnet.Docker;
 /// </param>
 internal record PipelineArtifactFile(string ArtifactName, string SubPath);
 
+internal interface IPipelineArtifactProvider
+{
+    /// <summary>
+    /// Gets the .NET release config from a run of the staging pipeline.
+    /// </summary>
+    Task<ReleaseConfig> GetReleaseConfigAsync(
+        string azdoOrganization,
+        string azdoProject,
+        int stagingPipelineRunId);
+}
+
 internal class PipelineArtifactProvider(
     AzdoAuthProvider azdoAuthProvider,
     ILogger<PipelineArtifactProvider> logger,
-    AzdoHttpClient azdoHttpClient
-)
+    AzdoHttpClient azdoHttpClient)
+        : IPipelineArtifactProvider
 {
     private readonly AzdoAuthProvider _azdoAuthProvider = azdoAuthProvider;
     private readonly ILogger<PipelineArtifactProvider> _logger = logger;
