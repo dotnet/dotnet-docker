@@ -293,11 +293,13 @@ public sealed class SyncInternalReleaseTests
         IGitRepoHelperFactory? repoFactory = null,
         ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
         IInternalVersionsService? internalVersionsService = null,
+        IEnvironmentService? environmentService = null,
         ILogger<SyncInternalReleaseCommand>? logger = null) =>
             // New parameters should be null by default and initialized with mocks if not specified.
             new(repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
                 fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
+                environmentService ?? Mock.Of<IEnvironmentService>(),
                 logger ?? Mock.Of<ILogger<SyncInternalReleaseCommand>>());
 
     /// <summary>
