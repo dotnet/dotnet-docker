@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=11.0.0-preview.1.26069.103 \
+RUN aspnetcore_version=11.0.0-preview.1.26070.110 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz.sha512 \
@@ -20,6 +20,6 @@ RUN aspnetcore_version=11.0.0-preview.1.26069.103 \
 FROM $REPO:11.0.0-preview.1-resolute-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-preview.1.26069.103
+ENV ASPNET_VERSION=11.0.0-preview.1.26070.110
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
