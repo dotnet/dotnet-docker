@@ -2,13 +2,27 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Azure.Identity;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
 
 namespace Dotnet.Docker;
 
-public class AzdoAuthProvider
+public interface IAzdoAuthProvider
+{
+    /// <summary>
+    /// Gets an Azure DevOps REST API access token.
+    /// </summary>
+    string AccessToken { get; }
+
+    /// <summary>
+    /// Gets a connection to Azure DevOps Services.
+    /// </summary>
+    VssConnection GetVssConnection(string azdoOrg);
+}
+
+public class AzdoAuthProvider : IAzdoAuthProvider
 {
     /// <summary>
     /// This scope provides access to Azure DevOps Services REST API.
@@ -71,4 +85,10 @@ public class AzdoAuthProvider
         accessToken = credential.GetToken(requestContext).Token;
         return accessToken;
     }
+}
+
+internal static class AzdoAuthProviderExtensions
+{
+    public static IServiceCollection AddAzdoAuthProvider(this IServiceCollection services) =>
+        services.AddSingleton<IAzdoAuthProvider, AzdoAuthProvider>();
 }
