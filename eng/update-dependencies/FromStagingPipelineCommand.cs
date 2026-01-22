@@ -56,6 +56,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
 
         var stagingPipelineRunId = options.GetStagingPipelineRunId();
 
+        // Log staging pipeline tags for diagnostic purposes
         var stagingPipelineTags = await _pipelinesService.GetBuildTagsAsync(
             options.AzdoOrganization,
             options.AzdoProject,
@@ -89,11 +90,11 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
 
         if (options.Internal)
         {
-            // Record pipeline run ID for this internal version, for later use by sync-internal-release command
+            // Record stage container for this internal version, for later use by sync-internal-release command
             _internalVersionsService.RecordInternalStagingBuild(
                 repoRoot: gitRepoContext.LocalRepoPath,
                 dotNetVersion: dotNetVersion,
-                stagingPipelineRunId: stagingPipelineRunId);
+                stageContainer: options.StageContainer);
         }
 
         var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
