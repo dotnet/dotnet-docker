@@ -14,8 +14,8 @@ public sealed class FromStagingPipelineCommandTests
     [Fact]
     public async Task ExecuteAsync_InternalMode_AddsBuildTagWithStageContainer()
     {
-        const int stagingPipelineRunId = 1234567;
-        var expectedTag = $"Container - stage-{stagingPipelineRunId}";
+        const string stageContainer = "stage-1234567";
+        var expectedTag = $"Container - {stageContainer}";
 
         using var output = new StringWriter();
         var buildLabelService = new BuildLabelService(output);
@@ -26,7 +26,7 @@ public sealed class FromStagingPipelineCommandTests
 
         var options = new FromStagingPipelineOptions
         {
-            StagingPipelineRunId = stagingPipelineRunId,
+            StageContainer = stageContainer,
             Internal = true,
             StagingStorageAccount = "https://dotnetstagetest.blob.core.windows.net/",
             Mode = ChangeMode.Local,
@@ -50,7 +50,7 @@ public sealed class FromStagingPipelineCommandTests
 
         var options = new FromStagingPipelineOptions
         {
-            StagingPipelineRunId = 1234567,
+            StageContainer = "stage-1234567",
             Internal = false,
             Mode = ChangeMode.Local,
             RepoRoot = "/tmp/repo"

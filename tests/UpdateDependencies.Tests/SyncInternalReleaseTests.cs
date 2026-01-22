@@ -249,7 +249,7 @@ public sealed class SyncInternalReleaseTests
             fromStagingPipelineCommandMock.Verify(command =>
                 command.ExecuteAsync(It.Is<FromStagingPipelineOptions>(o =>
                     o.RepoRoot == LocalRepoPath
-                    && o.StagingPipelineRunId == buildId
+                    && o.StageContainer == $"stage-{buildId}"
                     && o.StagingStorageAccount == options.StagingStorageAccount
                 )),
                 Times.Once

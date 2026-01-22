@@ -190,11 +190,12 @@ internal sealed class SyncInternalReleaseCommand(
             "Ignore any git-related logging output below, because git "
             + "operations are being managed by a different command.");
 
+        var stageContainer = $"stage-{stagingPipelineRunId}";
         var fromStagingPipelineOptions = new FromStagingPipelineOptions
         {
             RepoRoot = localRepo.LocalPath,
             Internal = true,
-            StagingPipelineRunId = stagingPipelineRunId,
+            StageContainer = stageContainer,
             StagingStorageAccount = stagingStorageAccount,
             AzdoOrganization = options.AzdoOrganization,
             AzdoProject = options.AzdoProject,
@@ -205,7 +206,7 @@ internal sealed class SyncInternalReleaseCommand(
         if (exitCode != 0)
         {
             throw new InvalidOperationException(
-                $"Failed to apply internal build {stagingPipelineRunId}. Command exited with code {exitCode}.");
+                $"Failed to apply internal build {stageContainer}. Command exited with code {exitCode}.");
         }
 
         _logger.LogInformation("Finished applying internal build {BuildNumber}", stagingPipelineRunId);
