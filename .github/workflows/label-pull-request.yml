@@ -1,0 +1,43 @@
+# Workflow: Label Merged PRs with "needs-backport"
+#
+# This workflow automatically adds a "needs-backport" label to all PRs
+# that are merged into development branches. This helps maintainers track which
+# changes need to be backported to main or release/ branches.
+#
+name: Label merged PRs for backport
+
+on:
+  # pull_request_target runs workflow code from the base branch with write permissions,
+  # while pull_request runs code from the PR branch with read-only permissions for forks.
+  # Use pull_request_target here to get write access for labeling fork PRs.
+  # Safe because this workflow only uses trusted inputs (PR number) and doesn't
+  # checkout or execute PR code.
+  pull_request_target:
+    types:
+      # To label merged PRs, trigger on all closed PRs and check for merged
+      # status later, in the job condition
+      - closed
+    branches:
+      - nightly
+
+permissions:
+  # Required to add labels to pull requests
+  pull-requests: write
+
+jobs:
+  add-backport-label:
+    # Only run if the PR was actually merged (not just closed)
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      # No checkout needed
+      - name: Add needs-backport label
+        # Use GitHub CLI (gh) which is pre-installed on GitHub-hosted runners
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # Provides repository context for gh CLI commands
+          GH_REPO: ${{ github.repository }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          gh pr edit "$PR_NUMBER" --add-label "needs-backport"
+          echo "Successfully labeled PR #$PR_NUMBER"
