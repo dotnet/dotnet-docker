@@ -225,10 +225,10 @@ public sealed class SyncInternalReleaseTests
                 : throw new Exception($"PR {PullRequestUrl} was not created first"));
 
         // For this scenario, two internal versions have been checked in to this repo.
-        var internalVersions = new Dictionary<DotNetVersion, int>
+        var internalVersions = new Dictionary<DotNetVersion, string>
         {
-            { DotNetVersion.Parse("8.0"), 8000000 },
-            { DotNetVersion.Parse("10.0"), 1000000 }
+            { DotNetVersion.Parse("8.0"), "stage-8000000" },
+            { DotNetVersion.Parse("10.0"), "stage-1000000" }
         };
         var internalVersionsService = CreateInternalVersionsService(LocalRepoPath, internalVersions);
 
@@ -244,12 +244,12 @@ public sealed class SyncInternalReleaseTests
         exitCode.ShouldBe(0);
 
         // Verify that we re-applied all internal versions by calling the downstream command.
-        foreach ((_, int buildId) in internalVersions)
+        foreach ((_, string stageContainer) in internalVersions)
         {
             fromStagingPipelineCommandMock.Verify(command =>
                 command.ExecuteAsync(It.Is<FromStagingPipelineOptions>(o =>
                     o.RepoRoot == LocalRepoPath
-                    && o.StagingPipelineRunId == buildId
+                    && o.StageContainer == stageContainer
                     && o.StagingStorageAccount == options.StagingStorageAccount
                 )),
                 Times.Once
@@ -306,9 +306,9 @@ public sealed class SyncInternalReleaseTests
     /// Helper method to create a mock version of <see cref="IInternalVersionsService"/>
     /// </summary>
     private static IInternalVersionsService CreateInternalVersionsService(
-        string repoPath, Dictionary<DotNetVersion, int> versions)
+        string repoPath, Dictionary<DotNetVersion, string> versions)
     {
-        var internalStagingBuilds = new InternalStagingBuilds(versions.ToImmutableDictionary());
+        var internalStagingBuilds = new InternalStageContainers(versions.ToImmutableDictionary());
 
         var mock = new Mock<IInternalVersionsService>();
         mock.Setup(s => s.GetInternalStagingBuilds(repoPath))

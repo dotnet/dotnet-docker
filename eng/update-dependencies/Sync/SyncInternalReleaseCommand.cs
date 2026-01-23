@@ -147,13 +147,13 @@ internal sealed class SyncInternalReleaseCommand(
             message: $"Reset {options.TargetBranch} to match {options.SourceBranch} commit {sourceSha}",
             author: commitAuthor);
 
-        // Re-apply internal .NET version updates for each recorded staging pipeline run ID.
-        foreach (var (dockerfileVersion, stagingPipelineRunId) in internalBuilds.Versions)
+        // Re-apply internal .NET version updates for each recorded stage container.
+        foreach (var (dockerfileVersion, stageContainer) in internalBuilds.Versions)
         {
             await ApplyInternalBuildAsync(
                 options: options,
                 localRepo: repo.Local,
-                stagingPipelineRunId: stagingPipelineRunId,
+                stageContainer: stageContainer,
                 stagingStorageAccount: options.StagingStorageAccount,
                 committerIdentity: commitAuthor);
         }
@@ -173,8 +173,8 @@ internal sealed class SyncInternalReleaseCommand(
     /// <summary>
     /// Apply an internal build by invoking the FromStagingPipelineCommand.
     /// </summary>
-    /// <param name="stagingPipelineRunId">
-    /// ID of the Azure DevOps pipeline run to get build information from.
+    /// <param name="stageContainer">
+    /// Stage container name (e.g., "stage-1234567") to get build information from.
     /// </param>
     /// <param name="committerIdentity">
     /// The identity to use when committing changes.
@@ -182,7 +182,7 @@ internal sealed class SyncInternalReleaseCommand(
     private async Task ApplyInternalBuildAsync(
         SyncInternalReleaseOptions options,
         ILocalGitRepoHelper localRepo,
-        int stagingPipelineRunId,
+        string stageContainer,
         string stagingStorageAccount,
         (string Name, string Email) committerIdentity)
     {
@@ -194,7 +194,7 @@ internal sealed class SyncInternalReleaseCommand(
         {
             RepoRoot = localRepo.LocalPath,
             Internal = true,
-            StagingPipelineRunId = stagingPipelineRunId,
+            StageContainer = stageContainer,
             StagingStorageAccount = stagingStorageAccount,
             AzdoOrganization = options.AzdoOrganization,
             AzdoProject = options.AzdoProject,
@@ -205,12 +205,12 @@ internal sealed class SyncInternalReleaseCommand(
         if (exitCode != 0)
         {
             throw new InvalidOperationException(
-                $"Failed to apply internal build {stagingPipelineRunId}. Command exited with code {exitCode}.");
+                $"Failed to apply internal build {stageContainer}. Command exited with code {exitCode}.");
         }
 
-        _logger.LogInformation("Finished applying internal build {BuildNumber}", stagingPipelineRunId);
+        _logger.LogInformation("Finished applying internal build {StageContainer}", stageContainer);
 
         await localRepo.StageAsync(".");
-        await localRepo.CommitAsync($"Update dependencies from build {stagingPipelineRunId}", committerIdentity);
+        await localRepo.CommitAsync($"Update dependencies from {stageContainer}", committerIdentity);
     }
 }
