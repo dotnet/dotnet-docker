@@ -2,18 +2,19 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.CommandLine;
+using System.Text.RegularExpressions;
 
 namespace Dotnet.Docker;
 
-internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
+internal partial record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
 {
     public const string StagingStorageAccountOptionName = "--staging-storage-account";
     public const string InternalOption = "--internal";
 
     /// <summary>
-    /// The staging pipeline run ID to use as a source for the update.
+    /// The stage container name (e.g., "stage-1234567") to use as a source for the update.
     /// </summary>
-    public required int StagingPipelineRunId { get; init; }
+    public required string StageContainer { get; init; }
 
     /// <summary>
     /// Whether or not to use the internal versions of the staged build.
@@ -33,10 +34,10 @@ internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
 
     public static new List<Argument> Arguments { get; } =
     [
-        new Argument<int>("staging-pipeline-run-id")
+        new Argument<string>("stage-container")
         {
             Arity = ArgumentArity.ExactlyOne,
-            Description = "The staging pipeline run ID to use as a source for the update"
+            Description = "The stage container name to use as a source for the update (e.g., 'stage-1234567')"
         },
         ..CreatePullRequestOptions.Arguments,
     ];
@@ -66,4 +67,27 @@ internal record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
         },
         ..CreatePullRequestOptions.Options,
     ];
+}
+
+internal static partial class StagingPipelineOptionsExtensions
+{
+    [GeneratedRegex(@"^stage-(\d+)$")]
+    private static partial Regex StageContainerRegex { get; }
+
+    /// <summary>
+    /// Extracts the staging pipeline run ID from the stage container name.
+    /// </summary>
+    /// <exception cref="ArgumentException">
+    /// Thrown if the stage container name is not in the expected format.
+    /// </exception>
+    public static int GetStagingPipelineRunId(this FromStagingPipelineOptions options)
+    {
+        var match = StageContainerRegex.Match(options.StageContainer);
+        if (!match.Success)
+        {
+            throw new ArgumentException(
+                $"Invalid stage container name '{options.StageContainer}'. Expected format: 'stage-{{buildId}}' (e.g., 'stage-1234567')");
+        }
+        return int.Parse(match.Groups[1].Value);
+    }
 }
