@@ -23,7 +23,15 @@ internal interface IGitRepoHelperFactory
     /// defaults to a temporary directory. The caller is responsible for
     /// managing/cleaning up the temporary directory.
     /// </param>
-    Task<IGitRepoHelper> CreateAndCloneAsync(string repoUri, string? localCloneDir = null);
+    /// <param name="gitIdentity">
+    /// The git identity (name and email) to configure on the cloned repository.
+    /// This is required for commits to succeed in environments where git is not
+    /// globally configured (e.g., CI/CD pipelines).
+    /// </param>
+    Task<IGitRepoHelper> CreateAndCloneAsync(
+        string repoUri,
+        string? localCloneDir = null,
+        (string Name, string Email)? gitIdentity = null);
 
     /// <summary>
     /// Creates an <see cref="IGitRepoHelper"/> that points to an existing
@@ -54,7 +62,10 @@ internal sealed class GitRepoHelperFactory(
     private readonly IServiceProvider _serviceProvider = serviceProvider;
 
     /// <inheritdoc/>
-    public async Task<IGitRepoHelper> CreateAndCloneAsync(string repoUri, string? localCloneDir = null)
+    public async Task<IGitRepoHelper> CreateAndCloneAsync(
+        string repoUri,
+        string? localCloneDir = null,
+        (string Name, string Email)? gitIdentity = null)
     {
         localCloneDir ??= Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
 
@@ -66,7 +77,19 @@ internal sealed class GitRepoHelperFactory(
             gitDirectory: null);
         _logger.LogInformation("Cloned '{RepoUri}' to '{LocalCloneDir}'", repoUri, localCloneDir);
 
-        return CreateFromLocal(repoUri, localCloneDir);
+        var gitRepoHelper = CreateFromLocal(repoUri, localCloneDir);
+
+        if (gitIdentity is { } identity)
+        {
+            var localGitRepo = _localGitRepoFactory.Create(new NativePath(localCloneDir));
+            await localGitRepo.SetConfigValue("user.name", identity.Name);
+            await localGitRepo.SetConfigValue("user.email", identity.Email);
+            _logger.LogInformation(
+                "Configured git identity: {Name} <{Email}>",
+                identity.Name, identity.Email);
+        }
+
+        return gitRepoHelper;
     }
 
     /// <inheritdoc/>
