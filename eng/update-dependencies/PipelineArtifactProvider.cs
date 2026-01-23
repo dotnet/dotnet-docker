@@ -32,12 +32,12 @@ internal interface IPipelineArtifactProvider
 }
 
 internal class PipelineArtifactProvider(
-    IAzdoAuthProvider azdoAuthProvider,
+    IPipelinesService pipelinesService,
     ILogger<PipelineArtifactProvider> logger,
     AzdoHttpClient azdoHttpClient)
         : IPipelineArtifactProvider
 {
-    private readonly IAzdoAuthProvider _azdoAuthProvider = azdoAuthProvider;
+    private readonly IPipelinesService _pipelinesService = pipelinesService;
     private readonly ILogger<PipelineArtifactProvider> _logger = logger;
     private readonly AzdoHttpClient _azdoHttpClient = azdoHttpClient;
 
@@ -92,9 +92,6 @@ internal class PipelineArtifactProvider(
             throw new ArgumentException("--azdo-project is required", nameof(azdoProject));
         }
 
-        var connection = _azdoAuthProvider.GetVssConnection(azdoOrganization);
-        var buildsClient = connection.GetClient<BuildHttpClient>();
-
         List<Exception> exceptions = [];
 
         foreach (PipelineArtifactFile pipelineArtifact in artifactsToTry)
@@ -106,7 +103,8 @@ internal class PipelineArtifactProvider(
             try
             {
                 // Attempt to get the artifact for the specified pipeline run
-                BuildArtifact resolvedArtifact = await buildsClient.GetArtifactAsync(
+                BuildArtifact resolvedArtifact = await _pipelinesService.GetArtifactAsync(
+                    azdoOrganization,
                     azdoProject,
                     stagingPipelineRunId,
                     pipelineArtifact.ArtifactName);
@@ -142,13 +140,9 @@ internal static class PipelineArtifactProviderExtensions
 {
     public static IServiceCollection AddPipelineArtifactProvider(this IServiceCollection services)
     {
-        // Add dependencies
-        services.AddAzdoAuthProvider();
+        services.AddPipelinesService();
         services.AddAzdoHttpClient();
-
-        // Add self
         services.TryAddSingleton<IPipelineArtifactProvider, PipelineArtifactProvider>();
-
         return services;
     }
 }
