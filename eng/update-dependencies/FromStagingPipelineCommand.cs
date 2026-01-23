@@ -244,8 +244,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                 var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StageContainer}", buildId);
                 var committer = options.GetCommitterIdentity();
 
-                // Clone the repo
-                var git = await gitRepoFactory.CreateAndCloneAsync(remoteUrl);
+                // Clone the repo and configure git identity for commits
+                var git = await gitRepoFactory.CreateAndCloneAsync(remoteUrl, gitIdentity: committer);
                 // Ensure the branch we want to modify exists, then check it out
                 await git.Remote.EnsureBranchExistsAsync(targetBranch);
                 // Create a new branch to push changes to and create a PR from
