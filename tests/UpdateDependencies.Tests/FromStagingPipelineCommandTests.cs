@@ -61,6 +61,42 @@ public sealed class FromStagingPipelineCommandTests
         output.ToString().ShouldNotContain("##vso[build.addbuildtag]");
     }
 
+    [Theory]
+    [InlineData("stage-1234567", 1234567)]
+    [InlineData("stage-1", 1)]
+    [InlineData("stage-999999999", 999999999)]
+    public void GetStagingPipelineRunId_ValidStageContainer_ReturnsExpectedId(string stageContainer, int expectedId)
+    {
+        var options = new FromStagingPipelineOptions
+        {
+            StageContainer = stageContainer,
+            RepoRoot = "/tmp/repo"
+        };
+
+        var result = options.GetStagingPipelineRunId();
+
+        result.ShouldBe(expectedId);
+    }
+
+    [Theory]
+    [InlineData("invalid-format")]
+    [InlineData("stage-abc")]
+    [InlineData("1234567")]
+    [InlineData("stage-")]
+    [InlineData("")]
+    public void GetStagingPipelineRunId_InvalidStageContainer_ThrowsArgumentException(string stageContainer)
+    {
+        var options = new FromStagingPipelineOptions
+        {
+            StageContainer = stageContainer,
+            RepoRoot = "/tmp/repo"
+        };
+
+        var exception = Should.Throw<ArgumentException>(() => options.GetStagingPipelineRunId());
+        exception.Message.ShouldContain($"Invalid stage container name '{stageContainer}'");
+        exception.Message.ShouldContain("Expected format: 'stage-{buildId}'");
+    }
+
     private static FromStagingPipelineCommand CreateCommand(
         ILogger<FromStagingPipelineCommand>? logger = null,
         IPipelineArtifactProvider? pipelineArtifactProvider = null,
