@@ -145,6 +145,16 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            // Tracking issue: https://github.com/dotnet/dotnet-docker/issues/7015
+            if (imageData.Version.Major == 11 &&
+                (imageData.OS.Family == OSFamily.NanoServer || imageData.OS.Family == OSFamily.WindowsServerCore))
+            {
+                OutputHelper.WriteLine(
+                    "Skipping SDK content verification for .NET 11 Windows " +
+                    "(tracking issue: https://github.com/dotnet/dotnet-docker/issues/7015)");
+                return;
+            }
+
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
