@@ -5,15 +5,21 @@ parameters:
   condition: true
   customInitSteps: []
   sourceBuildPipelineRunId: ""
+  # Skip init-common when these steps are included inline in a job that already called init-common
+  skipCommonInit: false
 
 steps:
-- template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+- ${{ if eq(parameters.skipCommonInit, false) }}:
+  - template: /eng/docker-tools/templates/steps/init-common.yml@self
+    parameters:
+      dockerClientOS: linux
+      setupImageBuilder: false
+      # Clean only up when we're running an internal build, not a PR, and not doing pre-build validation.
+      # i.e. when we're building something important.
+      cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.preBuildValidation, 'false')) }}
+      condition: ${{ parameters.condition }}
+- template: /eng/docker-tools/templates/steps/init-testrunner.yml@self
   parameters:
-    setupImageBuilder: false
-    setupTestRunner: true
-    # Clean only up when we're running an internal build, not a PR, and not doing pre-build validation.
-    # i.e. when we're building something important.
-    cleanupDocker: ${{ and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.preBuildValidation, 'false')) }}
     condition: ${{ parameters.condition }}
 - ${{ parameters.customInitSteps }}
 - script: |

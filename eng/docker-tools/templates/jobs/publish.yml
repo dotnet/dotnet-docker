@@ -3,6 +3,7 @@ parameters:
   internalProjectName: null
   publishConfig: null
   customInitSteps: []
+  customPostInitSteps: []
   customPublishVariables: []
   sourceBuildPipelineDefinitionId: ""
   sourceBuildPipelineRunId: ""
@@ -45,25 +46,21 @@ jobs:
   - ${{ parameters.customPublishVariables }}
 
   steps:
-  - template: /eng/docker-tools/templates/steps/init-matrix-build-publish.yml@self
+  - template: /eng/docker-tools/templates/steps/init-common.yml@self
     parameters:
+      dockerClientOS: linux
       publishConfig: ${{ parameters.publishConfig }}
       versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customInitSteps }}
 
   - template: /eng/docker-tools/templates/steps/retain-build.yml@self
-
-  - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
-    parameters:
-      publishConfig: ${{ parameters.publishConfig }}
 
   - pwsh: |
       $azdoOrgName = Split-Path -Leaf $Env:SYSTEM_COLLECTIONURI
       echo "##vso[task.setvariable variable=azdoOrgName]$azdoOrgName"
-      $versionsRepoRoot = "$(Pipeline.Workspace)/s/${{ parameters.versionsRepoPath }}"
-      echo "##vso[task.setvariable variable=versionsRepoRoot]$versionsRepoRoot"
     displayName: Set Publish Variables
 
-  - ${{ parameters.customInitSteps }}
+  - ${{ parameters.customPostInitSteps }}
 
   - template: /eng/docker-tools/templates/steps/validate-branch.yml@self
     parameters:
