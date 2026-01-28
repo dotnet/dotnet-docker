@@ -1,0 +1,130 @@
+# ImageBuilder setup steps for Docker Tools pipelines. Handles:
+# - Custom init steps (when provided by caller)
+# - Default pull-based setup (Linux containerized, Windows native executable)
+# - appsettings.json generation for publish configuration
+parameters:
+- name: dockerClientOS
+  type: string
+  values:
+  - linux
+  - windows
+
+- name: publishConfig
+  type: object
+  default: null
+
+- name: condition
+  type: string
+  default: "true"
+
+- name: customInitSteps
+  type: stepList
+  default: []
+
+steps:
+# Custom ImageBuilder setup (e.g., bootstrap from source)
+- ${{ if gt(length(parameters.customInitSteps), 0) }}:
+  # Set dockerClientOS variable so custom setup steps can use it
+  - script: echo "##vso[task.setvariable variable=dockerClientOS]${{ parameters.dockerClientOS }}"
+    displayName: Set dockerClientOS variable
+    condition: and(succeeded(), ${{ parameters.condition }})
+  - ${{ parameters.customInitSteps }}
+# Default: Pull pre-built ImageBuilder image
+- ${{ else }}:
+  - ${{ if eq(parameters.dockerClientOS, 'linux') }}:
+    - powershell: $(engDockerToolsPath)/Pull-Image.ps1 $(imageNames.imageBuilder)
+      displayName: Pull Image Builder
+      condition: and(succeeded(), ${{ parameters.condition }})
+  - ${{ if eq(parameters.dockerClientOS, 'windows') }}:
+    # Windows: Extract ImageBuilder executable from container image
+    # Windows containers don't support Docker socket mounting, so we run
+    # ImageBuilder as a native executable rather than in a container
+    - powershell: $(engDockerToolsPath)/Invoke-WithRetry.ps1 "docker pull $(imageNames.imageBuilder)"
+      displayName: Pull Image Builder
+      condition: and(succeeded(), ${{ parameters.condition }})
+    - script: docker create --name setupImageBuilder-$(Build.BuildId)-$(System.JobId) $(imageNames.imageBuilder)
+      displayName: Create Setup Container
+      condition: and(succeeded(), ${{ parameters.condition }})
+    - script: >
+        docker cp
+        setupImageBuilder-$(Build.BuildId)-$(System.JobId):/image-builder
+        $(Build.BinariesDirectory)/.Microsoft.DotNet.ImageBuilder
+      displayName: Copy Image Builder
+      condition: and(succeeded(), ${{ parameters.condition }})
+    - script: docker rm -f setupImageBuilder-$(Build.BuildId)-$(System.JobId)
+      displayName: Cleanup Setup Container
+      condition: and(always(), ${{ parameters.condition }})
+      continueOnError: true
+
+# Generate appsettings.json with publish configuration for ImageBuilder to read
+- template: /eng/docker-tools/templates/steps/generate-appsettings.yml@self
+  parameters:
+    publishConfig: ${{ parameters.publishConfig }}
+    condition: ${{ parameters.condition }}
+
+# On Linux, build the "withrepo" image that includes the repo's source code.
+# The withrepo image layers the checked-out repository into the ImageBuilder
+# container at /repo, so ImageBuilder can access manifests and Dockerfiles
+- ${{ if eq(parameters.dockerClientOS, 'linux') }}:
+  - script: >-
+      docker build
+      -t $(imageNames.imageBuilder.withrepo)
+      --build-arg IMAGE=$(imageNames.imageBuilder)
+      -f $(engDockerToolsPath)/Dockerfile.WithRepo .
+    displayName: Build Image for Image Builder
+    condition: and(succeeded(), ${{ parameters.condition }})
+  # Define runImageBuilderCmd and runAuthedImageBuilderCmd variables
+  # These are the primary interface for downstream ImageBuilder invocations:
+  # - runImageBuilderCmd: For operations that don't need Azure DevOps auth
+  # - runAuthedImageBuilderCmd: Passes OIDC tokens for ACR/Azure operations
+  # The commands mount Docker socket (for building images) and artifact directory
+  - task: PowerShell@2
+    displayName: Define ImageBuilder Command Variables
+    condition: and(succeeded(), ${{ parameters.condition }})
+    inputs:
+      targetType: 'inline'
+      script: |
+        $imageBuilderImageName = "$(imageNames.imageBuilder.withrepo)"
+        Write-Host "##vso[task.setvariable variable=imageBuilderImageName]$imageBuilderImageName"
+
+        $dockerRunBaseCmd = @(
+          "docker run --rm"
+        )
+
+        $dockerRunArgs = @(
+          "-v /var/run/docker.sock:/var/run/docker.sock"
+          "-v $(Build.ArtifactStagingDirectory):$(artifactsPath)"
+          "-w /repo"
+          "$(imageBuilderDockerRunExtraOptions)"
+          "$(imageNames.imageBuilder.withrepo)"
+        )
+
+        $authedDockerRunArgs = @(
+          '-e'
+          'SYSTEM_ACCESSTOKEN=$env:SYSTEM_ACCESSTOKEN'
+          '-e'
+          'SYSTEM_OIDCREQUESTURI=$env:SYSTEM_OIDCREQUESTURI'
+        )
+
+        $dockerRunCmd = $dockerRunBaseCmd + $dockerRunArgs
+        $authedDockerRunCmd = $dockerRunBaseCmd + $authedDockerRunArgs + $dockerRunArgs
+
+        $runImageBuilderCmd = $($dockerRunCmd -join ' ')
+        $runAuthedImageBuilderCmd = $($authedDockerRunCmd -join ' ')
+
+        Write-Host "##vso[task.setvariable variable=runImageBuilderCmd]$runImageBuilderCmd"
+        Write-Host "##vso[task.setvariable variable=runAuthedImageBuilderCmd]$runAuthedImageBuilderCmd"
+
+# On Windows, point to the extracted executable path
+# Both runImageBuilderCmd and runAuthedImageBuilderCmd are the same because
+# Windows runs natively and inherits environment variables automatically
+- ${{ if eq(parameters.dockerClientOS, 'windows') }}:
+  - task: PowerShell@2
+    displayName: Define runImageBuilderCmd Variables
+    condition: and(succeeded(), ${{ parameters.condition }})
+    inputs:
+      targetType: 'inline'
+      script: |
+        $runImageBuilderCmd = "$(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe"
+        Write-Host "##vso[task.setvariable variable=runImageBuilderCmd]$runImageBuilderCmd"
+        Write-Host "##vso[task.setvariable variable=runAuthedImageBuilderCmd]$runImageBuilderCmd"
