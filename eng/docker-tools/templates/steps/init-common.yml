@@ -1,9 +1,247 @@
+# Common initialization steps for all Docker Tools pipeline jobs. It handles:
+# - Repository checkout (single or multi-repo with versions repo)
+# - Path resolution that adapts to checkout configuration
+# - ImageBuilder setup (containerized on Linux, native on Windows)
+# - Test runner setup
+# - Docker environment cleanup
 parameters:
-  condition: true
+- name: dockerClientOS
+  type: string
+  values:
+  - linux
+  - windows
+
+# Whether to set up ImageBuilder
+- name: setupImageBuilder
+  type: boolean
+  default: true
+
+# Whether to delete existing Docker images
+- name: cleanupDocker
+  type: boolean
+  default: false
+
+# Whether or not to run the steps in this template
+- name: condition
+  type: string
+  default: "true"
+
+# Custom steps to set up ImageBuilder instead of pulling it.
+# When provided, these steps run instead of the default pull-based setup.
+# The steps should result in $(imageNames.imageBuilder) being available locally.
+# Used by bootstrap pipelines that build ImageBuilder from source.
+- name: customInitSteps
+  type: stepList
+  default: []
+
+# Registry and authentication configuration for publishing images.
+# Contains server URLs, repo prefixes, subscriptions, and resource groups.
+# When null, build/publish steps that require registry access will be skipped.
+- name: publishConfig
+  type: object
+  default: null
+
+# Reference to a versions repository (e.g., "dotnet-versions") for multi-repo checkout.
+# When set, enables image caching by providing access to historical image-info files.
+# When empty, single-repo checkout is used and caching is disabled.
+- name: versionsRepoRef
+  type: string
+  default: ""
+# Local path where the versions repository will be checked out.
+# Only used when versionsRepoRef is set.
+- name: versionsRepoPath
+  type: string
+  default: "versions"
 
 steps:
+# Repository Checkout
+# Multi-repo checkout is used when a versions repository is needed for caching.
+# The versions repo contains historical image-info files used to determine which
+# images need rebuilding. Credentials are persisted for later git operations.
+- checkout: self
+- ${{ if ne(parameters.versionsRepoRef, '') }}:
+  - checkout: ${{ parameters.versionsRepoRef }}
+    path: s/${{ parameters.versionsRepoPath }}
+    persistCredentials: true
+    fetchDepth: 1
+    condition: succeeded()
+
+# Base Variable Initialization
+# Sets foundational variables that subsequent steps build upon:
+# - sourceBranch: Cleaned branch name without refs/ prefixes, used for filtering
+# - commonMatrixAndBuildOptions: Base CLI args shared by matrix generation and
+#   build commands. Starts with just --source-repo; registry-specific options
+#   are added conditionally below.
 - powershell: |
-    $sourceBranch=$Env:BUILD_SOURCEBRANCH -replace "refs/heads/","" -replace "refs/tags/","" -replace "refs/pull/",""
+    # Source branch
+    $sourceBranch = $Env:BUILD_SOURCEBRANCH -replace "refs/heads/","" -replace "refs/tags/","" -replace "refs/pull/",""
+    Write-Host "Setting sourceBranch to '$sourceBranch'"
     echo "##vso[task.setvariable variable=sourceBranch]$sourceBranch"
-  displayName: Define Source Branch Variable
+
+    # Common matrix and build options (base)
+    $commonMatrixAndBuildOptions = "--source-repo $(publicGitRepoUri)"
+    Write-Host "Setting commonMatrixAndBuildOptions to '$commonMatrixAndBuildOptions'"
+    echo "##vso[task.setvariable variable=commonMatrixAndBuildOptions]$commonMatrixAndBuildOptions"
+  displayName: Set Source Branch and Base Options
   condition: and(succeeded(), ${{ parameters.condition }})
+
+# Build Registry Configuration
+# Extends commonMatrixAndBuildOptions with registry-specific settings:
+# - Internal builds: Use internal mirror registry prefix and build registry
+#   server to pull/push from private ACR instead of public MCR
+# - Public builds: Override non-MCR base images to use public mirror, reducing
+#   external dependencies and improving build reliability
+- ${{ if parameters.publishConfig }}:
+  - powershell: |
+      $commonMatrixAndBuildOptions = "$(commonMatrixAndBuildOptions)"
+      if ("$(System.TeamProject)" -eq "internal" -and "$(Build.Reason)" -ne "PullRequest") {
+        $commonMatrixAndBuildOptions = "$commonMatrixAndBuildOptions --source-repo-prefix ${{ parameters.publishConfig.InternalMirrorRegistry.repoPrefix }} --registry-override ${{ parameters.publishConfig.BuildRegistry.server }}"
+      }
+
+      if ("$(System.TeamProject)" -eq "public" -and "$(public-mirror.server)" -ne "") {
+        $commonMatrixAndBuildOptions = "$commonMatrixAndBuildOptions --base-override-regex '^(?!mcr\.microsoft\.com)' --base-override-sub '$(public-mirror.server)/'"
+      }
+
+      Write-Host "Setting commonMatrixAndBuildOptions to '$commonMatrixAndBuildOptions'"
+      echo "##vso[task.setvariable variable=commonMatrixAndBuildOptions]$commonMatrixAndBuildOptions"
+    displayName: Set Build Registry Options
+    condition: and(succeeded(), ${{ parameters.condition }})
+
+# Repository Path Resolution
+# Resolves paths differently based on checkout mode:
+#
+# Multi-repo checkout (versionsRepoRef is set):
+# - Both main repo and versions repo are checked out side-by-side
+# - Paths must be prefixed with repo name (e.g., "dotnet-docker/src/manifest.json")
+# - Caching is ENABLED because versions repo provides historical image-info files
+# - Build.Repository.Name may include org prefix (e.g., "dotnet/dotnet-docker")
+#   which must be stripped to get the actual checkout directory name
+#
+# Single-repo checkout (versionsRepoRef is empty):
+# - Only the main repo is checked out at Build.Repository.LocalPath
+# - Paths are relative to repo root without prefix
+# - Caching is disabled because no versions repo means no historical image-info
+#
+# Key outputs:
+# - versionsBasePath: Prefix for paths in versions repo (empty or "versions/")
+# - pipelineDisabledCache: "true" disables caching, "false" enables it
+# - repoRoot, engDockerToolsPath: Resolved absolute paths for scripts
+- powershell: |
+    function Set-PipelineVariable($name, $value) {
+      Write-Host "Setting $name to '$value'"
+      echo "##vso[task.setvariable variable=$name]$value"
+    }
+
+    # Repository paths - differ based on single vs multi-repo checkout
+    if ("${{ parameters.versionsRepoRef }}" -ne "") {
+      # Multi-repo checkout
+      $versionsBasePath = "${{ parameters.versionsRepoPath }}/"
+      $pipelineDisabledCache = "false"
+
+      $pathSeparatorIndex = "$(Build.Repository.Name)".IndexOf("/")
+      if ($pathSeparatorIndex -ge 0) {
+        $buildRepoName = "$(Build.Repository.Name)".Substring($pathSeparatorIndex + 1)
+      }
+      else {
+        $buildRepoName = "$(Build.Repository.Name)"
+      }
+
+      $repoRoot = "$(Build.Repository.LocalPath)/$buildRepoName"
+      $versionsRepoRoot = "$(Build.Repository.LocalPath)/${{ parameters.versionsRepoPath }}"
+      $engDockerToolsPath = "$repoRoot/$(engDockerToolsRelativePath)"
+
+      $engPath = "$repoRoot/eng"
+      $manifest = "$buildRepoName/$(manifest)"
+      $testResultsDirectory = "$buildRepoName/$testResultsDirectory"
+
+      if ("$(testScriptPath)") {
+        $testScriptPath = "$buildRepoName/$(testScriptPath)"
+      }
+
+      Set-PipelineVariable "buildRepoName" $buildRepoName
+      Set-PipelineVariable "repoRoot" $repoRoot
+      Set-PipelineVariable "versionsRepoRoot" $versionsRepoRoot
+      Set-PipelineVariable "engDockerToolsPath" $engDockerToolsPath
+      Set-PipelineVariable "manifest" $manifest
+      Set-PipelineVariable "engPath" $engPath
+      Set-PipelineVariable "testScriptPath" $testScriptPath
+      Set-PipelineVariable "testResultsDirectory" $testResultsDirectory
+    }
+    else {
+      # Single-repo checkout
+      $versionsBasePath = ""
+      $pipelineDisabledCache = "true"
+      $repoRoot = "$(Build.Repository.LocalPath)"
+      $engDockerToolsPath = "$repoRoot/$(engDockerToolsRelativePath)"
+
+      Set-PipelineVariable "repoRoot" $repoRoot
+      Set-PipelineVariable "engDockerToolsPath" $engDockerToolsPath
+    }
+
+    Set-PipelineVariable "versionsBasePath" $versionsBasePath
+    Set-PipelineVariable "pipelineDisabledCache" $pipelineDisabledCache
+  displayName: Set Repository Path Variables
+  condition: and(succeeded(), ${{ parameters.condition }})
+
+# TSA Configuration - 1ES Pipeline Templates require tsaoptions.json at
+# Build.SourcesDirectory. In a multi-repo checkout scenario,
+# Build.SourcesDirectory differs from the main repo's checkout location, so we
+# must copy the config file to the expected location.
+- ${{ if ne(parameters.versionsRepoRef, '') }}:
+  - task: CopyFiles@2
+    displayName: Copy TSA Config
+    condition: and(succeeded(), ${{ parameters.condition }})
+    inputs:
+      SourceFolder: '$(Build.Repository.LocalPath)/$(buildRepoName)'
+      Contents: '.config/tsaoptions.json'
+      TargetFolder: '$(Build.SourcesDirectory)'
+
+# Artifacts Path Configuration
+# Linux: Uses /artifacts inside the container, which is mounted to the host's
+#        Build.ArtifactStagingDirectory via docker run -v
+# Windows: Uses Build.ArtifactStagingDirectory directly since ImageBuilder runs
+#          as an extracted executable, not in a container
+- ${{ if eq(parameters.dockerClientOS, 'linux') }}:
+  - script: |
+      echo "Setting artifactsPath to '/artifacts'"
+      echo "##vso[task.setvariable variable=artifactsPath]/artifacts"
+    displayName: Define Artifacts Path Variable
+    condition: and(succeeded(), ${{ parameters.condition }})
+- ${{ if eq(parameters.dockerClientOS, 'windows') }}:
+  - powershell: |
+      Write-Host "Setting artifactsPath to '$(Build.ArtifactStagingDirectory)'"
+      echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)"
+    displayName: Define Artifacts Path Variable
+    condition: and(succeeded(), ${{ parameters.condition }})
+
+# Docker Cleanup - Removes existing Docker images and containers to ensure a clean build state.
+# Linux: Only runs when explicitly requested via cleanupDocker parameter
+# Windows: Always runs because Windows agents have limited disk space and
+#          accumulated images cause build failures
+- ${{ if and(eq(parameters.dockerClientOS, 'linux'), eq(parameters.cleanupDocker, true)) }}:
+  - template: /eng/docker-tools/templates/steps/cleanup-docker-linux.yml@self
+    parameters:
+      condition: ${{ parameters.condition }}
+- ${{ if eq(parameters.dockerClientOS, 'windows') }}:
+  - template: /eng/docker-tools/templates/steps/cleanup-docker-windows.yml@self
+    parameters:
+      condition: ${{ parameters.condition }}
+
+# ImageBuilder Setup
+# Linux: Runs containerized
+# - Pull the ImageBuilder image from MCR
+# - Build a "withrepo" image that layers the source code into the container
+# - Generate docker run commands that mount Docker socket and artifact paths
+# Windows: Runs as extracted executable
+# - Pull the ImageBuilder image, create a temporary container, and copy out
+#   the executable to Build.BinariesDirectory
+# - Run directly as .exe (no container) because Windows containers have
+#   limitations with Docker-in-Docker and volume mounts
+# Custom setup (customInitSteps) overrides both Linux and Windows setup steps.
+- ${{ if eq(parameters.setupImageBuilder, true) }}:
+  - template: /eng/docker-tools/templates/steps/init-imagebuilder.yml@self
+    parameters:
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      publishConfig: ${{ parameters.publishConfig }}
+      condition: ${{ parameters.condition }}
+      customInitSteps: ${{ parameters.customInitSteps }}
