@@ -82,6 +82,16 @@ public class PowerShellTests : ProductImageTests
     [MemberData(nameof(GetImageData))]
     public void VerifyPowerShellScenario_InvokeWebRequest(ProductImageData imageData)
     {
+        // Tracking issue: https://github.com/dotnet/dotnet-docker/issues/7017
+        if (imageData.Version.Major == 11 &&
+            (imageData.OS.Family == OSFamily.NanoServer || imageData.OS.Family == OSFamily.WindowsServerCore))
+        {
+            OutputHelper.WriteLine(
+                "Skipping PowerShell Invoke-WebRequest test for .NET 11 Windows " +
+                "(tracking issue: https://github.com/dotnet/dotnet-docker/issues/7017)");
+            return;
+        }
+
         string command = "(Invoke-WebRequest -Uri 'https://graph.microsoft.com').StatusCode";
         string output = PowerShellScenario_Execute(imageData, command, string.Empty);
 
