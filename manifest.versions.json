@@ -18,13 +18,13 @@
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
-    "aspire-dashboard|build-version": "13.2.0-preview.1.26070.7",
+    "aspire-dashboard|build-version": "13.2.0-preview.1.26077.6",
     "aspire-dashboard|product-version": "13.2.0",
     "aspire-dashboard|fixed-tag": "13.2.0",
     "aspire-dashboard|minor-tag": "13.2",
     "aspire-dashboard|major-tag": "13",
-    "aspire-dashboard|linux|x64|sha": "27eb68bd6be8dbcb57560f8a903bd344a055283975e07407d305f30d818ba06fd012b2ddb23240e70def9c872c83ae4c26ca315ddf440665e3f20652b56cc1ad",
-    "aspire-dashboard|linux|arm64|sha": "d3025f5a8db0f9bfb42cab1548635dfffaf2263ca37e3ad17a3bf629806e329a651f4c4fc76ec80178ea69431c32c5c365028ad35246252dbb29a72fa84578c5",
+    "aspire-dashboard|linux|x64|sha": "7adfd0e8bb561790cb19e8852b30d97607c32a138f7cbc4b32c545ccee041d27ed457f55d92fde4202feaab5c0858b17b889a939dfe78952578b71ead8d99a4c",
+    "aspire-dashboard|linux|arm64|sha": "36f3d806850f60924dfb7d0390ceaad66b6e1619acb9a126295a9d3450d31c6a5875aa866379aa67de110d46ebbae94e87066f03c8151e09c730509afa7cf6a5",
     "aspire-dashboard|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|base-url|nightly": "$(base-url|public|preview|nightly)",
 
