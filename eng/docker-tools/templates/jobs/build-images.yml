@@ -4,9 +4,14 @@ parameters:
   matrix: {}
   dockerClientOS: null
   buildJobTimeout: 60
-  commonInitStepsForMatrixAndBuild: []
+  # Custom steps to set up ImageBuilder instead of pulling from MCR (e.g., bootstrap from source).
+  # Runs before ImageBuilder pull. If non-empty, skips the default ImageBuilder pull.
   customInitSteps: []
+  # Custom steps that run after ImageBuilder is set up but before the build starts.
+  # Use for build-specific initialization (e.g., setting variables, additional setup).
+  customBuildInitSteps: []
   publishConfig: null
+  versionsRepoRef: ""
   noCache: false
   internalProjectName: null
   publicProjectName: null
@@ -29,12 +34,14 @@ jobs:
     imageInfoHostDir: $(Build.ArtifactStagingDirectory)/imageInfo
     imageInfoContainerDir: $(artifactsPath)/imageInfo
   steps:
-  - ${{ parameters.commonInitStepsForMatrixAndBuild }}
-  - template: /eng/docker-tools/templates/jobs/${{ format('../steps/init-docker-{0}.yml', parameters.dockerClientOS) }}@self
+  - template: /eng/docker-tools/templates/steps/init-common.yml@self
     parameters:
+      dockerClientOS: ${{ parameters.dockerClientOS }}
       publishConfig: ${{ parameters.publishConfig }}
+      versionsRepoRef: ${{ parameters.versionsRepoRef }}
       cleanupDocker: true
-  - ${{ parameters.customInitSteps }}
+      customInitSteps: ${{ parameters.customInitSteps }}
+  - ${{ parameters.customBuildInitSteps }}
   - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml@self
     parameters:
       publicSourceBranch: $(publicSourceBranch)
@@ -115,6 +122,7 @@ jobs:
     - template: /eng/docker-tools/templates/jobs/${{ format('../steps/test-images-{0}-client.yml', parameters.dockerClientOS) }}@self
       parameters:
         condition: ne(variables.testScriptPath, '')
+        skipCommonInit: true
   - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest'), eq(parameters.dockerClientOS, 'linux')) }}:
     - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
       parameters:

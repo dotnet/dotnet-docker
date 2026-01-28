@@ -1,0 +1,21 @@
+# Test Runner Setup (Linux only)
+# Pulls the test runner image and builds a "withrepo" variant that includes
+# the repository source code (test projects) in the container.
+# This is Linux-only because Windows image tests run natively.
+
+parameters:
+- name: condition
+  type: string
+  default: "true"
+
+steps:
+- powershell: $(engDockerToolsPath)/Pull-Image.ps1 $(imageNames.testrunner)
+  displayName: Pull Test Runner
+  condition: and(succeeded(), ${{ parameters.condition }})
+- script: >
+    docker build
+    -t $(imageNames.testRunner.withrepo)
+    --build-arg IMAGE=$(imageNames.testrunner)
+    -f $(engDockerToolsPath)/Dockerfile.WithRepo .
+  displayName: Build Test Runner Image
+  condition: and(succeeded(), ${{ parameters.condition }})

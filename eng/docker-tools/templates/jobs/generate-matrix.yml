@@ -7,18 +7,26 @@ parameters:
   internalProjectName: null
   noCache: false
   publishConfig: null
+  # Custom steps to set up ImageBuilder instead of pulling from MCR (e.g., bootstrap from source).
+  # Runs before ImageBuilder pull. If non-empty, skips the default ImageBuilder pull.
   customInitSteps: []
-  commonInitStepsForMatrixAndBuild: []
+  # Custom steps that run after ImageBuilder is set up but before matrix generation runs.
+  customGenerateMatrixInitSteps: []
+  versionsRepoRef: ""
   sourceBuildPipelineRunId: ""
 
 jobs:
 - job: ${{ parameters.name }}
   pool: ${{ parameters.pool }}
   steps:
-  - ${{ parameters.commonInitStepsForMatrixAndBuild }}
+  - template: /eng/docker-tools/templates/steps/init-common.yml@self
+    parameters:
+      dockerClientOS: linux
+      publishConfig: ${{ parameters.publishConfig }}
+      versionsRepoRef: ${{ parameters.versionsRepoRef }}
+      customInitSteps: ${{ parameters.customInitSteps }}
+  - ${{ parameters.customGenerateMatrixInitSteps }}
   - template: /eng/docker-tools/templates/steps/retain-build.yml@self
-  - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
-  - ${{ parameters.customInitSteps }}
   - template: /eng/docker-tools/templates/steps/validate-branch.yml@self
     parameters:
       publishConfig: ${{ parameters.publishConfig }}

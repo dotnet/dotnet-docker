@@ -4,6 +4,9 @@
 parameters:
   linuxAmd64Pool: ""
 
+  # Custom init steps for all jobs
+  customInitSteps: []
+
   # (Optional) This service connection should be an Azure Resource Manager
   # service connection to a storage account that's needed during image builds.
   # It can be used to build images with access to private/internal bits.
@@ -52,6 +55,7 @@ stages:
     testMatrixCustomBuildLegGroupArgs: ${{ parameters.testMatrixCustomBuildLegGroupArgs }}
     customCopyBaseImagesInitSteps: ${{ parameters.customCopyBaseImagesInitSteps}}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
+    customInitSteps: ${{ parameters.customInitSteps }}
     customTestInitSteps: ${{ parameters.customTestInitSteps }}
     windowsAmdBuildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
     windowsAmdTestJobTimeout: ${{ parameters.windowsAmdTestJobTimeout }}
