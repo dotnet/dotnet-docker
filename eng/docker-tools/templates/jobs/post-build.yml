@@ -2,6 +2,7 @@ parameters:
   pool: {}
   internalProjectName: null
   publicProjectName: null
+  customInitSteps: []
 
 jobs:
 - job: Build
@@ -13,7 +14,10 @@ jobs:
     imageInfosOutputSubDir: "/output"
     sbomOutputDir: "$(Build.ArtifactStagingDirectory)/sbom"
   steps:
-  - template: /eng/docker-tools/templates/steps/init-docker-linux.yml@self
+  - template: /eng/docker-tools/templates/steps/init-common.yml@self
+    parameters:
+      dockerClientOS: linux
+      customInitSteps: ${{ parameters.customInitSteps }}
   - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)

@@ -1,6 +1,7 @@
 parameters:
   customPublishInitSteps: []
   customPublishVariables: []
+  customInitSteps: []
 
   internalProjectName: null
   publicProjectName: null
@@ -72,7 +73,8 @@ stages:
       internalProjectName: ${{ parameters.internalProjectName }}
       publishConfig: ${{ parameters.publishConfig }}
       customPublishVariables: ${{ parameters.customPublishVariables }}
-      customInitSteps: ${{ parameters.customPublishInitSteps }}
+      customInitSteps: ${{ parameters.customInitSteps }}
+      customPostInitSteps: ${{ parameters.customPublishInitSteps }}
       sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
       sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
       versionsRepoRef: ${{ parameters.versionsRepoRef }}

@@ -3,6 +3,9 @@
 parameters:
   linuxAmd64Pool: ""
 
+  # Custom init steps for all jobs
+  customInitSteps: []
+
   # Parameters for pre-build jobs
   customGenerateMatrixInitSteps: []
   customCopyBaseImagesInitSteps: []
@@ -50,6 +53,7 @@ stages:
     linuxArmBuildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
     windowsAmdBuildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
+    customInitSteps: ${{ parameters.customInitSteps }}
     # Test
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     testMatrixType: ${{ parameters.testMatrixType }}
@@ -67,6 +71,7 @@ stages:
   parameters:
     pool: ${{ parameters.linuxAmd64Pool }}
     customPublishInitSteps: ${{ parameters.customPublishInitSteps }}
+    customInitSteps: ${{ parameters.customInitSteps }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     publishConfig: ${{ parameters.publishConfig }}

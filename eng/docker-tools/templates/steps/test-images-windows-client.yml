@@ -4,11 +4,14 @@ parameters:
   condition: "true"
   customInitSteps: []
   sourceBuildPipelineRunId: ""
+  # Skip init-common when these steps are included inline in a job that already called init-common
+  skipCommonInit: false
 
 steps:
-- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-  - template: /eng/docker-tools/templates/steps/init-docker-windows.yml@self
+- ${{ if and(eq(parameters.skipCommonInit, false), eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+  - template: /eng/docker-tools/templates/steps/init-common.yml@self
     parameters:
+      dockerClientOS: windows
       cleanupDocker: true
       setupImageBuilder: false
       condition: ${{ parameters.condition }}
