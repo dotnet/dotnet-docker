@@ -1,0 +1,45 @@
+# escape=`
+
+ARG REPO=mcr.microsoft.com/dotnet/runtime
+
+# Installer image
+FROM mcr.microsoft.com/windows/servercore:ltsc2022-amd64 AS installer
+
+ARG ACCESSTOKEN
+
+# Install ASP.NET Core Runtime
+RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        $aspnetcore_version = '0.0.0'; `
+        $aspnetcore_build_version = $aspnetcore_version + '.25609.108'; `
+        $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
+        $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
+        `
+        $Headers = @{ `
+            Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+            'x-ms-version' = '2017-11-09'; `
+        }; `
+        Invoke-WebRequest -OutFile $aspnetcore_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/$aspnetcore_file -Headers $Headers; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/$dotnet_sha512_file -Headers $Headers; `
+        `
+        if ((Get-FileHash $aspnetcore_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
+            Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
+            exit 1; `
+        }; `
+        `
+        mkdir dotnet; `
+        tar --gzip --extract --no-same-owner --file $aspnetcore_file --directory dotnet ./shared/Microsoft.AspNetCore.App; `
+        Remove-Item -Force `
+            $aspnetcore_file, `
+            $dotnet_sha512_file
+
+
+# ASP.NET Core image
+FROM $REPO:0.0.0-nanoserver-ltsc2022
+
+# ASP.NET Core version
+ENV ASPNET_VERSION=0.0.0
+
+COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
