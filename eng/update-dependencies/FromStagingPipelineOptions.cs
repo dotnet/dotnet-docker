@@ -12,9 +12,10 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions, I
     public const string InternalOption = "--internal";
 
     /// <summary>
-    /// The stage container name (e.g., "stage-1234567") to use as a source for the update.
+    /// A comma-delimited list of stage container names (e.g., "stage-1234567,stage-2345678")
+    /// to use as a source for the update.
     /// </summary>
-    public required string StageContainer { get; init; }
+    public required string StageContainers { get; init; }
 
     /// <summary>
     /// Whether or not to use the internal versions of the staged build.
@@ -34,10 +35,10 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions, I
 
     public static new List<Argument> Arguments { get; } =
     [
-        new Argument<string>("stage-container")
+        new Argument<string>("stage-containers")
         {
             Arity = ArgumentArity.ExactlyOne,
-            Description = "The stage container name to use as a source for the update (e.g., 'stage-1234567')"
+            Description = "A comma-delimited list of stage container names to use as a source for the update (e.g., 'stage-1234567,stage-2345678')"
         },
         ..CreatePullRequestOptions.Arguments,
     ];
@@ -67,6 +68,16 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions, I
         },
         ..CreatePullRequestOptions.Options,
     ];
+
+    /// <summary>
+    /// Parses the comma-delimited list of stage containers and returns them as a list.
+    /// </summary>
+    public IReadOnlyList<string> GetStageContainerList()
+    {
+        return StageContainers
+            .Split(',', StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries)
+            .ToList();
+    }
 }
 
 internal static partial class StagingPipelineOptionsExtensions
@@ -80,13 +91,13 @@ internal static partial class StagingPipelineOptionsExtensions
     /// <exception cref="ArgumentException">
     /// Thrown if the stage container name is not in the expected format.
     /// </exception>
-    public static int GetStagingPipelineRunId(this FromStagingPipelineOptions options)
+    public static int GetStagingPipelineRunId(string stageContainer)
     {
-        var match = StageContainerRegex.Match(options.StageContainer);
+        var match = StageContainerRegex.Match(stageContainer);
         if (!match.Success)
         {
             throw new ArgumentException(
-                $"Invalid stage container name '{options.StageContainer}'. Expected format: 'stage-{{buildId}}' (e.g., 'stage-1234567')");
+                $"Invalid stage container name '{stageContainer}'. Expected format: 'stage-{{buildId}}' (e.g., 'stage-1234567')");
         }
         return int.Parse(match.Groups[1].Value);
     }
