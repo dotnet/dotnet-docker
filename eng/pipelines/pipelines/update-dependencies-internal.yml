@@ -50,7 +50,7 @@ extends:
                     Write-Host "Processing stage container: $stageContainer"
                     dotnet run --project eng/update-dependencies/update-dependencies.csproj -- `
                         from-staging-pipeline `
-                        $stageContainer `
+                        "$stageContainer" `
                         --mode Remote `
                         --azdo-organization "$(System.CollectionUri)" `
                         --azdo-project "$(System.TeamProject)" `
