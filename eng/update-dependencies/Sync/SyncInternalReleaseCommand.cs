@@ -41,7 +41,14 @@ internal sealed class SyncInternalReleaseCommand(
                 $"The source branch '{options.SourceBranch}' cannot be an internal branch.");
         }
 
-        using var repo = await _gitRepoHelperFactory.CreateAndCloneAsync(remoteUrl);
+        // Get git identity if available (required for commits, optional for read-only operations)
+        var gitIdentity = !string.IsNullOrWhiteSpace(options.User) && !string.IsNullOrWhiteSpace(options.Email)
+            ? options.GetCommitterIdentity()
+            : ((string, string)?)null;
+
+        using var repo = await _gitRepoHelperFactory.CreateAndCloneAsync(
+            remoteUrl,
+            gitIdentity: gitIdentity);
 
         // Verify that the source branch exists on the remote.
         var sourceBranchExists = await repo.Remote.RemoteBranchExistsAsync(options.SourceBranch);
