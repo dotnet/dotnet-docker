@@ -307,7 +307,9 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                 var remoteUrl = options.GetAzdoRepoUrl();
                 var targetBranch = options.TargetBranch;
                 var buildId = environmentService.GetBuildId() ?? "";
-                var prBranch = options.CreatePrBranchName($"update-deps-int-{options.StageContainers.Split(',')[0].Trim()}", buildId);
+                var stageContainerList = options.GetStageContainerList();
+                var firstStageContainer = stageContainerList.Count > 0 ? stageContainerList[0] : "unknown";
+                var prBranch = options.CreatePrBranchName($"update-deps-int-{firstStageContainer}", buildId);
                 var committer = options.GetCommitterIdentity();
 
                 // Clone the repo and configure git identity for commits
