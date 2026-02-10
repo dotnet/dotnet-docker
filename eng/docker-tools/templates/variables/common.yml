@@ -68,7 +68,7 @@ variables:
 - name: default1ESInternalPoolName
   value: NetCore1ESPool-Internal
 - name: default1ESInternalPoolImage
-  value: Azure-Linux-3-Amd64
+  value: build.azurelinux.3.amd64
 
 - template: /eng/docker-tools/templates/variables/sdl-pool.yml@self
 
