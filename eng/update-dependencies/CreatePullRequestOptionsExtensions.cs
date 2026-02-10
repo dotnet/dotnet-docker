@@ -50,17 +50,19 @@ internal static class CreatePullRequestOptionsExtensions
     /// <param name="name">
     /// Should be something short but descriptive, like "sync" or "update-deps-int-{buildNumber}".
     /// </param>
+    /// <param name="buildId">
+    /// Optional build ID to append as a suffix. When running in Azure Pipelines, callers should
+    /// pass the build ID to make the branch name unique across pipeline runs.
+    /// </param>
     /// <returns>
     /// A valid branch name that is descriptive but not guaranteed to be unique.
     /// </returns>
-    public static string CreatePrBranchName(this CreatePullRequestOptions options, string name)
+    public static string CreatePrBranchName(this CreatePullRequestOptions options, string name, string buildId = "")
     {
         ArgumentException.ThrowIfNullOrEmpty(options.PrBranchPrefix);
         ArgumentException.ThrowIfNullOrEmpty(options.TargetBranch);
 
-        var buildIdSuffix = AzurePipelinesHelper.IsRunningInAzurePipelines()
-            ? $"-{AzurePipelinesHelper.GetBuildId()}"
-            : string.Empty;
+        var buildIdSuffix = string.IsNullOrWhiteSpace(buildId) ? string.Empty : $"-{buildId}";
 
         var sanitizedTargetBranch = options.TargetBranch.Replace('/', '-');
         var prefix = options.PrBranchPrefix.TrimEnd('/');

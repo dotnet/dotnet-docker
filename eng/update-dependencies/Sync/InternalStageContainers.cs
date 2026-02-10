@@ -7,21 +7,20 @@ using Microsoft.DotNet.Docker.Shared;
 namespace Dotnet.Docker.Sync;
 
 /// <summary>
-/// Records information about what internal staging pipeline run IDs were used
-/// for which .NET Dockerfile versions.
+/// Records information about what stage containers were used for which .NET Dockerfile versions.
 /// </summary>
 /// <param name="Versions">
-/// Mapping of Major.Minor .NET version to staging pipeline run ID.
+/// Mapping of Major.Minor .NET version to stage container name.
 /// </param>
-internal sealed record InternalStagingBuilds(ImmutableDictionary<DotNetVersion, int> Versions)
+internal sealed record InternalStageContainers(ImmutableDictionary<DotNetVersion, string> Versions)
 {
     /// <summary>
-    /// Parses <see cref=" InternalStagingBuilds"/> from lines of text.
+    /// Parses <see cref=" InternalStageContainers"/> from lines of text.
     /// </summary>
     /// <remarks>
-    /// Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
+    /// Each line should be formatted as: &lt;dockerfileVersion&gt;=&lt;stageContainer&gt;
     /// </remarks>
-    public static InternalStagingBuilds Parse(IEnumerable<string> lines)
+    public static InternalStageContainers Parse(IEnumerable<string> lines)
     {
         var versions = lines
             .Select(line => line.Split('=', 2))
@@ -30,20 +29,20 @@ internal sealed record InternalStagingBuilds(ImmutableDictionary<DotNetVersion, 
                 // Reduce the version to major.minor only.
                 // If we don't, we could end up with multiple entries for the same version.
                 parts => DotNetVersion.Parse(parts[0]).ToMajorMinorVersion(),
-                parts => int.Parse(parts[1]));
+                parts => parts[1]);
 
-        return new InternalStagingBuilds(versions);
+        return new InternalStageContainers(versions);
     }
 
     /// <summary>
-    /// Returns a new <see cref="InternalStagingBuilds"/> with the specified
+    /// Returns a new <see cref="InternalStageContainers"/> with the specified
     /// version added.
     /// </summary>
-    public InternalStagingBuilds Add(DotNetVersion dotNetVersion, int stagingPipelineRunId) =>
-        this with { Versions = Versions.SetItem(dotNetVersion.ToMajorMinorVersion(), stagingPipelineRunId) };
+    public InternalStageContainers Add(DotNetVersion dotNetVersion, string stageContainer) =>
+        this with { Versions = Versions.SetItem(dotNetVersion.ToMajorMinorVersion(), stageContainer) };
 
     // Internal versions file should have one line per dockerfileVersion, and
-    // each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
+    // each line should be formatted as: <dockerfileVersion>=<stageContainer>
     public override string ToString() =>
         string.Join(Environment.NewLine,
             Versions

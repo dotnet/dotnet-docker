@@ -9,28 +9,28 @@ namespace Dotnet.Docker.Sync;
 /// <inheritdoc/>
 internal sealed class InternalVersionsService : IInternalVersionsService
 {
-    private const string InternalVersionsFileName = "internal-versions.txt";
+    private const string InternalVersionsFileName = "stage-containers.txt";
 
     /// <inheritdoc/>
-    public InternalStagingBuilds GetInternalStagingBuilds(string repoRoot)
+    public InternalStageContainers GetInternalStagingBuilds(string repoRoot)
     {
         var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
         try
         {
             var fileContents = File.ReadAllLines(internalVersionFile);
-            return InternalStagingBuilds.Parse(fileContents);
+            return InternalStageContainers.Parse(fileContents);
         }
         catch (FileNotFoundException)
         {
-            return new InternalStagingBuilds(ImmutableDictionary<DotNetVersion, int>.Empty);
+            return new InternalStageContainers(ImmutableDictionary<DotNetVersion, string>.Empty);
         }
     }
 
     /// <inheritdoc/>
-    public void RecordInternalStagingBuild(string repoRoot, DotNetVersion dotNetVersion, int stagingPipelineRunId)
+    public void RecordInternalStagingBuild(string repoRoot, DotNetVersion dotNetVersion, string stageContainerName)
     {
-        // Internal versions file should have one line per dockerfileVersion
-        // Each line should be formatted as: <dockerfileVersion>=<stagingPipelineRunId>
+        // Stage containers file should have one line per dockerfileVersion
+        // Each line should be formatted as: <dockerfileVersion>=<stageContainerName>
         //
         // The preferable way to do this would be to record the version in
         // manifest.versions.json, however that would require one of the following:
@@ -39,7 +39,8 @@ internal sealed class InternalVersionsService : IInternalVersionsService
         // 2) lots of regex JSON manipulation which is error-prone and harder to maintain
         //
         // So for now, the separate file and format is a compromise.
-        var builds = GetInternalStagingBuilds(repoRoot).Add(dotNetVersion, stagingPipelineRunId);
+        var builds = GetInternalStagingBuilds(repoRoot);
+        builds = builds.Add(dotNetVersion, stageContainerName);
         var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
         File.WriteAllText(internalVersionFile, builds.ToString());
     }
