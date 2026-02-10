@@ -6,9 +6,9 @@ FROM $REPO:11.0.0-preview.1-alpine3.23-extra-arm32v7 AS installer
 # Retrieve .NET Runtime
 RUN dotnet_version=11.0.0-preview.1.26104.118 \
     && wget \
-        https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz \
-        https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512 \
-    && echo "$(cat dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz" | sha512sum -c - \
+        https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz \
+        https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512 \
+    && sha512sum -c dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-musl-arm.tar.gz --directory /dotnet \
     && rm \

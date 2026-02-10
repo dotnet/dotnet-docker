@@ -5,9 +5,9 @@ FROM amd64/buildpack-deps:resolute-curl AS installer
 # Install .NET SDK
 RUN dotnet_sdk_version=11.0.100-preview.1.26104.118 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
-    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512| tr 'A-F' 'a-f')  dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz" | sha512sum -c - \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
+    && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \

@@ -4,12 +4,12 @@
 
     "base-url|public|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public|preview|main": "https://ci.dot.net/public",
+    "base-url|public|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
 
     "base-url|public-checksums|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public-checksums|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public-checksums|preview|main": "https://ci.dot.net/public-checksums",
+    "base-url|public-checksums|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
     "alpine|floating-tag-version": "alpine3.23",
