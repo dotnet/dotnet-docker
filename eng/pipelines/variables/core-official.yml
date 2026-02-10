@@ -12,7 +12,5 @@ variables:
 - name: officialBranchPrefixes
   value: internal/release/
 
-# Temporarily disabled due to https://github.com/dotnet/docker-tools/issues/1905
-# Uncomment when the issue is resolved.
-# - name: publishEolAnnotations
-#   value: true
+# Set publishEolAnnotations to true or false in the Azure Pipelines UI to
+# control EOL annotation publishing. The default should be true.

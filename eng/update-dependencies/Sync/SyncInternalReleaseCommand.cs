@@ -22,12 +22,14 @@ internal sealed class SyncInternalReleaseCommand(
     IGitRepoHelperFactory gitRepoHelperFactory,
     ICommand<FromStagingPipelineOptions> updateFromStagingPipeline,
     IInternalVersionsService internalVersionsService,
+    IEnvironmentService environmentService,
     ILogger<SyncInternalReleaseCommand> logger
 ) : BaseCommand<SyncInternalReleaseOptions>
 {
     private readonly IGitRepoHelperFactory _gitRepoHelperFactory = gitRepoHelperFactory;
     private readonly ICommand<FromStagingPipelineOptions> _updateFromStagingPipeline = updateFromStagingPipeline;
     private readonly IInternalVersionsService _internalVersionsService = internalVersionsService;
+    private readonly IEnvironmentService _environmentService = environmentService;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
@@ -41,7 +43,14 @@ internal sealed class SyncInternalReleaseCommand(
                 $"The source branch '{options.SourceBranch}' cannot be an internal branch.");
         }
 
-        using var repo = await _gitRepoHelperFactory.CreateAndCloneAsync(remoteUrl);
+        // Get git identity if available (required for commits, optional for read-only operations)
+        var gitIdentity = !string.IsNullOrWhiteSpace(options.User) && !string.IsNullOrWhiteSpace(options.Email)
+            ? options.GetCommitterIdentity()
+            : ((string, string)?)null;
+
+        using var repo = await _gitRepoHelperFactory.CreateAndCloneAsync(
+            remoteUrl,
+            gitIdentity: gitIdentity);
 
         // Verify that the source branch exists on the remote.
         var sourceBranchExists = await repo.Remote.RemoteBranchExistsAsync(options.SourceBranch);
@@ -86,6 +95,8 @@ internal sealed class SyncInternalReleaseCommand(
             ancestorRef: $"origin/{options.TargetBranch}",
             descendantRef: $"origin/{options.SourceBranch}");
 
+        var buildId = _environmentService.GetBuildId() ?? "";
+
         if (targetIsAncestorOfSource)
         {
             _logger.LogInformation(
@@ -93,7 +104,7 @@ internal sealed class SyncInternalReleaseCommand(
                 options.TargetBranch, options.SourceBranch);
 
             // "ff" here is an abbreviation for "fast-forward" - just want to keep branch names short
-            var fastForwardPrBranch = options.CreatePrBranchName("ff");
+            var fastForwardPrBranch = options.CreatePrBranchName("ff", buildId);
             await repo.Remote.CreateRemoteBranchAsync(
                 newBranch: fastForwardPrBranch,
                 baseBranch: options.SourceBranch);
@@ -135,7 +146,7 @@ internal sealed class SyncInternalReleaseCommand(
         var internalBuilds = _internalVersionsService.GetInternalStagingBuilds(repo.Local.LocalPath);
 
         // Reset the target branch to match the source branch.
-        var prBranchName = options.CreatePrBranchName(name: "sync");
+        var prBranchName = options.CreatePrBranchName(name: "sync", buildId: buildId);
         await repo.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
         await repo.Local.RestoreAsync(source: sourceSha);
         await repo.Local.StageAsync(".");
@@ -143,13 +154,13 @@ internal sealed class SyncInternalReleaseCommand(
             message: $"Reset {options.TargetBranch} to match {options.SourceBranch} commit {sourceSha}",
             author: commitAuthor);
 
-        // Re-apply internal .NET version updates for each recorded staging pipeline run ID.
-        foreach (var (dockerfileVersion, stagingPipelineRunId) in internalBuilds.Versions)
+        // Re-apply internal .NET version updates for each recorded stage container.
+        foreach (var (dockerfileVersion, stageContainer) in internalBuilds.Versions)
         {
             await ApplyInternalBuildAsync(
                 options: options,
                 localRepo: repo.Local,
-                stagingPipelineRunId: stagingPipelineRunId,
+                stageContainer: stageContainer,
                 stagingStorageAccount: options.StagingStorageAccount,
                 committerIdentity: commitAuthor);
         }
@@ -169,8 +180,8 @@ internal sealed class SyncInternalReleaseCommand(
     /// <summary>
     /// Apply an internal build by invoking the FromStagingPipelineCommand.
     /// </summary>
-    /// <param name="stagingPipelineRunId">
-    /// ID of the Azure DevOps pipeline run to get build information from.
+    /// <param name="stageContainer">
+    /// Stage container name (e.g., "stage-1234567") to get build information from.
     /// </param>
     /// <param name="committerIdentity">
     /// The identity to use when committing changes.
@@ -178,7 +189,7 @@ internal sealed class SyncInternalReleaseCommand(
     private async Task ApplyInternalBuildAsync(
         SyncInternalReleaseOptions options,
         ILocalGitRepoHelper localRepo,
-        int stagingPipelineRunId,
+        string stageContainer,
         string stagingStorageAccount,
         (string Name, string Email) committerIdentity)
     {
@@ -190,7 +201,7 @@ internal sealed class SyncInternalReleaseCommand(
         {
             RepoRoot = localRepo.LocalPath,
             Internal = true,
-            StagingPipelineRunId = stagingPipelineRunId,
+            StageContainer = stageContainer,
             StagingStorageAccount = stagingStorageAccount,
             AzdoOrganization = options.AzdoOrganization,
             AzdoProject = options.AzdoProject,
@@ -201,12 +212,12 @@ internal sealed class SyncInternalReleaseCommand(
         if (exitCode != 0)
         {
             throw new InvalidOperationException(
-                $"Failed to apply internal build {stagingPipelineRunId}. Command exited with code {exitCode}.");
+                $"Failed to apply internal build {stageContainer}. Command exited with code {exitCode}.");
         }
 
-        _logger.LogInformation("Finished applying internal build {BuildNumber}", stagingPipelineRunId);
+        _logger.LogInformation("Finished applying internal build {StageContainer}", stageContainer);
 
         await localRepo.StageAsync(".");
-        await localRepo.CommitAsync($"Update dependencies from build {stagingPipelineRunId}", committerIdentity);
+        await localRepo.CommitAsync($"Update dependencies from {stageContainer}", committerIdentity);
     }
 }

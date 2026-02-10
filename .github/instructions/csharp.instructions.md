@@ -60,3 +60,7 @@ Other patterns:
 - Comments inside methods should explain "why," not "what".
 - Comments should provide context and rationale behind the code.
 - Avoid redundant comments that restate the code - not all code needs comments.
+
+## Testing
+
+- Do not add comments like `// Arrange`, `// Act`, or `// Assert` in unit tests.

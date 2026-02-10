@@ -304,7 +304,8 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo>? files))
             {
-                string sdkFile = Path.GetTempFileName();
+                using TempFolderContext tempFolder = FileHelper.UseTempFolder();
+                string sdkFile = Path.Combine(tempFolder.Path, "sdk-archive");
 
                 await s_sdkDownloadPipeline.ExecuteAsync(async cancellationToken =>
                 {

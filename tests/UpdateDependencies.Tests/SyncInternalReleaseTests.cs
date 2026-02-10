@@ -82,7 +82,7 @@ public sealed class SyncInternalReleaseTests
 
         var repoMock = new Mock<IGitRepoHelper>();
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null)).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup:
         // Target branch does not exist on remote
@@ -112,7 +112,7 @@ public sealed class SyncInternalReleaseTests
         // not explicitly set up in this test.
         var repoMock = new Mock<IGitRepoHelper>(MockBehavior.Strict);
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null)).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -149,7 +149,7 @@ public sealed class SyncInternalReleaseTests
         repoMock.Setup(r => r.Remote).Returns(remoteRepoMock.Object);
 
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null)).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -225,10 +225,10 @@ public sealed class SyncInternalReleaseTests
                 : throw new Exception($"PR {PullRequestUrl} was not created first"));
 
         // For this scenario, two internal versions have been checked in to this repo.
-        var internalVersions = new Dictionary<DotNetVersion, int>
+        var internalVersions = new Dictionary<DotNetVersion, string>
         {
-            { DotNetVersion.Parse("8.0"), 8000000 },
-            { DotNetVersion.Parse("10.0"), 1000000 }
+            { DotNetVersion.Parse("8.0"), "stage-8000000" },
+            { DotNetVersion.Parse("10.0"), "stage-1000000" }
         };
         var internalVersionsService = CreateInternalVersionsService(LocalRepoPath, internalVersions);
 
@@ -244,12 +244,12 @@ public sealed class SyncInternalReleaseTests
         exitCode.ShouldBe(0);
 
         // Verify that we re-applied all internal versions by calling the downstream command.
-        foreach ((_, int buildId) in internalVersions)
+        foreach ((_, string stageContainer) in internalVersions)
         {
             fromStagingPipelineCommandMock.Verify(command =>
                 command.ExecuteAsync(It.Is<FromStagingPipelineOptions>(o =>
                     o.RepoRoot == LocalRepoPath
-                    && o.StagingPipelineRunId == buildId
+                    && o.StageContainer == stageContainer
                     && o.StagingStorageAccount == options.StagingStorageAccount
                 )),
                 Times.Once
@@ -293,20 +293,22 @@ public sealed class SyncInternalReleaseTests
         IGitRepoHelperFactory? repoFactory = null,
         ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
         IInternalVersionsService? internalVersionsService = null,
+        IEnvironmentService? environmentService = null,
         ILogger<SyncInternalReleaseCommand>? logger = null) =>
             // New parameters should be null by default and initialized with mocks if not specified.
             new(repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
                 fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
+                environmentService ?? Mock.Of<IEnvironmentService>(),
                 logger ?? Mock.Of<ILogger<SyncInternalReleaseCommand>>());
 
     /// <summary>
     /// Helper method to create a mock version of <see cref="IInternalVersionsService"/>
     /// </summary>
     private static IInternalVersionsService CreateInternalVersionsService(
-        string repoPath, Dictionary<DotNetVersion, int> versions)
+        string repoPath, Dictionary<DotNetVersion, string> versions)
     {
-        var internalStagingBuilds = new InternalStagingBuilds(versions.ToImmutableDictionary());
+        var internalStagingBuilds = new InternalStageContainers(versions.ToImmutableDictionary());
 
         var mock = new Mock<IInternalVersionsService>();
         mock.Setup(s => s.GetInternalStagingBuilds(repoPath))
@@ -334,7 +336,7 @@ public sealed class SyncInternalReleaseTests
         public GitTestScenario(string localRepoPath, string remoteRepoUrl)
         {
             RepoMock.Setup(r => r.Local.LocalPath).Returns(localRepoPath);
-            RepoFactoryMock.Setup(f => f.CreateAndCloneAsync(remoteRepoUrl, null)).ReturnsAsync(RepoMock.Object);
+            RepoFactoryMock.Setup(f => f.CreateAndCloneAsync(remoteRepoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(RepoMock.Object);
         }
 
         /// <summary>

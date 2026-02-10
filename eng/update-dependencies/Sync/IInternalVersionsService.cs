@@ -17,19 +17,19 @@ namespace Dotnet.Docker.Sync;
 internal interface IInternalVersionsService
 {
     /// <summary>
-    /// Records a staging pipeline run ID in the repo.
+    /// Records a stage container in the repo.
     /// </summary>
     /// <remarks>
-    /// This will only store one staging pipeline run ID per <paramref name="dotNetVersion"/>.
+    /// This will only store one stage container per <paramref name="dotNetVersion"/>.
     /// If a version already exists for the same dockerfileVersion, it will be
     /// overwritten.
     /// </remarks>
     /// <param name="dotNetVersion">.NET build or product version</param>
-    /// <param name="stagingPipelineRunId">the build ID of the staging pipeline run</param>
-    void RecordInternalStagingBuild(string repoRoot, DotNetVersion dotNetVersion, int stagingPipelineRunId);
+    /// <param name="stageContainer">the stage container name (e.g., "stage-1234567")</param>
+    void RecordInternalStagingBuild(string repoRoot, DotNetVersion dotNetVersion, string stageContainer);
 
     /// <summary>
     /// Gets any previously recorded internal staging builds in the repo.
     /// </summary>
-    InternalStagingBuilds GetInternalStagingBuilds(string repoRoot);
+    InternalStageContainers GetInternalStagingBuilds(string repoRoot);
 }

@@ -24,7 +24,7 @@ resources:
 extends:
   template: /eng/pipelines/pipelines/update-dependencies-internal.yml@self
   parameters:
-    buildId: "$(resources.pipeline.dotnet-staging-pipeline.runID)"
+    stageContainer: "stage-$(resources.pipeline.dotnet-staging-pipeline.runID)"
     stagingStorageAccount: "dotnetstage"
     targetBranch: "${{ parameters.targetBranch }}"
     gitServiceConnectionName: "$(updateDepsInt-test.serviceConnectionName)"
