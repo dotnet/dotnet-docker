@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:8.0.23-alpine3.23-arm32v7 AS installer
+FROM $REPO:8.0.24-alpine3.23-arm32v7 AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=8.0.23 \
+RUN aspnetcore_version=8.0.24 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
@@ -17,13 +17,13 @@ RUN aspnetcore_version=8.0.23 \
 
 
 # ASP.NET Composite Image
-FROM $REPO:8.0.23-alpine3.23-arm32v7
+FROM $REPO:8.0.24-alpine3.23-arm32v7
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=8.0.23 \
+    DOTNET_VERSION=8.0.24 \
     # ASP.NET Core version
-    ASPNET_VERSION=8.0.23
+    ASPNET_VERSION=8.0.24
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
