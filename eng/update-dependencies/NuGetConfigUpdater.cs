@@ -92,7 +92,7 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     private void UpdatePackageSourceCredentials(DotNetVersion sdkVersion, string pkgSrcName, XElement configuration)
     {
         XElement? pkgSourceCreds = configuration.Element("packageSourceCredentials");
-        if (_options.IsInternal && !sdkVersion.IsPublicPreview)
+        if (_options.IsInternal)
         {
             pkgSourceCreds = GetOrCreateXObject(
                 pkgSourceCreds,
@@ -123,13 +123,10 @@ internal class NuGetConfigUpdater : IDependencyUpdater
                 createNode: () => new XElement("packageSources")
             );
 
-            // Public preview versions have builds and NuGet feeds in the public prior to release.
-            string project = sdkVersion.IsPublicPreview ? "public" : "internal";
-
             UpdateAddElement(
                 parentElement: pkgSources,
                 key: pkgSrcName,
-                value: $"https://pkgs.dev.azure.com/dnceng/{project}/_packaging/{sdkVersion}-shipping/nuget/v3/index.json"
+                value: $"https://pkgs.dev.azure.com/dnceng/internal/_packaging/{sdkVersion}-shipping/nuget/v3/index.json"
             );
         }
         else
