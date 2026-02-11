@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:10.0.102-noble-amd64
+FROM $REPO:10.0.103-noble-amd64
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
