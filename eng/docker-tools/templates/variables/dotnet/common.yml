@@ -16,25 +16,25 @@ variables:
 - name: linuxAmd64InternalPoolImage
   value: 1es-ubuntu-2204
 - name: linuxAmd64PublicPoolImage
-  value: Azure-Linux-3-Amd64-Public
+  value: build.azurelinux.3.amd64.open
 - name: linuxAmd64PublicPoolName
   value: NetCore-Public
 - name: linuxAmd64InternalPoolName
   value: NetCore1ESPool-Internal
 
 - name: linuxArm64PublicPoolImage
-  value: azure-linux-3-arm64-public
+  value: build.azurelinux.3.arm64.open
 - name: linuxArm64InternalPoolImage
-  value: azure-linux-3-arm64
+  value: build.azurelinux.3.arm64
 - name: linuxArm64PublicPoolName
   value: Docker-Linux-Arm-Public
 - name: linuxArm64InternalPoolName
   value: Docker-Linux-Arm-Internal
 
 - name: linuxArm32PublicPoolImage
-  value: azure-linux-3-arm64-public
+  value: build.azurelinux.3.arm64.open
 - name: linuxArm32InternalPoolImage
-  value: azure-linux-3-arm64
+  value: build.azurelinux.3.arm64
 - name: linuxArm32PublicPoolName
   value: Docker-Linux-Arm-Public
 - name: linuxArm32InternalPoolName
