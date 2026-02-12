@@ -5,9 +5,54 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
-    <PublishSingleFile>true</PublishSingleFile>
-    <PublishTrimmed>true</PublishTrimmed>
+    <RuntimeIdentifiers>linux-arm64;linux-x64</RuntimeIdentifiers>
+    <RuntimeIdentifiers Condition="'$(Alpine)' == 'true'">linux-musl-arm64;linux-musl-x64</RuntimeIdentifiers>
+  </PropertyGroup>
+  
+  <PropertyGroup Condition="'$(Chiseled)' == 'true'">
+    <ContainerFamily>noble-chiseled</ContainerFamily>
+    <ContainerImageTag>chiseled</ContainerImageTag>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Alpine)' == 'true'">
+    <ContainerImageTag>alpine</ContainerImageTag>
+    <ContainerFamily>alpine</ContainerFamily>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Chiseled)' != 'true' and '$(Alpine)' != 'true'" >
+    <ContainerFamily>noble</ContainerFamily>
+    <ContainerImageTag>noble</ContainerImageTag>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(SC)' == 'true'">
+    <PublishSelfContained>true</PublishSelfContained>
+    <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
+    <ContainerImageTag>$(ContainerImageTag)-sc</ContainerImageTag>
+    <AllowSelfContainedWithoutRuntimeIdentifier>true</AllowSelfContainedWithoutRuntimeIdentifier>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Trimmed)' == 'true'">
+    <UseCurrentRuntimeIdentifier>false</UseCurrentRuntimeIdentifier>
+    <AllowSelfContainedWithoutRuntimeIdentifier>true</AllowSelfContainedWithoutRuntimeIdentifier>
+    <PublishTrimmed>true</PublishTrimmed>
+    <ContainerImageTag>$(ContainerImageTag)-trimmed</ContainerImageTag>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(AOT)' == 'true'">
+    <PublishAOT>true</PublishAOT>
+    <ContainerImageTag>$(ContainerImageTag)-aot</ContainerImageTag>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(InvariantGlobalization)' == 'true'">
+    <ContainerImageTag>$(ContainerImageTag)-invariant</ContainerImageTag>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(InvariantGlobalization)' != 'true' "> <!-- and ('$(PublishSelfContained)' == 'true' or '$(PublishTrimmed)' == 'true' or '$(PublishAOT)' == 'true')"> -->
+    <ContainerImageTag>$(ContainerImageTag)-variant</ContainerImageTag>
+    <ContainerFamily Condition="'$(Chiseled)' == 'true' or '$(Alpine)' == 'true'">$(ContainerFamily)-extra</ContainerFamily>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ContainerEntrypoint Include="/app/$(MSBuildThisFileName)" />
+  </ItemGroup>
 </Project>
