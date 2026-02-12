@@ -201,7 +201,7 @@ internal sealed class SyncInternalReleaseCommand(
         {
             RepoRoot = localRepo.LocalPath,
             Internal = true,
-            StageContainer = stageContainer,
+            StageContainers = stageContainer,
             StagingStorageAccount = stagingStorageAccount,
             AzdoOrganization = options.AzdoOrganization,
             AzdoProject = options.AzdoProject,
