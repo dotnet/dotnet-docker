@@ -18,13 +18,13 @@
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
-    "aspire-dashboard|build-version": "13.3.0-preview.1.26111.5",
+    "aspire-dashboard|build-version": "13.3.0-preview.1.26112.3",
     "aspire-dashboard|product-version": "13.3.0",
     "aspire-dashboard|fixed-tag": "13.3.0",
     "aspire-dashboard|minor-tag": "13.3",
     "aspire-dashboard|major-tag": "13",
-    "aspire-dashboard|linux|x64|sha": "0f0a09c87585deadb18d192553af6e48c900b6ac5de4f0c593de8e6e0bfe7df32bb09bed27144257cce6c830fbbe19c500fee77cd51b140cbd5ce269e36734d0",
-    "aspire-dashboard|linux|arm64|sha": "20c2d7c0dbfad437d68018829d56701c3d91e54a3592994f392c13ce877c6a5b924fee78db6b124f5068fc540bb6c68834d3a7d4b066b260c4a6e33b2fc0a369",
+    "aspire-dashboard|linux|x64|sha": "8b99ac26fd3ebe95dd2d32746ac699b94bdefde5d28f6ed55c800e66f760b65a112b750a6475a1003763b80315ce75a7f86df7310022780adf1b2606e3a8142c",
+    "aspire-dashboard|linux|arm64|sha": "48afefd4fc351f089f77553f98f494661b8a12c043ebb098d80197d25b31648bea930b210790b4d9ecb80507c72f1ec90dee2a760a52d7e296275b11dbd90864",
     "aspire-dashboard|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|base-url|nightly": "$(base-url|public|preview|nightly)",
 
@@ -266,7 +266,7 @@
     "sdk|11.0|minor-tag": "$(dotnet|11.0|minor-tag)",
 
     "syft|repo": "anchore/syft",
-    "syft|version": "v1.41.1",
+    "syft|version": "v1.42.0",
     "syft|tag": "$(syft|version)-debug"
   }
 }
