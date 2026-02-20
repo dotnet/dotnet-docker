@@ -14,8 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
-using SharpCompress.Common;
-using SharpCompress.Readers;
+using System.Formats.Tar;
+using System.IO.Compression;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -280,23 +280,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 .OrderBy(fileInfo => fileInfo.Path);
         }
 
-        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
-        {
-            using FileStream fileStream = File.OpenRead(path);
-            using IReader reader = ReaderFactory.Open(fileStream);
-            using TempFolderContext tempFolderContext = FileHelper.UseTempFolder();
-            reader.WriteAllToDirectory(tempFolderContext.Path, new ExtractionOptions() { ExtractFullPath = true });
-
-            foreach (FileInfo file in new DirectoryInfo(tempFolderContext.Path).EnumerateFiles("*", SearchOption.AllDirectories))
-            {
-                using SHA512 sha512 = SHA512.Create();
-                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
-                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
-                yield return new SdkContentFileInfo(
-                    file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
-            }
-        }
-
         private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
         {
             string sdkUrl = GetSdkUrl(imageData);
@@ -312,7 +295,31 @@ namespace Microsoft.DotNet.Docker.Tests
                     await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
                 });
 
-                files = EnumerateArchiveContents(sdkFile)
+                using TempFolderContext extractFolder = FileHelper.UseTempFolder();
+
+                if (Path.GetExtension(sdkUrl).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+                {
+                    ZipFile.ExtractToDirectory(sdkFile, extractFolder.Path);
+                }
+                else
+                {
+                    using FileStream fileStream = File.OpenRead(sdkFile);
+                    using var gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
+                    TarFile.ExtractToDirectory(gzipStream, extractFolder.Path, overwriteFiles: false);
+                }
+
+                files = Directory.EnumerateFiles(extractFolder.Path, "*", SearchOption.AllDirectories)
+                    .Select(file =>
+                    {
+                        string filePath = Path.GetFullPath(file);
+                        string relativePath = Path.GetRelativePath(extractFolder.Path, filePath);
+
+                        byte[] fileData = File.ReadAllBytes(filePath);
+                        byte[] sha512HashBytes = SHA512.HashData(fileData);
+                        string sha512Hash = Convert.ToHexString(sha512HashBytes);
+
+                        return new SdkContentFileInfo(relativePath, sha512Hash);
+                    })
                     .OrderBy(file => file.Path)
                     .ToArray();
 
