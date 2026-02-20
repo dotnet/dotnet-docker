@@ -15,8 +15,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
-using SharpCompress.Common;
-using SharpCompress.Readers;
 using Xunit;
 using Xunit.Abstractions;
 

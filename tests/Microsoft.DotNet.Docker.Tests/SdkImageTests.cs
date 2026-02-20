@@ -14,8 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
-using SharpCompress.Common;
-using SharpCompress.Readers;
+using System.Formats.Tar;
+using System.IO.Compression;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -283,9 +283,23 @@ namespace Microsoft.DotNet.Docker.Tests
         private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
         {
             using FileStream fileStream = File.OpenRead(path);
-            using IReader reader = ReaderFactory.Open(fileStream);
+            using var gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
+            using var tarReader = new TarReader(gzipStream);
             using TempFolderContext tempFolderContext = FileHelper.UseTempFolder();
-            reader.WriteAllToDirectory(tempFolderContext.Path, new ExtractionOptions() { ExtractFullPath = true });
+
+            while (tarReader.GetNextEntry() is TarEntry entry)
+            {
+                string destinationPath = Path.Combine(tempFolderContext.Path, entry.Name);
+                if (entry.EntryType is TarEntryType.Directory)
+                {
+                    Directory.CreateDirectory(destinationPath);
+                }
+                else if (entry.EntryType is TarEntryType.RegularFile)
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
+                    entry.ExtractToFile(destinationPath, overwrite: false);
+                }
+            }
 
             foreach (FileInfo file in new DirectoryInfo(tempFolderContext.Path).EnumerateFiles("*", SearchOption.AllDirectories))
             {
