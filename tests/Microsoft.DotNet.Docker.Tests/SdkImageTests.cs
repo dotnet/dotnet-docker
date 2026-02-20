@@ -320,13 +320,18 @@ namespace Microsoft.DotNet.Docker.Tests
 
         private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string extractedPath)
         {
-            foreach (FileInfo file in new DirectoryInfo(extractedPath).EnumerateFiles("*", SearchOption.AllDirectories))
+            IEnumerable<string> files = Directory.EnumerateFiles(extractedPath, "*", SearchOption.AllDirectories);
+
+            foreach (string file in files)
             {
-                using SHA512 sha512 = SHA512.Create();
-                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
-                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
+                string filePath = Path.GetFullPath(file);
+                byte[] fileData = File.ReadAllBytes(filePath);
+                byte[] sha512HashBytes = SHA512.HashData(fileData);
+                string sha512Hash = Convert.ToHexString(sha512HashBytes);
+
                 yield return new SdkContentFileInfo(
-                    file.FullName.Substring(extractedPath.Length), sha512Hash);
+                    path: filePath.Substring(extractedPath.Length),
+                    sha512: sha512Hash);
             }
         }
 
