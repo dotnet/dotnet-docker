@@ -148,8 +148,8 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
-            using TempFileContext actualFilesContext = FileHelper.UseTempFile();
-            using TempFileContext expectedFilesContext = FileHelper.UseTempFile();
+            using TempFileContext actualFilesContext = FileHelper.UseTempFile("container-image");
+            using TempFileContext expectedFilesContext = FileHelper.UseTempFile("sdk-archive");
 
             File.WriteAllLines(actualFilesContext.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
             File.WriteAllLines(expectedFilesContext.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
