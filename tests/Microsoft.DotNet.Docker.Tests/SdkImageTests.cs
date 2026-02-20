@@ -280,18 +280,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 .OrderBy(fileInfo => fileInfo.Path);
         }
 
-        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string extractedPath)
-        {
-            foreach (FileInfo file in new DirectoryInfo(extractedPath).EnumerateFiles("*", SearchOption.AllDirectories))
-            {
-                using SHA512 sha512 = SHA512.Create();
-                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
-                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
-                yield return new SdkContentFileInfo(
-                    file.FullName.Substring(extractedPath.Length), sha512Hash);
-            }
-        }
-
         private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
         {
             string sdkUrl = GetSdkUrl(imageData);
@@ -329,6 +317,19 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return files;
         }
+
+        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string extractedPath)
+        {
+            foreach (FileInfo file in new DirectoryInfo(extractedPath).EnumerateFiles("*", SearchOption.AllDirectories))
+            {
+                using SHA512 sha512 = SHA512.Create();
+                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
+                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
+                yield return new SdkContentFileInfo(
+                    file.FullName.Substring(extractedPath.Length), sha512Hash);
+            }
+        }
+
 
         private static string GetSdkVersionFileLabel(string sdkBuildVersion, string dotnetVersion)
         {
