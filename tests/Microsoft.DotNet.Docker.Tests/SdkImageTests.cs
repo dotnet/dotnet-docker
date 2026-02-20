@@ -297,7 +297,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
                 using TempFolderContext extractFolder = FileHelper.UseTempFolder();
 
-                if (sdkUrl.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+                if (Path.GetExtension(sdkUrl).Equals(".zip", StringComparison.OrdinalIgnoreCase))
                 {
                     ZipFile.ExtractToDirectory(sdkFile, extractFolder.Path);
                 }
@@ -308,7 +308,18 @@ namespace Microsoft.DotNet.Docker.Tests
                     TarFile.ExtractToDirectory(gzipStream, extractFolder.Path, overwriteFiles: false);
                 }
 
-                files = EnumerateArchiveContents(extractFolder.Path)
+                files = Directory.EnumerateFiles(extractFolder.Path, "*", SearchOption.AllDirectories)
+                    .Select(file =>
+                    {
+                        string filePath = Path.GetFullPath(file);
+                        string relativePath = Path.GetRelativePath(extractFolder.Path, filePath);
+
+                        byte[] fileData = File.ReadAllBytes(filePath);
+                        byte[] sha512HashBytes = SHA512.HashData(fileData);
+                        string sha512Hash = Convert.ToHexString(sha512HashBytes);
+
+                        return new SdkContentFileInfo(relativePath, sha512Hash);
+                    })
                     .OrderBy(file => file.Path)
                     .ToArray();
 
@@ -317,24 +328,6 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return files;
         }
-
-        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string extractedPath)
-        {
-            IEnumerable<string> files = Directory.EnumerateFiles(extractedPath, "*", SearchOption.AllDirectories);
-
-            foreach (string file in files)
-            {
-                string filePath = Path.GetFullPath(file);
-                byte[] fileData = File.ReadAllBytes(filePath);
-                byte[] sha512HashBytes = SHA512.HashData(fileData);
-                string sha512Hash = Convert.ToHexString(sha512HashBytes);
-
-                yield return new SdkContentFileInfo(
-                    path: filePath.Substring(extractedPath.Length),
-                    sha512: sha512Hash);
-            }
-        }
-
 
         private static string GetSdkVersionFileLabel(string sdkBuildVersion, string dotnetVersion)
         {
