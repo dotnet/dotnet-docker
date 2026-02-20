@@ -280,34 +280,15 @@ namespace Microsoft.DotNet.Docker.Tests
                 .OrderBy(fileInfo => fileInfo.Path);
         }
 
-        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
+        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string extractedPath)
         {
-            using FileStream fileStream = File.OpenRead(path);
-            using var gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
-            using var tarReader = new TarReader(gzipStream);
-            using TempFolderContext tempFolderContext = FileHelper.UseTempFolder();
-
-            while (tarReader.GetNextEntry() is TarEntry entry)
-            {
-                string destinationPath = Path.Combine(tempFolderContext.Path, entry.Name);
-                if (entry.EntryType is TarEntryType.Directory)
-                {
-                    Directory.CreateDirectory(destinationPath);
-                }
-                else if (entry.EntryType is TarEntryType.RegularFile)
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(destinationPath)!);
-                    entry.ExtractToFile(destinationPath, overwrite: false);
-                }
-            }
-
-            foreach (FileInfo file in new DirectoryInfo(tempFolderContext.Path).EnumerateFiles("*", SearchOption.AllDirectories))
+            foreach (FileInfo file in new DirectoryInfo(extractedPath).EnumerateFiles("*", SearchOption.AllDirectories))
             {
                 using SHA512 sha512 = SHA512.Create();
                 byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
                 string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
                 yield return new SdkContentFileInfo(
-                    file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
+                    file.FullName.Substring(extractedPath.Length), sha512Hash);
             }
         }
 
@@ -326,7 +307,20 @@ namespace Microsoft.DotNet.Docker.Tests
                     await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
                 });
 
-                files = EnumerateArchiveContents(sdkFile)
+                using TempFolderContext extractFolder = FileHelper.UseTempFolder();
+
+                if (sdkUrl.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+                {
+                    ZipFile.ExtractToDirectory(sdkFile, extractFolder.Path);
+                }
+                else
+                {
+                    using FileStream fileStream = File.OpenRead(sdkFile);
+                    using var gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
+                    TarFile.ExtractToDirectory(gzipStream, extractFolder.Path, overwriteFiles: false);
+                }
+
+                files = EnumerateArchiveContents(extractFolder.Path)
                     .OrderBy(file => file.Path)
                     .ToArray();
 
