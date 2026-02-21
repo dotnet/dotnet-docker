@@ -234,7 +234,7 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 dotnetPath = "/usr/share/dotnet";
                 destinationPath = "/sdk";
-                command = $"find {destinationPath} -type f -exec sha512sum {{}} +";
+                command = $"find {destinationPath} -type f -o -type l -exec sha512sum {{}} +";
             }
             else
             {
