@@ -326,12 +326,20 @@ namespace Dotnet.Docker
                     Trace.WriteLine($"Found {nonBotCommits.Count} non-bot commit(s) on the PR branch - skipping update.");
 
                     string localCommand = BuildLocalUpdateCommand();
-                    string comment = "⚠️ **Automatic dependency update skipped**\n\n"
-                        + "The following commits were detected on this PR branch that were not authored by the bot:\n\n"
-                        + string.Join("\n", nonBotCommits.Select(c => $"- {c}"))
-                        + "\n\nTo apply this update locally on your branch, run:\n\n"
-                        + $"```\n{localCommand}\n```"
-                        + "\n\nTo allow automatic updates to resume, merge or close this PR.";
+                    string nonBotCommitList = string.Join("\n", nonBotCommits.Select(c => $"- {c}"));
+                    string comment = $"""
+                        Automatic update skipped because additional commits were detected on this branch:
+
+                        {nonBotCommitList}
+
+                        To apply this update manually, run:
+
+                        ```
+                        {localCommand}
+                        ```
+
+                        To allow automatic updates to resume, merge or close this PR.
+                        """;
 
                     await client.PostCommentAsync(upstreamProject, pullRequestNumber, comment);
                     return;
