@@ -235,10 +235,10 @@ namespace Microsoft.DotNet.Docker.Tests
                 dotnetPath = "/usr/share/dotnet";
                 destinationPath = "/sdk";
                 
-                // Alpine has limited find syntax support
+                // Alpine's BusyBox find doesn't support comma-separated types (-type f,l)
                 if (imageData.SdkOS.Family == OSFamily.Alpine)
                 {
-                    command = $"sh -c \"find {destinationPath} -type f -o -type l -exec sha512sum {{}} +\"";
+                    command = $"find {destinationPath} ( -type f -o -type l ) -exec sha512sum {{}} +";
                 }
                 else
                 {
