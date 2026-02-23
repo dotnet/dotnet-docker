@@ -16,9 +16,9 @@ namespace Microsoft.DotNet.Docker.Tests
             return new TempFolderContext();
         }
 
-        public static TempFileContext UseTempFile()
+        public static TempFileContext UseTempFile(string name = null)
         {
-            return new TempFileContext();
+            return new TempFileContext(name);
         }
 
         /// <summary>
@@ -83,15 +83,29 @@ namespace Microsoft.DotNet.Docker.Tests
 
     public sealed class TempFileContext : IDisposable
     {
-        public TempFileContext()
+        private readonly string _folder;
+
+        public TempFileContext(string name = null)
         {
+            string folder;
             do
             {
-                Path = System.IO.Path.Combine(
+                folder = System.IO.Path.Combine(
                     System.IO.Path.GetTempPath(),
                     Guid.NewGuid().ToString());
             }
-            while (File.Exists(Path));
+            while (Directory.Exists(folder));
+
+            if (name is not null)
+            {
+                _folder = folder;
+                Directory.CreateDirectory(folder);
+                Path = System.IO.Path.Combine(folder, name);
+            }
+            else
+            {
+                Path = folder;
+            }
 
             File.Create(Path).Dispose();
         }
@@ -100,7 +114,14 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public void Dispose()
         {
-            File.Delete(Path);
+            if (_folder is not null)
+            {
+                Directory.Delete(_folder, true);
+            }
+            else
+            {
+                File.Delete(Path);
+            }
         }
     }
 }
