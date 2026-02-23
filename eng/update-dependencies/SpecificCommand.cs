@@ -274,12 +274,15 @@ namespace Dotnet.Docker
                 }
                 else
                 {
-                    UpdateExistingGitHubPullRequest(gitHubAuth, prOptions, commitMessage, upstreamBranch);
+                    await UpdateExistingGitHubPullRequestAsync(
+                        client, upstreamProject, pullRequestToUpdate.Number,
+                        gitHubAuth, prOptions, commitMessage, upstreamBranch);
                 }
             }
         }
 
-        private static void UpdateExistingGitHubPullRequest(
+        private static async Task UpdateExistingGitHubPullRequestAsync(
+            GitHubClient client, GitHubProject upstreamProject, int pullRequestNumber,
             GitHubAuth gitHubAuth, PullRequestOptions prOptions, string commitMessage, GitHubBranch upstreamBranch)
         {
             // PullRequestCreator ends up force-pushing updates to an existing PR which is not great when the logic
@@ -308,13 +311,35 @@ namespace Dotnet.Docker
                 // Clone the PR's repo/branch to a temp location
                 Repository.Clone($"https://github.com/{gitHubAuth.User}/{Options.GitHubProject}", tempRepoPath, cloneOptions);
 
+                using Repository repo = new(tempRepoPath);
+
+                // Add upstream remote and fetch the target branch so we can find the merge base
+                string upstreamUrl = $"https://github.com/{Options.GitHubUpstreamOwner}/{Options.GitHubProject}";
+                repo.Network.Remotes.Add("upstream", upstreamUrl);
+                Commands.Fetch(repo, "upstream", [$"refs/heads/{upstreamBranch.Name}:refs/remotes/upstream/{upstreamBranch.Name}"], null, null);
+
+                // Check for non-bot commits on the PR branch. If someone other than the bot
+                // has pushed commits, we should not overwrite them.
+                List<string> nonBotCommits = GetNonBotCommits(repo, upstreamBranch.Name);
+                if (nonBotCommits.Count > 0)
+                {
+                    Trace.WriteLine($"Found {nonBotCommits.Count} non-bot commit(s) on the PR branch - skipping update.");
+
+                    string comment = "⚠️ **Automatic dependency update skipped**\n\n"
+                        + "The following commits were detected on this PR branch that were not authored by the bot:\n\n"
+                        + string.Join("\n", nonBotCommits.Select(c => $"- {c}"))
+                        + "\n\nTo allow automatic updates to resume, merge or close this PR.";
+
+                    await client.PostCommentAsync(upstreamProject, pullRequestNumber, comment);
+                    return;
+                }
+
                 // Remove all existing directories and files from the temp repo
                 ClearRepoContents(tempRepoPath);
 
                 // Copy contents of local repo changes to temp repo
                 DirectoryCopy(".", tempRepoPath);
 
-                using Repository repo = new(tempRepoPath);
                 RepositoryStatus status = repo.RetrieveStatus(new StatusOptions());
 
                 // If there are any changes from what exists in the PR
@@ -353,6 +378,47 @@ namespace Dotnet.Docker
                 // Cleanup temp repo
                 DeleteRepoDirectory(tempRepoPath);
             }
+        }
+
+        /// <summary>
+        /// Finds commits on the current branch that were not authored by the bot user.
+        /// Walks the commit log from HEAD back to the merge base with the target branch.
+        /// </summary>
+        private static List<string> GetNonBotCommits(Repository repo, string targetBranchName)
+        {
+            List<string> nonBotCommits = [];
+
+            Branch? targetBranch = repo.Branches[$"upstream/{targetBranchName}"];
+            if (targetBranch is null)
+            {
+                Trace.WriteLine($"Could not find remote tracking branch 'upstream/{targetBranchName}' - skipping non-bot commit check.");
+                return nonBotCommits;
+            }
+
+            Commit headCommit = repo.Head.Tip;
+            Commit targetCommit = targetBranch.Tip;
+
+            Commit? mergeBase = repo.ObjectDatabase.FindMergeBase(headCommit, targetCommit);
+            if (mergeBase is null)
+            {
+                Trace.WriteLine("Could not find merge base - skipping non-bot commit check.");
+                return nonBotCommits;
+            }
+
+            foreach (Commit commit in repo.Commits)
+            {
+                if (commit.Sha == mergeBase.Sha)
+                {
+                    break;
+                }
+
+                if (!string.Equals(commit.Author.Name, Options.User, StringComparison.OrdinalIgnoreCase))
+                {
+                    nonBotCommits.Add($"`{commit.Sha[..7]}` {commit.MessageShort} (by {commit.Author.Name})");
+                }
+            }
+
+            return nonBotCommits;
         }
 
         private static void DeleteRepoDirectory(string repoPath)
