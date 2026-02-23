@@ -234,7 +234,16 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 dotnetPath = "/usr/share/dotnet";
                 destinationPath = "/sdk";
-                command = $"find {destinationPath} -type f -exec sha512sum {{}} +";
+                
+                // Alpine has limited find syntax support
+                if (imageData.SdkOS.Family == OSFamily.Alpine)
+                {
+                    command = $"sh -c \"find {destinationPath} -type f -o -type l -exec sha512sum {{}} +\"";
+                }
+                else
+                {
+                    command = $"find {destinationPath} -type f,l -exec sha512sum {{}} +";
+                }
             }
             else
             {
