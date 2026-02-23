@@ -325,9 +325,12 @@ namespace Dotnet.Docker
                 {
                     Trace.WriteLine($"Found {nonBotCommits.Count} non-bot commit(s) on the PR branch - skipping update.");
 
+                    string localCommand = BuildLocalUpdateCommand();
                     string comment = "⚠️ **Automatic dependency update skipped**\n\n"
                         + "The following commits were detected on this PR branch that were not authored by the bot:\n\n"
                         + string.Join("\n", nonBotCommits.Select(c => $"- {c}"))
+                        + "\n\nTo apply this update locally on your branch, run:\n\n"
+                        + $"```\n{localCommand}\n```"
                         + "\n\nTo allow automatic updates to resume, merge or close this PR.";
 
                     await client.PostCommentAsync(upstreamProject, pullRequestNumber, comment);
@@ -419,6 +422,37 @@ namespace Dotnet.Docker
             }
 
             return nonBotCommits;
+        }
+
+        /// <summary>
+        /// Builds a CLI command string that can be run locally to apply the same dependency update.
+        /// Uses the <c>specific</c> subcommand with already-resolved versions, so no BAR auth is needed.
+        /// </summary>
+        private static string BuildLocalUpdateCommand()
+        {
+            List<string> parts =
+            [
+                "dotnet run --project eng/update-dependencies/update-dependencies.csproj --",
+                "specific",
+                Options.DockerfileVersion,
+            ];
+
+            foreach (var (name, version) in Options.ProductVersions)
+            {
+                parts.Add($"--product-version {name}={version}");
+            }
+
+            foreach (string tool in Options.Tools)
+            {
+                parts.Add($"--tool {tool}");
+            }
+
+            if (!string.IsNullOrEmpty(Options.VersionSourceName))
+            {
+                parts.Add($"--version-source-name '{Options.VersionSourceName}'");
+            }
+
+            return string.Join(" ", parts);
         }
 
         private static void DeleteRepoDirectory(string repoPath)
