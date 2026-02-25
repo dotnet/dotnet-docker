@@ -44,11 +44,13 @@ stages:
 - ${{ if parameters.isStandaloneBuild }}:
   - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
     parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      usesRegistries:
+        - ${{ parameters.publishConfig.InternalMirrorRegistry.server }}
+        - ${{ parameters.publishConfig.BuildRegistry.server }}
       serviceConnections:
-      - name: ${{ parameters.publishConfig.InternalMirrorRegistry.serviceConnection.name }}
-      - name: ${{ parameters.publishConfig.BuildRegistry.serviceConnection.name }}
-      - ${{ if parameters.storageAccountServiceConnection }}:
-        - name: ${{ parameters.storageAccountServiceConnection.name }}
+        - ${{ if parameters.storageAccountServiceConnection }}:
+          - name: ${{ parameters.storageAccountServiceConnection.name }}
 
 - template: /eng/docker-tools/templates/stages/dotnet/build-and-test.yml@self
   parameters:
