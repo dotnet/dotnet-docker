@@ -26,7 +26,7 @@ public sealed class FromStagingPipelineCommandTests
 
         var options = new FromStagingPipelineOptions
         {
-            StageContainer = stageContainer,
+            StageContainers = stageContainer,
             Internal = true,
             StagingStorageAccount = "https://dotnetstagetest.blob.core.windows.net/",
             Mode = ChangeMode.Local,
@@ -50,7 +50,7 @@ public sealed class FromStagingPipelineCommandTests
 
         var options = new FromStagingPipelineOptions
         {
-            StageContainer = "stage-1234567",
+            StageContainers = "stage-1234567",
             Internal = false,
             Mode = ChangeMode.Local,
             RepoRoot = "/tmp/repo"
@@ -67,13 +67,7 @@ public sealed class FromStagingPipelineCommandTests
     [InlineData("stage-999999999", 999999999)]
     public void GetStagingPipelineRunId_ValidStageContainer_ReturnsExpectedId(string stageContainer, int expectedId)
     {
-        var options = new FromStagingPipelineOptions
-        {
-            StageContainer = stageContainer,
-            RepoRoot = "/tmp/repo"
-        };
-
-        var result = options.GetStagingPipelineRunId();
+        var result = StagingPipelineOptionsExtensions.GetStagingPipelineRunId(stageContainer);
 
         result.ShouldBe(expectedId);
     }
@@ -86,15 +80,45 @@ public sealed class FromStagingPipelineCommandTests
     [InlineData("")]
     public void GetStagingPipelineRunId_InvalidStageContainer_ThrowsArgumentException(string stageContainer)
     {
+        var exception = Should.Throw<ArgumentException>(() =>
+            StagingPipelineOptionsExtensions.GetStagingPipelineRunId(stageContainer));
+        exception.Message.ShouldContain($"Invalid stage container name '{stageContainer}'");
+        exception.Message.ShouldContain("Expected format: 'stage-{buildId}'");
+    }
+
+    [Theory]
+    [InlineData("stage-1234567", new[] { "stage-1234567" })]
+    [InlineData("stage-1234567,stage-2345678", new[] { "stage-1234567", "stage-2345678" })]
+    [InlineData("stage-1234567, stage-2345678, stage-3456789", new[] { "stage-1234567", "stage-2345678", "stage-3456789" })]
+    [InlineData("  stage-1234567  ,  stage-2345678  ", new[] { "stage-1234567", "stage-2345678" })]
+    public void GetStageContainerList_ParsesCommaDelimitedList(string input, string[] expected)
+    {
         var options = new FromStagingPipelineOptions
         {
-            StageContainer = stageContainer,
+            StageContainers = input,
             RepoRoot = "/tmp/repo"
         };
 
-        var exception = Should.Throw<ArgumentException>(() => options.GetStagingPipelineRunId());
-        exception.Message.ShouldContain($"Invalid stage container name '{stageContainer}'");
-        exception.Message.ShouldContain("Expected format: 'stage-{buildId}'");
+        var result = options.GetStageContainerList();
+
+        result.ShouldBe(expected);
+    }
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("   ")]
+    [InlineData(",,,")]
+    public void GetStageContainerList_EmptyOrWhitespace_ReturnsEmptyList(string input)
+    {
+        var options = new FromStagingPipelineOptions
+        {
+            StageContainers = input,
+            RepoRoot = "/tmp/repo"
+        };
+
+        var result = options.GetStageContainerList();
+
+        result.ShouldBeEmpty();
     }
 
     private static FromStagingPipelineCommand CreateCommand(
