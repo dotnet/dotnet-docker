@@ -9,9 +9,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve Aspire Dashboard
-RUN dotnet_aspire_version=13.3.0-preview.1.26123.11 \
+RUN dotnet_aspire_version=13.3.0-preview.1.26124.19 \
     && curl --fail --show-error --location --output aspire_dashboard.zip https://ci.dot.net/public/aspire/$dotnet_aspire_version/aspire-dashboard-linux-arm64.zip \
-    && aspire_dashboard_sha512='1aac762fb21ce55487b16ffe2b9e5933a1208a8297f410538e497b4655f0b6f71a58592e85beb4f196b0f2adc580c51a7b103e3d71f94ff5ae79be8c6b8f859a' \
+    && aspire_dashboard_sha512='1e90a34a0a5d71278c38af85870177ed0921beb06c0533e6e18bce4ef193c92b735cdc919273f0a538a6090406f170c2e65e173686daf6722ec7f6d09a21bff2' \
     && echo "$aspire_dashboard_sha512  aspire_dashboard.zip" | sha512sum -c - \
     && mkdir --parents /app \
     && unzip aspire_dashboard.zip -d /app \
