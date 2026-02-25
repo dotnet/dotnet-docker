@@ -148,8 +148,8 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
-            using TempFileContext actualFilesContext = FileHelper.UseTempFile();
-            using TempFileContext expectedFilesContext = FileHelper.UseTempFile();
+            using TempFileContext actualFilesContext = FileHelper.UseTempFile("container-image");
+            using TempFileContext expectedFilesContext = FileHelper.UseTempFile("sdk-archive");
 
             File.WriteAllLines(actualFilesContext.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
             File.WriteAllLines(expectedFilesContext.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
@@ -234,7 +234,16 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 dotnetPath = "/usr/share/dotnet";
                 destinationPath = "/sdk";
-                command = $"find {destinationPath} -type f -exec sha512sum {{}} +";
+                
+                // Alpine's BusyBox find doesn't support comma-separated types (-type f,l)
+                if (imageData.SdkOS.Family == OSFamily.Alpine)
+                {
+                    command = $"find {destinationPath} ( -type f -o -type l ) -exec sha512sum {{}} +";
+                }
+                else
+                {
+                    command = $"find {destinationPath} -type f,l -exec sha512sum {{}} +";
+                }
             }
             else
             {
