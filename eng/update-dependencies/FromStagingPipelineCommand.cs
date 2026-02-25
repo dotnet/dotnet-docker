@@ -308,8 +308,11 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                 var targetBranch = options.TargetBranch;
                 var buildId = environmentService.GetBuildId() ?? "";
                 var stageContainerList = options.GetStageContainerList();
-                var firstStageContainer = stageContainerList.Count > 0 ? stageContainerList[0] : "unknown";
-                var prBranch = options.CreatePrBranchName($"update-deps-int-{firstStageContainer}", buildId);
+                if (stageContainerList.Count == 0)
+                {
+                    throw new ArgumentException("At least one stage container must be provided.");
+                }
+                var prBranch = options.CreatePrBranchName($"update-deps-int-{stageContainerList[0]}", buildId);
                 var committer = options.GetCommitterIdentity();
 
                 // Clone the repo and configure git identity for commits

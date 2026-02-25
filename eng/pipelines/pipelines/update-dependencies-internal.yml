@@ -32,6 +32,12 @@ extends:
         parameters:
           dependencyName: dotnet
           updateSteps:
+          - pwsh: |
+              if ([string]::IsNullOrWhiteSpace("${{ parameters.stageContainers }}")) {
+                Write-Error "stageContainers parameter must not be empty."
+                exit 1
+              }
+            displayName: Validate stageContainers parameter
           - task: AzureCLI@2
             displayName: Update .NET
             continueOnError: False
