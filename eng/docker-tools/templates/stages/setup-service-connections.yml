@@ -3,6 +3,10 @@
 # it is declared in this stage's parameters, even if your pipeline has already
 # been granted access to the service connection. This stage also does not need
 # to complete before the service connection is used.
+#
+# There are two ways to specify service connections:
+# - Pass `serviceConnections` directly (list of {name: string} objects)
+# - Pass `publishConfig` + `registries` to look up auth from RegistryAuthentication
 parameters:
 - name: pool
   type: object
@@ -10,14 +14,26 @@ parameters:
     name: $(default1ESInternalPoolName)
     image: $(default1ESInternalPoolImage)
     os: linux
-# serviceConnections object shape:
-# - name: string
+
+# Explicit list of service connections to initialize
+# Shape: [{ name: string }]
 - name: serviceConnections
   type: object
   default: []
 
-stages:
+# List of registry servers that need authentication. These will be looked up in
+# publishConfig.RegistryAuthentication.
+# Make sure to provide the publishConfig parameter.
+- name: usesRegistries
+  type: object
+  default: []
+# Look up service connections from publishConfig based on registries
+# The publish configuration containing RegistryAuthentication entries.
+- name: publishConfig
+  type: object
+  default: {}
 
+stages:
 - stage: SetupServiceConnectionsStage
   displayName: Setup service connections
   jobs:
@@ -27,6 +43,8 @@ stages:
     pool: ${{ parameters.pool }}
     steps:
     - checkout: none
+
+    # Direct service connections list
     - ${{ each serviceConnection in parameters.serviceConnections }}:
       - task: AzureCLI@2
         displayName: Setup ${{ serviceConnection.name }}
@@ -36,3 +54,15 @@ stages:
           scriptLocation: inlineScript
           inlineScript: |
             az account show
+
+    # Setup registry service connections
+    - ${{ if gt(length(parameters.usesRegistries), 0) }}:
+      - ${{ each auth in parameters.publishConfig.RegistryAuthentication }}:
+        - ${{ if containsValue(parameters.usesRegistries, auth.server) }}:
+          - task: AzureCLI@2
+            displayName: Setup ${{ auth.serviceConnection.name }}
+            inputs:
+              azureSubscription: ${{ auth.serviceConnection.name }}
+              scriptType: pscore
+              scriptLocation: inlineScript
+              inlineScript: az account show

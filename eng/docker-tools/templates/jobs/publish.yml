@@ -97,8 +97,6 @@ jobs:
       internalProjectName: ${{ parameters.internalProjectName }}
       args: >-
         copyAcrImages
-        '${{ parameters.publishConfig.BuildRegistry.subscription }}'
-        '${{ parameters.publishConfig.BuildRegistry.resourceGroup }}'
         '${{ parameters.publishConfig.BuildRegistry.repoPrefix }}'
         '${{ parameters.publishConfig.BuildRegistry.server }}'
         --os-type '*'

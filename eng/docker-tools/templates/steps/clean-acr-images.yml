@@ -5,7 +5,6 @@ parameters:
   age: null
   customArgs: "--dry-run"
   internalProjectName: null
-  publishConfig: null
 steps:
   - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
     parameters:
@@ -20,8 +19,6 @@ steps:
       args: >-
         cleanAcrImages
         ${{ parameters.repo }}
-        ${{ parameters.acr.subscription }}
-        ${{ parameters.acr.resourceGroup }}
         ${{ parameters.acr.server }}
         --action ${{ parameters.action }}
         --age ${{ parameters.age }}
