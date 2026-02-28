@@ -53,35 +53,44 @@ stages:
       InternalMirrorRegistry:
         server: $(acr-staging-test.server)
         repoPrefix: $(internalMirrorRepoPrefix)
-        resourceGroup: $(testResourceGroup)
-        subscription: $(testSubscription)
-        serviceConnection:
-          name: $(internal-mirror-test.serviceConnectionName)
-          id: $(internal-mirror-test.serviceConnection.id)
-          clientId: $(internal-mirror-test.serviceConnection.clientId)
-          tenantId: $(testTenant)
 
       PublicMirrorRegistry:
         server: $(public-mirror.server)
         repoPrefix: $(publicMirrorRepoPrefix)
-        resourceGroup: $(public-mirror.resourceGroup)
-        subscription: $(public-mirror.subscription)
-        serviceConnection:
-          name: $(public-mirror.serviceConnectionName)
-          id: $(public-mirror.serviceConnection.id)
-          tenantId: $(public-mirror.serviceConnection.tenantId)
-          clientId: $(public-mirror.serviceConnection.clientId)
 
       BuildRegistry:
         server: $(acr-staging-test.server)
-        resourceGroup: $(testResourceGroup)
-        subscription: $(testSubscription)
         repoPrefix: "${{ parameters.stagingRepoPrefix }}${{ parameters.sourceBuildPipelineRunId }}/"
-        serviceConnection:
-          name: $(build-test.serviceConnectionName)
-          id: $(build-test.serviceConnection.id)
-          clientId: $(build-test.serviceConnection.clientId)
-          tenantId: $(testTenant)
+
+      PublishRegistry:
+        server: $(acr-test.server)
+        repoPrefix: "${{ parameters.publishRepoPrefix }}"
+
+      RegistryAuthentication:
+        - server: $(acr-staging-test.server)
+          resourceGroup: $(testResourceGroup)
+          subscription: $(testSubscription)
+          serviceConnection:
+            name: $(build-test.serviceConnectionName)
+            id: $(build-test.serviceConnection.id)
+            clientId: $(build-test.serviceConnection.clientId)
+            tenantId: $(testTenant)
+        - server: $(public-mirror.server)
+          resourceGroup: $(public-mirror.resourceGroup)
+          subscription: $(public-mirror.subscription)
+          serviceConnection:
+            name: $(public-mirror.serviceConnectionName)
+            id: $(public-mirror.serviceConnection.id)
+            tenantId: $(public-mirror.serviceConnection.tenantId)
+            clientId: $(public-mirror.serviceConnection.clientId)
+        - server: $(acr-test.server)
+          resourceGroup: $(testResourceGroup)
+          subscription: $(testSubscription)
+          serviceConnection:
+            name: $(publish-test.serviceConnectionName)
+            id: $(publish-test.serviceConnection.id)
+            clientId: $(publish-test.serviceConnection.clientId)
+            tenantId: $(testTenant)
 
       cleanServiceConnection:
         name: $(clean-test.serviceConnectionName)
@@ -94,14 +103,3 @@ stages:
         id: $(test-nonprod.serviceConnection.id)
         clientId: $(test-nonprod.serviceConnection.clientId)
         tenantId: $(testTenant)
-
-      PublishRegistry:
-        server: $(acr-test.server)
-        resourceGroup: $(testResourceGroup)
-        subscription: $(testSubscription)
-        repoPrefix: "${{ parameters.publishRepoPrefix }}"
-        serviceConnection:
-          name: $(publish-test.serviceConnectionName)
-          id: $(publish-test.serviceConnection.id)
-          clientId: $(publish-test.serviceConnection.clientId)
-          tenantId: $(testTenant)

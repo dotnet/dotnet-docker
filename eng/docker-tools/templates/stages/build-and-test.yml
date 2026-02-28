@@ -3,11 +3,13 @@ parameters:
   testMatrixType: platformVersionedOs
   buildMatrixCustomBuildLegGroupArgs: ""
   testMatrixCustomBuildLegGroupArgs: ""
-  customCopyBaseImagesInitSteps: []
-  customGenerateMatrixInitSteps: []
   # Custom steps to set up ImageBuilder instead of pulling from MCR (e.g., bootstrap from source).
   # Runs before ImageBuilder pull. If non-empty, skips the default ImageBuilder pull.
   customInitSteps: []
+  # Custom steps that run after ImageBuilder is set up but before copy-base-images runs.
+  customCopyBaseImagesInitSteps: []
+  # Custom steps that run after ImageBuilder is set up but before matrix generation runs.
+  customGenerateMatrixInitSteps: []
   # Custom steps that run after ImageBuilder is set up but before the build starts.
   # Use for build-specific initialization (e.g., setting variables, additional setup).
   customBuildInitSteps: []
