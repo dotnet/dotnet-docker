@@ -3,8 +3,6 @@ parameters:
   type: object
   default:
     server: ""
-    subscription: ""
-    resourceGroup: ""
     repoPrefix: ""
 - name: additionalOptions
   type: string
@@ -29,8 +27,6 @@ steps:
     # error
     args: >-
       copyBaseImages
-      '${{ parameters.acr.subscription }}'
-      '${{ parameters.acr.resourceGroup }}'
       $(dockerHubRegistryCreds)
       $(customCopyBaseImagesArgs)
       --repo-prefix '${{ parameters.acr.repoPrefix }}'
