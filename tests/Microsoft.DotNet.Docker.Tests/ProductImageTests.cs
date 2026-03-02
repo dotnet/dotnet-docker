@@ -47,6 +47,13 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
+            if (imageData.OS.IsUnstable)
+            {
+                OutputHelper.WriteLine("Skipping insecure files check for unstable OS."
+                    + " Remove this check when https://github.com/dotnet/dotnet-docker/issues/7054 is resolved.");
+                return;
+            }
+
             string rootFsPath = imageData.IsDistroless ? "/rootfs" : "/";
 
             string worldWritableDirectoriesWithoutStickyBitCmd = $@"find {rootFsPath} -xdev -type d \( -perm -0002 -a ! -perm -1000 \)";
