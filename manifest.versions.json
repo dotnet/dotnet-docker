@@ -112,7 +112,7 @@
     "libicu|focal": 66,
     "libicu|jammy": 70,
     "libicu|noble": 74,
-    "libicu|resolute": 76,
+    "libicu|resolute": 78,
 
     "libssl|alpine3.22": "3",
     "libssl|alpine3.23": "3",
