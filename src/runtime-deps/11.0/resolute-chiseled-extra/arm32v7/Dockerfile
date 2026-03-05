@@ -33,7 +33,7 @@ RUN mkdir --parents /rootfs/var/lib/dpkg/ \
             ca-certificates_data \
             libc6_libs \
             libgcc-s1_libs \
-            libicu76_libs \
+            libicu78_libs \
             libssl3t64_libs \
             libstdc++6_libs \
             tzdata-legacy_zoneinfo \
