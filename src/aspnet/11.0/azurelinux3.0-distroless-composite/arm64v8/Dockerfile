@@ -10,16 +10,17 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=11.0.0-preview.2.26122.107 \
+RUN aspnetcore_version=11.0.0-preview.2.26155.102 \
+    && aspnetcore_file_version=11.0.0-preview.2.final \
     && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512 \
-    && sha512sum -c aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_file_version-linux-arm64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_file_version-linux-arm64.tar.gz.sha512 \
+    && echo "$(cat aspnetcore-runtime-composite-$aspnetcore_file_version-linux-arm64.tar.gz.sha512)  aspnetcore-runtime-composite-$aspnetcore_file_version-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
-    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz --directory /usr/share/dotnet \
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_file_version-linux-arm64.tar.gz --directory /usr/share/dotnet \
     && rm \
-        aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
-        aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512
+        aspnetcore-runtime-composite-$aspnetcore_file_version-linux-arm64.tar.gz \
+        aspnetcore-runtime-composite-$aspnetcore_file_version-linux-arm64.tar.gz.sha512
 
 RUN mkdir /dotnet-symlink \
     && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
@@ -30,9 +31,9 @@ FROM $REPO:11.0.0-preview.2-azurelinux3.0-distroless-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-preview.2.26122.107 \
+    DOTNET_VERSION=11.0.0-preview.2.26155.102 \
     # ASP.NET Core version
-    ASPNET_VERSION=11.0.0-preview.2.26122.107
+    ASPNET_VERSION=11.0.0-preview.2.26155.102
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

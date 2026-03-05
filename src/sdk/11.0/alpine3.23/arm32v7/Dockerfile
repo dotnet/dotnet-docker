@@ -3,16 +3,17 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:11.0.0-preview.2-alpine3.23-arm32v7 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.2.26122.107 \
+RUN dotnet_sdk_version=11.0.100-preview.2.26155.102 \
+    && dotnet_sdk_file_version=11.0.100-preview.2.final \
     && wget \
-        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz \
-        https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz.sha512 \
-    && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz.sha512 \
+        https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_file_version-linux-musl-arm.tar.gz \
+        https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_file_version-linux-musl-arm.tar.gz.sha512 \
+    && echo "$(cat dotnet-sdk-$dotnet_sdk_file_version-linux-musl-arm.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_file_version-linux-musl-arm.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_file_version-linux-musl-arm.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
-        dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz \
-        dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz.sha512
+        dotnet-sdk-$dotnet_sdk_file_version-linux-musl-arm.tar.gz \
+        dotnet-sdk-$dotnet_sdk_file_version-linux-musl-arm.tar.gz.sha512
 
 
 # .NET SDK image
@@ -24,7 +25,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.2.26122.107 \
+    DOTNET_SDK_VERSION=11.0.100-preview.2.26155.102 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
