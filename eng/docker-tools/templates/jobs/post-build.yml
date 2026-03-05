@@ -3,6 +3,7 @@ parameters:
   internalProjectName: null
   publicProjectName: null
   customInitSteps: []
+  publishConfig: null
 
 jobs:
 - job: Build
@@ -18,6 +19,7 @@ jobs:
     parameters:
       dockerClientOS: linux
       customInitSteps: ${{ parameters.customInitSteps }}
+      publishConfig: ${{ parameters.publishConfig }}
   - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)

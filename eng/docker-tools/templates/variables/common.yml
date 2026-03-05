@@ -79,3 +79,11 @@ variables:
   value: 00000000-0000-0000-0000-000000000000
 - name: acr-staging.subscription
   value: 00000000-0000-0000-0000-000000000000
+
+# See https://devdiv.visualstudio.com/Engineering/_git/Sign?version=GBmain&path=/src/CertificateMappings.xml
+- name: microBuildSigningKeyCode.containers
+  value: 4512
+- name: microBuildSigningKeyCode.attestations
+  value: 4571
+- name: microBuildSigningKeyCode.testing
+  value: 2151

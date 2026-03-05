@@ -38,6 +38,11 @@ parameters:
   type: object
   default: {}
 
+# Enable container image signing
+- name: enableSigning
+  type: boolean
+  default: false
+
 
 stages:
 - template: ${{ parameters.stagesTemplate }}
@@ -103,3 +108,12 @@ stages:
         id: $(test-nonprod.serviceConnection.id)
         clientId: $(test-nonprod.serviceConnection.clientId)
         tenantId: $(testTenant)
+
+      Signing:
+        Enabled: ${{ parameters.enableSigning }}
+        ImageSigningKeyCode: $(microBuildSigningKeyCode.testing)
+        ReferrerSigningKeyCode: $(microBuildSigningKeyCode.testing)
+        # Use signType 'real' even for non-prod to actually sign with the test certificate.
+        # The 'test' signType skips signing entirely on linux; the test keycode provides a non-production certificate.
+        SignType: real
+        TrustStoreName: test
