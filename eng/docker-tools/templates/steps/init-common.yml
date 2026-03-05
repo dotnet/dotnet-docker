@@ -53,6 +53,12 @@ parameters:
   type: string
   default: "versions"
 
+# Path to an env file for docker --env-file.
+# Passed through to init-imagebuilder.yml.
+- name: envFilePath
+  type: string
+  default: ""
+
 steps:
 # Repository Checkout
 # Multi-repo checkout is used when a versions repository is needed for caching.
@@ -197,14 +203,14 @@ steps:
       TargetFolder: '$(Build.SourcesDirectory)'
 
 # Artifacts Path Configuration
-# Linux: Uses /artifacts inside the container, which is mounted to the host's
-#        Build.ArtifactStagingDirectory via docker run -v
+# Linux: Uses Build.ArtifactStagingDirectory directly so container and host paths match
+#        through an identity volume mount
 # Windows: Uses Build.ArtifactStagingDirectory directly since ImageBuilder runs
 #          as an extracted executable, not in a container
 - ${{ if eq(parameters.dockerClientOS, 'linux') }}:
   - script: |
-      echo "Setting artifactsPath to '/artifacts'"
-      echo "##vso[task.setvariable variable=artifactsPath]/artifacts"
+      echo "Setting artifactsPath to '$(Build.ArtifactStagingDirectory)'"
+      echo "##vso[task.setvariable variable=artifactsPath]$(Build.ArtifactStagingDirectory)"
     displayName: Define Artifacts Path Variable
     condition: and(succeeded(), ${{ parameters.condition }})
 - ${{ if eq(parameters.dockerClientOS, 'windows') }}:
@@ -245,3 +251,4 @@ steps:
       publishConfig: ${{ parameters.publishConfig }}
       condition: ${{ parameters.condition }}
       customInitSteps: ${{ parameters.customInitSteps }}
+      envFilePath: ${{ parameters.envFilePath }}

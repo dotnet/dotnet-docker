@@ -4,6 +4,16 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-03-04: Pre-build validation gated by `preBuildTestScriptPath` variable
+
+The `PreBuildValidation` job condition now checks the new `preBuildTestScriptPath` variable instead of `testScriptPath`.
+This allows repos to independently control whether pre-build validation runs, without affecting functional tests.
+
+The new variable defaults to `$(testScriptPath)`, so existing repos that have pre-build tests are not affected.
+Repos that do not have pre-build tests can set `preBuildTestScriptPath` to `""` to skip the job entirely.
+
+---
+
 ## 2026-02-19: Separate Registry Endpoints from Authentication
 
 - Pull request: [#1945](https://github.com/dotnet/docker-tools/pull/1945)
