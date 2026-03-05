@@ -73,6 +73,6 @@ for more details on all of the supported options for publishing .NET apps.
 [`runtime-deps:10.0`]:                      https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble
 [`runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled
 [`runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled-extra
-[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.22
-[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22
-[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.22-extra
+[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.23
+[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.23
+[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.23-extra
