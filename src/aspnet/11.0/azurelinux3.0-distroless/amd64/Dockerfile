@@ -10,22 +10,23 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=11.0.0-preview.2.26122.107 \
+RUN aspnetcore_version=11.0.0-preview.2.26155.102 \
+    && aspnetcore_file_version=11.0.0-preview.2.final \
     && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz.sha512 \
-    && sha512sum -c aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_file_version-linux-x64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_file_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat aspnetcore-runtime-$aspnetcore_file_version-linux-x64.tar.gz.sha512)  aspnetcore-runtime-$aspnetcore_file_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-$aspnetcore_file_version-linux-x64.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
     && rm \
-        aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
-        aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz.sha512
+        aspnetcore-runtime-$aspnetcore_file_version-linux-x64.tar.gz \
+        aspnetcore-runtime-$aspnetcore_file_version-linux-x64.tar.gz.sha512
 
 
 # ASP.NET Core image
 FROM $REPO:11.0.0-preview.2-azurelinux3.0-distroless-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-preview.2.26122.107
+ENV ASPNET_VERSION=11.0.0-preview.2.26155.102
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
