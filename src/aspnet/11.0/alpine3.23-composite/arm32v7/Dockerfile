@@ -22,9 +22,9 @@ FROM $REPO:11.0.0-preview.2-alpine3.23-arm32v7
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-preview.2.26155.102 \
+    DOTNET_VERSION=11.0.0-preview.2.final \
     # ASP.NET Core version
-    ASPNET_VERSION=11.0.0-preview.2.26155.102
+    ASPNET_VERSION=11.0.0-preview.2.final
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
