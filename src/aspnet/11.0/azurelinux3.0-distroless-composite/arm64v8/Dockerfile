@@ -31,9 +31,9 @@ FROM $REPO:11.0.0-preview.2-azurelinux3.0-distroless-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-preview.2.26155.102 \
+    DOTNET_VERSION=11.0.0-preview.2.final \
     # ASP.NET Core version
-    ASPNET_VERSION=11.0.0-preview.2.26155.102
+    ASPNET_VERSION=11.0.0-preview.2.final
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
