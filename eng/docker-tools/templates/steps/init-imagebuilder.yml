@@ -21,6 +21,13 @@ parameters:
   type: stepList
   default: []
 
+# Path to an env file for docker --env-file.
+# When set, --env-file is added to the docker run commands so the container
+# receives the environment variables defined in the file.
+- name: envFilePath
+  type: string
+  default: ""
+
 steps:
 # Custom ImageBuilder setup (e.g., bootstrap from source)
 - ${{ if gt(length(parameters.customInitSteps), 0) }}:
@@ -60,6 +67,7 @@ steps:
 - template: /eng/docker-tools/templates/steps/generate-appsettings.yml@self
   parameters:
     publishConfig: ${{ parameters.publishConfig }}
+    artifactStagingDirectory: $(artifactsPath)
     condition: ${{ parameters.condition }}
 
 # On Linux, build the "withrepo" image that includes the repo's source code.
@@ -96,18 +104,20 @@ steps:
           "-v $(Build.ArtifactStagingDirectory):$(artifactsPath)"
           "-w /repo"
           "$(imageBuilderDockerRunExtraOptions)"
-          "$(imageNames.imageBuilder.withrepo)"
         )
+
+        $envFilePath = "${{ parameters.envFilePath }}"
+        if ($envFilePath) {
+          $dockerRunArgs += "--env-file $envFilePath"
+        }
 
         $authedDockerRunArgs = @(
-          '-e'
-          'SYSTEM_ACCESSTOKEN=$env:SYSTEM_ACCESSTOKEN'
-          '-e'
-          'SYSTEM_OIDCREQUESTURI=$env:SYSTEM_OIDCREQUESTURI'
+          "-e", 'SYSTEM_ACCESSTOKEN'
+          "-e", 'SYSTEM_OIDCREQUESTURI'
         )
 
-        $dockerRunCmd = $dockerRunBaseCmd + $dockerRunArgs
-        $authedDockerRunCmd = $dockerRunBaseCmd + $authedDockerRunArgs + $dockerRunArgs
+        $dockerRunCmd = $dockerRunBaseCmd + $dockerRunArgs + @("$(imageNames.imageBuilder.withrepo)")
+        $authedDockerRunCmd = $dockerRunBaseCmd + $authedDockerRunArgs + $dockerRunArgs + @("$(imageNames.imageBuilder.withrepo)")
 
         $runImageBuilderCmd = $($dockerRunCmd -join ' ')
         $runAuthedImageBuilderCmd = $($authedDockerRunCmd -join ' ')
