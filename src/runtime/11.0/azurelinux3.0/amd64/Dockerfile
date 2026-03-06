@@ -25,7 +25,7 @@ RUN dotnet_version=11.0.0-preview.2.26155.102 \
 FROM $REPO:11.0.0-preview.2-azurelinux3.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-preview.2.26155.102
+ENV DOTNET_VERSION=11.0.0-preview.2.final
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
