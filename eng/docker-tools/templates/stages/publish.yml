@@ -33,39 +33,36 @@ stages:
   ${{ if eq(parameters.isStandalonePublish, true) }}:
     dependsOn: []
   ${{ else }}:
-    ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
-      dependsOn: Test
-    ${{ else }}:
-      dependsOn: Post_Build
+    dependsOn:
+    - ${{ if eq(parameters.publishConfig.Signing.Enabled, true) }}:
+      - Sign
+    - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+      - Test
+    - ${{ else }}:
+      - Post_Build
+  # Run when all of the following are true:
+  # 1. The pipeline has not been canceled.
+  # 2. The stages variable includes 'publish'.
+  # 3. Either signing is not enabled, or the Sign stage succeeded.
+  # 4. Either the stages variable does not include 'build', or Post_Build succeeded.
+  # 5. Either the stages variable does not include 'test', or Test succeeded/was skipped.
   condition: "
     and(
       not(canceled()),
-      and(
-        contains(variables['stages'], 'publish'),
-        or(
-          or(
-            and(
-              and(
-                contains(variables['stages'], 'build'),
-                succeeded('Post_Build')),
-              and(
-                contains(variables['stages'], 'test'),
-                in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
-            or(
-              and(
-                not(contains(variables['stages'], 'build')),
-                and(
-                  contains(variables['stages'], 'test'),
-                  in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped'))),
-              and(
-                not(contains(variables['stages'], 'test')),
-                and(
-                  contains(variables['stages'], 'build'),
-                  succeeded('Post_Build'))))),
-          not(
-            or(
-              contains(variables['stages'], 'build'),
-              contains(variables['stages'], 'test'))))))"
+      contains(variables['stages'], 'publish'),
+      or(
+        ne(lower('${{ parameters.publishConfig.Signing.Enabled }}'), 'true'),
+        in(dependencies.Sign.result, 'Succeeded', 'SucceededWithIssues')
+      ),
+      or(
+        not(contains(variables['stages'], 'build')),
+        succeeded('Post_Build')
+      ),
+      or(
+        not(contains(variables['stages'], 'test')),
+        in(dependencies.Test.result, 'Succeeded', 'SucceededWithIssues', 'Skipped')
+      )
+    )"
   jobs:
   - template: /eng/docker-tools/templates/jobs/publish.yml@self
     parameters:

@@ -220,6 +220,33 @@ stages:
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
       customInitSteps: ${{ parameters.customInitSteps }}
+      publishConfig: ${{ parameters.publishConfig }}
+
+################################################################################
+# Sign Images
+################################################################################
+- ${{ if eq(parameters.publishConfig.Signing.Enabled, true) }}:
+  - stage: Sign
+    dependsOn: Post_Build
+    condition: "
+      and(
+        ne(stageDependencies.Post_Build.outputs['Build.MergeImageInfoFiles.noImageInfos'], 'true'),
+        and(
+          contains(variables['stages'], 'sign'),
+          or(
+            and(
+              succeeded(),
+              contains(variables['stages'], 'build')),
+            not(contains(variables['stages'], 'build')))))"
+    jobs:
+    - template: /eng/docker-tools/templates/jobs/sign-images.yml@self
+      parameters:
+        pool: ${{ parameters.linuxAmd64Pool }}
+        internalProjectName: ${{ parameters.internalProjectName }}
+        publicProjectName: ${{ parameters.publicProjectName }}
+        customInitSteps: ${{ parameters.customInitSteps }}
+        publishConfig: ${{ parameters.publishConfig }}
+        sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
 
 ################################################################################
 # Test Images
