@@ -8,9 +8,12 @@
         find(buildVersion, "alpha") < 0
         && find(buildVersion, "preview") < 0
         && find(buildVersion, "rc.") < 0 ^
+    set useFinalVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|use-final-version")] = "true" ^
     set runtimeVersion to when(isStableBranding,
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        buildVersion)
+        when(useFinalVersion,
+            cat(VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")], ".final"),
+            buildVersion))
 
 }}# .NET Runtime version
 {{if ARGS["is-standalone"]:ENV }}DOTNET_VERSION={{runtimeVersion}}
