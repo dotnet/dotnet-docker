@@ -9,14 +9,10 @@
     Updates the internal Dockerfile baselines by running the snapshot tests and accepting the changes.
 
 .DESCRIPTION
-    This script automates the workflow described in CONTRIBUTING.md for verifying internal Dockerfiles.
-    It runs the VerifyInternalDockerfilesOutput pre-build tests to generate updated baseline files,
-    then accepts the changes by renaming .received.txt files to .approved.txt.
-
-    Steps performed:
-    1. Runs the pre-build tests filtered to VerifyInternalDockerfilesOutput.
-    2. If the tests fail (baselines changed), accepts the new baselines.
-    3. Displays the git diff of updated baseline files for review.
+    Internal Dockerfiles are validated using snapshot testing. This script runs the
+    VerifyInternalDockerfilesOutput pre-build tests to generate updated baseline files,
+    accepts the changes by renaming .received.txt files to .approved.txt, and displays
+    the git diff for review.
 
 .EXAMPLE
     ./tests/update-internal-baselines.ps1
