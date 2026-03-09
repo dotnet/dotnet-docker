@@ -70,6 +70,7 @@ static class TemplateDefinitions
     private static readonly Dictionary<string, Func<TemplateContext>> s_templateContexts = new()
     {
         ["alpine-floating-tag-update.md"] = AlpineFloatingTagTemplateParameters.ContextFactory,
+        ["alpine-remove-version.md"] = AlpineVersionEolTemplateParameters.ContextFactory,
     };
 
     public static TemplateContext GetTemplateContext(FileInfo templateFileInfo)
@@ -185,6 +186,69 @@ sealed record AlpineFloatingTagTemplateParameters(
             eolDate.ToDateTime(TimeOnly.MinValue),
             publishDiscussionUrl,
             dotnetExampleVersion);
+    }
+}
+
+sealed record AlpineVersionEolTemplateParameters(
+    string RemovedVersion,
+    string ReplacementVersion,
+    string NewestVersion,
+    DateTime EolDate,
+    DateTime ReplacementReleaseDate,
+    string ReplacementDiscussionUrl,
+    string DotnetExampleVersion1,
+    string DotnetExampleVersion2)
+{
+    public static Func<TemplateContext> ContextFactory { get; } = () =>
+    {
+        var model = PromptForInput();
+        return new TemplateContext(model);
+    };
+
+    public static AlpineVersionEolTemplateParameters PromptForInput()
+    {
+        var removedVersion = AnsiConsole.Prompt(
+            new TextPrompt<string>("Alpine version being removed:")
+                .DefaultValue("3.XX"));
+
+        var replacementVersion = AnsiConsole.Prompt(
+            new TextPrompt<string>($"Primary Alpine version to upgrade to:")
+                .DefaultValue("3.XX"));
+
+        var newestVersion = AnsiConsole.Prompt(
+            new TextPrompt<string>("[grey][[Optional]][/] Newest Alpine version (if different from replacement):")
+                .DefaultValue("")
+                .AllowEmpty());
+
+        var eolDate = AnsiConsole.Prompt(
+            new TextPrompt<DateOnly>($"Date Alpine {removedVersion} images stop being maintained:")
+                .DefaultValue(DateOnly.GetPatchTuesday(0)));
+
+        var replacementReleaseDate = AnsiConsole.Prompt(
+            new TextPrompt<DateOnly>($"When were Alpine {replacementVersion} images released?")
+                .DefaultValue(DateOnly.GetPatchTuesday(-3)));
+
+        const string DiscussionQueryLink = "https://github.com/dotnet/dotnet-docker/discussions/categories/announcements?discussions_q=is%3Aopen+category%3AAnnouncements+alpine";
+        var replacementDiscussionUrl = AnsiConsole.Prompt(
+            new TextPrompt<string>($"Link to announcement for Alpine {replacementVersion} image release (see {DiscussionQueryLink}):"));
+
+        var dotnetExampleVersion1 = AnsiConsole.Prompt(
+            new TextPrompt<string>("First .NET example version for tags:")
+                .DefaultValue("8.0"));
+
+        var dotnetExampleVersion2 = AnsiConsole.Prompt(
+            new TextPrompt<string>("Second .NET example version for tags:")
+                .DefaultValue("9.0"));
+
+        return new AlpineVersionEolTemplateParameters(
+            removedVersion,
+            replacementVersion,
+            newestVersion,
+            eolDate.ToDateTime(TimeOnly.MinValue),
+            replacementReleaseDate.ToDateTime(TimeOnly.MinValue),
+            replacementDiscussionUrl,
+            dotnetExampleVersion1,
+            dotnetExampleVersion2);
     }
 }
 
