@@ -347,11 +347,20 @@ namespace Microsoft.DotNet.Docker.Tests
                 || sdkBuildVersion.Contains("-servicing")
                 || sdkBuildVersion.Contains("-rtm");
 
-            string sdkVersionFile = isStableBranding
-                ? Config.GetVariableValue($"sdk|{dotnetVersion}|product-version")
-                : sdkBuildVersion;
+            if (isStableBranding)
+            {
+                return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version");
+            }
 
-            return sdkVersionFile;
+            bool useFinalVersion =
+                Config.TryGetVariableValue($"sdk|{dotnetVersion}|use-final-version", out string finalFlag)
+                && finalFlag == "true";
+            if (useFinalVersion)
+            {
+                return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version") + ".final";
+            }
+
+            return sdkBuildVersion;
         }
 
         private string GetSdkUrl(ProductImageData imageData)

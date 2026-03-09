@@ -9,9 +9,12 @@
         && find(buildVersion, "preview") < 0
         && find(buildVersion, "rc.") < 0 ^
 
+    set useFinalVersion to VARIABLES[cat("sdk|", dotnetVersion, "|use-final-version")] = "true" ^
     set sdkVersion to when(isStableBranding,
         VARIABLES[cat("sdk|", dotnetVersion, "|product-version")],
-        VARIABLES[cat("sdk|", dotnetVersion, "|build-version")]) ^
+        when(useFinalVersion,
+            cat(VARIABLES[cat("sdk|", dotnetVersion, "|product-version")], ".final"),
+            VARIABLES[cat("sdk|", dotnetVersion, "|build-version")])) ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\") ^

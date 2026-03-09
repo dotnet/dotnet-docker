@@ -10,8 +10,9 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '11.0.0-preview.2.26155.113'; `
-        $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
+        $aspnetcore_version = '11.0.0-preview.2.26158.102'; `
+        $aspnetcore_file_version = '11.0.0-preview.2.final'; `
+        $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_file_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
         `
         Invoke-WebRequest -OutFile $aspnetcore_file https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/$aspnetcore_file; `
@@ -33,6 +34,6 @@ RUN powershell -Command `
 FROM $REPO:11.0.0-preview.2-windowsservercore-ltsc2025
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-preview.2.26155.113
+ENV ASPNET_VERSION=11.0.0-preview.2.final
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
