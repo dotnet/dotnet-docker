@@ -9,13 +9,20 @@
         && find(buildVersion, "preview") < 0
         && find(buildVersion, "rc.") < 0 ^
 
+    set useFinalVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|use-final-version")] = "true" ^
+    set productVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")] ^
+
     set runtimeVersion to when(isStableBranding,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]) ^
+        productVersion,
+        when(useFinalVersion,
+            cat(productVersion, ".final"),
+            VARIABLES[cat("runtime|", dotnetVersion, "|build-version")])) ^
 
     set aspnetVersion to when(isStableBranding,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")]) ^
+        productVersion,
+        when(useFinalVersion,
+            cat(productVersion, ".final"),
+            VARIABLES[cat("aspnet|", dotnetVersion, "|build-version")])) ^
 
     set isWindows to find(OS_VERSION, "nanoserver") >= 0 || find(OS_VERSION, "windowsservercore") >= 0 ^
     set lineContinuation to when(isWindows, "`", "\") ^

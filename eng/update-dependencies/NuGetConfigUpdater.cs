@@ -89,10 +89,16 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         return builder.ToString();
     }
 
+    /// <summary>
+    /// Updates the packageSourceCredentials section of the NuGet.config for the current version's package source.
+    /// Credentials are only needed for internal, non-public-preview builds which use authenticated feeds.
+    /// Public preview builds use public feeds, so their credentials are removed if present.
+    /// Only the current version's entry is modified — other versions' credentials are left intact.
+    /// </summary>
     private void UpdatePackageSourceCredentials(DotNetVersion sdkVersion, string pkgSrcName, XElement configuration)
     {
         XElement? pkgSourceCreds = configuration.Element("packageSourceCredentials");
-        if (_options.IsInternal && !sdkVersion.IsPublicPreview)
+        if (_options.IsInternal)
         {
             pkgSourceCreds = GetOrCreateXObject(
                 pkgSourceCreds,
@@ -108,7 +114,14 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         }
         else
         {
-            pkgSourceCreds?.Remove();
+            // Only remove the credentials entry for the current version's package source,
+            // leaving credentials for other versions intact (e.g. a non-preview version
+            // may still need authenticated access even if this preview version doesn't).
+            pkgSourceCreds?.Element(pkgSrcName)?.Remove();
+            if (pkgSourceCreds is not null && !pkgSourceCreds.HasElements)
+            {
+                pkgSourceCreds.Remove();
+            }
         }
     }
 
@@ -123,13 +136,10 @@ internal class NuGetConfigUpdater : IDependencyUpdater
                 createNode: () => new XElement("packageSources")
             );
 
-            // Public preview versions have builds and NuGet feeds in the public prior to release.
-            string project = sdkVersion.IsPublicPreview ? "public" : "internal";
-
             UpdateAddElement(
                 parentElement: pkgSources,
                 key: pkgSrcName,
-                value: $"https://pkgs.dev.azure.com/dnceng/{project}/_packaging/{sdkVersion}-shipping/nuget/v3/index.json"
+                value: $"https://pkgs.dev.azure.com/dnceng/internal/_packaging/{sdkVersion}-shipping/nuget/v3/index.json"
             );
         }
         else

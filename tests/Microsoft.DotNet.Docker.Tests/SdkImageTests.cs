@@ -14,8 +14,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
-using SharpCompress.Common;
-using SharpCompress.Readers;
+using System.Formats.Tar;
+using System.IO.Compression;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -148,8 +148,8 @@ namespace Microsoft.DotNet.Docker.Tests
             IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
             IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
-            using TempFileContext actualFilesContext = FileHelper.UseTempFile();
-            using TempFileContext expectedFilesContext = FileHelper.UseTempFile();
+            using TempFileContext actualFilesContext = FileHelper.UseTempFile("container-image");
+            using TempFileContext expectedFilesContext = FileHelper.UseTempFile("sdk-archive");
 
             File.WriteAllLines(actualFilesContext.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
             File.WriteAllLines(expectedFilesContext.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
@@ -234,7 +234,16 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 dotnetPath = "/usr/share/dotnet";
                 destinationPath = "/sdk";
-                command = $"find {destinationPath} -type f -exec sha512sum {{}} +";
+                
+                // Alpine's BusyBox find doesn't support comma-separated types (-type f,l)
+                if (imageData.SdkOS.Family == OSFamily.Alpine)
+                {
+                    command = $"find {destinationPath} ( -type f -o -type l ) -exec sha512sum {{}} +";
+                }
+                else
+                {
+                    command = $"find {destinationPath} -type f,l -exec sha512sum {{}} +";
+                }
             }
             else
             {
@@ -280,23 +289,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 .OrderBy(fileInfo => fileInfo.Path);
         }
 
-        private static IEnumerable<SdkContentFileInfo> EnumerateArchiveContents(string path)
-        {
-            using FileStream fileStream = File.OpenRead(path);
-            using IReader reader = ReaderFactory.Open(fileStream);
-            using TempFolderContext tempFolderContext = FileHelper.UseTempFolder();
-            reader.WriteAllToDirectory(tempFolderContext.Path, new ExtractionOptions() { ExtractFullPath = true });
-
-            foreach (FileInfo file in new DirectoryInfo(tempFolderContext.Path).EnumerateFiles("*", SearchOption.AllDirectories))
-            {
-                using SHA512 sha512 = SHA512.Create();
-                byte[] sha512HashBytes = sha512.ComputeHash(File.ReadAllBytes(file.FullName));
-                string sha512Hash = BitConverter.ToString(sha512HashBytes).Replace("-", string.Empty);
-                yield return new SdkContentFileInfo(
-                    file.FullName.Substring(tempFolderContext.Path.Length), sha512Hash);
-            }
-        }
-
         private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
         {
             string sdkUrl = GetSdkUrl(imageData);
@@ -312,7 +304,31 @@ namespace Microsoft.DotNet.Docker.Tests
                     await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
                 });
 
-                files = EnumerateArchiveContents(sdkFile)
+                using TempFolderContext extractFolder = FileHelper.UseTempFolder();
+
+                if (Path.GetExtension(sdkUrl).Equals(".zip", StringComparison.OrdinalIgnoreCase))
+                {
+                    ZipFile.ExtractToDirectory(sdkFile, extractFolder.Path);
+                }
+                else
+                {
+                    using FileStream fileStream = File.OpenRead(sdkFile);
+                    using var gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
+                    TarFile.ExtractToDirectory(gzipStream, extractFolder.Path, overwriteFiles: false);
+                }
+
+                files = Directory.EnumerateFiles(extractFolder.Path, "*", SearchOption.AllDirectories)
+                    .Select(file =>
+                    {
+                        string filePath = Path.GetFullPath(file);
+                        string relativePath = Path.GetRelativePath(extractFolder.Path, filePath);
+
+                        byte[] fileData = File.ReadAllBytes(filePath);
+                        byte[] sha512HashBytes = SHA512.HashData(fileData);
+                        string sha512Hash = Convert.ToHexString(sha512HashBytes);
+
+                        return new SdkContentFileInfo(relativePath, sha512Hash);
+                    })
                     .OrderBy(file => file.Path)
                     .ToArray();
 
@@ -331,11 +347,20 @@ namespace Microsoft.DotNet.Docker.Tests
                 || sdkBuildVersion.Contains("-servicing")
                 || sdkBuildVersion.Contains("-rtm");
 
-            string sdkVersionFile = isStableBranding
-                ? Config.GetVariableValue($"sdk|{dotnetVersion}|product-version")
-                : sdkBuildVersion;
+            if (isStableBranding)
+            {
+                return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version");
+            }
 
-            return sdkVersionFile;
+            bool useFinalVersion =
+                Config.TryGetVariableValue($"sdk|{dotnetVersion}|use-final-version", out string finalFlag)
+                && finalFlag == "true";
+            if (useFinalVersion)
+            {
+                return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version") + ".final";
+            }
+
+            return sdkBuildVersion;
         }
 
         private string GetSdkUrl(ProductImageData imageData)

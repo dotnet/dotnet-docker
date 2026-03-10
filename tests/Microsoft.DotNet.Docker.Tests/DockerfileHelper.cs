@@ -19,8 +19,8 @@ public static partial class DockerfileHelper
     [GeneratedRegex("[A-Fa-f0-9]{64}")]
     public static partial Regex Sha256Regex { get; }
 
-    // Match versions like `1.2.3`, `1.2.3.4`, `1.2.3-foo.45678.9`, and `1.2.3-preview.4.56789.0`
-    [GeneratedRegex(@"\d+\.\d+\.\d+(\.\d+)?(-[A-Za-z]+(\.\d+)+)?")]
+    // Match versions like `1.2.3`, `1.2.3.4`, `1.2.3-foo.45678.9`, `1.2.3-preview.4.56789.0`, and `1.2.3-preview.4.final`
+    [GeneratedRegex(@"\d+\.\d+\.\d+(\.\d+)?(-[A-Za-z]+(\.\d+)+(\.final)?)?")]
     public static partial Regex VersionRegex { get; }
 
     // Match unstable versions that have been partially replaced with variables,

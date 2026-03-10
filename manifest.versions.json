@@ -4,12 +4,12 @@
 
     "base-url|public|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public|preview|main": "https://ci.dot.net/public",
     "base-url|public|preview|nightly": "https://ci.dot.net/public",
 
     "base-url|public-checksums|maintenance|main": "https://builds.dotnet.microsoft.com/dotnet",
     "base-url|public-checksums|maintenance|nightly": "https://builds.dotnet.microsoft.com/dotnet",
-    "base-url|public-checksums|preview|main": "https://builds.dotnet.microsoft.com/dotnet",
+    "base-url|public-checksums|preview|main": "https://ci.dot.net/public-checksums",
     "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
     "alpine|floating-tag-version": "alpine3.23",
@@ -37,10 +37,10 @@
     "aspnet|10.0|build-version": "10.0.3",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
-    "aspnet|11.0|build-version": "11.0.0-preview.1.26104.118",
+    "aspnet|11.0|build-version": "11.0.0-preview.2.26155.102",
     "aspnet-composite|11.0|build-version": "$(aspnet|11.0|build-version)",
 
-    "chisel|latest|build-version": "v1.3.0",
+    "chisel|latest|build-version": "v1.4.0",
     "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/$(chisel|latest|build-version)/chisel_$(chisel|latest|build-version)_linux_amd64.tar.gz",
     "chisel|latest|arm|url": "https://github.com/canonical/chisel/releases/download/$(chisel|latest|build-version)/chisel_$(chisel|latest|build-version)_linux_arm.tar.gz",
     "chisel|latest|arm64|url": "https://github.com/canonical/chisel/releases/download/$(chisel|latest|build-version)/chisel_$(chisel|latest|build-version)_linux_arm64.tar.gz",
@@ -58,12 +58,12 @@
     "chisel|8.0|arm|url": "$(chisel|latest|arm|url)",
     "chisel|8.0|arm64|url": "$(chisel|latest|arm64|url)",
 
-    "chisel|latest|x64|sha384": "8a5a6831251828fcd9ce8c9a47fca941d8763b7c80c16da784e2b1bf830ba606ab848f3886ce5945a3c2fc5e719c77e9",
-    "chisel|latest|arm|sha384": "fbfabeea4adabd7c3f7fc5b9bd09636200d68091ad3fa4cf901fd5567285b60fb0c8a4bc54e558bac3921ecf9679e7fb",
-    "chisel|latest|arm64|sha384": "5e5ae3083ecb59c314fbee290263ccc7417016798943fb533f01737918d38c35d21d683c5fe89e6fd3488af90ec7c83b",
-    "chisel|11.0|x64|sha384": "e6d3210880eab61524dd83768278afffeb42ec49820b4263a2c5d9f5898c07ee3cbcb4699bae7878370c965b32527820",
-    "chisel|11.0|arm|sha384": "5edcb99020507325747b00314b85b6cf321238b99ebd5f3e6fe9f2315723c54f1b18fe066f5f9d55fe79bf1862d70997",
-    "chisel|11.0|arm64|sha384": "bc2caf1fac6463982ff0770ae5e7aa51f37307d281c1ca56d3ef9068c30434b254dc72739f7d2689a2e7975923eff1ff",
+    "chisel|latest|x64|sha384": "e6d3210880eab61524dd83768278afffeb42ec49820b4263a2c5d9f5898c07ee3cbcb4699bae7878370c965b32527820",
+    "chisel|latest|arm|sha384": "5edcb99020507325747b00314b85b6cf321238b99ebd5f3e6fe9f2315723c54f1b18fe066f5f9d55fe79bf1862d70997",
+    "chisel|latest|arm64|sha384": "bc2caf1fac6463982ff0770ae5e7aa51f37307d281c1ca56d3ef9068c30434b254dc72739f7d2689a2e7975923eff1ff",
+    "chisel|11.0|x64|sha384": "$(chisel|latest|x64|sha384)",
+    "chisel|11.0|arm|sha384": "$(chisel|latest|arm|sha384)",
+    "chisel|11.0|arm64|sha384": "$(chisel|latest|arm64|sha384)",
     "chisel|10.0|x64|sha384": "$(chisel|latest|x64|sha384)",
     "chisel|10.0|arm|sha384": "$(chisel|latest|arm|sha384)",
     "chisel|10.0|arm64|sha384": "$(chisel|latest|arm64|sha384)",
@@ -100,13 +100,14 @@
     "dotnet|10.0|base-url|checksums|main": "$(base-url|public|maintenance|main)",
     "dotnet|10.0|base-url|checksums|nightly": "$(base-url|public|maintenance|nightly)",
 
-    "dotnet|11.0|product-version": "11.0.0-preview.1",
+    "dotnet|11.0|product-version": "11.0.0-preview.2",
     "dotnet|11.0|fixed-tag": "$(dotnet|11.0|product-version)",
     "dotnet|11.0|minor-tag": "11.0-preview",
     "dotnet|11.0|base-url|main": "$(base-url|public|preview|main)",
     "dotnet|11.0|base-url|nightly": "$(base-url|public|preview|nightly)",
     "dotnet|11.0|base-url|checksums|main": "$(base-url|public-checksums|preview|main)",
     "dotnet|11.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
+    "dotnet|11.0|use-final-version": "true",
 
     "libicu|bookworm": 72,
     "libicu|bullseye": 67,
@@ -115,7 +116,6 @@
     "libicu|noble": 74,
     "libicu|resolute": 78,
 
-    "libssl|alpine3.22": "3",
     "libssl|alpine3.23": "3",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
@@ -217,7 +217,7 @@
     "runtime|8.0|build-version": "8.0.24",
     "runtime|9.0|build-version": "9.0.13",
     "runtime|10.0|build-version": "10.0.3",
-    "runtime|11.0|build-version": "11.0.0-preview.1.26104.118",
+    "runtime|11.0|build-version": "11.0.0-preview.2.26155.102",
 
     "sdk|8.0|build-version": "8.0.418",
     "sdk|8.0|product-version": "8.0.418",
@@ -246,17 +246,18 @@
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
 
-    "sdk|11.0|build-version": "11.0.100-preview.1.26104.118",
-    "sdk|11.0|product-version": "11.0.100-preview.1",
+    "sdk|11.0|build-version": "11.0.100-preview.2.26155.102",
+    "sdk|11.0|product-version": "11.0.100-preview.2",
     "sdk|11.0|base-url|main": "$(dotnet|11.0|base-url|main)",
     "sdk|11.0|base-url|nightly": "$(dotnet|11.0|base-url|nightly)",
     "sdk|11.0|base-url|checksums|main": "$(dotnet|11.0|base-url|checksums|main)",
     "sdk|11.0|base-url|checksums|nightly": "$(dotnet|11.0|base-url|checksums|nightly)",
+    "sdk|11.0|use-final-version": "$(dotnet|11.0|use-final-version)",
     "sdk|11.0|fixed-tag": "$(sdk|11.0|product-version)",
     "sdk|11.0|minor-tag": "$(dotnet|11.0|minor-tag)",
 
     "syft|repo": "anchore/syft",
-    "syft|version": "v1.41.1",
+    "syft|version": "v1.42.1",
     "syft|tag": "$(syft|version)-debug"
   }
 }
