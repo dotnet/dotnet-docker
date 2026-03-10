@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm64v8/buildpack-deps:resolute-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.2.26155.102 \
+RUN dotnet_sdk_version=11.0.100-preview.2.26159.112 \
     && dotnet_sdk_file_version=11.0.100-preview.2.final \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_file_version-linux-arm64.tar.gz \

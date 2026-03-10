@@ -25,7 +25,7 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '11.0.100-preview.2.26155.102'; `
+        $dotnet_sdk_version = '11.0.100-preview.2.26159.112'; `
         $dotnet_sdk_file_version = '11.0.100-preview.2.final'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_file_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `

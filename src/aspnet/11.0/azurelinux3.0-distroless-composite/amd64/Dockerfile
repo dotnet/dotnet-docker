@@ -10,7 +10,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=11.0.0-preview.2.26155.102 \
+RUN aspnetcore_version=11.0.0-preview.2.26159.112 \
     && aspnetcore_file_version=11.0.0-preview.2.final \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_file_version-linux-x64.tar.gz \
