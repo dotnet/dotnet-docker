@@ -8,9 +8,8 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '11.0.0-preview.2.26155.102'; `
-        $dotnet_file_version = '11.0.0-preview.2.final'; `
-        $dotnet_file = 'dotnet-runtime-' + $dotnet_file_version + '-win-x64.zip'; `
+        $dotnet_version = '11.0.0-preview.2.26159.112'; `
+        $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
         Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Runtime/$dotnet_version/$dotnet_file; `
@@ -37,7 +36,7 @@ ENV `
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true `
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-preview.2.final
+    DOTNET_VERSION=11.0.0-preview.2.26159.112
 
 # In order to set system PATH, ContainerAdministrator must be used
 USER ContainerAdministrator
