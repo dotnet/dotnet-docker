@@ -4,11 +4,11 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-preview.1.26104.118 \
+RUN dotnet_version=11.0.0-preview.2.26159.112 \
     && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512 \
-    && sha512sum -c dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512| tr 'A-F' 'a-f')  dotnet-runtime-$dotnet_version-linux-arm.tar.gz" | sha512sum -c - \
     && mkdir --parents /usr/share/dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-arm.tar.gz --directory /usr/share/dotnet \
     && rm \
@@ -20,10 +20,10 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:11.0.0-preview.1-resolute-chiseled-arm32v7
+FROM $REPO:11.0.0-preview.2-resolute-chiseled-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-preview.1.26104.118
+ENV DOTNET_VERSION=11.0.0-preview.2.26159.112
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

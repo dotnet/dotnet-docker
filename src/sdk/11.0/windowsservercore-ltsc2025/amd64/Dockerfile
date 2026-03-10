@@ -25,12 +25,12 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '11.0.100-preview.1.26104.118'; `
+        $dotnet_sdk_version = '11.0.100-preview.2.26159.112'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
-        $dotnet_sha512_file = $dotnet_file + '.sha512-bare'; `
+        $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
-        Invoke-WebRequest -OutFile $dotnet_file https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/$dotnet_file; `
-        Invoke-WebRequest -OutFile $dotnet_sha512_file https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/$dotnet_sha512_file; `
+        Invoke-WebRequest -OutFile $dotnet_file https://ci.dot.net/public/Sdk/$dotnet_sdk_version/$dotnet_file; `
+        Invoke-WebRequest -OutFile $dotnet_sha512_file https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/$dotnet_sha512_file; `
         `
         if ((Get-FileHash $dotnet_file -Algorithm sha512).Hash -ne (Get-Content $dotnet_sha512_file)) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
@@ -64,7 +64,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:11.0.0-preview.1-windowsservercore-ltsc2025
+FROM $REPO:11.0.0-preview.2-windowsservercore-ltsc2025
 
 ENV `
     # Do not generate certificate
@@ -72,7 +72,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.1.26104.118 `
+    DOTNET_SDK_VERSION=11.0.100-preview.2.26159.112 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

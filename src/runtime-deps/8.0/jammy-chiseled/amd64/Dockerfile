@@ -2,8 +2,8 @@ FROM amd64/buildpack-deps:jammy-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.3.0/chisel_v1.3.0_linux_amd64.tar.gz \
-    && chisel_sha384='8a5a6831251828fcd9ce8c9a47fca941d8763b7c80c16da784e2b1bf830ba606ab848f3886ce5945a3c2fc5e719c77e9' \
+RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.4.0/chisel_v1.4.0_linux_amd64.tar.gz \
+    && chisel_sha384='e6d3210880eab61524dd83768278afffeb42ec49820b4263a2c5d9f5898c07ee3cbcb4699bae7878370c965b32527820' \
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar --gzip --extract --no-same-owner --file chisel.tar.gz --directory /usr/bin/ \
     && rm chisel.tar.gz \

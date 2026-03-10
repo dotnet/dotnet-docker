@@ -46,7 +46,8 @@
       Public stable builds still use build versions for paths but stable versions for filenames.
       Public unstable builds use build versions for both paths and filenames. ^
     set isStableVersion to find(buildVersion, "alpha") < 0 && find(buildVersion, "preview") < 0 && find(buildVersion, "rc.") < 0 ^
-    set fileVersion to when(isStableVersion, productVersion, buildVersion) ^
+    set useFinalVersion to VARIABLES[cat(baseUrlType, "|", dotnetVersion, "|use-final-version")] = "true" ^
+    set fileVersion to when(isStableVersion, productVersion, when(useFinalVersion, cat(productVersion, ".final"), buildVersion)) ^
 
     set archiveExtension to when(isWindows, ".zip", ".tar.gz") ^
 
@@ -154,6 +155,16 @@
             "dotnet_sdk_build_version",
             "dotnet_build_version")),
         buildVersion
+    )^_
+}}}}{{if (useFinalVersion && !isStableVersion):{{lineEnd}}
+{{continue}}{{
+    assign(
+        when(product = "aspnet" || product = "aspnet-composite",
+            "aspnetcore_file_version",
+        when(product = "sdk",
+            "dotnet_sdk_file_version",
+            "dotnet_file_version")),
+        fileVersion
     )^_
 }}}}{{if runtimeVersion:{{lineEnd}}
 {{continue}}{{

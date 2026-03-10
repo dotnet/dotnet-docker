@@ -67,6 +67,20 @@ namespace Microsoft.DotNet.Docker.Tests
         public static string GetVariableValue(string variableName) =>
             GetVariableValue(variableName, (JObject)ManifestVersions.Value["variables"]);
 
+        public static bool TryGetVariableValue(string variableName, out string value)
+        {
+            var variables = (JObject)ManifestVersions.Value["variables"];
+            JToken token = variables[variableName];
+            if (token is null)
+            {
+                value = string.Empty;
+                return false;
+            }
+
+            value = ResolveVariables((string)token, variables);
+            return true;
+        }
+
         private static string GetVariableValue(string variableName, JObject variables) =>
             ResolveVariables((string)variables[variableName], variables);
 
