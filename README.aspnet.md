@@ -89,55 +89,55 @@ For more information, see the [composite images section in the Image Variants do
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-10.0.3-noble-amd64, 10.0-noble-amd64, 10.0.3-noble, 10.0-noble, 10.0.3, 10.0 | [Dockerfile](src/aspnet/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.3-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.3-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-composite-amd64, 10.0-noble-chiseled-composite-amd64, 10.0.3-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-composite-extra-amd64, 10.0-noble-chiseled-composite-extra-amd64, 10.0.3-noble-chiseled-composite-extra, 10.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
-10.0.3-alpine3.23-amd64, 10.0-alpine3.23-amd64, 10.0-alpine-amd64, 10.0.3-alpine3.23, 10.0-alpine3.23, 10.0-alpine | [Dockerfile](src/aspnet/10.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-extra-amd64, 10.0-alpine3.23-extra-amd64, 10.0-alpine-extra-amd64, 10.0.3-alpine3.23-extra, 10.0-alpine3.23-extra, 10.0-alpine-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-composite-amd64, 10.0-alpine3.23-composite-amd64, 10.0.3-alpine3.23-composite, 10.0-alpine3.23-composite | [Dockerfile](src/aspnet/10.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-composite-extra-amd64, 10.0-alpine3.23-composite-extra-amd64, 10.0.3-alpine3.23-composite-extra, 10.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-composite-extra/amd64/Dockerfile) | Alpine 3.23
-10.0.3-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.3-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/aspnet/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-amd64, 10.0-azurelinux3.0-distroless-amd64, 10.0.3-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-extra-amd64, 10.0-azurelinux3.0-distroless-extra-amd64, 10.0.3-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-composite-amd64, 10.0-azurelinux3.0-distroless-composite-amd64, 10.0.3-azurelinux3.0-distroless-composite, 10.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-composite-extra-amd64, 10.0-azurelinux3.0-distroless-composite-extra-amd64, 10.0.3-azurelinux3.0-distroless-composite-extra, 10.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
-9.0.13-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.13-bookworm-slim, 9.0-bookworm-slim, 9.0.13, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.13-alpine3.23-amd64, 9.0-alpine3.23-amd64, 9.0-alpine-amd64, 9.0.13-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-extra-amd64, 9.0-alpine3.23-extra-amd64, 9.0-alpine-extra-amd64, 9.0.13-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-composite-amd64, 9.0-alpine3.23-composite-amd64, 9.0.13-alpine3.23-composite, 9.0-alpine3.23-composite | [Dockerfile](src/aspnet/9.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-composite-extra-amd64, 9.0-alpine3.23-composite-extra-amd64, 9.0.13-alpine3.23-composite-extra, 9.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-composite-extra/amd64/Dockerfile) | Alpine 3.23
-9.0.13-noble-amd64, 9.0-noble-amd64, 9.0.13-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-amd64, 9.0-noble-chiseled-amd64, 9.0.13-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/aspnet/9.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-extra-amd64, 9.0-noble-chiseled-extra-amd64, 9.0.13-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-composite-amd64, 9.0-noble-chiseled-composite-amd64, 9.0.13-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-composite-extra-amd64, 9.0-noble-chiseled-composite-extra-amd64, 9.0.13-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
-9.0.13-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.13-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/aspnet/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-amd64, 9.0-azurelinux3.0-distroless-amd64, 9.0.13-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-extra-amd64, 9.0-azurelinux3.0-distroless-extra-amd64, 9.0.13-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-composite-amd64, 9.0-azurelinux3.0-distroless-composite-amd64, 9.0.13-azurelinux3.0-distroless-composite, 9.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-composite-extra-amd64, 9.0-azurelinux3.0-distroless-composite-extra-amd64, 9.0.13-azurelinux3.0-distroless-composite-extra, 9.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
-8.0.24-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.24-bookworm-slim, 8.0-bookworm-slim, 8.0.24, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.24-alpine3.23-amd64, 8.0-alpine3.23-amd64, 8.0-alpine-amd64, 8.0.24-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-extra-amd64, 8.0-alpine3.23-extra-amd64, 8.0-alpine-extra-amd64, 8.0.24-alpine3.23-extra, 8.0-alpine3.23-extra, 8.0-alpine-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-composite-amd64, 8.0-alpine3.23-composite-amd64, 8.0.24-alpine3.23-composite, 8.0-alpine3.23-composite | [Dockerfile](src/aspnet/8.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-composite-extra-amd64, 8.0-alpine3.23-composite-extra-amd64, 8.0.24-alpine3.23-composite-extra, 8.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-composite-extra/amd64/Dockerfile) | Alpine 3.23
-8.0.24-noble-amd64, 8.0-noble-amd64, 8.0.24-noble, 8.0-noble | [Dockerfile](src/aspnet/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-amd64, 8.0-noble-chiseled-amd64, 8.0.24-noble-chiseled, 8.0-noble-chiseled | [Dockerfile](src/aspnet/8.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-extra-amd64, 8.0-noble-chiseled-extra-amd64, 8.0.24-noble-chiseled-extra, 8.0-noble-chiseled-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-composite-amd64, 8.0-noble-chiseled-composite-amd64, 8.0.24-noble-chiseled-composite, 8.0-noble-chiseled-composite | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-composite-extra-amd64, 8.0-noble-chiseled-composite-extra-amd64, 8.0.24-noble-chiseled-composite-extra, 8.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
-8.0.24-jammy-amd64, 8.0-jammy-amd64, 8.0.24-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-amd64, 8.0-jammy-chiseled-amd64, 8.0.24-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-extra-amd64, 8.0-jammy-chiseled-extra-amd64, 8.0.24-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-composite-amd64, 8.0-jammy-chiseled-composite-amd64, 8.0.24-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/amd64/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-composite-extra-amd64, 8.0-jammy-chiseled-composite-extra-amd64, 8.0.24-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 22.04
-8.0.24-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.24-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/aspnet/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-amd64, 8.0-azurelinux3.0-distroless-amd64, 8.0.24-azurelinux3.0-distroless, 8.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-extra-amd64, 8.0-azurelinux3.0-distroless-extra-amd64, 8.0.24-azurelinux3.0-distroless-extra, 8.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-composite-amd64, 8.0-azurelinux3.0-distroless-composite-amd64, 8.0.24-azurelinux3.0-distroless-composite, 8.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-composite-extra-amd64, 8.0-azurelinux3.0-distroless-composite-extra-amd64, 8.0.24-azurelinux3.0-distroless-composite-extra, 8.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
+10.0.4-noble-amd64, 10.0-noble-amd64, 10.0.4-noble, 10.0-noble, 10.0.4, 10.0 | [Dockerfile](src/aspnet/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.4-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.4-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-composite-amd64, 10.0-noble-chiseled-composite-amd64, 10.0.4-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-composite-extra-amd64, 10.0-noble-chiseled-composite-extra-amd64, 10.0.4-noble-chiseled-composite-extra, 10.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
+10.0.4-alpine3.23-amd64, 10.0-alpine3.23-amd64, 10.0-alpine-amd64, 10.0.4-alpine3.23, 10.0-alpine3.23, 10.0-alpine | [Dockerfile](src/aspnet/10.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-extra-amd64, 10.0-alpine3.23-extra-amd64, 10.0-alpine-extra-amd64, 10.0.4-alpine3.23-extra, 10.0-alpine3.23-extra, 10.0-alpine-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-composite-amd64, 10.0-alpine3.23-composite-amd64, 10.0.4-alpine3.23-composite, 10.0-alpine3.23-composite | [Dockerfile](src/aspnet/10.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-composite-extra-amd64, 10.0-alpine3.23-composite-extra-amd64, 10.0.4-alpine3.23-composite-extra, 10.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-composite-extra/amd64/Dockerfile) | Alpine 3.23
+10.0.4-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.4-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/aspnet/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-amd64, 10.0-azurelinux3.0-distroless-amd64, 10.0.4-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-extra-amd64, 10.0-azurelinux3.0-distroless-extra-amd64, 10.0.4-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-composite-amd64, 10.0-azurelinux3.0-distroless-composite-amd64, 10.0.4-azurelinux3.0-distroless-composite, 10.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-composite-extra-amd64, 10.0-azurelinux3.0-distroless-composite-extra-amd64, 10.0.4-azurelinux3.0-distroless-composite-extra, 10.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
+9.0.14-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.14-bookworm-slim, 9.0-bookworm-slim, 9.0.14, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.14-alpine3.23-amd64, 9.0-alpine3.23-amd64, 9.0-alpine-amd64, 9.0.14-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-extra-amd64, 9.0-alpine3.23-extra-amd64, 9.0-alpine-extra-amd64, 9.0.14-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-composite-amd64, 9.0-alpine3.23-composite-amd64, 9.0.14-alpine3.23-composite, 9.0-alpine3.23-composite | [Dockerfile](src/aspnet/9.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-composite-extra-amd64, 9.0-alpine3.23-composite-extra-amd64, 9.0.14-alpine3.23-composite-extra, 9.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-composite-extra/amd64/Dockerfile) | Alpine 3.23
+9.0.14-noble-amd64, 9.0-noble-amd64, 9.0.14-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-amd64, 9.0-noble-chiseled-amd64, 9.0.14-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/aspnet/9.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-extra-amd64, 9.0-noble-chiseled-extra-amd64, 9.0.14-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-composite-amd64, 9.0-noble-chiseled-composite-amd64, 9.0.14-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-composite-extra-amd64, 9.0-noble-chiseled-composite-extra-amd64, 9.0.14-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
+9.0.14-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.14-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/aspnet/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-amd64, 9.0-azurelinux3.0-distroless-amd64, 9.0.14-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-extra-amd64, 9.0-azurelinux3.0-distroless-extra-amd64, 9.0.14-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-composite-amd64, 9.0-azurelinux3.0-distroless-composite-amd64, 9.0.14-azurelinux3.0-distroless-composite, 9.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-composite-extra-amd64, 9.0-azurelinux3.0-distroless-composite-extra-amd64, 9.0.14-azurelinux3.0-distroless-composite-extra, 9.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
+8.0.25-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.25-bookworm-slim, 8.0-bookworm-slim, 8.0.25, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.25-alpine3.23-amd64, 8.0-alpine3.23-amd64, 8.0-alpine-amd64, 8.0.25-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-extra-amd64, 8.0-alpine3.23-extra-amd64, 8.0-alpine-extra-amd64, 8.0.25-alpine3.23-extra, 8.0-alpine3.23-extra, 8.0-alpine-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-composite-amd64, 8.0-alpine3.23-composite-amd64, 8.0.25-alpine3.23-composite, 8.0-alpine3.23-composite | [Dockerfile](src/aspnet/8.0/alpine3.23-composite/amd64/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-composite-extra-amd64, 8.0-alpine3.23-composite-extra-amd64, 8.0.25-alpine3.23-composite-extra, 8.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-composite-extra/amd64/Dockerfile) | Alpine 3.23
+8.0.25-noble-amd64, 8.0-noble-amd64, 8.0.25-noble, 8.0-noble | [Dockerfile](src/aspnet/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-amd64, 8.0-noble-chiseled-amd64, 8.0.25-noble-chiseled, 8.0-noble-chiseled | [Dockerfile](src/aspnet/8.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-extra-amd64, 8.0-noble-chiseled-extra-amd64, 8.0.25-noble-chiseled-extra, 8.0-noble-chiseled-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-composite-amd64, 8.0-noble-chiseled-composite-amd64, 8.0.25-noble-chiseled-composite, 8.0-noble-chiseled-composite | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-composite-extra-amd64, 8.0-noble-chiseled-composite-extra-amd64, 8.0.25-noble-chiseled-composite-extra, 8.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 24.04
+8.0.25-jammy-amd64, 8.0-jammy-amd64, 8.0.25-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-amd64, 8.0-jammy-chiseled-amd64, 8.0.25-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/aspnet/8.0/jammy-chiseled/amd64/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-extra-amd64, 8.0-jammy-chiseled-extra-amd64, 8.0.25-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-extra/amd64/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-composite-amd64, 8.0-jammy-chiseled-composite-amd64, 8.0.25-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/amd64/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-composite-extra-amd64, 8.0-jammy-chiseled-composite-extra-amd64, 8.0.25-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/amd64/Dockerfile) | Ubuntu 22.04
+8.0.25-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.25-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/aspnet/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-amd64, 8.0-azurelinux3.0-distroless-amd64, 8.0.25-azurelinux3.0-distroless, 8.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-extra-amd64, 8.0-azurelinux3.0-distroless-extra-amd64, 8.0.25-azurelinux3.0-distroless-extra, 8.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-composite-amd64, 8.0-azurelinux3.0-distroless-composite-amd64, 8.0.25-azurelinux3.0-distroless-composite, 8.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite/amd64/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-composite-extra-amd64, 8.0-azurelinux3.0-distroless-composite-extra-amd64, 8.0.25-azurelinux3.0-distroless-composite-extra, 8.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 3.0
 
 #### .NET 11 Preview Tags
 
@@ -162,55 +162,55 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-10.0.3-noble-arm64v8, 10.0-noble-arm64v8, 10.0.3-noble, 10.0-noble, 10.0.3, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.3-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.3-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-composite-arm64v8, 10.0-noble-chiseled-composite-arm64v8, 10.0.3-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-composite-extra-arm64v8, 10.0-noble-chiseled-composite-extra-arm64v8, 10.0.3-noble-chiseled-composite-extra, 10.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.3-alpine3.23-arm64v8, 10.0-alpine3.23-arm64v8, 10.0-alpine-arm64v8, 10.0.3-alpine3.23, 10.0-alpine3.23, 10.0-alpine | [Dockerfile](src/aspnet/10.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-extra-arm64v8, 10.0-alpine3.23-extra-arm64v8, 10.0-alpine-extra-arm64v8, 10.0.3-alpine3.23-extra, 10.0-alpine3.23-extra, 10.0-alpine-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-composite-arm64v8, 10.0-alpine3.23-composite-arm64v8, 10.0.3-alpine3.23-composite, 10.0-alpine3.23-composite | [Dockerfile](src/aspnet/10.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-composite-extra-arm64v8, 10.0-alpine3.23-composite-extra-arm64v8, 10.0.3-alpine3.23-composite-extra, 10.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-composite-extra/arm64v8/Dockerfile) | Alpine 3.23
-10.0.3-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.3-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/aspnet/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-arm64v8, 10.0-azurelinux3.0-distroless-arm64v8, 10.0.3-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-extra-arm64v8, 10.0-azurelinux3.0-distroless-extra-arm64v8, 10.0.3-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-composite-arm64v8, 10.0-azurelinux3.0-distroless-composite-arm64v8, 10.0.3-azurelinux3.0-distroless-composite, 10.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.3-azurelinux3.0-distroless-composite-extra-arm64v8, 10.0-azurelinux3.0-distroless-composite-extra-arm64v8, 10.0.3-azurelinux3.0-distroless-composite-extra, 10.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.13-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.13-bookworm-slim, 9.0-bookworm-slim, 9.0.13, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.13-alpine3.23-arm64v8, 9.0-alpine3.23-arm64v8, 9.0-alpine-arm64v8, 9.0.13-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-extra-arm64v8, 9.0-alpine3.23-extra-arm64v8, 9.0-alpine-extra-arm64v8, 9.0.13-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-composite-arm64v8, 9.0-alpine3.23-composite-arm64v8, 9.0.13-alpine3.23-composite, 9.0-alpine3.23-composite | [Dockerfile](src/aspnet/9.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-composite-extra-arm64v8, 9.0-alpine3.23-composite-extra-arm64v8, 9.0.13-alpine3.23-composite-extra, 9.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-composite-extra/arm64v8/Dockerfile) | Alpine 3.23
-9.0.13-noble-arm64v8, 9.0-noble-arm64v8, 9.0.13-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-arm64v8, 9.0-noble-chiseled-arm64v8, 9.0.13-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/aspnet/9.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-extra-arm64v8, 9.0-noble-chiseled-extra-arm64v8, 9.0.13-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-composite-arm64v8, 9.0-noble-chiseled-composite-arm64v8, 9.0.13-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-composite-extra-arm64v8, 9.0-noble-chiseled-composite-extra-arm64v8, 9.0.13-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.13-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.13-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/aspnet/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-arm64v8, 9.0-azurelinux3.0-distroless-arm64v8, 9.0.13-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-extra-arm64v8, 9.0-azurelinux3.0-distroless-extra-arm64v8, 9.0.13-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-composite-arm64v8, 9.0-azurelinux3.0-distroless-composite-arm64v8, 9.0.13-azurelinux3.0-distroless-composite, 9.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.13-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0.13-azurelinux3.0-distroless-composite-extra, 9.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.24-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.24-bookworm-slim, 8.0-bookworm-slim, 8.0.24, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.24-alpine3.23-arm64v8, 8.0-alpine3.23-arm64v8, 8.0-alpine-arm64v8, 8.0.24-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-extra-arm64v8, 8.0-alpine3.23-extra-arm64v8, 8.0-alpine-extra-arm64v8, 8.0.24-alpine3.23-extra, 8.0-alpine3.23-extra, 8.0-alpine-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-composite-arm64v8, 8.0-alpine3.23-composite-arm64v8, 8.0.24-alpine3.23-composite, 8.0-alpine3.23-composite | [Dockerfile](src/aspnet/8.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-composite-extra-arm64v8, 8.0-alpine3.23-composite-extra-arm64v8, 8.0.24-alpine3.23-composite-extra, 8.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-composite-extra/arm64v8/Dockerfile) | Alpine 3.23
-8.0.24-noble-arm64v8, 8.0-noble-arm64v8, 8.0.24-noble, 8.0-noble | [Dockerfile](src/aspnet/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-arm64v8, 8.0-noble-chiseled-arm64v8, 8.0.24-noble-chiseled, 8.0-noble-chiseled | [Dockerfile](src/aspnet/8.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-extra-arm64v8, 8.0-noble-chiseled-extra-arm64v8, 8.0.24-noble-chiseled-extra, 8.0-noble-chiseled-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-composite-arm64v8, 8.0-noble-chiseled-composite-arm64v8, 8.0.24-noble-chiseled-composite, 8.0-noble-chiseled-composite | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.24-noble-chiseled-composite-extra-arm64v8, 8.0-noble-chiseled-composite-extra-arm64v8, 8.0.24-noble-chiseled-composite-extra, 8.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.24-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.24-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-arm64v8, 8.0-jammy-chiseled-arm64v8, 8.0.24-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/aspnet/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-extra-arm64v8, 8.0-jammy-chiseled-extra-arm64v8, 8.0.24-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-composite-arm64v8, 8.0-jammy-chiseled-composite-arm64v8, 8.0.24-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-composite-extra-arm64v8, 8.0-jammy-chiseled-composite-extra-arm64v8, 8.0.24-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.24-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.24-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/aspnet/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-arm64v8, 8.0-azurelinux3.0-distroless-arm64v8, 8.0.24-azurelinux3.0-distroless, 8.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-extra-arm64v8, 8.0-azurelinux3.0-distroless-extra-arm64v8, 8.0.24-azurelinux3.0-distroless-extra, 8.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-composite-arm64v8, 8.0-azurelinux3.0-distroless-composite-arm64v8, 8.0.24-azurelinux3.0-distroless-composite, 8.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.24-azurelinux3.0-distroless-composite-extra-arm64v8, 8.0-azurelinux3.0-distroless-composite-extra-arm64v8, 8.0.24-azurelinux3.0-distroless-composite-extra, 8.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.4-noble-arm64v8, 10.0-noble-arm64v8, 10.0.4-noble, 10.0-noble, 10.0.4, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.4-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.4-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-composite-arm64v8, 10.0-noble-chiseled-composite-arm64v8, 10.0.4-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-composite-extra-arm64v8, 10.0-noble-chiseled-composite-extra-arm64v8, 10.0.4-noble-chiseled-composite-extra, 10.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.4-alpine3.23-arm64v8, 10.0-alpine3.23-arm64v8, 10.0-alpine-arm64v8, 10.0.4-alpine3.23, 10.0-alpine3.23, 10.0-alpine | [Dockerfile](src/aspnet/10.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-extra-arm64v8, 10.0-alpine3.23-extra-arm64v8, 10.0-alpine-extra-arm64v8, 10.0.4-alpine3.23-extra, 10.0-alpine3.23-extra, 10.0-alpine-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-composite-arm64v8, 10.0-alpine3.23-composite-arm64v8, 10.0.4-alpine3.23-composite, 10.0-alpine3.23-composite | [Dockerfile](src/aspnet/10.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-composite-extra-arm64v8, 10.0-alpine3.23-composite-extra-arm64v8, 10.0.4-alpine3.23-composite-extra, 10.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-composite-extra/arm64v8/Dockerfile) | Alpine 3.23
+10.0.4-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.4-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/aspnet/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-arm64v8, 10.0-azurelinux3.0-distroless-arm64v8, 10.0.4-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-extra-arm64v8, 10.0-azurelinux3.0-distroless-extra-arm64v8, 10.0.4-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-composite-arm64v8, 10.0-azurelinux3.0-distroless-composite-arm64v8, 10.0.4-azurelinux3.0-distroless-composite, 10.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.4-azurelinux3.0-distroless-composite-extra-arm64v8, 10.0-azurelinux3.0-distroless-composite-extra-arm64v8, 10.0.4-azurelinux3.0-distroless-composite-extra, 10.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/10.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.14-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.14-bookworm-slim, 9.0-bookworm-slim, 9.0.14, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.14-alpine3.23-arm64v8, 9.0-alpine3.23-arm64v8, 9.0-alpine-arm64v8, 9.0.14-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-extra-arm64v8, 9.0-alpine3.23-extra-arm64v8, 9.0-alpine-extra-arm64v8, 9.0.14-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-composite-arm64v8, 9.0-alpine3.23-composite-arm64v8, 9.0.14-alpine3.23-composite, 9.0-alpine3.23-composite | [Dockerfile](src/aspnet/9.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-composite-extra-arm64v8, 9.0-alpine3.23-composite-extra-arm64v8, 9.0.14-alpine3.23-composite-extra, 9.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-composite-extra/arm64v8/Dockerfile) | Alpine 3.23
+9.0.14-noble-arm64v8, 9.0-noble-arm64v8, 9.0.14-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-arm64v8, 9.0-noble-chiseled-arm64v8, 9.0.14-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/aspnet/9.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-extra-arm64v8, 9.0-noble-chiseled-extra-arm64v8, 9.0.14-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-composite-arm64v8, 9.0-noble-chiseled-composite-arm64v8, 9.0.14-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-composite-extra-arm64v8, 9.0-noble-chiseled-composite-extra-arm64v8, 9.0.14-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.14-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.14-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/aspnet/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-arm64v8, 9.0-azurelinux3.0-distroless-arm64v8, 9.0.14-azurelinux3.0-distroless, 9.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-extra-arm64v8, 9.0-azurelinux3.0-distroless-extra-arm64v8, 9.0.14-azurelinux3.0-distroless-extra, 9.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-composite-arm64v8, 9.0-azurelinux3.0-distroless-composite-arm64v8, 9.0.14-azurelinux3.0-distroless-composite, 9.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.14-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0-azurelinux3.0-distroless-composite-extra-arm64v8, 9.0.14-azurelinux3.0-distroless-composite-extra, 9.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/9.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.25-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.25-bookworm-slim, 8.0-bookworm-slim, 8.0.25, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.25-alpine3.23-arm64v8, 8.0-alpine3.23-arm64v8, 8.0-alpine-arm64v8, 8.0.25-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-extra-arm64v8, 8.0-alpine3.23-extra-arm64v8, 8.0-alpine-extra-arm64v8, 8.0.25-alpine3.23-extra, 8.0-alpine3.23-extra, 8.0-alpine-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-composite-arm64v8, 8.0-alpine3.23-composite-arm64v8, 8.0.25-alpine3.23-composite, 8.0-alpine3.23-composite | [Dockerfile](src/aspnet/8.0/alpine3.23-composite/arm64v8/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-composite-extra-arm64v8, 8.0-alpine3.23-composite-extra-arm64v8, 8.0.25-alpine3.23-composite-extra, 8.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-composite-extra/arm64v8/Dockerfile) | Alpine 3.23
+8.0.25-noble-arm64v8, 8.0-noble-arm64v8, 8.0.25-noble, 8.0-noble | [Dockerfile](src/aspnet/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-arm64v8, 8.0-noble-chiseled-arm64v8, 8.0.25-noble-chiseled, 8.0-noble-chiseled | [Dockerfile](src/aspnet/8.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-extra-arm64v8, 8.0-noble-chiseled-extra-arm64v8, 8.0.25-noble-chiseled-extra, 8.0-noble-chiseled-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-composite-arm64v8, 8.0-noble-chiseled-composite-arm64v8, 8.0.25-noble-chiseled-composite, 8.0-noble-chiseled-composite | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.25-noble-chiseled-composite-extra-arm64v8, 8.0-noble-chiseled-composite-extra-arm64v8, 8.0.25-noble-chiseled-composite-extra, 8.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/noble-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.25-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.25-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-arm64v8, 8.0-jammy-chiseled-arm64v8, 8.0.25-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/aspnet/8.0/jammy-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-extra-arm64v8, 8.0-jammy-chiseled-extra-arm64v8, 8.0.25-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-composite-arm64v8, 8.0-jammy-chiseled-composite-arm64v8, 8.0.25-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-composite-extra-arm64v8, 8.0-jammy-chiseled-composite-extra-arm64v8, 8.0.25-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.25-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.25-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/aspnet/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-arm64v8, 8.0-azurelinux3.0-distroless-arm64v8, 8.0.25-azurelinux3.0-distroless, 8.0-azurelinux3.0-distroless | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-extra-arm64v8, 8.0-azurelinux3.0-distroless-extra-arm64v8, 8.0.25-azurelinux3.0-distroless-extra, 8.0-azurelinux3.0-distroless-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-composite-arm64v8, 8.0-azurelinux3.0-distroless-composite-arm64v8, 8.0.25-azurelinux3.0-distroless-composite, 8.0-azurelinux3.0-distroless-composite | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.25-azurelinux3.0-distroless-composite-extra-arm64v8, 8.0-azurelinux3.0-distroless-composite-extra-arm64v8, 8.0.25-azurelinux3.0-distroless-composite-extra, 8.0-azurelinux3.0-distroless-composite-extra | [Dockerfile](src/aspnet/8.0/azurelinux3.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 
 #### .NET 11 Preview Tags
 
@@ -235,35 +235,35 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-10.0.3-noble-arm32v7, 10.0-noble-arm32v7, 10.0.3-noble, 10.0-noble, 10.0.3, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.3-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.3-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-composite-arm32v7, 10.0-noble-chiseled-composite-arm32v7, 10.0.3-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.3-noble-chiseled-composite-extra-arm32v7, 10.0-noble-chiseled-composite-extra-arm32v7, 10.0.3-noble-chiseled-composite-extra, 10.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.3-alpine3.23-arm32v7, 10.0-alpine3.23-arm32v7, 10.0-alpine-arm32v7, 10.0.3-alpine3.23, 10.0-alpine3.23, 10.0-alpine | [Dockerfile](src/aspnet/10.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-extra-arm32v7, 10.0-alpine3.23-extra-arm32v7, 10.0-alpine-extra-arm32v7, 10.0.3-alpine3.23-extra, 10.0-alpine3.23-extra, 10.0-alpine-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-composite-arm32v7, 10.0-alpine3.23-composite-arm32v7, 10.0.3-alpine3.23-composite, 10.0-alpine3.23-composite | [Dockerfile](src/aspnet/10.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
-10.0.3-alpine3.23-composite-extra-arm32v7, 10.0-alpine3.23-composite-extra-arm32v7, 10.0.3-alpine3.23-composite-extra, 10.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-composite-extra/arm32v7/Dockerfile) | Alpine 3.23
-9.0.13-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.13-bookworm-slim, 9.0-bookworm-slim, 9.0.13, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.13-alpine3.23-arm32v7, 9.0-alpine3.23-arm32v7, 9.0-alpine-arm32v7, 9.0.13-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-extra-arm32v7, 9.0-alpine3.23-extra-arm32v7, 9.0-alpine-extra-arm32v7, 9.0.13-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-composite-arm32v7, 9.0-alpine3.23-composite-arm32v7, 9.0.13-alpine3.23-composite, 9.0-alpine3.23-composite | [Dockerfile](src/aspnet/9.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
-9.0.13-alpine3.23-composite-extra-arm32v7, 9.0-alpine3.23-composite-extra-arm32v7, 9.0.13-alpine3.23-composite-extra, 9.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-composite-extra/arm32v7/Dockerfile) | Alpine 3.23
-9.0.13-noble-arm32v7, 9.0-noble-arm32v7, 9.0.13-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-arm32v7, 9.0-noble-chiseled-arm32v7, 9.0.13-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/aspnet/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-extra-arm32v7, 9.0-noble-chiseled-extra-arm32v7, 9.0.13-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-composite-arm32v7, 9.0-noble-chiseled-composite-arm32v7, 9.0.13-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
-9.0.13-noble-chiseled-composite-extra-arm32v7, 9.0-noble-chiseled-composite-extra-arm32v7, 9.0.13-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.24-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.24-bookworm-slim, 8.0-bookworm-slim, 8.0.24, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.24-alpine3.23-arm32v7, 8.0-alpine3.23-arm32v7, 8.0-alpine-arm32v7, 8.0.24-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-extra-arm32v7, 8.0-alpine3.23-extra-arm32v7, 8.0-alpine-extra-arm32v7, 8.0.24-alpine3.23-extra, 8.0-alpine3.23-extra, 8.0-alpine-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-composite-arm32v7, 8.0-alpine3.23-composite-arm32v7, 8.0.24-alpine3.23-composite, 8.0-alpine3.23-composite | [Dockerfile](src/aspnet/8.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
-8.0.24-alpine3.23-composite-extra-arm32v7, 8.0-alpine3.23-composite-extra-arm32v7, 8.0.24-alpine3.23-composite-extra, 8.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-composite-extra/arm32v7/Dockerfile) | Alpine 3.23
-8.0.24-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.24-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.24-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/aspnet/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.24-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-composite-arm32v7, 8.0-jammy-chiseled-composite-arm32v7, 8.0.24-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 22.04
-8.0.24-jammy-chiseled-composite-extra-arm32v7, 8.0-jammy-chiseled-composite-extra-arm32v7, 8.0.24-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 22.04
+10.0.4-noble-arm32v7, 10.0-noble-arm32v7, 10.0.4-noble, 10.0-noble, 10.0.4, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.4-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.4-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-composite-arm32v7, 10.0-noble-chiseled-composite-arm32v7, 10.0.4-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.4-noble-chiseled-composite-extra-arm32v7, 10.0-noble-chiseled-composite-extra-arm32v7, 10.0.4-noble-chiseled-composite-extra, 10.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.4-alpine3.23-arm32v7, 10.0-alpine3.23-arm32v7, 10.0-alpine-arm32v7, 10.0.4-alpine3.23, 10.0-alpine3.23, 10.0-alpine | [Dockerfile](src/aspnet/10.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-extra-arm32v7, 10.0-alpine3.23-extra-arm32v7, 10.0-alpine-extra-arm32v7, 10.0.4-alpine3.23-extra, 10.0-alpine3.23-extra, 10.0-alpine-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-composite-arm32v7, 10.0-alpine3.23-composite-arm32v7, 10.0.4-alpine3.23-composite, 10.0-alpine3.23-composite | [Dockerfile](src/aspnet/10.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
+10.0.4-alpine3.23-composite-extra-arm32v7, 10.0-alpine3.23-composite-extra-arm32v7, 10.0.4-alpine3.23-composite-extra, 10.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/10.0/alpine3.23-composite-extra/arm32v7/Dockerfile) | Alpine 3.23
+9.0.14-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.14-bookworm-slim, 9.0-bookworm-slim, 9.0.14, 9.0 | [Dockerfile](src/aspnet/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.14-alpine3.23-arm32v7, 9.0-alpine3.23-arm32v7, 9.0-alpine-arm32v7, 9.0.14-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/aspnet/9.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-extra-arm32v7, 9.0-alpine3.23-extra-arm32v7, 9.0-alpine-extra-arm32v7, 9.0.14-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-composite-arm32v7, 9.0-alpine3.23-composite-arm32v7, 9.0.14-alpine3.23-composite, 9.0-alpine3.23-composite | [Dockerfile](src/aspnet/9.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
+9.0.14-alpine3.23-composite-extra-arm32v7, 9.0-alpine3.23-composite-extra-arm32v7, 9.0.14-alpine3.23-composite-extra, 9.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/9.0/alpine3.23-composite-extra/arm32v7/Dockerfile) | Alpine 3.23
+9.0.14-noble-arm32v7, 9.0-noble-arm32v7, 9.0.14-noble, 9.0-noble | [Dockerfile](src/aspnet/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-arm32v7, 9.0-noble-chiseled-arm32v7, 9.0.14-noble-chiseled, 9.0-noble-chiseled | [Dockerfile](src/aspnet/9.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-extra-arm32v7, 9.0-noble-chiseled-extra-arm32v7, 9.0.14-noble-chiseled-extra, 9.0-noble-chiseled-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-composite-arm32v7, 9.0-noble-chiseled-composite-arm32v7, 9.0.14-noble-chiseled-composite, 9.0-noble-chiseled-composite | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
+9.0.14-noble-chiseled-composite-extra-arm32v7, 9.0-noble-chiseled-composite-extra-arm32v7, 9.0.14-noble-chiseled-composite-extra, 9.0-noble-chiseled-composite-extra | [Dockerfile](src/aspnet/9.0/noble-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+8.0.25-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.25-bookworm-slim, 8.0-bookworm-slim, 8.0.25, 8.0 | [Dockerfile](src/aspnet/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.25-alpine3.23-arm32v7, 8.0-alpine3.23-arm32v7, 8.0-alpine-arm32v7, 8.0.25-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/aspnet/8.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-extra-arm32v7, 8.0-alpine3.23-extra-arm32v7, 8.0-alpine-extra-arm32v7, 8.0.25-alpine3.23-extra, 8.0-alpine3.23-extra, 8.0-alpine-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-composite-arm32v7, 8.0-alpine3.23-composite-arm32v7, 8.0.25-alpine3.23-composite, 8.0-alpine3.23-composite | [Dockerfile](src/aspnet/8.0/alpine3.23-composite/arm32v7/Dockerfile) | Alpine 3.23
+8.0.25-alpine3.23-composite-extra-arm32v7, 8.0-alpine3.23-composite-extra-arm32v7, 8.0.25-alpine3.23-composite-extra, 8.0-alpine3.23-composite-extra | [Dockerfile](src/aspnet/8.0/alpine3.23-composite-extra/arm32v7/Dockerfile) | Alpine 3.23
+8.0.25-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.25-jammy, 8.0-jammy | [Dockerfile](src/aspnet/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-arm32v7, 8.0-jammy-chiseled-arm32v7, 8.0.25-jammy-chiseled, 8.0-jammy-chiseled | [Dockerfile](src/aspnet/8.0/jammy-chiseled/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-extra-arm32v7, 8.0-jammy-chiseled-extra-arm32v7, 8.0.25-jammy-chiseled-extra, 8.0-jammy-chiseled-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-composite-arm32v7, 8.0-jammy-chiseled-composite-arm32v7, 8.0.25-jammy-chiseled-composite, 8.0-jammy-chiseled-composite | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 22.04
+8.0.25-jammy-chiseled-composite-extra-arm32v7, 8.0-jammy-chiseled-composite-extra-arm32v7, 8.0.25-jammy-chiseled-composite-extra, 8.0-jammy-chiseled-composite-extra | [Dockerfile](src/aspnet/8.0/jammy-chiseled-composite-extra/arm32v7/Dockerfile) | Ubuntu 22.04
 
 #### .NET 11 Preview Tags
 
@@ -283,22 +283,22 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-10.0.3-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-10.0.3-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-10.0.3-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-10.0.3-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
-9.0.13-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-9.0.13-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-9.0.13-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-9.0.13-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
-9.0.13-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
-9.0.13-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
-8.0.24-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-8.0.24-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-8.0.24-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-8.0.24-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
-8.0.24-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
-8.0.24-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
+10.0.4-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+10.0.4-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+10.0.4-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+10.0.4-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.14-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+9.0.14-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+9.0.14-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+9.0.14-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.14-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/aspnet/9.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+9.0.14-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/9.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
+8.0.25-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+8.0.25-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+8.0.25-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/aspnet/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+8.0.25-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+8.0.25-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/aspnet/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+8.0.25-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/aspnet/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
 
 #### .NET 11 Preview Tags
 
