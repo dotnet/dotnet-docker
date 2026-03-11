@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:11.0.0-preview.2-alpine3.23-arm32v7 AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=11.0.0-preview.2.26159.112 \
+RUN aspnetcore_version=11.0.0-preview.2.26160.101 \
     && aspnetcore_file_version=11.0.0-preview.2.final \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_file_version-linux-musl-arm.tar.gz \

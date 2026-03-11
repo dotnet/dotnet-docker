@@ -8,7 +8,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $dotnet_version = '11.0.0-preview.2.26159.112'; `
+        $dotnet_version = '11.0.0-preview.2.26160.101'; `
         $dotnet_file_version = '11.0.0-preview.2.final'; `
         $dotnet_file = 'dotnet-runtime-' + $dotnet_file_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `

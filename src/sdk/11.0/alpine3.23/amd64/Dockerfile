@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:11.0.0-preview.2-alpine3.23-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.2.26159.112 \
+RUN dotnet_sdk_version=11.0.100-preview.2.26160.101 \
     && dotnet_sdk_file_version=11.0.100-preview.2.final \
     && wget \
         https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_file_version-linux-musl-x64.tar.gz \

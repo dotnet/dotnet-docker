@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:resolute-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-preview.2.26159.112 \
+RUN dotnet_version=11.0.0-preview.2.26160.101 \
     && dotnet_file_version=11.0.0-preview.2.final \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_file_version-linux-arm64.tar.gz \

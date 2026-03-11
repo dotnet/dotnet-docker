@@ -10,7 +10,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '11.0.0-preview.2.26159.112'; `
+        $aspnetcore_version = '11.0.0-preview.2.26160.101'; `
         $aspnetcore_file_version = '11.0.0-preview.2.final'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_file_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
