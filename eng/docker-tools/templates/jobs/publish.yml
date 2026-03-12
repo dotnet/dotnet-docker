@@ -12,6 +12,9 @@ parameters:
   # When true, overrides the commit SHA in merged image info files to use the current repository commit.
   # This ensures that updated images reference the correct commit in their commitUrl properties.
   overrideImageInfoCommit: false
+  # Service connections not in publishConfig.RegistryAuthentication that need OIDC
+  # token access during publish (e.g., kusto, marStatus). Shape: [{ name: string }]
+  additionalServiceConnections: []
 
 jobs:
 - job: Publish
@@ -52,6 +55,14 @@ jobs:
       publishConfig: ${{ parameters.publishConfig }}
       versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customInitSteps }}
+
+  - template: /eng/docker-tools/templates/steps/reference-service-connections.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      usesRegistries:
+        - ${{ parameters.publishConfig.BuildRegistry.server }}
+        - ${{ parameters.publishConfig.PublishRegistry.server }}
+      serviceConnections: ${{ parameters.additionalServiceConnections }}
 
   - template: /eng/docker-tools/templates/steps/retain-build.yml@self
 
