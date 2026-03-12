@@ -1,8 +1,8 @@
 steps:
 - powershell: |
     # When multiple repos are checked out, the repo is in a subdirectory named after the repo.
-    # The buildRepoName variable is set in init-matrix-build-publish.yml, but only when mutiple
-    # repos are checked out.
+    # The buildRepoName variable is set in init-common.yml, but only when multiple repos are
+    # checked out.
     $buildRepoName = "$env:BUILDREPONAME"
     if ($buildRepoName) {
         $portalDocsRoot = "/repo/$buildRepoName/.portal-docs"
