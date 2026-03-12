@@ -42,6 +42,15 @@ jobs:
       cleanupDocker: true
       customInitSteps: ${{ parameters.customInitSteps }}
   - ${{ parameters.customBuildInitSteps }}
+  - template: /eng/docker-tools/templates/steps/reference-service-connections.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      usesRegistries:
+        - ${{ parameters.publishConfig.BuildRegistry.server }}
+      ${{ if parameters.storageAccountServiceConnection }}:
+        serviceConnections:
+        - name: ${{ parameters.storageAccountServiceConnection.name }}
   - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml@self
     parameters:
       publicSourceBranch: $(publicSourceBranch)

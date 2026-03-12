@@ -13,6 +13,9 @@ parameters:
   sourceBuildPipelineRunId: ''
   versionsRepoRef: null
   overrideImageInfoCommit: false
+  # Service connections not in publishConfig.RegistryAuthentication that need OIDC
+  # token access during publish (e.g., kusto, marStatus). Shape: [{ name: string }]
+  additionalServiceConnections: []
 
 stages:
 - template: /eng/docker-tools/templates/stages/publish.yml@self
@@ -22,6 +25,7 @@ stages:
     publishConfig: ${{ parameters.publishConfig }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     customInitSteps: ${{ parameters.customInitSteps }}
+    additionalServiceConnections: ${{ parameters.additionalServiceConnections }}
     sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}

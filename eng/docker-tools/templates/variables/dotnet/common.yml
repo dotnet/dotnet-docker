@@ -68,4 +68,15 @@ variables:
 - name: windowsServer2025PoolName
   value: Docker-2025-${{ variables['System.TeamProject'] }}
 
+## Signing
+# Team name required for MicroBuild signing plugin
+- name: TeamName
+  value: DotNetCore
+# MicroBuild signing plugin feed source
+- name: MicroBuildFeedSource
+  value: https://dnceng.pkgs.visualstudio.com/_packaging/MicroBuildToolset/nuget/v3/index.json
+# MicroBuild signing plugin version
+- name: MicroBuildPluginVersion
+  value: latest
+
 - group: DotNet-Docker-Common-2

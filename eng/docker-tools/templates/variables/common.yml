@@ -6,6 +6,8 @@ variables:
   value: true
 - name: publishImageInfo
   value: true
+- name: ingestKustoImageInfo
+  value: true
   # CG is disabled by default because projects are built within Dockerfiles and CG step do not scan artifacts
   # that are built within Dockerfiles. A separate CG pipeline exists for this reason.
 - name: skipComponentGovernanceDetection
@@ -77,3 +79,11 @@ variables:
   value: 00000000-0000-0000-0000-000000000000
 - name: acr-staging.subscription
   value: 00000000-0000-0000-0000-000000000000
+
+# See https://devdiv.visualstudio.com/Engineering/_git/Sign?version=GBmain&path=/src/CertificateMappings.xml
+- name: microBuildSigningKeyCode.containers
+  value: 4512
+- name: microBuildSigningKeyCode.attestations
+  value: 4571
+- name: microBuildSigningKeyCode.testing
+  value: 2151
