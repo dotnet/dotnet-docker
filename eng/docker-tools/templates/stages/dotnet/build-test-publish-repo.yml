@@ -32,6 +32,10 @@ parameters:
   # Publish parameters
   customPublishInitSteps: []
 
+  # Additional service connections not in publishConfig.RegistryAuthentication
+  # that need OIDC token access (e.g., kusto, marStatus). Shape: [{ name: string }]
+  additionalServiceConnections: []
+
   # Other common parameters
   internalProjectName: null
   publicProjectName: null
@@ -75,5 +79,6 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     publishConfig: ${{ parameters.publishConfig }}
+    additionalServiceConnections: ${{ parameters.additionalServiceConnections }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}

@@ -19,10 +19,6 @@ parameters:
 - name: stages
   type: stageList
   default: []
-  # 1ES Pipeline Template parameters
-- name: serviceConnections
-  type: object
-  default: []
 - name: pool
   type: object
   default:
@@ -71,9 +67,4 @@ extends:
         tsa:
           enabled: true
     stages:
-    - ${{ if gt(length(parameters.serviceConnections), 0) }}:
-      - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
-        parameters:
-          pool: ${{ parameters.pool }}
-          serviceConnections: ${{ parameters.serviceConnections }}
     - ${{ parameters.stages }}
