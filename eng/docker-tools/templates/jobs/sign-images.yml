@@ -1,0 +1,64 @@
+# Signs container images using ESRP/Notary v2.
+# This job downloads the merged image-info artifact and signs all images listed in it.
+parameters:
+  pool: {}
+  internalProjectName: null
+  publicProjectName: null
+  customInitSteps: []
+  publishConfig: null
+  sourceBuildPipelineRunId: ""
+
+jobs:
+- job: Sign
+  pool: ${{ parameters.pool }}
+  variables:
+    imageInfoDir: $(Build.ArtifactStagingDirectory)/image-info
+  steps:
+
+  # Install MicroBuild signing plugin for ESRP container image signing
+  - template: /eng/docker-tools/templates/steps/init-signing-linux.yml@self
+    parameters:
+      signType: ${{ parameters.publishConfig.Signing.SignType }}
+      envFileVariableName: signingEnvFilePath
+
+  # Setup docker and ImageBuilder
+  - template: /eng/docker-tools/templates/steps/init-common.yml@self
+    parameters:
+      dockerClientOS: linux
+      setupImageBuilder: true
+      customInitSteps: ${{ parameters.customInitSteps }}
+      publishConfig: ${{ parameters.publishConfig }}
+      envFilePath: $(signingEnvFilePath)
+
+  - template: /eng/docker-tools/templates/steps/reference-service-connections.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      usesRegistries:
+        - ${{ parameters.publishConfig.BuildRegistry.server }}
+
+  # Download merged image-info artifact from Post_Build stage (or from a previous pipeline run)
+  - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
+    parameters:
+      targetPath: $(imageInfoDir)
+      artifactName: image-info
+      pipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: 🔏 Sign Container Images
+      internalProjectName: ${{ parameters.internalProjectName }}
+      args: >-
+        signImages
+        $(artifactsPath)/image-info/image-info.json
+        --registry-override ${{ parameters.publishConfig.BuildRegistry.server }}
+        --repo-prefix ${{ parameters.publishConfig.BuildRegistry.repoPrefix }}
+
+  - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+    parameters:
+      displayName: ✅ Verify Container Image Signatures
+      internalProjectName: ${{ parameters.internalProjectName }}
+      args: >-
+        verifySignatures
+        $(artifactsPath)/image-info/image-info.json
+        --registry-override ${{ parameters.publishConfig.BuildRegistry.server }}
+        --repo-prefix ${{ parameters.publishConfig.BuildRegistry.repoPrefix }}

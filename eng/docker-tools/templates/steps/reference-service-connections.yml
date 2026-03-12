@@ -1,0 +1,68 @@
+# Emit AzureCLI@2 steps that reference service connections in the current
+# stage so that Azure DevOps will issue OIDC tokens for them. Azure DevOps
+# requires each stage to explicitly reference (via an azureSubscription task
+# input) any service connection it needs OIDC tokens for.
+#
+# This template must be included in every job that authenticates to Azure
+# via AzurePipelinesCredential (i.e., any job that uses run-imagebuilder.yml
+# with internalProjectName, or run-pwsh-with-auth.yml).
+#
+# Service connections can be specified in two ways:
+# - Via publishConfig + usesRegistries: looks up service connections from
+#   publishConfig.RegistryAuthentication entries matching the given servers.
+#   Use this for registry-scoped connections (e.g., BuildRegistry, PublishRegistry).
+# - Via serviceConnections: a direct list of { name: string } objects.
+#   Use this for non-registry connections (e.g., kusto, marStatus, cleanServiceConnection).
+#
+# Both can be used together in a single call.
+parameters:
+# Publishing configuration object. Only needed when using the usesRegistries parameter.
+- name: publishConfig
+  type: object
+  default: {}
+# List of registry server URLs to look up in publishConfig.RegistryAuthentication.
+# Each matching entry's service connection will be referenced.
+- name: usesRegistries
+  type: object
+  default: []
+# Direct list of service connections to reference. Shape: [{ name: string }]
+- name: serviceConnections
+  type: object
+  default: []
+# The OS of the agent running this job. Determines whether to use PowerShell
+# Core (pscore, Linux) or Windows PowerShell (ps, Windows) for the AzureCLI task.
+- name: dockerClientOS
+  type: string
+  default: linux
+# The internal Azure DevOps project name. Reference steps are only emitted
+# for internal non-PR builds, since public projects don't have these service
+# connections.
+- name: internalProjectName
+  type: string
+  default: internal
+
+steps:
+- ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
+  - ${{ each serviceConnection in parameters.serviceConnections }}:
+    - task: AzureCLI@2
+      displayName: Reference ${{ serviceConnection.name }}
+      inputs:
+        azureSubscription: ${{ serviceConnection.name }}
+        ${{ if eq(parameters.dockerClientOS, 'windows') }}:
+          scriptType: ps
+        ${{ else }}:
+          scriptType: pscore
+        scriptLocation: inlineScript
+        inlineScript: Write-Host "Service connection referenced for OIDC"
+  - ${{ each auth in parameters.publishConfig.RegistryAuthentication }}:
+    - ${{ if containsValue(parameters.usesRegistries, auth.server) }}:
+      - task: AzureCLI@2
+        displayName: Reference ${{ auth.serviceConnection.name }}
+        inputs:
+          azureSubscription: ${{ auth.serviceConnection.name }}
+          ${{ if eq(parameters.dockerClientOS, 'windows') }}:
+            scriptType: ps
+          ${{ else }}:
+            scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: Write-Host "Service connection referenced for OIDC"
