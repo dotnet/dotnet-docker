@@ -48,7 +48,9 @@ jobs:
       dockerClientOS: ${{ parameters.dockerClientOS }}
       usesRegistries:
         - ${{ parameters.publishConfig.BuildRegistry.server }}
-      ${{ if parameters.storageAccountServiceConnection }}:
+      # Check .name instead of the whole object - null parameters can become
+      # empty objects through template layers, making ${{ if }} truthy.
+      ${{ if parameters.storageAccountServiceConnection.name }}:
         serviceConnections:
         - name: ${{ parameters.storageAccountServiceConnection.name }}
   - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml@self
