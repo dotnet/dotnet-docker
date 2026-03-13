@@ -26,10 +26,21 @@ Service connections are now referenced per-job via
 
 ## 2026-03-04: Pre-build validation gated by `preBuildTestScriptPath` variable
 
+- Pull request: [#1997](https://github.com/dotnet/docker-tools/pull/1997)
+
 The `PreBuildValidation` job condition now checks the new `preBuildTestScriptPath` variable instead of `testScriptPath`.
 This allows repos to independently control whether pre-build validation runs, without affecting functional tests.
 
 The new variable defaults to `$(testScriptPath)`, so existing repos that have pre-build tests are not affected.
+Repos that do not have pre-build tests can set `preBuildTestScriptPath` to `""` to skip the job entirely.
+
+### Update (2026-03-11): Use `preBuildTestScriptPath` for test execution
+
+- Pull request: [#2011](https://github.com/dotnet/docker-tools/pull/2011)
+
+The `PreBuildValidation` job now uses `preBuildTestScriptPath` for test execution instead of `testScriptPath`.
+Previously, the job condition was gated on `preBuildTestScriptPath` but the test execution step still used `testScriptPath`,
+which meant PreBuildValidation could not be enabled independently when `testScriptPath` was empty.
 Repos that do not have pre-build tests can set `preBuildTestScriptPath` to `""` to skip the job entirely.
 
 ---
