@@ -25,6 +25,12 @@ steps:
 - script: |
     echo "##vso[task.setvariable variable=testRunner.container]testrunner-$(Build.BuildId)-$(System.JobId)"
 
+    if [ "${{ parameters.preBuildValidation }}" == "true" ]; then
+      echo "##vso[task.setvariable variable=effectiveTestScriptPath]$(preBuildTestScriptPath)"
+    else
+      echo "##vso[task.setvariable variable=effectiveTestScriptPath]$(testScriptPath)"
+    fi
+
     additionalTestArgs="$ADDITIONALTESTARGS"
     if [ "${{ parameters.preBuildValidation }}" == "true" ]; then
       additionalTestArgs="$additionalTestArgs -TestCategories pre-build"
@@ -74,7 +80,7 @@ steps:
     $(testRunner.options)
     $(testRunner.container)
     pwsh
-    -Command "$(testScriptPath)
+    -Command "$(effectiveTestScriptPath)
     -Paths $(imageBuilderPathsArrayInitStr)
     -OSVersions $(osVersionsArrayInitStr)
     -Architecture '$(architecture)'
