@@ -14,7 +14,7 @@ variables:
   value: --registry-creds 'docker.io=placeholder;placeholder'
 
 - name: linuxAmd64InternalPoolImage
-  value: 1es-ubuntu-2204
+  value: build.azurelinux.3.amd64
 - name: linuxAmd64PublicPoolImage
   value: build.azurelinux.3.amd64.open
 - name: linuxAmd64PublicPoolName
