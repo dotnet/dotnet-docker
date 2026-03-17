@@ -69,7 +69,7 @@
                 cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
                 "tzdata"
             ],
-            when(OS_VERSION_BASE = "noble", [ "tzdata-legacy" ], []))
+            when(isUbuntu && OS_VERSION_BASE != "jammy", [ "tzdata-legacy" ], []))
         )))) ^
 
     set pkgs to

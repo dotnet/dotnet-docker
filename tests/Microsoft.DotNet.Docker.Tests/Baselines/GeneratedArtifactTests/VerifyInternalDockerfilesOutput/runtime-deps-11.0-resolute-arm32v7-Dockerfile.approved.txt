@@ -19,6 +19,7 @@ RUN apt-get update \
         libssl3t64 \
         libstdc++6 \
         tzdata \
+        tzdata-legacy \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user and group
