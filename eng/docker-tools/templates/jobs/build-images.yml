@@ -42,6 +42,17 @@ jobs:
       cleanupDocker: true
       customInitSteps: ${{ parameters.customInitSteps }}
   - ${{ parameters.customBuildInitSteps }}
+  - template: /eng/docker-tools/templates/steps/reference-service-connections.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      dockerClientOS: ${{ parameters.dockerClientOS }}
+      usesRegistries:
+        - ${{ parameters.publishConfig.BuildRegistry.server }}
+      # Check .name instead of the whole object - null parameters can become
+      # empty objects through template layers, making ${{ if }} truthy.
+      ${{ if parameters.storageAccountServiceConnection.name }}:
+        serviceConnections:
+        - name: ${{ parameters.storageAccountServiceConnection.name }}
   - template: /eng/docker-tools/templates/steps/set-image-info-path-var.yml@self
     parameters:
       publicSourceBranch: $(publicSourceBranch)

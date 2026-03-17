@@ -38,6 +38,11 @@ parameters:
   type: object
   default: {}
 
+# Enable container image signing
+- name: enableSigning
+  type: boolean
+  default: false
+
 
 stages:
 - template: ${{ parameters.stagesTemplate }}
@@ -103,3 +108,10 @@ stages:
         id: $(test.serviceConnection.id)
         clientId: $(test.serviceConnection.clientId)
         tenantId: $(test.serviceConnection.tenantId)
+
+      Signing:
+        Enabled: ${{ parameters.enableSigning }}
+        ImageSigningKeyCode: $(microBuildSigningKeyCode.containers)
+        ReferrerSigningKeyCode: $(microBuildSigningKeyCode.attestations)
+        SignType: real
+        TrustStoreName: supplychain

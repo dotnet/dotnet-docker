@@ -50,7 +50,7 @@ Follow the below policies when adding or removing images:
 
 1. Update the [TestData.cs](../../tests/Microsoft.DotNet.Docker.Tests/TestData.cs) to include the new distro version
 2. Update internal Dockerfile baselines:
-    - To automatically update baselines, run `pwsh ./tests/run-tests.ps1 -Paths "*" -TestCategories "pre-build" -CustomTestFilter "VerifyInternalDockerfilesOutput"; pwsh ./tests/accept-changes.ps1`
+    - Run `pwsh ./tests/update-internal-baselines.ps1` to regenerate and accept baseline files.
     - Commit the updated baseline files.
 3. Ensure pre-build validation tests pass: `pwsh ./tests/run-tests.ps1 -Paths "*" -TestCategories "pre-build"`
 

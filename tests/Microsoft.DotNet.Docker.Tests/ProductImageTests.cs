@@ -379,6 +379,12 @@ namespace Microsoft.DotNet.Docker.Tests
                         "icu",
                         "tzdata"
                     },
+                { OS: var os } when os == OS.ResoluteChiseled => new[]
+                    {
+                        "libicu78",
+                        "tzdata-legacy",
+                        "tzdata"
+                    },
                 { OS: var os } when os == OS.NobleChiseled => new[]
                     {
                         "libicu74",

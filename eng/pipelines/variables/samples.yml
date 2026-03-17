@@ -1,7 +1,8 @@
 variables:
 - template: /eng/docker-tools/templates/variables/dotnet/build-test-publish.yml@self
 
-# Cannot be readonly because it's currently overridden by eng/docker-tools/templates/steps/init-matrix-build-publish.yml
+# Cannot be readonly because it's currently overridden by
+# eng/docker-tools/templates/steps/init-common.yml during multi-repo checkout.
 # `manifest` is overloaded, since it is used both for this definition and also
 # to refer to the precise path of the manifest file in multi-repo builds (e.g.
 # when we are using a versions repo)

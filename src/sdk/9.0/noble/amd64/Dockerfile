@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=9.0.311 \
-    && dotnet_version=9.0.13 \
+RUN dotnet_sdk_version=9.0.312 \
+    && dotnet_version=9.0.14 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -18,7 +18,7 @@ RUN dotnet_sdk_version=9.0.311 \
 
 
 # .NET SDK image
-FROM $REPO:9.0.13-noble-amd64
+FROM $REPO:9.0.14-noble-amd64
 
 ENV \
     # Do not generate certificate
@@ -26,7 +26,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.311 \
+    DOTNET_SDK_VERSION=9.0.312 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -48,9 +48,9 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.5.4 \
+RUN powershell_version=7.5.5 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='00822aa06b46c3e614bb3479218c25282552922eb5164509d722e26a8e4cef477acc54b846ce486a9d8d87d0cb511b4196703ae76ec5786aa15e098597141b54' \
+    && powershell_sha512='6a869c3e9a4c6c55b3758de28499e33f8926284f54635d0d6303e07dffec44dfbf4aa75ff67d35ffb9a4802701d6d759ba85c4d3cb80b3627b28b076f574ca93' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \

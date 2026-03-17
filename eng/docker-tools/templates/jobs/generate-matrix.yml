@@ -25,6 +25,13 @@ jobs:
       publishConfig: ${{ parameters.publishConfig }}
       versionsRepoRef: ${{ parameters.versionsRepoRef }}
       customInitSteps: ${{ parameters.customInitSteps }}
+  # When --trim-cached-images is active, ImageBuilder checks base image digests
+  # in the ACR mirror registry, which requires OIDC auth via this service connection.
+  - template: /eng/docker-tools/templates/steps/reference-service-connections.yml@self
+    parameters:
+      publishConfig: ${{ parameters.publishConfig }}
+      usesRegistries:
+        - ${{ parameters.publishConfig.BuildRegistry.server }}
   - ${{ parameters.customGenerateMatrixInitSteps }}
   - template: /eng/docker-tools/templates/steps/retain-build.yml@self
   - template: /eng/docker-tools/templates/steps/validate-branch.yml@self

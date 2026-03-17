@@ -15,7 +15,7 @@ parameters:
     type: boolean
     default: false
   # Additional service connections needed by this pipeline that are not included
-  # in the publishConfig. Only used when `isStandalonePublish` is true.
+  # in the publishConfig.
   - name: additionalServiceConnections
     type: object
     default: []
@@ -36,16 +36,6 @@ parameters:
     default: false
 
 stages:
-- ${{ if parameters.isStandalonePublish }}:
-  - template: /eng/docker-tools/templates/stages/setup-service-connections.yml@self
-    parameters:
-      publishConfig: ${{ parameters.publishConfig }}
-      usesRegistries:
-        - ${{ parameters.publishConfig.PublishRegistry.server }}
-      serviceConnections:
-        - ${{ each serviceConnection in parameters.additionalServiceConnections }}:
-          - name: ${{ serviceConnection.name }}
-
 - template: /eng/docker-tools/templates/stages/dotnet/publish.yml@self
   parameters:
     publishConfig: ${{ parameters.publishConfig }}
@@ -53,6 +43,7 @@ stages:
     publicProjectName: ${{ parameters.publicProjectName }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
+    additionalServiceConnections: ${{ parameters.additionalServiceConnections }}
     pool: ${{ parameters.linuxAmd64Pool }}
     customPublishInitSteps:
     - ${{ parameters.customPublishInitSteps }}

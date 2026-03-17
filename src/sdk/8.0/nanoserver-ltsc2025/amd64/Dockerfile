@@ -25,8 +25,8 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '8.0.418'; `
-        $dotnet_version = '8.0.24'; `
+        $dotnet_sdk_version = '8.0.419'; `
+        $dotnet_version = '8.0.25'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
@@ -54,9 +54,9 @@ RUN powershell -Command " `
             $dotnet_checksums_file; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.4.13'; `
+        $powershell_version = '7.4.14'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'e819797e59c10e3da29e56184e4b6941bd731f7cfc79207a88ff3a5d42e913c2429d5cb28cdbb071b60061151c37395377d52d9e1e5f7c99e625a6f3be78efb7'; `
+        $powershell_sha512 = 'a5b8db565143cd75275235d6fe9b570df1bb26fc55ac825f7bf0df638db407a7bafcb59207cd208ed9a32483398a408731007076b39ff9858a68eae9b45024c9'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -74,7 +74,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:8.0.24-nanoserver-ltsc2025
+FROM $REPO:8.0.25-nanoserver-ltsc2025
 
 ENV `
     # Do not generate certificate
@@ -82,7 +82,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=8.0.418 `
+    DOTNET_SDK_VERSION=8.0.419 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

@@ -1,0 +1,124 @@
+# Installs the MicroBuild signing plugin for ESRP container image signing.
+# After installation, MBSIGN_APPFOLDER environment variable points to DDSignFiles.dll location.
+parameters:
+- name: signType
+  type: string
+  default: test
+  values:
+  - test
+  - real
+
+- name: condition
+  type: string
+  default: "true"
+
+- name: microBuildOutputFolder
+  type: string
+  default: $(Agent.TempDirectory)/MicroBuild
+
+# Name of the pipeline variable to set with the signing env file path.
+# When set, a signing env file is written after plugin installation and
+# the specified pipeline variable is set to its path via logging directive,
+# allowing downstream steps to reference it as $(variableName).
+# When empty, no env file is created (non-signing jobs).
+- name: envFileVariableName
+  type: string
+  default: ""
+
+steps:
+# Install .NET SDK on Linux - needed to download the MicroBuild plugin nupkgs when nuget.exe is unavailable.
+# Install to an isolated location so the repo's global.json doesn't interfere.
+- task: UseDotNet@2
+  displayName: Install .NET SDK for MicroBuild Plugin
+  condition: and(succeeded(), ${{ parameters.condition }})
+  inputs:
+    packageType: sdk
+    version: 8.0.x
+    installationPath: ${{ parameters.microBuildOutputFolder }}/.dotnet
+
+# Create a global.json in the MicroBuild folder that pins to the installed SDK.
+# This prevents the repo's global.json from causing SDK resolution failures.
+- script: |
+    mkdir -p ${{ parameters.microBuildOutputFolder }}
+    version=$(dotnet --version)
+    cat > ${{ parameters.microBuildOutputFolder }}/global.json << EOF
+    {
+      "sdk": {
+        "version": "$version"
+      }
+    }
+    EOF
+  displayName: Create global.json for MicroBuild
+  condition: and(succeeded(), ${{ parameters.condition }})
+
+- task: MicroBuildSigningPlugin@4
+  displayName: Install MicroBuild Signing Plugin
+  condition: and(succeeded(), ${{ parameters.condition }})
+  inputs:
+    version: $(MicroBuildPluginVersion)
+    ${{ if eq(parameters.signType, 'test') }}:
+      signType: test
+    ${{ else }}:
+      signType: real
+    zipSources: false
+    feedSource: $(MicroBuildFeedSource)
+    ConnectedServiceName: 'MicroBuild Signing Task (DevDiv)'
+    ConnectedPMEServiceName: c24de2a5-cc7a-493d-95e4-8e5ff5cad2bc
+    workingDirectory: ${{ parameters.microBuildOutputFolder }}
+  env:
+    TeamName: $(TeamName)
+    MicroBuildOutputFolderOverride: $(Agent.TempDirectory)/MicroBuild
+    SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+
+# Configure ImageBuilder docker run options and write env file for signing.
+# Sets imageBuilderDockerRunExtraOptions with the plugin volume mount and,
+# when envFileVariableName is provided, writes a signing env file and sets
+# the named pipeline variable to its path via logging directive.
+- ${{ if ne(parameters.envFileVariableName, '') }}:
+  - task: PowerShell@2
+    displayName: Configure ImageBuilder Signing Options
+    condition: and(succeeded(), ${{ parameters.condition }})
+    inputs:
+      targetType: 'inline'
+      script: |
+        # Mount the MicroBuild signing plugin directory (contains DDSignFiles.dll and esrpcli.dll).
+        $imageBuilderDockerRunExtraOptions = "-v $env:MBSIGN_APPFOLDER`:/microbuild"
+        Write-Host "MicroBuild signing enabled, mounting $env:MBSIGN_APPFOLDER to /microbuild"
+        Write-Host "##vso[task.setvariable variable=imageBuilderDockerRunExtraOptions]$imageBuilderDockerRunExtraOptions"
+
+        # Write the signing env file for docker --env-file.
+        # Docker reads this file on the host before creating the container,
+        # so no volume mount is needed for the file itself.
+        $envFilePath = "$(Agent.TempDirectory)/imagebuilder-signing.env"
+        $envFileContent = @(
+          # MicroBuild plugin variables for DDSignFiles.dll
+          "MBSIGN_APPFOLDER=/microbuild"
+          "VSENGESRPSSL"
+          "USEESRPCLI"
+          "MBSIGN_CONNECTEDSERVICE"
+
+          # Container-local temp/workspace paths (host paths aren't accessible inside the container)
+          "MBSIGNTEMPDIR=/tmp/MicroBuildSign"
+          "PIPELINE_WORKSPACE=$(Build.ArtifactStagingDirectory)"
+          "AGENT_TEMPDIRECTORY=/tmp"
+
+          # Azure DevOps pipeline variables for ESRP bearer token auth (ESRPUtils.GetAccountInfo)
+          "SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"
+          "BUILD_BUILDID"
+          "SYSTEM_TEAMPROJECT"
+          "BUILD_SOURCEBRANCH"
+
+          # Azure DevOps pipeline variables for ESRP CLI federated token (ESRPCliDll.GetFederatedTokenData)
+          "SYSTEM_JOBID"
+          "SYSTEM_PLANID"
+          "SYSTEM_TEAMPROJECTID"
+          "SYSTEM_HOSTTYPE"
+          "SYSTEM_COLLECTIONURI"
+
+          # Azure DevOps pipeline variables for DDSignFilesConfiguration
+          "BUILD_DEFINITIONNAME"
+          "BUILD_BUILDNUMBER"
+        )
+
+        $envFileContent | Set-Content -Path $envFilePath -Encoding utf8NoBOM
+        Write-Host "##vso[task.setvariable variable=${{ parameters.envFileVariableName }}]$envFilePath"

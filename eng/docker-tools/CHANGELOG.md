@@ -4,6 +4,47 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-03-12: Service connection OIDC changes
+
+- Pull request: [#2013](https://github.com/dotnet/docker-tools/pull/2013)
+- Issue: [#2012](https://github.com/dotnet/docker-tools/issues/2012)
+
+`setup-service-connections.yml` has been removed. Azure DevOps no longer
+issues OIDC tokens for service connections referenced in a separate stage.
+Service connections are now referenced per-job via
+`reference-service-connections.yml`.
+
+**How to update:**
+
+- Remove any `serviceConnections` parameters passed to `1es-official.yml` or
+  `1es-unofficial.yml` - they are no longer accepted.
+- Remove any calls to `setup-service-connections.yml` from stage templates.
+- Non-registry service connections (e.g., kusto, marStatus) should be passed
+  via `additionalServiceConnections` to the job templates that need them.
+
+---
+
+## 2026-03-04: Pre-build validation gated by `preBuildTestScriptPath` variable
+
+- Pull request: [#1997](https://github.com/dotnet/docker-tools/pull/1997)
+
+The `PreBuildValidation` job condition now checks the new `preBuildTestScriptPath` variable instead of `testScriptPath`.
+This allows repos to independently control whether pre-build validation runs, without affecting functional tests.
+
+The new variable defaults to `$(testScriptPath)`, so existing repos that have pre-build tests are not affected.
+Repos that do not have pre-build tests can set `preBuildTestScriptPath` to `""` to skip the job entirely.
+
+### Update (2026-03-11): Use `preBuildTestScriptPath` for test execution
+
+- Pull request: [#2011](https://github.com/dotnet/docker-tools/pull/2011)
+
+The `PreBuildValidation` job now uses `preBuildTestScriptPath` for test execution instead of `testScriptPath`.
+Previously, the job condition was gated on `preBuildTestScriptPath` but the test execution step still used `testScriptPath`,
+which meant PreBuildValidation could not be enabled independently when `testScriptPath` was empty.
+Repos that do not have pre-build tests can set `preBuildTestScriptPath` to `""` to skip the job entirely.
+
+---
+
 ## 2026-02-19: Separate Registry Endpoints from Authentication
 
 - Pull request: [#1945](https://github.com/dotnet/docker-tools/pull/1945)
