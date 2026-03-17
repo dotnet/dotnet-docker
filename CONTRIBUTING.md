@@ -166,12 +166,9 @@ Press F5 (Continue) to start test execution.
 
 Internal Dockerfiles are validated using "snapshot" testing, which uses tooling to record and test the accepted state of the Dockerfiles.
 If your changes fail tests due to changes in the internal Dockerfiles, you will need to review the changes before the tests can pass.
-You can use a local dotnet tool to accept or reject the changes.
 
-1. Run the failing test(s). For example: `./tests/run-tests.ps1 -Paths "*" -TestCategories "pre-build" -CustomTestFilter "VerifyInternalDockerfilesOutput"`
-1. The failing test will output updated baseline files in the `tests/Microsoft.DotNet.Docker.Tests/Baselines/` directory, ending in `*.received.txt`.
-1. Accept or discard the changes: `./tests/accept-changes.ps1 [-Discard]`. This script will either rename all of the `.received.txt` files to `.approved.txt` or remove them.
-1. If the git diff of the changes look acceptable, then commit the changes.
+1. Run `./tests/update-internal-baselines.ps1` to regenerate the baselines. This script runs the `VerifyInternalDockerfilesOutput` tests, accepts the updated baseline files, and displays a git diff.
+1. If the diff looks acceptable, commit the changes.
 
 ### Metadata Changes
 
