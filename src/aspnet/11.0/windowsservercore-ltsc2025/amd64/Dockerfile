@@ -10,7 +10,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '11.0.0-preview.2.26159.112'; `
+        $aspnetcore_version = '11.0.0-preview.3.26167.112'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
         `
@@ -30,9 +30,9 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:11.0.0-preview.2-windowsservercore-ltsc2025
+FROM $REPO:11.0.0-preview.3-windowsservercore-ltsc2025
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-preview.2.26159.112
+ENV ASPNET_VERSION=11.0.0-preview.3.26167.112
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
