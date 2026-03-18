@@ -188,12 +188,12 @@
     "powershell|9.0|Linux|x64|sha": "6a869c3e9a4c6c55b3758de28499e33f8926284f54635d0d6303e07dffec44dfbf4aa75ff67d35ffb9a4802701d6d759ba85c4d3cb80b3627b28b076f574ca93",
     "powershell|9.0|Windows|x64|sha": "62c9464b801cad2055b75479da3bd14dd962ab7149a6b1e1bc5b278ae1231168eac719d6430e70053751b47063907c465915a7edc599d3eeacf54fe6d332468a",
 
-    "powershell|10.0|build-version": "7.6.0-preview.4",
-    "powershell|10.0|Linux.Alpine|sha": "d0b0e5822a49371f632605a087aed11e71943899c7e910ba510dd848270e56b449b02d425f23333139054ae37f298241c071ca15a77c945af7d4d39c15ac74a6",
-    "powershell|10.0|Linux|arm32|sha": "32e410abb44dcd6ba943fa8c7367a88a6c0c4e3ac0a67756fb5919139c980f1a3d66a3b055e6b2292a154c9eede22003b0b85605c101e3e6fa89fd71b7d44a7f",
-    "powershell|10.0|Linux|arm64|sha": "265519a89209f8c0c6c736f3a0d92d97468ee5ddfc245c9ed24ec8ebe13826f15b6d3a879ce6e4274c17091d38811c91b2e5acf8ec4d2202d9b0d1176a28c710",
-    "powershell|10.0|Linux|x64|sha": "92ba2a8344f13d1c640f73d61488a582bae3ea82e4d00aad02efece3475f852855fb6f8ac37f72b4a14cdc1975af9f253d59ce72e36f3653e6b1ee87dc273f8f",
-    "powershell|10.0|Windows|x64|sha": "a529408a93ca2be753d84137bff8ed95dc9301faf2da62fbd9d7bfb29fe502bfca9427736b1004884e839e3f2585ac613349f0fbbb97ea6f979b115dcf06aa0c",
+    "powershell|10.0|build-version": "7.6.0",
+    "powershell|10.0|Linux.Alpine|sha": "d5c2184d2a2172e56701cb5cc646826b4cc774c6c76ef820ca83e9324ccce77e83d9db42545a6f9199f9b8ffc259080fda9ee57b5a9354ecd2b1683f9cf0936a",
+    "powershell|10.0|Linux|arm32|sha": "e07b1c4d67fa6415670f7e19202ac9e9c5c94991530a85b1c1e885df9da6f67a3c900c9989e88cfb17c12eb6e82414db44483e043f902ba8510e999c395849c8",
+    "powershell|10.0|Linux|arm64|sha": "21efd12f1eb232d95fb2d08f07d3afb8ca9e5b77992b28de149394ad444357ab3f37cc571443dafb0d9ac09b2d59c1fbd682b8c3630f0b24726d6c85690f542b",
+    "powershell|10.0|Linux|x64|sha": "90f4a60e389483a80defe9fd7bac1954390f33d9e0fbf12b8b62389c5a1038bf5fa63efcaeca6d886f1788b5ebc88b7dafa7d11ee2dddb307a130be1c056e5f0",
+    "powershell|10.0|Windows|x64|sha": "f47d1a6b15cd6eb603df661e51bba870d898fa669853b190b1a79268b18eacb66e38263575a2882e122aa37530ac064dceea499f03b0eea680506d3aa025cd38",
 
     "powershell|11.0|build-version": "$(powershell|10.0|build-version)",
     "powershell|11.0|Linux.Alpine|sha": "$(powershell|10.0|Linux.Alpine|sha)",
