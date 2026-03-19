@@ -21,13 +21,6 @@ parameters:
   type: stepList
   default: []
 
-# Path to an env file for docker --env-file.
-# When set, --env-file is added to the docker run commands so the container
-# receives the environment variables defined in the file.
-- name: envFilePath
-  type: string
-  default: ""
-
 steps:
 # Custom ImageBuilder setup (e.g., bootstrap from source)
 - ${{ if gt(length(parameters.customInitSteps), 0) }}:
@@ -106,21 +99,25 @@ steps:
           "$(imageBuilderDockerRunExtraOptions)"
         )
 
-        $envFilePath = "${{ parameters.envFilePath }}"
-        if ($envFilePath) {
-          $dockerRunArgs += "--env-file $envFilePath"
-        }
-
         $authedDockerRunArgs = @(
           "-e", 'SYSTEM_ACCESSTOKEN'
           "-e", 'SYSTEM_OIDCREQUESTURI'
         )
 
-        $dockerRunCmd = $dockerRunBaseCmd + $dockerRunArgs + @("$(imageNames.imageBuilder.withrepo)")
-        $authedDockerRunCmd = $dockerRunBaseCmd + $authedDockerRunArgs + $dockerRunArgs + @("$(imageNames.imageBuilder.withrepo)")
+        $dockerRunCmd = $dockerRunBaseCmd + $dockerRunArgs
+        $authedDockerRunCmd = $dockerRunBaseCmd + $authedDockerRunArgs + $dockerRunArgs
 
-        $runImageBuilderCmd = $($dockerRunCmd -join ' ')
-        $runAuthedImageBuilderCmd = $($authedDockerRunCmd -join ' ')
+        # Base commands without image name for templates that need to insert
+        # extra docker run args before the image name (e.g. signing)
+        $runImageBuilderBaseCmd = $($dockerRunCmd -join ' ')
+        $runAuthedImageBuilderBaseCmd = $($authedDockerRunCmd -join ' ')
+
+        Write-Host "##vso[task.setvariable variable=runImageBuilderBaseCmd]$runImageBuilderBaseCmd"
+        Write-Host "##vso[task.setvariable variable=runAuthedImageBuilderBaseCmd]$runAuthedImageBuilderBaseCmd"
+
+        # Full commands with image name for direct invocation by other templates
+        $runImageBuilderCmd = "$runImageBuilderBaseCmd $imageBuilderImageName"
+        $runAuthedImageBuilderCmd = "$runAuthedImageBuilderBaseCmd $imageBuilderImageName"
 
         Write-Host "##vso[task.setvariable variable=runImageBuilderCmd]$runImageBuilderCmd"
         Write-Host "##vso[task.setvariable variable=runAuthedImageBuilderCmd]$runAuthedImageBuilderCmd"
@@ -138,3 +135,12 @@ steps:
         $runImageBuilderCmd = "$(Build.BinariesDirectory)\.Microsoft.DotNet.ImageBuilder\Microsoft.DotNet.ImageBuilder.exe"
         Write-Host "##vso[task.setvariable variable=runImageBuilderCmd]$runImageBuilderCmd"
         Write-Host "##vso[task.setvariable variable=runAuthedImageBuilderCmd]$runImageBuilderCmd"
+        # On Windows the base commands are the same as the full commands since
+        # there is no container image name to append
+        Write-Host "##vso[task.setvariable variable=runImageBuilderBaseCmd]$runImageBuilderCmd"
+        Write-Host "##vso[task.setvariable variable=runAuthedImageBuilderBaseCmd]$runImageBuilderCmd"
+        # Set imageBuilderImageName to empty - on Windows there is no container image
+        # since ImageBuilder runs as a native exe. run-imagebuilder.yml appends this
+        # variable to the command line, so it must be defined (but empty) to avoid
+        # leaving an unexpanded $(imageBuilderImageName) literal in the script.
+        Write-Host "##vso[task.setvariable variable=imageBuilderImageName]"
