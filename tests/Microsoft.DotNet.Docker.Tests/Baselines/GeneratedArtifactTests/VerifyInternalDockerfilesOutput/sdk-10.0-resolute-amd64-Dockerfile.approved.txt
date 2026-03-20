@@ -2,21 +2,24 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM amd64/buildpack-deps:resolute-curl AS installer
 
+ARG ACCESSTOKEN
+
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.201 \
-    && curl --fail --show-error --location \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
-    && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
+RUN dotnet_sdk_version=0.0.0 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz \
+        --remote-name https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
-    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
+    && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
-        dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
-        dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512
+        dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz \
+        dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz.sha512
 
 
 # .NET SDK image
-FROM $REPO:10.0.5-resolute-amd64
+FROM $REPO:0.0.0-resolute-amd64
 
 ENV \
     # Do not generate certificate
@@ -24,7 +27,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.201 \
+    DOTNET_SDK_VERSION=0.0.0 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -49,9 +52,9 @@ RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.6.0-preview.4 \
+RUN powershell_version=0.0.0 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='92ba2a8344f13d1c640f73d61488a582bae3ea82e4d00aad02efece3475f852855fb6f8ac37f72b4a14cdc1975af9f253d59ce72e36f3653e6b1ee87dc273f8f' \
+    && powershell_sha512='{sha512_placeholder}' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
