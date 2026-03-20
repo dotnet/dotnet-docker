@@ -29,6 +29,15 @@ parameters:
   type: string
   default: "linux"
 
+# Additional docker run args inserted before the image name (Linux only).
+# These are flags passed to `docker run` for the containerized ImageBuilder
+# and must not be set for Windows jobs where ImageBuilder runs as a native
+# executable. Used for signing (volume mounts, env files) or other
+# job-specific docker configuration.
+- name: linuxOnlyExtraDockerRunArgs
+  type: string
+  default: ""
+
 steps:
 - ${{ if and(eq(variables['System.TeamProject'], parameters.internalProjectName), ne(variables['Build.Reason'], 'PullRequest')) }}:
 
@@ -56,7 +65,7 @@ steps:
             $serviceConnectionsArgs += "$($connection.tenantId):$($connection.clientId):$($connection.id)"
         }
 
-        $(runAuthedImageBuilderCmd) ${{ parameters.args }} @serviceConnectionsArgs
+        $(runAuthedImageBuilderBaseCmd) ${{ parameters.linuxOnlyExtraDockerRunArgs }} $(imageBuilderImageName) ${{ parameters.args }} @serviceConnectionsArgs
 
 - ${{ else }}:
 
@@ -69,4 +78,4 @@ steps:
     inputs:
       targetType: 'inline'
       script: >-
-        $(runImageBuilderCmd) ${{ parameters.args }}
+        $(runImageBuilderBaseCmd) ${{ parameters.linuxOnlyExtraDockerRunArgs }} $(imageBuilderImageName) ${{ parameters.args }}
