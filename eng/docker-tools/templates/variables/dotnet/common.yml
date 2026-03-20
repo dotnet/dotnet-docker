@@ -1,10 +1,8 @@
 variables:
 - template: /eng/docker-tools/templates/variables/common.yml@self
-
-- name: publicProjectName
-  value: public
-- name: internalProjectName
-  value: internal
+- template: /eng/docker-tools/templates/variables/dnceng-build-pools.yml@self
+- template: /eng/docker-tools/templates/variables/dnceng-signing.yml@self
+- template: /eng/docker-tools/templates/variables/dnceng-project-names.yml@self
 
 # $(dockerHubRegistryCreds) is needed by the copy-base-images step in
 # eng/docker-tools/templates/stages/build-and-test.yml#L73-L78, even during a dry-run.
@@ -12,71 +10,5 @@ variables:
 # variable template.
 - name: dockerHubRegistryCreds
   value: --registry-creds 'docker.io=placeholder;placeholder'
-
-- name: linuxAmd64InternalPoolImage
-  value: build.azurelinux.3.amd64
-- name: linuxAmd64PublicPoolImage
-  value: build.azurelinux.3.amd64.open
-- name: linuxAmd64PublicPoolName
-  value: NetCore-Public
-- name: linuxAmd64InternalPoolName
-  value: NetCore1ESPool-Internal
-
-- name: linuxArm64PublicPoolImage
-  value: build.azurelinux.3.arm64.open
-- name: linuxArm64InternalPoolImage
-  value: build.azurelinux.3.arm64
-- name: linuxArm64PublicPoolName
-  value: Docker-Linux-Arm-Public
-- name: linuxArm64InternalPoolName
-  value: Docker-Linux-Arm-Internal
-
-- name: linuxArm32PublicPoolImage
-  value: build.azurelinux.3.arm64.open
-- name: linuxArm32InternalPoolImage
-  value: build.azurelinux.3.arm64
-- name: linuxArm32PublicPoolName
-  value: Docker-Linux-Arm-Public
-- name: linuxArm32InternalPoolName
-  value: Docker-Linux-Arm-Internal
-
-- name: windowsServer2016PublicPoolImage
-  value: Server2016-NESDockerBuilds
-- name: windowsServer2016InternalPoolImage
-  value: Server2016-NESDockerBuilds-1ESPT
-- name: windowsServer2016PoolName
-  value: Docker-2016-${{ variables['System.TeamProject'] }}
-
-- name: windowsServer2019PublicPoolImage
-  value: Server2019-1809-NESDockerBuilds
-- name: windowsServer2019InternalPoolImage
-  value: Server2019-1809-NESDockerBuilds-1ESPT
-- name: windowsServer2019PoolName
-  value: Docker-1809-${{ variables['System.TeamProject'] }}
-
-- name: windowsServer2022PublicPoolImage
-  value: Server2022-NESDockerBuilds
-- name: windowsServer2022InternalPoolImage
-  value: Server2022-NESDockerBuilds-1ESPT
-- name: windowsServer2022PoolName
-  value: Docker-2022-${{ variables['System.TeamProject'] }}
-
-- name: windowsServer2025PublicPoolImage
-  value: Server2025-NESDockerBuilds
-- name: windowsServer2025InternalPoolImage
-  value: Server2025-NESDockerBuilds-1ESPT
-- name: windowsServer2025PoolName
-  value: Docker-2025-${{ variables['System.TeamProject'] }}
-
-## Signing
-# Team name required for MicroBuild signing plugin
-- name: TeamName
-  value: DotNetCore
-# MicroBuild signing plugin feed source
-- name: MicroBuildFeedSource
-  value: https://dnceng.pkgs.visualstudio.com/_packaging/MicroBuildToolset/nuget/v3/index.json
-# MicroBuild signing plugin version
-- name: MicroBuildPluginVersion
-  value: latest
 
 - group: DotNet-Docker-Common-2
