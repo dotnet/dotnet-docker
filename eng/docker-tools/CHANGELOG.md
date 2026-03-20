@@ -4,6 +4,17 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-03-18: CG build template supports skipping .NET SDK installation
+
+- Issue: [#2029](https://github.com/dotnet/docker-tools/issues/2029)
+
+`cg-build-projects.yml` now accepts `skipDotNetInstall` (boolean, default `false`) and
+`initSteps` (stepList, default `[]`) parameters. Setting `skipDotNetInstall: true` skips
+the built-in SDK installation. Setting `initSteps` will execute those custom steps
+at the beginning of the job.
+
+---
+
 ## 2026-03-12: Service connection OIDC changes
 
 - Pull request: [#2013](https://github.com/dotnet/docker-tools/pull/2013)

@@ -1,0 +1,10 @@
+# MicroBuild signing variables for dnceng pipelines.
+# Reference this template in pipelines that run in the dnceng or dnceng-public Azure DevOps orgs.
+
+variables:
+- name: TeamName
+  value: DotNetCore
+- name: MicroBuildFeedSource
+  value: https://dnceng.pkgs.visualstudio.com/_packaging/MicroBuildToolset/nuget/v3/index.json
+- name: MicroBuildPluginVersion
+  value: latest

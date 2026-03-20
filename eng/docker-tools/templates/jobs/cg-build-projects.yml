@@ -7,11 +7,20 @@ parameters:
   type: boolean
   default: false
   displayName: CG Dry Run
+# When true, the job skips the .NET SDK installation.
+- name: skipDotNetInstall
+  type: boolean
+  default: false
+  displayName: Skip .NET SDK Installation
 # See https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options for possible Channel values
 - name: dotnetVersionChannel
   type: string
   default: '9.0'
   displayName: .NET Version
+# Additional steps to run before building projects (e.g. custom SDK installation).
+- name: initSteps
+  type: stepList
+  default: []
 
 jobs:
 - job: BuildProjects
@@ -21,9 +30,12 @@ jobs:
     image: $(default1ESInternalPoolImage)
     os: linux
   steps:
-  - powershell: >
-      ./eng/docker-tools/Install-DotNetSdk.ps1 -Channel ${{ parameters.dotnetVersionChannel }} -InstallPath "$(Build.SourcesDirectory)/.dotnet"
-    displayName: Run Dotnet Install Script
+  - ${{ each step in parameters.initSteps }}:
+    - ${{ step }}
+  - ${{ if eq(parameters.skipDotNetInstall, false) }}:
+    - powershell: >
+        ./eng/docker-tools/Install-DotNetSdk.ps1 -Channel ${{ parameters.dotnetVersionChannel }} -InstallPath "$(Build.SourcesDirectory)/.dotnet"
+      displayName: Install .NET SDK
   - script: >
       find . -name '*.csproj' | grep $(cgBuildGrepArgs) | xargs -n 1 $(Build.SourcesDirectory)/.dotnet/dotnet build
     displayName: Build Projects
