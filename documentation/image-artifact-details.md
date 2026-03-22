@@ -49,12 +49,12 @@ $ docker run --rm mcr.microsoft.com/dotnet/sdk:10.0 /bin/sh -c "find ./usr/share
 ./usr/share/dotnet/sdk/10.0.100/Sdks/Microsoft.NET.Sdk.WindowsDesktop/THIRD-PARTY-NOTICES.TXT
 ./usr/share/dotnet/sdk/10.0.100/Sdks/Microsoft.SourceLink.Common/LICENSE.txt
 ./usr/share/dotnet/sdk/10.0.100/Sdks/Microsoft.SourceLink.GitLab/LICENSE.txt
-./usr/share/powershell/.store/powershell.linux.x64/7.6.0-preview.4/powershell.linux.x64/7.6.0-preview.4/tools/net10.0/any/LICENSE.txt
-./usr/share/powershell/.store/powershell.linux.x64/7.6.0-preview.4/powershell.linux.x64/7.6.0-preview.4/tools/net10.0/any/Modules/Microsoft.PowerShell.PSResourceGet/LICENSE
-./usr/share/powershell/.store/powershell.linux.x64/7.6.0-preview.4/powershell.linux.x64/7.6.0-preview.4/tools/net10.0/any/Modules/Microsoft.PowerShell.ThreadJob/LICENSE
-./usr/share/powershell/.store/powershell.linux.x64/7.6.0-preview.4/powershell.linux.x64/7.6.0-preview.4/tools/net10.0/any/Modules/Microsoft.PowerShell.ThreadJob/ThirdPartyNotices.txt
-./usr/share/powershell/.store/powershell.linux.x64/7.6.0-preview.4/powershell.linux.x64/7.6.0-preview.4/tools/net10.0/any/Modules/PSReadLine/License.txt
-./usr/share/powershell/.store/powershell.linux.x64/7.6.0-preview.4/powershell.linux.x64/7.6.0-preview.4/tools/net10.0/any/ThirdPartyNotices.txt
+./usr/share/powershell/.store/powershell.linux.x64/7.6.0/powershell.linux.x64/7.6.0/tools/net10.0/any/LICENSE.txt
+./usr/share/powershell/.store/powershell.linux.x64/7.6.0/powershell.linux.x64/7.6.0/tools/net10.0/any/Modules/Microsoft.PowerShell.PSResourceGet/LICENSE
+./usr/share/powershell/.store/powershell.linux.x64/7.6.0/powershell.linux.x64/7.6.0/tools/net10.0/any/Modules/Microsoft.PowerShell.ThreadJob/LICENSE
+./usr/share/powershell/.store/powershell.linux.x64/7.6.0/powershell.linux.x64/7.6.0/tools/net10.0/any/Modules/Microsoft.PowerShell.ThreadJob/ThirdPartyNotices.txt
+./usr/share/powershell/.store/powershell.linux.x64/7.6.0/powershell.linux.x64/7.6.0/tools/net10.0/any/Modules/PSReadLine/License.txt
+./usr/share/powershell/.store/powershell.linux.x64/7.6.0/powershell.linux.x64/7.6.0/tools/net10.0/any/ThirdPartyNotices.txt
 ```
 
 ## Distroless Images and Appliance Images
