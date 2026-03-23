@@ -27,7 +27,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = 'Stop'
 
 if (!(Test-Path "$InstallPath")) {
-    mkdir "$InstallPath" | Out-Null
+    New-Item -ItemType Directory -Path "$InstallPath" -Force | Out-Null
 }
 
 $IsRunningOnUnix = $PSVersionTable.contains("Platform") -and $PSVersionTable.Platform -eq "Unix"
