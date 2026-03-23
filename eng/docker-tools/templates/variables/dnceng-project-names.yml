@@ -1,0 +1,8 @@
+# Azure DevOps project name variables for dnceng pipelines.
+# Reference this template in pipelines that run in the dnceng or dnceng-public Azure DevOps orgs.
+
+variables:
+- name: publicProjectName
+  value: public
+- name: internalProjectName
+  value: internal

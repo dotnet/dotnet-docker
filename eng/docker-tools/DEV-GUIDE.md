@@ -171,7 +171,7 @@ The `generateBuildMatrix` command is key to understanding how builds are paralle
 1. **Reads the manifest.json** - Understands which images exist
 2. **Builds a dependency graph** - Knows that `runtime-deps` must build before `runtime`
 3. **Groups by platform** - Creates jobs for each OS/Architecture combo
-4. **Optimizes with caching** - Can detect and exclude unchanged images
+4. **Optimizes with caching** - Can detect and exclude unchanged images (see [Image Caching](#image-caching) below)
 
 ### Controlling Which Build Stages Run
 
@@ -338,6 +338,34 @@ The `autobuilder` label is how the infrastructure tracks that the failure cycle 
 
 ---
 
+### Image Caching
+
+The infrastructure includes caching to avoid rebuilding images that haven't changed. Caching operates at two levels:
+
+**1. Matrix Trimming (job-level caching)**
+
+When `trimCachedImagesForMatrix` is enabled, the `generateBuildMatrix` command excludes platforms from the build matrix if they would result in cache hits. This means no build job is even created for those platforms—they're completely skipped.
+
+**2. Build-time Caching**
+
+Even if a platform isn't trimmed from the matrix, the `build` command checks each image against the cache before building. If the image is cached, it outputs `CACHE HIT`, pulls the previously-built image from the registry, and skips the actual Docker build.
+
+#### Cache Conditions
+
+An image is considered cached when **both** of the following conditions are true:
+
+1. **Base image digest is unchanged** — The digest of the base image (FROM image) matches the digest recorded in the image info file from the last successful publish. If the upstream base image has been updated, this condition fails and the image will be rebuilt.
+
+2. **Dockerfile commit is unchanged** — The git commit URL for the Dockerfile matches the commit URL recorded in the image info file. If you've modified the Dockerfile, this condition fails and the image will be rebuilt.
+
+Caching compares against the published image info stored in the [versions repo](https://github.com/dotnet/versions). This means caching compares against what's been officially published, not what's in your current branch.
+
+#### Disabling Caching
+
+To force a rebuild regardless of cache state, set the `noCache` parameter to `true` when queuing the build. This disables both matrix trimming and build-time caching.
+
+---
+
 ## Common Customization Patterns
 
 ### Pattern: Adding Build Arguments
@@ -389,3 +417,59 @@ When you queue a new run, you can override these as runtime parameters:
 2. Set `sourceBuildPipelineRunId` to the run ID containing the artifacts you need (find the build ID in the URL when viewing a pipeline run, e.g., `buildId=123456`)
 
 This avoids the multi-hour rebuild cycle when you just need to retry a failed operation.
+
+---
+
+## Troubleshooting
+
+### Why isn't my Dockerfile being built?
+
+When you trigger a pipeline run, you might find that your Dockerfile isn't being built.
+
+#### Symptom 1: The Dockerfile isn't included in any build job
+
+If your Dockerfile doesn't appear in any build job, first verify the Dockerfile is included in the manifest file.
+
+**How to verify:** Check `manifest.json` to ensure your Dockerfile path is defined under the appropriate repo and image. You can also run `generateBuildMatrix` locally to see which Dockerfiles are included:
+
+```powershell
+./eng/docker-tools/Invoke-ImageBuilder.ps1 "generateBuildMatrix --manifest manifest.json --type platformDependencyGraph"
+```
+
+**How to fix:** Add the Dockerfile to `manifest.json` under the correct repo, image, and platform configuration.
+
+#### Symptom 2: The pipeline job isn't running at all
+
+If the Dockerfile is in the manifest but you don't see a build job for it, the build matrix was likely trimmed due to [matrix trimming](#image-caching).
+
+**How to verify:** Look at the "Generate platformDependencyGraph Matrix" step output in the `GenerateBuildMatrix` job. This is an example of what the output in that step looks like:
+
+```yaml
+windowsLtsc2025Amd64:
+  src-windowsservercore-ltsc2025-helix-graph:
+    imageBuilderPaths: --path src/windowsservercore/ltsc2025/helix/amd64 --path src/windowsservercore/ltsc2025/helix/webassembly-net8/amd64 --path src/windowsservercore/ltsc2025/helix/webassembly/amd64
+    legName: windows-ltsc2025amd64src-windowsservercore-ltsc2025-helix-graph
+    osType: windows
+    architecture: amd64
+    osVersions: --os-version windowsservercore-ltsc2025
+```
+
+If your Dockerfile path doesn't appear in any of the matrix legs, it was trimmed.
+
+**How to fix:** Set the `noCache` parameter to `true` when queuing the build.
+
+#### Symptom 3: The build output shows `CACHE HIT`
+
+If your build job runs but you see `CACHE HIT` in the output of the `Build Images` step and the Dockerfile isn't actually built, the [build-time caching](#image-caching) determined that the image doesn't need to be rebuilt. This is an example of what the output in that step looks like:
+
+```
+Image info's Dockerfile commit: https://github.com/dotnet/dotnet-buildtools-prereqs-docker/blob/aa85f0dcc3b3d6757c80dc8c2a6f38c290b372cc/src/windowsservercore/ltsc2025/helix/amd64/Dockerfile
+Latest Dockerfile commit: https://github.com/dotnet/dotnet-buildtools-prereqs-docker/blob/aa85f0dcc3b3d6757c80dc8c2a6f38c290b372cc/src/windowsservercore/ltsc2025/helix/amd64/Dockerfile
+Dockerfile commits match: True
+
+CACHE HIT
+
+-- EXECUTING: docker pull mcr.microsoft.com/dotnet-buildtools/prereqs@sha256:40d36a0aab610f4d513ed7c7300a5d962968a547ffe8a859a0e599691b74b77f
+```
+
+**How to fix:** Set the `noCache` parameter to `true` when queuing the build.
