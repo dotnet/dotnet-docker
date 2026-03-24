@@ -17,7 +17,10 @@ RUN apk add --upgrade --no-cache \
         libgcc \
         libssl3 \
         libstdc++ \
-        tzdata
+        tzdata \
+        \
+        # manually update zlib from alpine base image
+        zlib
 
 # Create a non-root user and group
 RUN addgroup \
