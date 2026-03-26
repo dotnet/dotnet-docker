@@ -4,6 +4,14 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-03-25: Manifest list creation moved to Post_Build
+
+- Issue: [#2002](https://github.com/dotnet/docker-tools/issues/2002)
+
+Manifest lists are now created during `Post_Build` instead of during `Publish`. They are copied to the publish registry via ACR import along with the platform images, rather than being recreated from scratch during publish.
+
+---
+
 ## 2026-03-18: CG build template supports skipping .NET SDK installation
 
 - Issue: [#2029](https://github.com/dotnet/docker-tools/issues/2029)

@@ -20,6 +20,12 @@ jobs:
       dockerClientOS: linux
       customInitSteps: ${{ parameters.customInitSteps }}
       publishConfig: ${{ parameters.publishConfig }}
+  - ${{ if parameters.publishConfig }}:
+    - template: /eng/docker-tools/templates/steps/reference-service-connections.yml@self
+      parameters:
+        publishConfig: ${{ parameters.publishConfig }}
+        usesRegistries:
+          - ${{ parameters.publishConfig.BuildRegistry.server }}
   - template: /eng/docker-tools/templates/steps/download-build-artifact.yml@self
     parameters:
       targetPath: $(Build.ArtifactStagingDirectory)
@@ -75,6 +81,21 @@ jobs:
         $(manifestVariables)
     name: MergeImageInfoFiles
     displayName: Merge Image Info Files
+  - ${{ if parameters.publishConfig }}:
+    - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
+      parameters:
+        displayName: Create Manifest Lists
+        internalProjectName: ${{ parameters.internalProjectName }}
+        condition: and(succeeded(), ne(variables['MergeImageInfoFiles.noImageInfos'], 'true'), ne(variables['Build.Reason'], 'PullRequest'))
+        args: >-
+          createManifestList
+          '$(imageInfosContainerDir)$(imageInfosOutputSubDir)/image-info.json'
+          --repo-prefix '${{ parameters.publishConfig.BuildRegistry.repoPrefix }}'
+          --os-type '*'
+          --architecture '*'
+          --manifest '$(manifest)'
+          --registry-override '${{ parameters.publishConfig.BuildRegistry.server }}'
+          $(manifestVariables)
   - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
     parameters:
       condition: and(succeeded(), ne(variables['MergeImageInfoFiles.noImageInfos'], 'true'))
