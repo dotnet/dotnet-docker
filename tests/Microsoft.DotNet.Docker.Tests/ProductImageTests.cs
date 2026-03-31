@@ -188,12 +188,6 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             IEnumerable<string> extraExcludePaths = null)
         {
-            if (imageData.OS.IsUnstable)
-            {
-                OutputHelper.WriteLine("Skipping package verification for unstable OS");
-                return;
-            }
-
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
 
@@ -315,6 +309,30 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
+                { OS: var os } when os == OS.ResoluteChiseled =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "libstdc++6",
+                        "libzstd",
+                        "libzstd1",
+                        "openssl",
+                        "zlib",
+                        "zlib1g"
+                    ],
+                { OS: { Family: OSFamily.Ubuntu, Version: "26.04" } } =>
+                    [
+                        "ca-certificates",
+                        "gcc-16-base",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "openssl",
+                        "libstdc++6"
+                    ],
                 { OS: var os } when os == OS.NobleChiseled =>
                     [
                         "ca-certificates",
@@ -381,8 +399,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     },
                 { OS: var os } when os == OS.ResoluteChiseled => new[]
                     {
+                        "icu",
                         "libicu78",
-                        "tzdata-legacy",
                         "tzdata"
                     },
                 { OS: var os } when os == OS.NobleChiseled => new[]
