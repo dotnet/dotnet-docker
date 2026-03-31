@@ -16,7 +16,10 @@ RUN apk add --upgrade --no-cache \
         # .NET dependencies
         libgcc \
         libssl3 \
-        libstdc++
+        libstdc++ \
+        \
+        # manually update zlib from alpine base image
+        zlib
 
 # Create a non-root user and group
 RUN addgroup \

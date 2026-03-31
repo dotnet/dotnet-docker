@@ -85,7 +85,9 @@
             dotnetDepsComment
         ] ^
 
-    set pkgs to cat(prefixPkgs, pkgs) ^
+    set suffixPkgs to when(isAlpine && dotnetVersion != "8.0", ["", "# manually update zlib from alpine base image", zlibPkg], []) ^
+
+    set pkgs to cat(prefixPkgs, pkgs, suffixPkgs) ^
 
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
