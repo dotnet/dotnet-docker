@@ -313,6 +313,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     [
                         "ca-certificates",
                         "gcc-14-base",
+                        ..GetResoluteChiseledAmd64Packages(imageData),
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
@@ -389,6 +390,13 @@ namespace Microsoft.DotNet.Docker.Tests
             OSFamily[] unversionedZLibOSFamilies = [OSFamily.Alpine, OSFamily.AzureLinux, OSFamily.Mariner];
             return unversionedZLibOSFamilies.Contains(os.Family) ? "zlib" : "zlib1g";
         }
+
+        /// <summary>
+        /// Syft detects gcc-16 and openssl-provider-legacy as separate binary packages
+        /// on amd64 resolute chiseled images but not on arm64/arm32.
+        /// </summary>
+        private static IEnumerable<string> GetResoluteChiseledAmd64Packages(ProductImageData imageData) =>
+            imageData.Arch == Arch.Amd64 ? ["gcc-16", "openssl-provider-legacy"] : [];
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
