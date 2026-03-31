@@ -47,9 +47,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (imageData.OS.IsUnstable)
+            if (imageData.OS.Contains("resolute"))
             {
-                OutputHelper.WriteLine("Skipping insecure files check for unstable OS."
+                OutputHelper.WriteLine("Skipping insecure files check for Ubuntu 26.04 (resolute)."
                     + " Remove this check when https://github.com/dotnet/dotnet-docker/issues/7054 is resolved.");
                 return;
             }
