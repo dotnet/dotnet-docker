@@ -20,7 +20,7 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:10.0.5-resolute-chiseled-arm64v8
+FROM $REPO:10.0.5-resolute-chiseled-extra-arm64v8
 
 # .NET Runtime version
 ENV DOTNET_VERSION=10.0.5
