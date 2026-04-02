@@ -241,6 +241,9 @@ jobs:
   #
   # https://github.com/dotnet/docker-tools/issues/1698 tracks making this command no longer depend
   # on individual step displayNames.
+  #
+  # Skipped for PR builds because manifest lists are not created in PR builds (see post-build.yml).
+  # Without manifest lists present in image-info.json, the postPublishNotification fails with a NRE.
   - script: >
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
@@ -266,7 +269,7 @@ jobs:
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
-    condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'))
+    condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'), ne(variables['Build.Reason'], 'PullRequest'))
 
   - powershell: |
       # Default to current build number if parameter was not overridden
