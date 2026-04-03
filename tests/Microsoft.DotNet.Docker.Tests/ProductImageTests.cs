@@ -47,9 +47,9 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            if (imageData.OS.IsUnstable)
+            if (imageData.OS.Contains("resolute"))
             {
-                OutputHelper.WriteLine("Skipping insecure files check for unstable OS."
+                OutputHelper.WriteLine("Skipping insecure files check for Ubuntu 26.04 (resolute)."
                     + " Remove this check when https://github.com/dotnet/dotnet-docker/issues/7054 is resolved.");
                 return;
             }
@@ -188,12 +188,6 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             IEnumerable<string> extraExcludePaths = null)
         {
-            if (imageData.OS.IsUnstable)
-            {
-                OutputHelper.WriteLine("Skipping package verification for unstable OS");
-                return;
-            }
-
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
 
@@ -315,6 +309,31 @@ namespace Microsoft.DotNet.Docker.Tests
                         "openssl",
                         "libstdc++6"
                     ],
+                { OS: var os } when os == OS.ResoluteChiseled =>
+                    [
+                        "ca-certificates",
+                        "gcc-14-base",
+                        ..GetResoluteChiseledAmd64Packages(imageData),
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "libstdc++6",
+                        "libzstd",
+                        "libzstd1",
+                        "openssl",
+                        "zlib",
+                        "zlib1g"
+                    ],
+                { OS: { Family: OSFamily.Ubuntu, Version: "26.04" } } =>
+                    [
+                        "ca-certificates",
+                        "gcc-16-base",
+                        "libc6",
+                        "libgcc-s1",
+                        "libssl3t64",
+                        "openssl",
+                        "libstdc++6"
+                    ],
                 { OS: var os } when os == OS.NobleChiseled =>
                     [
                         "ca-certificates",
@@ -372,6 +391,13 @@ namespace Microsoft.DotNet.Docker.Tests
             return unversionedZLibOSFamilies.Contains(os.Family) ? "zlib" : "zlib1g";
         }
 
+        /// <summary>
+        /// Syft detects gcc-16 and openssl-provider-legacy as separate binary packages
+        /// on amd64 resolute chiseled images but not on arm64/arm32.
+        /// </summary>
+        private static IEnumerable<string> GetResoluteChiseledAmd64Packages(ProductImageData imageData) =>
+            imageData.Arch == Arch.Amd64 ? ["gcc-16", "openssl-provider-legacy"] : [];
+
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
                 { IsDistroless: true, OS.Family: OSFamily.Mariner or OSFamily.AzureLinux } => new[]
@@ -381,8 +407,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     },
                 { OS: var os } when os == OS.ResoluteChiseled => new[]
                     {
+                        "icu",
                         "libicu78",
-                        "tzdata-legacy",
                         "tzdata"
                     },
                 { OS: var os } when os == OS.NobleChiseled => new[]
