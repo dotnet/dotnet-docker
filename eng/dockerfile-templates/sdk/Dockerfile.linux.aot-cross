@@ -26,8 +26,7 @@
             "http://archive.ubuntu.com/ubuntu/",
             "http://ports.ubuntu.com/ubuntu-ports/")
 
-}}# syntax=docker/dockerfile:1
-ARG REPO=mcr.microsoft.com/dotnet/sdk
+}}ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM {{baseImageTag}}
 
 {{if match(OS_VERSION, "jammy"):RUN echo "deb [arch={{targetArchShortName}}] {{ubuntuPortsUrl}} {{OS_VERSION}} main restricted" > {{sourcesListFilePath}} \
