@@ -370,12 +370,21 @@ To force a rebuild regardless of cache state, set the `noCache` parameter to `tr
 
 ### Pattern: Adding Build Arguments
 
-Pass additional arguments to Docker builds via ImageBuilder:
+Pass Dockerfile `ARG` values via ImageBuilder:
 
 ```yaml
 customBuildInitSteps:
 - powershell: |
     $args = "--build-arg MY_VAR=value"
+    echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$args"
+```
+
+To pass raw options directly to `docker build`, use `--build-option`. Quote values that contain spaces:
+
+```yaml
+customBuildInitSteps:
+- powershell: |
+    $args = '--build-option "--ulimit nofile=65536:65536"'
     echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$args"
 ```
 
