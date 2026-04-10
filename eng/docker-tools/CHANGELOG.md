@@ -4,6 +4,27 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-04-02: Extra Docker build options can be passed through ImageBuilder
+
+- Pull request: [#2063](https://github.com/dotnet/docker-tools/pull/2063)
+
+ImageBuilder's `build` command now accepts repeated `--build-option` arguments and forwards them directly to
+`docker build`. This allows repos to pass options such as `--ulimit nofile=65536:65536` or `--network host`
+through `imageBuilderBuildArgs`, in addition to standard Dockerfile `--build-arg` values.
+
+**How to use:**
+
+```yaml
+customBuildInitSteps:
+- powershell: |
+    $args = '--build-option "--ulimit nofile=65536:65536"'
+    echo "##vso[task.setvariable variable=imageBuilderBuildArgs]$args"
+```
+
+Repeat `--build-option` for multiple Docker arguments, and quote values that contain spaces.
+
+---
+
 ## 2026-03-25: Manifest list creation moved to Post_Build
 
 - Issue: [#2002](https://github.com/dotnet/docker-tools/issues/2002)
