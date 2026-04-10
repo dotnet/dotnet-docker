@@ -1,4 +1,3 @@
-# syntax=docker/dockerfile:1
 ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM $REPO:11.0.100-preview.2-alpine3.23-arm64v8
 
