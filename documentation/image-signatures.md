@@ -67,7 +67,7 @@ mcr.microsoft.com/dotnet/sdk@sha256:<digest>
 .NET container image signatures use the following certificates:
 
 - Signature Root Certificate: [Microsoft Supply Chain RSA Root CA 2022](https://www.microsoft.com/pkiops/certs/Microsoft%20Supply%20Chain%20RSA%20Root%20CA%202022.crt)
-- Timestamping Authority (TSA) Root Certificate: [Microsoft Root Certificate Authority 2010](http://www.microsoft.com/pki/certs/MicRooCerAut_2010-06-23.crt) (timestamp authority)
+- Timestamping Authority (TSA) Root Certificate: [Microsoft Root Certificate Authority 2010](http://www.microsoft.com/pki/certs/MicRooCerAut_2010-06-23.crt)
 
 ### Set up Trust Store and Trust Policy
 
