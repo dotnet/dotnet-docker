@@ -109,7 +109,7 @@ for verifying .NET images:
 }
 ```
 
-> [!CRITICAL]
+> [!CAUTION]
 > A misconfigured trust policy can cause signature verification to silently
 > pass without logging errors for invalid or missing signatures. Read the trust
 > policy specification carefully.
