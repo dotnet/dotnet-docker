@@ -313,7 +313,7 @@ namespace Microsoft.DotNet.Docker.Tests
                     [
                         "ca-certificates",
                         "gcc-14-base",
-                        ..GetResoluteChiseledAmd64Packages(imageData),
+                        ..GetResoluteChiseledArchSpecificPackages(imageData),
                         "libc6",
                         "libgcc-s1",
                         "libssl3t64",
@@ -392,11 +392,16 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         /// <summary>
-        /// Syft detects gcc-16 and openssl-provider-legacy as separate binary packages
-        /// on amd64 resolute chiseled images but not on arm64/arm32.
+        /// Syft detects additional binary packages on specific architectures
+        /// for resolute chiseled images: gcc-16 on amd64, openssl-provider-legacy on arm32.
         /// </summary>
-        private static IEnumerable<string> GetResoluteChiseledAmd64Packages(ProductImageData imageData) =>
-            imageData.Arch == Arch.Amd64 ? ["gcc-16", "openssl-provider-legacy"] : [];
+        private static IEnumerable<string> GetResoluteChiseledArchSpecificPackages(ProductImageData imageData) =>
+            imageData.Arch switch
+            {
+                Arch.Amd64 => ["gcc-16"],
+                Arch.Arm => ["openssl-provider-legacy"],
+                _ => []
+            };
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
@@ -409,7 +414,8 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "icu",
                         "libicu78",
-                        "tzdata"
+                        "tzdata",
+                        "tzdata-legacy"
                     },
                 { OS: var os } when os == OS.NobleChiseled => new[]
                     {
