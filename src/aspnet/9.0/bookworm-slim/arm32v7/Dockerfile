@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM arm32v7/buildpack-deps:bookworm-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=9.0.14 \
+RUN aspnetcore_version=9.0.15 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-arm.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
@@ -18,9 +18,9 @@ RUN aspnetcore_version=9.0.14 \
 
 
 # ASP.NET Core image
-FROM $REPO:9.0.14-bookworm-slim-arm32v7
+FROM $REPO:9.0.15-bookworm-slim-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=9.0.14
+ENV ASPNET_VERSION=9.0.15
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
