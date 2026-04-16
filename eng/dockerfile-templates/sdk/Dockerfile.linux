@@ -1,8 +1,7 @@
 {{
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isMariner to find(OS_VERSION, "cbl-mariner") >= 0 ^
-    set isAzureLinux to isMariner || find(OS_VERSION, "azurelinux") >= 0 ^
+    set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set baseUrl to VARIABLES[cat("sdk|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set tagVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
@@ -40,17 +39,11 @@
                 "tzdata",
             ]),
         when(isAzureLinux,
-            when (isMariner,
-                [
-                    "git",
-                    "libatomic_ops",
-                    "tar",
-                ],
-                [
-                    "git",
-                    "libgcc-atomic",
-                    "tar",
-                ]),
+            [
+                "git",
+                "libgcc-atomic",
+                "tar",
+            ],
             [
                 "curl",
                 "git",

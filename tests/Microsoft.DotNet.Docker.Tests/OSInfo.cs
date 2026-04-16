@@ -25,7 +25,6 @@ public enum OSFamily
     Alpine,
     AzureLinux,
     Debian,
-    Mariner,
     Ubuntu,
     NanoServer,
     WindowsServerCore
@@ -74,7 +73,6 @@ public sealed record OSInfo(
                 OSFamily.Alpine => string.IsNullOrEmpty(Version) ? "alpine" : $"alpine{Version}",
                 OSFamily.AzureLinux => $"azurelinux{Version}",
                 OSFamily.Debian => $"{GetCodename(Family, Version)}-slim",
-                OSFamily.Mariner => $"cbl-mariner{Version}",
                 OSFamily.Ubuntu => GetCodename(Family, Version),
                 OSFamily.NanoServer => $"nanoserver-{Version.ToLowerInvariant().Replace(" ", "")}",
                 OSFamily.WindowsServerCore => $"windowsservercore-{Version.ToLowerInvariant().Replace(" ", "")}",
@@ -102,7 +100,6 @@ public sealed record OSInfo(
                 OSFamily.Alpine => "Alpine",
                 OSFamily.AzureLinux => "Azure Linux",
                 OSFamily.Debian => "Debian",
-                OSFamily.Mariner => "CBL-Mariner",
                 OSFamily.Ubuntu => "Ubuntu",
                 OSFamily.NanoServer => "Nano Server",
                 OSFamily.WindowsServerCore => "Windows Server Core",

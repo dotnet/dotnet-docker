@@ -57,7 +57,7 @@ docker scout cves mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled
 **Azure Linux**:
 
 ```bash
-docker scout cves mcr.microsoft.com/dotnet/runtime-deps:10.0-cbl-mariner2.0-distroless
+docker scout cves mcr.microsoft.com/dotnet/runtime-deps:10.0-azurelinux3.0-distroless
 ```
 
 ### How do I write my Dockerfile to work without a shell?

@@ -151,7 +151,7 @@ public static class TestDockerfileBuilder
                         debian | ubuntu) apt-get update \
                             && apt-get install -y --no-install-recommends python3 \
                             && rm -rf /var/lib/apt/lists/* ;; \
-                        mariner | azurelinux) tdnf install -y python3 \
+                        azurelinux) tdnf install -y python3 \
                             && tdnf clean all ;; \
                     esac
                 """);
