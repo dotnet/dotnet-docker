@@ -8,6 +8,7 @@ WORKDIR /source
 
 # Copy project file and restore as distinct layers
 COPY --link Directory.Build.props .
+COPY --link nuget.config .
 COPY --link complexapp/*.csproj complexapp/
 COPY --link libfoo/*.csproj libfoo/
 COPY --link libbar/*.csproj libbar/
