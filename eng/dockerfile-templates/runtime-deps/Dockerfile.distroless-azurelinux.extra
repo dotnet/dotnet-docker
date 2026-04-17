@@ -1,0 +1,1 @@
+{{InsertTemplate("Dockerfile.distroless-azurelinux", [ "is-extra": "true" ])}}
