@@ -8,7 +8,7 @@
     set buildVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")] ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
+    set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set isDistroless to find(OS_VERSION, "distroless") >= 0 || find(OS_VERSION, "chiseled") >= 0 ^
     set isFullAzureLinux to isAzureLinux && !isDistroless ^
     set isDistrolessAzureLinux to isAzureLinux && isDistroless ^
@@ -25,9 +25,7 @@
     set osVersionBase to when(isUbuntu && ARCH_VERSIONED = "arm32v7", "jammy", osVersionBase) ^
 
     set installerImageTag to when(isDistrolessAzureLinux,
-        cat("mcr.microsoft.com/"
-            when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinux", "cbl-mariner"),
-            "/base/core:",
+        cat("mcr.microsoft.com/azurelinux/base/core:",
             OS_VERSION_NUMBER),
         when(isAlpine || isFullAzureLinux,
             runtimeDepsBaseTag,

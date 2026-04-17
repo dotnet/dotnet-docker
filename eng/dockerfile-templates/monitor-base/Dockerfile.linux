@@ -23,14 +23,12 @@
     set monitorBaseUrl to cat(monitorBaseUrl, monitorPath) ^
     set monitorBaseChecksumUrl to cat(monitorBaseChecksumUrl, monitorChecksumPath) ^
 
-    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
+    set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|", dotnetMajorMinor, "|product-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
-        cat("mcr.microsoft.com/"
-            when(find(OS_VERSION_NUMBER, "3.0") >= 0, "azurelinux", "cbl-mariner"),
-            "/base/core:",
+        cat("mcr.microsoft.com/azurelinux/base/core:",
             OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
     set monitorBaseTemplate to when(monitorMajor != "8" && monitorMajor != "9", "Dockerfile.linux.install-monitor-base.10", "Dockerfile.linux.install-monitor-base")
