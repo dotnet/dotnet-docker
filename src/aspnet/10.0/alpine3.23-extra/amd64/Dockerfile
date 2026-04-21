@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:10.0.6-alpine3.23-extra-amd64 AS installer
+FROM $REPO:10.0.7-alpine3.23-extra-amd64 AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=10.0.6 \
+RUN aspnetcore_version=10.0.7 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-x64.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-x64.tar.gz.sha512 \
@@ -17,9 +17,9 @@ RUN aspnetcore_version=10.0.6 \
 
 
 # ASP.NET Core image
-FROM $REPO:10.0.6-alpine3.23-extra-amd64
+FROM $REPO:10.0.7-alpine3.23-extra-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=10.0.6
+ENV ASPNET_VERSION=10.0.7
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
