@@ -51,7 +51,7 @@ RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
 # Install PowerShell global tool
 RUN powershell_version=7.6.0 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm32.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha512='e07b1c4d67fa6415670f7e19202ac9e9c5c94991530a85b1c1e885df9da6f67a3c900c9989e88cfb17c12eb6e82414db44483e043f902ba8510e999c395849c8' \
+    && powershell_sha512='f1abc49e631358ba980f7db5fa08fbc8f93c11a621599bcb1e7b49747da499572195b4810ff1ff04f02687e0ff34fe9846114edb61e06ea4424ae2eec920def3' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
