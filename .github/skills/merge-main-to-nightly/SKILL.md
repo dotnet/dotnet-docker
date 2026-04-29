@@ -9,7 +9,7 @@ disable-model-invocation: true
 
 ## Workflow
 
-1. **Determine the release name**: Run `pwsh ../shared/Get-LatestReleaseBranch.ps1` to find the latest release branch.
+1. **Determine the release name**: Run `pwsh ../shared/Get-ReleaseBranches.ps1` to find the latest release branch.
    - The most recently created branch corresponds to the current release.
 2. **Create a working branch** - create a new branch based off of the `nightly` branch, called `main-to-nightly-$releaseName`.
    - `git fetch upstream nightly && git checkout -b main-to-nightly-$releaseName upstream/nightly`

@@ -9,9 +9,8 @@ disable-model-invocation: true
 
 ## Workflow
 
-1. **Create a working branch** — create a new branch based off of the public release branch (e.g. `release-$ReleaseName`).
-   - Run `pwsh ../shared/Get-LatestReleaseBranch.ps1` to find the latest release branch.
-   - The public release branch is `release/$ReleaseName` and the internal release branch is `internal/release/$ReleaseName`.
+1. **Create a working branch** - create a new branch based off of the public release branch (e.g. `release-$ReleaseName`).
+   - Run `pwsh ../shared/Get-ReleaseBranches.ps1` to find the latest release branch.
    - The most recently created branch corresponds to the current release.
 2. **Collect stage container names** - read `stage-containers.txt` from the internal release branch get the stage container names for each release.
 3. **Update Dockerfiles to new .NET versions** - for each .NET version to be released, run the update-dependencies tool from the root of the dotnet-docker repo:
