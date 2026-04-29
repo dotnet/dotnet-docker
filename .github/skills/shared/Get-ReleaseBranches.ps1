@@ -13,7 +13,6 @@ function Get-RemoteName {
 	$matchingRemotes = @(git remote | Where-Object {
 		$remoteName = $_
 		$remoteUrl = git remote get-url $remoteName 2>$null
-
 		$remoteUrl -match $UrlPattern
 	})
 
@@ -28,19 +27,24 @@ function Get-RemoteName {
 	return $matchingRemotes[0]
 }
 
+# Show basic documentation
+Write-Host ""
+Write-Host "# Release branches"
+Write-Host "Release branches follow the Windows release naming scheme."
+Write-Host "Example: 2026-04B refers to the second week (B) of April 2026."
+
 $upstreamRemote = Get-RemoteName -UrlPattern 'github\.com[:/]dotnet/'
 $dncengRemote = Get-RemoteName -UrlPattern 'dev\.azure\.com/dnceng/'
 
-Write-Host "Fetching from '$upstreamRemote' and '$dncengRemote' remotes..."
 git fetch $upstreamRemote 2>&1 | Out-Null
 git fetch $dncengRemote 2>&1 | Out-Null
 
-Write-Host ""
-Write-Host "## Public release branches (most recent first)"
-Write-Host ""
-git branch -r --list "$upstreamRemote/release/*" --sort=-creatordate | Select-Object -First 5
+$numberOfBranches = 5
 
 Write-Host ""
-Write-Host "## Internal release branches (most recent first)"
+Write-Host "## ${numberOfBranches} most recent public release branches"
+git branch -r --list "$upstreamRemote/release/*" --sort=-creatordate | Select-Object -First $numberOfBranches
+
 Write-Host ""
-git branch -r --list "$dncengRemote/internal/release/*" --sort=-creatordate | Select-Object -First 5
+Write-Host "## ${numberOfBranches} most recent internal release branches"
+git branch -r --list "$dncengRemote/internal/release/*" --sort=-creatordate | Select-Object -First $numberOfBranches
