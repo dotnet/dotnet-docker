@@ -28,7 +28,6 @@ function Get-RemoteName {
 }
 
 # Show basic documentation
-Write-Host ""
 Write-Host "# Release branches"
 Write-Host "Release branches follow the Windows release naming scheme."
 Write-Host "Example: 2026-04B refers to the second week (B) of April 2026."
@@ -54,8 +53,12 @@ $numberOfBranches = 5
 
 Write-Host ""
 Write-Host "## ${numberOfBranches} most recent public release branches"
-git branch -r --list "$gitHubRemote/release/*" --sort=-creatordate | Select-Object -First $numberOfBranches
+git branch -r --list "$gitHubRemote/release/*" --sort=-creatordate `
+    | Select-Object -First $numberOfBranches `
+    | ForEach-Object { Write-Host "- $($_.Trim())" }
 
 Write-Host ""
 Write-Host "## ${numberOfBranches} most recent internal release branches"
-git branch -r --list "$dncengRemote/internal/release/*" --sort=-creatordate | Select-Object -First $numberOfBranches
+git branch -r --list "$dncengRemote/internal/release/*" --sort=-creatordate `
+    | Select-Object -First $numberOfBranches `
+    | ForEach-Object { Write-Host "- $($_.Trim())" }
