@@ -1,8 +1,7 @@
 #!/usr/bin/env pwsh
-#
-# Get-BackportPRs.ps1 — List pull requests with the 'needs-backport' label in dotnet/dotnet-docker.
+
+# Lists pull requests with the 'needs-backport' label in dotnet/dotnet-docker.
 # Separates PRs merged before the most recent Patch Tuesday (likely stale labels).
-#
 
 function Get-PatchTuesday ([int]$Offset = 0) {
     $target = [datetime]::Today.AddMonths($Offset)
