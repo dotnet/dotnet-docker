@@ -7,6 +7,11 @@ parameters:
 - name: useInternalBuild
   type: boolean
   default: false
+# Token used for internal-build pushes when the internal path is enabled.
+# Set the `internalAccessToken` YAML variable to override this if needed.
+- name: internalAccessToken
+  type: string
+  default: '$(internalAccessToken)'
 - name: skipPullRequest
   type: boolean
   default: false
@@ -18,7 +23,7 @@ steps:
   displayName: Create Update Dependencies container
 - powershell: |
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
-      $pat="$(dn-bot-devdiv-dnceng-rw-code-pat)"
+      $pat='${{ parameters.internalAccessToken }}'
     } else {
       $pat="$(BotAccount-dotnet-docker-bot-PAT)"
     }

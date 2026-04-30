@@ -21,9 +21,9 @@
     set monitorBaseUrl to cat(monitorBaseUrl, monitorPath) ^
     set monitorBaseChecksumUrl to cat(monitorBaseChecksumUrl, monitorChecksumPath) ^
 
-    set isAzureLinux to find(OS_VERSION, "mariner") >= 0 || find(OS_VERSION, "azurelinux") >=0 ^
+    set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set monitorBaseTagOs to when(isAzureLinux,
-        cat(when(find(OS_VERSION, "3.0") >= 0, "azurelinux-distroless", "cbl-mariner-distroless")),
+        "azurelinux-distroless",
         "ubuntu-chiseled") ^
     set monitorBaseTagHasOs to monitorMajor = "8" ^
     set monitorBaseTagOsSuffix to when(monitorBaseTagHasOs, cat("-", monitorBaseTagOs), "") ^
@@ -31,9 +31,7 @@
         cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], monitorBaseTagOsSuffix, ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
-        cat("mcr.microsoft.com/"
-            when(find(OS_VERSION, "3.0") >= 0, "azurelinux", "cbl-mariner"),
-            "/base/core:",
+        cat("mcr.microsoft.com/azurelinux/base/core:",
             OS_VERSION_NUMBER),
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
     set extensionsTemplate to when(monitorMajor != "8" && monitorMajor != "9", "Dockerfile.linux.install-extensions.10", "Dockerfile.linux.install-extensions")

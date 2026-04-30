@@ -25,10 +25,6 @@ internal static class OS
     // Debian
     public static OSInfo BookwormSlim { get; } = new(OSType.Linux, OSFamily.Debian, "12");
 
-    // Mariner (CBL-Mariner)
-    public static OSInfo Mariner20 { get; } = new(OSType.Linux, OSFamily.Mariner, "2.0");
-    public static OSInfo Mariner20Distroless { get; } = Mariner20 with { IsDistroless = true };
-
     // Ubuntu
     public static OSInfo Jammy { get; } = new(OSType.Linux, OSFamily.Ubuntu, "22.04");
     public static OSInfo JammyChiseled { get; } = Jammy with { IsDistroless = true };

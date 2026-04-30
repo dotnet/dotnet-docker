@@ -3,6 +3,9 @@ parameters:
   # Comma-delimited list of SDK versions to target (overrides the use of channel var to determine latest version)
   sdkVersions: ""
   buildId: ""
+  # Token used for AzdoVersionsRepoInfoAccessToken in the internal-build path.
+  # Set the `internalAccessToken` YAML variable to override this if needed.
+  internalAccessToken: '$(internalAccessToken)'
   skipPullRequest: false
 
 steps:
@@ -26,7 +29,7 @@ steps:
     if ("${{ parameters.useInternalBuild }}" -eq "true") {
       $args["UseInternalBuild"] = $true
       $args["InternalAccessToken"] = '$(System.AccessToken)'
-      $args["AzdoVersionsRepoInfoAccessToken"] = "$(dn-bot-devdiv-dnceng-rw-code-pat)"
+      $args["AzdoVersionsRepoInfoAccessToken"] = '${{ parameters.internalAccessToken }}'
     }
 
     $(engPath)/Get-DropVersions.ps1 @args
@@ -86,3 +89,4 @@ steps:
     customArgsArray: "$(customArgsArray)"
     skipPullRequest: ${{ parameters.skipPullRequest }}
     useInternalBuild: ${{ parameters.useInternalBuild }}
+    internalAccessToken: ${{ parameters.internalAccessToken }}
