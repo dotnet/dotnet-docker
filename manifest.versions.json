@@ -124,8 +124,8 @@
     "libssl|noble": "3t64",
     "libssl|resolute": "3t64",
 
-    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.2/MinGit-2.53.0.2-64-bit.zip",
-    "mingit|latest|x64|sha": "d4bf83d6a860ccae9af44e508e1e00a39f09db6fa78a9ba5543b94d87ca22a29",
+    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.53.0.windows.3/MinGit-2.53.0.3-64-bit.zip",
+    "mingit|latest|x64|sha": "0d7c85a26e45668b35d0d0aeb763289376cfc039e55e0938a617ed0dfa32e433",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
