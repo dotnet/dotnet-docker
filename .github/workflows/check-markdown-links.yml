@@ -1,9 +1,10 @@
 name: 'Check Markdown Links'
 
-on:
-  pull_request:
-    paths:
-      - "**/*.md"
+# Re-enable when https://github.com/dotnet/dotnet-docker/issues/7176 is resolved.
+# on:
+#   pull_request:
+#     paths:
+#       - "**/*.md"
 
 permissions:
   pull-requests: read
