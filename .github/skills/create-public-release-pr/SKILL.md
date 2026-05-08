@@ -14,9 +14,11 @@ disable-model-invocation: true
    - The most recently created branch corresponds to the current release.
 2. **Collect stage container names** - read `stage-containers.txt` from the internal release branch get the stage container names for each release.
 3. **Update Dockerfiles to new .NET versions** - for each .NET version to be released, run the update-dependencies tool from the root of the dotnet-docker repo:
+
    ```bash
    dotnet run --project ./eng/update-dependencies/update-dependencies.csproj -- from-staging-pipeline $StageContainerName --azdo-organization "https://dev.azure.com/dnceng" --azdo-project internal --source-branch "main"
    ```
+
    - Commit changes separately for each .NET version with this commit message format: `Update .NET X.0 to X.0.Y Runtime / X.0.ZZZ SDK`.
      For previews: `Update .NET X.0 to X.0 Preview N`.
 4. **Confirm with the user** — Let the user review the changes.
