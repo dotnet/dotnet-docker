@@ -9,11 +9,14 @@ disable-model-invocation: true
 
 ## Workflow
 
-1. **Get candidates for backport**: Run `pwsh scripts/Get-BackportPRs.ps1` to find PRs to backport.
-2. **Analyze PRs** - classify each PR using the backport guidelines below and present the analysis table to the user
-3. **Cherry-pick** - confirm the plan with the user, then run `git cherry-pick <commits>` (in the order they were merged).
+1. **Determine the release branch**: Run `pwsh ../shared/Get-ReleaseBranches.ps1` to find the latest public release branch.
+   - The most recently created public release branch corresponds to the current release.
+   - Do not assume `main` is the release branch.
+2. **Get candidates for backport**: Run `pwsh scripts/Get-BackportPRs.ps1` to find PRs to backport.
+3. **Analyze PRs** - classify each PR using the backport guidelines below and present the analysis table to the user
+4. **Cherry-pick** - confirm the plan with the user, create a working branch based off of the public release branch, then run `git cherry-pick <commits>` (in the order they were merged).
     - If any templates or manifests changed, regenerate Dockerfiles and READMEs. Confirm that the diff looks correct.
-4. **Resolve conflicts** - follow the conflict resolution table below; stop and consult the user for anything not covered
+5. **Resolve conflicts** - follow the conflict resolution table below; stop and consult the user for anything not covered
 
 ## Backport guidelines
 
