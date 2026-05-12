@@ -10,7 +10,7 @@ RUN powershell -Command `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        $aspnetcore_version = '8.0.26'; `
+        $aspnetcore_version = '8.0.27'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $aspnetcore_version + '-sha.txt'; `
         `
@@ -39,9 +39,9 @@ RUN powershell -Command `
 
 
 # ASP.NET Core image
-FROM $REPO:8.0.26-windowsservercore-ltsc2025
+FROM $REPO:8.0.27-windowsservercore-ltsc2025
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=8.0.26
+ENV ASPNET_VERSION=8.0.27
 
 COPY --from=installer ["/dotnet/shared/Microsoft.AspNetCore.App", "/Program Files/dotnet/shared/Microsoft.AspNetCore.App"]
