@@ -16,7 +16,7 @@ RUN dotnet_sdk_version=10.0.203 \
 
 
 # .NET SDK image
-FROM $REPO:10.0.7-noble-arm32v7
+FROM $REPO:10.0.8-noble-arm32v7
 
 ENV \
     # Do not generate certificate

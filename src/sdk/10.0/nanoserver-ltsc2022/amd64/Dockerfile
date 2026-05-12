@@ -64,7 +64,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:10.0.7-nanoserver-ltsc2022
+FROM $REPO:10.0.8-nanoserver-ltsc2022
 
 ENV `
     # Do not generate certificate

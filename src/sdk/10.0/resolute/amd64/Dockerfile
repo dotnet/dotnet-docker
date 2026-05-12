@@ -16,7 +16,7 @@ RUN dotnet_sdk_version=10.0.203 \
 
 
 # .NET SDK image
-FROM $REPO:10.0.7-resolute-amd64
+FROM $REPO:10.0.8-resolute-amd64
 
 ENV \
     # Do not generate certificate

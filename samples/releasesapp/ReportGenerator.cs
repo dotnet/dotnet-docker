@@ -16,7 +16,7 @@ public static class Generator
         await foreach(MajorRelease release in GetMajorReleasesAsync())
         {
             int supportDays = release.EolDate is null ? 0 : GetDaysAgo(release.EolDate);
-            bool supported = release.SupportPhase is "active" or "maintainence";
+            bool supported = IsSupported(release);
             MajorVersion version = new(release.ChannelVersion, supported, release.EolDate ?? "", supportDays, GetReleases(release).ToList());
             yield return version;
         }
@@ -44,7 +44,7 @@ public static class Generator
 
     public static MajorVersion GetVersion(MajorRelease release) =>
         new(release.ChannelVersion, 
-            release.SupportPhase is "active" or "maintainence", 
+            IsSupported(release), 
             release.EolDate ?? "", 
             release.EolDate is null ? 0 : GetDaysAgo(release.EolDate), 
             GetReleases(release).ToList()
@@ -81,6 +81,9 @@ public static class Generator
         var daysAgo = success ? (int)(day - DateTime.Now).TotalDays : 0;
         return positiveNumber ? Math.Abs(daysAgo) : daysAgo;
     }
+
+    static bool IsSupported(MajorRelease release) =>
+        release.SupportPhase is "active" or "maintenance";
 
 }
 
