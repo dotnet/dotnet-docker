@@ -23,7 +23,7 @@ RUN dotnet_monitor_version=10.0.2-preview.1.26206.1 \
 
 
 # .NET Monitor Base image
-FROM $REPO:10.0.7-azurelinux3.0-distroless-amd64
+FROM $REPO:10.0.8-azurelinux3.0-distroless-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
