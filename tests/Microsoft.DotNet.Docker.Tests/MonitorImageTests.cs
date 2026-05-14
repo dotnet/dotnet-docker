@@ -288,7 +288,9 @@ namespace Microsoft.DotNet.Docker.Tests
         /// Verifies that the image can discover a dotnet process
         /// in another container via mounting the /tmp directory.
         /// </summary>
-        [LinuxImageTheory]
+        // Temporarily disabled because of https://github.com/dotnet/dotnet-docker/issues/7191.
+        // Re-enable this test when that issue is fixed.
+        [LinuxImageTheory(Skip = "Temporarily disabled because of https://github.com/dotnet/dotnet-docker/issues/7191. Re-enable when that issue is fixed.")]
         [MemberData(nameof(GetScenarioData))]
         public Task VerifyConnectMode(ProductImageData imageData, SampleImageData sampleData)
         {
@@ -323,7 +325,9 @@ namespace Microsoft.DotNet.Docker.Tests
         /// Verifies that the image can listen for dotnet processes
         /// in other containers by having them connect to the diagnostic port listener.
         /// </summary>
-        [LinuxImageTheory]
+        // Temporarily disabled because of https://github.com/dotnet/dotnet-docker/issues/7191.
+        // Re-enable this test when that issue is fixed.
+        [LinuxImageTheory(Skip = "Temporarily disabled because of https://github.com/dotnet/dotnet-docker/issues/7191. Re-enable when that issue is fixed.")]
         [MemberData(nameof(GetScenarioData))]
         public Task VerifyListenMode(ProductImageData imageData, SampleImageData sampleData)
         {
