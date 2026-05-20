@@ -41,6 +41,8 @@ function Invoke-AzDORestMethod {
         Request body as a hashtable. Automatically converted to JSON.
     .PARAMETER ApiVersion
         API version. Defaults to 7.1.
+    .PARAMETER QueryParams
+        Optional hashtable of additional query string parameters.
     #>
     [CmdletBinding()]
     param(
@@ -49,7 +51,8 @@ function Invoke-AzDORestMethod {
         [Parameter(Mandatory)][string] $Endpoint,
         [string] $Method = "GET",
         [hashtable] $Body,
-        [string] $ApiVersion = "7.1"
+        [string] $ApiVersion = "7.1",
+        [hashtable] $QueryParams
     )
 
     $token = Get-AzDOAccessToken
@@ -58,7 +61,15 @@ function Invoke-AzDORestMethod {
         "Content-Type" = "application/json"
     }
 
-    $uri = "https://dev.azure.com/$Organization/$Project/_apis/$($Endpoint)?api-version=$ApiVersion"
+    $query = "api-version=$ApiVersion"
+    if ($QueryParams) {
+        foreach ($key in $QueryParams.Keys) {
+            $value = [System.Uri]::EscapeDataString([string]$QueryParams[$key])
+            $query += "&$key=$value"
+        }
+    }
+
+    $uri = "https://dev.azure.com/$Organization/$Project/_apis/$($Endpoint)?$query"
 
     $params = @{
         Uri     = $uri
