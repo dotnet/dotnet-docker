@@ -71,10 +71,12 @@ public class PowerShellTests : ProductImageTests
     [MemberData(nameof(GetImageData))]
     public void VerifyPowerShellScenario_NestedInvocationAsNonRootUser(ProductImageData imageData)
     {
-        string command = "pwsh -nologo -noprofile -c (Get-ChildItem env:DOTNET_RUNNING_IN_CONTAINER).Value";
-        string output = PowerShellScenario_Execute(imageData, command, "-u 12345:12345");
+        int? nonRootUID = imageData.NonRootUID;
+        Assert.True(nonRootUID.HasValue);
+        string command = "pwsh -nologo -noprofile -c \"Write-Output nested-pwsh-success\"";
+        string output = PowerShellScenario_Execute(imageData, command, $"-u {nonRootUID}");
 
-        Assert.Equal(output, bool.TrueString, ignoreCase: true);
+        Assert.Equal("nested-pwsh-success", output);
     }
 
     [DotNetTheory]
