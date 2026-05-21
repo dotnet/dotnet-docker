@@ -71,6 +71,13 @@ public class PowerShellTests : ProductImageTests
     [MemberData(nameof(GetImageData))]
     public void VerifyPowerShellScenario_NestedInvocationAsNonRootUser(ProductImageData imageData)
     {
+        // Nested pwsh invocation is unsupported on Arm because of https://github.com/PowerShell/PowerShell/issues/27490.
+        // Re-enable when the issue is fixed in PowerShell.
+        if (imageData.IsArm)
+        {
+            return;
+        }
+
         int? nonRootUID = imageData.NonRootUID;
         Assert.True(nonRootUID.HasValue);
         string command = "pwsh -nologo -noprofile -c \"Write-Output nested-pwsh-success\"";
