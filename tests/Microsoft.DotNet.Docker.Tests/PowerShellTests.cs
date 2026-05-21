@@ -66,6 +66,17 @@ public class PowerShellTests : ProductImageTests
         Assert.Equal(output, bool.TrueString, ignoreCase: true);
     }
 
+    // Regression test for https://github.com/dotnet/dotnet-docker/issues/7205
+    [LinuxImageTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyPowerShellScenario_NestedInvocationAsNonRootUser(ProductImageData imageData)
+    {
+        string command = "pwsh -nologo -noprofile -c (Get-ChildItem env:DOTNET_RUNNING_IN_CONTAINER).Value";
+        string output = PowerShellScenario_Execute(imageData, command, "-u 12345:12345");
+
+        Assert.Equal(output, bool.TrueString, ignoreCase: true);
+    }
+
     [DotNetTheory]
     [MemberData(nameof(GetImageData))]
     public void VerifyPowerShellScenario_PSVersion(ProductImageData imageData)
