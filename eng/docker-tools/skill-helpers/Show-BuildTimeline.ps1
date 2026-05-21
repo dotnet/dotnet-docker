@@ -21,7 +21,7 @@ $build = Invoke-AzDORestMethod `
     -Project $Project `
     -Endpoint "build/builds/$BuildId"
 
-Write-Host "# Build $BuildId - $($build.definition.name)"
+Write-Host "## Build $BuildId - $($build.definition.name)"
 Write-Host ""
 Write-Host "- Status:  $($build.status) $(if ($build.result) { "($($build.result))" })"
 Write-Host "- Branch:  $($build.sourceBranch)"
@@ -71,7 +71,7 @@ function Write-TimelineNode([string] $nodeId, [int] $depth) {
     }
 }
 
-Write-Host "## Build Timeline"
+Write-Host "### Build Timeline"
 Write-Host ""
 Write-TimelineNode "" 0
 Write-Host ""
