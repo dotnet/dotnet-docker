@@ -71,9 +71,9 @@ public class PowerShellTests : ProductImageTests
     [MemberData(nameof(GetImageData))]
     public void VerifyPowerShellScenario_NestedInvocationAsNonRootUser(ProductImageData imageData)
     {
-        // Nested pwsh invocation is unsupported on Arm because of https://github.com/PowerShell/PowerShell/issues/27490.
+        // Nested pwsh invocation is unsupported on Arm and Alpine because of https://github.com/PowerShell/PowerShell/issues/27490.
         // Re-enable when the issue is fixed in PowerShell.
-        if (imageData.IsArm)
+        if (imageData.IsArm || imageData.SdkOS.Family == OSFamily.Alpine)
         {
             return;
         }
