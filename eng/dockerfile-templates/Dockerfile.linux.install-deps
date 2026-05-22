@@ -95,6 +95,9 @@
         "") ^
     set pkgMgrOpts to when(isDistrolessAzureLinux,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
+        pkgMgrOpts) ^
+    set pkgMgrOpts to when(isDistrolessAzureLinux && isAzureLinux4Plus && len(ARGS["staging-dir"]) > 0,
+        cat(" --use-host-config", pkgMgrOpts),
         pkgMgrOpts)
 
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",

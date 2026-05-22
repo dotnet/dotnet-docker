@@ -18,7 +18,7 @@ FROM {{azureLinuxRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
-        "pkgs": ["gawk", "shadow-utils"]
+        "pkgs": when(isAzureLinux4Plus, ["shadow-utils"], ["gawk", "shadow-utils"])
     ])}}
 
 # Install .NET's dependencies into a staging location
@@ -29,7 +29,7 @@ RUN mkdir {{distrolessStagingDir}} \
                 "is-extra": ARGS["is-extra"],
                 "staging-dir": distrolessStagingDir
             ]
-        )}}
+        )}}{{if !isAzureLinux4Plus:
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
 COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
@@ -37,7 +37,7 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
     && mkdir --parents /staging/var/lib/rpmmanifest \
     # Remove duplicates that match on the first field (package name)
-    && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
+    && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2}}
 
 # Create a non-root user and group
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",

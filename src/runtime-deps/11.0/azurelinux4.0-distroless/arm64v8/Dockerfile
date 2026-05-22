@@ -2,13 +2,12 @@
 FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0 AS installer
 
 RUN dnf install -y \
-        gawk \
         shadow-utils \
     && dnf clean all
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
-    && dnf install -y --releasever=4.0 --installroot /staging \
+    && dnf install -y --use-host-config --releasever=4.0 --installroot /staging \
         prebuilt-ca-certificates \
         \
         # .NET dependencies
@@ -16,15 +15,7 @@ RUN mkdir /staging \
         libgcc \
         libstdc++ \
         openssl-libs \
-    && dnf clean all --releasever=4.0 --installroot /staging
-
-# Generate RPM manifest file by appending to the original manifest file from base distroless image
-COPY --from=mcr.microsoft.com/azurelinux-beta/distroless/minimal:4.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
-RUN tmpManifestPath="/tmp/rpmmanifest" \
-    && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
-    && mkdir --parents /staging/var/lib/rpmmanifest \
-    # Remove duplicates that match on the first field (package name)
-    && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
+    && dnf clean all --use-host-config --releasever=4.0 --installroot /staging
 
 # Create a non-root user and group
 RUN groupadd \
