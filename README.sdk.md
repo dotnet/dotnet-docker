@@ -88,13 +88,11 @@ Tags | Dockerfile | OS Version
 9.0.314-alpine3.23-amd64, 9.0-alpine3.23-amd64, 9.0-alpine-amd64, 9.0.314-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 9.0.314-noble-amd64, 9.0-noble-amd64, 9.0.314-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.314-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.314-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-9.0.314-azurelinux4.0-amd64, 9.0-azurelinux4.0-amd64, 9.0.314-azurelinux4.0, 9.0-azurelinux4.0 | [Dockerfile](src/sdk/9.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
 8.0.421-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.421-bookworm-slim, 8.0-bookworm-slim, 8.0.421, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.421-alpine3.23-amd64, 8.0-alpine3.23-amd64, 8.0-alpine-amd64, 8.0.421-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 8.0.421-noble-amd64, 8.0-noble-amd64, 8.0.421-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 8.0.421-jammy-amd64, 8.0-jammy-amd64, 8.0.421-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.421-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.421-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-8.0.421-azurelinux4.0-amd64, 8.0-azurelinux4.0-amd64, 8.0.421-azurelinux4.0, 8.0-azurelinux4.0 | [Dockerfile](src/sdk/8.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
 
 #### .NET 11 Preview Tags
 
@@ -127,13 +125,11 @@ Tags | Dockerfile | OS Version
 9.0.314-alpine3.23-arm64v8, 9.0-alpine3.23-arm64v8, 9.0-alpine-arm64v8, 9.0.314-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 9.0.314-noble-arm64v8, 9.0-noble-arm64v8, 9.0.314-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.314-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.314-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.314-azurelinux4.0-arm64v8, 9.0-azurelinux4.0-arm64v8, 9.0.314-azurelinux4.0, 9.0-azurelinux4.0 | [Dockerfile](src/sdk/9.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
 8.0.421-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.421-bookworm-slim, 8.0-bookworm-slim, 8.0.421, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.421-alpine3.23-arm64v8, 8.0-alpine3.23-arm64v8, 8.0-alpine-arm64v8, 8.0.421-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 8.0.421-noble-arm64v8, 8.0-noble-arm64v8, 8.0.421-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 8.0.421-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.421-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.421-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.421-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.421-azurelinux4.0-arm64v8, 8.0-azurelinux4.0-arm64v8, 8.0.421-azurelinux4.0, 8.0-azurelinux4.0 | [Dockerfile](src/sdk/8.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
 
 #### .NET 11 Preview Tags
 
