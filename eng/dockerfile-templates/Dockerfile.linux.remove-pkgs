@@ -20,7 +20,7 @@
         when(isDnf,
             "dnf remove -y",
         when(isTdnf,
-            "tdnf autoremove -y",
+            "tdnf remove -y",
         when (ARGS["noninteractive"],
             "DEBIAN_FRONTEND=noninteractive apt-get remove -y",
             "apt-get remove -y"

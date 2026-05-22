@@ -32,6 +32,6 @@ RUN tdnf install -y \
         --gid=$APP_UID \
         --create-home \
         app \
-    && tdnf autoremove -y \
+    && tdnf remove -y \
         shadow-utils \
     && tdnf clean all
