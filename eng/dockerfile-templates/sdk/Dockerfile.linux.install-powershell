@@ -23,6 +23,7 @@ RUN powershell_version={{VARIABLES[cat("powershell|", dotnetVersion, "|build-ver
     && rm {{nupkgName}} \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     && chmod 755 /usr/share/powershell/pwsh \
+    && chmod 755 /usr/share/powershell/.store/powershell.{{lcase(nupkgPlatform)}}/$powershell_version/powershell.{{lcase(nupkgPlatform)}}/$powershell_version/tools/*/any/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm{{if isAlpine: \
     # Add ncurses-terminfo-base to resolve psreadline dependency

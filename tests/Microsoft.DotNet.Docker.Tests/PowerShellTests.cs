@@ -66,6 +66,26 @@ public class PowerShellTests : ProductImageTests
         Assert.Equal(output, bool.TrueString, ignoreCase: true);
     }
 
+    // Regression test for https://github.com/dotnet/dotnet-docker/issues/7205
+    [LinuxImageTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyPowerShellScenario_NestedInvocationAsNonRootUser(ProductImageData imageData)
+    {
+        // Nested pwsh invocation is unsupported on Arm and Alpine because of https://github.com/PowerShell/PowerShell/issues/27490.
+        // Re-enable when the issue is fixed in PowerShell.
+        if (imageData.IsArm || imageData.SdkOS.Family == OSFamily.Alpine)
+        {
+            return;
+        }
+
+        int? nonRootUID = imageData.NonRootUID;
+        Assert.True(nonRootUID.HasValue);
+        string command = "pwsh -nologo -noprofile -c \"Write-Output nested-pwsh-success\"";
+        string output = PowerShellScenario_Execute(imageData, command, $"-u {nonRootUID}");
+
+        Assert.Equal("nested-pwsh-success", output);
+    }
+
     [DotNetTheory]
     [MemberData(nameof(GetImageData))]
     public void VerifyPowerShellScenario_PSVersion(ProductImageData imageData)
