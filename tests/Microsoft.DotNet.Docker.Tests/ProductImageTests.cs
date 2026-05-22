@@ -181,6 +181,14 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo,
             IEnumerable<string> extraExcludePaths = null)
         {
+            if (imageData.OS.IsUnstable)
+            {
+                OutputHelper.WriteLine(
+                    $"Skipping installed-packages verification for unstable OS '{imageData.OS.DisplayName}'."
+                    + " The package set for pre-release distros is expected to change and is not asserted by tests.");
+                return;
+            }
+
             IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
             IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
 
