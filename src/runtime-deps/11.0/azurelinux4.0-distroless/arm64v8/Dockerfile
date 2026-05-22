@@ -8,8 +8,6 @@ RUN dnf install -y \
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
     && dnf install -y --use-host-config --releasever=4.0 --installroot /staging \
-        prebuilt-ca-certificates \
-        \
         # .NET dependencies
         glibc \
         libgcc \

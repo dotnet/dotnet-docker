@@ -80,11 +80,15 @@
                 extraPkgs,
                 standardPkgs)) ^
 
-    set prefixPkgs to [
+    set prefixPkgs to when(isDistrolessAzureLinux && isAzureLinux4Plus,
+        [
+            dotnetDepsComment
+        ],
+        [
             caCertsPkg,
             "",
             dotnetDepsComment
-        ] ^
+        ]) ^
 
     set suffixPkgs to when(isAlpine && dotnetVersion != "8.0", ["", "# manually update zlib from alpine base image", zlibPkg], []) ^
 
