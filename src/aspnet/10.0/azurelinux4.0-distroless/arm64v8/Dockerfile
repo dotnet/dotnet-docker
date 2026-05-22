@@ -3,11 +3,11 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 # Installer image
 FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0 AS installer
 
-RUN tdnf install -y \
+RUN dnf install -y \
         ca-certificates \
         gzip \
         tar \
-    && tdnf clean all
+    && dnf clean all
 
 # Retrieve ASP.NET Core
 RUN aspnetcore_version=10.0.8 \

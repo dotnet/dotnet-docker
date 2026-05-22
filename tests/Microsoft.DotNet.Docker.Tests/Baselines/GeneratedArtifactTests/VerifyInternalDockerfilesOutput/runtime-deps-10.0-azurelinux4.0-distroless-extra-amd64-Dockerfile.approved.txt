@@ -1,14 +1,14 @@
 # Installer image
 FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0 AS installer
 
-RUN tdnf install -y \
+RUN dnf install -y \
         gawk \
         shadow-utils \
-    && tdnf clean all
+    && dnf clean all
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
-    && tdnf install -y --releasever=4.0 --installroot /staging \
+    && dnf install -y --releasever=4.0 --installroot /staging \
         prebuilt-ca-certificates \
         \
         # .NET dependencies
@@ -18,7 +18,7 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         tzdata \
-    && tdnf clean all --releasever=4.0 --installroot /staging
+    && dnf clean all --releasever=4.0 --installroot /staging
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
 COPY --from=mcr.microsoft.com/azurelinux-beta/distroless/minimal:4.0 /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
@@ -45,9 +45,9 @@ RUN groupadd \
 
 # Clean up staging
 RUN rm -rf \
-        /staging/etc/tdnf \
+        /staging/etc/dnf \
         /staging/run/* \
-        /staging/var/cache/tdnf \
+        /staging/var/cache/dnf \
         /staging/var/lib/rpm \
         /staging/usr/share/doc \
         /staging/usr/share/man \

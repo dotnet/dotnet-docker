@@ -8,7 +8,7 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-RUN tdnf install -y \
+RUN dnf install -y \
         ca-certificates \
         \
         # .NET dependencies
@@ -18,10 +18,10 @@ RUN tdnf install -y \
         libstdc++ \
         openssl-libs \
         tzdata \
-    && tdnf clean all
+    && dnf clean all
 
 # Create a non-root user and group
-RUN tdnf install -y \
+RUN dnf install -y \
         shadow-utils \
     && groupadd \
         --gid=$APP_UID \
@@ -31,6 +31,6 @@ RUN tdnf install -y \
         --gid=$APP_UID \
         --create-home \
         app \
-    && tdnf remove -y \
+    && dnf remove -y \
         shadow-utils \
-    && tdnf clean all
+    && dnf clean all

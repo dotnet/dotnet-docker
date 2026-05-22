@@ -11,6 +11,7 @@
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
+    set isAzureLinux4Plus to defined(match(OS_VERSION, "^azurelinux([4-9]|\d{2,})")) ^
     set isFullAzureLinux to isAzureLinux && !isDistrolessAzureLinux ^
 
     set dotnetDepsComment to "# .NET dependencies" ^
@@ -99,6 +100,6 @@
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,
-        "pkg-mgr": when(isDistrolessAzureLinux, "tdnf", ""),
+        "pkg-mgr": when(isDistrolessAzureLinux && isAzureLinux4Plus, "dnf", when(isDistrolessAzureLinux, "tdnf", "")),
         "pkg-mgr-opts": pkgMgrOpts
     ])}}

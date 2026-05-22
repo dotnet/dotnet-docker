@@ -5,9 +5,9 @@ FROM $REPO:0.0.0-azurelinux4.0-arm64v8 AS installer
 
 ARG ACCESSTOKEN
 
-RUN tdnf install -y \
+RUN dnf install -y \
         tar \
-    && tdnf clean all
+    && dnf clean all
 
 # Retrieve .NET Runtime
 RUN dotnet_version=0.0.0 \

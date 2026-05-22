@@ -5,11 +5,11 @@ FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0 AS installer
 
 ARG ACCESSTOKEN
 
-RUN tdnf install -y \
+RUN dnf install -y \
         ca-certificates \
         gzip \
         tar \
-    && tdnf clean all
+    && dnf clean all
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=0.0.0 \

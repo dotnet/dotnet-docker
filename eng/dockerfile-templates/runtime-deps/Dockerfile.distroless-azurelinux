@@ -7,6 +7,8 @@
     set distrolessStagingDir to "/staging" ^
     set azureLinuxRepo to VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")] ^
     set baseImage to cat(azureLinuxRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
+    set isAzureLinux4Plus to defined(match(OS_VERSION, "^azurelinux([4-9]|\d{2,})")) ^
+    set pkgMgrDir to when(isAzureLinux4Plus, "dnf", "tdnf") ^
     set username to "app" ^
     set nonRootUser to "$APP_UID" ^
     set uid to 1654 ^
@@ -49,9 +51,9 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
 
 # Clean up staging
 RUN rm -rf \
-        {{distrolessStagingDir}}/etc/tdnf \
+        {{distrolessStagingDir}}/etc/{{pkgMgrDir}} \
         {{distrolessStagingDir}}/run/* \
-        {{distrolessStagingDir}}/var/cache/tdnf \
+        {{distrolessStagingDir}}/var/cache/{{pkgMgrDir}} \
         {{distrolessStagingDir}}/var/lib/rpm \
         {{distrolessStagingDir}}/usr/share/doc \
         {{distrolessStagingDir}}/usr/share/man \

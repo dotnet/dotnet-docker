@@ -2,9 +2,9 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:11.0.0-preview.4-azurelinux4.0-arm64v8 AS installer
 
-RUN tdnf install -y \
+RUN dnf install -y \
         tar \
-    && tdnf clean all
+    && dnf clean all
 
 # Install .NET SDK
 RUN dotnet_sdk_version=11.0.100-preview.4.26230.115 \
@@ -38,11 +38,11 @@ ENV \
     # Workaround for https://github.com/PowerShell/PowerShell/issues/20685
     DOTNET_ROLL_FORWARD=Major
 
-RUN tdnf install -y \
+RUN dnf install -y \
         git \
         libgcc-atomic \
         tar \
-    && tdnf clean all
+    && dnf clean all
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
