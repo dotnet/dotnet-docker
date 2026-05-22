@@ -16,7 +16,7 @@
             when(isUbuntu,
                 "ubuntu.azurecr.io/ubuntu",
                 when(isAzureLinux,
-                    "mcr.microsoft.com/azurelinux/base/core",
+                cat(VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")], "/base/core"),
                     "<NOT-IMPLEMENTED>")))) ^
     set baseImageTag to when(isAlpine || isAzureLinux, OS_VERSION_NUMBER, OS_VERSION) ^
     set baseImage to cat(baseImageRepo, ":", baseImageTag) ^

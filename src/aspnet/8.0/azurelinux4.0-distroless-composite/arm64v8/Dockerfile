@@ -1,0 +1,42 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+
+# Installer image
+FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0 AS installer
+
+RUN tdnf install -y \
+        ca-certificates \
+        gzip \
+        tar \
+    && tdnf clean all
+
+# Retrieve ASP.NET Composite Runtime
+RUN aspnetcore_version=8.0.27 \
+    && curl --fail --show-error --location \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$aspnetcore_version-sha.txt \
+    && sed -i 's/\r$//' $aspnetcore_version-sha.txt \
+    && sha512sum -c $aspnetcore_version-sha.txt --ignore-missing \
+    && mkdir --parents /usr/share/dotnet \
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz --directory /usr/share/dotnet \
+    && rm \
+        aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
+        $aspnetcore_version-sha.txt
+
+RUN mkdir /dotnet-symlink \
+    && ln -s /usr/share/dotnet/dotnet /dotnet-symlink/dotnet
+
+
+# ASP.NET Composite Image
+FROM $REPO:8.0.27-azurelinux4.0-distroless-arm64v8
+
+ENV \
+    # .NET Runtime version
+    DOTNET_VERSION=8.0.27 \
+    # ASP.NET Core version
+    ASPNET_VERSION=8.0.27
+
+COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
+
+ENTRYPOINT ["/usr/bin/dotnet"]
+CMD ["--info"]

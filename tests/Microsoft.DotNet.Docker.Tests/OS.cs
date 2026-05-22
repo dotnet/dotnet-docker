@@ -21,6 +21,8 @@ internal static class OS
     // Azure Linux
     public static OSInfo AzureLinux30 { get; } = new(OSType.Linux, OSFamily.AzureLinux, "3.0");
     public static OSInfo AzureLinux30Distroless { get; } = AzureLinux30 with { IsDistroless = true };
+    public static OSInfo AzureLinux40 { get; } = new(OSType.Linux, OSFamily.AzureLinux, "4.0");
+    public static OSInfo AzureLinux40Distroless { get; } = AzureLinux40 with { IsDistroless = true };
 
     // Debian
     public static OSInfo BookwormSlim { get; } = new(OSType.Linux, OSFamily.Debian, "12");

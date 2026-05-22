@@ -82,15 +82,19 @@ Tags | Dockerfile | OS Version
 10.0.300-alpine3.23-aot-amd64, 10.0-alpine3.23-aot-amd64, 10.0-alpine-aot-amd64, 10.0.300-alpine3.23-aot, 10.0-alpine3.23-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.23-aot/amd64/Dockerfile) | Alpine 3.23
 10.0.300-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.300-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 10.0.300-azurelinux3.0-aot-amd64, 10.0-azurelinux3.0-aot-amd64, 10.0.300-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+10.0.300-azurelinux4.0-amd64, 10.0-azurelinux4.0-amd64, 10.0.300-azurelinux4.0, 10.0-azurelinux4.0 | [Dockerfile](src/sdk/10.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+10.0.300-azurelinux4.0-aot-amd64, 10.0-azurelinux4.0-aot-amd64, 10.0.300-azurelinux4.0-aot, 10.0-azurelinux4.0-aot | [Dockerfile](src/sdk/10.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
 9.0.314-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.314-bookworm-slim, 9.0-bookworm-slim, 9.0.314, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.314-alpine3.23-amd64, 9.0-alpine3.23-amd64, 9.0-alpine-amd64, 9.0.314-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 9.0.314-noble-amd64, 9.0-noble-amd64, 9.0.314-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 9.0.314-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.314-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+9.0.314-azurelinux4.0-amd64, 9.0-azurelinux4.0-amd64, 9.0.314-azurelinux4.0, 9.0-azurelinux4.0 | [Dockerfile](src/sdk/9.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
 8.0.421-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.421-bookworm-slim, 8.0-bookworm-slim, 8.0.421, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 8.0.421-alpine3.23-amd64, 8.0-alpine3.23-amd64, 8.0-alpine-amd64, 8.0.421-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 8.0.421-noble-amd64, 8.0-noble-amd64, 8.0.421-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 8.0.421-jammy-amd64, 8.0-jammy-amd64, 8.0.421-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.421-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.421-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+8.0.421-azurelinux4.0-amd64, 8.0-azurelinux4.0-amd64, 8.0.421-azurelinux4.0, 8.0-azurelinux4.0 | [Dockerfile](src/sdk/8.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
 
 #### .NET 11 Preview Tags
 
@@ -102,6 +106,8 @@ Tags | Dockerfile | OS Version
 11.0.100-preview.4-alpine3.23-aot-amd64, 11.0-preview-alpine3.23-aot-amd64, 11.0-preview-alpine-aot-amd64, 11.0.100-preview.4-alpine3.23-aot, 11.0-preview-alpine3.23-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.23-aot/amd64/Dockerfile) | Alpine 3.23
 11.0.100-preview.4-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.100-preview.4-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 11.0.100-preview.4-azurelinux3.0-aot-amd64, 11.0-preview-azurelinux3.0-aot-amd64, 11.0.100-preview.4-azurelinux3.0-aot, 11.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+11.0.100-preview.4-azurelinux4.0-amd64, 11.0-preview-azurelinux4.0-amd64, 11.0.100-preview.4-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+11.0.100-preview.4-azurelinux4.0-aot-amd64, 11.0-preview-azurelinux4.0-aot-amd64, 11.0.100-preview.4-azurelinux4.0-aot, 11.0-preview-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm64 Tags
 
@@ -115,15 +121,19 @@ Tags | Dockerfile | OS Version
 10.0.300-alpine3.23-aot-arm64v8, 10.0-alpine3.23-aot-arm64v8, 10.0-alpine-aot-arm64v8, 10.0.300-alpine3.23-aot, 10.0-alpine3.23-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.23-aot/arm64v8/Dockerfile) | Alpine 3.23
 10.0.300-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.300-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.300-azurelinux3.0-aot-arm64v8, 10.0-azurelinux3.0-aot-arm64v8, 10.0.300-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.300-azurelinux4.0-arm64v8, 10.0-azurelinux4.0-arm64v8, 10.0.300-azurelinux4.0, 10.0-azurelinux4.0 | [Dockerfile](src/sdk/10.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+10.0.300-azurelinux4.0-aot-arm64v8, 10.0-azurelinux4.0-aot-arm64v8, 10.0.300-azurelinux4.0-aot, 10.0-azurelinux4.0-aot | [Dockerfile](src/sdk/10.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
 9.0.314-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.314-bookworm-slim, 9.0-bookworm-slim, 9.0.314, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.314-alpine3.23-arm64v8, 9.0-alpine3.23-arm64v8, 9.0-alpine-arm64v8, 9.0.314-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 9.0.314-noble-arm64v8, 9.0-noble-arm64v8, 9.0.314-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 9.0.314-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.314-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.314-azurelinux4.0-arm64v8, 9.0-azurelinux4.0-arm64v8, 9.0.314-azurelinux4.0, 9.0-azurelinux4.0 | [Dockerfile](src/sdk/9.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
 8.0.421-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.421-bookworm-slim, 8.0-bookworm-slim, 8.0.421, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 8.0.421-alpine3.23-arm64v8, 8.0-alpine3.23-arm64v8, 8.0-alpine-arm64v8, 8.0.421-alpine3.23, 8.0-alpine3.23, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 8.0.421-noble-arm64v8, 8.0-noble-arm64v8, 8.0.421-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 8.0.421-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.421-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.421-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.421-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.421-azurelinux4.0-arm64v8, 8.0-azurelinux4.0-arm64v8, 8.0.421-azurelinux4.0, 8.0-azurelinux4.0 | [Dockerfile](src/sdk/8.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
 
 #### .NET 11 Preview Tags
 
@@ -135,6 +145,8 @@ Tags | Dockerfile | OS Version
 11.0.100-preview.4-alpine3.23-aot-arm64v8, 11.0-preview-alpine3.23-aot-arm64v8, 11.0-preview-alpine-aot-arm64v8, 11.0.100-preview.4-alpine3.23-aot, 11.0-preview-alpine3.23-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.23-aot/arm64v8/Dockerfile) | Alpine 3.23
 11.0.100-preview.4-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.100-preview.4-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 11.0.100-preview.4-azurelinux3.0-aot-arm64v8, 11.0-preview-azurelinux3.0-aot-arm64v8, 11.0.100-preview.4-azurelinux3.0-aot, 11.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.100-preview.4-azurelinux4.0-arm64v8, 11.0-preview-azurelinux4.0-arm64v8, 11.0.100-preview.4-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.100-preview.4-azurelinux4.0-aot-arm64v8, 11.0-preview-azurelinux4.0-aot-arm64v8, 11.0.100-preview.4-azurelinux4.0-aot, 11.0-preview-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm32 Tags
 

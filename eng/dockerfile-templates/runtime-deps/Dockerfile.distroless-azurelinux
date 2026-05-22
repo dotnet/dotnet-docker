@@ -5,7 +5,7 @@
             for example globalization support ^
 
     set distrolessStagingDir to "/staging" ^
-    set azureLinuxRepo to "mcr.microsoft.com/azurelinux" ^
+    set azureLinuxRepo to VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")] ^
     set baseImage to cat(azureLinuxRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
     set username to "app" ^
     set nonRootUser to "$APP_UID" ^
