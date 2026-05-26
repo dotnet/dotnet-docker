@@ -7,8 +7,8 @@
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
-    set isAzureLinux4Plus to defined(match(OS_VERSION, "^azurelinux([4-9]|\d{2,})")) ^
-    set isDnf to ARGS["pkg-mgr"] = "dnf" || (isAzureLinux4Plus && ARGS["pkg-mgr"] != "tdnf") ^
+    set isAzureLinux3 to defined(match(OS_VERSION, "^azurelinux3")) ^
+    set isDnf to ARGS["pkg-mgr"] = "dnf" || (isAzureLinux && !isAzureLinux3 && ARGS["pkg-mgr"] != "tdnf") ^
     set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isAzureLinux) ^
     set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine ^
     set appendPkgSuffix(pkg, index) to:{{

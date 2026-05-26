@@ -7,8 +7,8 @@
     set distrolessStagingDir to "/staging" ^
     set azureLinuxRepo to VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")] ^
     set baseImage to cat(azureLinuxRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
-    set isAzureLinux4Plus to defined(match(OS_VERSION, "^azurelinux([4-9]|\d{2,})")) ^
-    set pkgMgrDir to when(isAzureLinux4Plus, "dnf", "tdnf") ^
+    set isAzureLinux3 to defined(match(OS_VERSION, "^azurelinux3")) ^
+    set pkgMgrDir to when(isAzureLinux3, "tdnf", "dnf") ^
     set username to "app" ^
     set nonRootUser to "$APP_UID" ^
     set uid to 1654 ^
@@ -18,7 +18,7 @@ FROM {{azureLinuxRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
-        "pkgs": when(isAzureLinux4Plus, ["shadow-utils"], ["gawk", "shadow-utils"])
+        "pkgs": when(isAzureLinux3, ["gawk", "shadow-utils"], ["shadow-utils"])
     ])}}
 
 # Install .NET's dependencies into a staging location
@@ -29,7 +29,7 @@ RUN mkdir {{distrolessStagingDir}} \
                 "is-extra": ARGS["is-extra"],
                 "staging-dir": distrolessStagingDir
             ]
-        )}}{{if !isAzureLinux4Plus:
+        )}}{{if isAzureLinux3:
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
 COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
