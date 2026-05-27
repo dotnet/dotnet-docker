@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:11.0.0-preview.4-alpine3.23-arm64v8 AS installer
+FROM $REPO:11.0.0-preview.6-alpine3.23-arm64v8 AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-preview.4.26230.115 \
+RUN dotnet_version=11.0.0-preview.6.26276.119 \
     && wget \
         https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
         https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz.sha512 \
@@ -17,10 +17,10 @@ RUN dotnet_version=11.0.0-preview.4.26230.115 \
 
 
 # .NET runtime image
-FROM $REPO:11.0.0-preview.4-alpine3.23-arm64v8
+FROM $REPO:11.0.0-preview.6-alpine3.23-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-preview.4.26230.115
+ENV DOTNET_VERSION=11.0.0-preview.6.26276.119
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
