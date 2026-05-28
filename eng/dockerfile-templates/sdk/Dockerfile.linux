@@ -41,7 +41,7 @@
         when(isAzureLinux,
             [
                 "git",
-                "libgcc-atomic",
+                when(OS_VERSION_NUMBER = "3.0", "libgcc-atomic", "libatomic"),
                 "tar",
             ],
             [

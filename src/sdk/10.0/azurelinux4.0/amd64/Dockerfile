@@ -41,7 +41,7 @@ ENV \
 
 RUN dnf install -y \
         git \
-        libgcc-atomic \
+        libatomic \
         tar \
     && dnf clean all
 
