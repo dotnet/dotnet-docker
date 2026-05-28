@@ -7,7 +7,7 @@ RUN dnf install -y \
 
 # Install .NET's dependencies into a staging location
 RUN mkdir /staging \
-    && dnf install -y --use-host-config --releasever=4.0 --installroot /staging \
+    && dnf install -y --use-host-config --installroot /staging \
         # .NET dependencies
         glibc \
         icu \
@@ -15,7 +15,7 @@ RUN mkdir /staging \
         libstdc++ \
         openssl-libs \
         tzdata \
-    && dnf clean all --use-host-config --releasever=4.0 --installroot /staging
+    && dnf clean all --use-host-config --installroot /staging
 
 # Create a non-root user and group
 RUN groupadd \

@@ -97,7 +97,7 @@
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
         "") ^
-    set pkgMgrOpts to when(isDistrolessAzureLinux,
+    set pkgMgrOpts to when(isDistrolessAzureLinux && isAzureLinux3,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
         pkgMgrOpts) ^
     set pkgMgrOpts to when(isDistrolessAzureLinux && !isAzureLinux3 && len(ARGS["staging-dir"]) > 0,
