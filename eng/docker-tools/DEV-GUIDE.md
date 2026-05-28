@@ -427,6 +427,8 @@ When you queue a new run, you can override these as runtime parameters:
 
 This avoids the multi-hour rebuild cycle when you just need to retry a failed operation.
 
+When signing is enabled, use `"publish"` by itself only if the images from `sourceBuildPipelineRunId` were already signed and the current run is not building new images. Use `"sign,publish"` when the current run still needs to sign them before publishing.
+
 ---
 
 ## Troubleshooting
