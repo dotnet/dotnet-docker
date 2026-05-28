@@ -4,6 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM $REPO:10.0.8-azurelinux4.0-amd64 AS installer
 
 RUN dnf install -y \
+        gzip \
         tar \
     && dnf clean all
 

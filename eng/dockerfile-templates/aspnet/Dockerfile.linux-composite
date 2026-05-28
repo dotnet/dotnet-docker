@@ -37,7 +37,7 @@ ARG ACCESSTOKEN
 ^elif isFullAzureLinux:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
-        "pkgs": ["tar"]
+        "pkgs": when(OS_VERSION_NUMBER = "3.0", ["tar"], ["gzip", "tar"])
     ])}}
 }}
 # Retrieve ASP.NET Composite Runtime

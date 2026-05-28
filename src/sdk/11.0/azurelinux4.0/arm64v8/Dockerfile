@@ -3,6 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM $REPO:11.0.0-preview.4-azurelinux4.0-arm64v8 AS installer
 
 RUN dnf install -y \
+        gzip \
         tar \
     && dnf clean all
 
