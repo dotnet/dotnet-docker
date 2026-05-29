@@ -47,7 +47,7 @@ stages:
   # Run when all of the following are true:
   # 1. The pipeline has not been canceled.
   # 2. The stages variable includes 'publish'.
-  # 3. Either signing is not enabled, or the Sign stage succeeded.
+  # 3. Either signing is not enabled, this run is reusing previously signed images, or the Sign stage succeeded.
   # 4. Either the stages variable does not include 'build', or Post_Build succeeded.
   # 5. Either the stages variable does not include 'test', or Test succeeded/was skipped.
   condition: "
@@ -56,6 +56,10 @@ stages:
       contains(variables['stages'], 'publish'),
       or(
         ne(lower('${{ parameters.publishConfig.Signing.Enabled }}'), 'true'),
+        and(
+          not(contains(variables['stages'], 'build')),
+          not(contains(variables['stages'], 'sign'))
+        ),
         in(dependencies.Sign.result, 'Succeeded', 'SucceededWithIssues')
       ),
       or(

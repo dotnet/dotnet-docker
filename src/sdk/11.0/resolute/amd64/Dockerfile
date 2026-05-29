@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:resolute-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.5.26275.101 \
+RUN dotnet_sdk_version=11.0.100-preview.5.26277.119 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
@@ -24,7 +24,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.5.26275.101 \
+    DOTNET_SDK_VERSION=11.0.100-preview.5.26277.119 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -49,9 +49,9 @@ RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.7.0-preview.1 \
+RUN powershell_version=7.7.0-preview.2 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='7622aeae7e62a4bbeaa7b80f09c3dec63e35f209d920a956b08265351a8af63ae42770a4461c985dd1dd7f4f977dcb1ebf35ac0b9768fdb7d86889dbb1ff1eeb' \
+    && powershell_sha512='0bfdb2cb425e9dc45ce824746b9c686e0cfebe76e02918c3e09663cfb6d7c8a1fb9a8f983b61a30627ab5c48001e5e778ce30e977ce246bf6f48ac09f550bd6f' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
