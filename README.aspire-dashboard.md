@@ -1,13 +1,13 @@
 # Aspire Dashboard
 
-> **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+> **Important**: The images from the aspire/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [aspire](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 ## Featured Tags
 
 * `13`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:13`
+  * `docker pull mcr.microsoft.com/aspire/nightly/dashboard:13`
 
 ## About
 
@@ -99,7 +99,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 .NET:
 
 * [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
-* [dotnet/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): Aspire Dashboard
+* [aspire/dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): Aspire Dashboard
 * [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)
@@ -129,7 +129,7 @@ Tags | Dockerfile | OS Version
 
 <!--End of generated tags-->
 
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/aspire-dashboard/tags/list) for all supported and unsupported tags.*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/aspire/nightly/dashboard/tags/list) for all supported and unsupported tags.*
 
 ## Support
 

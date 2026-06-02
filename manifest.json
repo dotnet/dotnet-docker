@@ -11844,7 +11844,7 @@
     },
     {
       "id": "aspire-dashboard",
-      "name": "dotnet/nightly/aspire-dashboard",
+      "name": "aspire/nightly/dashboard",
       "readmes": [
         {
           "path": "README.aspire-dashboard.md",

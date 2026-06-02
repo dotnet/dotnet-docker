@@ -15,7 +15,13 @@
     set isFrameworkRepo to match(repoParts[1], "framework") ^
     set readmeFileName to cat(
         "README.",
-        when(isProductFamily, "", cat(join(slice(repoParts, when(isNightlyRepo || isFrameworkRepo, 2, 1)), "-"), ".")),
+        when(isProductFamily,
+            "",
+            cat(
+                when(find(repo, "aspire") >= 0,
+                    "aspire-dashboard",
+                    join(slice(repoParts, when(isNightlyRepo || isFrameworkRepo, 2, 1)), "-")),
+                ".")),
         "md")
 
 }}{{

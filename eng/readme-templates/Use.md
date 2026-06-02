@@ -4,7 +4,9 @@
       readme-host: Moniker of the site that will host the readme ^
     set templateQualifier to when(IS_PRODUCT_FAMILY,
         "samples",
-        when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO))
+        when(find(REPO, "aspire") >= 0,
+            "aspire-dashboard",
+            when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)))
 }}{{ARGS["top-header"]}} Usage
 {{ _ Special case while aspire-dashboard image doesn't have any samples. Remove when https://github.com/dotnet/dotnet-docker/issues/5335 is resolved. ^
 if templateQualifier != "aspire-dashboard":

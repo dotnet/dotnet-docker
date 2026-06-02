@@ -143,7 +143,12 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static string GetRepoName(string repoName, string repoNameModifier = null) =>
-            $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
+            // The Aspire Dashboard image is published under the dedicated "aspire" product
+            // family (mcr.microsoft.com/aspire/dashboard) rather than the "dotnet" family.
+            // Its internal/test identifier remains "aspire-dashboard".
+            repoName == "aspire-dashboard"
+                ? $"aspire{repoNameModifier ?? GetRepoNameModifier()}/dashboard"
+                : $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
 
         protected string GetTagName(string tagPrefix, string os, string tagPostfix = null)
         {

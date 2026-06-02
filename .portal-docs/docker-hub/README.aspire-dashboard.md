@@ -1,11 +1,11 @@
-> **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+> **Important**: The images from the aspire/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [aspire](https://hub.docker.com/r/microsoft/aspire-dashboard/) for images with official releases of [.NET](https://github.com/dotnet/core).
 
 # Featured Tags
 
 * `13`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:13`
+  * `docker pull mcr.microsoft.com/aspire/nightly/dashboard:13`
 
 # About
 
@@ -97,7 +97,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 .NET:
 
 * [dotnet](https://hub.docker.com/r/microsoft/dotnet/): .NET
-* [dotnet/aspire-dashboard](https://hub.docker.com/r/microsoft/dotnet-aspire-dashboard/): Aspire Dashboard
+* [aspire/dashboard](https://hub.docker.com/r/microsoft/aspire-dashboard/): Aspire Dashboard
 * [dotnet/nightly/sdk](https://hub.docker.com/r/microsoft/dotnet-nightly-sdk/): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://hub.docker.com/r/microsoft/dotnet-nightly-aspnet/): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime/): .NET Runtime (Preview)
@@ -113,7 +113,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 # Full Tag Listing
 
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspire-dashboard/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md#full-tag-listing).
+View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/aspire/nightly/dashboard/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md#full-tag-listing).
 
 # Support
 
