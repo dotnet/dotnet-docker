@@ -9,7 +9,7 @@
     }} ^
 
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
-    set readmeRepoName to when(find(REPO, "aspire") >= 0,
+    set readmeRepoName to when(split(REPO, "/")[0] = "aspire",
         "aspire-dashboard",
         when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO))
 

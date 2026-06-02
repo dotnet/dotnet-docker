@@ -4,7 +4,7 @@
       readme-host: Moniker of the site that will host the readme ^
     set templateQualifier to when(IS_PRODUCT_FAMILY,
         "samples",
-        when(find(REPO, "aspire") >= 0,
+        when(split(REPO, "/")[0] = "aspire",
             "aspire-dashboard",
             when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)))
 }}{{ARGS["top-header"]}} Usage

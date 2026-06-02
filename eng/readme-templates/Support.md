@@ -5,7 +5,7 @@
     set isRuntimeDeps to match(SHORT_REPO, "runtime-deps") ^
     set isSamples to match(SHORT_REPO, "samples") ^
     set isMonitor to match(SHORT_REPO, "monitor") || match(SHORT_REPO, "base") ^
-    set isAspireDashboard to match(REPO, "aspire") ^
+    set isAspireDashboard to split(REPO, "/")[0] = "aspire" ^
     set isReverseProxy to match(SHORT_REPO, "yarp")
 
 }}{{ARGS["top-header"]}} Support
