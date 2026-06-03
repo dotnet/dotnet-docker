@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM $REPO:11.0.0-preview.4-alpine3.23-extra-arm32v7 AS installer
+FROM $REPO:11.0.0-preview.5-alpine3.23-extra-arm32v7 AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=11.0.0-preview.4.26230.115 \
+RUN aspnetcore_version=11.0.0-preview.5.26302.115 \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm.tar.gz \
         https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-musl-arm.tar.gz.sha512 \
@@ -17,9 +17,9 @@ RUN aspnetcore_version=11.0.0-preview.4.26230.115 \
 
 
 # ASP.NET Core image
-FROM $REPO:11.0.0-preview.4-alpine3.23-extra-arm32v7
+FROM $REPO:11.0.0-preview.5-alpine3.23-extra-arm32v7
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-preview.4.26230.115
+ENV ASPNET_VERSION=11.0.0-preview.5.26302.115
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
