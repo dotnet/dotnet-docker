@@ -124,6 +124,13 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 expectedUser = "ContainerUser";
             }
+            // Azure Linux 4.0 and newer base images default to USER root, unlike 3.0
+            // which left the user unset. Our non-distroless images inherit this from
+            // the base image without resetting it.
+            else if (imageData.OS.Family == OSFamily.AzureLinux && imageData.OS.Version != "3.0")
+            {
+                expectedUser = "root";
+            }
             else
             {
                 expectedUser = string.Empty;
