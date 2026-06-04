@@ -50,7 +50,11 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         ])}}
 
 # Clean up staging
-RUN rm -rf \
+RUN {{if !isAzureLinux3:\
+    # Bash is a transient dependency of glibc.
+    # Remove it since this is a Distroless image.
+    rpm --erase --nodeps --root {{distrolessStagingDir}} bash \
+    && }}rm -rf \
         {{distrolessStagingDir}}/etc/{{pkgMgrDir}} \
         {{distrolessStagingDir}}/run/* \
         {{distrolessStagingDir}}/var/cache/{{pkgMgrDir}} \
