@@ -111,17 +111,17 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.0-preview.4-resolute-amd64, 11.0-preview-resolute-amd64, 11.0.0-preview.4-resolute, 11.0-preview-resolute, 11.0.0-preview.4, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-resolute-chiseled-amd64, 11.0-preview-resolute-chiseled-amd64, 11.0.0-preview.4-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-resolute-chiseled-extra-amd64, 11.0-preview-resolute-chiseled-extra-amd64, 11.0.0-preview.4-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-alpine3.23-amd64, 11.0-preview-alpine3.23-amd64, 11.0-preview-alpine-amd64, 11.0.0-preview.4-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-11.0.0-preview.4-alpine3.23-extra-amd64, 11.0-preview-alpine3.23-extra-amd64, 11.0-preview-alpine-extra-amd64, 11.0.0-preview.4-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
-11.0.0-preview.4-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.0-preview.4-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.4-azurelinux3.0-distroless-amd64, 11.0-preview-azurelinux3.0-distroless-amd64, 11.0.0-preview.4-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.4-azurelinux3.0-distroless-extra-amd64, 11.0-preview-azurelinux3.0-distroless-extra-amd64, 11.0.0-preview.4-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.4-azurelinux4.0-amd64, 11.0-preview-azurelinux4.0-amd64, 11.0.0-preview.4-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
-11.0.0-preview.4-azurelinux4.0-distroless-amd64, 11.0-preview-azurelinux4.0-distroless-amd64, 11.0.0-preview.4-azurelinux4.0-distroless, 11.0-preview-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless/amd64/Dockerfile) | Azure Linux 4.0
-11.0.0-preview.4-azurelinux4.0-distroless-extra-amd64, 11.0-preview-azurelinux4.0-distroless-extra-amd64, 11.0.0-preview.4-azurelinux4.0-distroless-extra, 11.0-preview-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless-extra/amd64/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-resolute-amd64, 11.0-preview-resolute-amd64, 11.0.0-preview.5-resolute, 11.0-preview-resolute, 11.0.0-preview.5, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-resolute-chiseled-amd64, 11.0-preview-resolute-chiseled-amd64, 11.0.0-preview.5-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-resolute-chiseled-extra-amd64, 11.0-preview-resolute-chiseled-extra-amd64, 11.0.0-preview.5-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-alpine3.23-amd64, 11.0-preview-alpine3.23-amd64, 11.0-preview-alpine-amd64, 11.0.0-preview.5-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
+11.0.0-preview.5-alpine3.23-extra-amd64, 11.0-preview-alpine3.23-extra-amd64, 11.0-preview-alpine-extra-amd64, 11.0.0-preview.5-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
+11.0.0-preview.5-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.0-preview.5-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux3.0-distroless-amd64, 11.0-preview-azurelinux3.0-distroless-amd64, 11.0.0-preview.5-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux3.0-distroless-extra-amd64, 11.0-preview-azurelinux3.0-distroless-extra-amd64, 11.0.0-preview.5-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux4.0-amd64, 11.0-preview-azurelinux4.0-amd64, 11.0.0-preview.5-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-amd64, 11.0-preview-azurelinux4.0-distroless-amd64, 11.0.0-preview.5-azurelinux4.0-distroless, 11.0-preview-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless/amd64/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-extra-amd64, 11.0-preview-azurelinux4.0-distroless-extra-amd64, 11.0.0-preview.5-azurelinux4.0-distroless-extra, 11.0-preview-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless-extra/amd64/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm64 Tags
 
@@ -167,17 +167,17 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.0-preview.4-resolute-arm64v8, 11.0-preview-resolute-arm64v8, 11.0.0-preview.4-resolute, 11.0-preview-resolute, 11.0.0-preview.4, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-resolute-chiseled-arm64v8, 11.0-preview-resolute-chiseled-arm64v8, 11.0.0-preview.4-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-resolute-chiseled-extra-arm64v8, 11.0-preview-resolute-chiseled-extra-arm64v8, 11.0.0-preview.4-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-alpine3.23-arm64v8, 11.0-preview-alpine3.23-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.0-preview.4-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-11.0.0-preview.4-alpine3.23-extra-arm64v8, 11.0-preview-alpine3.23-extra-arm64v8, 11.0-preview-alpine-extra-arm64v8, 11.0.0-preview.4-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
-11.0.0-preview.4-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.0-preview.4-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.4-azurelinux3.0-distroless-arm64v8, 11.0-preview-azurelinux3.0-distroless-arm64v8, 11.0.0-preview.4-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.4-azurelinux3.0-distroless-extra-arm64v8, 11.0-preview-azurelinux3.0-distroless-extra-arm64v8, 11.0.0-preview.4-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.0-preview.4-azurelinux4.0-arm64v8, 11.0-preview-azurelinux4.0-arm64v8, 11.0.0-preview.4-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
-11.0.0-preview.4-azurelinux4.0-distroless-arm64v8, 11.0-preview-azurelinux4.0-distroless-arm64v8, 11.0.0-preview.4-azurelinux4.0-distroless, 11.0-preview-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless/arm64v8/Dockerfile) | Azure Linux 4.0
-11.0.0-preview.4-azurelinux4.0-distroless-extra-arm64v8, 11.0-preview-azurelinux4.0-distroless-extra-arm64v8, 11.0.0-preview.4-azurelinux4.0-distroless-extra, 11.0-preview-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-resolute-arm64v8, 11.0-preview-resolute-arm64v8, 11.0.0-preview.5-resolute, 11.0-preview-resolute, 11.0.0-preview.5, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-resolute-chiseled-arm64v8, 11.0-preview-resolute-chiseled-arm64v8, 11.0.0-preview.5-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-resolute-chiseled-extra-arm64v8, 11.0-preview-resolute-chiseled-extra-arm64v8, 11.0.0-preview.5-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-alpine3.23-arm64v8, 11.0-preview-alpine3.23-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.0-preview.5-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
+11.0.0-preview.5-alpine3.23-extra-arm64v8, 11.0-preview-alpine3.23-extra-arm64v8, 11.0-preview-alpine-extra-arm64v8, 11.0.0-preview.5-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
+11.0.0-preview.5-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.0-preview.5-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux3.0-distroless-arm64v8, 11.0-preview-azurelinux3.0-distroless-arm64v8, 11.0.0-preview.5-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux3.0-distroless-extra-arm64v8, 11.0-preview-azurelinux3.0-distroless-extra-arm64v8, 11.0.0-preview.5-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux4.0-arm64v8, 11.0-preview-azurelinux4.0-arm64v8, 11.0.0-preview.5-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-arm64v8, 11.0-preview-azurelinux4.0-distroless-arm64v8, 11.0.0-preview.5-azurelinux4.0-distroless, 11.0-preview-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-extra-arm64v8, 11.0-preview-azurelinux4.0-distroless-extra-arm64v8, 11.0.0-preview.5-azurelinux4.0-distroless-extra, 11.0-preview-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm32 Tags
 
@@ -208,11 +208,11 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.0-preview.4-resolute-arm32v7, 11.0-preview-resolute-arm32v7, 11.0.0-preview.4-resolute, 11.0-preview-resolute, 11.0.0-preview.4, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-resolute-chiseled-arm32v7, 11.0-preview-resolute-chiseled-arm32v7, 11.0.0-preview.4-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-resolute-chiseled-extra-arm32v7, 11.0-preview-resolute-chiseled-extra-arm32v7, 11.0.0-preview.4-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
-11.0.0-preview.4-alpine3.23-arm32v7, 11.0-preview-alpine3.23-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.0-preview.4-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-11.0.0-preview.4-alpine3.23-extra-arm32v7, 11.0-preview-alpine3.23-extra-arm32v7, 11.0-preview-alpine-extra-arm32v7, 11.0.0-preview.4-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
+11.0.0-preview.5-resolute-arm32v7, 11.0-preview-resolute-arm32v7, 11.0.0-preview.5-resolute, 11.0-preview-resolute, 11.0.0-preview.5, 11.0-preview, latest | [Dockerfile](src/runtime-deps/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-resolute-chiseled-arm32v7, 11.0-preview-resolute-chiseled-arm32v7, 11.0.0-preview.5-resolute-chiseled, 11.0-preview-resolute-chiseled | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-resolute-chiseled-extra-arm32v7, 11.0-preview-resolute-chiseled-extra-arm32v7, 11.0.0-preview.5-resolute-chiseled-extra, 11.0-preview-resolute-chiseled-extra | [Dockerfile](src/runtime-deps/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.0-preview.5-alpine3.23-arm32v7, 11.0-preview-alpine3.23-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.0-preview.5-alpine3.23, 11.0-preview-alpine3.23, 11.0-preview-alpine | [Dockerfile](src/runtime-deps/11.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
+11.0.0-preview.5-alpine3.23-extra-arm32v7, 11.0-preview-alpine3.23-extra-arm32v7, 11.0-preview-alpine-extra-arm32v7, 11.0.0-preview.5-alpine3.23-extra, 11.0-preview-alpine3.23-extra, 11.0-preview-alpine-extra | [Dockerfile](src/runtime-deps/11.0/alpine3.23-extra/arm32v7/Dockerfile) | Alpine 3.23
 
 <!--End of generated tags-->
 

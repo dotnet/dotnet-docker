@@ -31,7 +31,11 @@ RUN groupadd \
     && cat /etc/group | grep $rootOrAppRegex > "/staging/etc/group"
 
 # Clean up staging
-RUN rm -rf \
+RUN \
+    # Bash is a transient dependency of glibc.
+    # Remove it since this is a Distroless image.
+    rpm --erase --nodeps --root /staging bash \
+    && rm -rf \
         /staging/etc/dnf \
         /staging/run/* \
         /staging/var/cache/dnf \
