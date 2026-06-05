@@ -26,7 +26,7 @@ disable-model-invocation: true
   - Dockerfile/template changes - structural changes to how images are built
   - Image component updates - MinGit, PowerShell, and other tools
   - Infrastructure and tooling changes - build scripts, CI/CD updates
-  - Automated `eng/common` updates - standard engineering infrastructure
+  - Automated `eng/docker-tools` updates - standard engineering infrastructure
 - Do not backport:
   - Version-only updates for daily/preview builds (no Dockerfile changes)
   - Changes already on the release branch
