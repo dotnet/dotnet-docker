@@ -38,7 +38,9 @@ if (-not (git rev-parse --verify --quiet "$startPoint")) {
 }
 
 $releaseName = $startPoint -replace '^.*release/', ''
-$workingBranch = "backport-$releaseName"
+# Include a timestamp so re-running the skill always produces a distinct branch name.
+$timestamp = Get-Date -Format 'yyyyMMdd-HHmmss'
+$workingBranch = "backport-$releaseName-$timestamp"
 
 if (git rev-parse --verify --quiet "refs/heads/$workingBranch") {
     throw "Branch '$workingBranch' already exists. Delete it or check it out before re-running."
