@@ -6,31 +6,10 @@
 # be an expected divergence (see SKILL.md). Investigate anything that is not.
 # The working tree must be clean.
 
-function Get-RemoteName {
-    param(
-        [Parameter(Mandatory = $true)]
-        [string] $UrlPattern
-    )
-
-    $matchingRemotes = @(git remote | Where-Object {
-        $remoteName = $_
-        $remoteUrl = git remote get-url $remoteName 2>$null
-        $remoteUrl -match $UrlPattern
-    })
-
-    if ($matchingRemotes.Count -eq 0) {
-        throw "Unable to find a remote with a URL matching '$UrlPattern'."
-    }
-
-    if ($matchingRemotes.Count -gt 1) {
-        throw "Found multiple remotes with URLs matching '$UrlPattern': $($matchingRemotes -join ', ')."
-    }
-
-    return $matchingRemotes[0]
-}
+. "$PSScriptRoot/../../shared/GitHelpers.ps1"
 
 # Detect the public (GitHub) remote so we can fetch and diff against its nightly.
-$gitHubRemote = Get-RemoteName -UrlPattern 'github\.com[:/]dotnet/'
+$gitHubRemote = Get-PublicRemoteName
 
 # Require a clean working tree so that all cherry-picks and regenerated files are
 # committed. This lets us diff HEAD (including new files) rather than the working

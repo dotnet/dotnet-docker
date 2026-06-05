@@ -4,28 +4,7 @@
 # by fetching from GitHub (public) and Azure DevOps (internal) and listing by
 # branch creation date.
 
-function Get-RemoteName {
-	param(
-		[Parameter(Mandatory = $true)]
-		[string] $UrlPattern
-	)
-
-	$matchingRemotes = @(git remote | Where-Object {
-		$remoteName = $_
-		$remoteUrl = git remote get-url $remoteName 2>$null
-		$remoteUrl -match $UrlPattern
-	})
-
-	if ($matchingRemotes.Count -eq 0) {
-		throw "Unable to find a remote with a URL matching '$UrlPattern'."
-	}
-
-	if ($matchingRemotes.Count -gt 1) {
-		throw "Found multiple remotes with URLs matching '$UrlPattern': $($matchingRemotes -join ', ')."
-	}
-
-	return $matchingRemotes[0]
-}
+. "$PSScriptRoot/GitHelpers.ps1"
 
 # Show basic documentation
 Write-Host "# Release branches"
