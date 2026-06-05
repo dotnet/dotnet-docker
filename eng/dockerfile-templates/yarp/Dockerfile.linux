@@ -3,7 +3,7 @@
     set yarpMajorMinor to cat(yarpVersionParts[0], ".", yarpVersionParts[1]) ^
     set aspnetBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|9.0|fixed-tag")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
-    set installerImageTag to cat("mcr.microsoft.com/azurelinux", "/base/core:", OS_VERSION_NUMBER) ^
+    set installerImageTag to cat(VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")], "/base/core:", OS_VERSION_NUMBER) ^
 
     set baseUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])] ^
     set baseChecksumUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|checksums|", VARIABLES["branch"])] ^

@@ -15,11 +15,15 @@
             "zlib-dev"
         ],
         when(isAzureLinux,
+        when(OS_VERSION_NUMBER = "3.0",
         [
             "build-essential",
             "clang",
             "zlib-devel"
         ],
+        [
+            "gcc"
+        ]),
         [
             "clang",
             "zlib1g-dev",

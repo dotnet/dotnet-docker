@@ -82,6 +82,9 @@ Tags | Dockerfile | OS Version
 10.0.8-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.8-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 10.0.8-azurelinux3.0-distroless-amd64, 10.0-azurelinux3.0-distroless-amd64, 10.0.8-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
 10.0.8-azurelinux3.0-distroless-extra-amd64, 10.0-azurelinux3.0-distroless-extra-amd64, 10.0.8-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+10.0.8-azurelinux4.0-amd64, 10.0-azurelinux4.0-amd64, 10.0.8-azurelinux4.0, 10.0-azurelinux4.0 | [Dockerfile](src/runtime-deps/10.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+10.0.8-azurelinux4.0-distroless-amd64, 10.0-azurelinux4.0-distroless-amd64, 10.0.8-azurelinux4.0-distroless, 10.0-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/10.0/azurelinux4.0-distroless/amd64/Dockerfile) | Azure Linux 4.0
+10.0.8-azurelinux4.0-distroless-extra-amd64, 10.0-azurelinux4.0-distroless-extra-amd64, 10.0.8-azurelinux4.0-distroless-extra, 10.0-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/10.0/azurelinux4.0-distroless-extra/amd64/Dockerfile) | Azure Linux 4.0
 9.0.16-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.16-bookworm-slim, 9.0-bookworm-slim, 9.0.16, 9.0 | [Dockerfile](src/runtime-deps/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.16-alpine3.23-amd64, 9.0-alpine3.23-amd64, 9.0-alpine-amd64, 9.0.16-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/runtime-deps/9.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
 9.0.16-alpine3.23-extra-amd64, 9.0-alpine3.23-extra-amd64, 9.0-alpine-extra-amd64, 9.0.16-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/runtime-deps/9.0/alpine3.23-extra/amd64/Dockerfile) | Alpine 3.23
@@ -116,6 +119,9 @@ Tags | Dockerfile | OS Version
 11.0.0-preview.5-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.0-preview.5-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 11.0.0-preview.5-azurelinux3.0-distroless-amd64, 11.0-preview-azurelinux3.0-distroless-amd64, 11.0.0-preview.5-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
 11.0.0-preview.5-azurelinux3.0-distroless-extra-amd64, 11.0-preview-azurelinux3.0-distroless-extra-amd64, 11.0.0-preview.5-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux4.0-amd64, 11.0-preview-azurelinux4.0-amd64, 11.0.0-preview.5-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-amd64, 11.0-preview-azurelinux4.0-distroless-amd64, 11.0.0-preview.5-azurelinux4.0-distroless, 11.0-preview-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless/amd64/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-extra-amd64, 11.0-preview-azurelinux4.0-distroless-extra-amd64, 11.0.0-preview.5-azurelinux4.0-distroless-extra, 11.0-preview-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless-extra/amd64/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm64 Tags
 
@@ -132,6 +138,9 @@ Tags | Dockerfile | OS Version
 10.0.8-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.8-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.8-azurelinux3.0-distroless-arm64v8, 10.0-azurelinux3.0-distroless-arm64v8, 10.0.8-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.8-azurelinux3.0-distroless-extra-arm64v8, 10.0-azurelinux3.0-distroless-extra-arm64v8, 10.0.8-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.8-azurelinux4.0-arm64v8, 10.0-azurelinux4.0-arm64v8, 10.0.8-azurelinux4.0, 10.0-azurelinux4.0 | [Dockerfile](src/runtime-deps/10.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+10.0.8-azurelinux4.0-distroless-arm64v8, 10.0-azurelinux4.0-distroless-arm64v8, 10.0.8-azurelinux4.0-distroless, 10.0-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/10.0/azurelinux4.0-distroless/arm64v8/Dockerfile) | Azure Linux 4.0
+10.0.8-azurelinux4.0-distroless-extra-arm64v8, 10.0-azurelinux4.0-distroless-extra-arm64v8, 10.0.8-azurelinux4.0-distroless-extra, 10.0-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/10.0/azurelinux4.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 4.0
 9.0.16-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.16-bookworm-slim, 9.0-bookworm-slim, 9.0.16, 9.0 | [Dockerfile](src/runtime-deps/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.16-alpine3.23-arm64v8, 9.0-alpine3.23-arm64v8, 9.0-alpine-arm64v8, 9.0.16-alpine3.23, 9.0-alpine3.23, 9.0-alpine | [Dockerfile](src/runtime-deps/9.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
 9.0.16-alpine3.23-extra-arm64v8, 9.0-alpine3.23-extra-arm64v8, 9.0-alpine-extra-arm64v8, 9.0.16-alpine3.23-extra, 9.0-alpine3.23-extra, 9.0-alpine-extra | [Dockerfile](src/runtime-deps/9.0/alpine3.23-extra/arm64v8/Dockerfile) | Alpine 3.23
@@ -166,6 +175,9 @@ Tags | Dockerfile | OS Version
 11.0.0-preview.5-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.0-preview.5-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 11.0.0-preview.5-azurelinux3.0-distroless-arm64v8, 11.0-preview-azurelinux3.0-distroless-arm64v8, 11.0.0-preview.5-azurelinux3.0-distroless, 11.0-preview-azurelinux3.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 11.0.0-preview.5-azurelinux3.0-distroless-extra-arm64v8, 11.0-preview-azurelinux3.0-distroless-extra-arm64v8, 11.0.0-preview.5-azurelinux3.0-distroless-extra, 11.0-preview-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.5-azurelinux4.0-arm64v8, 11.0-preview-azurelinux4.0-arm64v8, 11.0.0-preview.5-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-arm64v8, 11.0-preview-azurelinux4.0-distroless-arm64v8, 11.0.0-preview.5-azurelinux4.0-distroless, 11.0-preview-azurelinux4.0-distroless | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.0-preview.5-azurelinux4.0-distroless-extra-arm64v8, 11.0-preview-azurelinux4.0-distroless-extra-arm64v8, 11.0.0-preview.5-azurelinux4.0-distroless-extra, 11.0-preview-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime-deps/11.0/azurelinux4.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm32 Tags
 
