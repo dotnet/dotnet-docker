@@ -7,28 +7,68 @@
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set ubuntuVersion to when(find(OS_VERSION, "jammy") >= 0, "jammy", "noble") ^
 
+    _ Native AOT only requires gcc. Native AOT in .NET really only needs a linker and something to drive the linker.
+      The runtime falls back to using gcc to drive linking when clang is not present, and both use the same bfd linker
+      under the hood, so dropping clang/llvm meaningfully shrinks the image. This optimization was made in .NET 11,
+      hence the conditional below. ^
+    set useGcc to dotnetVersion != "8.0" && dotnetVersion != "9.0" && dotnetVersion != "10.0" ^
+
     set pkgs to cat(sort(
-        when(isAlpine,
-        [
-            "build-base",
-            "clang",
-            "zlib-dev"
-        ],
-        when(isAzureLinux,
-        when(OS_VERSION_NUMBER = "3.0",
-        [
-            "build-essential",
-            "clang",
-            "zlib-devel"
-        ],
-        [
-            "gcc"
-        ]),
-        [
-            "clang",
-            "zlib1g-dev",
-            "llvm"
-        ]))))
+        when(
+            useGcc,
+            when(
+                isAlpine,
+                [
+                    "build-base",
+                    "zlib-dev"
+                ],
+                when(
+                    isAzureLinux,
+                    when(
+                        OS_VERSION_NUMBER = "3.0",
+                        [
+                            "build-essential",
+                            "zlib-devel"
+                        ],
+                        [
+                            "gcc"
+                        ]
+                    ),
+                    [
+                        "gcc",
+                        "zlib1g-dev"
+                    ]
+                )
+            ),
+            when(
+                isAlpine,
+                [
+                    "build-base",
+                    "clang",
+                    "zlib-dev"
+                ],
+                when(
+                    isAzureLinux,
+                    when(
+                        OS_VERSION_NUMBER = "3.0",
+                        [
+                            "build-essential",
+                            "clang",
+                            "zlib-devel"
+                        ],
+                        [
+                            "gcc"
+                        ]
+                    ),
+                    [
+                        "clang",
+                        "zlib1g-dev",
+                        "llvm"
+                    ]
+                )
+            )
+        )
+    ))
 
 }}ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM {{baseImageTag}}

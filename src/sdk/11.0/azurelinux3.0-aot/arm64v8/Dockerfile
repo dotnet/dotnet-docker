@@ -3,6 +3,5 @@ FROM $REPO:11.0.100-preview.5-azurelinux3.0-arm64v8
 
 RUN tdnf install -y \
         build-essential \
-        clang \
         zlib-devel \
     && tdnf clean all
