@@ -19,6 +19,8 @@ disable-model-invocation: true
 5. **Resolve conflicts** - follow the conflict resolution table below; stop and consult the user for anything not covered.
 6. **Verify nothing was missed** - from your working branch with all cherry-picks committed and a clean working tree, run `pwsh scripts/Get-BackportDiff.ps1` to diff `HEAD` against `nightly`. Confirm every reported difference is an expected divergence (see below). Investigate anything that is not.
 7. **Open the PR** - push the working branch and open a PR targeting the public release branch.
+    - Title: `Backport changes from nightly to $targetReleaseBranch` (e.g. `Backport changes from nightly to release/2026-05B`).
+    - Body: use [pr-body-template.md](pr-body-template.md), replacing the example PR numbers with the list of PRs you backported (one `- #<number>` per line).
 8. **Clean up labels** - remove the `needs-backport` label from each backported PR by running `pwsh scripts/Remove-BackportLabels.ps1 -PRs <numbers>`. Leave the label on PRs you intentionally did not backport.
 
 ## Backport guidelines
