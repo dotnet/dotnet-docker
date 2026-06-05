@@ -12,17 +12,18 @@ disable-model-invocation: true
 1. **Determine the release branch**: Run `pwsh ../shared/Get-ReleaseBranches.ps1` to find the latest public release branch.
    - The most recently created public release branch corresponds to the current release.
    - Do not assume `main` is the release branch.
-2. **Get candidates for backport**: Run `pwsh scripts/Get-BackportPRs.ps1` to find PRs to backport.
-3. **Analyze PRs** - classify each PR using the backport guidelines below and present the analysis table to the user.
-4. **Cherry-pick** - confirm the plan with the user, create a working branch based off of the public release branch, then run `git cherry-pick <commits>` (in the order they were merged).
+2. **Create a working branch** - fetch the public remote and create a new branch based on the up-to-date release branch tip (e.g. `git fetch <remote>` then `git switch -c backport-$releaseName <remote>/release/$releaseName`, naming the branch `backport-2026-05B`).
+3. **Get candidates for backport**: Run `pwsh scripts/Get-BackportPRs.ps1` to find PRs to backport.
+4. **Analyze PRs** - classify each PR using the backport guidelines below and present the analysis table to the user.
+5. **Cherry-pick** - confirm the backport plan with the user, then run `git cherry-pick <commits>` (in the order they were merged).
     - If any templates or manifests changed, regenerate Dockerfiles and READMEs. Confirm that the diff looks correct.
-5. **Resolve conflicts** - follow the conflict resolution table below; stop and consult the user for anything not covered.
-6. **Verify nothing was missed** - from your working branch with all cherry-picks committed and a clean working tree, run `pwsh scripts/Get-BackportDiff.ps1` to diff `HEAD` against `nightly`. Confirm every reported difference is an expected divergence (see below). Investigate anything that is not.
-7. **Confirm changes** - confirm the full set of changes with the user. If the user requests additional changes, get confirmation again before moving to the next step.
-8. **Open a draft PR** - push the working branch and open a **draft** PR targeting the public release branch (`gh pr create --draft --base <release-branch>`).
+6. **Resolve conflicts** - follow the conflict resolution table below; stop and consult the user for anything not covered.
+7. **Verify nothing was missed** - from your working branch with all cherry-picks committed and a clean working tree, run `pwsh scripts/Get-BackportDiff.ps1` to diff `HEAD` against `nightly`. Confirm every reported difference is an expected divergence (see below). Investigate anything that is not.
+8. **Confirm changes** - confirm the full set of changes with the user. If the user requests additional changes, get confirmation again before moving to the next step.
+9. **Open a draft PR** - push the working branch and open a **draft** PR targeting the public release branch (`gh pr create --draft --base <release-branch>`).
     - Title: `Backport changes from nightly to $targetReleaseBranch` (e.g. `Backport changes from nightly to release/2026-05B`).
     - Body: use [pr-body-template.md](pr-body-template.md), replacing the example PR numbers with the list of PRs you backported (one `- #<number>` per line).
-9. **Clean up labels** - remove the `needs-backport` label from each backported PR by running `pwsh scripts/Remove-BackportLabels.ps1 -PRs <numbers>`. Leave the label on PRs you intentionally did not backport.
+10. **Clean up labels** - remove the `needs-backport` label from each backported PR by running `pwsh scripts/Remove-BackportLabels.ps1 -PRs <numbers>`. Leave the label on PRs you intentionally did not backport.
 
 ## Backport guidelines
 
