@@ -120,6 +120,7 @@
     "libicu|resolute": 78,
 
     "libssl|alpine3.23": "3",
+    "libssl|alpine3.24": "3",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
     "libssl|focal": "1.1",

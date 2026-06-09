@@ -3,7 +3,6 @@ FROM $REPO:11.0.100-preview.5-resolute-amd64
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-        clang \
-        llvm \
+        gcc \
         zlib1g-dev \
     && rm -rf /var/lib/apt/lists/*

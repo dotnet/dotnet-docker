@@ -2,6 +2,6 @@ ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM $REPO:11.0.100-preview.5-alpine3.23-amd64
 
 RUN apk add --upgrade --no-cache \
-        build-base \
-        clang \
+        gcc \
+        musl-dev \
         zlib-dev
