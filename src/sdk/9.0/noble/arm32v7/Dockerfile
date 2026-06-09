@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=9.0.314 \
-    && dotnet_version=9.0.16 \
+RUN dotnet_sdk_version=9.0.315 \
+    && dotnet_version=9.0.17 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -18,7 +18,7 @@ RUN dotnet_sdk_version=9.0.314 \
 
 
 # .NET SDK image
-FROM $REPO:9.0.16-noble-arm32v7
+FROM $REPO:9.0.17-noble-arm32v7
 
 ENV \
     # Do not generate certificate
@@ -26,7 +26,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.314 \
+    DOTNET_SDK_VERSION=9.0.315 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -48,9 +48,9 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.5.6 \
+RUN powershell_version=7.5.7 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm32.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha512='463e4fe79455005cf6b372446faceca68f00ce0877c06f8dc486e713701d6e5d63a066e213d9162a6e17f7f57b892631d4a46e515407d776c1b839ce19e0f99a' \
+    && powershell_sha512='4fdfe99c4e27dffccf4550a2571fba0bdf630a92bfe39c4b2af1ed0adad5ffe19e50df3eed1ed4bb18d88e7c7e26e2d1e1f41c164049f819aa1266b9b4a72db1' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
@@ -58,5 +58,6 @@ RUN powershell_version=7.5.6 \
     && rm PowerShell.Linux.arm32.$powershell_version.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     && chmod 755 /usr/share/powershell/pwsh \
+    && chmod 755 /usr/share/powershell/.store/powershell.linux.arm32/$powershell_version/powershell.linux.arm32/$powershell_version/tools/*/any/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm

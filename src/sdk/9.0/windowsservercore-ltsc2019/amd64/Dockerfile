@@ -25,8 +25,8 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '9.0.314'; `
-        $dotnet_version = '9.0.16'; `
+        $dotnet_sdk_version = '9.0.315'; `
+        $dotnet_version = '9.0.17'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
@@ -54,9 +54,9 @@ RUN powershell -Command " `
             $dotnet_checksums_file; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.5.6'; `
+        $powershell_version = '7.5.7'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '4b78d10f28d984872c23498301192bc14428715309777307d7728c4bd18879fde7e980dfc65fed2a45c93df86bba8b72fa7f39e586c8b22cd74993858a5304fe'; `
+        $powershell_sha512 = 'e4ecdafdfdda73c6df53a7eb8da6929a71539d2df2ac204a6e7a870b118e28609f0d6a281411b5ce46c23899c650737eaf3681087cd0751be5d658bc8cfb25e8'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -74,7 +74,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:9.0.16-windowsservercore-ltsc2019
+FROM $REPO:9.0.17-windowsservercore-ltsc2019
 
 ENV `
     # Do not generate certificate
@@ -82,7 +82,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=9.0.314 `
+    DOTNET_SDK_VERSION=9.0.315 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

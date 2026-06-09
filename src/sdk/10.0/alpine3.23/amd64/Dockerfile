@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:10.0.8-alpine3.23-amd64 AS installer
+FROM $REPO:10.0.9-alpine3.23-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.300 \
+RUN dotnet_sdk_version=10.0.301 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
@@ -16,7 +16,7 @@ RUN dotnet_sdk_version=10.0.300 \
 
 
 # .NET SDK image
-FROM $REPO:10.0.8-alpine3.23-amd64
+FROM $REPO:10.0.9-alpine3.23-amd64
 
 ENV \
     # Do not generate certificate
@@ -24,7 +24,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.300 \
+    DOTNET_SDK_VERSION=10.0.301 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -51,9 +51,9 @@ RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.6.1 \
+RUN powershell_version=7.6.2 \
     && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='efaddba3ec1c644e0ac3ddf07ae8d300929af99a4bdb5f3b8f69e70113a57cf3c065a208e0065a2cfbbdbb0a6d51900ee5179d4304a6a9b34f5423ee8c5929c9' \
+    && powershell_sha512='a6f152b23c3ab16676f173fc61d532b5853ccc92715cbcef02c2ffb92172e18d28a11b11b0bea0a939bb5d543e197cdce3c1162bc4a52ad96d91c6fe6664f830' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
@@ -61,6 +61,7 @@ RUN powershell_version=7.6.1 \
     && rm PowerShell.Linux.Alpine.$powershell_version.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     && chmod 755 /usr/share/powershell/pwsh \
+    && chmod 755 /usr/share/powershell/.store/powershell.linux.alpine/$powershell_version/powershell.linux.alpine/$powershell_version/tools/*/any/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
     # Add ncurses-terminfo-base to resolve psreadline dependency

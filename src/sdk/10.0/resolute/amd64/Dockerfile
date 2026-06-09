@@ -3,7 +3,7 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:resolute-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.300 \
+RUN dotnet_sdk_version=10.0.301 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
@@ -16,7 +16,7 @@ RUN dotnet_sdk_version=10.0.300 \
 
 
 # .NET SDK image
-FROM $REPO:10.0.8-resolute-amd64
+FROM $REPO:10.0.9-resolute-amd64
 
 ENV \
     # Do not generate certificate
@@ -24,7 +24,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.300 \
+    DOTNET_SDK_VERSION=10.0.301 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -49,9 +49,9 @@ RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.6.1 \
+RUN powershell_version=7.6.2 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='a68b53b8c4408a93318b6c734904cbc7e817e89b370b4b4bb74d52e5403da4f8dde7349dad3d1ed8869b4a0e4e83a88fb7547af8b9b36a2854e31f8e1606fcd1' \
+    && powershell_sha512='c97cbad25218d4e5048ec827f15c2a86df893e6f0a36511005cdf0321f4e1c630cdfd0fc78ad8b82ce75ba6e0a218c35e6bada88a0c2caac91af381642c55720' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
@@ -59,5 +59,6 @@ RUN powershell_version=7.6.1 \
     && rm PowerShell.Linux.x64.$powershell_version.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     && chmod 755 /usr/share/powershell/pwsh \
+    && chmod 755 /usr/share/powershell/.store/powershell.linux.x64/$powershell_version/powershell.linux.x64/$powershell_version/tools/*/any/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm

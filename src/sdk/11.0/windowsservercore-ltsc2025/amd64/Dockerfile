@@ -25,7 +25,7 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '11.0.100-preview.4.26230.115'; `
+        $dotnet_sdk_version = '11.0.100-preview.5.26302.115'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
@@ -44,9 +44,9 @@ RUN powershell -Command " `
             $dotnet_sha512_file; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.7.0-preview.1'; `
+        $powershell_version = '7.7.0-preview.2'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'db6ee1bbdde9891526f760a2e8c482f0010fa73afa21d9e155de6e09bb17c51962863c0e5dac3e3a76d62d82deb1b95515dcbaf93fa1637a7ab654466da96c3e'; `
+        $powershell_sha512 = '5429366a119a1ac06032e661518d7ed2b9d5f73263752e384d3a8250ec496244b4a95730d72e2a15261784d71dacd6bada12122ea627ceacfec8b34f8c7ed8cd'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -64,7 +64,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:11.0.0-preview.4-windowsservercore-ltsc2025
+FROM $REPO:11.0.0-preview.5-windowsservercore-ltsc2025
 
 ENV `
     # Do not generate certificate
@@ -72,7 +72,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.4.26230.115 `
+    DOTNET_SDK_VERSION=11.0.100-preview.5.26302.115 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

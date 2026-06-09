@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:11.0.0-preview.4-alpine3.23-amd64 AS installer
+FROM $REPO:11.0.0-preview.5-alpine3.23-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.4.26230.115 \
+RUN dotnet_sdk_version=11.0.100-preview.5.26302.115 \
     && wget \
         https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
         https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
@@ -16,7 +16,7 @@ RUN dotnet_sdk_version=11.0.100-preview.4.26230.115 \
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-preview.4-alpine3.23-amd64
+FROM $REPO:11.0.0-preview.5-alpine3.23-amd64
 
 ENV \
     # Do not generate certificate
@@ -24,7 +24,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.4.26230.115 \
+    DOTNET_SDK_VERSION=11.0.100-preview.5.26302.115 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -51,9 +51,9 @@ RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.7.0-preview.1 \
+RUN powershell_version=7.7.0-preview.2 \
     && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='56eb146ee000ebcb08b3c0961fcf5b985cea928c5fe43979eae4dbc1b14a9df01ebf5f464bcd644077893922d9924d5d752647bae7f7907c03291f8e2b74ff53' \
+    && powershell_sha512='4eba9c9b057620bef0b33d01e04b2d448d6c95896a27d4659c3b173e989f7c900e204b9b987d0587bc8941015f75a4bc2ab8f8cec6dd2e9860ffc02b98b72f62' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
@@ -61,6 +61,7 @@ RUN powershell_version=7.7.0-preview.1 \
     && rm PowerShell.Linux.Alpine.$powershell_version.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     && chmod 755 /usr/share/powershell/pwsh \
+    && chmod 755 /usr/share/powershell/.store/powershell.linux.alpine/$powershell_version/powershell.linux.alpine/$powershell_version/tools/*/any/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm \
     # Add ncurses-terminfo-base to resolve psreadline dependency

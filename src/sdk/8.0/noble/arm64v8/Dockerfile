@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm64v8/buildpack-deps:noble-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=8.0.421 \
-    && dotnet_version=8.0.27 \
+RUN dotnet_sdk_version=8.0.422 \
+    && dotnet_version=8.0.28 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -18,7 +18,7 @@ RUN dotnet_sdk_version=8.0.421 \
 
 
 # .NET SDK image
-FROM $REPO:8.0.27-noble-arm64v8
+FROM $REPO:8.0.28-noble-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -26,7 +26,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.421 \
+    DOTNET_SDK_VERSION=8.0.422 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -48,9 +48,9 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.4.15 \
+RUN powershell_version=7.4.16 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha512='22aaf4cf6085b3f1e932bd0745f06bd7a3e3f030206c9442350c20a61ba6c56a56728335cbcf5b7a38ee4a1ce930601ad1513934429e62aafd62cfeec5f53254' \
+    && powershell_sha512='fe29fe9126ada7cbf0b9aa4be4e80958268b7a1a5bc6dcd0f950d003af12a2c448672cd0d6081dab7fc6bd880eb1551ae06faad15e6210363c52e8ed5fd7b67c' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
@@ -58,5 +58,6 @@ RUN powershell_version=7.4.15 \
     && rm PowerShell.Linux.arm64.$powershell_version.nupkg \
     && ln -s /usr/share/powershell/pwsh /usr/bin/pwsh \
     && chmod 755 /usr/share/powershell/pwsh \
+    && chmod 755 /usr/share/powershell/.store/powershell.linux.arm64/$powershell_version/powershell.linux.arm64/$powershell_version/tools/*/any/pwsh \
     # To reduce image size, remove the copy nupkg that nuget keeps.
     && find /usr/share/powershell -print | grep -i '.*[.]nupkg$' | xargs rm

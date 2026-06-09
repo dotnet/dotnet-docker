@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=10.0.8 \
+RUN dotnet_version=10.0.9 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm.tar.gz.sha512 \
@@ -17,10 +17,10 @@ RUN dotnet_version=10.0.8 \
 
 
 # .NET runtime image
-FROM $REPO:10.0.8-resolute-arm32v7
+FROM $REPO:10.0.9-resolute-arm32v7
 
 # .NET Runtime version
-ENV DOTNET_VERSION=10.0.8
+ENV DOTNET_VERSION=10.0.9
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
