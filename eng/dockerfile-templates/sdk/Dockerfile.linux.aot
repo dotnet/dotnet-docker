@@ -13,13 +13,23 @@
       hence the conditional below. ^
     set useGcc to dotnetVersion != "8.0" && dotnetVersion != "9.0" && dotnetVersion != "10.0" ^
 
+    _ The gcc package alone isn't always sufficient to link Native AOT binaries:
+      - Alpine: gcc pulls in binutils, but musl-dev (crt objects/headers) must be added.
+      - Azure Linux 3.0: gcc pulls in neither binutils (objcopy/ld) nor glibc-devel
+        (crt objects and -ldl/-lrt), so both are added explicitly.
+      - Azure Linux 4.0 and Ubuntu: gcc transitively pulls in binutils and libc dev
+        packages, so gcc alone is enough.
+      Installing these specific packages avoids the much larger build-base /
+      build-essential meta-packages that bundle make, g++, autotools, etc. ^
+
     set pkgs to cat(sort(
         when(
             useGcc,
             when(
                 isAlpine,
                 [
-                    "build-base",
+                    "gcc",
+                    "musl-dev",
                     "zlib-dev"
                 ],
                 when(
@@ -27,7 +37,9 @@
                     when(
                         OS_VERSION_NUMBER = "3.0",
                         [
-                            "build-essential",
+                            "binutils",
+                            "gcc",
+                            "glibc-devel",
                             "zlib-devel"
                         ],
                         [
