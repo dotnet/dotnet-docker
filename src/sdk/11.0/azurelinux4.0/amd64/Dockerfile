@@ -8,7 +8,7 @@ RUN dnf install -y \
     && dnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.5.26302.115 \
+RUN dotnet_sdk_version=11.0.100-preview.5.26305.118 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
@@ -29,7 +29,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.5.26302.115 \
+    DOTNET_SDK_VERSION=11.0.100-preview.5.26305.118 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
