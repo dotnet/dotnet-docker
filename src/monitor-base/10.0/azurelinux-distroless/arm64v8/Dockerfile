@@ -10,7 +10,7 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve .NET Monitor Base
-RUN dotnet_monitor_version=10.0.2-preview.1.26206.1 \
+RUN dotnet_monitor_version=10.0.3-preview.1.26303.1 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/diagnostics/monitor/$dotnet_monitor_version/dotnet-monitor-base-$dotnet_monitor_version-linux-arm64.tar.gz.sha512 \
@@ -23,7 +23,7 @@ RUN dotnet_monitor_version=10.0.2-preview.1.26206.1 \
 
 
 # .NET Monitor Base image
-FROM $REPO:10.0.8-azurelinux3.0-distroless-arm64v8
+FROM $REPO:10.0.9-azurelinux3.0-distroless-arm64v8
 
 WORKDIR /app
 COPY --from=installer /app .
