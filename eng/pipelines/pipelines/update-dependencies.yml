@@ -73,8 +73,8 @@ extends:
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                   from-channel
                   ${{ parameters.aspireChannel }}
-                  https://github.com/dotnet/aspire
-                  --version-source-name 'dotnet/aspire'
+                  https://github.com/microsoft/aspire
+                  --version-source-name 'microsoft/aspire'
                   ${{ parameters.gitHubAuthArgs }}
 
       - ${{ each tool in parameters.tools }}:

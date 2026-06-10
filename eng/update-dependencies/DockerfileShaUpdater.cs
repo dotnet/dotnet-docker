@@ -138,7 +138,7 @@ namespace Dotnet.Docker
             usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
 
             string baseUrl = ManifestHelper.GetBaseUrls(_manifestVariables.Variables, _options).First();
-            // Remove Aspire Dashboard case once https://github.com/dotnet/aspire/issues/2035 is fixed.
+            // Remove Aspire Dashboard case once https://github.com/microsoft/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
             string versionFile = VersionHelper.ResolveProductVersion(versionDir, _options.StableBranding);

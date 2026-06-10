@@ -20,7 +20,6 @@ internal static class BuildExtensions
         return repo switch
         {
             "https://github.com/dotnet/dotnet" or "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet" => BuildRepo.Vmr,
-            "https://github.com/dotnet/aspire" or "https://dev.azure.com/dnceng/internal/_git/dotnet-aspire" => BuildRepo.Aspire,
             "https://github.com/microsoft/aspire" or "https://dev.azure.com/dnceng/internal/_git/microsoft-aspire" => BuildRepo.Aspire,
             _ => throw new InvalidOperationException($"Build {build.Id} was from unsupported repository '{repo}'"),
         };
