@@ -1,8 +1,6 @@
 # Aspire Dashboard
 
-> **Important**: The images from the aspire/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
->
-> See [aspire](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md) for images with official releases of [.NET](https://github.com/dotnet/core).
+> **Important**: The aspire/nightly/dashboard image is a preview build of the Aspire Dashboard and is not signed. See [aspire/dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md) for stable releases.
 
 ## Featured Tags
 

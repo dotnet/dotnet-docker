@@ -22,8 +22,9 @@
 
 }}{{if isNightlyRepo || VARIABLES["branch"] = "nightly"
 :{{if ARGS["leading-line-break"]:
-}}> **Important**: The images from the {{announcementFamily}}/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+}}{{if announcementFamily = "aspire":> **Important**: The {{REPO}} image is a preview build of the Aspire Dashboard and is not signed. See [{{nonNightlyRepo}}]({{url}}) for stable releases.
+^else:> **Important**: The images from the {{announcementFamily}}/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
 > See [{{announcementFamily}}]({{url}}) for images with official releases of [.NET](https://github.com/dotnet/core).
-{{if ARGS["trailing-line-break"]:
+}}{{if ARGS["trailing-line-break"]:
 }}}}
