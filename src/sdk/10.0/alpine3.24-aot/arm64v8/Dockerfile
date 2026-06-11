@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:10.0.300-alpine3.24-arm64v8
+FROM $REPO:10.0.301-alpine3.24-arm64v8
 
 RUN apk add --upgrade --no-cache \
         build-base \
