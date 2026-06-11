@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:11.0.0-preview.5-alpine3.23-arm64v8 AS installer
+FROM $REPO:11.0.0-preview.6-alpine3.23-arm64v8 AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=11.0.0-preview.5.26302.115 \
+RUN aspnetcore_version=11.0.0-preview.6.26310.110 \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz \
         https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512 \
@@ -17,13 +17,13 @@ RUN aspnetcore_version=11.0.0-preview.5.26302.115 \
 
 
 # ASP.NET Composite Image
-FROM $REPO:11.0.0-preview.5-alpine3.23-arm64v8
+FROM $REPO:11.0.0-preview.6-alpine3.23-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-preview.5.26302.115 \
+    DOTNET_VERSION=11.0.0-preview.6.26310.110 \
     # ASP.NET Core version
-    ASPNET_VERSION=11.0.0-preview.5.26302.115
+    ASPNET_VERSION=11.0.0-preview.6.26310.110
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
