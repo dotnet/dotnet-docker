@@ -50,7 +50,7 @@ RUN dotnet help
 # Install PowerShell global tool
 RUN powershell_version=7.4.17 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='446e83a1a293be84f22b9a0a9243961caae33a7032a4e00a11434cf44aa546855174b5336efee284cb8d88a416e8f59145f3cd43aff8d7bf5939e079b7e2e3a4' \
+    && powershell_sha512='e278f58ec3b86c2857dee5711d3d3d7f39b3a1ac0a732d3d0e6d9293fbfce246bbf1d24fd314a62d760a27e2664fdd3a5a44a1c61f1c1613cc8691602157b576' \
     && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
