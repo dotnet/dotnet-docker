@@ -177,7 +177,7 @@
     "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|maintenance|main)",
     "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
 
-    "powershell|8.0|build-version": "7.4.16",
+    "powershell|8.0|build-version": "7.4.17",
     "powershell|8.0|Linux.Alpine|sha": "5b9f1362121a45fc06a89a58b28b66fff85fd1c1236e9df5e20f1eb44e6a480b01769874e88156972fd6b33719fa98fb7a6dae72073e37a2f87f6da1127d3988",
     "powershell|8.0|Linux|arm32|sha": "f61674177ec9ee3557db3bbce669938a8e17e830634b310f93aada0b427aa8e2882a1fb4c2e3ac6f8246371753bc08c7f450a4fa8b6fe9bc96343767cda97405",
     "powershell|8.0|Linux|arm64|sha": "fe29fe9126ada7cbf0b9aa4be4e80958268b7a1a5bc6dcd0f950d003af12a2c448672cd0d6081dab7fc6bd880eb1551ae06faad15e6210363c52e8ed5fd7b67c",
