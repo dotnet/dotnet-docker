@@ -184,7 +184,7 @@
     "powershell|8.0|Linux|x64|sha": "446e83a1a293be84f22b9a0a9243961caae33a7032a4e00a11434cf44aa546855174b5336efee284cb8d88a416e8f59145f3cd43aff8d7bf5939e079b7e2e3a4",
     "powershell|8.0|Windows|x64|sha": "5eedf11e4a54937713067e0796de3bf165afca0ad4002578ddd92fccbec37ebd70efd23160bfe7d9b6cb9c15b7afcc3c4635955112a950fb9b70fd8c1a9eb4df",
 
-    "powershell|9.0|build-version": "7.5.7",
+    "powershell|9.0|build-version": "7.5.8",
     "powershell|9.0|Linux.Alpine|sha": "c672bac9f736e794cd586195c87fcb6f26468cc49c1ec835cfcf25c79daeaef934b5d92bc0ce092cd02cc0a5b8d933e94dead0aa850a7b7f77afbec8338331fd",
     "powershell|9.0|Linux|arm32|sha": "4fdfe99c4e27dffccf4550a2571fba0bdf630a92bfe39c4b2af1ed0adad5ffe19e50df3eed1ed4bb18d88e7c7e26e2d1e1f41c164049f819aa1266b9b4a72db1",
     "powershell|9.0|Linux|arm64|sha": "b06e7a36b359fd10bfe86259849d5bcfebcc1d107578ac1135f899a3fe701a5e486475fce3bbe249c86def733848093662efe953e5851410a90dc90888ef5d95",
