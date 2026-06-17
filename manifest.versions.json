@@ -13,7 +13,7 @@
     "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
     "alpine|floating-tag-version": "alpine3.23",
-    "alpine|11.0|floating-tag-version": "$(alpine|floating-tag-version)",
+    "alpine|11.0|floating-tag-version": "alpine3.24",
     "alpine|10.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
@@ -117,6 +117,7 @@
     "libicu|resolute": 78,
 
     "libssl|alpine3.23": "3",
+    "libssl|alpine3.24": "3",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
     "libssl|focal": "1.1",
