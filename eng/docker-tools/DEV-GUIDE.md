@@ -143,6 +143,7 @@ Build Stage
               ▼
           Post_Build Stage
             ├── Merge image info files
+            ├── Create multi-arch manifests
             └── Consolidate SBOMs
                     │
                     ▼
@@ -191,12 +192,34 @@ Common patterns:
 - `"publish"` - Publish only (when re-running a failed publish from a previous build)
 - `"build,test,sign,publish"` - Full pipeline
 
-**Note:** The `Post_Build` stage is implicitly included whenever `build` is in the stages list. You don't need to specify it separately—it automatically runs after Build to merge image info files and consolidate SBOMs.
+**Note:** The `Post_Build` stage is implicitly included whenever `build` is in the stages list. You don't need to specify it separately—it automatically runs after Build to merge image info files, create and validate multi-arch manifests, and consolidate SBOMs.
 
 The stages variable is useful for:
 - Re-running just the publish stage after fixing a transient failure
 - Skipping tests during initial development
 - Running isolated stages for debugging
+
+### Decoupling build OS from the base image OS
+
+By default, a platform's `osVersion` represents the base image OS version, but also determines what
+build leg an image is built in. This can cause problems when build image and base image don't match
+up. For example, building a .NET app on Windows Server 2025 and copying the artifacts into a
+Windows Server 2019 base image won't work, because the build matrix generation will attempt to
+build the image on the Server 2019 build leg (which can't run Server 2025 images).
+
+To fix this, set the optional `buildOsVersion` field in order to override only the OS used in the
+build matrix generation. Here is an example of building a Windows Server 2019 image using Windows
+Server 2025:
+
+```jsonc
+{
+  // ...
+  "os": "windows",
+  "osVersion": "windowsservercore-ltsc2019",
+  "buildOsVersion": "windowsservercore-ltsc2025"
+  // ...
+}
+```
 
 ### Image Info Files: The Build's Memory
 
