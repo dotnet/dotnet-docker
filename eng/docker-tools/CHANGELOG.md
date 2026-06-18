@@ -4,6 +4,36 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-06-11: Configurable per-registry referrer-lookup rate limit
+
+- Issue: [#2141](https://github.com/dotnet/docker-tools/issues/2141)
+
+ImageBuilder now rate limits only OCI referrer lookups (the ACR
+`/v2/<repo>/referrers/<digest>` endpoint), instead of throttling and bounding the concurrency of all
+ACR operations. All other ACR operations rely on the standard HTTP retry behavior, which retries on
+HTTP 429 and respects `Retry-After` headers. This significantly speeds up image copying during
+publishing.
+
+The referrer-lookup limit defaults to 250 requests per 60-second window and can be configured per
+registry via an optional `referrerRequestsPerMinute` field on each `RegistryAuthentication` entry in
+`publishConfig`:
+
+```yaml
+RegistryAuthentication:
+  - server: $(acr.server)
+    resourceGroup: $(acr.resourceGroup)
+    subscription: $(acr.subscription)
+    referrerRequestsPerMinute: 1000
+    serviceConnection:
+      name: $(publish.serviceConnectionName)
+      ...
+```
+
+This field is optional; when omitted, the 250/60s default is used. No action is required for
+existing configurations.
+
+---
+
 ## 2026-04-02: Extra Docker build options can be passed through ImageBuilder
 
 - Pull request: [#2063](https://github.com/dotnet/docker-tools/pull/2063)
