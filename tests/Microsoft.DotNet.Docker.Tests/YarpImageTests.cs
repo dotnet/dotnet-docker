@@ -43,8 +43,8 @@ public class YarpImageTests(ITestOutputHelper outputHelper) : CommonRuntimeImage
         IEnumerable<EnvironmentVariableInfo> expectedVariables =
         [
             // Unset ASPNETCORE_HTTP_PORTS from base image
-            new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty),
-            new EnvironmentVariableInfo("ASPNETCORE_URLS", "http://+:5000"),
+            EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", string.Empty),
+            EnvironmentVariableInfo.Require("ASPNETCORE_URLS", "http://+:5000"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);

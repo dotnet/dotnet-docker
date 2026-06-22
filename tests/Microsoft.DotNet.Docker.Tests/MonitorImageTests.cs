@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -120,25 +120,25 @@ namespace Microsoft.DotNet.Docker.Tests
             List<EnvironmentVariableInfo> variables =
             [
                 ..GetCommonEnvironmentVariables(),
-                new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty),
+                EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", string.Empty),
 
                 // Diagnostics should be disabled
-                new EnvironmentVariableInfo("COMPlus_EnableDiagnostics", "0"),
+                EnvironmentVariableInfo.Require("COMPlus_EnableDiagnostics", "0"),
 
                 // DefaultProcess filter should select a process with a process ID of 1
-                new EnvironmentVariableInfo("DefaultProcess__Filters__0__Key", "ProcessId"),
-                new EnvironmentVariableInfo("DefaultProcess__Filters__0__Value", "1"),
+                EnvironmentVariableInfo.Require("DefaultProcess__Filters__0__Key", "ProcessId"),
+                EnvironmentVariableInfo.Require("DefaultProcess__Filters__0__Value", "1"),
 
                 // Existing (orphaned) diagnostic port should be delete before starting server
-                new EnvironmentVariableInfo("DiagnosticPort__DeleteEndpointOnStartup", "true"),
+                EnvironmentVariableInfo.Require("DiagnosticPort__DeleteEndpointOnStartup", "true"),
 
                 // GC mode should be set to Server
-                new EnvironmentVariableInfo("DOTNET_gcServer", "1"),
+                EnvironmentVariableInfo.Require("DOTNET_gcServer", "1"),
 
                 // Console logger format should be JSON and output UTC timestamps without timezone information
-                new EnvironmentVariableInfo("Logging__Console__FormatterName", "json"),
-                new EnvironmentVariableInfo("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"),
-                new EnvironmentVariableInfo("Logging__Console__FormatterOptions__UseUtcTimestamp", "true"),
+                EnvironmentVariableInfo.Require("Logging__Console__FormatterName", "json"),
+                EnvironmentVariableInfo.Require("Logging__Console__FormatterOptions__TimestampFormat", "yyyy-MM-ddTHH:mm:ss.fffffffZ"),
+                EnvironmentVariableInfo.Require("Logging__Console__FormatterOptions__UseUtcTimestamp", "true"),
             ];
 
             EnvironmentVariableInfo.Validate(
