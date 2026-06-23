@@ -35,10 +35,10 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (!imageData.IsWindows)
             {
-                variables.Add(new EnvironmentVariableInfo("APP_UID", imageData.NonRootUID?.ToString()));
+                variables.Add(EnvironmentVariableInfo.Require("APP_UID", imageData.NonRootUID?.ToString()));
             }
 
-            variables.Add(new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
+            variables.Add(EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
 
             if (customVariables != null)
             {
@@ -47,7 +47,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             if (imageData.GlobalizationInvariantMode)
             {
-                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
+                variables.Add(EnvironmentVariableInfo.Require("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "true"));
             }
 
             string imageTag = imageData.GetImage(ImageRepo, DockerHelper);

@@ -16,17 +16,33 @@ namespace Microsoft.DotNet.Docker.Tests
         public string Name { get; init; }
         public bool IsProductVersion { get; init; } = false;
 
-        public EnvironmentVariableInfo(string name, string expectedValue)
+        /// <summary>
+        /// When true, the variable is expected to NOT be set on the image.
+        /// </summary>
+        public bool ShouldNotExist { get; init; } = false;
+
+        private EnvironmentVariableInfo(string name)
         {
             Name = name;
-            ExpectedValue = expectedValue;
         }
 
-        public EnvironmentVariableInfo(string name, bool allowAnyValue)
-        {
-            Name = name;
-            AllowAnyValue = allowAnyValue;
-        }
+        /// <summary>
+        /// Requires the named environment variable to be set to <paramref name="expectedValue"/>.
+        /// </summary>
+        public static EnvironmentVariableInfo Require(string name, string expectedValue) =>
+            new(name) { ExpectedValue = expectedValue };
+
+        /// <summary>
+        /// Requires the named environment variable to be set to any non-empty value.
+        /// </summary>
+        public static EnvironmentVariableInfo Require(string name) =>
+            new(name) { AllowAnyValue = true };
+
+        /// <summary>
+        /// Requires the named environment variable to NOT be set on the image.
+        /// </summary>
+        public static EnvironmentVariableInfo Forbid(string name) =>
+            new(name) { ShouldNotExist = true };
 
         public static void Validate(
             IEnumerable<EnvironmentVariableInfo> expectedVariables,
@@ -40,6 +56,14 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 foreach (EnvironmentVariableInfo variable in expectedVariables)
                 {
+                    if (variable.ShouldNotExist)
+                    {
+                        environmentVariables.Should().NotContainKey(
+                            variable.Name,
+                            because: $"{imageName} should not have the environment variable '{variable.Name}' defined");
+                        continue;
+                    }
+
                     string environmentVariable = environmentVariables.Should()
                         .ContainKey(
                             variable.Name,

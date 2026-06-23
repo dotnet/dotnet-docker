@@ -1,4 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
+// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 // See the LICENSE file in the project root for more information.
 
@@ -170,7 +170,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static IEnumerable<EnvironmentVariableInfo> GetCommonEnvironmentVariables()
         {
-            yield return new EnvironmentVariableInfo("DOTNET_RUNNING_IN_CONTAINER", "true");
+            yield return EnvironmentVariableInfo.Require("DOTNET_RUNNING_IN_CONTAINER", "true");
         }
 
         /// <summary>
