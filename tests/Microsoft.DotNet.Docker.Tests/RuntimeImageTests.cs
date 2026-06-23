@@ -101,7 +101,7 @@ namespace Microsoft.DotNet.Docker.Tests
             DotNetImageRepo imageRepo, ProductImageData imageData, DockerHelper dockerHelper)
         {
             string version = imageData.GetProductVersion(imageRepo, DotNetImageRepo.Runtime, dockerHelper);
-            return new EnvironmentVariableInfo("DOTNET_VERSION", version)
+            return EnvironmentVariableInfo.Require("DOTNET_VERSION", version) with
             {
                 IsProductVersion = true
             };
