@@ -16,7 +16,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [aspire/dashboard](https://mcr.microsoft.com/artifact/mar/aspire/dashboard/about): Aspire Dashboard
 * [dotnet/nightly/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/sdk/about): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime/about): .NET Runtime (Preview)

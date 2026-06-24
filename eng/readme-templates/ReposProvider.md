@@ -13,8 +13,7 @@
         ["dotnet/runtime", ".NET Runtime"],
         ["dotnet/runtime-deps", ".NET Runtime Dependencies"],
         ["dotnet/monitor", ".NET Monitor Tool"],
-        ["dotnet/monitor/base", ".NET Monitor Base"],
-        ["aspire/dashboard", "Aspire Dashboard"]
+        ["dotnet/monitor/base", ".NET Monitor Base"]
     ] ^
     set nightlyOnlyRepos to [
         ["dotnet/yarp", "YARP (Yet Another Reverse Proxy)"]

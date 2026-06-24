@@ -97,7 +97,6 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 .NET:
 
 * [dotnet](https://github.com/dotnet/dotnet-docker/blob/main/README.md): .NET
-* [aspire/dashboard](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md): Aspire Dashboard
 * [dotnet/nightly/sdk](https://github.com/dotnet/dotnet-docker/blob/nightly/README.sdk.md): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspnet.md): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime.md): .NET Runtime (Preview)

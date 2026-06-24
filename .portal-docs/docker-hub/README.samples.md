@@ -71,7 +71,6 @@ They contain the following features:
 * [dotnet/runtime](https://hub.docker.com/r/microsoft/dotnet-runtime/): .NET Runtime
 * [dotnet/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-runtime-deps/): .NET Runtime Dependencies
 * [dotnet/monitor](https://hub.docker.com/r/microsoft/dotnet-monitor/): .NET Monitor Tool
-* [aspire/dashboard](https://mcr.microsoft.com/artifact/mar/aspire/dashboard/about): Aspire Dashboard
 
 .NET Framework:
 

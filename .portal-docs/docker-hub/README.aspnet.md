@@ -72,7 +72,6 @@ For more information, see the [composite images section in the Image Variants do
 * [dotnet/nightly/runtime](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime/): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://hub.docker.com/r/microsoft/dotnet-nightly-runtime-deps/): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://hub.docker.com/r/microsoft/dotnet-nightly-monitor/): .NET Monitor Tool (Preview)
-* [aspire/nightly/dashboard](https://mcr.microsoft.com/artifact/mar/aspire/nightly/dashboard/about): Aspire Dashboard (Preview)
 * [dotnet/nightly/yarp](https://hub.docker.com/r/microsoft/dotnet-nightly-yarp/): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://hub.docker.com/r/microsoft/dotnet-samples/): .NET Samples
 
