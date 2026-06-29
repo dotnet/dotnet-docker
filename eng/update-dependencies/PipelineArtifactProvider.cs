@@ -43,9 +43,10 @@ internal class PipelineArtifactProvider(
 
     private static readonly IEnumerable<PipelineArtifactFile> s_releaseConfigFiles =
     [
-        // Newest version of the staging pipeline
+        // Newest known location for release artifact data
+        new PipelineArtifactFile("manifests", "ReleaseConfig.json"),
+        // Older versions
         new PipelineArtifactFile("metadata", "ReleaseConfig.json"),
-        // Old version
         new PipelineArtifactFile("drop", "config.json"),
     ];
 
