@@ -1,0 +1,28 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime
+
+# Installer image
+FROM $REPO:0.0.0-alpine3.XX-arm64v8 AS installer
+
+ARG ACCESSTOKEN
+
+# Retrieve ASP.NET Core
+RUN aspnetcore_version=0.0.0 \
+    && aspnetcore_build_version=$aspnetcore_version \
+    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" \
+        https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_build_version-linux-musl-arm64.tar.gz \
+        https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_build_version-linux-musl-arm64.tar.gz.sha512 \
+    && echo "$(cat aspnetcore-runtime-$aspnetcore_build_version-linux-musl-arm64.tar.gz.sha512)  aspnetcore-runtime-$aspnetcore_build_version-linux-musl-arm64.tar.gz" | sha512sum -c - \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file aspnetcore-runtime-$aspnetcore_build_version-linux-musl-arm64.tar.gz --directory /dotnet ./shared/Microsoft.AspNetCore.App \
+    && rm \
+        aspnetcore-runtime-$aspnetcore_build_version-linux-musl-arm64.tar.gz \
+        aspnetcore-runtime-$aspnetcore_build_version-linux-musl-arm64.tar.gz.sha512
+
+
+# ASP.NET Core image
+FROM $REPO:0.0.0-alpine3.XX-arm64v8
+
+# ASP.NET Core version
+ENV ASPNET_VERSION=0.0.0
+
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
