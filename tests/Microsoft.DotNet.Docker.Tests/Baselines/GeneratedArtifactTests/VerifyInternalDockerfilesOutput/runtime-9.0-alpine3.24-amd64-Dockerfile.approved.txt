@@ -1,0 +1,30 @@
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
+
+# Installer image
+FROM $REPO:0.0.0-alpine3.XX-amd64 AS installer
+
+ARG ACCESSTOKEN
+
+# Retrieve .NET Runtime
+RUN dotnet_version=0.0.0 \
+    && dotnet_build_version=$dotnet_version \
+    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" \
+        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_build_version-linux-musl-x64.tar.gz \
+        https://dotnetstage.blob.core.windows.net/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_build_version-linux-musl-x64.tar.gz.sha512 \
+    && echo "$(cat dotnet-runtime-$dotnet_build_version-linux-musl-x64.tar.gz.sha512)  dotnet-runtime-$dotnet_build_version-linux-musl-x64.tar.gz" | sha512sum -c - \
+    && mkdir --parents /dotnet \
+    && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_build_version-linux-musl-x64.tar.gz --directory /dotnet \
+    && rm \
+        dotnet-runtime-$dotnet_build_version-linux-musl-x64.tar.gz \
+        dotnet-runtime-$dotnet_build_version-linux-musl-x64.tar.gz.sha512
+
+
+# .NET runtime image
+FROM $REPO:0.0.0-alpine3.XX-amd64
+
+# .NET Runtime version
+ENV DOTNET_VERSION=0.0.0
+
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+
+RUN ln -s /usr/share/dotnet/dotnet /usr/bin/dotnet
