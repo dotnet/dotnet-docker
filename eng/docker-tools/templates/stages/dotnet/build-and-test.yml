@@ -21,6 +21,8 @@ parameters:
   # Build parameters
   noCache: false
   publishConfig: null
+  # When true, the Post-Build stage runs even if the Build stage failed.
+  runPostBuildOnFailure: false
   buildMatrixType: platformDependencyGraph
   buildMatrixCustomBuildLegGroupArgs: ""
   linuxAmdBuildJobTimeout: 60
@@ -47,6 +49,7 @@ stages:
   parameters:
     noCache: ${{ parameters.noCache }}
     publishConfig: ${{ parameters.publishConfig }}
+    runPostBuildOnFailure: ${{ parameters.runPostBuildOnFailure }}
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
