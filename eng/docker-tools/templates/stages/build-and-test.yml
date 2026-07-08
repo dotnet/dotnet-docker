@@ -15,6 +15,8 @@ parameters:
   customBuildInitSteps: []
   customTestInitSteps: []
   sourceBuildPipelineRunId: ""
+  # When true, the Post-Build stage runs even if the Build stage failed (succeededOrFailed).
+  runPostBuildOnFailure: false
 
   linuxAmdBuildJobTimeout: 60
   linuxArmBuildJobTimeout: 60
@@ -212,7 +214,10 @@ stages:
 ################################################################################
 - stage: Post_Build
   dependsOn: Build
-  condition: and(succeeded(), contains(variables['stages'], 'build'))
+  ${{ if eq(parameters.runPostBuildOnFailure, true) }}:
+    condition: and(succeededOrFailed(), contains(variables['stages'], 'build'))
+  ${{ else }}:
+    condition: and(succeeded(), contains(variables['stages'], 'build'))
   jobs:
   - template: /eng/docker-tools/templates/jobs/post-build.yml@self
     parameters:
