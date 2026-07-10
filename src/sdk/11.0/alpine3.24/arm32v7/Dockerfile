@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:11.0.0-preview.7-alpine3.24-arm32v7 AS installer
+FROM $REPO:11.0.0-preview.6-alpine3.24-arm32v7 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.7.26358.120 \
+RUN dotnet_sdk_version=11.0.100-preview.6.26359.118 \
     && wget \
         https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz \
         https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm.tar.gz.sha512 \
@@ -16,7 +16,7 @@ RUN dotnet_sdk_version=11.0.100-preview.7.26358.120 \
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-preview.7-alpine3.24-arm32v7
+FROM $REPO:11.0.0-preview.6-alpine3.24-arm32v7
 
 ENV \
     # Do not generate certificate
@@ -24,7 +24,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.7.26358.120 \
+    DOTNET_SDK_VERSION=11.0.100-preview.6.26359.118 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
