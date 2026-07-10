@@ -19,6 +19,7 @@
     set includePowerShellVars to isPowerShellSupported || dotnetVersion = "8.0" || dotnetVersion = "9.0" ^
 
     set dnxIsSupported to dotnetVersion != "8.0" && dotnetVersion != "9.0" ^
+    set useDnxScript to isAlpine && dotnetVersion = "11.0" ^
 
     set pkgs to filter(
         when(isAlpine,
@@ -95,7 +96,13 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-{{if dnxIsSupported:RUN {{
+{{if dnxIsSupported:{{if useDnxScript:# Workaround for https://github.com/dotnet/sdk/issues/55238
+}}RUN {{if useDnxScript:printf '%s\n' \
+        '#!/bin/sh' \
+        'exec /usr/share/dotnet/dotnet dnx "$@@"' \
+        > /usr/share/dotnet/dnx \
+    && chmod +x /usr/share/dotnet/dnx \
+    && }}{{
         InsertTemplate("../Dockerfile.linux.symlink", [
             "from": "/usr/share/dotnet/dnx",
             "to": "/usr/bin/dnx"
