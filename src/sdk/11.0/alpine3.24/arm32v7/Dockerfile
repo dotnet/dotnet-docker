@@ -42,7 +42,7 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-# Use the managed muxer path because the native dnx apphost fails on Alpine.
+# Workaround for https://github.com/dotnet/sdk/issues/55238
 RUN printf '%s\n' \
         '#!/bin/sh' \
         'exec /usr/share/dotnet/dotnet dnx "$@"' \

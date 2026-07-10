@@ -96,7 +96,7 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-{{if dnxIsSupported:{{if useDnxScript:# Use the managed muxer path because the native dnx apphost fails on Alpine.
+{{if dnxIsSupported:{{if useDnxScript:# Workaround for https://github.com/dotnet/sdk/issues/55238
 }}RUN {{if useDnxScript:printf '%s\n' \
         '#!/bin/sh' \
         'exec /usr/share/dotnet/dotnet dnx "$@@"' \
