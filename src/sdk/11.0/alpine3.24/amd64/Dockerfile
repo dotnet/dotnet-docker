@@ -44,7 +44,13 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
+# Use the managed muxer path because the native dnx apphost fails on Alpine.
+RUN printf '%s\n' \
+        '#!/bin/sh' \
+        'exec /usr/share/dotnet/dotnet dnx "$@"' \
+        > /usr/share/dotnet/dnx \
+    && chmod +x /usr/share/dotnet/dnx \
+    && ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
