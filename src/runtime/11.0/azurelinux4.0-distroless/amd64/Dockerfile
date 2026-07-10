@@ -10,7 +10,7 @@ RUN dnf install -y \
     && dnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-preview.5.26302.115 \
+RUN dotnet_version=11.0.0-preview.6.26359.118 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
@@ -26,10 +26,10 @@ RUN mkdir /dotnet-symlink \
 
 
 # .NET runtime image
-FROM $REPO:11.0.0-preview.5-azurelinux4.0-distroless-amd64
+FROM $REPO:11.0.0-preview.6-azurelinux4.0-distroless-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-preview.5.26302.115
+ENV DOTNET_VERSION=11.0.0-preview.6.26359.118
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]
