@@ -23,6 +23,7 @@ from the ["releasesapi" sample](../samples/releasesapi).
 | [`runtime-deps:10.0-noble-chiseled`]       | [Native AOT]                  | ✅ Yes      | ✖️ No         |        11.60 MB |
 | [`runtime-deps:10.0-noble-chiseled-extra`] | [Native AOT]                  | ✅ Yes      | ✅ Yes         |        26.56 MB |
 | [`aspnet:10.0-alpine`]                     | [Framework-dependent]         | ✖️ No      | ✖️ No         |        51.93 MB |
+| [`aspnet:10.0-alpine-extra`]               | [Framework-dependent]         | ✖️ No      | ✅ Yes         |        66.50 MB |
 | [`runtime-deps:10.0-alpine`]               | [Self-contained] + [Trimming] | ✖️ No      | ✖️ No         |        20.95 MB |
 | [`runtime-deps:10.0-alpine-extra`]         | [Self-contained] + [Trimming] | ✖️ No      | ✅ Yes         |        35.52 MB |
 | [`runtime-deps:10.0-alpine`]               | [Native AOT]                  | ✖️ No      | ✖️ No         |        10.69 MB |
@@ -74,5 +75,6 @@ for more details on all of the supported options for publishing .NET apps.
 [`runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled
 [`runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled-extra
 [`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.23
+[`aspnet:10.0-alpine-extra`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.23-extra
 [`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.23
 [`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.23-extra

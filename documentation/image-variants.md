@@ -7,7 +7,7 @@ These images are intended to satisfy the most common use cases of .NET developer
 
 Alpine and [Ubuntu Chiseled](./ubuntu-chiseled.md) .NET images are focused on size.
 By default, these images do not include `icu` or `tzdata`, meaning that these images only work with apps that are configured for [globalization-invariant mode](https://learn.microsoft.com/dotnet/core/runtime-config/globalization).
-Apps that require globalization support can use the `extra` image variant of the [dotnet/runtime-deps](../README.runtime-deps.md) images. Because this is only available with `runtime-deps` images, it requires a [self-contained deployment](https://learn.microsoft.com/dotnet/core/deploying/#publish-self-contained) of the application.
+Apps that require globalization support can use the `extra` image variant (see below).
 Alpine, Azure Linux, and Ubuntu Chiseled images also come in `extra`, `composite`, and `aot` variants (see below).
 
 ## Distroless
@@ -17,7 +17,7 @@ For more information, see the [distroless .NET images documentation](./distroles
 
 ## `extra` (.NET 8+)
 
-For apps that depend on globalization functionality, the `extra` image variant is offered for [Ubuntu Chiseled](./ubuntu-chiseled.md) and [Azure Linux](./azurelinux.md) distroless `runtime-deps`, `runtime`, and `aspnet` images as well as `runtime-deps` images for Alpine Linux.
+For apps that depend on globalization functionality, the `extra` image variant is offered for [Ubuntu Chiseled](./ubuntu-chiseled.md) and [Azure Linux](./azurelinux.md) distroless `runtime-deps`, `runtime`, and `aspnet` images as well as `runtime-deps`, `runtime`, and `aspnet` images for Alpine Linux.
 These `extra` images contain everything that the default images do, plus `icu` and `tzdata`.
 
 ## `composite` (.NET 8+)
