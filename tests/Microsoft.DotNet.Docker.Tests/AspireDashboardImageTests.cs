@@ -47,11 +47,11 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
         IEnumerable<EnvironmentVariableInfo> expectedVariables =
         [
             // Unset ASPNETCORE_HTTP_PORTS from base image
-            new EnvironmentVariableInfo("ASPNETCORE_HTTP_PORTS", string.Empty),
-            new EnvironmentVariableInfo("ASPNETCORE_URLS", $"{baseUrl}:{DashboardWebPort}"),
-            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpPort}"),
-            new EnvironmentVariableInfo("DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpHttpPort}"),
-            new EnvironmentVariableInfo("DOTNET_DASHBOARD_MCP_ENDPOINT_URL", $"{baseUrl}:{DashboardMcpPort}"),
+            EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", string.Empty),
+            EnvironmentVariableInfo.Require("ASPNETCORE_URLS", $"{baseUrl}:{DashboardWebPort}"),
+            EnvironmentVariableInfo.Require("DOTNET_DASHBOARD_OTLP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpPort}"),
+            EnvironmentVariableInfo.Require("DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL", $"{baseUrl}:{DashboardOtlpHttpPort}"),
+            EnvironmentVariableInfo.Require("DOTNET_DASHBOARD_MCP_ENDPOINT_URL", $"{baseUrl}:{DashboardMcpPort}"),
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);

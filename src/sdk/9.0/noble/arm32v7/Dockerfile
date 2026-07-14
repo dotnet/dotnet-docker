@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=9.0.315 \
-    && dotnet_version=9.0.17 \
+RUN dotnet_sdk_version=9.0.316 \
+    && dotnet_version=9.0.18 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -18,7 +18,7 @@ RUN dotnet_sdk_version=9.0.315 \
 
 
 # .NET SDK image
-FROM $REPO:9.0.17-noble-arm32v7
+FROM $REPO:9.0.18-noble-arm32v7
 
 ENV \
     # Do not generate certificate
@@ -26,7 +26,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.315 \
+    DOTNET_SDK_VERSION=9.0.316 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -48,9 +48,9 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.5.7 \
+RUN powershell_version=7.5.8 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm32.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha512='4fdfe99c4e27dffccf4550a2571fba0bdf630a92bfe39c4b2af1ed0adad5ffe19e50df3eed1ed4bb18d88e7c7e26e2d1e1f41c164049f819aa1266b9b4a72db1' \
+    && powershell_sha512='e63f22b5402ddb8a480d708c7d7a0aeee5e8edc24a683e5d4fe64ed6c2aa106e9c6917185ab8a97a156598759c9028535c564fdc53967bed33d11ef4d753b712' \
     && echo "$powershell_sha512  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \

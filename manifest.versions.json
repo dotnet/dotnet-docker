@@ -28,16 +28,16 @@
     "aspire-dashboard|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|base-url|nightly": "$(base-url|public|preview|nightly)",
 
-    "aspnet|8.0|build-version": "8.0.28",
+    "aspnet|8.0|build-version": "8.0.29",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
 
-    "aspnet|9.0|build-version": "9.0.17",
+    "aspnet|9.0|build-version": "9.0.18",
     "aspnet-composite|9.0|build-version": "$(aspnet|9.0|build-version)",
 
-    "aspnet|10.0|build-version": "10.0.9",
+    "aspnet|10.0|build-version": "10.0.10",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
-    "aspnet|11.0|build-version": "11.0.0-preview.5.26302.115",
+    "aspnet|11.0|build-version": "11.0.0-preview.6.26359.118",
     "aspnet-composite|11.0|build-version": "$(aspnet|11.0|build-version)",
 
     "chisel|latest|build-version": "v1.4.0",
@@ -74,7 +74,7 @@
     "chisel|8.0|arm|sha384": "$(chisel|latest|arm|sha384)",
     "chisel|8.0|arm64|sha384": "$(chisel|latest|arm64|sha384)",
 
-    "dotnet|8.0|product-version": "8.0.28",
+    "dotnet|8.0|product-version": "8.0.29",
     "dotnet|8.0|fixed-tag": "$(dotnet|8.0|product-version)",
     "dotnet|8.0|minor-tag": "8.0",
     "dotnet|8.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -83,7 +83,7 @@
     "dotnet|8.0|base-url|checksums|nightly": "$(dotnet|8.0|base-url|nightly)",
     "dotnet|8.0|aggregate-checksums": "/checksums/$(dotnet|8.0|product-version)-sha.txt",
 
-    "dotnet|9.0|product-version": "9.0.17",
+    "dotnet|9.0|product-version": "9.0.18",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0",
     "dotnet|9.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -92,7 +92,7 @@
     "dotnet|9.0|base-url|checksums|nightly": "$(dotnet|9.0|base-url|nightly)",
     "dotnet|9.0|aggregate-checksums": "/checksums/$(dotnet|9.0|product-version)-sha.txt",
 
-    "dotnet|10.0|product-version": "10.0.9",
+    "dotnet|10.0|product-version": "10.0.10",
     "dotnet|10.0|fixed-tag": "$(dotnet|10.0|product-version)",
     "dotnet|10.0|minor-tag": "10.0",
     "dotnet|10.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -100,7 +100,7 @@
     "dotnet|10.0|base-url|checksums|main": "$(base-url|public|maintenance|main)",
     "dotnet|10.0|base-url|checksums|nightly": "$(base-url|public|maintenance|nightly)",
 
-    "dotnet|11.0|product-version": "11.0.0-preview.5",
+    "dotnet|11.0|product-version": "11.0.0-preview.6",
     "dotnet|11.0|fixed-tag": "$(dotnet|11.0|product-version)",
     "dotnet|11.0|minor-tag": "11.0-preview",
     "dotnet|11.0|base-url|main": "$(base-url|public|preview|main)",
@@ -125,8 +125,8 @@
     "libssl|noble": "3t64",
     "libssl|resolute": "3t64",
 
-    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.54.0.windows.1/MinGit-2.54.0-64-bit.zip",
-    "mingit|latest|x64|sha": "04f937e1f0918b17b9be6f2294cb2bb66e96e1d9832d1c298e2de088a1d0e668",
+    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.55.0.windows.2/MinGit-2.55.0.2-64-bit.zip",
+    "mingit|latest|x64|sha": "e3ea2944cea4b3fabcd69c7c1669ef69b1b66c05ac7806d81224d0abad2dec31",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
@@ -166,8 +166,8 @@
     "monitor-ext-s3storage|9.0|linux|x64|sha": "8fa19f1b002fa3d91571f960d7bb803a38bb81d237f5a44677726ca3b0d65e8231c9bbe1494c84a6998ac1c4dd138290e138eabd36fdf409da311736741d91d4",
     "monitor-ext-s3storage|9.0|linux|arm64|sha": "60dfe12e76badb3530a0ad0d9b8d58ea059883774f1a671c2702ae35ce2e3212ad9e3acb1134df448a9c7bcfdd264293584b74f02283b57e4a98d0ff0279ac4a",
 
-    "monitor|10.0|build-version": "10.0.2",
-    "monitor|10.0|product-version": "10.0.2",
+    "monitor|10.0|build-version": "10.0.3",
+    "monitor|10.0|product-version": "10.0.3",
     "monitor|10.0|fixed-tag": "$(monitor|10.0|product-version)",
     "monitor|10.0|minor-tag": "10.0",
     "monitor|10.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -175,19 +175,19 @@
     "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|maintenance|main)",
     "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|maintenance|nightly)",
 
-    "powershell|8.0|build-version": "7.4.16",
-    "powershell|8.0|Linux.Alpine|sha": "5b9f1362121a45fc06a89a58b28b66fff85fd1c1236e9df5e20f1eb44e6a480b01769874e88156972fd6b33719fa98fb7a6dae72073e37a2f87f6da1127d3988",
-    "powershell|8.0|Linux|arm32|sha": "f61674177ec9ee3557db3bbce669938a8e17e830634b310f93aada0b427aa8e2882a1fb4c2e3ac6f8246371753bc08c7f450a4fa8b6fe9bc96343767cda97405",
-    "powershell|8.0|Linux|arm64|sha": "fe29fe9126ada7cbf0b9aa4be4e80958268b7a1a5bc6dcd0f950d003af12a2c448672cd0d6081dab7fc6bd880eb1551ae06faad15e6210363c52e8ed5fd7b67c",
-    "powershell|8.0|Linux|x64|sha": "446e83a1a293be84f22b9a0a9243961caae33a7032a4e00a11434cf44aa546855174b5336efee284cb8d88a416e8f59145f3cd43aff8d7bf5939e079b7e2e3a4",
-    "powershell|8.0|Windows|x64|sha": "5eedf11e4a54937713067e0796de3bf165afca0ad4002578ddd92fccbec37ebd70efd23160bfe7d9b6cb9c15b7afcc3c4635955112a950fb9b70fd8c1a9eb4df",
+    "powershell|8.0|build-version": "7.4.17",
+    "powershell|8.0|Linux.Alpine|sha": "2653ecb7c4423f5530f9847a47909a34692c36db9311e97d4b10f92af82d87943593762d8107cd27c4cc0cbaebb34c2919fe2e00302172f00a8cb6d5f84e8927",
+    "powershell|8.0|Linux|arm32|sha": "1fa6e803011747cd98feac935e694823a682d6285f9155b5cd4abc30fec0368cf35568776212d3039c36d3f43da4e866b28126766ecf28e0e6cc38b59612ea9c",
+    "powershell|8.0|Linux|arm64|sha": "83b7e6dcea9b235b3f2f87c98704746583a3403f7590f06f04483fd26a16b893930f35d17862ee7fdc6d189b3b069ba8b7b97d79d479124362687c0e8840da55",
+    "powershell|8.0|Linux|x64|sha": "e278f58ec3b86c2857dee5711d3d3d7f39b3a1ac0a732d3d0e6d9293fbfce246bbf1d24fd314a62d760a27e2664fdd3a5a44a1c61f1c1613cc8691602157b576",
+    "powershell|8.0|Windows|x64|sha": "b99fbfd7370a49bee61b4635d4158917089682fa021c7e9e219d747f1a7a33e893027195947688cfbe0caaa641360ab53ec919d8a5ba152ab29d23b4ecbe7dd4",
 
-    "powershell|9.0|build-version": "7.5.7",
-    "powershell|9.0|Linux.Alpine|sha": "c672bac9f736e794cd586195c87fcb6f26468cc49c1ec835cfcf25c79daeaef934b5d92bc0ce092cd02cc0a5b8d933e94dead0aa850a7b7f77afbec8338331fd",
-    "powershell|9.0|Linux|arm32|sha": "4fdfe99c4e27dffccf4550a2571fba0bdf630a92bfe39c4b2af1ed0adad5ffe19e50df3eed1ed4bb18d88e7c7e26e2d1e1f41c164049f819aa1266b9b4a72db1",
-    "powershell|9.0|Linux|arm64|sha": "b06e7a36b359fd10bfe86259849d5bcfebcc1d107578ac1135f899a3fe701a5e486475fce3bbe249c86def733848093662efe953e5851410a90dc90888ef5d95",
-    "powershell|9.0|Linux|x64|sha": "a39f82dd75d697a1b004235d3c699636dce009196cec91b7d1a5cb4be6e260e178da4a37071598cfceda0c03bf1faaf0a557b88ec801a7fdc2ea6be2b6a82b08",
-    "powershell|9.0|Windows|x64|sha": "e4ecdafdfdda73c6df53a7eb8da6929a71539d2df2ac204a6e7a870b118e28609f0d6a281411b5ce46c23899c650737eaf3681087cd0751be5d658bc8cfb25e8",
+    "powershell|9.0|build-version": "7.5.8",
+    "powershell|9.0|Linux.Alpine|sha": "b98caef3b68bb6b85c3b1cfad9d783b91d2e1b01e2e74502e2e1a6b33bbca92c0613b77aee45db95daeb7868266472cbe4bafc505904abe3852481c3b776b30f",
+    "powershell|9.0|Linux|arm32|sha": "e63f22b5402ddb8a480d708c7d7a0aeee5e8edc24a683e5d4fe64ed6c2aa106e9c6917185ab8a97a156598759c9028535c564fdc53967bed33d11ef4d753b712",
+    "powershell|9.0|Linux|arm64|sha": "5b972bda947d4762974ecdde770e4f8bb55deab6b8ae2e04d9d25e17662670432bbecceab7fcc584fa01e34dab355bbb58bc156a2cecfab9931030baa172f6bc",
+    "powershell|9.0|Linux|x64|sha": "2ab1face06a1da3ab3fc26ead6deb0e6b28c24438b606f10101c00099a12f5af38ffcbab00a9160669f4c9c85e5b48bf818e72ccf6a5316353562480537c87c4",
+    "powershell|9.0|Windows|x64|sha": "e4d0c535601f6ab5d671ad0a2fea967183e54794cb39027d1cf296eac8ec4c80b550e2d5d620ee00dbb29d800026ee3b103441b0018af92240902849d16f9c8b",
 
     "powershell|10.0|build-version": "7.6.2",
     "powershell|10.0|Linux.Alpine|sha": "a6f152b23c3ab16676f173fc61d532b5853ccc92715cbcef02c2ffb92172e18d28a11b11b0bea0a939bb5d543e197cdce3c1162bc4a52ad96d91c6fe6664f830",
@@ -215,13 +215,13 @@
     "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|11.0|version": "$(rocks-toolbox|latest|version)",
 
-    "runtime|8.0|build-version": "8.0.28",
-    "runtime|9.0|build-version": "9.0.17",
-    "runtime|10.0|build-version": "10.0.9",
-    "runtime|11.0|build-version": "11.0.0-preview.5.26302.115",
+    "runtime|8.0|build-version": "8.0.29",
+    "runtime|9.0|build-version": "9.0.18",
+    "runtime|10.0|build-version": "10.0.10",
+    "runtime|11.0|build-version": "11.0.0-preview.6.26359.118",
 
-    "sdk|8.0|build-version": "8.0.422",
-    "sdk|8.0|product-version": "8.0.422",
+    "sdk|8.0|build-version": "8.0.423",
+    "sdk|8.0|product-version": "8.0.423",
     "sdk|8.0|base-url|main": "$(dotnet|8.0|base-url|main)",
     "sdk|8.0|base-url|nightly": "$(dotnet|8.0|base-url|nightly)",
     "sdk|8.0|base-url|checksums|main": "$(sdk|8.0|base-url|main)",
@@ -229,8 +229,8 @@
     "sdk|8.0|fixed-tag": "$(sdk|8.0|product-version)",
     "sdk|8.0|minor-tag": "$(dotnet|8.0|minor-tag)",
 
-    "sdk|9.0|build-version": "9.0.315",
-    "sdk|9.0|product-version": "9.0.315",
+    "sdk|9.0|build-version": "9.0.316",
+    "sdk|9.0|product-version": "9.0.316",
     "sdk|9.0|base-url|main": "$(dotnet|9.0|base-url|main)",
     "sdk|9.0|base-url|nightly": "$(dotnet|9.0|base-url|nightly)",
     "sdk|9.0|base-url|checksums|main": "$(sdk|9.0|base-url|main)",
@@ -238,8 +238,8 @@
     "sdk|9.0|fixed-tag": "$(sdk|9.0|product-version)",
     "sdk|9.0|minor-tag": "$(dotnet|9.0|minor-tag)",
 
-    "sdk|10.0|build-version": "10.0.301",
-    "sdk|10.0|product-version": "10.0.301",
+    "sdk|10.0|build-version": "10.0.302",
+    "sdk|10.0|product-version": "10.0.302",
     "sdk|10.0|base-url|main": "$(dotnet|10.0|base-url|main)",
     "sdk|10.0|base-url|nightly": "$(dotnet|10.0|base-url|nightly)",
     "sdk|10.0|base-url|checksums|main": "$(dotnet|10.0|base-url|checksums|main)",
@@ -247,8 +247,8 @@
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
 
-    "sdk|11.0|build-version": "11.0.100-preview.5.26302.115",
-    "sdk|11.0|product-version": "11.0.100-preview.5",
+    "sdk|11.0|build-version": "11.0.100-preview.6.26359.118",
+    "sdk|11.0|product-version": "11.0.100-preview.6",
     "sdk|11.0|base-url|main": "$(dotnet|11.0|base-url|main)",
     "sdk|11.0|base-url|nightly": "$(dotnet|11.0|base-url|nightly)",
     "sdk|11.0|base-url|checksums|main": "$(dotnet|11.0|base-url|checksums|main)",
@@ -258,7 +258,7 @@
     "sdk|11.0|minor-tag": "$(dotnet|11.0|minor-tag)",
 
     "syft|repo": "anchore/syft",
-    "syft|version": "v1.44.0",
+    "syft|version": "v1.46.0",
     "syft|tag": "$(syft|version)-debug"
   }
 }

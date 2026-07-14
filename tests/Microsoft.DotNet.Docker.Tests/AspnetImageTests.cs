@@ -122,7 +122,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             string version = imageData.GetProductVersion(imageRepo, DotNetImageRepo.Aspnet, dockerHelper);
 
-            return new EnvironmentVariableInfo("ASPNET_VERSION", version)
+            return EnvironmentVariableInfo.Require("ASPNET_VERSION", version) with
             {
                 IsProductVersion = true
             };

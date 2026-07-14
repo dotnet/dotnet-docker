@@ -109,22 +109,26 @@ namespace Microsoft.DotNet.Docker.Tests
 
             List<EnvironmentVariableInfo> variables =
             [
-                new EnvironmentVariableInfo("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
-                new EnvironmentVariableInfo("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
-                new EnvironmentVariableInfo("NUGET_XMLDOC_MODE", "skip"),
-                new EnvironmentVariableInfo("DOTNET_SDK_VERSION", version)
+                EnvironmentVariableInfo.Require("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
+                EnvironmentVariableInfo.Require("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
+                EnvironmentVariableInfo.Require("NUGET_XMLDOC_MODE", "skip"),
+                EnvironmentVariableInfo.Require("DOTNET_SDK_VERSION", version) with
                 {
                     IsProductVersion = true
                 },
                 AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
                 RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
-                new EnvironmentVariableInfo("DOTNET_NOLOGO", "true"),
+                EnvironmentVariableInfo.Require("DOTNET_NOLOGO", "true"),
+                // DOTNET_ROLL_FORWARD must not be set globally, as it can silently change
+                // the runtime that unrelated workloads (e.g. dotnet test) execute on.
+                // See https://github.com/dotnet/dotnet-docker/issues/7255.
+                EnvironmentVariableInfo.Forbid("DOTNET_ROLL_FORWARD"),
                 ..GetCommonEnvironmentVariables(),
             ];
 
             if (imageData.SdkOS.Family == OSFamily.Alpine)
             {
-                variables.Add(new EnvironmentVariableInfo("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
+                variables.Add(EnvironmentVariableInfo.Require("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
             }
 
             EnvironmentVariableInfo.Validate(variables, imageName, imageData, DockerHelper);
@@ -142,6 +146,12 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Skip this test for internal builds, since this test does not
                 // yet authenticate to download the internal staged version of
                 // the .NET SDK.
+                return;
+            }
+
+            // Workaround for https://github.com/dotnet/sdk/issues/55238
+            if (imageData.SdkOS.Family == OSFamily.Alpine && imageData.Version.Major == 11)
+            {
                 return;
             }
 
