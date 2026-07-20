@@ -8,8 +8,9 @@
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
+    set isAzureLinux3 to defined(match(OS_VERSION, "^azurelinux3")) ^
 
-    set isDnf to ARGS["pkg-mgr"] = "dnf" ^
+    set isDnf to ARGS["pkg-mgr"] = "dnf" || (isAzureLinux && !isAzureLinux3 && ARGS["pkg-mgr"] != "tdnf") ^
     set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isAzureLinux) ^
     set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine ^
     set isApt to ARGS["pkg-mgr"] = "apt-get" || (!isDnf && !isTdnf && !isApk) ^
@@ -29,10 +30,12 @@
     set cleanCmd to
         when(isApk,
             "apk del",
+        when(isDnf,
+            "dnf clean all",
         when(isTdnf,
             "tdnf clean all",
             "apt-get autoremove \
-&& rm -rf /var/lib/apt/lists/*"))
+&& rm -rf /var/lib/apt/lists/*")))
 
 }}{{
 removeCmd}}{{ARGS["pkg-mgr-opts"]}} \{{

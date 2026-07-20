@@ -24,7 +24,7 @@
     set osVersionBase to when(isUbuntu && ARCH_VERSIONED = "arm32v7", "jammy", osVersionBase) ^
 
     set installerImageTag to when(isDistrolessAzureLinux,
-        cat("mcr.microsoft.com/azurelinux/base/core:",
+        cat(VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")], "/base/core:",
             OS_VERSION_NUMBER),
         when(isAlpine || isFullAzureLinux,
             runtimeBaseTag,
@@ -42,7 +42,7 @@ ARG ACCESSTOKEN
 ^elif isFullAzureLinux:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
-        "pkgs": ["tar"]
+        "pkgs": when(OS_VERSION_NUMBER = "3.0", ["tar"], ["gzip", "tar"])
     ])}}
 }}
 # Retrieve ASP.NET Core
