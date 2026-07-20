@@ -54,9 +54,9 @@ RUN powershell -Command " `
             $dotnet_checksums_file; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.4.15'; `
+        $powershell_version = '7.4.18'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = 'eba9bba7e2293989f19f9415140693b1e2b61ea0afe1ba30497b3496fbae859af82586ddb079ab821dea830a9274d7cf6e54136edee71c4204cd23821c9cc12f'; `
+        $powershell_sha512 = '31dfc4a4e75728bb6e279d0691ab38ff3fcf9e09fe114031e9ff02ef7037569d15145fa591bca23a5368344baa59cc9110cb1b04ba5785c64c8c392671327f51'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
