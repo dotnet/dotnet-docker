@@ -42,7 +42,7 @@
         when(isAzureLinux,
             [
                 "git",
-                "libgcc-atomic",
+                when(OS_VERSION_NUMBER = "3.0", "libgcc-atomic", "libatomic"),
                 "tar",
             ],
             [
@@ -73,7 +73,7 @@ ARG ACCESSTOKEN}}
 {{if isAzureLinux:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
-        "pkgs": ["tar"]
+        "pkgs": when(OS_VERSION_NUMBER = "3.0", ["tar"], ["gzip", "tar"])
     ])}}
 }}
 # Install .NET SDK

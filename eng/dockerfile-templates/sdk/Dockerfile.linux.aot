@@ -34,12 +34,18 @@
                 ],
                 when(
                     isAzureLinux,
-                    [
-                        "binutils",
-                        "gcc",
-                        "glibc-devel",
-                        "zlib-devel"
-                    ],
+                    when(
+                        OS_VERSION_NUMBER = "3.0",
+                        [
+                            "binutils",
+                            "gcc",
+                            "glibc-devel",
+                            "zlib-devel"
+                        ],
+                        [
+                            "gcc"
+                        ]
+                    ),
                     [
                         "gcc",
                         "zlib1g-dev"
@@ -55,11 +61,17 @@
                 ],
                 when(
                     isAzureLinux,
-                    [
-                        "build-essential",
-                        "clang",
-                        "zlib-devel"
-                    ],
+                    when(
+                        OS_VERSION_NUMBER = "3.0",
+                        [
+                            "build-essential",
+                            "clang",
+                            "zlib-devel"
+                        ],
+                        [
+                            "gcc"
+                        ]
+                    ),
                     [
                         "clang",
                         "zlib1g-dev",

@@ -99,6 +99,8 @@ Tags | Dockerfile | OS Version
 11.0.100-preview.6-alpine3.24-aot-amd64, 11.0-preview-alpine3.24-aot-amd64, 11.0-preview-alpine-aot-amd64, 11.0.100-preview.6-alpine3.24-aot, 11.0-preview-alpine3.24-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
 11.0.100-preview.6-azurelinux3.0-amd64, 11.0-preview-azurelinux3.0-amd64, 11.0.100-preview.6-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 11.0.100-preview.6-azurelinux3.0-aot-amd64, 11.0-preview-azurelinux3.0-aot-amd64, 11.0.100-preview.6-azurelinux3.0-aot, 11.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+11.0.100-preview.6-azurelinux4.0-amd64, 11.0-preview-azurelinux4.0-amd64, 11.0.100-preview.6-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+11.0.100-preview.6-azurelinux4.0-aot-amd64, 11.0-preview-azurelinux4.0-aot-amd64, 11.0.100-preview.6-azurelinux4.0-aot, 11.0-preview-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm64 Tags
 
@@ -136,6 +138,8 @@ Tags | Dockerfile | OS Version
 11.0.100-preview.6-alpine3.24-aot-arm64v8, 11.0-preview-alpine3.24-aot-arm64v8, 11.0-preview-alpine-aot-arm64v8, 11.0.100-preview.6-alpine3.24-aot, 11.0-preview-alpine3.24-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
 11.0.100-preview.6-azurelinux3.0-arm64v8, 11.0-preview-azurelinux3.0-arm64v8, 11.0.100-preview.6-azurelinux3.0, 11.0-preview-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 11.0.100-preview.6-azurelinux3.0-aot-arm64v8, 11.0-preview-azurelinux3.0-aot-arm64v8, 11.0.100-preview.6-azurelinux3.0-aot, 11.0-preview-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.100-preview.6-azurelinux4.0-arm64v8, 11.0-preview-azurelinux4.0-arm64v8, 11.0.100-preview.6-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.100-preview.6-azurelinux4.0-aot-arm64v8, 11.0-preview-azurelinux4.0-aot-arm64v8, 11.0.100-preview.6-azurelinux4.0-aot, 11.0-preview-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm32 Tags
 

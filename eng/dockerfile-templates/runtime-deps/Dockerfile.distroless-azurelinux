@@ -5,8 +5,10 @@
             for example globalization support ^
 
     set distrolessStagingDir to "/staging" ^
-    set azureLinuxRepo to "mcr.microsoft.com/azurelinux" ^
+    set azureLinuxRepo to VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")] ^
     set baseImage to cat(azureLinuxRepo, "/distroless/minimal:", OS_VERSION_NUMBER) ^
+    set isAzureLinux3 to defined(match(OS_VERSION, "^azurelinux3")) ^
+    set pkgMgrDir to when(isAzureLinux3, "tdnf", "dnf") ^
     set username to "app" ^
     set nonRootUser to "$APP_UID" ^
     set uid to 1654 ^
@@ -16,7 +18,7 @@ FROM {{azureLinuxRepo}}/base/core:{{OS_VERSION_NUMBER}} AS installer
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
-        "pkgs": ["gawk", "shadow-utils"]
+        "pkgs": when(isAzureLinux3, ["gawk", "shadow-utils"], ["shadow-utils"])
     ])}}
 
 # Install .NET's dependencies into a staging location
@@ -27,7 +29,7 @@ RUN mkdir {{distrolessStagingDir}} \
                 "is-extra": ARGS["is-extra"],
                 "staging-dir": distrolessStagingDir
             ]
-        )}}
+        )}}{{if isAzureLinux3:
 
 # Generate RPM manifest file by appending to the original manifest file from base distroless image
 COPY --from={{baseImage}} /var/lib/rpmmanifest/container-manifest-2 /tmp/rpmmanifest
@@ -35,7 +37,7 @@ RUN tmpManifestPath="/tmp/rpmmanifest" \
     && rpm --query --all --queryformat "%{NAME}\t%{VERSION}-%{RELEASE}\t%{INSTALLTIME}\t%{BUILDTIME}\t%{VENDOR}\t%{EPOCH}\t%{SIZE}\t%{ARCH}\t%{EPOCHNUM}\t%{SOURCERPM}\n" --root /staging | grep -v gpg-pubkey >> $tmpManifestPath \
     && mkdir --parents /staging/var/lib/rpmmanifest \
     # Remove duplicates that match on the first field (package name)
-    && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2
+    && tac $tmpManifestPath | gawk '!x[$1]++' | sort > /staging/var/lib/rpmmanifest/container-manifest-2}}
 
 # Create a non-root user and group
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
@@ -48,10 +50,14 @@ RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged",
         ])}}
 
 # Clean up staging
-RUN rm -rf \
-        {{distrolessStagingDir}}/etc/tdnf \
+RUN {{if !isAzureLinux3:\
+    # Bash is a transient dependency of glibc.
+    # Remove it since this is a Distroless image.
+    rpm --erase --nodeps --root {{distrolessStagingDir}} bash \
+    && }}rm -rf \
+        {{distrolessStagingDir}}/etc/{{pkgMgrDir}} \
         {{distrolessStagingDir}}/run/* \
-        {{distrolessStagingDir}}/var/cache/tdnf \
+        {{distrolessStagingDir}}/var/cache/{{pkgMgrDir}} \
         {{distrolessStagingDir}}/var/lib/rpm \
         {{distrolessStagingDir}}/usr/share/doc \
         {{distrolessStagingDir}}/usr/share/man \

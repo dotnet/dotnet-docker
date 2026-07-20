@@ -11,6 +11,7 @@
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
+    set isAzureLinux3 to defined(match(OS_VERSION, "^azurelinux3")) ^
     set isFullAzureLinux to isAzureLinux && !isDistrolessAzureLinux ^
 
     set dotnetDepsComment to "# .NET dependencies" ^
@@ -79,11 +80,15 @@
                 extraPkgs,
                 standardPkgs)) ^
 
-    set prefixPkgs to [
+    set prefixPkgs to when(isDistrolessAzureLinux && !isAzureLinux3,
+        [
+            dotnetDepsComment
+        ],
+        [
             caCertsPkg,
             "",
             dotnetDepsComment
-        ] ^
+        ]) ^
 
     set suffixPkgs to when(isAlpine && dotnetVersion != "8.0", ["", "# manually update zlib from alpine base image", zlibPkg], []) ^
 
@@ -92,13 +97,16 @@
     set pkgMgrOpts to when(len(ARGS["staging-dir"]) > 0,
         cat(" --installroot ", ARGS["staging-dir"]),
         "") ^
-    set pkgMgrOpts to when(isDistrolessAzureLinux,
+    set pkgMgrOpts to when(isDistrolessAzureLinux && isAzureLinux3,
         cat(" --releasever=", OS_VERSION_NUMBER, pkgMgrOpts),
+        pkgMgrOpts) ^
+    set pkgMgrOpts to when(isDistrolessAzureLinux && !isAzureLinux3 && len(ARGS["staging-dir"]) > 0,
+        cat(" --use-host-config", pkgMgrOpts),
         pkgMgrOpts)
 
 }}{{InsertTemplate("Dockerfile.linux.install-pkgs",
     [
         "pkgs": pkgs,
-        "pkg-mgr": when(isDistrolessAzureLinux, "tdnf", ""),
+        "pkg-mgr": when(isDistrolessAzureLinux && !isAzureLinux3, "dnf", when(isDistrolessAzureLinux, "tdnf", "")),
         "pkg-mgr-opts": pkgMgrOpts
     ])}}
