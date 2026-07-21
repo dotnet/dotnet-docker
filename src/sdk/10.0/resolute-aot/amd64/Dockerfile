@@ -1,9 +1,15 @@
 ARG REPO=mcr.microsoft.com/dotnet/sdk
 FROM $REPO:10.0.302-resolute-amd64
 
-RUN apt-get update \
+RUN __netiso_apt_srcs="$(find /etc/apt -type f \( -name '*.list' -o -name '*.sources' \))" \
+    && __netiso_backup_dir="$(mktemp -d)" \
+    && for f in $__netiso_apt_srcs; do cp -a --parents "$f" "$__netiso_backup_dir" || exit 1; done \
+    && for f in $__netiso_apt_srcs; do sed -E -i 's#([[:space:]/])archive\.ubuntu\.com/ubuntu([[:space:]/]|$)#\1azure.archive.ubuntu.com/ubuntu\2#g' "$f" || exit 1; done \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         clang \
         llvm \
         zlib1g-dev \
+    && for f in $__netiso_apt_srcs; do cp -a "$__netiso_backup_dir$f" "$f" || exit 1; done \
+    && rm -rf "$__netiso_backup_dir" \
     && rm -rf /var/lib/apt/lists/*

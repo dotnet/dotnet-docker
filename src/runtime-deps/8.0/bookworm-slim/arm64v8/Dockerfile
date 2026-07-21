@@ -8,7 +8,11 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-RUN apt-get update \
+RUN __netiso_apt_srcs="$(find /etc/apt -type f \( -name '*.list' -o -name '*.sources' \))" \
+    && __netiso_backup_dir="$(mktemp -d)" \
+    && for f in $__netiso_apt_srcs; do cp -a --parents "$f" "$__netiso_backup_dir" || exit 1; done \
+    && for f in $__netiso_apt_srcs; do sed -E -i 's#([[:space:]/])deb\.debian\.org/debian([[:space:]/]|$)#\1debian-archive.trafficmanager.net/debian\2#g' "$f" || exit 1; done \
+    && apt-get update \
     && apt-get install -y --no-install-recommends \
         ca-certificates \
         \
@@ -20,6 +24,8 @@ RUN apt-get update \
         libstdc++6 \
         tzdata \
         zlib1g \
+    && for f in $__netiso_apt_srcs; do cp -a "$__netiso_backup_dir$f" "$f" || exit 1; done \
+    && rm -rf "$__netiso_backup_dir" \
     && rm -rf /var/lib/apt/lists/*
 
 # Create a non-root user and group
