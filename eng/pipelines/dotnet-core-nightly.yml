@@ -47,6 +47,9 @@ resources:
 extends:
   template: /eng/docker-tools/templates/1es.yml@self
   parameters:
+    # Temporarily use only Permissive because CFSClean blocks Ubuntu/Debian package feeds.
+    # Tracking issue: https://github.com/dotnet/dotnet-docker-internal/issues/11529
+    networkIsolationPolicy: Permissive
     reposToExcludeFromScanning:
     - VersionsRepo
     stages:
