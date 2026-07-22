@@ -37,7 +37,7 @@ ENV \
 RUN __netiso_apt_srcs="$(find /etc/apt -type f \( -name '*.list' -o -name '*.sources' \))" \
     && __netiso_backup_dir="$(mktemp -d)" \
     && for f in $__netiso_apt_srcs; do cp -a --parents "$f" "$__netiso_backup_dir" || exit 1; done \
-    && for f in $__netiso_apt_srcs; do sed -E -i 's#([[:space:]/])deb\.debian\.org/debian([[:space:]/]|$)#\1cdn-fastly.deb.debian.org/debian\2#g' "$f" || exit 1; done \
+    && for f in $__netiso_apt_srcs; do sed -E -i 's#([[:space:]/])deb\.debian\.org/debian([[:space:]/-]|$)#\1cdn-fastly.deb.debian.org/debian\2#g' "$f" || exit 1; done \
     && apt-get update \
     && apt-get install -y --no-install-recommends \
         curl \

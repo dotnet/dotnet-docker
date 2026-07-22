@@ -44,7 +44,7 @@ elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 else:{{if useAptMirror:__netiso_apt_srcs="$(find /etc/apt -type f \( -name '*.list' -o -name '*.sources' \))" \
     && __netiso_backup_dir="$(mktemp -d)" \
     && for f in $__netiso_apt_srcs; do cp -a --parents "$f" "$__netiso_backup_dir" || exit 1; done \
-    && for f in $__netiso_apt_srcs; do sed -E -i 's#([[:space:]/]){{aptMirrorFrom}}([[:space:]/]|$)#\1{{aptMirrorTo}}\2#g' "$f" || exit 1; done \
+    && for f in $__netiso_apt_srcs; do sed -E -i 's#([[:space:]/]){{aptMirrorFrom}}([[:space:]/-]|$)#\1{{aptMirrorTo}}\2#g' "$f" || exit 1; done \
     && }}apt-get update \
     && apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
     for index, pkg in ARGS["pkgs"]:
