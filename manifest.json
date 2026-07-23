@@ -14975,15 +14975,11 @@
     },
     {
       "id": "aspire-dashboard",
-      "name": "dotnet/nightly/aspire-dashboard",
+      "name": "aspire/nightly/dashboard",
       "readmes": [
         {
           "path": "README.aspire-dashboard.md",
           "templatePath": "eng/readme-templates/README.github.md"
-        },
-        {
-          "path": ".portal-docs/docker-hub/README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".portal-docs/mar/README.aspire-dashboard.portal.md",

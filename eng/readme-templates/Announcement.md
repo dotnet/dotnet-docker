@@ -11,6 +11,7 @@
     }} ^
 
     set nonNightlyRepo to when(IS_PRODUCT_FAMILY, "dotnet", join(split(REPO, "/nightly"), "")) ^
+    set announcementFamily to split(nonNightlyRepo, "/")[0] ^
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
     set productFamilyRepo to ARGS["product-family-repos"][0][0] ^
     set isNightlyOnly to find(map(ARGS["nightly-only-repos"],getRepoName), nonNightlyRepo) >= 0 ^
@@ -21,8 +22,9 @@
 
 }}{{if isNightlyRepo || VARIABLES["branch"] = "nightly"
 :{{if ARGS["leading-line-break"]:
-}}> **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
+}}{{if announcementFamily = "aspire":> **Important**: The {{REPO}} image is a preview build of the Aspire Dashboard and is not signed. See [{{nonNightlyRepo}}]({{url}}) for stable releases.
+^else:> **Important**: The images from the {{announcementFamily}}/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet]({{url}}) for images with official releases of [.NET](https://github.com/dotnet/core).
-{{if ARGS["trailing-line-break"]:
+> See [{{announcementFamily}}]({{url}}) for images with official releases of [.NET](https://github.com/dotnet/core).
+}}{{if ARGS["trailing-line-break"]:
 }}}}

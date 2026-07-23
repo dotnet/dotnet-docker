@@ -9,7 +9,9 @@
     }} ^
 
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
-    set readmeRepoName to when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)
+    set readmeRepoName to when(split(REPO, "/")[0] = "aspire",
+        "aspire-dashboard",
+        when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO))
 
 }}{{insertReposListTemplate("Announcement.md", [ "trailing-line-break": "true" ])}}{{
 if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
