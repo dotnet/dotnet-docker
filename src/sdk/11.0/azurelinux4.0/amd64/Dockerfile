@@ -1,6 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:11.0.0-preview.6-azurelinux4.0-amd64 AS installer
+FROM $REPO:11.0.0-preview.7-azurelinux4.0-amd64 AS installer
 
 RUN dnf install -y \
         gzip \
@@ -8,7 +8,7 @@ RUN dnf install -y \
     && dnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-preview.6.26359.118 \
+RUN dotnet_sdk_version=11.0.100-preview.7.26365.101 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
@@ -21,7 +21,7 @@ RUN dotnet_sdk_version=11.0.100-preview.6.26359.118 \
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-preview.6-azurelinux4.0-amd64
+FROM $REPO:11.0.0-preview.7-azurelinux4.0-amd64
 
 ENV \
     # Do not generate certificate
@@ -29,7 +29,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-preview.6.26359.118 \
+    DOTNET_SDK_VERSION=11.0.100-preview.7.26365.101 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
