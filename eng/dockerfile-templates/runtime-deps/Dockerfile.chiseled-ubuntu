@@ -7,15 +7,12 @@
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
 
-    set chiselUrl to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|url")] ^
-    set chiselFileName to "chisel.tar.gz" ^
-    set shaFunction to "384" ^
-    set chiselSha to VARIABLES[cat("chisel|", dotnetVersion, "|", ARCH_SHORT, "|sha", shaFunction)] ^
+    set chiselCommit to VARIABLES[cat("chisel|", dotnetVersion, "|commit")] ^
     set rocksToolboxBaseUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|version")] ^
     set rocksToolboxUrl to cat(rocksToolboxBaseUrl, "/", rocksToolboxRef, "/chisel-wrapper") ^
 
-    set installerImageTag to cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl") ^
+    set installerImageTag to VARIABLES[cat("chisel|", dotnetVersion, "|golang-image")] ^
 
     set opensslPkg to when(match(osVersionBase, "jammy"), "libssl3", "libssl3t64") ^
 
@@ -62,24 +59,21 @@
 
 }}FROM {{installerImageTag}} AS chisel
 
-RUN apt-get update && apt-get install -y file
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends file \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN git init /src/chisel \
+    && git -C /src/chisel remote add origin https://github.com/canonical/chisel.git \
+    && git -C /src/chisel fetch --depth 1 origin {{chiselCommit}} \
+    && git -C /src/chisel checkout --detach FETCH_HEAD \
+    && sed --in-place 's|http://archive.ubuntu.com/ubuntu/|http://azure.archive.ubuntu.com/ubuntu/|' /src/chisel/internal/archive/archive.go
+
+WORKDIR /src/chisel
+
+ENV CHISEL_BIN="go run ./cmd/chisel"
 
 RUN {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
-        "url": chiselUrl,
-        "out-file": chiselFileName
-    ]]], "    ")}} \
-    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
-        "file": chiselFileName,
-        "sha-function": shaFunction,
-        "sha": chiselSha,
-        "sha-var-name": cat("chisel_sha", shaFunction)
-    ], "    ")}} \
-    && {{InsertTemplate("../Dockerfile.linux.extract-file", [
-        "file": chiselFileName,
-        "dest-dir": "/usr/bin/"
-    ], "    ")}} \
-    && rm {{chiselFileName}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
         "url": rocksToolboxUrl,
         "out-file": "/usr/bin/chisel-wrapper"
     ]]], "    ")}} \
