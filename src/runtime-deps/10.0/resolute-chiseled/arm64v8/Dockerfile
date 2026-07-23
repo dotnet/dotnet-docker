@@ -2,8 +2,8 @@ FROM arm64v8/buildpack-deps:resolute-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.4.0/chisel_v1.4.0_linux_arm64.tar.gz \
-    && chisel_sha384='bc2caf1fac6463982ff0770ae5e7aa51f37307d281c1ca56d3ef9068c30434b254dc72739f7d2689a2e7975923eff1ff' \
+RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.4.2/chisel_v1.4.2_linux_arm64.tar.gz \
+    && chisel_sha384='216f10d4cc461411558fa4ac03fc24e104589126f87657457877389ae8015e1eac4299fcd8557c0dfea3d33342aa3297' \
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar --gzip --extract --no-same-owner --file chisel.tar.gz --directory /usr/bin/ \
     && rm chisel.tar.gz \
