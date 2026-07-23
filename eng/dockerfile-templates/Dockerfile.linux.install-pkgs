@@ -14,17 +14,26 @@
 
     _ Temporarily use Network Isolation-compatible mirrors during APT installs. Restore
         the original source files and metadata before the RUN completes so published images
-        retain their distro-provided configuration. Ubuntu ARM and chiseled images are excluded. ^
+        retain their distro-provided configuration. Ubuntu armhf and chiseled images are excluded. ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
+    set isArm64 to ARCH_VERSIONED = "arm64v8" ^
     set isArmhf to ARCH_VERSIONED = "arm32v7" ^
-    set aptMirrorFrom to when(isUbuntu && ARCH_VERSIONED = "amd64",
-        "archive\.ubuntu\.com/ubuntu",
+    set aptMirrorFrom to when(isUbuntu,
+        when(ARCH_VERSIONED = "amd64",
+            "archive\.ubuntu\.com/ubuntu",
+            when(isArm64,
+                "ports\.ubuntu\.com/ubuntu-ports",
+                "")),
         when(isDebian,
             "deb\.debian\.org/debian",
             "")) ^
-    set aptMirrorTo to when(isUbuntu && ARCH_VERSIONED = "amd64",
-        "azure.archive.ubuntu.com/ubuntu",
+    set aptMirrorTo to when(isUbuntu,
+        when(ARCH_VERSIONED = "amd64",
+            "azure.archive.ubuntu.com/ubuntu",
+            when(isArm64,
+                "azure.ports.ubuntu.com/ubuntu-ports",
+                "")),
         when(isDebian && isArmhf,
             "cdn-fastly.deb.debian.org/debian",
             when(isDebian,
