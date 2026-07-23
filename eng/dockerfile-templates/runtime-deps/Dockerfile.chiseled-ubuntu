@@ -8,6 +8,8 @@
     set osVersionNumber to split(OS_ARCH_HYPHENATED, "-")[1] ^
 
     set chiselCommit to VARIABLES[cat("chisel|", dotnetVersion, "|commit")] ^
+    set ubuntuAptFeed to VARIABLES["apt-mirror|ubuntu|x64|from"] ^
+    set ubuntuAptMirror to VARIABLES["apt-mirror|ubuntu|x64|to"] ^
     set rocksToolboxBaseUrl to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|url")] ^
     set rocksToolboxRef to VARIABLES[cat("rocks-toolbox|", dotnetVersion, "|version")] ^
     set rocksToolboxUrl to cat(rocksToolboxBaseUrl, "/", rocksToolboxRef, "/chisel-wrapper") ^
@@ -67,7 +69,7 @@ RUN git init /src/chisel \
     && git -C /src/chisel remote add origin https://github.com/canonical/chisel.git \
     && git -C /src/chisel fetch --depth 1 origin {{chiselCommit}} \
     && git -C /src/chisel checkout --detach FETCH_HEAD \
-    && sed --in-place 's|http://archive.ubuntu.com/ubuntu/|http://azure.archive.ubuntu.com/ubuntu/|' /src/chisel/internal/archive/archive.go
+    && sed --in-place 's|http://{{ubuntuAptFeed}}/|http://{{ubuntuAptMirror}}/|' /src/chisel/internal/archive/archive.go
 
 WORKDIR /src/chisel
 

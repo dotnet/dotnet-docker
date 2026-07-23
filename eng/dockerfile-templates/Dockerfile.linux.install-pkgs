@@ -17,28 +17,17 @@
         retain their distro-provided configuration. Ubuntu armhf and chiseled images are excluded. ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
-    set isArm64 to ARCH_VERSIONED = "arm64v8" ^
-    set isArmhf to ARCH_VERSIONED = "arm32v7" ^
-    set aptMirrorFrom to when(isUbuntu,
-        when(ARCH_VERSIONED = "amd64",
-            "archive\.ubuntu\.com/ubuntu",
-            when(isArm64,
-                "ports\.ubuntu\.com/ubuntu-ports",
-                "")),
+    set aptFeedFrom to when(isUbuntu,
+        VARIABLES[cat("apt-mirror|ubuntu|", ARCH_SHORT, "|from")],
         when(isDebian,
-            "deb\.debian\.org/debian",
+            VARIABLES[cat("apt-mirror|debian|", ARCH_SHORT, "|from")],
             "")) ^
+    set aptMirrorFrom to replace(aptFeedFrom, ".", "\.") ^
     set aptMirrorTo to when(isUbuntu,
-        when(ARCH_VERSIONED = "amd64",
-            "azure.archive.ubuntu.com/ubuntu",
-            when(isArm64,
-                "azure.ports.ubuntu.com/ubuntu-ports",
-                "")),
-        when(isDebian && isArmhf,
-            "cdn-fastly.deb.debian.org/debian",
-            when(isDebian,
-                "debian-archive.trafficmanager.net/debian",
-                ""))) ^
+        VARIABLES[cat("apt-mirror|ubuntu|", ARCH_SHORT, "|to")],
+        when(isDebian,
+            VARIABLES[cat("apt-mirror|debian|", ARCH_SHORT, "|to")],
+            "")) ^
     set useAptMirror to len(aptMirrorFrom) > 0 ^
 
     set appendPkgSuffix(pkg, index) to:{{
