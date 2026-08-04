@@ -31,7 +31,36 @@ pipeline {
 
         stage('Checkout Source') {
             steps {
-                checkout scm
+                script {
+                    /*
+                     * checkout scm returns Git information as a map.
+                     * We store the values explicitly because GIT_COMMIT and
+                     * GIT_URL are not always available in later stages.
+                     */
+                    def scmVariables = checkout scm
+
+                    env.FULL_GIT_COMMIT =
+                        scmVariables.GIT_COMMIT ?: sh(
+                            label: 'Read full Git commit',
+                            returnStdout: true,
+                            script: '''#!/usr/bin/env bash
+set -Eeuo pipefail
+
+git rev-parse HEAD
+'''
+                        ).trim()
+
+                    env.GIT_REMOTE_URL =
+                        scmVariables.GIT_URL ?: sh(
+                            label: 'Read Git remote URL',
+                            returnStdout: true,
+                            script: '''#!/usr/bin/env bash
+set -Eeuo pipefail
+
+git config --get remote.origin.url
+'''
+                        ).trim()
+                }
             }
         }
 
@@ -53,6 +82,8 @@ git rev-parse --short=12 HEAD
                 }
 
                 echo "Jenkins node: ${NODE_NAME}"
+                echo "Git commit: ${FULL_GIT_COMMIT}"
+                echo "Git repository: ${GIT_REMOTE_URL}"
                 echo "Docker image: ${IMAGE_NAME}:${IMAGE_TAG}"
                 echo "Test container: ${CONTAINER_NAME}"
                 echo "Test URL: http://127.0.0.1:${HOST_PORT}"
@@ -143,14 +174,15 @@ set -Eeuo pipefail
 
 docker build \
   --pull \
-  --label "org.opencontainers.image.revision=${GIT_COMMIT}" \
-  --label "org.opencontainers.image.source=${GIT_URL:-unknown}" \
+  --label "org.opencontainers.image.revision=${FULL_GIT_COMMIT}" \
+  --label "org.opencontainers.image.source=${GIT_REMOTE_URL}" \
   --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
   --tag "${IMAGE_NAME}:${IMAGE_TAG}" \
   samples/aspnetapp
 
 echo
 echo "Created image:"
+
 docker image ls \
   --filter "reference=${IMAGE_NAME}:${IMAGE_TAG}"
 '''
@@ -184,6 +216,7 @@ docker image inspect \
 
 echo
 echo "Configured runtime user:"
+
 image_user="$(
   docker image inspect \
     --format '{{.Config.User}}' \
@@ -198,12 +231,14 @@ test "${image_user}" != "root"
 
 echo
 echo "Configured exposed ports:"
+
 docker image inspect \
   --format '{{json .Config.ExposedPorts}}' \
   "${full_image_name}"
 
 echo
 echo "Image size:"
+
 image_size="$(
   docker image inspect \
     --format '{{.Size}}' \
@@ -216,6 +251,7 @@ test "${image_size}" -gt 0
 
 echo
 echo "Image labels:"
+
 docker image inspect \
   --format '{{json .Config.Labels}}' \
   "${full_image_name}" |
@@ -235,6 +271,7 @@ echo "Image successfully uses a non-root runtime user."
                     script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
+# Remove a leftover container with the same name, if one exists.
 docker rm \
   --force \
   "${CONTAINER_NAME}" \
@@ -254,11 +291,13 @@ docker run \
 
 echo
 echo "Running container:"
+
 docker ps \
   --filter "name=^/${CONTAINER_NAME}$"
 
 echo
 echo "Container port mapping:"
+
 docker port "${CONTAINER_NAME}"
 '''
                 )
@@ -286,12 +325,14 @@ for attempt in $(seq 1 30); do
 
     echo
     echo "Container status:"
+
     docker ps \
       --all \
       --filter "name=^/${CONTAINER_NAME}$"
 
     echo
     echo "Container logs:"
+
     docker logs "${CONTAINER_NAME}" || true
 
     exit 1
@@ -316,12 +357,14 @@ if [[ "${application_ready}" != "true" ]]; then
 
   echo
   echo "Container status:"
+
   docker ps \
     --all \
     --filter "name=^/${CONTAINER_NAME}$"
 
   echo
   echo "Container logs:"
+
   docker logs "${CONTAINER_NAME}" || true
 
   exit 1
@@ -355,6 +398,7 @@ curl \
   --output "${response_file}"
 
 echo "Application response:"
+
 jq . "${response_file}"
 
 jq -e '
@@ -504,10 +548,12 @@ if [[ -n "${CONTAINER_NAME:-}" ]]; then
 
     echo
     echo "Final container logs:"
+
     docker logs "${CONTAINER_NAME}" || true
 
     echo
     echo "Removing test container:"
+
     docker rm \
       --force \
       "${CONTAINER_NAME}" || true
@@ -523,6 +569,7 @@ if [[ -n "${IMAGE_TAG:-}" ]]; then
 
     echo
     echo "Removing temporary image:"
+
     docker image rm \
       "${IMAGE_NAME}:${IMAGE_TAG}" || true
   else
