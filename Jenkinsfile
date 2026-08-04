@@ -911,60 +911,35 @@ echo "Immutable image metadata verified."
         }
 
         stage('Publish Staging Tag') {
-            when {
-                branch 'main'
-            }
+    when {
+        branch 'main'
+    }
 
-            steps {
-                sh(
-                    label: 'Retag immutable image as staging',
-                    script: '''#!/usr/bin/env bash
+    steps {
+        sh(
+            label: 'Retag immutable image as staging',
+            script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
-manifest_file="${WORKSPACE}/ecr-image-manifest.json"
-put_result_file="${WORKSPACE}/ecr-staging-result.json"
+echo "Creating local staging tag from:"
+echo "${LOCAL_IMAGE_NAME}:${IMAGE_TAG}"
 
-aws ecr batch-get-image \
-  --repository-name "${ECR_REPOSITORY}" \
-  --image-ids "imageDigest=${ECR_IMAGE_DIGEST}" \
-  --accepted-media-types \
-    application/vnd.oci.image.manifest.v1+json \
-    application/vnd.docker.distribution.manifest.v2+json \
-  --region "${AWS_REGION}" \
-  --query 'images[0].imageManifest' \
-  --output text \
-  >"${manifest_file}"
+docker tag \
+  "${LOCAL_IMAGE_NAME}:${IMAGE_TAG}" \
+  "${ECR_STAGING_IMAGE}"
 
-test -s "${manifest_file}"
+echo
+echo "Pushing staging tag:"
 
-manifest_media_type="$(
-  jq -r '.mediaType // empty' \
-    "${manifest_file}"
-)"
-
-echo "Manifest media type: ${manifest_media_type}"
-
-test \
-  "${manifest_media_type}" = \
-  "${ECR_MANIFEST_MEDIA_TYPE}"
-
-aws ecr put-image \
-  --repository-name "${ECR_REPOSITORY}" \
-  --image-tag staging \
-  --image-manifest "file://${manifest_file}" \
-  --region "${AWS_REGION}" \
-  --output json \
-  >"${put_result_file}"
-
-jq . "${put_result_file}"
+docker push "${ECR_STAGING_IMAGE}"
 
 echo
 echo "Staging tag updated:"
 echo "${ECR_STAGING_IMAGE}"
 '''
-                )
-            }
-        }
+        )
+    }
+}
 
         stage('Verify Staging Tag') {
             when {
