@@ -1,17 +1,24 @@
 pipeline {
     agent {
-        label 'linux-build-agent-01'
+        label 'dotnet-docker-agent'
     }
 
     stages {
-        stage('Agent Test') {
+        stage('Agent Verification') {
             steps {
-                sh '''
-                    whoami
-                    hostname
-                    id
-                    docker version
-                '''
+                sh(
+                    label: 'Verify Jenkins agent',
+                    script: '''#!/usr/bin/env bash
+set -Eeuo pipefail
+
+echo "Jenkins node: ${NODE_NAME}"
+echo "Linux user: $(whoami)"
+echo "Hostname: $(hostname)"
+
+id
+docker version
+'''
+                )
             }
         }
     }
