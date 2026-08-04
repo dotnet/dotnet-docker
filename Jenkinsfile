@@ -17,7 +17,7 @@ pipeline {
         skipDefaultCheckout(true)
         timestamps()
         disableConcurrentBuilds()
-        timeout(time: 40, unit: 'MINUTES')
+        timeout(time: 45, unit: 'MINUTES')
 
         buildDiscarder(
             logRotator(
@@ -60,6 +60,16 @@ set -Eeuo pipefail
 git config --get remote.origin.url
 '''
                         ).trim()
+
+                    env.GIT_COMMIT_DATE = sh(
+                        label: 'Read Git commit date',
+                        returnStdout: true,
+                        script: '''#!/usr/bin/env bash
+set -Eeuo pipefail
+
+git show -s --format=%cI HEAD
+'''
+                    ).trim()
                 }
             }
         }
@@ -87,6 +97,7 @@ git rev-parse --short=12 HEAD
                 echo "Jenkins node: ${NODE_NAME}"
                 echo "Branch: ${BRANCH_NAME}"
                 echo "Git commit: ${FULL_GIT_COMMIT}"
+                echo "Git commit date: ${GIT_COMMIT_DATE}"
                 echo "Git repository: ${GIT_REMOTE_URL}"
                 echo "Local image: ${LOCAL_IMAGE_NAME}:${IMAGE_TAG}"
                 echo "Test container: ${CONTAINER_NAME}"
@@ -94,17 +105,13 @@ git rev-parse --short=12 HEAD
             }
         }
 
-        stage('Verify Docker') {
+        stage('Verify Tooling') {
             steps {
                 sh(
-                    label: 'Verify Docker environment',
+                    label: 'Verify Docker, Buildx, AWS CLI and jq',
                     script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
-echo "Jenkins node:"
-echo "${NODE_NAME}"
-
-echo
 echo "Build user:"
 whoami
 
@@ -117,16 +124,23 @@ echo "Build user groups:"
 id
 
 echo
-echo "Docker executable:"
+echo "Docker:"
 command -v docker
-
-echo
-echo "Docker client and server:"
 docker version
 
 echo
 echo "Docker Buildx:"
 docker buildx version
+
+echo
+echo "AWS CLI:"
+command -v aws
+aws --version
+
+echo
+echo "jq:"
+command -v jq
+jq --version
 
 echo
 echo "Docker daemon:"
@@ -160,7 +174,7 @@ ls -la samples/aspnetapp/aspnetapp
 
 echo
 echo "Dockerfile:"
-sed -n '1,200p' samples/aspnetapp/Dockerfile
+sed -n '1,220p' samples/aspnetapp/Dockerfile
 
 echo
 echo "Repository validation completed successfully."
@@ -169,18 +183,22 @@ echo "Repository validation completed successfully."
             }
         }
 
-        stage('Build Container Image') {
+        stage('Build Scannable Image') {
             steps {
                 sh(
-                    label: 'Build ASP.NET container image',
+                    label: 'Build single-platform image without attestations',
                     script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
-docker build \
+docker buildx build \
+  --load \
   --pull \
+  --platform linux/amd64 \
+  --provenance=false \
+  --sbom=false \
   --label "org.opencontainers.image.revision=${FULL_GIT_COMMIT}" \
   --label "org.opencontainers.image.source=${GIT_REMOTE_URL}" \
-  --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+  --label "org.opencontainers.image.created=${GIT_COMMIT_DATE}" \
   --tag "${LOCAL_IMAGE_NAME}:${IMAGE_TAG}" \
   samples/aspnetapp
 
@@ -203,18 +221,11 @@ set -Eeuo pipefail
 
 full_image_name="${LOCAL_IMAGE_NAME}:${IMAGE_TAG}"
 
-echo "Inspecting image:"
-echo "${full_image_name}"
-
-echo
-echo "Image ID:"
-
-docker image inspect \
-  --format '{{.Id}}' \
-  "${full_image_name}"
-
-echo
-echo "Configured runtime user:"
+image_id="$(
+  docker image inspect \
+    --format '{{.Id}}' \
+    "${full_image_name}"
+)"
 
 image_user="$(
   docker image inspect \
@@ -222,11 +233,53 @@ image_user="$(
     "${full_image_name}"
 )"
 
-echo "${image_user}"
+image_os="$(
+  docker image inspect \
+    --format '{{.Os}}' \
+    "${full_image_name}"
+)"
 
+image_arch="$(
+  docker image inspect \
+    --format '{{.Architecture}}' \
+    "${full_image_name}"
+)"
+
+image_size="$(
+  docker image inspect \
+    --format '{{.Size}}' \
+    "${full_image_name}"
+)"
+
+revision_label="$(
+  docker image inspect \
+    --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' \
+    "${full_image_name}"
+)"
+
+source_label="$(
+  docker image inspect \
+    --format '{{index .Config.Labels "org.opencontainers.image.source"}}' \
+    "${full_image_name}"
+)"
+
+echo "Image ID: ${image_id}"
+echo "Configured runtime user: ${image_user}"
+echo "OS: ${image_os}"
+echo "Architecture: ${image_arch}"
+echo "Image size: ${image_size} bytes"
+echo "Revision label: ${revision_label}"
+echo "Source label: ${source_label}"
+
+test -n "${image_id}"
 test -n "${image_user}"
 test "${image_user}" != "0"
 test "${image_user}" != "root"
+test "${image_os}" = "linux"
+test "${image_arch}" = "amd64"
+test "${image_size}" -gt 0
+test "${revision_label}" = "${FULL_GIT_COMMIT}"
+test "${source_label}" = "${GIT_REMOTE_URL}"
 
 echo
 echo "Configured exposed ports:"
@@ -236,28 +289,15 @@ docker image inspect \
   "${full_image_name}"
 
 echo
-echo "Image size:"
-
-image_size="$(
-  docker image inspect \
-    --format '{{.Size}}' \
-    "${full_image_name}"
-)"
-
-echo "${image_size} bytes"
-
-test "${image_size}" -gt 0
-
-echo
 echo "Image labels:"
 
 docker image inspect \
   --format '{{json .Config.Labels}}' \
   "${full_image_name}" |
-  jq .
+jq .
 
 echo
-echo "Image successfully uses a non-root runtime user."
+echo "Image inspection completed successfully."
 '''
                 )
             }
@@ -478,19 +518,18 @@ echo "PID limit: ${pid_limit}"
 
 test "${container_running}" = "true"
 test "${container_status}" = "running"
-
 test -n "${runtime_user}"
 test "${runtime_user}" != "root"
 test "${runtime_user}" != "0"
 
 echo "${no_new_privileges}" |
-  grep -q 'no-new-privileges'
+grep -q 'no-new-privileges'
 
 echo "${dropped_capabilities}" |
-  grep -q 'ALL'
+grep -q 'ALL'
 
 echo "${port_binding}" |
-  grep -q '"HostIp":"127.0.0.1"'
+grep -q '"HostIp":"127.0.0.1"'
 
 test "${memory_limit}" -gt 0
 test "${nano_cpus}" -gt 0
@@ -510,7 +549,6 @@ echo "Runtime security checks completed successfully."
                     script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
-echo "Container logs:"
 docker logs "${CONTAINER_NAME}"
 '''
                 )
@@ -559,7 +597,7 @@ aws --version
 aws sts get-caller-identity \
   --region "${AWS_REGION}" \
   --output json |
-  jq .
+jq .
 '''
                 )
             }
@@ -611,7 +649,7 @@ repository_json="$(
 )"
 
 echo "${repository_json}" |
-  jq .
+jq .
 
 repository_uri="$(
   echo "${repository_json}" |
@@ -635,14 +673,13 @@ test \
   "IMMUTABLE_WITH_EXCLUSION"
 
 echo "${repository_json}" |
-  jq -e '
-    any(
-      .repositories[0]
-      .imageTagMutabilityExclusionFilters[]?;
-      .filterType == "WILDCARD" and
-      .filter == "staging"
-    )
-  ' >/dev/null
+jq -e '
+  any(
+    .repositories[0].imageTagMutabilityExclusionFilters[]?;
+    .filterType == "WILDCARD" and
+    .filter == "staging"
+  )
+' >/dev/null
 
 echo
 echo "ECR repository configuration verified."
@@ -698,6 +735,7 @@ if [[ "${existing_digest}" == sha256:* ]]; then
   echo "${ECR_COMMIT_IMAGE}"
   echo "Existing digest: ${existing_digest}"
   echo "The immutable tag will not be overwritten."
+
   exit 0
 fi
 
@@ -705,8 +743,7 @@ docker tag \
   "${LOCAL_IMAGE_NAME}:${IMAGE_TAG}" \
   "${ECR_COMMIT_IMAGE}"
 
-docker push \
-  "${ECR_COMMIT_IMAGE}"
+docker push "${ECR_COMMIT_IMAGE}"
 
 echo
 echo "Immutable image pushed:"
@@ -729,12 +766,8 @@ echo "${ECR_COMMIT_IMAGE}"
                         script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
-image_digest=""
-
 for attempt in $(seq 1 15); do
-  echo \
-    "Digest lookup attempt ${attempt}/15" \
-    >&2
+  echo "Digest lookup attempt ${attempt}/15" >&2
 
   image_digest="$(
     aws ecr describe-images \
@@ -755,12 +788,60 @@ for attempt in $(seq 1 15); do
 done
 
 echo "Unable to resolve ECR image digest." >&2
+
 exit 1
 '''
                     ).trim()
                 }
 
                 echo "Published ECR digest: ${ECR_IMAGE_DIGEST}"
+            }
+        }
+
+        stage('Verify Scannable Manifest') {
+            when {
+                branch 'main'
+            }
+
+            steps {
+                script {
+                    env.ECR_MANIFEST_MEDIA_TYPE = sh(
+                        label: 'Read ECR manifest media type',
+                        returnStdout: true,
+                        script: '''#!/usr/bin/env bash
+set -Eeuo pipefail
+
+aws ecr describe-images \
+  --repository-name "${ECR_REPOSITORY}" \
+  --image-ids "imageTag=${IMAGE_TAG}" \
+  --region "${AWS_REGION}" \
+  --query 'imageDetails[0].imageManifestMediaType' \
+  --output text
+'''
+                    ).trim()
+
+                    def allowedTypes = [
+                        'application/vnd.oci.image.manifest.v1+json',
+                        'application/vnd.docker.distribution.manifest.v2+json'
+                    ]
+
+                    echo(
+                        "ECR manifest media type: " +
+                        "${env.ECR_MANIFEST_MEDIA_TYPE}"
+                    )
+
+                    if (
+                        !allowedTypes.contains(
+                            env.ECR_MANIFEST_MEDIA_TYPE
+                        )
+                    ) {
+                        error(
+                            "ECR image is not a single-image manifest. " +
+                            "Found ${env.ECR_MANIFEST_MEDIA_TYPE}. " +
+                            "ECR Basic Scanning cannot scan this image type."
+                        )
+                    }
+                }
             }
         }
 
@@ -771,39 +852,45 @@ exit 1
 
             steps {
                 sh(
-                    label: 'Verify immutable image metadata',
+                    label: 'Pull and verify immutable image metadata',
                     script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
-digest_image="$(
-  printf '%s/%s@%s' \
-    "${ECR_REGISTRY}" \
-    "${ECR_REPOSITORY}" \
-    "${ECR_IMAGE_DIGEST}"
-)"
+digest_image="${ECR_REGISTRY}/${ECR_REPOSITORY}@${ECR_IMAGE_DIGEST}"
 
 echo "Pulling immutable image:"
 echo "${digest_image}"
 
-docker pull \
-  "${digest_image}"
+docker pull "${digest_image}"
 
 remote_revision="$(
   docker image inspect \
-    --format \
-      '{{index .Config.Labels "org.opencontainers.image.revision"}}' \
+    --format '{{index .Config.Labels "org.opencontainers.image.revision"}}' \
     "${digest_image}"
 )"
 
 remote_source="$(
   docker image inspect \
-    --format \
-      '{{index .Config.Labels "org.opencontainers.image.source"}}' \
+    --format '{{index .Config.Labels "org.opencontainers.image.source"}}' \
+    "${digest_image}"
+)"
+
+remote_os="$(
+  docker image inspect \
+    --format '{{.Os}}' \
+    "${digest_image}"
+)"
+
+remote_arch="$(
+  docker image inspect \
+    --format '{{.Architecture}}' \
     "${digest_image}"
 )"
 
 echo "Remote revision: ${remote_revision}"
 echo "Remote source: ${remote_source}"
+echo "Remote OS: ${remote_os}"
+echo "Remote architecture: ${remote_arch}"
 
 test \
   "${remote_revision}" = \
@@ -812,6 +899,9 @@ test \
 test \
   "${remote_source}" = \
   "${GIT_REMOTE_URL}"
+
+test "${remote_os}" = "linux"
+test "${remote_arch}" = "amd64"
 
 echo
 echo "Immutable image metadata verified."
@@ -827,21 +917,46 @@ echo "Immutable image metadata verified."
 
             steps {
                 sh(
-                    label: 'Update staging from immutable digest',
+                    label: 'Retag immutable image as staging',
                     script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
-immutable_digest_reference="$(
-  printf '%s/%s@%s' \
-    "${ECR_REGISTRY}" \
-    "${ECR_REPOSITORY}" \
-    "${ECR_IMAGE_DIGEST}"
+manifest_file="${WORKSPACE}/ecr-image-manifest.json"
+put_result_file="${WORKSPACE}/ecr-staging-result.json"
+
+aws ecr batch-get-image \
+  --repository-name "${ECR_REPOSITORY}" \
+  --image-ids "imageDigest=${ECR_IMAGE_DIGEST}" \
+  --accepted-media-types \
+    application/vnd.oci.image.manifest.v1+json \
+    application/vnd.docker.distribution.manifest.v2+json \
+  --region "${AWS_REGION}" \
+  --query 'images[0].imageManifest' \
+  --output text \
+  >"${manifest_file}"
+
+test -s "${manifest_file}"
+
+manifest_media_type="$(
+  jq -r '.mediaType // empty' \
+    "${manifest_file}"
 )"
 
-docker buildx imagetools create \
-  --prefer-index=false \
-  --tag "${ECR_STAGING_IMAGE}" \
-  "${immutable_digest_reference}"
+echo "Manifest media type: ${manifest_media_type}"
+
+test \
+  "${manifest_media_type}" = \
+  "${ECR_MANIFEST_MEDIA_TYPE}"
+
+aws ecr put-image \
+  --repository-name "${ECR_REPOSITORY}" \
+  --image-tag staging \
+  --image-manifest "file://${manifest_file}" \
+  --region "${AWS_REGION}" \
+  --output json \
+  >"${put_result_file}"
+
+jq . "${put_result_file}"
 
 echo
 echo "Staging tag updated:"
@@ -858,11 +973,12 @@ echo "${ECR_STAGING_IMAGE}"
 
             steps {
                 sh(
-                    label: 'Verify staging and immutable digests',
+                    label: 'Verify staging digest and manifest type',
                     script: '''#!/usr/bin/env bash
 set -Eeuo pipefail
 
 staging_digest=""
+staging_media_type=""
 
 for attempt in $(seq 1 15); do
   echo "Staging lookup attempt ${attempt}/15"
@@ -884,8 +1000,19 @@ for attempt in $(seq 1 15); do
   sleep 2
 done
 
+staging_media_type="$(
+  aws ecr describe-images \
+    --repository-name "${ECR_REPOSITORY}" \
+    --image-ids imageTag=staging \
+    --region "${AWS_REGION}" \
+    --query 'imageDetails[0].imageManifestMediaType' \
+    --output text
+)"
+
 echo "Immutable digest: ${ECR_IMAGE_DIGEST}"
 echo "Staging digest: ${staging_digest}"
+echo "Immutable media type: ${ECR_MANIFEST_MEDIA_TYPE}"
+echo "Staging media type: ${staging_media_type}"
 
 [[ "${staging_digest}" == sha256:* ]]
 
@@ -893,8 +1020,100 @@ test \
   "${staging_digest}" = \
   "${ECR_IMAGE_DIGEST}"
 
+test \
+  "${staging_media_type}" = \
+  "${ECR_MANIFEST_MEDIA_TYPE}"
+
 echo
 echo "Amazon ECR publication verification succeeded."
+'''
+                )
+            }
+        }
+
+        stage('Report ECR Basic Scan') {
+            when {
+                branch 'main'
+            }
+
+            steps {
+                sh(
+                    label: 'Report asynchronous ECR scan status',
+                    script: '''#!/usr/bin/env bash
+set -Eeuo pipefail
+
+scan_json="${WORKSPACE}/ecr-scan.json"
+scan_error="${WORKSPACE}/ecr-scan-error.txt"
+scan_status=""
+
+for attempt in $(seq 1 18); do
+  echo "ECR scan lookup attempt ${attempt}/18"
+
+  if aws ecr describe-image-scan-findings \
+    --repository-name "${ECR_REPOSITORY}" \
+    --image-id "imageTag=${IMAGE_TAG}" \
+    --region "${AWS_REGION}" \
+    --output json \
+    >"${scan_json}" \
+    2>"${scan_error}"; then
+
+    scan_status="$(
+      jq -r \
+        '.imageScanStatus.status // "UNKNOWN"' \
+        "${scan_json}"
+    )"
+
+    echo "ECR scan status: ${scan_status}"
+
+    if [[ "${scan_status}" == "COMPLETE" ]]; then
+      jq '{
+        status: .imageScanStatus.status,
+        description: .imageScanStatus.description,
+        completedAt: .imageScanFindings.imageScanCompletedAt,
+        severityCounts: .imageScanFindings.findingSeverityCounts
+      }' "${scan_json}"
+
+      echo
+      echo "ECR Basic Scan completed."
+
+      exit 0
+    fi
+
+    case "${scan_status}" in
+      FAILED|UNSUPPORTED_IMAGE|LIMIT_EXCEEDED)
+        cat "${scan_json}"
+
+        echo \
+          "ECR Basic Scan ended with status ${scan_status}." \
+          >&2
+
+        exit 1
+        ;;
+    esac
+  else
+    if grep -q \
+      'UnsupportedImageTypeException' \
+      "${scan_error}"; then
+
+      cat "${scan_error}" >&2
+
+      echo \
+        "ECR rejected the image type for scanning." \
+        >&2
+
+      exit 1
+    fi
+
+    echo "Scan result is not available yet."
+  fi
+
+  sleep 10
+done
+
+echo
+echo "ECR scan is still pending or findings are not available yet."
+echo "Image publishing and manifest verification succeeded."
+echo "Review the scan later in the ECR Console."
 '''
                 )
             }
@@ -910,24 +1129,22 @@ set +e
 
 echo "Beginning Docker cleanup."
 
-if [[ -n "${CONTAINER_NAME:-}" ]]; then
-  if docker container inspect \
-    "${CONTAINER_NAME}" \
-    >/dev/null 2>&1; then
+if [[ -n "${CONTAINER_NAME:-}" ]] &&
+   docker container inspect \
+     "${CONTAINER_NAME}" \
+     >/dev/null 2>&1; then
 
-    echo
-    echo "Final container logs:"
+  echo
+  echo "Final container logs:"
 
-    docker logs \
-      "${CONTAINER_NAME}" || true
+  docker logs "${CONTAINER_NAME}" || true
 
-    echo
-    echo "Removing test container:"
+  echo
+  echo "Removing test container:"
 
-    docker rm \
-      --force \
-      "${CONTAINER_NAME}" || true
-  fi
+  docker rm \
+    --force \
+    "${CONTAINER_NAME}" || true
 fi
 
 images_to_remove=()
@@ -964,16 +1181,14 @@ for image in "${images_to_remove[@]}"; do
   echo "Removing local image reference:"
   echo "${image}"
 
-  docker image rm \
-    "${image}" || true
+  docker image rm "${image}" || true
 done
 
 if [[ -n "${ECR_REGISTRY:-}" ]]; then
   echo
   echo "Logging out from Amazon ECR:"
 
-  docker logout \
-    "${ECR_REGISTRY}" || true
+  docker logout "${ECR_REGISTRY}" || true
 fi
 
 echo
@@ -995,6 +1210,11 @@ echo "Docker cleanup completed."
                     echo(
                         "Published digest: " +
                         "${env.ECR_IMAGE_DIGEST}"
+                    )
+
+                    echo(
+                        "Manifest media type: " +
+                        "${env.ECR_MANIFEST_MEDIA_TYPE}"
                     )
                 } else {
                     echo(
