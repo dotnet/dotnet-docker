@@ -196,17 +196,8 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            // Chisel may omit dependent slice packages from dpkg status even though their files remain.
-            IEnumerable<string> inconsistentlyReportedPackages = imageData.OS switch
-            {
-                var os when os == OS.ResoluteChiseled => ["openssl-provider-legacy", "tzdata-legacy"],
-                var os when os == OS.NobleChiseled => ["tzdata-legacy"],
-                _ => []
-            };
-            IEnumerable<string> expectedPackages =
-                GetExpectedPackages(imageData, imageRepo).Except(inconsistentlyReportedPackages);
-            IEnumerable<string> actualPackages =
-                GetInstalledPackages(imageData, imageRepo, extraExcludePaths).Except(inconsistentlyReportedPackages);
+            IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
+            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
 
             string imageName = imageData.GetImage(imageRepo, DockerHelper, skipPull: true);
             ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, OutputHelper);
@@ -401,16 +392,10 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         /// <summary>
-        /// Syft detects additional binary packages on specific architectures
-        /// for resolute chiseled images: gcc-16 on amd64, openssl-provider-legacy on arm32.
+        /// Syft detects gcc-16 as an additional binary package on amd64 resolute chiseled images.
         /// </summary>
         private static IEnumerable<string> GetResoluteChiseledArchSpecificPackages(ProductImageData imageData) =>
-            imageData.Arch switch
-            {
-                Arch.Amd64 => ["gcc-16"],
-                Arch.Arm => ["openssl-provider-legacy"],
-                _ => []
-            };
+            imageData.Arch == Arch.Amd64 ? ["gcc-16"] : [];
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
@@ -423,13 +408,11 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "icu",
                         "libicu78",
-                        "tzdata",
-                        "tzdata-legacy"
+                        "tzdata"
                     },
                 { OS: var os } when os == OS.NobleChiseled => new[]
                     {
                         "libicu74",
-                        "tzdata-legacy",
                         "tzdata"
                     },
                 { OS: var os } when os == OS.JammyChiseled => new[]
