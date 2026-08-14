@@ -2,36 +2,31 @@
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
-> See [dotnet](https://mcr.microsoft.com/artifact/mar/dotnet/aspnet/about) for images with official releases of [.NET](https://github.com/dotnet/core).
+> See [dotnet](https://mcr.microsoft.com/catalog?search=dotnet) for images with official releases of [.NET](https://github.com/dotnet/core).
 
-This image contains the ASP.NET Core and .NET runtimes and libraries and is optimized for running ASP.NET Core apps in production.
+This image contains the Blazor gateway, a prebuilt reverse-proxy front end for hosting statically-published Blazor Web applications.
+
+The gateway image only contains the gateway runtime. It does not contain any application content. Consumers must layer or mount their published Blazor application's static web assets and endpoints manifest into the image.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 ## Featured Tags
 
-* `11.0-preview` (Preview)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:11.0-preview`
-* `10.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:10.0`
-* `9.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:9.0`
-* `8.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspnet:8.0`
+* `11.0-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/blazor-gateway:11.0-preview`
 
 ## Related Repositories
 
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/aspnet/about): ASP.NET Core Runtime
 * [dotnet/nightly/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/sdk/about): .NET SDK (Preview)
+* [dotnet/nightly/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime/about): .NET Runtime (Preview)
 * [dotnet/nightly/runtime-deps](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime-deps/about): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/monitor/about): .NET Monitor Tool (Preview)
 * [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
 * [dotnet/nightly/yarp](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
-* [dotnet/nightly/blazor-gateway](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/blazor-gateway/about): Blazor Gateway (Preview)
 * [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:
@@ -41,46 +36,47 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Usage
 
-The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/introduction) and [Host ASP.NET Core in Docker containers](https://learn.microsoft.com/aspnet/core/host-and-deploy/docker) to learn more.
+The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/introduction) to learn more.
 
-### Container sample: Run a web application
+You can run this image to launch a Blazor gateway instance in front of one or more statically-published Blazor Web applications.
 
-You can quickly run a container with a pre-built [.NET Docker image](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
+### Layering application content
 
-Type the following command to run a sample web application:
+This image only contains the gateway runtime at `/app`. It does not contain any Blazor application content. To serve a Blazor application, layer or mount the application's published static web assets and its transformed static-web-assets endpoints manifest on top of this image, then reference that manifest from the `ClientApps` configuration section described below.
 
-```console
-docker run -it --rm -p 8000:8080 --name aspnetcore_sample mcr.microsoft.com/dotnet/samples:aspnetapp
+### Configuration
+
+The gateway listens by default on port 8080. It is configured entirely through the standard ASP.NET Core configuration system (environment variables, mounted `appsettings.json` files, and so on). The following configuration section families are supported:
+
+* `ClientApps` &mdash; the set of Blazor applications the gateway serves, including each application's endpoints manifest location and path prefix.
+* `ReverseProxy` &mdash; standard [YARP](https://aka.ms/YarpDocumentation) reverse-proxy routes and clusters, used to proxy requests to backend APIs alongside the Blazor application(s).
+* Service discovery &mdash; the gateway uses [.NET service discovery](https://learn.microsoft.com/dotnet/core/extensions/service-discovery) to resolve destination addresses for reverse-proxy clusters.
+* `Gateway` &mdash; gateway-level settings.
+
+For example, the following command mounts a published Blazor application's `wwwroot` directory and endpoints manifest, then maps the application at the root path:
+
+```bash
+docker run --rm -p 8080:8080 \
+  -v $(pwd)/myapp/wwwroot:/app/wwwroot:ro \
+  -v $(pwd)/myapp/MyApp.staticwebassets.endpoints.json:/app/myapp.endpoints.json:ro \
+  -e ClientApps__myapp__EndpointsManifest=/app/myapp.endpoints.json \
+  -e ClientApps__myapp__PathPrefix= \
+  mcr.microsoft.com/dotnet/nightly/blazor-gateway:11.0-preview
 ```
 
-After the application starts, navigate to `http://localhost:8000` in your web browser. You can also view the ASP.NET Core site running in the container from another machine with a local IP address such as `http://192.168.1.18:8000`.
+### Health checks
 
-> Note: ASP.NET Core apps (in official images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7), starting with .NET 8. The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The container will not be accessible without this mapping. ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
+This image exposes `/alive` as its liveness endpoint. `/alive` is the endpoint to use for container/orchestrator health probes in Production; it is available in every environment. `/health`, which reports more detailed health information, is only available when `ASPNETCORE_ENVIRONMENT` is set to `Development` and should not be assumed to be present otherwise.
 
-See [Hosting ASP.NET Core Images with Docker over HTTPS](https://github.com/dotnet/dotnet-docker/blob/main/samples/host-aspnetcore-https.md) to use HTTPS with this image.
+### OpenTelemetry support
 
-## Image Variants
+This image supports OpenTelemetry. It can be configured by passing environment variables to the container:
 
-.NET container images have several variants that offer different combinations of flexibility and deployment size.
-The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md) contains a summary of the image variants and their use-cases.
+```bash
+docker run --rm -p 8080:8080 -e OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-endpoint.internal:4317 mcr.microsoft.com/dotnet/nightly/blazor-gateway:11.0-preview
+```
 
-### Distroless images
-
-.NET [distroless container images](https://github.com/dotnet/dotnet-docker/blob/main/documentation/distroless.md) contain only the minimal set of packages .NET needs, with everything else removed.
-Due to their limited set of packages, distroless containers have a minimized security attack surface, smaller deployment sizes, and faster start-up time compared to their non-distroless counterparts.
-They contain the following features:
-
-* Minimal set of packages required for .NET applications
-* Non-root user by default
-* No package manager
-* No shell
-
-.NET offers distroless images for [Azure Linux](https://github.com/dotnet/dotnet-docker/blob/main/documentation/azurelinux.md) and [Ubuntu (Chiseled)](https://github.com/dotnet/dotnet-docker/blob/main/documentation/ubuntu-chiseled.md).
-
-### ASP.NET Core Composite Images
-
-Starting from .NET 8, ASP.NET Core Composite images are optimized for performance using [ReadyToRun (R2R) compilation](https://learn.microsoft.com/dotnet/core/deploying/ready-to-run).
-For more information, see the [composite images section in the Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-variants.md#composite-net-80).
+See the [OTLP Exporter Configuration](https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/) for all supported environment variables.
 
 ## Support
 
