@@ -392,10 +392,15 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         /// <summary>
-        /// Syft detects gcc-16 as an additional binary package on amd64 resolute chiseled images.
+        /// Syft detects additional architecture-specific packages on Resolute chiseled images.
         /// </summary>
         private static IEnumerable<string> GetResoluteChiseledArchSpecificPackages(ProductImageData imageData) =>
-            imageData.Arch == Arch.Amd64 ? ["gcc-16"] : [];
+            imageData.Arch switch
+            {
+                Arch.Amd64 => ["gcc-16"],
+                Arch.Arm => ["openssl-provider-legacy"],
+                _ => [],
+            };
 
         private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
             {
@@ -408,12 +413,14 @@ namespace Microsoft.DotNet.Docker.Tests
                     {
                         "icu",
                         "libicu78",
-                        "tzdata"
+                        "tzdata",
+                        "tzdata-legacy"
                     },
                 { OS: var os } when os == OS.NobleChiseled => new[]
                     {
                         "libicu74",
-                        "tzdata"
+                        "tzdata",
+                        "tzdata-legacy"
                     },
                 { OS: var os } when os == OS.JammyChiseled => new[]
                     {
