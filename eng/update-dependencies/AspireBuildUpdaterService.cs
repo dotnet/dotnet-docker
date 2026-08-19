@@ -43,11 +43,8 @@ internal class AspireBuildUpdaterService(
 
         _logger.LogInformation("Found Aspire build version: {version}", dashboardAssets.First().Version);
 
-        IEnumerable<string?> dashboardChecksums = await dashboardAssets
-            .Select(asset => GetDashboardUrl(dashboardBaseUrl, asset))
-            .ToAsyncEnumerable()
-            .SelectAwait(async url => await GetChecksumAsync(url))
-            .ToListAsync();
+        var dashboardChecksums = await Task.WhenAll(dashboardAssets
+            .Select(asset => GetChecksumAsync(GetDashboardUrl(dashboardBaseUrl, asset))));
 
         var dashboardChecksumInfos = dashboardAssets.Zip(dashboardChecksums);
 

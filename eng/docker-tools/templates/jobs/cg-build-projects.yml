@@ -15,7 +15,7 @@ parameters:
 # See https://learn.microsoft.com/en-us/dotnet/core/tools/dotnet-install-script#options for possible Channel values
 - name: dotnetVersionChannel
   type: string
-  default: '9.0'
+  default: '10.0'
   displayName: .NET Version
 # Additional steps to run before building projects (e.g. custom SDK installation).
 - name: initSteps

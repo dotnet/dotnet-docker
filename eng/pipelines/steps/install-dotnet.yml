@@ -3,4 +3,4 @@ steps:
   displayName: Install .NET SDK
   inputs:
     packageType: "sdk"
-    version: "9.x"
+    version: "10.x"

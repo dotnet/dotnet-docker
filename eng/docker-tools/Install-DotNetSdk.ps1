@@ -20,7 +20,7 @@ param(
     [string]
     $InstallPath,
     [string]
-    $Channel = "9.0"
+    $Channel = "10.0"
 )
 
 Set-StrictMode -Version Latest
