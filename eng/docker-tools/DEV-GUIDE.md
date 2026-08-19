@@ -352,12 +352,10 @@ The system has built-in retry logic but requires manual intervention after repea
 
 Once you've fixed the underlying problem (Dockerfile change, test fix, etc.) and have a successful build:
 
-1. Navigate to the successful pipeline run in Azure DevOps
-2. Add the `autobuilder` label to that run
-3. This signals to the infrastructure that a successful build has occurred
-4. The system will resume automatic rebuilds for that image as needed
+1. Manually queue a build for the affected image paths
+2. After the build succeeds, the system will resume automatic rebuilds for that image as needed
 
-The `autobuilder` label is how the infrastructure tracks that the failure cycle has been broken and normal operations can resume.
+The infrastructure considers the three most recent pipeline runs, so any successful run breaks the failure cycle.
 
 ---
 
