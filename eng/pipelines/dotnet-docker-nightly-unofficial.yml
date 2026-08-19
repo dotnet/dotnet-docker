@@ -52,6 +52,7 @@ resources:
 extends:
   template: /eng/docker-tools/templates/1es.yml@self
   parameters:
+    networkIsolationPolicy: Permissive,CFSClean,CFSClean2,CFSClean3
     reposToExcludeFromScanning:
     - VersionsRepo
     stages:

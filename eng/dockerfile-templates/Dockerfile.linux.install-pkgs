@@ -11,6 +11,25 @@
     set isDnf to ARGS["pkg-mgr"] = "dnf" || (isAzureLinux && !isAzureLinux3 && ARGS["pkg-mgr"] != "tdnf") ^
     set isTdnf to ARGS["pkg-mgr"] = "tdnf" || (!isDnf && isAzureLinux) ^
     set isApk to ARGS["pkg-mgr"] = "apk" || isAlpine ^
+
+    _ Temporarily use Network Isolation-compatible mirrors during APT installs. Restore
+        the original source files and metadata before the RUN completes so published images
+        retain their distro-provided configuration. Ubuntu armhf and chiseled images are excluded. ^
+    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
+    set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
+    set aptFeedFrom to when(isUbuntu,
+        VARIABLES[cat("apt-mirror|ubuntu|", ARCH_SHORT, "|from")],
+        when(isDebian,
+            VARIABLES[cat("apt-mirror|debian|", ARCH_SHORT, "|from")],
+            "")) ^
+    set aptMirrorFrom to replace(aptFeedFrom, ".", "\.") ^
+    set aptMirrorTo to when(isUbuntu,
+        VARIABLES[cat("apt-mirror|ubuntu|", ARCH_SHORT, "|to")],
+        when(isDebian,
+            VARIABLES[cat("apt-mirror|debian|", ARCH_SHORT, "|to")],
+            "")) ^
+    set useAptMirror to len(aptMirrorFrom) > 0 ^
+
     set appendPkgSuffix(pkg, index) to:{{
         _ Don't apply a space and continuation character after the package text if it's a comment or
           the last of the Alpine packages ^
@@ -20,10 +39,16 @@
 if isDnf:dnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 elif isApk:apk add --upgrade --no-cache{{ARGS["pkg-mgr-opts"]}} \^
 elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
-else:apt-get update \
+else:{{if useAptMirror:__netiso_apt_srcs="$(find /etc/apt -type f \( -name '*.list' -o -name '*.sources' \))" \
+    && __netiso_backup_dir="$(mktemp -d)" \
+    && for f in $__netiso_apt_srcs; do cp -a --parents "$f" "$__netiso_backup_dir" || exit 1; done \
+    && for f in $__netiso_apt_srcs; do sed -E -i 's#([[:space:]/]){{aptMirrorFrom}}([[:space:]/-]|$)#\1{{aptMirrorTo}}\2#g' "$f" || exit 1; done \
+    && }}apt-get update \
     && apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
     for index, pkg in ARGS["pkgs"]:
-        {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{if !ARGS["no-clean"]:{{
+        {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{if useAptMirror:
+    && for f in $__netiso_apt_srcs; do cp -a "$__netiso_backup_dir$f" "$f" || exit 1; done \
+    && rm -rf "$__netiso_backup_dir" \}}{{if !ARGS["no-clean"]:{{
 if isTdnf:
     && tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
 elif isDnf:
