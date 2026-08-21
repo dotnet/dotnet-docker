@@ -68,6 +68,9 @@ namespace Dotnet.Docker
                 { "aspire-dashboard",               "$DOTNET_BASE_URL/aspire/$VERSION_DIR/aspire-dashboard-$OS-$ARCH.$ARCHIVE_EXT" },
                 { "aspnet-composite",               "$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-composite-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
                 { "aspnet",                         "$DOTNET_BASE_URL/aspnetcore/Runtime/$VERSION_DIR/aspnetcore-runtime-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
+                // The Blazor Gateway CLI tool is published as an architecture-neutral NuGet package, so
+                // its URL has no $OS/$ARCH segments and uses the NuGet CDN rather than the dotnet CDN.
+                { "blazor-gateway",                 "$DOTNET_BASE_URL/microsoft.aspnetcore.components.gateway.cli.$VERSION_FILE.nupkg" },
                 { "monitor-base",                   "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-base-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
                 { "monitor-ext-azureblobstorage",   "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-azureblobstorage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
                 { "monitor-ext-s3storage",          "$DOTNET_BASE_URL/diagnostics/monitor/$VERSION_DIR/dotnet-monitor-egress-s3storage-$VERSION_FILE-$OS-$ARCH.$ARCHIVE_EXT" },
@@ -137,7 +140,12 @@ namespace Dotnet.Docker
         {
             usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
 
-            string baseUrl = ManifestHelper.GetBaseUrls(_manifestVariables.Variables, _options).First();
+            // The Blazor Gateway CLI tool is published to the public NuGet CDN rather than the dotnet
+            // product build CDNs that ManifestHelper.GetBaseUrls resolves for. Resolve its base URL
+            // directly from the product-specific "blazor-gateway|<version>|base-url|<branch>" variable.
+            string baseUrl = _productName == "blazor-gateway"
+                ? GetBlazorGatewayBaseUrl()
+                : ManifestHelper.GetBaseUrls(_manifestVariables.Variables, _options).First();
             // Remove Aspire Dashboard case once https://github.com/microsoft/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
@@ -154,6 +162,20 @@ namespace Dotnet.Docker
                 .Replace("..", ".");
 
             return GetArtifactShaAsync(downloadUrl).Result;
+        }
+
+        /// <summary>
+        /// Resolves the base URL for the Blazor Gateway CLI tool package. Unlike the other products,
+        /// which are downloaded from a dotnet product build CDN, the Blazor Gateway CLI tool is
+        /// published directly to the public NuGet CDN. The "blazor-gateway|&lt;version&gt;|base-url|&lt;branch&gt;"
+        /// manifest variable is resolved directly instead of going through ManifestHelper.GetBaseUrls,
+        /// which would otherwise resolve to the generic "dotnet" product build CDN.
+        /// </summary>
+        private string GetBlazorGatewayBaseUrl()
+        {
+            string branch = ManifestHelper.ResolveVariableValue("branch", _manifestVariables.Variables);
+            string variableName = $"{_productName}|{_dockerfileVersion}|base-url|{branch}";
+            return ManifestHelper.ResolveVariableValue(variableName, _manifestVariables.Variables);
         }
 
         private static string GetOs(string[] variableParts)

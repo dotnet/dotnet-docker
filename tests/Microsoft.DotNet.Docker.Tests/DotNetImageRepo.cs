@@ -17,4 +17,5 @@ public enum DotNetImageRepo
     Monitor_Base     = 1 << 5,
     Aspire_Dashboard = 1 << 6,
     Yarp             = 1 << 7,
+    Blazor_Gateway   = 1 << 8,
 }

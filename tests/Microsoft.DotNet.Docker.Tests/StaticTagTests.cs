@@ -37,7 +37,8 @@ namespace Microsoft.DotNet.Docker.Tests
             "monitor",
             "monitor-base",
             "aspire-dashboard",
-            "yarp"
+            "yarp",
+            "blazor-gateway"
         ];
 
         private enum TestType

@@ -17,7 +17,8 @@
         ["dotnet/aspire-dashboard", "Aspire Dashboard"]
     ] ^
     set nightlyOnlyRepos to [
-        ["dotnet/yarp", "YARP (Yet Another Reverse Proxy)"]
+        ["dotnet/yarp", "YARP (Yet Another Reverse Proxy)"],
+        ["dotnet/blazor-gateway", "Blazor Gateway"]
     ] ^
     set productFamilyRepos to [
         ["dotnet", ".NET", 1]
