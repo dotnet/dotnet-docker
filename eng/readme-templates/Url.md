@@ -15,7 +15,13 @@
     set isFrameworkRepo to match(repoParts[1], "framework") ^
     set readmeFileName to cat(
         "README.",
-        when(isProductFamily, "", cat(join(slice(repoParts, when(isNightlyRepo || isFrameworkRepo, 2, 1)), "-"), ".")),
+        when(isProductFamily,
+            "",
+            cat(
+                when(repoParts[0] = "aspire",
+                    "aspire-dashboard",
+                    join(slice(repoParts, when(isNightlyRepo || isFrameworkRepo, 2, 1)), "-")),
+                ".")),
         "md")
 
 }}{{
@@ -35,5 +41,9 @@ when(readmeHost = "mar",
                 "/",
                 readmeFileName)),
         when(readmeHost = "dockerhub",
-            cat("https://hub.docker.com/r/microsoft/", join(repoParts, "-"), "/"),
+            when(repoParts[0] = "aspire",
+                when(isProductFamily,
+                    cat("https://mcr.microsoft.com/catalog?search=", repo),
+                    cat("https://mcr.microsoft.com/artifact/mar/", repo, "/about")),
+                cat("https://hub.docker.com/r/microsoft/", join(repoParts, "-"), "/")),
             cat("UNKNOWN HOST: ", readmeHost))))}}

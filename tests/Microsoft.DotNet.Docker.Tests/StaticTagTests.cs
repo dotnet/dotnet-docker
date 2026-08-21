@@ -36,7 +36,9 @@ namespace Microsoft.DotNet.Docker.Tests
         [
             "monitor",
             "monitor-base",
-            "aspire-dashboard",
+            // The Aspire Dashboard repo is published as "aspire/[nightly/]dashboard".
+            // "aspire" uniquely substring-matches its repo name.
+            "aspire",
             "yarp"
         ];
 

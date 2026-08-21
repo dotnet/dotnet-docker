@@ -10,7 +10,8 @@
     set isNightlyRepo to VARIABLES["branch"] = "nightly" ^
 
     set insertNightlyRepoName(repoName) to:{{
-        return token(repoName, "/", 0, "dotnet/nightly")
+        set repoNameParts to split(repoName, "/") ^
+        return cat(repoNameParts[0], "/nightly/", join(slice(repoNameParts, 1), "/"))
     }} ^
 
     set insertNightlyRepoDisplayName(displayName) to:{{

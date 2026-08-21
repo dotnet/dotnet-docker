@@ -1,8 +1,6 @@
 ## About
 
-> **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
->
-> See [dotnet](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about) for images with official releases of [.NET](https://github.com/dotnet/core).
+> **Important**: The aspire/nightly/dashboard image is a preview build of the Aspire Dashboard and is not signed. See [aspire/dashboard](https://mcr.microsoft.com/artifact/mar/aspire/dashboard/about) for stable releases.
 
 This image contains the Aspire Dashboard.
 
@@ -11,14 +9,13 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 ## Featured Tags
 
 * `13`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/aspire-dashboard:13`
+  * `docker pull mcr.microsoft.com/aspire/nightly/dashboard:13`
 
 ## Related Repositories
 
 .NET:
 
 * [dotnet](https://mcr.microsoft.com/catalog?search=dotnet): .NET
-* [dotnet/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about): Aspire Dashboard
 * [dotnet/nightly/sdk](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/sdk/about): .NET SDK (Preview)
 * [dotnet/nightly/aspnet](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspnet/about): ASP.NET Core Runtime (Preview)
 * [dotnet/nightly/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/runtime/about): .NET Runtime (Preview)
@@ -115,7 +112,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 ### Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
+* [Microsoft Support for Aspire](https://aspire.dev/support/)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
