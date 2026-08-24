@@ -125,7 +125,7 @@ docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app\ -w \app -e ASPNETCORE_HTTP_UR
 
 ## Using a launch profile to configure ASP.NET Core
 
-The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://docs.microsoft.com/aspnet/core/fundamentals/environments). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI.
+The examples above use environment variables to configure ASP.NET Core. You can instead [configure ASP.NET Core with a launchSettings.json file](https://learn.microsoft.com/aspnet/core/fundamentals/environments?view=aspnetcore-10.0). The [launchSettings.json file](aspnetapp/aspnetapp/Properties/launchSettings.json) in this app has been updated with a `container` profile that can be used instead of specifying environment variables with the docker CLI.
 
 The following JSON segment shows the `container` profile that was added to enable this workflow.
 
