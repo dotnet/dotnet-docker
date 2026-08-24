@@ -67,6 +67,14 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
+11.0.100-rc.1-resolute-amd64, 11.0-resolute-amd64, 11.0.100-rc.1-resolute, 11.0-resolute, 11.0.100-rc.1, 11.0 | [Dockerfile](src/sdk/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.1-resolute-aot-amd64, 11.0-resolute-aot-amd64, 11.0.100-rc.1-resolute-aot, 11.0-resolute-aot, 11.0.100-rc.1-aot, 11.0-aot | [Dockerfile](src/sdk/11.0/resolute-aot/amd64/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.1-alpine3.24-amd64, 11.0-alpine3.24-amd64, 11.0-alpine-amd64, 11.0.100-rc.1-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
+11.0.100-rc.1-alpine3.24-aot-amd64, 11.0-alpine3.24-aot-amd64, 11.0-alpine-aot-amd64, 11.0.100-rc.1-alpine3.24-aot, 11.0-alpine3.24-aot, 11.0-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
+11.0.100-rc.1-azurelinux3.0-amd64, 11.0-azurelinux3.0-amd64, 11.0.100-rc.1-azurelinux3.0, 11.0-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.1-azurelinux3.0-aot-amd64, 11.0-azurelinux3.0-aot-amd64, 11.0.100-rc.1-azurelinux3.0-aot, 11.0-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.1-azurelinux4.0-amd64, 11.0-azurelinux4.0-amd64, 11.0.100-rc.1-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+11.0.100-rc.1-azurelinux4.0-aot-amd64, 11.0-azurelinux4.0-aot-amd64, 11.0.100-rc.1-azurelinux4.0-aot, 11.0-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
 10.0.400-noble-amd64, 10.0-noble-amd64, 10.0.400-noble, 10.0-noble, 10.0.400, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 10.0.400-noble-aot-amd64, 10.0-noble-aot-amd64, 10.0.400-noble-aot, 10.0-noble-aot, 10.0.400-aot, 10.0-aot | [Dockerfile](src/sdk/10.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
 10.0.400-resolute-amd64, 10.0-resolute-amd64, 10.0.400-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
@@ -89,21 +97,18 @@ Tags | Dockerfile | OS Version
 8.0.424-jammy-amd64, 8.0-jammy-amd64, 8.0.424-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
 8.0.424-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.424-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 
-#### .NET 11 Preview Tags
-
-Tags | Dockerfile | OS Version
----- | ---------- | ----------
-11.0.100-preview.7-resolute-amd64, 11.0-preview-resolute-amd64, 11.0.100-preview.7-resolute, 11.0-preview-resolute, 11.0.100-preview.7, 11.0-preview | [Dockerfile](src/sdk/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
-11.0.100-preview.7-resolute-aot-amd64, 11.0-preview-resolute-aot-amd64, 11.0.100-preview.7-resolute-aot, 11.0-preview-resolute-aot, 11.0.100-preview.7-aot, 11.0-preview-aot | [Dockerfile](src/sdk/11.0/resolute-aot/amd64/Dockerfile) | Ubuntu 26.04
-11.0.100-preview.7-alpine3.24-amd64, 11.0-preview-alpine3.24-amd64, 11.0-preview-alpine-amd64, 11.0.100-preview.7-alpine3.24, 11.0-preview-alpine3.24, 11.0-preview-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
-11.0.100-preview.7-alpine3.24-aot-amd64, 11.0-preview-alpine3.24-aot-amd64, 11.0-preview-alpine-aot-amd64, 11.0.100-preview.7-alpine3.24-aot, 11.0-preview-alpine3.24-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
-11.0.100-preview.7-azurelinux4.0-amd64, 11.0-preview-azurelinux4.0-amd64, 11.0.100-preview.7-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
-11.0.100-preview.7-azurelinux4.0-aot-amd64, 11.0-preview-azurelinux4.0-aot-amd64, 11.0.100-preview.7-azurelinux4.0-aot, 11.0-preview-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
-
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
+11.0.100-rc.1-resolute-arm64v8, 11.0-resolute-arm64v8, 11.0.100-rc.1-resolute, 11.0-resolute, 11.0.100-rc.1, 11.0 | [Dockerfile](src/sdk/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.1-resolute-aot-arm64v8, 11.0-resolute-aot-arm64v8, 11.0.100-rc.1-resolute-aot, 11.0-resolute-aot, 11.0.100-rc.1-aot, 11.0-aot | [Dockerfile](src/sdk/11.0/resolute-aot/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.1-alpine3.24-arm64v8, 11.0-alpine3.24-arm64v8, 11.0-alpine-arm64v8, 11.0.100-rc.1-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
+11.0.100-rc.1-alpine3.24-aot-arm64v8, 11.0-alpine3.24-aot-arm64v8, 11.0-alpine-aot-arm64v8, 11.0.100-rc.1-alpine3.24-aot, 11.0-alpine3.24-aot, 11.0-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
+11.0.100-rc.1-azurelinux3.0-arm64v8, 11.0-azurelinux3.0-arm64v8, 11.0.100-rc.1-azurelinux3.0, 11.0-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.1-azurelinux3.0-aot-arm64v8, 11.0-azurelinux3.0-aot-arm64v8, 11.0.100-rc.1-azurelinux3.0-aot, 11.0-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.1-azurelinux4.0-arm64v8, 11.0-azurelinux4.0-arm64v8, 11.0.100-rc.1-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.100-rc.1-azurelinux4.0-aot-arm64v8, 11.0-azurelinux4.0-aot-arm64v8, 11.0.100-rc.1-azurelinux4.0-aot, 11.0-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
 10.0.400-noble-arm64v8, 10.0-noble-arm64v8, 10.0.400-noble, 10.0-noble, 10.0.400, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.400-noble-aot-arm64v8, 10.0-noble-aot-arm64v8, 10.0.400-noble-aot, 10.0-noble-aot, 10.0.400-aot, 10.0-aot | [Dockerfile](src/sdk/10.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.400-resolute-arm64v8, 10.0-resolute-arm64v8, 10.0.400-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
@@ -126,21 +131,12 @@ Tags | Dockerfile | OS Version
 8.0.424-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.424-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
 8.0.424-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.424-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 
-#### .NET 11 Preview Tags
-
-Tags | Dockerfile | OS Version
----- | ---------- | ----------
-11.0.100-preview.7-resolute-arm64v8, 11.0-preview-resolute-arm64v8, 11.0.100-preview.7-resolute, 11.0-preview-resolute, 11.0.100-preview.7, 11.0-preview | [Dockerfile](src/sdk/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.100-preview.7-resolute-aot-arm64v8, 11.0-preview-resolute-aot-arm64v8, 11.0.100-preview.7-resolute-aot, 11.0-preview-resolute-aot, 11.0.100-preview.7-aot, 11.0-preview-aot | [Dockerfile](src/sdk/11.0/resolute-aot/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.100-preview.7-alpine3.24-arm64v8, 11.0-preview-alpine3.24-arm64v8, 11.0-preview-alpine-arm64v8, 11.0.100-preview.7-alpine3.24, 11.0-preview-alpine3.24, 11.0-preview-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
-11.0.100-preview.7-alpine3.24-aot-arm64v8, 11.0-preview-alpine3.24-aot-arm64v8, 11.0-preview-alpine-aot-arm64v8, 11.0.100-preview.7-alpine3.24-aot, 11.0-preview-alpine3.24-aot, 11.0-preview-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
-11.0.100-preview.7-azurelinux4.0-arm64v8, 11.0-preview-azurelinux4.0-arm64v8, 11.0.100-preview.7-azurelinux4.0, 11.0-preview-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
-11.0.100-preview.7-azurelinux4.0-aot-arm64v8, 11.0-preview-azurelinux4.0-aot-arm64v8, 11.0.100-preview.7-azurelinux4.0-aot, 11.0-preview-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
-
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
+11.0.100-rc.1-resolute-arm32v7, 11.0-resolute-arm32v7, 11.0.100-rc.1-resolute, 11.0-resolute, 11.0.100-rc.1, 11.0 | [Dockerfile](src/sdk/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.1-alpine3.24-arm32v7, 11.0-alpine3.24-arm32v7, 11.0-alpine-arm32v7, 11.0.100-rc.1-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
 10.0.400-noble-arm32v7, 10.0-noble-arm32v7, 10.0.400-noble, 10.0-noble, 10.0.400, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.400-resolute-arm32v7, 10.0-resolute-arm32v7, 10.0.400-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
 10.0.400-alpine3.23-arm32v7, 10.0-alpine3.23-arm32v7, 10.0.400-alpine3.23, 10.0-alpine3.23 | [Dockerfile](src/sdk/10.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
@@ -154,17 +150,12 @@ Tags | Dockerfile | OS Version
 8.0.424-alpine3.24-arm32v7, 8.0-alpine3.24-arm32v7, 8.0-alpine-arm32v7, 8.0.424-alpine3.24, 8.0-alpine3.24, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
 8.0.424-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.424-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
-#### .NET 11 Preview Tags
-
-Tags | Dockerfile | OS Version
----- | ---------- | ----------
-11.0.100-preview.7-resolute-arm32v7, 11.0-preview-resolute-arm32v7, 11.0.100-preview.7-resolute, 11.0-preview-resolute, 11.0.100-preview.7, 11.0-preview | [Dockerfile](src/sdk/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
-11.0.100-preview.7-alpine3.24-arm32v7, 11.0-preview-alpine3.24-arm32v7, 11.0-preview-alpine-arm32v7, 11.0.100-preview.7-alpine3.24, 11.0-preview-alpine3.24, 11.0-preview-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
-
 ### Windows amd64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
+11.0.100-rc.1-nanoserver-ltsc2025, 11.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/11.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+11.0.100-rc.1-windowsservercore-ltsc2025, 11.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/11.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 10.0.400-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
 10.0.400-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 10.0.400-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
@@ -181,13 +172,6 @@ Tags | Dockerfile | OS Version
 8.0.424-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
 8.0.424-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/sdk/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
 8.0.424-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
-
-#### .NET 11 Preview Tags
-
-Tags | Dockerfile | OS Version
----- | ---------- | ----------
-11.0.100-preview.7-nanoserver-ltsc2025, 11.0-preview-nanoserver-ltsc2025 | [Dockerfile](src/sdk/11.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-11.0.100-preview.7-windowsservercore-ltsc2025, 11.0-preview-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/11.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 
 <!--End of generated tags-->
 

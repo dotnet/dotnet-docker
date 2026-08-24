@@ -24,8 +24,8 @@ elif match(REPO, "aspire-dashboard"):* `13`
   * `docker pull {{FULL_REPO}}:13`^
 elif match(REPO, "yarp"):* `2.3-preview`
   * `docker pull {{FULL_REPO}}:2.3-preview`^
-else:{{if VARIABLES["branch"] = "nightly":* `11.0-preview` (Preview)
-  * `docker pull {{FULL_REPO}}:11.0-preview`
+else:{{if VARIABLES["branch"] = "nightly":* `11.0` (Release Candidate)
+  * `docker pull {{FULL_REPO}}:11.0`
 }}* `10.0` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:10.0`
 * `9.0` (Standard Support)
