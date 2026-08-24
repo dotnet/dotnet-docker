@@ -24,13 +24,13 @@ jobs:
       - name: Check markdown links
         uses: becheran/mlc@7ec24825cefe0c9c8c6bac48430e1f69e3ec356e # v1.2.0
         with:
-          # The locale-neutral bounty URL redirects to the visitor's localized Microsoft page.
+          # Locale-neutral Microsoft URLs redirect to the visitor's localized page. The bounty URL also rejects mlc intermittently.
           args: >-
             .
             --markup-types md
             --gitignore
             --root-dir .
             --ignore-path eng/announcement-templates,eng/readme-templates
-            --ignore-links https://github.com/microsoft/mcr*,https://github.com/dotnet/release*,https://aka.ms/
-            --do-not-warn-for-redirect-to https://www.microsoft.com/*/msrc/bounty-dot-net-core
+            --ignore-links https://github.com/microsoft/mcr*,https://github.com/dotnet/release*,https://aka.ms/,https://www.microsoft.com/msrc/bounty-dot-net-core
+            --do-not-warn-for-redirect-to https://www.microsoft.com/??-??/*
             --throttle 250
