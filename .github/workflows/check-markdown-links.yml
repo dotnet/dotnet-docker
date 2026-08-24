@@ -1,27 +1,36 @@
 name: 'Check Markdown Links'
 
-# Re-enable when https://github.com/dotnet/dotnet-docker/issues/7176 is resolved.
-# on:
-#   pull_request:
-#     paths:
-#       - "**/*.md"
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - ".github/workflows/check-markdown-links.yml"
 
 permissions:
-  pull-requests: read
+  contents: read
 
 jobs:
   check-markdown-links:
-    # https://github.com/UmbrellaDocs/action-linkspector/issues/32
-    # Upgrade to `ubuntu-latest` when resolved
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # mlc treats GitHub alert markers as unresolved Markdown references, so remove them from the temporary checkout.
+      - name: Remove GitHub alert markers
+        run: find . -name '*.md' -exec sed -i -E 's/> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]//g' {} +
+
       - name: Check markdown links
-        uses: umbrelladocs/action-linkspector@v1
+        uses: becheran/mlc@7ec24825cefe0c9c8c6bac48430e1f69e3ec356e # v1.2.0
         with:
-          config_file: .github/linters/.linkspector.yml
-          fail_on_error: true
-          filter_mode: nofilter
+          # The locale-neutral bounty URL redirects to the visitor's localized Microsoft page.
+          args: >-
+            .
+            --markup-types md
+            --gitignore
+            --root-dir .
+            --ignore-path eng/announcement-templates,eng/readme-templates
+            --ignore-links https://github.com/microsoft/mcr*,https://github.com/dotnet/release*,https://aka.ms/
+            --do-not-warn-for-redirect-to https://www.microsoft.com/*/msrc/bounty-dot-net-core
+            --throttle 250
