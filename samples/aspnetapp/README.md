@@ -49,7 +49,7 @@ d021ffa2e15f   aspnetapp   "./aspnetapp"   2 minutes ago   Up 2 minutes   0.0.0.
 
 ## Change port
 
-ASP.NET Core apps (in official .NET images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7). The [`-p` argument](https://docs.docker.com/engine/reference/commandline/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The web server hosted by the container will not be accessible without this mapping.
+ASP.NET Core apps (in official .NET images) listen to [port 8080 by default](https://github.com/dotnet/dotnet-docker/blob/6da64f31944bb16ecde5495b6a53fc170fbe100d/src/runtime-deps/8.0/bookworm-slim/amd64/Dockerfile#L7). The [`-p` argument](https://docs.docker.com/reference/cli/docker/container/run/#publish) in these examples maps host port `8000` to container port `8080` (`host:container` mapping). The web server hosted by the container will not be accessible without this mapping.
 
 ASP.NET Core can be [configured to listen on a different or additional port](https://learn.microsoft.com/aspnet/core/fundamentals/servers/kestrel/endpoints).
 For example, setting either of the following evnironment variables will change the container port to `80`:
@@ -165,7 +165,7 @@ Sample Dockerfiles are provided for:
 
 ## Supported Windows versions
 
-The .NET Team publishes images for [multiple Windows versions](../../documentation/supported-platforms.md). You must have [Windows containers enabled](https://docs.docker.com/docker-for-windows/#switch-between-windows-and-linux-containers) to use these images.
+The .NET Team publishes images for [multiple Windows versions](../../documentation/supported-platforms.md). You must have [Windows containers enabled](https://docs.docker.com/desktop/setup/install/windows-install/#windows-containers) to use these images.
 
 Samples are provided for
 

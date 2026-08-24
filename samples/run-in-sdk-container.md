@@ -10,7 +10,7 @@ Alternatively, you can use `dotnet watch run`. This command reruns the applicati
 
 The instructions assume that you have cloned the [repository](https://github.com/dotnet/dotnet-docker) locally.
 
-You may need to enable [shared drives (Windows)](https://docs.docker.com/docker-for-windows/#shared-drives) or [file sharing (macOS)](https://docs.docker.com/docker-for-mac/#file-sharing) first.
+You may need to enable [file sharing](https://docs.docker.com/desktop/settings-and-maintenance/settings/#file-sharing) first.
 
 Container scenarios that use volume mounting can produce conflicts between the `bin` and `obj` directories in local and container environments.  To avoid that, you need to use a different set of `obj` and `bin` folders for your container environment. The easiest way to do that is to copy a custom [Directory.Build.props](Directory.Build.props) into the directory you are using (like the `dotnetapp` directory in the following example), either via copying from this repo or downloading with the following command:
 
@@ -25,7 +25,7 @@ curl -o Directory.Build.props https://raw.githubusercontent.com/dotnet/dotnet-do
 
 The following example demonstrates using `dotnet run` with a console app in a .NET SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
-The instructions assume you are in the `samples/dotnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax).
+The instructions assume you are in the `samples/dotnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/storage/volumes/) `-v` syntax).
 
 ```console
 % docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
@@ -79,7 +79,7 @@ docker run --rm -it -v ${pwd}:c:\app\ -w \app mcr.microsoft.com/dotnet/sdk:8.0 d
 
 The following example demonstrates using `dotnet run` with an ASP.NET Core app in a .NET SDK container. This initial example is demonstrated on macOS. Instructions for all OSes follow.
 
-The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/admin/volumes/volumes/) `-v` syntax used).
+The instructions assume you are in the `samples/aspnetapp/aspnetapp` directory (due to the [volume mounting](https://docs.docker.com/engine/storage/volumes/) `-v` syntax used).
 
 ```console
 % docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --no-launch-profile

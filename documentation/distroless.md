@@ -84,7 +84,7 @@ ENTRYPOINT dotnet myapp.dll
 CMD dotnet myapp.dll -- args
 ```
 
-Please see Docker's [Dockerfile documentation](https://docs.docker.com/engine/reference/builder/#run) for more info on instruction formatting.
+Please see Docker's [Dockerfile documentation](https://docs.docker.com/reference/dockerfile/#run) for more info on instruction formatting.
 
 If you need to run any shell commands or other utilities at build time, you can do so in the build stage of the multi-stage Dockerfile and copy the results to the final stage.
 For example, you could download and extract an archive so that the files will be available in your container.

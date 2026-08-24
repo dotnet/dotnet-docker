@@ -45,7 +45,7 @@ docker tag dotnetapp richlander.azurecr.io/dotnetapp
 
 ## Login to ACR
 
-You need to [login to ACR](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-portal) with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to push images. ACR registries are private, so `pull`, `push`, and any other registry operation requires login.
+You need to [login to ACR](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-portal) with [`docker login`](https://docs.docker.com/reference/cli/docker/login/) to push images. ACR registries are private, so `pull`, `push`, and any other registry operation requires login.
 
 To interfact with your credentials, you need to first request to make admin calls to your account with the following command:
 
