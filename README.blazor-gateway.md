@@ -1,4 +1,4 @@
-# YARP (Yet Another Reverse Proxy)
+# Blazor Gateway
 
 > **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
@@ -6,12 +6,14 @@
 
 ## Featured Tags
 
-* `2.3-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:2.3-preview`
+* `11.0-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/blazor-gateway:11.0-preview`
 
 ## About
 
-This image contains an implementation of YARP, a reverse proxy framework in .NET.
+This image contains the Blazor gateway, a prebuilt reverse-proxy front end for hosting statically-published Blazor Web applications.
+
+The gateway image only contains the gateway runtime. It does not contain any application content. Consumers must layer or mount their published Blazor application's static web assets and endpoints manifest into the image.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
@@ -19,73 +21,45 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/introduction) to learn more.
 
-You can run this image to launch a YARP instance.
+You can run this image to launch a Blazor gateway instance in front of one or more statically-published Blazor Web applications.
+
+### Layering application content
+
+This image only contains the gateway runtime at `/app`. It does not contain any Blazor application content. To serve a Blazor application, layer or mount the application's published static web assets and its transformed static-web-assets endpoints manifest on top of this image, then reference that manifest from the `ClientApps` configuration section described below.
 
 ### Configuration
 
-YARP expects the config file to be in `/etc/yarp.config`, and listens by default on port 5000.
+The gateway listens by default on port 8080. It is configured entirely through the standard ASP.NET Core configuration system (environment variables, mounted `appsettings.json` files, and so on). The following configuration section families are supported:
 
-Example of configuration:
+* `ClientApps` &mdash; the set of Blazor applications the gateway serves, including each application's endpoints manifest location and path prefix.
+* `ReverseProxy` &mdash; standard [YARP](https://aka.ms/YarpDocumentation) reverse-proxy routes and clusters, used to proxy requests to backend APIs alongside the Blazor application(s).
+* Service discovery &mdash; the gateway uses [.NET service discovery](https://learn.microsoft.com/dotnet/core/extensions/service-discovery) to resolve destination addresses for reverse-proxy clusters.
+* `Gateway` &mdash; gateway-level settings.
 
-```json
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft": "Warning",
-      "Microsoft.Hosting.Lifetime": "Information"
-    }
-  },
-  "AllowedHosts": "*",
-  "ReverseProxy": {
-    "Routes": {
-      "route1": {
-        "ClusterId": "cluster1",
-        "Match": {
-          "Path": "/aspnetapp/{**catch-all}"
-        },
-        "Transforms": [
-            { "PathRemovePrefix": "/aspnetapp" }
-        ]
-      }
-    },
-    "Clusters": {
-      "cluster1": {
-        "Destinations": {
-          "destination1": {
-            "Address": "http://aspnetapp1:8080"
-          }
-        }
-      }
-    }
-  }
-}
-```
-
-It can then be used with the following command (where `my-config.config` is a file containing this configuration):
+For example, the following command mounts a published Blazor application's `wwwroot` directory and endpoints manifest, then maps the application at the root path:
 
 ```bash
-docker run --rm --name myaspnetapp -d -t  mcr.microsoft.com/dotnet/samples:aspnetapp 
-docker run --rm -v $(pwd)/my-config.config:/etc/yarp.config -p 5000:5000 --link myaspnetapp:aspnetapp1 mcr.microsoft.com/dotnet/yarp:latest
+docker run --rm -p 8080:8080 \
+  -v $(pwd)/myapp/wwwroot:/app/wwwroot:ro \
+  -v $(pwd)/myapp/MyApp.staticwebassets.endpoints.json:/app/myapp.endpoints.json:ro \
+  -e ClientApps__myapp__EndpointsManifest=/app/myapp.endpoints.json \
+  -e ClientApps__myapp__PathPrefix= \
+  mcr.microsoft.com/dotnet/nightly/blazor-gateway:11.0-preview
 ```
 
-This example will proxy every requests from `http://localhost:5000/aspnetapp` to the `mcr.microsoft.com/dotnet/samples:aspnetapp` container deployed.
+### Health checks
 
-The [YARP GitHub repository](https://github.com/dotnet/yarp/tree/main/samples/) contains more configuration samples.
-
-For more details, see the [documentation](https://aka.ms/YarpDocumentation) for how to configure the image and documentation for the reverse proxy configuration.
+This image exposes `/alive` as its liveness endpoint. `/alive` is the endpoint to use for container/orchestrator health probes in Production; it is available in every environment. `/health`, which reports more detailed health information, is only available when `ASPNETCORE_ENVIRONMENT` is set to `Development` and should not be assumed to be present otherwise.
 
 ### OpenTelemetry support
 
 This image supports OpenTelemetry. It can be configured by passing environment variables to the container:
 
 ```bash
-docker run --rm -v $(pwd)/my-config.config:/etc/yarp.config -p 5000:5000 -e OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-endpoint.internal:4317 mcr.microsoft.com/dotnet/yarp:latest
+docker run --rm -p 8080:8080 -e OTEL_EXPORTER_OTLP_ENDPOINT=https://otlp-endpoint.internal:4317 mcr.microsoft.com/dotnet/nightly/blazor-gateway:11.0-preview
 ```
 
 See the [OTLP Exporter Configuration](https://opentelemetry.io/docs/languages/sdk-configuration/otlp-exporter/) for all supported environment variables.
-
-You can skip HTTPS validation for the OTLP endpoint only by passing the environment variable `YARP_UNSAFE_OLTP_CERT_ACCEPT_ANY_SERVER_CERTIFICATE`.
 
 ## Related Repositories
 
@@ -98,7 +72,7 @@ You can skip HTTPS validation for the OTLP endpoint only by passing the environm
 * [dotnet/nightly/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/nightly/README.runtime-deps.md): .NET Runtime Dependencies (Preview)
 * [dotnet/nightly/monitor](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor.md): .NET Monitor Tool (Preview)
 * [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): Aspire Dashboard (Preview)
-* [dotnet/nightly/blazor-gateway](https://github.com/dotnet/dotnet-docker/blob/nightly/README.blazor-gateway.md): Blazor Gateway (Preview)
+* [dotnet/nightly/yarp](https://github.com/dotnet/dotnet-docker/blob/nightly/README.yarp.md): YARP (Yet Another Reverse Proxy) (Preview)
 * [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
@@ -112,23 +86,22 @@ You can skip HTTPS validation for the OTLP endpoint only by passing the environm
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-2.3.0-preview.5, 2.3-preview, 2-preview, latest | [Dockerfile](src/yarp/2.3/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.7, 11.0-preview, 11-preview, latest | [Dockerfile](src/blazor-gateway/11.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-2.3.0-preview.5, 2.3-preview, 2-preview, latest | [Dockerfile](src/yarp/2.3/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.0-preview.7, 11.0-preview, 11-preview, latest | [Dockerfile](src/blazor-gateway/11.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 <!--End of generated tags-->
 
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/yarp/tags/list) for all supported and unsupported tags.*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/nightly/blazor-gateway/tags/list) for all supported and unsupported tags.*
 
 ## Support
 
 ### Lifecycle
 
-* [Microsoft Support for YARP](https://github.com/dotnet/yarp/blob/main/docs/roadmap.md)
 * [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)

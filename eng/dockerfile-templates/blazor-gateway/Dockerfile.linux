@@ -1,0 +1,63 @@
+{{
+    set gatewayVersionParts to split(PRODUCT_VERSION, ".") ^
+    set gatewayMajorMinor to cat(gatewayVersionParts[0], ".", gatewayVersionParts[1]) ^
+
+    set aspnetBaseTag to
+        cat("$REPO:", VARIABLES[cat("dotnet|", gatewayMajorMinor, "|fixed-tag")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+    set installerImageTag to cat(VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")], "/base/core:", OS_VERSION_NUMBER) ^
+
+    set baseUrl to VARIABLES[cat("blazor-gateway|", gatewayMajorMinor, "|base-url|", VARIABLES["branch"])] ^
+
+    set buildVersion to VARIABLES[cat("blazor-gateway|", gatewayMajorMinor, "|build-version")] ^
+    set gatewayVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
+    set gatewayVersion to VARIABLES[cat("blazor-gateway|", gatewayMajorMinor, "|", gatewayVersionVariable)] ^
+
+    _ The CLI package is architecture-neutral and only ships a single "any" tools folder for
+      its target framework moniker. Only that folder's contents are needed at runtime. ^
+    set tfm to cat("net", gatewayMajorMinor) ^
+    set toolsPath to cat("tools/", tfm, "/any") ^
+    set stagingDir to "/tmp/blazor-gateway" ^
+    set outFile to "blazor_gateway.nupkg" ^
+    set appDir to "/app" ^
+    set downloadUrl to cat(baseUrl, "/microsoft.aspnetcore.components.gateway.cli.$gateway_version.nupkg") ^
+    set sha to VARIABLES[cat("blazor-gateway|", gatewayMajorMinor, "|sha")]
+
+}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
+
+# Installer image
+FROM {{installerImageTag}} AS installer
+
+{{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
+
+# Retrieve the Blazor Gateway CLI tool package. This package is architecture-neutral, so the
+# same package and checksum are used to build every architecture of this image.
+RUN gateway_version={{gatewayVersion}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
+        "url": downloadUrl,
+        "out-file": outFile
+    ]]], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": outFile,
+        "sha-function": "512",
+        "sha": sha,
+        "sha-var-name": "blazor_gateway_sha512"
+    ], "    ")}} \
+    && mkdir --parents {{stagingDir}} {{appDir}} \
+    && unzip {{outFile}} "{{toolsPath}}/*" "THIRD-PARTY-NOTICES.txt" -d {{stagingDir}} \
+    && cp --recursive {{stagingDir}}/{{toolsPath}}/. {{appDir}} \
+    && cp {{stagingDir}}/THIRD-PARTY-NOTICES.txt {{appDir}} \
+    && rm --recursive --force \
+        {{outFile}} \
+        {{stagingDir}} \
+        {{appDir}}/blazor-gateway.exe \
+        {{appDir}}/DotnetToolSettings.xml \
+        {{appDir}}/web.config
+
+
+# Blazor Gateway image
+FROM {{aspnetBaseTag}}
+
+WORKDIR {{appDir}}
+COPY --from=installer {{appDir}} .
+
+ENTRYPOINT [ "dotnet", "{{appDir}}/blazor-gateway.dll" ]

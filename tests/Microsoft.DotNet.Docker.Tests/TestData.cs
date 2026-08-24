@@ -575,6 +575,26 @@ namespace Microsoft.DotNet.Docker.Tests
             },
         ];
 
+        private static readonly ProductImageData[] s_BlazorGatewayTestData =
+        [
+            new() {
+                Version = V11_0,
+                OS = OS.AzureLinux30Distroless,
+                OSTag = "",
+                OSDir = OS.AzureLinuxDistroless,
+                Arch = Arch.Amd64,
+                SupportedImageRepos = DotNetImageRepo.Blazor_Gateway,
+            },
+            new() {
+                Version = V11_0,
+                OS = OS.AzureLinux30Distroless,
+                OSTag = "",
+                OSDir = OS.AzureLinuxDistroless,
+                Arch = Arch.Arm64,
+                SupportedImageRepos = DotNetImageRepo.Blazor_Gateway
+            },
+        ];
+
         public static IEnumerable<ProductImageData> AllImageData =>
         [
             ..s_linuxTestData,
@@ -583,6 +603,7 @@ namespace Microsoft.DotNet.Docker.Tests
             ..s_linuxMonitorTestData,
             ..s_windowsMonitorTestData,
             ..s_YarpTestData,
+            ..s_BlazorGatewayTestData,
         ];
 
         public static IEnumerable<ProductImageData> GetImageData(
@@ -641,6 +662,20 @@ namespace Microsoft.DotNet.Docker.Tests
 
             return s_YarpTestData
                 .FilterImagesByPath(DotNetImageRepo.Yarp)
+                .FilterImagesByArch()
+                .FilterImagesByOs()
+                .Cast<ProductImageData>();
+        }
+
+        public static IEnumerable<ProductImageData> GetBlazorGatewayImageData()
+        {
+            if (!DockerHelper.IsLinuxContainerModeEnabled)
+            {
+                return [];
+            }
+
+            return s_BlazorGatewayTestData
+                .FilterImagesByPath(DotNetImageRepo.Blazor_Gateway)
                 .FilterImagesByArch()
                 .FilterImagesByOs()
                 .Cast<ProductImageData>();

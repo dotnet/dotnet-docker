@@ -18,3 +18,7 @@ yarp/ @dotnet/dotnet-docker-reviewers @benjaminpetit
 *YARP* @dotnet/dotnet-docker-reviewers @benjaminpetit
 *ReverseProxy* @dotnet/dotnet-docker-reviewers @benjaminpetit
 otlptestlistener/ @dotnet/dotnet-docker-reviewers @benjaminpetit
+
+blazor-gateway/     @dotnet/dotnet-docker-reviewers
+*blazor-gateway*    @dotnet/dotnet-docker-reviewers
+*Blazor-Gateway*    @dotnet/dotnet-docker-reviewers

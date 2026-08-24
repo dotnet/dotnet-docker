@@ -42,6 +42,7 @@ See [documentation](https://go.microsoft.com/fwlink/?linkid=2158052) for how to 
 * [dotnet/nightly/monitor/base](https://github.com/dotnet/dotnet-docker/blob/nightly/README.monitor-base.md): .NET Monitor Base (Preview)
 * [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): Aspire Dashboard (Preview)
 * [dotnet/nightly/yarp](https://github.com/dotnet/dotnet-docker/blob/nightly/README.yarp.md): YARP (Yet Another Reverse Proxy) (Preview)
+* [dotnet/nightly/blazor-gateway](https://github.com/dotnet/dotnet-docker/blob/nightly/README.blazor-gateway.md): Blazor Gateway (Preview)
 * [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:

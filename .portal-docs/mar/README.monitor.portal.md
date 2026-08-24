@@ -30,6 +30,7 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/nightly/monitor/base](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/monitor/base/about): .NET Monitor Base (Preview)
 * [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
 * [dotnet/nightly/yarp](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/yarp/about): YARP (Yet Another Reverse Proxy) (Preview)
+* [dotnet/nightly/blazor-gateway](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/blazor-gateway/about): Blazor Gateway (Preview)
 * [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:

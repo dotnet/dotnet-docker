@@ -43,6 +43,15 @@
     "aspnet|11.0|build-version": "11.0.0-rc.1.26411.119",
     "aspnet-composite|11.0|build-version": "$(aspnet|11.0|build-version)",
 
+    "blazor-gateway|11.0|build-version": "11.0.0-preview.7.26381.103",
+    "blazor-gateway|11.0|product-version": "11.0.0-preview.7",
+    "blazor-gateway|11.0|fixed-tag": "$(blazor-gateway|11.0|product-version)",
+    "blazor-gateway|11.0|minor-tag": "11.0-preview",
+    "blazor-gateway|11|major-tag": "11-preview",
+    "blazor-gateway|11.0|sha": "20168120b8ea930a1d46bb6009f49c1f18cb578b840d742c3421b047f6e764e36daf4da19f751a8ba0c68f40701e19ff26f21b3e08dc5251ce3c565de3290850",
+    "blazor-gateway|11.0|base-url|main": "https://globalcdn.nuget.org/packages",
+    "blazor-gateway|11.0|base-url|nightly": "https://globalcdn.nuget.org/packages",
+
     "chisel|latest|build-version": "v1.4.2",
     "chisel|latest|x64|url": "https://github.com/canonical/chisel/releases/download/$(chisel|latest|build-version)/chisel_$(chisel|latest|build-version)_linux_amd64.tar.gz",
     "chisel|latest|arm|url": "https://github.com/canonical/chisel/releases/download/$(chisel|latest|build-version)/chisel_$(chisel|latest|build-version)_linux_arm.tar.gz",

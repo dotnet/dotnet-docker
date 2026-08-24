@@ -1,0 +1,35 @@
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
+
+# Installer image
+FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
+
+RUN tdnf install -y \
+        ca-certificates \
+        unzip \
+    && tdnf clean all
+
+# Retrieve the Blazor Gateway CLI tool package. This package is architecture-neutral, so the
+# same package and checksum are used to build every architecture of this image.
+RUN gateway_version=0.0.0 \
+    && curl --fail --show-error --location --output blazor_gateway.nupkg https://globalcdn.nuget.org/packages/microsoft.aspnetcore.components.gateway.cli.$gateway_version.nupkg \
+    && blazor_gateway_sha512='{sha512_placeholder}' \
+    && echo "$blazor_gateway_sha512  blazor_gateway.nupkg" | sha512sum -c - \
+    && mkdir --parents /tmp/blazor-gateway /app \
+    && unzip blazor_gateway.nupkg "tools/net11.0/any/*" "THIRD-PARTY-NOTICES.txt" -d /tmp/blazor-gateway \
+    && cp --recursive /tmp/blazor-gateway/tools/net11.0/any/. /app \
+    && cp /tmp/blazor-gateway/THIRD-PARTY-NOTICES.txt /app \
+    && rm --recursive --force \
+        blazor_gateway.nupkg \
+        /tmp/blazor-gateway \
+        /app/blazor-gateway.exe \
+        /app/DotnetToolSettings.xml \
+        /app/web.config
+
+
+# Blazor Gateway image
+FROM $REPO:0.0.0-azurelinux3.0-distroless-amd64
+
+WORKDIR /app
+COPY --from=installer /app .
+
+ENTRYPOINT [ "dotnet", "/app/blazor-gateway.dll" ]

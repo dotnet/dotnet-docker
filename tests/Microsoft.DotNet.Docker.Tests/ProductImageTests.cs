@@ -196,8 +196,17 @@ namespace Microsoft.DotNet.Docker.Tests
                 return;
             }
 
-            IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
-            IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
+            // Chisel may omit dependent slice packages from dpkg status even though their files remain.
+            IEnumerable<string> inconsistentlyReportedPackages = imageData.OS switch
+            {
+                var os when os == OS.ResoluteChiseled => ["openssl-provider-legacy", "tzdata-legacy"],
+                var os when os == OS.NobleChiseled => ["tzdata-legacy"],
+                _ => []
+            };
+            IEnumerable<string> expectedPackages =
+                GetExpectedPackages(imageData, imageRepo).Except(inconsistentlyReportedPackages);
+            IEnumerable<string> actualPackages =
+                GetInstalledPackages(imageData, imageRepo, extraExcludePaths).Except(inconsistentlyReportedPackages);
 
             string imageName = imageData.GetImage(imageRepo, DockerHelper, skipPull: true);
             ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, OutputHelper);
