@@ -31,6 +31,6 @@ jobs:
             --gitignore
             --root-dir .
             --ignore-path eng/announcement-templates,eng/readme-templates
-            --ignore-links https://github.com/microsoft/mcr*,https://github.com/dotnet/release*,https://aka.ms/*,https://go.microsoft.com/fwlink/*
+            --ignore-links https://github.com/microsoft/mcr*,https://github.com/dotnet/release*,https://aka.ms/*,https://go.microsoft.com/fwlink/*,https://www.microsoft.com/msrc/faqs-report-an-issue,https://www.microsoft.com/msrc/bounty-dot-net-core
             --do-not-warn-for-redirect-to https://github.com/login*,https://learn.microsoft.com/??-??/*,https://dotnet.microsoft.com/??-??/*,https://www.microsoft.com/??-??/*,https://en.wikipedia.org/*
             --throttle 250
