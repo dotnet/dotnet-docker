@@ -23,14 +23,24 @@ jobs:
 
       - name: Check markdown links
         uses: becheran/mlc@7ec24825cefe0c9c8c6bac48430e1f69e3ec356e # v1.2.0
+        env:
+          # Private GitHub repos
+          MLC_IGNORE_GITHUB: https://github.com/microsoft/mcr*,https://github.com/dotnet/release*
+          # Microsoft short link
+          MLC_IGNORE_SHORT_LINKS: https://aka.ms/*,https://go.microsoft.com/fwlink/*
+          # MSRC rejects automated requests
+          MLC_IGNORE_MSRC: https://www.microsoft.com/msrc/faqs-report-an-issue,https://www.microsoft.com/msrc/bounty-dot-net-core
+          # Some GitHub links redirect to the login page
+          MLC_REDIRECT_GITHUB: https://github.com/login*
+          # Sites that redirect locale-neutral URLs to locale-specific URLs
+          MLC_REDIRECT_LOCALES: https://learn.microsoft.com/??-??/*,https://dotnet.microsoft.com/??-??/*,https://www.microsoft.com/??-??/*,https://en.wikipedia.org/*
         with:
-          # Suppress expected redirects for locale-neutral Microsoft URLs and unauthenticated GitHub links.
           args: >-
             .
             --markup-types md
             --gitignore
             --root-dir .
             --ignore-path eng/announcement-templates,eng/readme-templates
-            --ignore-links https://github.com/microsoft/mcr*,https://github.com/dotnet/release*,https://aka.ms/*,https://go.microsoft.com/fwlink/*,https://www.microsoft.com/msrc/faqs-report-an-issue,https://www.microsoft.com/msrc/bounty-dot-net-core
-            --do-not-warn-for-redirect-to https://github.com/login*,https://learn.microsoft.com/??-??/*,https://dotnet.microsoft.com/??-??/*,https://www.microsoft.com/??-??/*,https://en.wikipedia.org/*
+            --ignore-links ${{ env.MLC_IGNORE_GITHUB }},${{ env.MLC_IGNORE_SHORT_LINKS }},${{ env.MLC_IGNORE_MSRC }}
+            --do-not-warn-for-redirect-to ${{ env.MLC_REDIRECT_GITHUB }},${{ env.MLC_REDIRECT_LOCALES }}
             --throttle 250
