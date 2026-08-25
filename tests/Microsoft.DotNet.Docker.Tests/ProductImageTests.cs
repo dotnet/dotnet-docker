@@ -312,7 +312,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 { OS: var os } when os == OS.ResoluteChiseled =>
                     [
                         "ca-certificates",
-                        "gcc-14-base",
+                        "gcc-16-base",
                         ..GetResoluteChiseledArchSpecificPackages(imageData),
                         "libc6",
                         "libgcc-s1",
