@@ -31,7 +31,7 @@ jobs:
           # MSRC rejects automated requests
           MLC_IGNORE_MSRC: https://www.microsoft.com/msrc/faqs-report-an-issue,https://www.microsoft.com/msrc/bounty-dot-net-core
           # Kubernetes documentation links are unstable
-          MLC_IGNORE_KUBERNETES: https://kubernetes.io/*
+          MLC_IGNORE_KUBERNETES: https://kubernetes.io/*,https://k3s.io/*
           # Some GitHub links redirect to the login page
           MLC_REDIRECT_GITHUB: https://github.com/login*
           # Sites that redirect locale-neutral URLs to locale-specific URLs
