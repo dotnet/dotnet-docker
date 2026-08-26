@@ -5,6 +5,7 @@
   },
   "registry": "mcr.microsoft.com",
   "variables": {
+    "syndicatedAspireDashboardRepo": "dotnet/nightly/aspire-dashboard",
     "syndicatedRuntimeDepsRepo": "dotnet/core-nightly/runtime-deps",
     "syndicatedRuntimeRepo": "dotnet/core-nightly/runtime",
     "syndicatedAspnetRepo": "dotnet/core-nightly/aspnet",
@@ -14991,15 +14992,11 @@
     },
     {
       "id": "aspire-dashboard",
-      "name": "dotnet/nightly/aspire-dashboard",
+      "name": "aspire/nightly/dashboard",
       "readmes": [
         {
           "path": "README.aspire-dashboard.md",
           "templatePath": "eng/readme-templates/README.github.md"
-        },
-        {
-          "path": ".portal-docs/docker-hub/README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
           "path": ".portal-docs/mar/README.aspire-dashboard.portal.md",
@@ -15011,9 +15008,25 @@
         {
           "productVersion": "$(aspire-dashboard|product-version)",
           "sharedTags": {
-            "$(aspire-dashboard|fixed-tag)": {},
-            "$(aspire-dashboard|minor-tag)": {},
-            "$(aspire-dashboard|major-tag)": {},
+            "$(aspire-dashboard|fixed-tag)": {
+              "syndication": {
+                "repo": "$(syndicatedAspireDashboardRepo)"
+              }
+            },
+            "$(aspire-dashboard|minor-tag)": {
+              "syndication": {
+                "repo": "$(syndicatedAspireDashboardRepo)"
+              }
+            },
+            "$(aspire-dashboard|major-tag)": {
+              "syndication": {
+                "repo": "$(syndicatedAspireDashboardRepo)",
+                "destinationTags": [
+                  "$(aspire-dashboard|major-tag)",
+                  "latest"
+                ]
+              }
+            },
             "latest": {}
           },
           "platforms": [
@@ -15027,13 +15040,22 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|fixed-tag)-amd64": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|minor-tag)-amd64": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|major-tag)-amd64": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 }
               }
             },
@@ -15048,13 +15070,22 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|fixed-tag)-arm64v8": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|minor-tag)-arm64v8": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|major-tag)-arm64v8": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 }
               },
               "variant": "v8"
