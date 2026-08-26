@@ -21,7 +21,7 @@ Use these common directions as a guide:
 | --- | --- |
 | `nightly` to `release/*` | A change in nightly is planned to be shipped in the next release. This is the most common porting operation. Exclude daily-only version bumps, experiments, and changes already represented on the release branch. |
 | `release/*` to `main` | The release contents are final and will be published soon. |
-| `main` to `nightly` | After each public release, merge all of `main` into `nightly`. Also see the `merge-main-to-nightly` skill. |
+| `main` to `nightly` | After a new .NET release, use the `merge-main-to-nightly` skill to merge changes from `main` into `nightly`. Outside of normal release processes, individual changes may be ported as needed if a fix was made initially in the `main` branch instead of the `nightly` branch. |
 | `nightly` to `main` | A fix in the `nightly` branch affects all currently published images, shared automation, tests, samples, or documentation before the next release merge. |
 | `main` to `release/*` | `main` had changes after the release branch was created. Example: new Aspire Dashboard version. |
 | `release/*` to `nightly` | Rare. Prefer the normal `release/*` to `main` to `nightly` route. Port directly only when nightly needs an urgent fix before that route completes. |
