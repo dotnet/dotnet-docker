@@ -38,6 +38,7 @@ However, if you'd still like to implement it yourself, you can request the issue
 ### Branches
 
 When making PRs, all source code changes (e.g. Dockerfiles, tests, and infrastructure) should be made in the [nightly branch](https://github.com/dotnet/dotnet-docker/tree/nightly). Only changes to the samples and documentation will be accepted against the [main branch](https://github.com/dotnet/dotnet-docker/tree/main).
+See the [branch guide](eng/developer-docs/branches.md) for branch roles and the release flow.
 
 ### Building
 
@@ -170,6 +171,10 @@ If your changes fail tests due to changes in the internal Dockerfiles, you will 
 1. Run `./tests/update-internal-baselines.ps1` to regenerate the baselines. This script runs the `VerifyInternalDockerfilesOutput` tests, accepts the updated baseline files, and displays a git diff.
 1. If the diff looks acceptable, commit the changes.
 
+### Adding new images
+
+Follow the [new repository onboarding guide](eng/developer-docs/new-repo-onboarding.md) when adding another image repository.
+
 ### Metadata Changes
 
 The [`manifest.json`](https://github.com/dotnet/dotnet-docker/blob/main/manifest.json) contains metadata used by the engineering infrastructure to build and publish the images.  It includes information such as:
@@ -190,6 +195,8 @@ Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, e
 1. Update the product versions and checksums stored in `manifest.versions.json`
 1. Regenerate the Dockerfiles
 1. Update the tags listing in the readmes
+
+Use the [new .NET version release lifecycle](eng/developer-docs/dotnet-release-lifecycle.md) when planning work for a .NET release.
 
 The following examples illustrate how to run `update-dependencies`:
 
