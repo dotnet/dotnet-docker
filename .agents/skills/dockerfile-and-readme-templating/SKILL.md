@@ -1,5 +1,6 @@
 ---
-applyTo: "eng/dockerfile-templates/**/*,eng/readme-templates/**/*"
+name: dockerfile-and-readme-templating
+description: Modify Cottle templates that generate Dockerfiles and READMEs in dotnet/dotnet-docker.
 ---
 
 # Instructions for modifying Dockerfile templates
