@@ -4,4 +4,5 @@ target-branch: nightly
 ---
 
 Related:
+
 - ${linkToMainBranchReleasePR}
