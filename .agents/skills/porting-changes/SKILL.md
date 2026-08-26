@@ -44,4 +44,5 @@ Security, correctness, and release-blocking fixes may take priority over the nor
 ## Completing the port
 
 1. Review the complete target diff and run focused validation.
-2. Create a *draft* PR using the [PR template](./reference/pull-request-template.md).
+2. Get user confirmation before submitting a pull request.
+3. Open a pull request using the [template](./reference/pull-request-template.md).
