@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0 AS build-env
+FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0 AS build-env
 WORKDIR /update-dependencies
 
 # Build update-dependencies
@@ -9,7 +9,7 @@ RUN --mount=type=cache,target=/root/.nuget \
     dotnet publish eng/update-dependencies/update-dependencies.csproj -o out
 
 # Runtime image
-FROM mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0
+FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0
 
 RUN tdnf install -y \
         ca-certificates \
