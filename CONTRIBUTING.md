@@ -220,7 +220,6 @@ The following examples illustrate how to run `update-dependencies`:
 
 #### Checking Markdown links locally
 
-This repo uses [becheran/mlc](https://github.com/becheran/mlc) to automatically validate markdown
-links in the [check-markdown-links](.github/workflows/check-markdown-links.yml) workflow. You can
-run it locally using the container image:
-`becheran/mlc@sha256:1248f4e0da11cec8f80d644a8efe0106a85210ef63c8b186802ac7332bcfb090` (v1.2.0).
+The [check-markdown-links](.github/workflows/check-markdown-links.yml) workflow uses
+[becheran/mlc](https://github.com/becheran/mlc) to validate markdown links. To run the check
+locally, use the version and options defined in that workflow.
