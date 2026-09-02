@@ -157,4 +157,4 @@ Successfully verified signature for mcr.microsoft.com/dotnet/sdk@sha256:<digest>
 
 [Docker CLI]: https://docs.docker.com/reference/cli/docker/
 [Notation CLI]: https://github.com/notaryproject/notation
-[ORAS CLI]: https://oras.land/docs/installation
+[ORAS CLI]: https://oras.land/docs/installation/

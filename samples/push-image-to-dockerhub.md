@@ -30,7 +30,7 @@ docker tag dotnetapp richlander/dotnetapp
 
 ## Login to Docker Hub
 
-You need to [login to Docker Hub](https://docs.docker.com/docker-hub/accounts/) with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) or with the Docker Client UI to push images.
+You need to [create a Docker account](https://docs.docker.com/accounts/create-account/) and then [`docker login`](https://docs.docker.com/reference/cli/docker/login/) or use the Docker Client UI to push images.
 
 There are a couple ways of passing a password to `docker login`. These instructions [pass the password to stdin](https://github.com/docker/cli/pull/218) via a text file called password-dh.txt. Make sure to save to a location not managed by source control (to avoid accidental disclosure).
 

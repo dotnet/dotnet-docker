@@ -15,7 +15,7 @@
 
 # About
 
-This image contains the native dependencies needed by .NET. It does not include .NET. It is for [self-contained](https://docs.microsoft.com/dotnet/articles/core/deploying/index) applications.
+This image contains the native dependencies needed by .NET. It does not include .NET. It is for [self-contained](https://learn.microsoft.com/dotnet/articles/core/deploying/index) applications.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
