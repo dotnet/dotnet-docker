@@ -163,5 +163,5 @@ COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "aspnetapp.dll"]
 ```
 
-If this example doesn't work for your scenario, see [Container Tools build properties](https://docs.microsoft.com/visualstudio/containers/container-msbuild-properties) for more information on
+If this example doesn't work for your scenario, see [Container Tools build properties](https://learn.microsoft.com/visualstudio/containers/container-msbuild-properties) for more information on
 customizing the Fast Mode stage, or setting a custom `DockerDebuggeeKillProgram`.

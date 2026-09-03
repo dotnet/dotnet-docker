@@ -1,27 +1,48 @@
 name: 'Check Markdown Links'
 
-# Re-enable when https://github.com/dotnet/dotnet-docker/issues/7176 is resolved.
-# on:
-#   pull_request:
-#     paths:
-#       - "**/*.md"
+on:
+  pull_request:
+    paths:
+      - "**/*.md"
+      - ".github/workflows/check-markdown-links.yml"
 
 permissions:
-  pull-requests: read
+  contents: read
 
 jobs:
   check-markdown-links:
-    # https://github.com/UmbrellaDocs/action-linkspector/issues/32
-    # Upgrade to `ubuntu-latest` when resolved
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      # mlc treats GitHub alert markers as unresolved Markdown references, so remove them from the temporary checkout.
+      - name: Remove GitHub alert markers
+        run: find . -name '*.md' -exec sed -i -E 's/> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]//g' {} +
+
       - name: Check markdown links
-        uses: umbrelladocs/action-linkspector@v1
+        uses: becheran/mlc@7ec24825cefe0c9c8c6bac48430e1f69e3ec356e # v1.2.0
+        env:
+          # Private GitHub repos
+          MLC_IGNORE_GITHUB: https://github.com/microsoft/mcr*,https://github.com/dotnet/release*
+          # Microsoft short link
+          MLC_IGNORE_SHORT_LINKS: https://aka.ms/*,https://go.microsoft.com/fwlink/*
+          # MSRC rejects automated requests
+          MLC_IGNORE_MSRC: https://www.microsoft.com/msrc/faqs-report-an-issue,https://www.microsoft.com/msrc/bounty-dot-net-core
+          # Kubernetes documentation links are unstable
+          MLC_IGNORE_KUBERNETES: https://kubernetes.io/*,https://k3s.io/*,https://minikube.sigs.k8s.io/*
+          # Some GitHub links redirect to the login page
+          MLC_REDIRECT_GITHUB: https://github.com/login*
+          # Sites that redirect locale-neutral URLs to locale-specific URLs
+          MLC_REDIRECT_LOCALES: https://learn.microsoft.com/??-??/*,https://dotnet.microsoft.com/??-??/*,https://www.microsoft.com/??-??/*,https://en.wikipedia.org/*
         with:
-          config_file: .github/linters/.linkspector.yml
-          fail_on_error: true
-          filter_mode: nofilter
+          args: >-
+            .
+            --markup-types md
+            --gitignore
+            --root-dir .
+            --ignore-path eng/announcement-templates,eng/readme-templates
+            --ignore-links ${{ env.MLC_IGNORE_GITHUB }},${{ env.MLC_IGNORE_SHORT_LINKS }},${{ env.MLC_IGNORE_MSRC }},${{ env.MLC_IGNORE_KUBERNETES }}
+            --do-not-warn-for-redirect-to ${{ env.MLC_REDIRECT_GITHUB }},${{ env.MLC_REDIRECT_LOCALES }}
+            --throttle 250

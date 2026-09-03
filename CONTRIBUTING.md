@@ -220,11 +220,6 @@ The following examples illustrate how to run `update-dependencies`:
 
 #### Checking Markdown links locally
 
-This repo uses [UmbrellaDocs/linkspector](https://github.com/UmbrellaDocs/linkspector)
-to automatically validate links in markdown files. You can run this tool
-locally using Docker.
-
-1. Build linkspector Docker image:
-   `docker build --no-cache --pull --build-arg LINKSPECTOR_PACKAGE= -t umbrelladocs/linkspector https://github.com/UmbrellaDocs/linkspector.git`
-2. Run linkspector:
-   `docker run --rm -it -v ${PWD}:/app umbrelladocs/linkspector bash -c 'linkspector check -c /app/.github/linters/.linkspector.yml'`
+The [check-markdown-links](.github/workflows/check-markdown-links.yml) workflow uses
+[becheran/mlc](https://github.com/becheran/mlc) to validate markdown links. To run the check
+locally, use the version and options defined in that workflow.

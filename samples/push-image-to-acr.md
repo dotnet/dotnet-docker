@@ -1,8 +1,8 @@
 # Push Docker Images to Azure Container Registry
 
-This sample demonstrates how to push .NET images to [Azure Container Registry (ACR)](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal). The instructions are based on the [.NET Docker Sample](README.md).
+This sample demonstrates how to push .NET images to [Azure Container Registry (ACR)](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-portal). The instructions are based on the [.NET Docker Sample](README.md).
 
-These instructions use the [Azure CLI](https://docs.microsoft.com/cli/azure/install-azure-cli) and the [Docker client](https://www.docker.com/products/docker).
+These instructions use the [Azure CLI](https://learn.microsoft.com/cli/azure/install-azure-cli) and the [Docker client](https://www.docker.com/products/docker-desktop/).
 
 Similar instructions are also available to [push to DockerHub](push-image-to-dockerhub.md).
 
@@ -45,7 +45,7 @@ docker tag dotnetapp richlander.azurecr.io/dotnetapp
 
 ## Login to ACR
 
-You need to [login to ACR](https://docs.microsoft.com/azure/container-registry/container-registry-get-started-portal#log-in-to-acr) with [`docker login`](https://docs.docker.com/engine/reference/commandline/login/) to push images. ACR registries are private, so `pull`, `push`, and any other registry operation requires login.
+You need to [login to ACR](https://learn.microsoft.com/azure/container-registry/container-registry-get-started-portal) with [`docker login`](https://docs.docker.com/reference/cli/docker/login/) to push images. ACR registries are private, so `pull`, `push`, and any other registry operation requires login.
 
 To interfact with your credentials, you need to first request to make admin calls to your account with the following command:
 

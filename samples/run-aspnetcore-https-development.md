@@ -1,6 +1,6 @@
 # Developing ASP.NET Core Applications with Docker over HTTPS
 
-ASP.NET Core uses [HTTPS by default](https://docs.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
+ASP.NET Core uses [HTTPS by default](https://learn.microsoft.com/aspnet/core/security/enforcing-ssl). [HTTPS](https://en.wikipedia.org/wiki/HTTPS) relies on [certificates](https://en.wikipedia.org/wiki/Public_key_certificate) for trust, identity, and encryption.
 
 This document demonstrates how to develop ASP.NET Core applications with HTTPS in Docker containers. It's recommended to try the [ASP.NET Core Docker Sample](README.md) first, which is simpler because the container only exposes HTTP. This more basic tutorial will help you validate that you have the sample working correctly, before adding the complication of certificates.
 
@@ -37,7 +37,7 @@ certificate password.
 
 Rather than using environment variable to specify the development certificate password,  use [.NET user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) to store the password.
 
-Initializing user-secrets for the first time on a project modifies the project file, so you will need a local copy of the `aspnetapp` sample. Clone this repo or [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/main.zip).
+Initializing user-secrets for the first time on a project modifies the project file, so you will need a local copy of the `aspnetapp` sample. Clone this repo or [download the repository as a zip](https://codeload.github.com/dotnet/dotnet-docker/zip/refs/heads/main).
 
 ```console
 git clone https://github.com/dotnet/dotnet-docker/

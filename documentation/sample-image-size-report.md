@@ -68,13 +68,13 @@ for more details on all of the supported options for publishing .NET apps.
 [Trimming]:                                        https://learn.microsoft.com/dotnet/core/deploying/trimming/trim-self-contained
 [Native AOT]:                                      https://learn.microsoft.com/dotnet/core/deploying/native-aot/
 [Framework-dependent]:                             https://learn.microsoft.com/dotnet/core/deploying/#publish-framework-dependent
-[`aspnet:10.0`]:                            https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble
-[`aspnet:10.0-noble-chiseled`]:             https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled
-[`aspnet:10.0-noble-chiseled-extra`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/noble-chiseled-extra
-[`runtime-deps:10.0`]:                      https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble
-[`runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled
-[`runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble-chiseled-extra
-[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.23
-[`aspnet:10.0-alpine-extra`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/aspnet/10.0/alpine3.23-extra
-[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.23
-[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/alpine3.23-extra
+[`aspnet:10.0`]:                            https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/noble
+[`aspnet:10.0-noble-chiseled`]:             https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/noble-chiseled
+[`aspnet:10.0-noble-chiseled-extra`]:       https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/noble-chiseled-extra
+[`runtime-deps:10.0`]:                      https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/noble
+[`runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/noble-chiseled
+[`runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/noble-chiseled-extra
+[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/alpine3.23
+[`aspnet:10.0-alpine-extra`]:               https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/alpine3.23-extra
+[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/alpine3.23
+[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/alpine3.23-extra
