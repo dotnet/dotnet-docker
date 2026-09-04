@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM arm64v8/buildpack-deps:resolute-curl AS installer
 
 # Retrieve ASP.NET Composite Runtime
-RUN aspnetcore_version=11.0.0-rc.1.26411.119 \
+RUN aspnetcore_version=11.0.0-rc.2.26453.107 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512 \
@@ -20,13 +20,13 @@ RUN mkdir /dotnet-symlink \
 
 
 # ASP.NET Composite Image
-FROM $REPO:11.0.0-rc.1-resolute-chiseled-extra-arm64v8
+FROM $REPO:11.0.0-rc.2-resolute-chiseled-extra-arm64v8
 
 ENV \
     # .NET Runtime version
-    DOTNET_VERSION=11.0.0-rc.1.26411.119 \
+    DOTNET_VERSION=11.0.0-rc.2.26453.107 \
     # ASP.NET Core version
-    ASPNET_VERSION=11.0.0-rc.1.26411.119
+    ASPNET_VERSION=11.0.0-rc.2.26453.107
 
 COPY --from=installer ["/usr/share/dotnet", "/usr/share/dotnet"]
 COPY --from=installer ["/dotnet-symlink", "/usr/bin"]

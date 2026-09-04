@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:11.0.100-rc.1-resolute-amd64
+FROM $REPO:11.0.100-rc.2-resolute-amd64
 
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
