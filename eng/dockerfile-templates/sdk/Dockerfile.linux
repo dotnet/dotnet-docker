@@ -92,7 +92,9 @@ RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
 ], "    ")}}{{if isPowerShellSupported:
 
 # Download PowerShell
-RUN {{InsertTemplate("Dockerfile.linux.download-powershell", [])}}}}
+RUN {{InsertTemplate("Dockerfile.linux.download-powershell", [
+    "dotnet-is-internal": isInternal
+])}}}}
 
 
 # .NET SDK image
