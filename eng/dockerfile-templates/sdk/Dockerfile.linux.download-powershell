@@ -1,0 +1,19 @@
+{{
+    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
+    set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
+    set nupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
+    set shaPlatform to when(isAlpine, "Linux.Alpine", cat("Linux|", ARCH_NUPKG)) ^
+    set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")] ^
+    set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") ^
+    set url to cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgName)
+}}powershell_version={{powershellVersion}} \
+    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
+        "url": url,
+        "out-file": nupkgName
+    ]]], "    ")}} \
+    && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
+        "file": nupkgName,
+        "sha-function": "512",
+        "sha-var-name": "powershell_sha512",
+        "sha": VARIABLES[join(["powershell", dotnetVersion, shaPlatform, "sha"], "|")]
+    ], "    ")}}
