@@ -10,7 +10,8 @@
         cat("https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/", nupkgFile),
         cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgFile)
     ) ^
-    set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]
+    set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")] ^
+    set shaFunction to VARIABLES[cat("powershell|", dotnetVersion, "|sha-function")]
 }}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
 {{if ARGS["dotnet-is-internal"]:$powershell_url_version = $powershell_version.Replace('.', '-'); `
@@ -21,8 +22,8 @@ $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-ver
 {{InsertTemplate("../Dockerfile.windows.validate-checksum", [
     "file": nupkgFile,
     "sha": VARIABLES[cat("powershell|", dotnetVersion, "|Windows|x64|sha")],
-    "sha-function": "512",
-    "sha-var-name": "$powershell_sha512"
+    "sha-function": shaFunction,
+    "sha-var-name": cat("$powershell_sha", shaFunction)
 ])}}; `
 & {{rootDir}}dotnet\dotnet tool install --add-source . --tool-path {{rootDir}}powershell --version $powershell_version PowerShell.Windows.x64; `
 & {{rootDir}}dotnet\dotnet nuget locals all --clear; `
