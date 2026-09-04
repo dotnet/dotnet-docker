@@ -15,6 +15,12 @@ RUN dotnet_sdk_version=9.0.317 \
         dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
         $dotnet_version-sha.txt
 
+# Download PowerShell
+RUN powershell_version=7.5.10 \
+    && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
+    && powershell_sha512='2c379c003cff9de263aa0d006300a67a784f69ab6ce9cfd822be0a66215bd4cea1c04b1289d2c58efdf62a8a6af6068fd06a946a58d5e6987d222a811698b4f1' \
+    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c -
+
 
 # .NET SDK image
 FROM $REPO:9.0.19-alpine3.24-amd64
@@ -45,14 +51,13 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
+COPY --from=installer ["/PowerShell.Linux.Alpine.7.5.10.nupkg", "/"]
+
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.5.10 \
-    && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='2c379c003cff9de263aa0d006300a67a784f69ab6ce9cfd822be0a66215bd4cea1c04b1289d2c58efdf62a8a6af6068fd06a946a58d5e6987d222a811698b4f1' \
-    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
     && dotnet nuget locals all --clear \

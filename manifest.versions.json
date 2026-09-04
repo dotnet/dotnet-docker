@@ -179,6 +179,7 @@
     "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
 
     "powershell|8.0|build-version": "7.4.19",
+    "powershell|8.0|sha-function": "512",
     "powershell|8.0|Linux.Alpine|sha": "2b0c19fd71971eaf135193790fc3513e19f7ae527f66526e0a476c73bfaee8d62d1f03bf33cc7d775c10c927ed95744ccfe8989783c0fc7fdd84e7f26ff713ff",
     "powershell|8.0|Linux|arm32|sha": "e82c73185baf1ce368ddebf8c5eecd5c35c3df4c026b1a6c81aea1416fbaf6c39c7c83c5fabaadc21f97df2269f364d8e7630db87a796e843da0ce362a1bfd8f",
     "powershell|8.0|Linux|arm64|sha": "97a2788fb4a124792121bb8c5b1d47ca1efa4badf7733a5eee4bd9421e3886c3f0ea1030bf03ded132acb7da7c6b1a9a78b943ebc774d9481299451c560f53d4",
@@ -186,6 +187,7 @@
     "powershell|8.0|Windows|x64|sha": "916cc2c65a0abbc8f29420c796ca542137152f8b8637379c1b19891768040308128daf04966436467459a852cd26cce772f9ffd06d55f17aed5ba99d67a7afa4",
 
     "powershell|9.0|build-version": "7.5.10",
+    "powershell|9.0|sha-function": "512",
     "powershell|9.0|Linux.Alpine|sha": "2c379c003cff9de263aa0d006300a67a784f69ab6ce9cfd822be0a66215bd4cea1c04b1289d2c58efdf62a8a6af6068fd06a946a58d5e6987d222a811698b4f1",
     "powershell|9.0|Linux|arm32|sha": "94815faa00214c435181cc76aa44e53c2d49d10b1f3a1b3a4f94592e854bbceeb67931eb300ad79dae71a7b5c4c4f555caf6df7e873a7326636998f6d6467e3b",
     "powershell|9.0|Linux|arm64|sha": "309cc2305d06bca3228796d785003fd5bdb8cab22170bf7bb48d5cd88de0248e67585439277b9ff9d5bceb632566dcbe52cfea2dcd26d40e10bd0b1a67c1ae19",
@@ -193,6 +195,7 @@
     "powershell|9.0|Windows|x64|sha": "c6c069144747210bbe41f6d0c07f58d790ea25ead56c3005ad650ea01bc00eeafa0c485648c63c5b5561e419935b3581707dcbf79337873d747098057ff579d6",
 
     "powershell|10.0|build-version": "7.6.5",
+    "powershell|10.0|sha-function": "512",
     "powershell|10.0|Linux.Alpine|sha": "5d6deaf0195971e7b6893f932eb04ec7502c90ae61ae5ee6de9364eb2e05345252d5d5df1df579a85f8a936260cba598f0a5a27be3a66670762c1b6d988743a9",
     "powershell|10.0|Linux|arm32|sha": "e1cc2888dd2048603e4c587d1e0df939bdc9955ebbe66616bb8f34e7cdc43ff9728c6ebfbcfe9353f046f4749b1f4b760c0bd5a47baad64d38bc16df9b280969",
     "powershell|10.0|Linux|arm64|sha": "2e1085f6944bc25999fae30b51d6fce90a08dcbeec2011e99e879d85da5a3da6cd7d2e0fba2cbd3158e8ad412b16265afd0b0893a658f88223cb6ee557459d48",
@@ -200,6 +203,7 @@
     "powershell|10.0|Windows|x64|sha": "0b9bdc4ab91b1c756faca808483a252ca2d26b3dafe5ef9859e5d052056302def0847367820be57657c8387cf766a57f3e3965960be9993292860e20bd974a1c",
 
     "powershell|11.0|build-version": "7.7.0-preview.2",
+    "powershell|11.0|sha-function": "512",
     "powershell|11.0|Linux.Alpine|sha": "4eba9c9b057620bef0b33d01e04b2d448d6c95896a27d4659c3b173e989f7c900e204b9b987d0587bc8941015f75a4bc2ab8f8cec6dd2e9860ffc02b98b72f62",
     "powershell|11.0|Linux|arm32|sha": "f35aa20ca9d521a0b7878c97737eca817e192093d3067f68cabd8928064f27982739ff3bd5261bf6776ae31c6934a86fb25fb98ac98830f8e4da77ad46cd6999",
     "powershell|11.0|Linux|arm64|sha": "4ea0c5fac453a9c1b3c5800acda1319c9db2df4c6e2dfa40c08fbb169c32def3e4688c5b89473fcdb4b218091a1f3836749fd59d8ee94d39f2c96e8761c08c94",
