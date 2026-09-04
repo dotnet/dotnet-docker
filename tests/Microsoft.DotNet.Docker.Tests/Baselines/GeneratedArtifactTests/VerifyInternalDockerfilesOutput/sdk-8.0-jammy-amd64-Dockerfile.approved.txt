@@ -17,6 +17,12 @@ RUN dotnet_sdk_version=0.0.0 \
         dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz \
         dotnet-sdk-$dotnet_sdk_build_version-linux-x64.tar.gz.sha512
 
+# Download PowerShell
+RUN powershell_version=0.0.0 \
+    && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
+    && powershell_sha512='{sha512_placeholder}' \
+    && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c -
+
 
 # .NET SDK image
 FROM $REPO:0.0.0-jammy-amd64
@@ -45,14 +51,13 @@ RUN apt-get update \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
+COPY --from=installer ["/PowerShell.Linux.x0.0.0.nupkg", "/"]
+
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=0.0.0 \
-    && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='{sha512_placeholder}' \
-    && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
     && dotnet nuget locals all --clear \
