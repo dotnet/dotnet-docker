@@ -18,6 +18,12 @@ RUN dotnet_sdk_version=11.0.100-rc.1.26411.119 \
         dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
         dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512
 
+# Download PowerShell
+RUN powershell_version=7.7.0-preview.2 \
+    && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
+    && powershell_sha512='4ea0c5fac453a9c1b3c5800acda1319c9db2df4c6e2dfa40c08fbb169c32def3e4688c5b89473fcdb4b218091a1f3836749fd59d8ee94d39f2c96e8761c08c94' \
+    && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c -
+
 
 # .NET SDK image
 FROM $REPO:11.0.0-rc.1-azurelinux3.0-arm64v8
@@ -44,15 +50,14 @@ RUN tdnf install -y \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
+COPY --from=installer ["/PowerShell.Linux.arm64.7.7.0-preview.2.nupkg", "/"]
+
 RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
 RUN powershell_version=7.7.0-preview.2 \
-    && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha512='4ea0c5fac453a9c1b3c5800acda1319c9db2df4c6e2dfa40c08fbb169c32def3e4688c5b89473fcdb4b218091a1f3836749fd59d8ee94d39f2c96e8761c08c94' \
-    && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c - \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
     && dotnet nuget locals all --clear \

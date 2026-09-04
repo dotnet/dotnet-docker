@@ -17,6 +17,14 @@
 
     set isPowerShellSupported to !(isAlpine && ARCH_SHORT != "x64") ^
     set includePowerShellVars to isPowerShellSupported || dotnetVersion = "8.0" || dotnetVersion = "9.0" ^
+    set powershellNupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
+    set powershellNupkgName to cat(
+        "PowerShell.",
+        powershellNupkgPlatform,
+        ".",
+        VARIABLES[cat("powershell|", dotnetVersion, "|build-version")],
+        ".nupkg"
+    ) ^
 
     set dnxIsSupported to dotnetVersion != "8.0" && dotnetVersion != "9.0" ^
     set useDnxScript to isAlpine && dotnetVersion = "11.0" ^
@@ -81,7 +89,10 @@ RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
     "product": "sdk",
     "extract-to": "/dotnet",
     "extract-paths": sdkExtractPaths
-], "    ")}}
+], "    ")}}{{if isPowerShellSupported:
+
+# Download PowerShell
+RUN {{InsertTemplate("Dockerfile.linux.download-powershell", [])}}}}
 
 
 # .NET SDK image
@@ -94,7 +105,9 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     "pkgs": pkgs
 ])}}
 
-COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
+COPY --from=installer ["/dotnet", "/usr/share/dotnet"]{{if isPowerShellSupported:
+
+COPY --from=installer ["/{{powershellNupkgName}}", "/"]}}
 
 {{if dnxIsSupported:{{if useDnxScript:# Workaround for https://github.com/dotnet/sdk/issues/55238
 }}RUN {{if useDnxScript:printf '%s\n' \
