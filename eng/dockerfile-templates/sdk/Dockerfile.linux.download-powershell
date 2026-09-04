@@ -7,6 +7,8 @@
     set nupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
     set shaPlatform to when(isAlpine, "Linux.Alpine", cat("Linux|", ARCH_NUPKG)) ^
     set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")] ^
+    set shaFunction to VARIABLES[cat("powershell|", dotnetVersion, "|sha-function")] ^
+    set shaVarName to cat("powershell_sha", shaFunction) ^
     set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") ^
     set url to when(
         ARGS["dotnet-is-internal"],
@@ -21,7 +23,7 @@
     ]]], "    ")}} \
     && {{InsertTemplate("../Dockerfile.linux.validate-checksum", [
         "file": nupkgName,
-        "sha-function": "512",
-        "sha-var-name": "powershell_sha512",
+        "sha-function": shaFunction,
+        "sha-var-name": shaVarName,
         "sha": VARIABLES[join(["powershell", dotnetVersion, shaPlatform, "sha"], "|")]
     ], "    ")}}
