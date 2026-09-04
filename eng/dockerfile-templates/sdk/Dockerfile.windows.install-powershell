@@ -5,11 +5,16 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set rootDir to "\" ^
     set nupkgFile to "PowerShell.Windows.x64.$powershell_version.nupkg" ^
-    set url to cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgFile) ^
+    set url to when(
+        ARGS["dotnet-is-internal"],
+        cat("https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/", nupkgFile),
+        cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgFile)
+    ) ^
     set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]
 }}# Install PowerShell global tool
 $powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
-{{InsertTemplate("../Dockerfile.windows.download-files", ["files": [[
+{{if ARGS["dotnet-is-internal"]:$powershell_url_version = $powershell_version.Replace('.', '-'); `
+}}{{InsertTemplate("../Dockerfile.windows.download-files", ["files": [[
     "out-file": nupkgFile,
     "url": url
 ]]])}}; `
