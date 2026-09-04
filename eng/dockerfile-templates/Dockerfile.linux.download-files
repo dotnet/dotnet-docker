@@ -13,7 +13,7 @@
         https://learn.microsoft.com/rest/api/storageservices/authorize-with-azure-active-directory#call-storage-operations-with-oauth-tokens ^
 
     for i, file in ARGS["files"]:{{
-        if (find(file["url"], "dotnetstage") >= 0):{{
+        if (find(file["url"], "dotnetstage") >= 0 || find(file["url"], "pscoretestdata") >= 0):{{
             set isInternal to 1
     }}}}^
 

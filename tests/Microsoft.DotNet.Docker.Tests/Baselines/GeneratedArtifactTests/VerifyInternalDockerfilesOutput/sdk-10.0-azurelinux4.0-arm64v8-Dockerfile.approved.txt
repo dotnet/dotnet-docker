@@ -24,7 +24,8 @@ RUN dotnet_sdk_version=0.0.0 \
 
 # Download PowerShell
 RUN powershell_version=0.0.0 \
-    && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
+    && powershell_url_version=$(printf '%s' "$powershell_version" | tr '.' '-') \
+    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/PowerShell.Linux.arm64.$powershell_version.nupkg \
     && powershell_sha512='{sha512_placeholder}' \
     && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c -
 

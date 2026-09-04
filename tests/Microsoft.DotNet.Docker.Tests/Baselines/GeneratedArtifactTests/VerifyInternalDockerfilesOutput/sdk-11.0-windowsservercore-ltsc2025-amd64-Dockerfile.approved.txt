@@ -52,7 +52,12 @@ RUN `
         `
         # Install PowerShell global tool
         $powershell_version = '0.0.0'; `
-        Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
+        $powershell_url_version = $powershell_version.Replace('.', '-'); `
+        $Headers = @{ `
+            Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+            'x-ms-version' = '2017-11-09'; `
+        }; `
+        Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/PowerShell.Windows.x64.$powershell_version.nupkg -Headers $Headers; `
         $powershell_sha512 = '{sha512_placeholder}'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
