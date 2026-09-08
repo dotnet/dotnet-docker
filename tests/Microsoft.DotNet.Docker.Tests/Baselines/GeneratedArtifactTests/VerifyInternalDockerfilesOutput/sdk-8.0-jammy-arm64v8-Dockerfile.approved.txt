@@ -21,8 +21,8 @@ RUN dotnet_sdk_version=0.0.0 \
 RUN powershell_version=0.0.0 \
     && powershell_url_version=$(printf '%s' "$powershell_version" | tr '.' '-') \
     && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha512='{sha512_placeholder}' \
-    && echo "$powershell_sha512  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha512sum -c -
+    && powershell_sha256='{sha256_placeholder}' \
+    && echo "$powershell_sha256  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
