@@ -34,7 +34,7 @@
     "aspnet|8.0|build-version": "8.0.31",
     "aspnet-composite|8.0|build-version": "$(aspnet|8.0|build-version)",
 
-    "aspnet|9.0|build-version": "9.0.19",
+    "aspnet|9.0|build-version": "9.0.20",
     "aspnet-composite|9.0|build-version": "$(aspnet|9.0|build-version)",
 
     "aspnet|10.0|build-version": "10.0.11",
@@ -86,7 +86,7 @@
     "dotnet|8.0|base-url|checksums|nightly": "$(dotnet|8.0|base-url|nightly)",
     "dotnet|8.0|aggregate-checksums": "/checksums/$(dotnet|8.0|product-version)-sha.txt",
 
-    "dotnet|9.0|product-version": "9.0.19",
+    "dotnet|9.0|product-version": "9.0.20",
     "dotnet|9.0|fixed-tag": "$(dotnet|9.0|product-version)",
     "dotnet|9.0|minor-tag": "9.0",
     "dotnet|9.0|base-url|main": "$(base-url|public|maintenance|main)",
@@ -223,7 +223,7 @@
     "rocks-toolbox|11.0|version": "$(rocks-toolbox|latest|version)",
 
     "runtime|8.0|build-version": "8.0.31",
-    "runtime|9.0|build-version": "9.0.19",
+    "runtime|9.0|build-version": "9.0.20",
     "runtime|10.0|build-version": "10.0.11",
     "runtime|11.0|build-version": "11.0.0-rc.1.26411.119",
 
@@ -236,8 +236,8 @@
     "sdk|8.0|fixed-tag": "$(sdk|8.0|product-version)",
     "sdk|8.0|minor-tag": "$(dotnet|8.0|minor-tag)",
 
-    "sdk|9.0|build-version": "9.0.317",
-    "sdk|9.0|product-version": "9.0.317",
+    "sdk|9.0|build-version": "9.0.318",
+    "sdk|9.0|product-version": "9.0.318",
     "sdk|9.0|base-url|main": "$(dotnet|9.0|base-url|main)",
     "sdk|9.0|base-url|nightly": "$(dotnet|9.0|base-url|nightly)",
     "sdk|9.0|base-url|checksums|main": "$(sdk|9.0|base-url|main)",
