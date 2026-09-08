@@ -178,12 +178,12 @@
     "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|maintenance|main)",
     "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
 
-    "powershell|8.0|build-version": "7.4.19",
-    "powershell|8.0|Linux.Alpine|sha": "2b0c19fd71971eaf135193790fc3513e19f7ae527f66526e0a476c73bfaee8d62d1f03bf33cc7d775c10c927ed95744ccfe8989783c0fc7fdd84e7f26ff713ff",
-    "powershell|8.0|Linux|arm32|sha": "e82c73185baf1ce368ddebf8c5eecd5c35c3df4c026b1a6c81aea1416fbaf6c39c7c83c5fabaadc21f97df2269f364d8e7630db87a796e843da0ce362a1bfd8f",
-    "powershell|8.0|Linux|arm64|sha": "97a2788fb4a124792121bb8c5b1d47ca1efa4badf7733a5eee4bd9421e3886c3f0ea1030bf03ded132acb7da7c6b1a9a78b943ebc774d9481299451c560f53d4",
-    "powershell|8.0|Linux|x64|sha": "d9689427a30d9cd0b5e125de676fd3b2bdca7108d7d7cbe11836ba8b1f29b4fadfaa1c54568f34d34326d02d7ca920cd28e6bf4df07d12095265cffafb4a2eb6",
-    "powershell|8.0|Windows|x64|sha": "916cc2c65a0abbc8f29420c796ca542137152f8b8637379c1b19891768040308128daf04966436467459a852cd26cce772f9ffd06d55f17aed5ba99d67a7afa4",
+    "powershell|8.0|build-version": "7.4.20",
+    "powershell|8.0|Linux.Alpine|sha": "36c7177379eef4f69fc871bc910ff8087c3f62f2c9e1612f60b1c5a8fc73cbe0bcd53998d573429e926c098d08fd4bb2d8dee169e1fa0e45c54b4ed251a47221",
+    "powershell|8.0|Linux|arm32|sha": "8d3f9eafb497e8cb5a65c602744c5d4bfc999a978bfd31eb4926bd2ff2154bf7e31bbb2a738c4a537da026cf67814062f20d58d75ea2efad66c11ed3f2b7a390",
+    "powershell|8.0|Linux|arm64|sha": "cd181e0ebebbfd13a163815164a4ffecf61e7e14f511411750013b8260067ae0655f4f88b28b3379559223fe827a1dd9c12321762188e896dfc409e2d728df95",
+    "powershell|8.0|Linux|x64|sha": "8c93b2dd9750bcb15336123a1f37d60751951dae1a17c6104a361e3957c663be8e44ec4a1ee566cef69fb0b96321d42fbde7885ef23bb4d0a90299905c189994",
+    "powershell|8.0|Windows|x64|sha": "e17f06b8507bf85f836dd1abacc4d845f9905eb5b1fde5d9a7641a22d916ebfed194d89f14af39a798ceaa0b4a50e52879185b52723a4cddc1e5dfdfa4d95c94",
 
     "powershell|9.0|build-version": "7.5.10",
     "powershell|9.0|Linux.Alpine|sha": "2c379c003cff9de263aa0d006300a67a784f69ab6ce9cfd822be0a66215bd4cea1c04b1289d2c58efdf62a8a6af6068fd06a946a58d5e6987d222a811698b4f1",
