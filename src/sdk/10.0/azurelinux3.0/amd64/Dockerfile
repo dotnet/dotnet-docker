@@ -1,13 +1,13 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:10.0.11-azurelinux3.0-amd64 AS installer
+FROM $REPO:10.0.12-azurelinux3.0-amd64 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.400 \
+RUN dotnet_sdk_version=10.0.401 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
@@ -18,9 +18,15 @@ RUN dotnet_sdk_version=10.0.400 \
         dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512
 
+# Download PowerShell
+RUN powershell_version=7.6.6 \
+    && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
+    && powershell_sha256='4227dacda5fd8817655a0aecd92b7ee923d915a98083fae0e46e31e5c125a0d8' \
+    && echo "$powershell_sha256  PowerShell.Linux.x64.$powershell_version.nupkg" | sha256sum -c -
+
 
 # .NET SDK image
-FROM $REPO:10.0.11-azurelinux3.0-amd64
+FROM $REPO:10.0.12-azurelinux3.0-amd64
 
 ENV \
     # Do not generate certificate
@@ -28,7 +34,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.400 \
+    DOTNET_SDK_VERSION=10.0.401 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -44,15 +50,14 @@ RUN tdnf install -y \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
+COPY --from=installer ["/PowerShell.Linux.x64.7.6.6.nupkg", "/"]
+
 RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.6.5 \
-    && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha512='33bb73608db324e7efccb32722b778512b667b4983a39f96b7b069f9d06e726c2957351216c31cafec52e4a32043802bbf5e807596d143ecd67328c002c1295e' \
-    && echo "$powershell_sha512  PowerShell.Linux.x64.$powershell_version.nupkg" | sha512sum -c - \
+RUN powershell_version=7.6.6 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
     && dotnet nuget locals all --clear \
