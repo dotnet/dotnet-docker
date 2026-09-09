@@ -1,7 +1,7 @@
 # escape=`
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/sdk:10.0-nanoserver-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 AS build
 WORKDIR /source
 
 # Copy project file and restore as distinct layers
@@ -14,7 +14,7 @@ RUN dotnet publish --no-restore -o /app
 
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-nanoserver-ltsc2022
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-nanoserver-ltsc2025
 EXPOSE 8080
 WORKDIR /app
 COPY --link --from=build /app .

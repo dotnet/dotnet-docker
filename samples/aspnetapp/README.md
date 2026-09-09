@@ -26,7 +26,7 @@ You can also reach the app's API endpoint from the command line:
 ```bash
 $ curl http://localhost:8000/Environment
 {
-  "runtimeVersion": ".NET 10.0.0-rc.1.25451.107",
+  "runtimeVersion": ".NET 11.0.0-rc.1",
   "osVersion": "Ubuntu 24.04.3 LTS",
   "osArchitecture": "X64",
   "user": "app",
@@ -61,7 +61,7 @@ For example, setting either of the following evnironment variables will change t
 > Ports 1 through 1023 are restricted to root users only, and will not work when running as the non-root root user provided in .NET images.
 
 `ASPNETCORE_URLS` overrides `ASPNETCORE_HTTP_PORTS` if set.
-The `ASPNETCORE_HTTP_PORTS` envrionment variable is used in the [ASP.NET Core](https://github.com/dotnet/dotnet-docker/blob/d033b1beda6bc9ac933dd88fcc572ec05c28f705/src/runtime-deps/10.0/noble/amd64/Dockerfile#L7)
+The `ASPNETCORE_HTTP_PORTS` envrionment variable is used in the [ASP.NET Core](https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/11.0/resolute/amd64/Dockerfile#L7)
 images to set the default port.
 
 ## Enable HTTPS
@@ -140,7 +140,7 @@ For example, the following command uses a different base image and publishes the
 ```console
 dotnet publish \
     -p PublishProfile=DefaultContainer \
-    -p ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled \
+    -p ContainerBaseImage=mcr.microsoft.com/dotnet/aspnet:11.0-resolute-chiseled \
     -p ContainerRegistry=docker.io \
     -p ContainerRepository=youraccount/aspnetapp
 ```

@@ -23,7 +23,7 @@ It will produce output similar to this:
   "reportDate": "09/10/2025",
   "versions": [
     {
-      "version": "10.0",
+      "version": "11.0",
       "supported": false,
       "eolDate": "",
       "supportEndsInDays": 0,
@@ -31,7 +31,7 @@ It will produce output similar to this:
         {
           "releaseDate": "2025-09-09",
           "releasedDaysAgo": 2,
-          "releaseVersion": "10.0.0-rc.1",
+          "releaseVersion": "11.0.0-rc.1",
           "security": false,
           "cveList": []
         }

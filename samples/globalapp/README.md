@@ -16,7 +16,7 @@ The behavior of these APIs is affected by:
 The recommended way to configure [tzdata](https://en.wikipedia.org/wiki/Tz_database) and [timezones](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones) is to set the container timezone by using the `TZ` environment variables, as is demonstrated below.
 
 ```console
-$ docker run -it --rm -e TZ=$(cat /etc/timezone) mcr.microsoft.com/dotnet/runtime-deps:10.0
+$ docker run -it --rm -e TZ=$(cat /etc/timezone) mcr.microsoft.com/dotnet/runtime-deps:11.0
 
 root@4770a50f643e# date
 Wed Sep 10 17:27:24 UTC 2025
@@ -32,7 +32,7 @@ Wed Sep 10 10:29:07 PDT 2025
 
 root@4771a50f643e# exit
 
-$ docker run --rm -e TZ=$(cat /etc/timezone) mcr.microsoft.com/dotnet/runtime-deps:10.0 date
+$ docker run --rm -e TZ=$(cat /etc/timezone) mcr.microsoft.com/dotnet/runtime-deps:11.0 date
 Wed Sep 10 10:29:07 PDT 2025
 ```
 
