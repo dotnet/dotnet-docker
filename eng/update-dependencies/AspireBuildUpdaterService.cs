@@ -48,8 +48,6 @@ internal class AspireBuildUpdaterService(
 
         var dashboardChecksumInfos = dashboardAssets.Zip(dashboardChecksums);
 
-        var manifestVersionsPath = pullRequestOptions.GetManifestVersionsFilePath();
-
         var version = dashboardAssets.First().Version;
         var majorMinorVersion = VersionHelper.ResolveMajorMinorVersion(version);
 
@@ -78,16 +76,10 @@ internal class AspireBuildUpdaterService(
                 return new VariableUpdateInfo($"aspire-dashboard|linux|{arch}|sha", checksum!);
             }));
 
-        var dependencyUpdaters = variableUpdates
-            .Select(updateInfo => new VariableUpdater(manifestVersionsPath, updateInfo));
-
         var updateDependencies = new SpecificCommand();
-        updateDependencies.CustomUpdateInfos.AddRange(variableUpdates);
-        updateDependencies.CustomUpdaters.AddRange(dependencyUpdaters);
+        updateDependencies.VariableUpdates.AddRange(variableUpdates);
 
-        // Don't pass in any  through options, since we calculated all of the variables
-        // and their new versions to update above. Everything is handled through CustomUpdateInfos.
-        // Using the SpecificCommand here just allows us to easily create automated pull requests.
+        // Pass values rather than file-bound updaters so they can be applied in the PR workspace.
         var updateDependenciesOptions = SpecificCommandOptions.FromPullRequestOptions(pullRequestOptions);
         return await updateDependencies.ExecuteAsync(updateDependenciesOptions);
     }

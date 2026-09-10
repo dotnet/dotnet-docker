@@ -12,29 +12,70 @@ namespace Dotnet.Docker
     public class SpecificCommand : BaseCommand<SpecificCommandOptions>
     {
         /// <summary>
-        /// Custom dependency updaters to run in addition to those selected by
-        /// <see cref="SpecificCommandOptions"/>.
+        /// Additional manifest values, resolved before choosing the workspace to update.
         /// </summary>
-        public List<IDependencyUpdater> CustomUpdaters { get; } = [];
-
-        /// <summary>
-        /// Custom build infos to use for the <see cref="CustomUpdaters"/>.
-        /// </summary>
-        public List<IDependencyInfo> CustomUpdateInfos { get; } = [];
+        internal List<VariableUpdateInfo> VariableUpdates { get; } = [];
 
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
-            int exitCode = 0;
-
-            ErrorTraceListener errorTraceListener = new();
-            TextWriterTraceListener consoleTraceListener = new(Console.Out);
-            Trace.Listeners.Add(errorTraceListener);
+            using TextWriterTraceListener consoleTraceListener = new(Console.Out);
             Trace.Listeners.Add(consoleTraceListener);
 
             try
             {
-                // VersionTools runs git commands in the current directory rather than accepting
-                // a repo path. Keep both change detection and publishing in the requested repo.
+                string repoRoot = Path.GetFullPath(options.RepoRoot);
+                options = options with { RepoRoot = repoRoot };
+
+                // A supplied checksum file is an input from the caller's checkout, not the clone.
+                if (!string.IsNullOrEmpty(options.ChecksumsFile))
+                {
+                    string checksumsFile = Path.GetFullPath(options.ChecksumsFile, repoRoot);
+                    options = options with { ChecksumsFile = checksumsFile };
+                }
+
+                if (options.UpdateOnly)
+                {
+                    bool changesDetected = await ApplyUpdatesAsync(options);
+                    if (changesDetected)
+                    {
+                        Trace.TraceInformation("Changes made but no credentials specified, skipping push to remote.");
+                    }
+                }
+                else
+                {
+                    var publisher = new DependencyUpdatePublisher(options);
+                    await publisher.PublishAsync(async (gitContext, cancellationToken) =>
+                    {
+                        var updateOptions = options with { RepoRoot = gitContext.WorkspaceDirectory };
+                        await ApplyUpdatesAsync(updateOptions, cancellationToken);
+                    });
+                }
+
+                return 0;
+            }
+            catch (Exception e)
+            {
+                Console.Error.WriteLine($"Failed to update dependencies:{Environment.NewLine}{e}");
+                return 1;
+            }
+            finally
+            {
+                Trace.Listeners.Remove(consoleTraceListener);
+            }
+        }
+
+        private async Task<bool> ApplyUpdatesAsync(
+            SpecificCommandOptions options,
+            CancellationToken cancellationToken = default)
+        {
+            cancellationToken.ThrowIfCancellationRequested();
+            using ErrorTraceListener errorTraceListener = new();
+            Trace.Listeners.Add(errorTraceListener);
+
+            try
+            {
+                // VersionTools and the generation scripts operate in the current directory.
+                // Restore it before GitAutomation commits or cleans up its workspace.
                 using var context = DirectoryStack.Push(options.RepoRoot);
 
                 IDependencyInfo[] productBuildInfos = options.ProductVersions
@@ -42,6 +83,8 @@ namespace Dotnet.Docker
                     .ToArray();
                 IDependencyInfo[] toolBuildInfos =
                     await Task.WhenAll(options.Tools.Select(Tools.GetToolBuildInfoAsync));
+
+                cancellationToken.ThrowIfCancellationRequested();
 
                 // Load manifest variables once, up front.
                 var manifestFilePath = options.GetManifestVersionsFilePath();
@@ -63,53 +106,40 @@ namespace Dotnet.Docker
                     updateResults.Add(toolUpdateResults);
                 }
 
-                if (CustomUpdaters.Count != 0)
+                if (VariableUpdates.Count != 0)
                 {
-                    DependencyUpdateResults customUpdateResults = UpdateFiles(CustomUpdateInfos, CustomUpdaters);
+                    // Bind edits to this workspace, not the checkout used to resolve versions.
+                    var variableUpdaters = VariableUpdates
+                        .Select(update => new VariableUpdater(manifestFilePath, update));
+
+                    DependencyUpdateResults customUpdateResults = UpdateFiles(VariableUpdates, variableUpdaters);
                     updateResults.Add(customUpdateResults);
                 }
 
                 IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters(options.RepoRoot);
                 IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
+                cancellationToken.ThrowIfCancellationRequested();
                 UpdateFiles(allBuildInfos, generatedContentUpdaters);
+                cancellationToken.ThrowIfCancellationRequested();
 
                 if (errorTraceListener.Errors.Any())
                 {
                     string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
-                    Console.Error.WriteLine("Failed to update dependencies due to the following errors:");
-                    Console.Error.WriteLine(errors);
-                    Environment.Exit(1);
+                    throw new InvalidOperationException($"Dependency updates reported errors:{Environment.NewLine}{errors}");
                 }
 
-                if (!updateResults.Any(result => result.ChangesDetected()))
+                bool changesDetected = updateResults.Any(result => result.ChangesDetected());
+                if (!changesDetected)
                 {
                     Trace.TraceInformation("No changes detected after updates.");
-                    return 0;
                 }
 
-                if (options.UpdateOnly)
-                {
-                    Trace.TraceInformation("Changes made but no credentials specified, skipping push to remote.");
-                    return 0;
-                }
-
-                var publisher = new DependencyUpdatePublisher(options);
-                await publisher.PublishAsync();
-            }
-            catch (Exception e)
-            {
-                Console.Error.WriteLine($"Failed to update dependencies:{Environment.NewLine}{e}");
-                exitCode = 1;
+                return changesDetected;
             }
             finally
             {
                 Trace.Listeners.Remove(errorTraceListener);
-                Trace.Listeners.Remove(consoleTraceListener);
-                errorTraceListener.Dispose();
-                consoleTraceListener.Dispose();
             }
-
-            return exitCode;
         }
 
         private static DependencyUpdateResults UpdateFiles(
