@@ -454,44 +454,36 @@ namespace Microsoft.DotNet.Docker.Tests
             new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Amd64, DockerfileSuffix = "alpine",   IsPublished = true },
             new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm,   DockerfileSuffix = "alpine",   IsPublished = true },
             new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm64, DockerfileSuffix = "alpine",   IsPublished = true },
-            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm,   DockerfileSuffix = "chiseled", IsPublished = true },
-            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm64, DockerfileSuffix = "chiseled", IsPublished = true },
-            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Amd64, DockerfileSuffix = "chiseled", IsPublished = true },
+            new SampleImageData { OS = OS.ResoluteChiseled, Arch = Arch.Arm,   DockerfileSuffix = "chiseled", IsPublished = true },
+            new SampleImageData { OS = OS.ResoluteChiseled, Arch = Arch.Arm64, DockerfileSuffix = "chiseled", IsPublished = true },
+            new SampleImageData { OS = OS.ResoluteChiseled, Arch = Arch.Amd64, DockerfileSuffix = "chiseled", IsPublished = true },
 
-            new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Amd64 },
-            new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm },
-            new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm64 },
+            new SampleImageData { OS = OS.Resolute,         Arch = Arch.Amd64 },
+            new SampleImageData { OS = OS.Resolute,         Arch = Arch.Arm },
+            new SampleImageData { OS = OS.Resolute,         Arch = Arch.Arm64 },
             new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm64, DockerfileSuffix = "alpine" },
             new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Amd64, DockerfileSuffix = "alpine" },
             new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Arm64, DockerfileSuffix = "alpine-icu" },
             new SampleImageData { OS = OS.AlpineFloating,   Arch = Arch.Amd64, DockerfileSuffix = "alpine-icu" },
-            new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm,   DockerfileSuffix = "debian" },
-            new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Arm64, DockerfileSuffix = "debian" },
-            new SampleImageData { OS = OS.BookwormSlim,     Arch = Arch.Amd64, DockerfileSuffix = "debian" },
-            new SampleImageData { OS = OS.Jammy,            Arch = Arch.Arm,   DockerfileSuffix = "ubuntu" },
-            new SampleImageData { OS = OS.Jammy,            Arch = Arch.Arm64, DockerfileSuffix = "ubuntu" },
-            new SampleImageData { OS = OS.Jammy,            Arch = Arch.Amd64, DockerfileSuffix = "ubuntu" },
-            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm,   DockerfileSuffix = "chiseled" },
-            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Arm64, DockerfileSuffix = "chiseled" },
-            new SampleImageData { OS = OS.JammyChiseled,    Arch = Arch.Amd64, DockerfileSuffix = "chiseled" },
+            new SampleImageData { OS = OS.Resolute,         Arch = Arch.Arm,   DockerfileSuffix = "ubuntu" },
+            new SampleImageData { OS = OS.Resolute,         Arch = Arch.Arm64, DockerfileSuffix = "ubuntu" },
+            new SampleImageData { OS = OS.Resolute,         Arch = Arch.Amd64, DockerfileSuffix = "ubuntu" },
+            new SampleImageData { OS = OS.ResoluteChiseled, Arch = Arch.Arm,   DockerfileSuffix = "chiseled" },
+            new SampleImageData { OS = OS.ResoluteChiseled, Arch = Arch.Arm64, DockerfileSuffix = "chiseled" },
+            new SampleImageData { OS = OS.ResoluteChiseled, Arch = Arch.Amd64, DockerfileSuffix = "chiseled" },
         };
 
         private static readonly SampleImageData[] s_windowsSampleTestData =
         {
-            new SampleImageData { OS = OS.NanoServer1809,     Arch = Arch.Amd64, IsPublished = true },
-            new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, IsPublished = true },
             new SampleImageData { OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64, IsPublished = true },
 
-            new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver" },
             new SampleImageData { OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64, DockerfileSuffix = "nanoserver" },
 
             // Use Nano Server as the OS even though the Dockerfiles are for Windows Server Core. This is because the OS value
             // needs to match the filter set by the build/test job. We only produce builds jobs based on what's in the manifest
             // and the manifest only defines Nano Server-based Dockerfiles. So we just need to piggyback on the Nano Server
             // jobs in order to test the Windows Server Core samples.
-            new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore" },
             new SampleImageData { OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore" },
-            new SampleImageData { OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis" },
             new SampleImageData { OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64, DockerfileSuffix = "windowsservercore-iis" },
         };
 
