@@ -46,14 +46,14 @@ PS> mkdir TestResults
 
 # Run the test image, mounting the TestResults directory into the container
 PS> docker run --rm -v ${pwd}/TestResults:/source/Tests/TestResults complexapp-tests
-Test run for /source/Tests/bin/Debug/net9.0/Tests.dll (.NETCoreApp,Version=v9.0)
+Test run for /source/Tests/bin/Debug/net11.0/Tests.dll (.NETCoreApp,Version=v11.0)
 VSTest version 17.12.0-preview-24412-03 (x64)
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
 Results File: /source/Tests/TestResults/_51029443fea7_2024-09-27_16_25_14.trx
 
-Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 9 ms - Tests.dll (net9.0)
+Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 9 ms - Tests.dll (net11.0)
 
 
 # View the test results on the host machine

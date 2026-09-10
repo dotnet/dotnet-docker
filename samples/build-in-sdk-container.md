@@ -72,13 +72,13 @@ This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/v
 It is recommended to pull the SDK image before running the appropriate command. This ensures that you get the latest patch version of the SDK. Use the following command:
 
 ```console
-docker pull mcr.microsoft.com/dotnet/sdk:9.0
+docker pull mcr.microsoft.com/dotnet/sdk:11.0
 ```
 
 ### Linux
 
 ```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out
+docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o out
 ```
 
 You can see the built binaries with the following command:
@@ -91,7 +91,7 @@ ConsoleApp  ConsoleApp.deps.json  ConsoleApp.dll  ConsoleApp.pdb  ConsoleApp.run
 ### macOS
 
 ```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out -r osx-x64 --self-contained false
+docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o out -r osx-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
@@ -108,7 +108,7 @@ ConsoleApp.dll
 The following example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out -r win-x64 --self-contained false
+docker run --rm -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o out -r win-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
@@ -133,7 +133,7 @@ Mode                 LastWriteTime         Length Name
 The following example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:9.0-nanoserver-ltsc2022 dotnet publish -c Release -o out
+docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 dotnet publish -c Release -o out
 ```
 
 > [!WARNING]
@@ -164,7 +164,7 @@ You may want the build output to be written to a separate location than the sour
 The following example demonstrates doing that on macOS:
 
 ```console
-docker run --rm -v ~/ConsoleApp:/out -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o /out -r osx-x64 --self-contained false
+docker run --rm -v ~/ConsoleApp:/out -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o /out -r osx-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
@@ -180,7 +180,7 @@ The following PowerShell example demonstrates doing that on Windows (using Linux
 
 ```console
 mkdir C:\ConsoleApp
-docker run --rm -v C:\ConsoleApp:c:\app\out -v ${pwd}:c:\app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out -r win-x64 --self-contained false
+docker run --rm -v C:\ConsoleApp:/out -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o /out -r win-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:

@@ -20,10 +20,10 @@ For example, using `FROM` statements like the following:
 
 ```dockerfile
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0-alpine AS build
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-alpine
 ```
 
 A Dockerfile following this pattern can be built with the following command:
@@ -44,17 +44,17 @@ linux/amd64
 You can also do this with base images (that you have pulled):
 
 ```bash
-$ docker inspect mcr.microsoft.com/dotnet/runtime:9.0 -f "{{.Os}}/{{.Architecture}}"
+$ docker inspect mcr.microsoft.com/dotnet/runtime:11.0 -f "{{.Os}}/{{.Architecture}}"
 linux/amd64
 ```
 
 Windows Containers include extra version information:
 
 ```pwsh
-> docker inspect mcr.microsoft.com/dotnet/runtime:9.0-nanoserver-ltsc2022 -f "{{.Os}}/{{.Architecture}}"
+> docker inspect mcr.microsoft.com/dotnet/runtime:11.0-nanoserver-ltsc2025 -f "{{.Os}}/{{.Architecture}}"
 windows/amd64
-> docker inspect mcr.microsoft.com/dotnet/runtime:9.0-nanoserver-ltsc2022 -f "{{.OsVersion}}"
-10.0.20348.2700
+> docker inspect mcr.microsoft.com/dotnet/runtime:11.0-nanoserver-ltsc2025 -f "{{.OsVersion}}"
+10.0.26100.<revision>
 ```
 
 This model works very well given a homogenous compute environment. For example, it works well if dev, CI, and prod machines are all `x64`. However, it doesn't as well in heterogenous environments, like if dev machines are `arm64` and prod machines are `x64`. This is because Docker defaults to the native architecture, but that means that resulting images might not match.
@@ -67,10 +67,10 @@ This model works very well given a homogenous compute environment. For example, 
 
 ```Dockerfile
 # Build stage
-FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0
+FROM mcr.microsoft.com/dotnet/aspnet:11.0
 ```
 
 You can see [one of the sample Dockerfiles](AspNetCoreRazorApp/Dockerfile) for a complete example. Such a Dockerfile can be built using the following commands:
@@ -102,10 +102,10 @@ Another approach is to always build for one platform by using matching architect
 
 ```Dockerfile
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:9.0-alpine-amd64 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0-alpine-amd64 AS build
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:9.0-alpine-amd64
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-alpine-amd64
 ```
 
 Building a Dockerfile with single-platform tags does not require passing the `--platform` argument to the build command.
