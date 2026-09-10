@@ -1,5 +1,4 @@
 using LibFoo;
-using Xunit;
 
 namespace Tests;
 

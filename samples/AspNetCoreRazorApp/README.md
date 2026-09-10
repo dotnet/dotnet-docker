@@ -1,6 +1,6 @@
 # ASP.NET Core Docker Sample
 
-This sample demonstrates how to build container images for ASP.NET Core web apps. See [.NET Docker Samples](../README.md) for more samples.
+This sample demonstrates how to build container images for ASP.NET Core web apps. It is based on the `dotnet new webapp` template. See [.NET Docker Samples](../README.md) for more samples.
 
 ## Run the sample image
 

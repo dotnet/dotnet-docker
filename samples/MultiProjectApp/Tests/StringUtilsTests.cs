@@ -1,5 +1,4 @@
 using LibBar;
-using Xunit;
 
 namespace Tests;
 
