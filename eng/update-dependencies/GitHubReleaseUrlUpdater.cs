@@ -11,14 +11,14 @@ namespace Dotnet.Docker;
 /// Updates to the latest download URL when runtime dependencies are being updated.
 /// </summary>
 internal class GitHubReleaseUrlUpdater(
-    string manifestVersionsFilePath,
+    ManifestVariables variables,
     string toolName,
     string variableName,
     string owner,
     string repo,
     Regex assetRegex)
     : GitHubReleaseUpdaterBase(
-        manifestVersionsFilePath,
+        variables,
         toolName,
         variableName,
         owner,

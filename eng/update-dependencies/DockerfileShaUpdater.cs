@@ -16,16 +16,11 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 namespace Dotnet.Docker
 {
     /// <summary>
-    /// An IDependencyUpdater that will scan a Dockerfile for the .NET artifacts that are installed.
-    /// The updater will then retrieve and update the checksum sha used to validate the downloaded artifacts.
+    /// Updates manifest checksum variables for the selected product's artifacts.
     /// </summary>
-    public class DockerfileShaUpdater : FileRegexUpdater
+    internal class DockerfileShaUpdater : VariableUpdaterBase
     {
         private const string ReleaseDotnetBaseCdnUrl = $"https://builds.dotnet.microsoft.com/dotnet";
-
-        private const string ShaVariableGroupName = "shaVariable";
-        private const string ShaValueGroupName = "shaValue";
-        private const string NetStandard21TargetingPack = "netstandard-targeting-pack-2.1.0";
 
         private static readonly Dictionary<string, string> s_shaCache = new();
         private static readonly Dictionary<string, Dictionary<string, string>> s_releaseChecksumCache = new();
@@ -37,9 +32,7 @@ namespace Dotnet.Docker
         private readonly string _arch;
         private readonly string _os;
         private readonly SpecificCommandOptions _options;
-        private readonly string _versions;
         private readonly Dictionary<string, string> _urls;
-        private readonly ManifestVariables _manifestVariables;
 
         public DockerfileShaUpdater(
             string productName,
@@ -47,18 +40,17 @@ namespace Dotnet.Docker
             string? buildVersion,
             string arch,
             string os,
-            string versions,
+            string variableName,
             SpecificCommandOptions options,
             ManifestVariables manifestVariables)
+            : base(manifestVariables, variableName)
         {
             _productName = productName;
             _dockerfileVersion = new Version(dockerfileVersion);
             _buildVersion = buildVersion;
             _arch = arch;
             _os = os;
-            _versions = versions;
             _options = options;
-            _manifestVariables = manifestVariables;
 
             // Maps a product name to a set of one or more candidate URLs referencing the associated artifact. The order of the URLs
             // should be in priority order with each subsequent URL being the fallback.
@@ -91,17 +83,13 @@ namespace Dotnet.Docker
             SpecificCommandOptions options,
             ManifestVariables variables)
         {
-            string versionsPath = options.GetManifestVersionsFilePath();
-            string versions = File.ReadAllText(versionsPath);
-
             // The format of the sha variable name is '<productName>|<dockerfileVersion>|<os>|<arch>|sha'.
             // The 'os' and 'arch' segments are optional.
-            string shaVariablePattern = $"\"(?<{ShaVariableGroupName}>{Regex.Escape(productName)}\\|{Regex.Escape(dockerfileVersion)}.*\\|sha)\":";
+            string prefix = $"{productName}|{dockerfileVersion}|";
 
-            Regex shaVariableRegex = new(shaVariablePattern);
-
-            return shaVariableRegex.Matches(versions)
-                .Select(match => match.Groups[ShaVariableGroupName].Value)
+            return variables.Names
+                .Where(name => name.StartsWith(prefix, StringComparison.Ordinal))
+                .Where(name => name.EndsWith("|sha", StringComparison.Ordinal))
                 .Select(variable =>
                 {
                     Trace.TraceInformation($"Updating {variable}");
@@ -110,21 +98,12 @@ namespace Dotnet.Docker
                     DockerfileShaUpdater updater = new(
                         productName,
                         dockerfileVersion,
-                        GetBuildVersion(productName, dockerfileVersion, versions, options),
+                        GetBuildVersion(productName, dockerfileVersion, variables, options),
                         GetArch(parts),
                         GetOs(parts),
-                        versions,
+                        variable,
                         options,
-                        variables)
-                    {
-                        Path = versionsPath,
-                        VersionGroupName = ShaValueGroupName
-                    };
-
-                    string archPattern = updater._arch == string.Empty ? string.Empty : "|" + updater._arch;
-                    string osPattern = updater._os == string.Empty ? string.Empty : "|" + updater._os;
-                    updater.Regex = new Regex(
-                        $"{shaVariablePattern.Replace(".*", Regex.Escape(osPattern + archPattern))} \"(?<{ShaValueGroupName}>.*)\"");
+                        variables);
 
                     return updater;
                 })
@@ -136,7 +115,7 @@ namespace Dotnet.Docker
         {
             usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
 
-            string baseUrl = ManifestHelper.GetBaseUrls(_manifestVariables, _options).First();
+            string baseUrl = ManifestHelper.GetBaseUrls(Variables, _options).First();
             // Remove Aspire Dashboard case once https://github.com/microsoft/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
@@ -246,7 +225,7 @@ namespace Dotnet.Docker
             if (_productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ||
                 _productName.Contains("aspnet", StringComparison.OrdinalIgnoreCase))
             {
-                version = GetBuildVersion("runtime", _dockerfileVersion.ToString(), _versions, _options);
+                version = GetBuildVersion("runtime", _dockerfileVersion.ToString(), Variables, _options);
             }
 
             return version;
@@ -275,7 +254,7 @@ namespace Dotnet.Docker
             // the daily build location, we wouldn't use the release checksums file and instead use the other means of
             // retrieving the checksums.
             string? baseUrl = ManifestHelper
-                .GetBaseUrls(_manifestVariables, _options)
+                .GetBaseUrls(Variables, _options)
                 .Where(url => url == ReleaseDotnetBaseCdnUrl)
                 .FirstOrDefault();
 
@@ -409,7 +388,7 @@ namespace Dotnet.Docker
             return checksumEntries;
         }
 
-        private static string? GetBuildVersion(string productName, string dockerfileVersion, string variables, SpecificCommandOptions options)
+        private static string? GetBuildVersion(string productName, string dockerfileVersion, ManifestVariables variables, SpecificCommandOptions options)
         {
             string? buildVersion;
             if (options.ProductVersions.TryGetValue(productName, out string? version))

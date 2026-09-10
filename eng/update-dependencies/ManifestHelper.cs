@@ -92,15 +92,6 @@ public static partial class ManifestHelper
         $"{productName}|{dockerfileVersion}|{versionType.ToString().ToLowerInvariant()}-version";
 
     /// <summary>
-    /// Gets the regex that identifies a manifest variable.
-    /// </summary>
-    /// <param name="variableName">Name of the variable.</param>
-    /// <param name="valuePattern">Regex pattern that identifies the value of the variable.</param>
-    /// <param name="options">Configured options from the app.</param>
-    public static Regex GetManifestVariableRegex(string variableName, string valuePattern, RegexOptions options = RegexOptions.None) =>
-        new($"\"{Regex.Escape(variableName)}\": \"{valuePattern}\"", options);
-
-    /// <summary>
     /// Determines if the given value matches the pattern manifest variable. Does not check if the variable is defined
     /// in the manifest.
     /// </summary>

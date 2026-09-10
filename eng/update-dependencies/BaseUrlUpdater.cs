@@ -13,12 +13,9 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the baseUrl variables in the manifest.versions.json file.
 /// </summary>
-internal class BaseUrlUpdater : FileRegexUpdater
+internal class BaseUrlUpdater : VariableUpdaterBase
 {
-    private const string BaseUrlGroupName = "BaseUrlValue";
     private readonly SpecificCommandOptions _options;
-    private readonly ManifestVariables _manifestVariables;
-    private readonly string _manifestVariableName;
 
     /// <summary>
     /// Creates a new <see cref="IDependencyUpdater"/> for updating base URLs.
@@ -27,12 +24,6 @@ internal class BaseUrlUpdater : FileRegexUpdater
     /// </summary>
     public static IEnumerable<IDependencyUpdater> CreateUpdaters(ManifestVariables manifestVariables, SpecificCommandOptions options)
     {
-        if (manifestVariables is null)
-        {
-            Trace.TraceWarning("BaseUrlUpdater: manifest variables missing - skipping base URL update.");
-            return [];
-        }
-
         var upstreamBranch = manifestVariables.GetValue("branch");
         var baseUrlVarNames = ManifestHelper.GetBaseUrlVariableNames(
             dockerfileVersion: options.DockerfileVersion,
@@ -66,22 +57,18 @@ internal class BaseUrlUpdater : FileRegexUpdater
         SpecificCommandOptions options,
         ManifestVariables manifestVariables,
         string manifestVariableName)
+        : base(manifestVariables, manifestVariableName)
     {
-        Path = options.GetManifestVersionsFilePath();
-        VersionGroupName = BaseUrlGroupName;
         _options = options;
-        _manifestVariables = manifestVariables;
-        _manifestVariableName = manifestVariableName;
-
-        Regex = ManifestHelper.GetManifestVariableRegex(_manifestVariableName, $"(?<{BaseUrlGroupName}>.+)");
     }
+
+    protected override bool ShouldUpdate(string currentValue) => currentValue.Length != 0;
 
     protected override string TryGetDesiredValue(IEnumerable<IDependencyInfo> dependencyInfos, out IEnumerable<IDependencyInfo> usedDependencyInfos)
     {
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
 
-        string baseUrlVersionVarName = _manifestVariableName;
-        string unresolvedBaseUrl = _manifestVariables.GetRawValue(baseUrlVersionVarName);
+        string unresolvedBaseUrl = Variables.GetRawValue(VariableName);
 
         if (_options.IsInternal)
         {

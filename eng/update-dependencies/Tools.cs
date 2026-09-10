@@ -25,11 +25,11 @@ internal static class Tools
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 
-    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(string manifestVersionsFilePath) =>
+    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(ManifestVariables variables) =>
     [
-        ..MinGitUpdater.GetUpdaters(manifestVersionsFilePath),
-        ..ChiselUpdater.GetUpdaters(manifestVersionsFilePath),
-        RocksToolboxUpdater.GetUpdater(manifestVersionsFilePath),
-        SyftUpdater.GetUpdater(manifestVersionsFilePath),
+        ..MinGitUpdater.GetUpdaters(variables),
+        ..ChiselUpdater.GetUpdaters(variables),
+        RocksToolboxUpdater.GetUpdater(variables),
+        SyftUpdater.GetUpdater(variables),
     ];
 }

@@ -19,16 +19,16 @@ internal static partial class MinGitUpdater
 
     private const string Repo = "git";
 
-    public static IEnumerable<IDependencyUpdater> GetUpdaters(string manifestVersionsFilePath) =>
+    public static IEnumerable<IDependencyUpdater> GetUpdaters(ManifestVariables variables) =>
     [
         new GitHubReleaseUrlUpdater(
-            manifestVersionsFilePath: manifestVersionsFilePath,
+            variables: variables,
             toolName: ToolName,
             variableName: GetManifestVariableName("url"),
             owner: Owner,
             repo: Repo,
             assetRegex: UrlRegex),
-        new MinGitShaUpdater(manifestVersionsFilePath)
+        new MinGitShaUpdater(variables)
     ];
 
     public static async Task<GitHubReleaseInfo> GetBuildInfoAsync()
@@ -42,9 +42,9 @@ internal static partial class MinGitUpdater
 
     private static string GetManifestVariableName(string type) => "mingit|latest|x64|" + type;
 
-    private class MinGitShaUpdater(string manifestVersionsFilePath)
+    private class MinGitShaUpdater(ManifestVariables variables)
         : GitHubReleaseUpdaterBase(
-            manifestVersionsFilePath,
+            variables,
             MinGitUpdater.ToolName,
             GetManifestVariableName("sha"),
             MinGitUpdater.Owner,

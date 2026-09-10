@@ -86,9 +86,9 @@ namespace Dotnet.Docker
 
                 cancellationToken.ThrowIfCancellationRequested();
 
-                // Load manifest variables once, up front.
                 var manifestFilePath = options.GetManifestVersionsFilePath();
                 var manifestVariables = ManifestVariables.FromFile(manifestFilePath);
+                string originalContent = manifestVariables.Content;
 
                 List<DependencyUpdateResults> updateResults = [];
 
@@ -101,7 +101,7 @@ namespace Dotnet.Docker
 
                 if (toolBuildInfos.Length != 0)
                 {
-                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(manifestFilePath);
+                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(manifestVariables);
                     DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
                     updateResults.Add(toolUpdateResults);
                 }
@@ -110,17 +110,11 @@ namespace Dotnet.Docker
                 {
                     // Bind edits to this workspace, not the checkout used to resolve versions.
                     var variableUpdaters = VariableUpdates
-                        .Select(update => new VariableUpdater(manifestFilePath, update));
+                        .Select(update => new VariableUpdater(manifestVariables, update));
 
                     DependencyUpdateResults customUpdateResults = UpdateFiles(VariableUpdates, variableUpdaters);
                     updateResults.Add(customUpdateResults);
                 }
-
-                IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters(options.RepoRoot);
-                IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
-                cancellationToken.ThrowIfCancellationRequested();
-                UpdateFiles(allBuildInfos, generatedContentUpdaters);
-                cancellationToken.ThrowIfCancellationRequested();
 
                 if (errorTraceListener.Errors.Any())
                 {
@@ -128,7 +122,21 @@ namespace Dotnet.Docker
                     throw new InvalidOperationException($"Dependency updates reported errors:{Environment.NewLine}{errors}");
                 }
 
-                bool changesDetected = updateResults.Any(result => result.ChangesDetected());
+                string updatedContent = manifestVariables.Content;
+                bool manifestChanged = updatedContent != originalContent;
+                if (manifestChanged)
+                {
+                    await File.WriteAllTextAsync(manifestFilePath, updatedContent, cancellationToken);
+                }
+
+                // Generation reads the manifest from disk, after all in-memory edits are complete.
+                IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters(options.RepoRoot);
+                IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
+                cancellationToken.ThrowIfCancellationRequested();
+                UpdateFiles(allBuildInfos, generatedContentUpdaters);
+                cancellationToken.ThrowIfCancellationRequested();
+
+                bool changesDetected = manifestChanged || updateResults.Any(result => result.ChangesDetected());
                 if (!changesDetected)
                 {
                     Trace.TraceInformation("No changes detected after updates.");
@@ -177,8 +185,8 @@ namespace Dotnet.Docker
 
             foreach (string productName in options.ProductVersions.Keys)
             {
-                updaters.Add(new VersionUpdater(VersionType.Build, productName, options.DockerfileVersion, options));
-                updaters.Add(new VersionUpdater(VersionType.Product, productName, options.DockerfileVersion, options));
+                updaters.Add(new VersionUpdater(VersionType.Build, productName, options.DockerfileVersion, options, manifestVariables));
+                updaters.Add(new VersionUpdater(VersionType.Product, productName, options.DockerfileVersion, options, manifestVariables));
 
                 var shaUpdaters = DockerfileShaUpdater.CreateUpdaters(
                     productName: productName,

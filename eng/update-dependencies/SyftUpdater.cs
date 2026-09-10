@@ -21,6 +21,6 @@ internal static class SyftUpdater
             SimpleName: ToolName,
             Release: await GitHubHelper.GetLatestRelease(Owner, Repo));
 
-    public static IDependencyUpdater GetUpdater(string manifestVersionsFilePath) =>
-        new GitHubReleaseVersionUpdater(manifestVersionsFilePath, ToolName, VariableName, Owner, Repo);
+    public static IDependencyUpdater GetUpdater(ManifestVariables variables) =>
+        new GitHubReleaseVersionUpdater(variables, ToolName, VariableName, Owner, Repo);
 }

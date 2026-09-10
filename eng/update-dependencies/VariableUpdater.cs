@@ -8,16 +8,16 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates a single variable in the manifest.versions.json file.
 /// </summary>
-/// <param name="manifestVersionsFilePath">
-/// Path to the manifest.versions.json file to updated.
+/// <param name="variables">
+/// Shared manifest editor for this update pass.
 /// </param>
 /// <param name="dependencyInfo">
 /// Information about what variable to update and what the new value should be.
 /// </param>
 internal sealed class VariableUpdater(
-    string manifestVersionsFilePath,
+    ManifestVariables variables,
     VariableUpdateInfo dependencyInfo
-) : VariableUpdaterBase(manifestVersionsFilePath, dependencyInfo.SimpleName)
+) : VariableUpdaterBase(variables, dependencyInfo.SimpleName)
 {
     private readonly VariableUpdateInfo _dependencyInfo = dependencyInfo;
 

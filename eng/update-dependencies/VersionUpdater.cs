@@ -4,7 +4,6 @@
 using Microsoft.DotNet.VersionTools.Dependencies;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 
@@ -14,28 +13,29 @@ namespace Dotnet.Docker
     /// An IDependencyUpdater that will update the specified version variables within the manifest to align with the
     /// current product version.
     /// </summary>
-    public class VersionUpdater : FileRegexUpdater
+    internal partial class VersionUpdater : VariableUpdaterBase
     {
         private static readonly string[] s_excludedMonikers = { "servicing", "rtm" };
-        private static readonly string s_versionGroupName = "versionValue";
 
         private readonly string _productName;
         private readonly SpecificCommandOptions _options;
         private readonly VersionType _versionType;
 
-        public VersionUpdater(VersionType versionType, string productName, string dockerfileVersion, SpecificCommandOptions options)
+        public VersionUpdater(
+            VersionType versionType,
+            string productName,
+            string dockerfileVersion,
+            SpecificCommandOptions options,
+            ManifestVariables variables)
+            : base(variables, ManifestHelper.GetVersionVariableName(versionType, productName, dockerfileVersion))
         {
             _productName = productName;
             _options = options;
             _versionType = versionType;
-            string versionVariableName = ManifestHelper.GetVersionVariableName(versionType, productName, dockerfileVersion);
-
-            Trace.TraceInformation($"Updating {versionVariableName}");
-
-            Path = options.GetManifestVersionsFilePath();
-            VersionGroupName = s_versionGroupName;
-            Regex = GetVersionVariableRegex(versionVariableName);
         }
+
+        // Preserve the old selection rule: edit literal versions, not aliases or empty values.
+        protected override bool ShouldUpdate(string currentValue) => VersionValueRegex.IsMatch(currentValue);
 
         protected override string TryGetDesiredValue(
             IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
@@ -54,7 +54,7 @@ namespace Dotnet.Docker
 
         private static string GetBuildVersion(IDependencyInfo productInfo) => productInfo.SimpleVersion ?? string.Empty;
 
-        public static string GetBuildVersion(string productName, string dockerfileVersion, string variables)
+        public static string GetBuildVersion(string productName, string dockerfileVersion, ManifestVariables variables)
         {
             // Special case for handling the lzma NuGet package cache.
             if (productName == "lzma")
@@ -63,14 +63,13 @@ namespace Dotnet.Docker
             }
 
             string versionVariableName = ManifestHelper.GetVersionVariableName(VersionType.Build, productName, dockerfileVersion);
-            Regex regex = GetVersionVariableRegex(versionVariableName);
-            Match match = regex.Match(variables);
-            if (!match.Success)
+            string version = variables.GetRawValue(versionVariableName);
+            if (!VersionValueRegex.IsMatch(version))
             {
                 throw new InvalidOperationException($"Unable to retrieve {versionVariableName}");
             }
 
-            return match.Groups[s_versionGroupName].Value;
+            return version;
         }
 
         private string GetProductVersion(IDependencyInfo productInfo)
@@ -98,9 +97,7 @@ namespace Dotnet.Docker
             return VersionHelper.ResolveProductVersion(version, _options.StableBranding);
         }
 
-        private static Regex GetVersionVariableRegex(string versionVariableName) =>
-            ManifestHelper.GetManifestVariableRegex(
-                versionVariableName,
-                $"(?<{s_versionGroupName}>v?[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)*)?)");
+        [GeneratedRegex(@"\Av?[\d]+.[\d]+.[\d]+(-[\w]+(.[\d]+)*)?\z")]
+        private static partial Regex VersionValueRegex { get; }
     }
 }

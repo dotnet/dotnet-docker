@@ -8,13 +8,13 @@ using Microsoft.DotNet.VersionTools.Dependencies;
 namespace Dotnet.Docker;
 
 internal abstract partial class GitHubReleaseUpdaterBase(
-    string manifestVersionsFilePath,
+    ManifestVariables variables,
     string toolName,
     string variableName,
     string owner,
     string repo)
     : VariableUpdaterBase(
-        manifestVersionsFilePath,
+        variables,
         variableName)
 {
     protected string ToolName { get; } = toolName;
@@ -31,10 +31,7 @@ internal abstract partial class GitHubReleaseUpdaterBase(
     {
         usedDependencyInfos = [];
 
-        var variables = Variables.Value;
-        string currentVersion = variables.Contains(VariableName)
-            ? variables.GetRawValue(VariableName)
-            : "";
+        string currentVersion = Variables.GetRawValue(VariableName);
         if (string.IsNullOrEmpty(currentVersion))
         {
             return "";
