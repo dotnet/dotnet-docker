@@ -8,18 +8,21 @@ WORKDIR /source
 # Add the Ubuntu sources list for the target architecture
 COPY <<EOF /etc/apt/sources.list.d/amd64.sources
 Types: deb
-URIs: http://ports.ubuntu.com/ubuntu-ports/
-Suites: noble noble-updates
+URIs: http://archive.ubuntu.com/ubuntu/
+Suites: resolute resolute-updates
 Components: main restricted
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 Architectures: amd64
 EOF
 
 # Add packages necessary for cross-build support
+# Native AOT cross-compilation requires Clang's --target support.
 RUN sed -i '/Signed-By/ a Architectures: arm64' /etc/apt/sources.list.d/ubuntu.sources \
     && dpkg --add-architecture amd64 \
     && apt-get update \
     && apt-get install -y \
+        clang \
+        llvm \
         gcc-x86-64-linux-gnu \
         zlib1g-dev:amd64 \
     && rm -rf /var/lib/apt/lists/*

@@ -9,17 +9,20 @@ WORKDIR /source
 COPY <<EOF /etc/apt/sources.list.d/arm64.sources
 Types: deb
 URIs: http://ports.ubuntu.com/ubuntu-ports/
-Suites: noble noble-updates
+Suites: resolute resolute-updates
 Components: main restricted
 Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 Architectures: arm64
 EOF
 
 # Add packages necessary for cross-build support
+# Native AOT cross-compilation requires Clang's --target support.
 RUN sed -i '/Signed-By/ a Architectures: amd64' /etc/apt/sources.list.d/ubuntu.sources \
     && dpkg --add-architecture arm64 \
     && apt-get update \
     && apt-get install -y \
+        clang \
+        llvm \
         gcc-aarch64-linux-gnu \
         zlib1g-dev:arm64 \
     && rm -rf /var/lib/apt/lists/*
