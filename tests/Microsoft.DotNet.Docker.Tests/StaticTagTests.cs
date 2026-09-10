@@ -32,7 +32,7 @@ namespace Microsoft.DotNet.Docker.Tests
         private const string SingleNumberRegex = @"\d+";
         private const string MajorVersionRegex = SingleNumberRegex;
         private const string MajorMinorVersionRegex = @$"{SingleNumberRegex}\.{SingleNumberRegex}";
-        private static readonly string[] ApplianceRepos =
+        private static readonly string[] ApplianceRepoIds =
         [
             "monitor",
             "monitor-base",
@@ -294,7 +294,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         break;
 
                     case TestType.Platform:
-                        if (ApplianceRepos.Any(repo.Name.Contains))
+                        if (ApplianceRepoIds.Contains(repo.Id))
                         {
                             // Only appliance repos have major version tags
                             // Only appliance repos have floating distro tags (<cref="IsApplianceVersionUsingOldSchema"/>)
@@ -428,7 +428,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         break;
 
                     case TestType.FloatingAlpine:
-                        if (ApplianceRepos.Any(repo.Name.Contains))
+                        if (ApplianceRepoIds.Contains(repo.Id))
                         {
                             // Only appliance repos have major version alpine floating tags
                             // Only appliance repos have major.minor.patch alpine floating tags
@@ -482,7 +482,7 @@ namespace Microsoft.DotNet.Docker.Tests
                         break;
 
                     case TestType.Version:
-                        if (ApplianceRepos.Any(repo.Name.Contains))
+                        if (ApplianceRepoIds.Contains(repo.Id))
                         {
                             // Only appliance repos have major version tags
                             testObjects.Add(GetTagTestInput(

@@ -1,1 +1,1 @@
-This image contains the Aspire Dashboard.
+This image contains the [Aspire Dashboard](https://aspire.dev/dashboard/standalone/), a standalone browser-based app for viewing telemetry and run-time information about distributed applications. The source is available in the [microsoft/aspire](https://github.com/microsoft/aspire) repository.
