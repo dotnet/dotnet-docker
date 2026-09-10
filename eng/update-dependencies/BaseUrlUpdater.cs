@@ -7,7 +7,6 @@ using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.DotNet.VersionTools.Dependencies;
-using Newtonsoft.Json.Linq;
 
 namespace Dotnet.Docker;
 
@@ -52,7 +51,7 @@ internal class BaseUrlUpdater : FileRegexUpdater
         ManifestVariables manifestVariables,
         SpecificCommandOptions options)
     {
-        var variableHasValue = manifestVariables.HasValue(baseUrlVarName);
+        var variableHasValue = manifestVariables.Contains(baseUrlVarName);
 
         if (!variableHasValue)
         {
@@ -82,8 +81,7 @@ internal class BaseUrlUpdater : FileRegexUpdater
         usedDependencyInfos = Enumerable.Empty<IDependencyInfo>();
 
         string baseUrlVersionVarName = _manifestVariableName;
-        string unresolvedBaseUrl = _manifestVariables.Variables[baseUrlVersionVarName]?.ToString() ??
-            throw new InvalidOperationException($"Variable with name '{baseUrlVersionVarName}' is missing.");
+        string unresolvedBaseUrl = _manifestVariables.GetRawValue(baseUrlVersionVarName);
 
         if (_options.IsInternal)
         {

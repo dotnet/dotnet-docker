@@ -3,14 +3,13 @@
 
 using System;
 using Microsoft.DotNet.VersionTools.Dependencies;
-using Newtonsoft.Json.Linq;
 
 namespace Dotnet.Docker;
 
 internal abstract class VariableUpdaterBase : FileRegexUpdater
 {
     protected string VariableName { get; }
-    protected Lazy<JObject> ManifestVariables { get; }
+    protected Lazy<ManifestVariables> Variables { get; }
 
     public VariableUpdaterBase(string manifestVersionsFilePath, string variableName)
     {
@@ -19,16 +18,7 @@ internal abstract class VariableUpdaterBase : FileRegexUpdater
         VersionGroupName = "val";
         Regex = ManifestHelper.GetManifestVariableRegex(variableName, @$"(?<{VersionGroupName}>\S*)");
 
-        ManifestVariables = new Lazy<JObject>(
-            () =>
-            {
-                const string VariablesProperty = "variables";
-                JToken? variables = ManifestHelper.LoadManifest(manifestVersionsFilePath)[VariablesProperty];
-                if (variables is null)
-                {
-                    throw new InvalidOperationException($"'{VariablesProperty}' property missing in '{manifestVersionsFilePath}'");
-                }
-                return (JObject)variables;
-            });
+        Variables = new Lazy<ManifestVariables>(
+            () => ManifestVariables.FromFile(manifestVersionsFilePath));
     }
 }

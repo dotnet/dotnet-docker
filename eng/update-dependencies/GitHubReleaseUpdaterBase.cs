@@ -31,7 +31,10 @@ internal abstract partial class GitHubReleaseUpdaterBase(
     {
         usedDependencyInfos = [];
 
-        string currentVersion = ManifestHelper.TryGetVariableValue(VariableName, ManifestVariables.Value);
+        var variables = Variables.Value;
+        string currentVersion = variables.Contains(VariableName)
+            ? variables.GetRawValue(VariableName)
+            : "";
         if (string.IsNullOrEmpty(currentVersion))
         {
             return "";

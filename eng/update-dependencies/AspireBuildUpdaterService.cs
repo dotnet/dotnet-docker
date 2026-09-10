@@ -9,12 +9,12 @@ namespace Dotnet.Docker;
 internal class AspireBuildUpdaterService(
     ILogger<AspireBuildUpdaterService> logger,
     HttpClient httpClient,
-    Func<string, IManifestVariables> manifestVariablesFactory
+    Func<string, ManifestVariables> manifestVariablesFactory
 ) : IBuildUpdaterService
 {
     private readonly ILogger<AspireBuildUpdaterService> _logger = logger;
     private readonly HttpClient _httpClient = httpClient;
-    private readonly Func<string, IManifestVariables> _createManifestVariables = manifestVariablesFactory;
+    private readonly Func<string, ManifestVariables> _createManifestVariables = manifestVariablesFactory;
 
     /// <summary>
     /// Given a BAR (https://aka.ms/bar) build of Aspire, updates the Aspire Dashboard build version.

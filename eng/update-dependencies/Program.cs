@@ -132,7 +132,7 @@ config.UseHost(
                 // Dependencies that can be updated using the FromComponentCommand
                 services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
                 // Factory method for reading variables from manifest.versions.json
-                services.AddSingleton<Func<string, IManifestVariables>>(path => ManifestVariables.FromFile(path));
+                services.AddSingleton<Func<string, ManifestVariables>>(path => ManifestVariables.FromFile(path));
 
                 // Commands
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();

@@ -12,7 +12,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.DotNet.VersionTools.Dependencies;
-using Newtonsoft.Json.Linq;
 
 namespace Dotnet.Docker
 {
@@ -137,7 +136,7 @@ namespace Dotnet.Docker
         {
             usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
 
-            string baseUrl = ManifestHelper.GetBaseUrls(_manifestVariables.Variables, _options).First();
+            string baseUrl = ManifestHelper.GetBaseUrls(_manifestVariables, _options).First();
             // Remove Aspire Dashboard case once https://github.com/microsoft/aspire/issues/2035 is fixed.
             string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
             string versionDir = _buildVersion ?? "";
@@ -276,7 +275,7 @@ namespace Dotnet.Docker
             // the daily build location, we wouldn't use the release checksums file and instead use the other means of
             // retrieving the checksums.
             string? baseUrl = ManifestHelper
-                .GetBaseUrls(_manifestVariables.Variables, _options)
+                .GetBaseUrls(_manifestVariables, _options)
                 .Where(url => url == ReleaseDotnetBaseCdnUrl)
                 .FirstOrDefault();
 
