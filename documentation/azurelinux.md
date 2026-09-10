@@ -145,22 +145,22 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["aspnetapp/aspnetapp.csproj", "aspnetapp/"]
-RUN dotnet restore "./aspnetapp/aspnetapp.csproj"
+COPY ["AspNetCoreRazorApp/AspNetCoreRazorApp.csproj", "AspNetCoreRazorApp/"]
+RUN dotnet restore "./AspNetCoreRazorApp/AspNetCoreRazorApp.csproj"
 COPY . .
-WORKDIR "/src/aspnetapp"
-RUN dotnet build "./aspnetapp.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/AspNetCoreRazorApp"
+RUN dotnet build "./AspNetCoreRazorApp.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./aspnetapp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./AspNetCoreRazorApp.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 + # Make sure non-root user is enabled after the debug stage so that we have permission to install the debug dependencies
 + USER $APP_UID
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+ENTRYPOINT ["dotnet", "AspNetCoreRazorApp.dll"]
 ```
 
 If this example doesn't work for your scenario, see [Container Tools build properties](https://docs.microsoft.com/visualstudio/containers/container-msbuild-properties) for more information on

@@ -73,7 +73,7 @@ FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 FROM mcr.microsoft.com/dotnet/aspnet:9.0
 ```
 
-You can see [one of the sample Dockerfiles](aspnetapp/Dockerfile) for a complete example. Such a Dockerfile can be built using the following commands:
+You can see [one of the sample Dockerfiles](AspNetCoreRazorApp/Dockerfile) for a complete example. Such a Dockerfile can be built using the following commands:
 
 ```bash
 # Build targeting the current machine's platform

@@ -13,12 +13,12 @@ The following is just one example of how to test .NET apps with Docker and isn't
 There are multiple ways to run unit tests in containers, most of which which aren't .NET-specific.
 A good approach to automated testing is to make sure that tests run in an environment similar to production, make sure that failing tests fail the build/test/deployment pipeline that they run in, and make sure to collect detailed test output/logs regardless of test success or failure.
 
-This example uses the [tests](./complexapp/tests) that are part of [complexapp](./complexapp).
-The instructions assume that you have cloned this repo and are in the [complexapp](./complexapp) directory.
+This example uses the [tests](./MultiProjectApp/Tests) that are part of [MultiProjectApp](./MultiProjectApp).
+The instructions assume that you have cloned this repo and are in the [MultiProjectApp](./MultiProjectApp) directory.
 
 ## Running tests in an executable stage
 
-The [complexapp Dockerfile](./complexapp/Dockerfile) includes a `test` stage that demonstrates running via its `ENTRYPOINT`, as follows:
+The [MultiProjectApp Dockerfile](./MultiProjectApp/Dockerfile) includes a `test` stage that demonstrates running via its `ENTRYPOINT`, as follows:
 
 ```Dockerfile
 # test exposes tests as the default executable for the stage
@@ -45,21 +45,21 @@ PS> mkdir TestResults
 
 
 # Run the test image, mounting the TestResults directory into the container
-PS> docker run --rm -v ${pwd}/TestResults:/source/tests/TestResults complexapp-tests
-Test run for /source/tests/bin/Debug/net9.0/tests.dll (.NETCoreApp,Version=v9.0)
+PS> docker run --rm -v ${pwd}/TestResults:/source/Tests/TestResults complexapp-tests
+Test run for /source/Tests/bin/Debug/net9.0/Tests.dll (.NETCoreApp,Version=v9.0)
 VSTest version 17.12.0-preview-24412-03 (x64)
 
 Starting test execution, please wait...
 A total of 1 test files matched the specified pattern.
-Results File: /source/tests/TestResults/_51029443fea7_2024-09-27_16_25_14.trx
+Results File: /source/Tests/TestResults/_51029443fea7_2024-09-27_16_25_14.trx
 
-Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 9 ms - tests.dll (net9.0)
+Passed!  - Failed:     0, Passed:     3, Skipped:     0, Total:     3, Duration: 9 ms - Tests.dll (net9.0)
 
 
 # View the test results on the host machine
 PS> ls TestResults
 
-    Directory: C:\s\dotnet-docker\samples\complexapp\TestResults
+    Directory: C:\s\dotnet-docker\samples\MultiProjectApp\TestResults
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----

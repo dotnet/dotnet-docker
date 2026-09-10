@@ -21,7 +21,7 @@ docker pull mcr.microsoft.com/dotnet/samples:aspnetapp
 Alternatively, you can build the sample image locally:
 
 ```console
-docker build --pull -t mcr.microsoft.com/dotnet/samples:aspnetapp 'https://github.com/dotnet/dotnet-docker.git#:samples/aspnetapp'
+docker build --pull -t mcr.microsoft.com/dotnet/samples:aspnetapp 'https://github.com/dotnet/dotnet-docker.git#:samples/AspNetCoreRazorApp'
 ```
 
 ## Create and trust a development certificate
@@ -37,7 +37,7 @@ certificate password.
 
 Rather than using environment variable to specify the development certificate password,  use [.NET user secrets](https://learn.microsoft.com/aspnet/core/security/app-secrets) to store the password.
 
-Initializing user-secrets for the first time on a project modifies the project file, so you will need a local copy of the `aspnetapp` sample. Clone this repo or [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/main.zip).
+Initializing user-secrets for the first time on a project modifies the project file, so you will need a local copy of the `AspNetCoreRazorApp` sample. Clone this repo or [download the repository as a zip](https://github.com/dotnet/dotnet-docker/archive/main.zip).
 
 ```console
 git clone https://github.com/dotnet/dotnet-docker/
@@ -46,9 +46,9 @@ git clone https://github.com/dotnet/dotnet-docker/
 Initialize user secrets for your app, and set the certificate password:
 
 ```console
-cd samples/aspnetapp
-dotnet user-secrets init -p aspnetapp/aspnetapp.csproj
-dotnet user-secrets -p aspnetapp/aspnetapp.csproj set "Kestrel:Certificates:Default:Password" $CREDENTIAL_PLACEHOLDER
+cd samples/AspNetCoreRazorApp
+dotnet user-secrets init -p AspNetCoreRazorApp/AspNetCoreRazorApp.csproj
+dotnet user-secrets -p AspNetCoreRazorApp/AspNetCoreRazorApp.csproj set "Kestrel:Certificates:Default:Password" $CREDENTIAL_PLACEHOLDER
 ```
 
 Since initializing user-secrets modified the project file, re-build the sample image:
@@ -94,6 +94,7 @@ docker run --rm -it `
     -e ASPNETCORE_ENVIRONMENT=Development `
     -v ${env:APPDATA}\microsoft\UserSecrets\:C:\Users\ContainerUser\AppData\Roaming\microsoft\UserSecrets `
     -v ${env:USERPROFILE}\.aspnet\https:C:\https `
+    -e ASPNETCORE_Kestrel__Certificates__Default__Path=C:\https\aspnetapp.pfx `
     aspnetapp
 ```
 

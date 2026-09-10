@@ -10,7 +10,7 @@ Before doing all the work of authoring and maintaining a Dockerfile that install
 
 If there's a platform that you require that is available in its own Docker image, ask yourself whether it would be better to use that image and add .NET to it or would it be better to use the .NET image as the base and add the platform to it.
 
-In some cases, you can work around the need for the .NET runtime by publishing your application as a [self-contained app](https://learn.microsoft.com/dotnet/core/deploying/), in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the [releasesapp sample](../../samples/releasesapp/README.md).
+In some cases, you can work around the need for the .NET runtime by publishing your application as a [self-contained app](https://learn.microsoft.com/dotnet/core/deploying/), in which case all of your app's dependencies are packaged with the app. This reduces the dependencies that need to be installed separately on the base image. Example Dockerfiles that demonstrate publishing a self-contained app are available in the [ConsoleAppSelfContained sample](../../samples/ConsoleAppSelfContained/README.md).
 
 ## Image Purposes
 

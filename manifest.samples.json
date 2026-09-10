@@ -32,7 +32,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
+              "dockerfile": "samples/ConsoleApp/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -43,7 +43,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
+              "dockerfile": "samples/ConsoleApp/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -55,7 +55,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/dotnetapp/Dockerfile.alpine",
+              "dockerfile": "samples/ConsoleApp/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -66,7 +66,7 @@
               "variant": "v8"
             },
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.nanoserver",
+              "dockerfile": "samples/ConsoleApp/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
@@ -84,7 +84,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/ConsoleApp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
@@ -95,7 +95,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/ConsoleApp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
@@ -107,7 +107,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/dotnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/ConsoleApp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
@@ -127,7 +127,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
+              "dockerfile": "samples/AspNetCoreRazorApp/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -147,7 +147,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
+              "dockerfile": "samples/AspNetCoreRazorApp/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -168,7 +168,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/aspnetapp/Dockerfile.alpine",
+              "dockerfile": "samples/AspNetCoreRazorApp/Dockerfile.alpine",
               "os": "linux",
               "osVersion": "alpine",
               "tags": {
@@ -188,7 +188,7 @@
               ]
             },
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.nanoserver",
+              "dockerfile": "samples/AspNetCoreRazorApp/Dockerfile.nanoserver",
               "os": "windows",
               "osVersion": "nanoserver-ltsc2022",
               "tags": {
@@ -215,7 +215,7 @@
           },
           "platforms": [
             {
-              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/AspNetCoreRazorApp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
@@ -235,7 +235,7 @@
             },
             {
               "architecture": "arm",
-              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/AspNetCoreRazorApp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {
@@ -256,7 +256,7 @@
             },
             {
               "architecture": "arm64",
-              "dockerfile": "samples/aspnetapp/Dockerfile.chiseled",
+              "dockerfile": "samples/AspNetCoreRazorApp/Dockerfile.chiseled",
               "os": "linux",
               "osVersion": "ubuntu",
               "tags": {

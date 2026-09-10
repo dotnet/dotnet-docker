@@ -17,8 +17,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/introduction) and [Host ASP.NET Core in Docker containers](https://learn.microsoft.com/aspnet/core/host-and-deploy/docker) to learn more.
 
-* [Self-contained sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapp/README.md) - [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapp/Dockerfile)
-* [Native AOT sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapi/README.md) - [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/releasesapi/Dockerfile)
+* [Self-contained sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleAppSelfContained/README.md) - [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleAppSelfContained/Dockerfile)
+* [Native AOT sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreNativeAOT/README.md) - [Dockerfile](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreNativeAOT/Dockerfile)
 
 # Image Variants
 
