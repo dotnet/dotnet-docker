@@ -31,7 +31,7 @@ Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NE
 
 * [AspNetCoreRazorApp](../samples/AspNetCoreRazorApp/Dockerfile.chiseled)
 * [ConsoleApp](../samples/ConsoleApp/Dockerfile.chiseled)
-* [AspNetCoreNativeAOT](../samples/AspNetCoreNativeAOT/Dockerfile) (and [icu version](../samples/AspNetCoreNativeAOT/Dockerfile.icu))
+* [AspNetCoreNativeAot](../samples/AspNetCoreNativeAot/Dockerfile) (and [icu version](../samples/AspNetCoreNativeAot/Dockerfile.icu))
 * [ConsoleAppSelfContained](../samples/ConsoleAppSelfContained/Dockerfile.chiseled)
 
 If your app's Dockerfile doesn't depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.

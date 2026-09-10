@@ -17,7 +17,7 @@ Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) direct
 * [Build a .NET container image](ConsoleApp/README.md)
 * [Build an ASP.NET Core container image](AspNetCoreRazorApp/README.md)
 * [Build a single file app](ConsoleAppSelfContained/README.md)
-* [Build a native AOT app](AspNetCoreNativeAOT/README.md)
+* [Build a native AOT app](AspNetCoreNativeAot/README.md)
 * [Building a globalization and time zone aware (or unaware) image](ConsoleAppWithGlobalization/README.md)
 * [Build for a platform](build-for-a-platform.md)
 

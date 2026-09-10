@@ -9,7 +9,7 @@ A similar console app sample supports [single file deployment](../ConsoleAppSelf
 You can build and run the sample:
 
 ```console
-docker build --pull -t releasesapi 'https://github.com/dotnet/dotnet-docker.git#:samples/AspNetCoreNativeAOT'
+docker build --pull -t releasesapi 'https://github.com/dotnet/dotnet-docker.git#:samples/AspNetCoreNativeAot'
 docker run --rm -it -p 8000:8080 -e ASPNETCORE_HTTP_PORTS=8080 releasesapi
 ```
 
@@ -50,7 +50,7 @@ This means you can build ARM64 images using an AMD64 machine and vice-versa.
 For example, to build an Ubuntu ARM64 native AOT .NET image on an AMD64 machine, you can run the following command:
 
 ```console
-docker build --pull --platform linux/arm64 -t releasesapi -f Dockerfile.ubuntu-cross-x64-arm64 'https://github.com/dotnet/dotnet-docker.git#:samples/AspNetCoreNativeAOT'
+docker build --pull --platform linux/arm64 -t releasesapi -f Dockerfile.ubuntu-cross-x64-arm64 'https://github.com/dotnet/dotnet-docker.git#:samples/AspNetCoreNativeAot'
 ```
 
 Additional [native AOT cross-compilation options](https://github.com/dotnet/runtime/blob/main/src/coreclr/nativeaot/docs/containers.md) are described in the dotnet/runtime repo.

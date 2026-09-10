@@ -32,7 +32,7 @@ COPY --link . .
 RUN --mount=type=cache,target=/root/.nuget \
     --mount=type=cache,target=/source/bin \
     --mount=type=cache,target=/source/obj \
-    dotnet publish -a $TARGETARCH -o /app AspNetCoreNativeAOT.csproj \
+    dotnet publish -a $TARGETARCH -o /app AspNetCoreNativeAot.csproj \
         && rm /app/*.dbg /app/*.Development.json
 
 # Final stage/image
@@ -40,4 +40,4 @@ FROM mcr.microsoft.com/dotnet/runtime-deps:11.0-resolute-chiseled-amd64
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./AspNetCoreNativeAOT"]
+ENTRYPOINT ["./AspNetCoreNativeAot"]

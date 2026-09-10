@@ -2,7 +2,7 @@
 
 This app demonstrates publishing an app published with [single file](https://learn.microsoft.com/dotnet/core/deploying/single-file/) deployment in containers.
 
-A similar [web API sample](../AspNetCoreNativeAOT/README.md) supports native AOT deployment. This app could also be deployed that way.
+A similar [web API sample](../AspNetCoreNativeAot/README.md) supports native AOT deployment. This app could also be deployed that way.
 
 ## Usage
 
