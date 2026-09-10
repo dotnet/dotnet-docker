@@ -50,4 +50,4 @@ Samples are provided for
 
 You can pull a pre-built Windows sample image using the following tag:
 
-- `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-ltsc2022`
+- `mcr.microsoft.com/dotnet/samples:dotnetapp-nanoserver-ltsc2025`

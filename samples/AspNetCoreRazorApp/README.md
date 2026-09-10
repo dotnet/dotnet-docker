@@ -27,7 +27,7 @@ You can also reach the app's API endpoint from the command line:
 $ curl http://localhost:8000/Environment
 {
   "runtimeVersion": ".NET 11.0.0-rc.1",
-  "osVersion": "Ubuntu 24.04.3 LTS",
+  "osVersion": "Ubuntu 26.04 LTS",
   "osArchitecture": "X64",
   "user": "app",
   "processorCount": 32,
@@ -175,4 +175,4 @@ Samples are provided for
 
 You can pull a pre-built Windows sample image using the following tag:
 
-- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-ltsc2022`
+- `mcr.microsoft.com/dotnet/samples:aspnetapp-nanoserver-ltsc2025`
