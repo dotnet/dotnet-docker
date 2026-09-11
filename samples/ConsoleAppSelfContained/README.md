@@ -20,7 +20,7 @@ It will produce output similar to this:
 
 ```json
 {
-  "reportDate": "09/10/2025",
+  "reportDate": "09/11/2026",
   "versions": [
     {
       "version": "11.0",
@@ -29,36 +29,114 @@ It will produce output similar to this:
       "supportEndsInDays": 0,
       "releases": [
         {
-          "releaseDate": "2025-09-09",
-          "releasedDaysAgo": 2,
+          "releaseDate": "2026-09-08",
+          "releasedDaysAgo": 3,
           "releaseVersion": "11.0.0-rc.1",
-          "security": false,
-          "cveList": []
+          "security": true,
+          "cveList": [
+            {
+              "cveId": "CVE-2026-69439",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69439"
+            },
+            {
+              "cveId": "CVE-2026-71328",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71328"
+            },
+            {
+              "cveId": "CVE-2026-69522",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69522"
+            },
+            {
+              "cveId": "CVE-2026-69304",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69304"
+            },
+            {
+              "cveId": "CVE-2026-58649",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-58649"
+            },
+            {
+              "cveId": "CVE-2026-69806",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69806"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "version": "10.0",
+      "supported": true,
+      "eolDate": "2028-11-14",
+      "supportEndsInDays": 794,
+      "releases": [
+        {
+          "releaseDate": "2026-09-08",
+          "releasedDaysAgo": 3,
+          "releaseVersion": "10.0.12",
+          "security": true,
+          "cveList": [
+            {
+              "cveId": "CVE-2026-69439",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69439"
+            },
+            {
+              "cveId": "CVE-2026-71328",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71328"
+            },
+            {
+              "cveId": "CVE-2026-69522",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69522"
+            },
+            {
+              "cveId": "CVE-2026-69304",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69304"
+            },
+            {
+              "cveId": "CVE-2026-58649",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-58649"
+            },
+            {
+              "cveId": "CVE-2026-69806",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69806"
+            }
+          ]
         }
       ]
     },
     {
       "version": "9.0",
       "supported": true,
-      "eolDate": "2026-05-12",
-      "supportEndsInDays": 242,
+      "eolDate": "2026-11-10",
+      "supportEndsInDays": 59,
       "releases": [
         {
-          "releaseDate": "2025-09-09",
-          "releasedDaysAgo": 2,
-          "releaseVersion": "9.0.9",
-          "security": false,
-          "cveList": []
-        },
-        {
-          "releaseDate": "2025-06-10",
-          "releasedDaysAgo": 93,
-          "releaseVersion": "9.0.6",
+          "releaseDate": "2026-09-08",
+          "releasedDaysAgo": 3,
+          "releaseVersion": "9.0.20",
           "security": true,
           "cveList": [
             {
-              "cveId": "CVE-2025-30399",
-              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-30399"
+              "cveId": "CVE-2026-69439",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69439"
+            },
+            {
+              "cveId": "CVE-2026-71328",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71328"
+            },
+            {
+              "cveId": "CVE-2026-69522",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69522"
+            },
+            {
+              "cveId": "CVE-2026-69304",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69304"
+            },
+            {
+              "cveId": "CVE-2026-58649",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-58649"
+            },
+            {
+              "cveId": "CVE-2026-69806",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69806"
             }
           ]
         }
@@ -68,59 +146,33 @@ It will produce output similar to this:
       "version": "8.0",
       "supported": true,
       "eolDate": "2026-11-10",
-      "supportEndsInDays": 424,
+      "supportEndsInDays": 59,
       "releases": [
         {
-          "releaseDate": "2025-09-09",
-          "releasedDaysAgo": 2,
-          "releaseVersion": "8.0.20",
-          "security": false,
-          "cveList": []
-        },
-        {
-          "releaseDate": "2025-06-10",
-          "releasedDaysAgo": 93,
-          "releaseVersion": "8.0.17",
+          "releaseDate": "2026-09-08",
+          "releasedDaysAgo": 3,
+          "releaseVersion": "8.0.31",
           "security": true,
           "cveList": [
             {
-              "cveId": "CVE-2025-30399",
-              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2025-30399"
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "version": "6.0",
-      "supported": false,
-      "eolDate": "2024-11-12",
-      "supportEndsInDays": -303,
-      "releases": [
-        {
-          "releaseDate": "2024-11-12",
-          "releasedDaysAgo": 303,
-          "releaseVersion": "6.0.36",
-          "security": false,
-          "cveList": []
-        },
-        {
-          "releaseDate": "2024-10-08",
-          "releasedDaysAgo": 338,
-          "releaseVersion": "6.0.35",
-          "security": true,
-          "cveList": [
-            {
-              "cveId": "CVE-2024-43483",
-              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-43483"
+              "cveId": "CVE-2026-69439",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69439"
             },
             {
-              "cveId": "CVE-2024-43485",
-              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-43485"
+              "cveId": "CVE-2026-71328",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-71328"
             },
             {
-              "cveId": "CVE-2024-43484",
-              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-43484"
+              "cveId": "CVE-2026-69522",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69522"
+            },
+            {
+              "cveId": "CVE-2026-69304",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-69304"
+            },
+            {
+              "cveId": "CVE-2026-58649",
+              "cveUrl": "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2026-58649"
             }
           ]
         }
