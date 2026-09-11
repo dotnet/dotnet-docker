@@ -22,8 +22,8 @@ RUN sed -i '/Signed-By/ a Architectures: arm64' /etc/apt/sources.list.d/ubuntu.s
     && apt-get update \
     && apt-get install -y \
         clang \
-        llvm \
         gcc-x86-64-linux-gnu \
+        llvm \
         zlib1g-dev:amd64 \
     && rm -rf /var/lib/apt/lists/*
 
