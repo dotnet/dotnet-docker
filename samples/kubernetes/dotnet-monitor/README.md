@@ -37,9 +37,9 @@ You can query basic information from `dotnet-monitor` with the following approac
 % curl http://localhost:52323/info
 {"version":"8.0.2-servicing.24258.10+25e00f40ba2a55512ea59365e73ddb4b27c73280","runtimeVersion":"8.0.5","diagnosticPortMode":"Listen","diagnosticPortName":"/diag/dotnet-monitor.sock"}
  % curl http://localhost:52323/processes
-[{"pid":1,"uid":"6dd610b6-bc0c-4bf1-a882-4fa0afea34d2","name":"aspnetapp","isDefault":true}]   
+[{"pid":1,"uid":"6dd610b6-bc0c-4bf1-a882-4fa0afea34d2","name":"AspNetCoreRazorApp","isDefault":true}]
 % curl "http://localhost:52323/processes?pid=1"
-[{"pid":1,"uid":"6dd610b6-bc0c-4bf1-a882-4fa0afea34d2","name":"aspnetapp","isDefault":true}]
+[{"pid":1,"uid":"6dd610b6-bc0c-4bf1-a882-4fa0afea34d2","name":"AspNetCoreRazorApp","isDefault":true}]
 ```
 
 See [API documentation](https://github.com/dotnet/dotnet-monitor/blob/main/documentation/api/README.md) for a complete list of endpoints.

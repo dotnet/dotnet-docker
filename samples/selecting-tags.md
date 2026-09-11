@@ -17,16 +17,16 @@ The `runtime-deps`, `runtime`, `aspnet`, and `sdk` repos provide version-only
 manifest list tags. These tags can sometimes be referred to as "convenience
 tags".
 
-* `9.0`
-* `9.0.X`
+* `11.0`
+* `11.0.X`
 * `latest`
 
-For .NET 8 and .NET 9, these tags refer to Debian 12 (Bookworm). All three
-of the above tags will provide a Debian image.
+For .NET 11, version-only tags refer to Ubuntu 26.04 (Resolute). The `latest`
+tag follows the latest stable .NET release and does not necessarily refer to
+.NET 11 while it is in preview.
 
-> [!CAUTION]
-> For .NET 10 and subsequent releases, [these tags will refer to Ubuntu 24.04
-> ("Noble")](https://github.com/dotnet/dotnet-docker/discussions/5709).
+For comparison, .NET 8 and .NET 9 version-only tags refer to Debian 12
+(Bookworm), and .NET 10 version-only tags refer to Ubuntu 24.04 (Noble).
 
 These convenience tags don't support Windows. See the [Multi-Platform
 Tags](/documentation/supported-tags.md#multi-platform-tags) documentation for
@@ -34,25 +34,20 @@ more info.
 
 ## Targeting a specific operating system
 
-If you want a specific operating system image, you should use a specific operating system tag. We publish images for [Alpine](#alpine-linux), [Azure Linux](#azure-linux), [Debian](#debian), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core).
+If you want a specific operating system image, you should use a specific operating system tag. For .NET 11, we publish images for [Alpine](#alpine-linux), [Azure Linux](#azure-linux), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core). [Debian](#debian) images are available for .NET 8 and .NET 9.
 
-The following tags demonstrate the pattern used to describe each operating system (using .NET 9.0 as the example):
+The following tags demonstrate the pattern used to describe each operating system (using .NET 11.0 as the example):
 
-* `9.0-alpine` (Latest Alpine)
-* `9.0-azurelinux3.0` (Azure Linux 3.0)
-* `9.0-bookworm-slim` (Debian 12)
-* `9.0-noble` (Ubuntu 24.04)
-* `9.0-nanoserver-ltsc2025` (Nano Server LTSC 2025)
-* `9.0-nanoserver-ltsc2022` (Nano Server LTSC 2022)
-* `9.0-nanoserver-1809` (Nano Server, version 1809)
-* `9.0-windowsservercore-ltsc2025` (Windows Server Core LTSC 2025)
-* `9.0-windowsservercore-ltsc2022` (Windows Server Core LTSC 2022)
-* `9.0-windowsservercore-ltsc2019` (Windows Server Core LTSC 2019)
+* `11.0-alpine` (Latest Alpine)
+* `11.0-azurelinux3.0` (Azure Linux 3.0)
+* `11.0-resolute` (Ubuntu 26.04)
+* `11.0-nanoserver-ltsc2025` (Nano Server LTSC 2025)
+* `11.0-windowsservercore-ltsc2025` (Windows Server Core LTSC 2025)
 
 For example, the following command will pull an Alpine image for your machine's architecture:
 
 ```console
-docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
+docker pull mcr.microsoft.com/dotnet/runtime:11.0-alpine
 ```
 
 ### Linux
@@ -141,39 +136,34 @@ docker pull mcr.microsoft.com/dotnet/runtime:9.0-alpine
 
 ## Targeting a specific processor type
 
-If you want an image of a specific processor type, you should use a specific processor architecture tag. We publish tags for x64, ARM64 and ARM32. Tags without an architecture suffix are for x64 images.
+If you want an image of a specific processor type, you should use a specific processor architecture tag. We publish tags for x64, ARM64 and ARM32. Linux tags without an architecture suffix select the architecture automatically. Windows images support x64 only.
 
 The following tags demonstrate the pattern used to describe each processor, using the same operating systems listed above.
 
 ### x64
 
-* `9.0-alpine-amd64`
-* `9.0-noble-amd64`
-* `9.0-bookworm-slim-amd64`
-* `9.0-nanoserver-ltsc2025`
-* `9.0-nanoserver-ltsc2022`
-* `9.0-windowsservercore-ltsc2025`
-* `9.0-windowsservercore-ltsc2022`
+* `11.0-alpine-amd64`
+* `11.0-resolute-amd64`
+* `11.0-nanoserver-ltsc2025`
+* `11.0-windowsservercore-ltsc2025`
 
 ### ARM64
 
-* `9.0-alpine-arm64v8`
-* `9.0-noble-arm64v8`
-* `9.0-bookworm-slim-arm64v8`
+* `11.0-alpine-arm64v8`
+* `11.0-resolute-arm64v8`
 
 ### ARM32
 
-* `9.0-alpine-arm32v7`
-* `9.0-noble-arm32v7`
-* `9.0-bookworm-slim-arm32v7`
+* `11.0-alpine-arm32v7`
+* `11.0-resolute-arm32v7`
 
 ## Matching SDK and Runtime images
 
-As already stated, we offer images for Alpine, Debian and Ubuntu, for Linux. People (and organizations) choose each of these distros for different reasons. Many people likely choose Debian, for example, because it is the default distro (for example, the `9.0` tag in each of the .NET Docker repos will pull a Debian image).
+For .NET 11, we offer Linux images based on Alpine, Azure Linux, and Ubuntu. People (and organizations) choose each of these distros for different reasons. Ubuntu 26.04 (Resolute) is the default distro selected by the `11.0` tag.
 
-For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. You may want to make a conscious choice to make the distros match for those two tags. If you are only targeting Debian, this is easy, because you can just use the simple multi-platform tags we expose (like `9.0`), and you'll always get Debian (when building for Linux containers). If you are targeting Alpine or Ubuntu for your final runtime image (`aspnet` or `runtime`), then you have a choice, as follows:
+For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. You may want to make a conscious choice to make the distros match for those two tags. If you are targeting Ubuntu Resolute, you can use `11.0` for both stages. If you are targeting another distro for your final runtime image (`aspnet` or `runtime`), then you have a choice, as follows:
 
-* Target a multi-platform tag for the SDK (like `9.0`) to make the SDK stage simple and to enable your Dockerfile to be built in multiple environments (with different processor architectures). This is what most of the samples Dockerfiles in this repo do.
+* Target a multi-platform tag for the SDK (like `11.0`) to make the SDK stage simple and to enable your Dockerfile to be built in multiple environments (with different processor architectures). This is what most of the samples Dockerfiles in this repo do.
 * Match SDK and runtime tags to ensure that you are using the same OS (with the associated shell and commands) and package manager for all stages within a Dockerfile.
 
 ## Building for your production environment
@@ -182,4 +172,4 @@ Each container image is generated for a specific processor architecture and oper
 
 For multi-stage Dockerfiles, there are typically at least two tags referenced, an SDK and a runtime tag. It is fine to use a multi-platform tag for the SDK. That's the pattern used for .NET samples. You will pull an SDK image that works on your machine. It is important to define a .NET runtime (`runtime-deps`, `runtime`, or `aspnet`) that matches your production environment.
 
-Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Debian and Ubuntu (the distros we produce images for) in any environment that supports Linux containers. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.
+Linux containers are flexible. As long as the processor architecture matches, you can run Alpine, Azure Linux, and Ubuntu images in environments that support Linux containers and meet the images' kernel requirements. [Windows images are more restricted](https://docs.microsoft.com/virtualization/windowscontainers/deploy-containers/version-compatibility). You cannot load containers for newer Windows versions on older hosts. For the best experience, the Windows container version should match the host Windows version.

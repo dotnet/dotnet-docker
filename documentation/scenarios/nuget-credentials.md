@@ -52,7 +52,7 @@ FROM mcr.microsoft.com/dotnet/runtime:9.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./dotnetapp"]
+ENTRYPOINT ["./ConsoleApp"]
 ```
 
 ## Using environment variables in `nuget.config`
@@ -106,7 +106,7 @@ FROM mcr.microsoft.com/dotnet/runtime:9.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./dotnetapp"]
+ENTRYPOINT ["./ConsoleApp"]
 ```
 
 Before running `docker build`, first populate the `Nuget_CustomFeedUserName` and `Nuget_CustomFeedPassword` environment variables with appropriate secrets. Then, this Dockerfile would be built using this command:
@@ -163,7 +163,7 @@ FROM mcr.microsoft.com/dotnet/runtime:9.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./dotnetapp"]
+ENTRYPOINT ["./ConsoleApp"]
 ```
 
 ### Windows
@@ -197,7 +197,7 @@ RUN dotnet publish --no-restore -o /app
 FROM mcr.microsoft.com/dotnet/runtime:9.0-nanoserver-ltsc2022
 WORKDIR /app
 COPY --link --from=build /app .
-ENTRYPOINT ["dotnetapp"]
+ENTRYPOINT ["ConsoleApp"]
 ```
 
 > [!NOTE]
@@ -297,7 +297,7 @@ FROM mcr.microsoft.com/dotnet/runtime:9.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
-ENTRYPOINT ["./dotnetapp"]
+ENTRYPOINT ["./ConsoleApp"]
 ```
 
 This Dockerfile would be built using this command:

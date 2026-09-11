@@ -4,8 +4,8 @@
       readme-host: Moniker of the site that will host the readme
 }}{{ARGS["top-header"]}}# Building .NET Apps with Docker
 
-* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
-* [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
+* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleApp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleApp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
+* [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
 {{ARGS["top-header"]}}# Develop .NET Apps in a Container
 

@@ -29,10 +29,10 @@ If you have a compelling use case for a distroless SDK image, please leave a com
 
 Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NET images:
 
-* [aspnetapp](../samples/aspnetapp/Dockerfile.chiseled)
-* [dotnetapp](../samples/dotnetapp/Dockerfile.chiseled)
-* [releasesapi](../samples/releasesapi/Dockerfile) (and [icu version](../samples/releasesapi/Dockerfile.icu))
-* [releasesapp](../samples/releasesapp/Dockerfile.chiseled)
+* [ConsoleApp](../samples/ConsoleApp/Dockerfile.chiseled)
+* [ConsoleAppSelfContained](../samples/ConsoleAppSelfContained/Dockerfile.chiseled)
+* [AspNetCoreRazorApp](../samples/AspNetCoreRazorApp/Dockerfile.chiseled)
+* [AspNetCoreNativeAot](../samples/AspNetCoreNativeAot/Dockerfile) (and [icu version](../samples/AspNetCoreNativeAot/Dockerfile.icu))
 
 If your app's Dockerfile doesn't depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
 

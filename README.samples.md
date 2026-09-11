@@ -2,10 +2,10 @@
 
 ## Featured Tags
 
-* `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/Dockerfile)
+* `dotnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleApp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp`
   * `docker pull mcr.microsoft.com/dotnet/samples:dotnetapp-chiseled`
-* `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/Dockerfile)
+* `aspnetapp` [(*Dockerfile*)](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/Dockerfile)
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp`
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`
 
@@ -21,7 +21,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 ### Container sample: Run a simple application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleApp/README.md).
 
 Type the following command to run a sample console application:
 
@@ -31,7 +31,7 @@ docker run --rm mcr.microsoft.com/dotnet/samples
 
 ### Container sample: Run a web application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/aspnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md), based on the [ASP.NET Core sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/README.md).
 
 Type the following command to run a sample web application:
 
@@ -86,35 +86,35 @@ They contain the following features:
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-10.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
-aspnetapp-10.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
-aspnetapp-chiseled-10.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
+dotnetapp-11.0, dotnetapp, latest | [Dockerfile](samples/ConsoleApp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-11.0, dotnetapp-chiseled | [Dockerfile](samples/ConsoleApp/Dockerfile.chiseled) | Ubuntu
+aspnetapp-11.0, aspnetapp | [Dockerfile](samples/AspNetCoreRazorApp/Dockerfile.alpine) | Alpine
+aspnetapp-chiseled-11.0, aspnetapp-chiseled | [Dockerfile](samples/AspNetCoreRazorApp/Dockerfile.chiseled) | Ubuntu
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-10.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
-aspnetapp-10.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
-aspnetapp-chiseled-10.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
+dotnetapp-11.0, dotnetapp, latest | [Dockerfile](samples/ConsoleApp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-11.0, dotnetapp-chiseled | [Dockerfile](samples/ConsoleApp/Dockerfile.chiseled) | Ubuntu
+aspnetapp-11.0, aspnetapp | [Dockerfile](samples/AspNetCoreRazorApp/Dockerfile.alpine) | Alpine
+aspnetapp-chiseled-11.0, aspnetapp-chiseled | [Dockerfile](samples/AspNetCoreRazorApp/Dockerfile.chiseled) | Ubuntu
 
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.alpine) | Alpine
-dotnetapp-chiseled-10.0, dotnetapp-chiseled | [Dockerfile](samples/dotnetapp/Dockerfile.chiseled) | Ubuntu
-aspnetapp-10.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.alpine) | Alpine
-aspnetapp-chiseled-10.0, aspnetapp-chiseled | [Dockerfile](samples/aspnetapp/Dockerfile.chiseled) | Ubuntu
+dotnetapp-11.0, dotnetapp, latest | [Dockerfile](samples/ConsoleApp/Dockerfile.alpine) | Alpine
+dotnetapp-chiseled-11.0, dotnetapp-chiseled | [Dockerfile](samples/ConsoleApp/Dockerfile.chiseled) | Ubuntu
+aspnetapp-11.0, aspnetapp | [Dockerfile](samples/AspNetCoreRazorApp/Dockerfile.alpine) | Alpine
+aspnetapp-chiseled-11.0, aspnetapp-chiseled | [Dockerfile](samples/AspNetCoreRazorApp/Dockerfile.chiseled) | Ubuntu
 
 ### Windows amd64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-dotnetapp-10.0-nanoserver-ltsc2022, dotnetapp-nanoserver-ltsc2022, dotnetapp-10.0, dotnetapp, latest | [Dockerfile](samples/dotnetapp/Dockerfile.nanoserver) | Nano Server 2022
-aspnetapp-10.0-nanoserver-ltsc2022, aspnetapp-nanoserver-ltsc2022, aspnetapp-10.0, aspnetapp | [Dockerfile](samples/aspnetapp/Dockerfile.nanoserver) | Nano Server 2022
+dotnetapp-11.0-nanoserver-ltsc2025, dotnetapp-nanoserver-ltsc2025, dotnetapp-11.0, dotnetapp, latest | [Dockerfile](samples/ConsoleApp/Dockerfile.nanoserver) | Nano Server 2025
+aspnetapp-11.0-nanoserver-ltsc2025, aspnetapp-nanoserver-ltsc2025, aspnetapp-11.0, aspnetapp | [Dockerfile](samples/AspNetCoreRazorApp/Dockerfile.nanoserver) | Nano Server 2025
 
 <!--End of generated tags-->
 

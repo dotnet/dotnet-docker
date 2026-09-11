@@ -10,7 +10,7 @@ The following instructions are a subset of the [.NET Docker Sample](README.md) i
 
 ```console
 cd samples
-cd dotnetapp
+cd ConsoleApp
 docker build --pull -t dotnetapp .
 ```
 

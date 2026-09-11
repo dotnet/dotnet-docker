@@ -37,7 +37,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 ### Container sample: Run a simple application
 
-You can quickly run a container with a pre-built [.NET Docker image](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/dotnetapp/README.md).
+You can quickly run a container with a pre-built [.NET Docker image](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about), based on the [.NET console sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleApp/README.md).
 
 Type the following command to run a sample console application:
 

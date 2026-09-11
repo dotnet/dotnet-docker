@@ -8,7 +8,7 @@ This is useful to avoid the need to install .NET on the build machine and helps 
 Docker [buildx](https://docs.docker.com/reference/cli/docker/buildx/) has built-in support for [exporting files from the docker build command](https://docs.docker.com/build/building/export/).
 Using a Dockerfile to build .NET apps is advantageous because it allows you to specify all of the apps required dependencies and build instructions in one place.
 
-The `dotnetapp` sample contains a sample [Dockerfile](./dotnetapp/Dockerfile.sdk-build) that supports this functionality.
+The `ConsoleApp` sample contains a sample [Dockerfile](./ConsoleApp/Dockerfile.sdk-build) that supports this functionality.
 This sample uses a multi-stage Dockerfile with a `FROM scratch` stage.
 The Dockerfile copies the build outputs into that stage using the `COPY` instruction.
 Then, when you provide the `--output/-o <directory>` argument to the Docker build command, Docker will copy the entire filesystem of the final stage of the image to the specified directory.
@@ -16,7 +16,7 @@ Since the sample Dockerfile's final stage is a `FROM scratch` stage, the result 
 
 ### Build single-platform binary
 
-From the `samples/dotnetapp` directory:
+From the `samples/ConsoleApp` directory:
 
 ```pwsh
 docker build --pull -f Dockerfile.sdk-build --output ./out .
@@ -25,7 +25,7 @@ docker build --pull -f Dockerfile.sdk-build --output ./out .
 You can also give it a try without cloning this repository:
 
 ```pwsh
-docker build --pull -f Dockerfile.sdk-build --output ./out 'https://github.com/dotnet/dotnet-docker.git#:samples/dotnetapp'
+docker build --pull -f Dockerfile.sdk-build --output ./out 'https://github.com/dotnet/dotnet-docker.git#:samples/ConsoleApp'
 ```
 
 ### Build binaries for multiple platforms at once
@@ -34,32 +34,32 @@ Taking advantage of Docker buildx, you can cross-build binaries for multiple pla
 For more info about how this works, see our documentation on [building images for a specific platform](./build-for-a-platform.md).
 
 ```pwsh
-docker buildx build --pull --platform linux/amd64,linux/arm64 -f ./samples/dotnetapp/Dockerfile.sdk-build --output out ./samples/dotnetapp/
+docker buildx build --pull --platform linux/amd64,linux/arm64 -f ./samples/ConsoleApp/Dockerfile.sdk-build --output out ./samples/ConsoleApp/
 ```
 
 Docker buildx will create a separate sub-directory for each target platform:
 
 ```pwsh
 PS> tree /F out
-C:\...\dotnetapp\out
+C:\...\ConsoleApp\out
 ├───linux_amd64
-│       dotnetapp
-│       dotnetapp.deps.json
-│       dotnetapp.dll
-│       dotnetapp.pdb
-│       dotnetapp.runtimeconfig.json
+│       ConsoleApp
+│       ConsoleApp.deps.json
+│       ConsoleApp.dll
+│       ConsoleApp.pdb
+│       ConsoleApp.runtimeconfig.json
 └───linux_arm64
-        dotnetapp
-        dotnetapp.deps.json
-        dotnetapp.dll
-        dotnetapp.pdb
-        dotnetapp.runtimeconfig.json
+        ConsoleApp
+        ConsoleApp.deps.json
+        ConsoleApp.dll
+        ConsoleApp.pdb
+        ConsoleApp.runtimeconfig.json
 ```
 
 ## Build by running Docker container directly
 
 If you can't use Docker buildx or don't want to use a Dockerfile, you can build your app by running the SDK image directly and volume mounting your app's source code into the container.
-These instructions assume that you have cloned the repository locally, and that you are in the `samples/dotnetapp` directory (due to the volume mounting syntax), as demonstrated by the examples.
+These instructions assume that you have cloned the repository locally, and that you are in the `samples/ConsoleApp` directory (due to the volume mounting syntax), as demonstrated by the examples.
 
 ### Requirements
 
@@ -72,35 +72,35 @@ This scenario relies on [volume mounting](https://docs.docker.com/engine/admin/v
 It is recommended to pull the SDK image before running the appropriate command. This ensures that you get the latest patch version of the SDK. Use the following command:
 
 ```console
-docker pull mcr.microsoft.com/dotnet/sdk:9.0
+docker pull mcr.microsoft.com/dotnet/sdk:11.0
 ```
 
 ### Linux
 
 ```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out
+docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o out
 ```
 
 You can see the built binaries with the following command:
 
 ```console
 $ ls out
-dotnetapp  dotnetapp.deps.json  dotnetapp.dll  dotnetapp.pdb  dotnetapp.runtimeconfig.json
+ConsoleApp  ConsoleApp.deps.json  ConsoleApp.dll  ConsoleApp.pdb  ConsoleApp.runtimeconfig.json
 ```
 
 ### macOS
 
 ```console
-docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out -r osx-x64 --self-contained false
+docker run --rm -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o out -r osx-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
 
 ```console
 % ls out
-dotnetapp                       dotnetapp.pdb
-dotnetapp.deps.json             dotnetapp.runtimeconfig.json
-dotnetapp.dll
+ConsoleApp                       ConsoleApp.pdb
+ConsoleApp.deps.json             ConsoleApp.runtimeconfig.json
+ConsoleApp.dll
 ```
 
 ### Windows using Linux containers
@@ -108,24 +108,24 @@ dotnetapp.dll
 The following example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out -r win-x64 --self-contained false
+docker run --rm -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o out -r win-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
 
 ```console
-PS C:\git\dotnet-docker\samples\dotnetapp> dir out
+PS C:\git\dotnet-docker\samples\ConsoleApp> dir out
 
 
-    Directory: C:\git\dotnet-docker\samples\dotnetapp\out
+    Directory: C:\git\dotnet-docker\samples\ConsoleApp\out
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
--a----         11/2/2020  10:46 AM            449 dotnetapp.deps.json
--a----         11/2/2020  10:46 AM           7680 dotnetapp.dll
--a----         11/2/2020  10:46 AM         141312 dotnetapp.exe
--a----         11/2/2020  10:46 AM           9444 dotnetapp.pdb
--a----         11/2/2020  10:46 AM            152 dotnetapp.runtimeconfig.json
+-a----         11/2/2020  10:46 AM            449 ConsoleApp.deps.json
+-a----         11/2/2020  10:46 AM           7680 ConsoleApp.dll
+-a----         11/2/2020  10:46 AM         141312 ConsoleApp.exe
+-a----         11/2/2020  10:46 AM           9444 ConsoleApp.pdb
+-a----         11/2/2020  10:46 AM            152 ConsoleApp.runtimeconfig.json
 ```
 
 ### Windows using Windows containers
@@ -133,7 +133,7 @@ Mode                 LastWriteTime         Length Name
 The following example uses PowerShell.
 
 ```console
-docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:9.0-nanoserver-ltsc2022 dotnet publish -c Release -o out
+docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 dotnet publish -c Release -o out
 ```
 
 > [!WARNING]
@@ -143,18 +143,18 @@ docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:9.0-nano
 You can see the built binaries with the following command:
 
 ```console
-PS C:\git\dotnet-docker\samples\dotnetapp> dir out
+PS C:\git\dotnet-docker\samples\ConsoleApp> dir out
 
 
-    Directory: C:\git\dotnet-docker\samples\dotnetapp\out
+    Directory: C:\git\dotnet-docker\samples\ConsoleApp\out
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
--a----         11/2/2020  10:49 AM            419 dotnetapp.deps.json
--a----         11/2/2020  10:49 AM           8192 dotnetapp.dll
--a----         11/2/2020  10:49 AM         141312 dotnetapp.exe
--a----         11/2/2020  10:49 AM           9440 dotnetapp.pdb
--a----         11/2/2020  10:49 AM            160 dotnetapp.runtimeconfig.json
+-a----         11/2/2020  10:49 AM            419 ConsoleApp.deps.json
+-a----         11/2/2020  10:49 AM           8192 ConsoleApp.dll
+-a----         11/2/2020  10:49 AM         141312 ConsoleApp.exe
+-a----         11/2/2020  10:49 AM           9440 ConsoleApp.pdb
+-a----         11/2/2020  10:49 AM            160 ConsoleApp.runtimeconfig.json
 ```
 
 ### Building to a separate location
@@ -164,40 +164,40 @@ You may want the build output to be written to a separate location than the sour
 The following example demonstrates doing that on macOS:
 
 ```console
-docker run --rm -v ~/dotnetapp:/out -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o /out -r osx-x64 --self-contained false
+docker run --rm -v ~/ConsoleApp:/out -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o /out -r osx-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
 
 ```console
-> ls ~/dotnetapp
-dotnetapp                       dotnetapp.pdb
-dotnetapp.deps.json             dotnetapp.runtimeconfig.json
-dotnetapp.dll
+> ls ~/ConsoleApp
+ConsoleApp                       ConsoleApp.pdb
+ConsoleApp.deps.json             ConsoleApp.runtimeconfig.json
+ConsoleApp.dll
 ```
 
 The following PowerShell example demonstrates doing that on Windows (using Linux containers):
 
 ```console
-mkdir C:\dotnetapp
-docker run --rm -v C:\dotnetapp:c:\app\out -v ${pwd}:c:\app -w /app mcr.microsoft.com/dotnet/sdk:9.0 dotnet publish -c Release -o out -r win-x64 --self-contained false
+mkdir C:\ConsoleApp
+docker run --rm -v C:\ConsoleApp:/out -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet publish -c Release -o /out -r win-x64 --self-contained false
 ```
 
 You can see the built binaries with the following command:
 
 ```console
-PS C:\git\dotnet-docker\samples\dotnetapp> dir C:\dotnetapp\
+PS C:\git\dotnet-docker\samples\ConsoleApp> dir C:\ConsoleApp\
 
 
-    Directory: C:\dotnetapp
+    Directory: C:\ConsoleApp
 
 Mode                 LastWriteTime         Length Name
 ----                 -------------         ------ ----
--a----         11/2/2020  10:52 AM            472 dotnetapp.deps.json
--a----         11/2/2020  10:52 AM           7680 dotnetapp.dll
--a----         11/2/2020  10:52 AM         141312 dotnetapp.exe
--a----         11/2/2020  10:52 AM           9452 dotnetapp.pdb
--a----         11/2/2020  10:52 AM            160 dotnetapp.runtimeconfig.json
+-a----         11/2/2020  10:52 AM            472 ConsoleApp.deps.json
+-a----         11/2/2020  10:52 AM           7680 ConsoleApp.dll
+-a----         11/2/2020  10:52 AM         141312 ConsoleApp.exe
+-a----         11/2/2020  10:52 AM           9452 ConsoleApp.pdb
+-a----         11/2/2020  10:52 AM            160 ConsoleApp.runtimeconfig.json
 ```
 
 ## More Samples
