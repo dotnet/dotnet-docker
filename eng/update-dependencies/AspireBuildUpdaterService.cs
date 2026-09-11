@@ -65,16 +65,15 @@ internal class AspireBuildUpdaterService(
             new VariableUpdateInfo("aspire-dashboard|major-tag", majorMinorVersion.Major.ToString()),
         ];
 
-        variableUpdates.AddRange(dashboardChecksumInfos
-            // Filter out null checksums (indicates the checksum was not found above)
-            .Where(info => info.Second is not null)
-            .Select(info =>
+        foreach (var (asset, checksum) in dashboardChecksumInfos)
+        {
+            // A missing checksum was already reported by the download helper.
+            if (checksum is not null)
             {
-                var (asset, checksum) = info;
                 var arch = asset.Name.Contains("arm64") ? "arm64" : "x64";
-                // Null-forgiving operator is OK since we filtered out null checksums above.
-                return new VariableUpdateInfo($"aspire-dashboard|linux|{arch}|sha", checksum!);
-            }));
+                variableUpdates.Add(new VariableUpdateInfo($"aspire-dashboard|linux|{arch}|sha", checksum));
+            }
+        }
 
         var updateDependencies = new SpecificCommand();
         updateDependencies.VariableUpdates.AddRange(variableUpdates);

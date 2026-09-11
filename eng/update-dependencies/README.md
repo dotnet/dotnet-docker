@@ -10,24 +10,29 @@ component versions for images built from this repo. It is used to:
 
 ## Implementation
 
-The tool has two layers of implementation code:
+Commands built with `System.CommandLine` and dependency injection retrieve
+version information from BAR builds/channels, staging pipeline artifacts, or
+component version sources. They pass product versions or resolved manifest
+values to [SpecificCommand](./SpecificCommand.cs).
 
-1. Modern CLI built with `System.CommandLine` and dependency injection.
-   These commands retrieve version information from official .NET build assets
-   (BAR builds/channels, staging pipeline artifacts) and then map that
-   information into a standardized set of product versions.
-2. Legacy code built on `Microsoft.DotNet.VersionTools.Automation` that
-   performs regex replacement of versions, checksums, and URLs in
-   [manifest.versions.json](../../manifest.versions.json). This logic is
-   encapsulated behind `SpecificCommand` and related helper classes
-   (e.g. `VersionUpdater`, `DockerfileShaUpdater`).
+`SpecificCommand` owns the update flow. It loads a shared
+[ManifestVariables](./ManifestVariables.cs) editor and directly calls the
+product and tool update functions. These functions keep their own selection
+policies, such as preserving aliases or empty values. Product versions and
+base URLs are updated before checksum retrieval so later operations can read
+the new values from the same editor. NuGet configuration is updated separately.
 
-Currently, the modern CLI front-end of the tool resolves product versions and
-hands them over to the `SpecificCommand` class to perform file updates. New
-features should only be added to the modern CLI front-end. `SpecificCommand`
-will be removed/re-implemented eventually since it is tightly coupled to an
-unsupported package dependency (`Microsoft.DotNet.VersionTools.Automation` -
-removal tracked by [this GitHub issue](https://github.com/dotnet/docker-tools/issues/1658)).
+The command writes [manifest.versions.json](../../manifest.versions.json) only
+if its content changed, preserving formatting outside edited values. It then
+runs the Dockerfile and README generators, even when the manifest is unchanged.
+Update and generation failures propagate to the command boundary.
+
+In local-only mode, updates run in the supplied checkout.
+[DependencyUpdatePublisher](./DependencyUpdatePublisher.cs) uses
+`Microsoft.DotNet.GitAutomation` to run the same updates in a publishing
+workspace and create or update a pull request. GitAutomation detects changes
+across the repository, including generated files and NuGet configuration,
+rather than relying on manifest changes alone.
 
 ## Adding support for new dependencies
 

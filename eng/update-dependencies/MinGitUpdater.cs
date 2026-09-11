@@ -1,12 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using Microsoft.DotNet.VersionTools.Dependencies;
 using Octokit;
 
 namespace Dotnet.Docker;
@@ -19,19 +14,7 @@ internal static partial class MinGitUpdater
 
     private const string Repo = "git";
 
-    public static IEnumerable<IDependencyUpdater> GetUpdaters(ManifestVariables variables) =>
-    [
-        new GitHubReleaseUrlUpdater(
-            variables: variables,
-            toolName: ToolName,
-            variableName: GetManifestVariableName("url"),
-            owner: Owner,
-            repo: Repo,
-            assetRegex: UrlRegex),
-        new MinGitShaUpdater(variables)
-    ];
-
-    public static async Task<GitHubReleaseInfo> GetBuildInfoAsync()
+    public static async Task<GitHubReleaseInfo> GetReleaseAsync()
     {
         Release minGitRelease = await GitHubHelper.GetLatestRelease(Owner, Repo);
         return new GitHubReleaseInfo(ToolName, minGitRelease);
@@ -42,27 +25,36 @@ internal static partial class MinGitUpdater
 
     private static string GetManifestVariableName(string type) => "mingit|latest|x64|" + type;
 
-    private class MinGitShaUpdater(ManifestVariables variables)
-        : GitHubReleaseUpdaterBase(
-            variables,
-            MinGitUpdater.ToolName,
-            GetManifestVariableName("sha"),
-            MinGitUpdater.Owner,
-            MinGitUpdater.Repo)
+    public static void Update(ManifestVariables variables, Release release)
     {
-        protected override string? GetValue(GitHubReleaseInfo dependencyInfo)
+        string urlVariable = GetManifestVariableName("url");
+        string shaVariable = GetManifestVariableName("sha");
+        bool updateUrl = Tools.ShouldUpdateVariable(variables, urlVariable);
+        bool updateSha = Tools.ShouldUpdateVariable(variables, shaVariable);
+        if (!updateUrl && !updateSha)
         {
-            ReleaseAsset asset = dependencyInfo.Release.Assets
-                .First(asset => UrlRegex.IsMatch(asset.Name))
-                    ?? throw new Exception(
-                        $"Could not find release asset for {GetManifestVariableName("sha")} matching regex {UrlRegex}");
+            return;
+        }
 
-            string body = dependencyInfo.Release.Body;
-            const string ShaGroupName = "sha";
-            Regex shaRegex = new(@$"{Regex.Escape(asset.Name)}\s\|\s(?<{ShaGroupName}>[0-9|a-f]+)");
-            string sha = shaRegex.Match(body).Groups[ShaGroupName].Value;
-            return sha;
+        ReleaseAsset asset = release.Assets.FirstOrDefault(asset => UrlRegex.IsMatch(asset.Name))
+            ?? throw new InvalidOperationException($"Could not find MinGit release asset matching regex {UrlRegex}.");
+
+        if (updateUrl)
+        {
+            VariableUpdater.Update(variables, urlVariable, asset.BrowserDownloadUrl);
+        }
+
+        if (updateSha)
+        {
+            Regex shaRegex = new(@$"{Regex.Escape(asset.Name)}\s\|\s(?<sha>[0-9a-f]+)");
+            Match match = shaRegex.Match(release.Body);
+            if (!match.Success)
+            {
+                throw new InvalidOperationException($"Could not find checksum for '{asset.Name}' in the MinGit release body.");
+            }
+
+            string sha = match.Groups["sha"].Value;
+            VariableUpdater.Update(variables, shaVariable, sha);
         }
     }
-
 }

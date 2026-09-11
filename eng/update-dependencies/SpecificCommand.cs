@@ -2,10 +2,6 @@
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
 using System.Diagnostics;
-using Microsoft.DotNet.VersionTools;
-using Microsoft.DotNet.VersionTools.Automation;
-using Microsoft.DotNet.VersionTools.Dependencies;
-using Microsoft.DotNet.VersionTools.Dependencies.BuildOutput;
 
 namespace Dotnet.Docker
 {
@@ -35,11 +31,8 @@ namespace Dotnet.Docker
 
                 if (options.UpdateOnly)
                 {
-                    bool changesDetected = await ApplyUpdatesAsync(options);
-                    if (changesDetected)
-                    {
-                        Trace.TraceInformation("Changes made but no credentials specified, skipping push to remote.");
-                    }
+                    await ApplyUpdatesAsync(options);
+                    Trace.TraceInformation("Local updates completed without publishing.");
                 }
                 else
                 {
@@ -64,146 +57,57 @@ namespace Dotnet.Docker
             }
         }
 
-        private async Task<bool> ApplyUpdatesAsync(
+        private async Task ApplyUpdatesAsync(
             SpecificCommandOptions options,
             CancellationToken cancellationToken = default)
         {
             cancellationToken.ThrowIfCancellationRequested();
-            using ErrorTraceListener errorTraceListener = new();
-            Trace.Listeners.Add(errorTraceListener);
+            GitHubReleaseInfo[] toolReleases = await Task.WhenAll(options.Tools.Select(Tools.GetReleaseAsync));
+            cancellationToken.ThrowIfCancellationRequested();
 
-            try
+            string manifestFilePath = options.GetManifestVersionsFilePath();
+            var manifestVariables = ManifestVariables.FromFile(manifestFilePath);
+            string originalContent = manifestVariables.Content;
+
+            if (options.ProductVersions.Count != 0)
             {
-                // VersionTools and the generation scripts operate in the current directory.
-                // Restore it before GitAutomation commits or cleans up its workspace.
-                using var context = DirectoryStack.Push(options.RepoRoot);
+                NuGetConfigUpdater.Update(manifestVariables, options);
+                BaseUrlUpdater.Update(manifestVariables, options);
 
-                IDependencyInfo[] productBuildInfos = options.ProductVersions
-                    .Select(kvp => CreateDependencyBuildInfo(kvp.Key, kvp.Value))
-                    .ToArray();
-                IDependencyInfo[] toolBuildInfos =
-                    await Task.WhenAll(options.Tools.Select(Tools.GetToolBuildInfoAsync));
-
-                cancellationToken.ThrowIfCancellationRequested();
-
-                var manifestFilePath = options.GetManifestVersionsFilePath();
-                var manifestVariables = ManifestVariables.FromFile(manifestFilePath);
-                string originalContent = manifestVariables.Content;
-
-                List<DependencyUpdateResults> updateResults = [];
-
-                if (productBuildInfos.Length != 0)
+                foreach (var (productName, version) in options.ProductVersions)
                 {
-                    IEnumerable<IDependencyUpdater> productUpdaters = GetProductUpdaters(manifestVariables, options);
-                    DependencyUpdateResults productUpdateResults = UpdateFiles(productBuildInfos, productUpdaters);
-                    updateResults.Add(productUpdateResults);
+                    VersionUpdater.Update(manifestVariables, productName, version, options);
                 }
 
-                if (toolBuildInfos.Length != 0)
+                // Checksums can depend on other products' versions as well as the updated base URLs.
+                foreach (string productName in options.ProductVersions.Keys)
                 {
-                    IEnumerable<IDependencyUpdater> toolUpdaters = Tools.GetToolUpdaters(manifestVariables);
-                    DependencyUpdateResults toolUpdateResults = UpdateFiles(toolBuildInfos, toolUpdaters);
-                    updateResults.Add(toolUpdateResults);
+                    var checksumUpdater = new DockerfileShaUpdater(productName, options, manifestVariables);
+                    await checksumUpdater.UpdateAsync(cancellationToken);
                 }
-
-                if (VariableUpdates.Count != 0)
-                {
-                    // Bind edits to this workspace, not the checkout used to resolve versions.
-                    var variableUpdaters = VariableUpdates
-                        .Select(update => new VariableUpdater(manifestVariables, update));
-
-                    DependencyUpdateResults customUpdateResults = UpdateFiles(VariableUpdates, variableUpdaters);
-                    updateResults.Add(customUpdateResults);
-                }
-
-                if (errorTraceListener.Errors.Any())
-                {
-                    string errors = string.Join(Environment.NewLine, errorTraceListener.Errors);
-                    throw new InvalidOperationException($"Dependency updates reported errors:{Environment.NewLine}{errors}");
-                }
-
-                string updatedContent = manifestVariables.Content;
-                bool manifestChanged = updatedContent != originalContent;
-                if (manifestChanged)
-                {
-                    await File.WriteAllTextAsync(manifestFilePath, updatedContent, cancellationToken);
-                }
-
-                // Generation reads the manifest from disk, after all in-memory edits are complete.
-                IEnumerable<IDependencyUpdater> generatedContentUpdaters = GetGeneratedContentUpdaters(options.RepoRoot);
-                IEnumerable<IDependencyInfo> allBuildInfos = [..productBuildInfos, ..toolBuildInfos];
-                cancellationToken.ThrowIfCancellationRequested();
-                UpdateFiles(allBuildInfos, generatedContentUpdaters);
-                cancellationToken.ThrowIfCancellationRequested();
-
-                bool changesDetected = manifestChanged || updateResults.Any(result => result.ChangesDetected());
-                if (!changesDetected)
-                {
-                    Trace.TraceInformation("No changes detected after updates.");
-                }
-
-                return changesDetected;
-            }
-            finally
-            {
-                Trace.Listeners.Remove(errorTraceListener);
-            }
-        }
-
-        private static DependencyUpdateResults UpdateFiles(
-            IEnumerable<IDependencyInfo> buildInfos,
-            IEnumerable<IDependencyUpdater> updaters)
-        {
-            DependencyUpdateResults results = DependencyUpdateUtils.Update(updaters, buildInfos);
-            Console.WriteLine(results.GetSuggestedCommitMessage());
-            return results;
-        }
-
-        private static IDependencyInfo CreateDependencyBuildInfo(string name, string? version)
-        {
-            return new BuildDependencyInfo(
-                new BuildInfo()
-                {
-                    Name = name,
-                    LatestReleaseVersion = version,
-                    LatestPackages = new Dictionary<string, string>()
-                },
-                false,
-                Enumerable.Empty<string>());
-        }
-
-        private static IEnumerable<IDependencyUpdater> GetProductUpdaters(
-            ManifestVariables manifestVariables,
-            SpecificCommandOptions options)
-        {
-            // Preserve updater order because later operations can depend on earlier edits.
-            List<IDependencyUpdater> updaters =
-            [
-                new NuGetConfigUpdater(manifestVariables, options),
-                ..BaseUrlUpdater.CreateUpdaters(manifestVariables, options)
-            ];
-
-            foreach (string productName in options.ProductVersions.Keys)
-            {
-                updaters.Add(new VersionUpdater(VersionType.Build, productName, options.DockerfileVersion, options, manifestVariables));
-                updaters.Add(new VersionUpdater(VersionType.Product, productName, options.DockerfileVersion, options, manifestVariables));
-
-                var shaUpdaters = DockerfileShaUpdater.CreateUpdaters(
-                    productName: productName,
-                    dockerfileVersion: options.DockerfileVersion,
-                    options: options,
-                    variables: manifestVariables);
-
-                updaters.AddRange(shaUpdaters);
             }
 
-            return updaters;
-        }
+            foreach (GitHubReleaseInfo release in toolReleases)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                await Tools.UpdateAsync(manifestVariables, release, cancellationToken);
+            }
 
-        private static IEnumerable<IDependencyUpdater> GetGeneratedContentUpdaters(string repoRoot) =>
-        [
-            ScriptRunnerUpdater.GetDockerfileUpdater(repoRoot),
-            ScriptRunnerUpdater.GetReadMeUpdater(repoRoot)
-        ];
+            foreach (VariableUpdateInfo update in VariableUpdates)
+            {
+                VariableUpdater.Update(manifestVariables, update.VariableName, update.Value);
+            }
+
+            cancellationToken.ThrowIfCancellationRequested();
+            string updatedContent = manifestVariables.Content;
+            if (updatedContent != originalContent)
+            {
+                await File.WriteAllTextAsync(manifestFilePath, updatedContent, cancellationToken);
+            }
+
+            // Generators read the saved manifest and may change files even when the manifest is unchanged.
+            await ScriptRunner.GenerateDockerfilesAsync(options.RepoRoot, cancellationToken);
+            await ScriptRunner.GenerateReadmesAsync(options.RepoRoot, cancellationToken);
+        }
     }
 }

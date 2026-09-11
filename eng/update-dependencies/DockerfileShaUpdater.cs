@@ -11,14 +11,13 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Microsoft.DotNet.VersionTools.Dependencies;
 
 namespace Dotnet.Docker
 {
     /// <summary>
     /// Updates manifest checksum variables for the selected product's artifacts.
     /// </summary>
-    internal class DockerfileShaUpdater : VariableUpdaterBase
+    internal class DockerfileShaUpdater
     {
         private const string ReleaseDotnetBaseCdnUrl = $"https://builds.dotnet.microsoft.com/dotnet";
 
@@ -27,30 +26,18 @@ namespace Dotnet.Docker
         private static readonly HttpClient s_httpClient = new();
 
         private readonly string _productName;
-        private readonly Version _dockerfileVersion;
-        private readonly string? _buildVersion;
-        private readonly string _arch;
-        private readonly string _os;
         private readonly SpecificCommandOptions _options;
+        private readonly ManifestVariables _variables;
         private readonly Dictionary<string, string> _urls;
 
         public DockerfileShaUpdater(
             string productName,
-            string dockerfileVersion,
-            string? buildVersion,
-            string arch,
-            string os,
-            string variableName,
             SpecificCommandOptions options,
-            ManifestVariables manifestVariables)
-            : base(manifestVariables, variableName)
+            ManifestVariables variables)
         {
             _productName = productName;
-            _dockerfileVersion = new Version(dockerfileVersion);
-            _buildVersion = buildVersion;
-            _arch = arch;
-            _os = os;
             _options = options;
+            _variables = variables;
 
             // Maps a product name to a set of one or more candidate URLs referencing the associated artifact. The order of the URLs
             // should be in priority order with each subsequent URL being the fallback.
@@ -77,61 +64,48 @@ namespace Dotnet.Docker
             }
         }
 
-        public static IEnumerable<IDependencyUpdater> CreateUpdaters(
-            string productName,
-            string dockerfileVersion,
-            SpecificCommandOptions options,
-            ManifestVariables variables)
+        private string? BuildVersion => GetBuildVersion(_productName, _options.DockerfileVersion, _variables, _options);
+
+        public async Task UpdateAsync(CancellationToken cancellationToken = default)
         {
             // The format of the sha variable name is '<productName>|<dockerfileVersion>|<os>|<arch>|sha'.
             // The 'os' and 'arch' segments are optional.
-            string prefix = $"{productName}|{dockerfileVersion}|";
+            string prefix = $"{_productName}|{_options.DockerfileVersion}|";
 
-            return variables.Names
+            string[] variableNames = _variables.Names
                 .Where(name => name.StartsWith(prefix, StringComparison.Ordinal))
                 .Where(name => name.EndsWith("|sha", StringComparison.Ordinal))
-                .Select(variable =>
-                {
-                    Trace.TraceInformation($"Updating {variable}");
-
-                    string[] parts = variable.Split('|');
-                    DockerfileShaUpdater updater = new(
-                        productName,
-                        dockerfileVersion,
-                        GetBuildVersion(productName, dockerfileVersion, variables, options),
-                        GetArch(parts),
-                        GetOs(parts),
-                        variable,
-                        options,
-                        variables);
-
-                    return updater;
-                })
                 .ToArray();
+
+            foreach (string variableName in variableNames)
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+                string downloadUrl = GetDownloadUrl(variableName);
+                string sha = await GetArtifactShaAsync(downloadUrl, cancellationToken);
+                VariableUpdater.Update(_variables, variableName, sha);
+            }
         }
 
-        protected override string? TryGetDesiredValue(
-            IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
+        private string GetDownloadUrl(string variableName)
         {
-            usedBuildInfos = [dependencyBuildInfos.First(info => info.SimpleName == _productName)];
-
-            string baseUrl = ManifestHelper.GetBaseUrls(Variables, _options).First();
+            string[] parts = variableName.Split('|');
+            string os = GetOs(parts);
+            string arch = GetArch(parts);
+            string baseUrl = ManifestHelper.GetBaseUrls(_variables, _options).First();
             // Remove Aspire Dashboard case once https://github.com/microsoft/aspire/issues/2035 is fixed.
-            string archiveExt = _os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
-            string versionDir = _buildVersion ?? "";
+            string archiveExt = os.Contains("win") || _productName.Contains("aspire-dashboard") ? "zip" : "tar.gz";
+            string versionDir = BuildVersion ?? "";
             string versionFile = VersionHelper.ResolveProductVersion(versionDir, _options.StableBranding);
 
-            string downloadUrl = _urls[_productName]
+            return _urls[_productName]
                 .Replace("$DOTNET_BASE_URL", baseUrl)
                 .Replace("$ARCHIVE_EXT", archiveExt)
                 .Replace("$VERSION_DIR", versionDir)
                 .Replace("$VERSION_FILE", versionFile)
-                .Replace("$OS", _os)
-                .Replace("$ARCH", _arch)
+                .Replace("$OS", os)
+                .Replace("$ARCH", arch)
                 .Replace("$DF_VERSION", _options.DockerfileVersion)
                 .Replace("..", ".");
-
-            return GetArtifactShaAsync(downloadUrl).Result;
         }
 
         private static string GetOs(string[] variableParts)
@@ -154,16 +128,16 @@ namespace Dotnet.Docker
             return string.Empty;
         }
 
-        private async Task<string?> GetArtifactShaAsync(string downloadUrl)
+        private async Task<string> GetArtifactShaAsync(string downloadUrl, CancellationToken cancellationToken)
         {
             if (!s_shaCache.TryGetValue(downloadUrl, out string? sha))
             {
-                sha = await GetChecksumShaFromChecksumsFileAsync(downloadUrl)
-                    ?? await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl)
-                    ?? await GetDotNetReleaseChecksumsShaFromBuildVersionAsync(downloadUrl)
-                    ?? await GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(downloadUrl)
-                    ?? await GetDotNetBinaryStorageChecksumsShaAsync(downloadUrl)
-                    ?? await ComputeChecksumShaAsync(downloadUrl);
+                sha = await GetChecksumShaFromChecksumsFileAsync(downloadUrl, cancellationToken)
+                    ?? await GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(downloadUrl, cancellationToken)
+                    ?? await GetDotNetReleaseChecksumsShaFromBuildVersionAsync(downloadUrl, cancellationToken)
+                    ?? await GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(downloadUrl, cancellationToken)
+                    ?? await GetDotNetBinaryStorageChecksumsShaAsync(downloadUrl, cancellationToken)
+                    ?? await ComputeChecksumShaAsync(downloadUrl, cancellationToken);
 
                 if (sha != null)
                 {
@@ -173,22 +147,21 @@ namespace Dotnet.Docker
                 }
                 else
                 {
-                    string notFoundMsg = $"Unable to retrieve sha for '{downloadUrl}'.";
-                    Trace.TraceError(notFoundMsg);
+                    throw new InvalidOperationException($"Unable to retrieve sha for '{downloadUrl}'.");
                 }
             }
 
             return sha;
         }
 
-        private Task<string?> ComputeChecksumShaAsync(string downloadUrl)
+        private Task<string?> ComputeChecksumShaAsync(string downloadUrl, CancellationToken cancellationToken)
         {
             Trace.TraceInformation($"Downloading '{downloadUrl}'.");
             return ChecksumHelper.ComputeChecksumShaAsync(
-                s_httpClient, downloadUrl);
+                s_httpClient, downloadUrl, cancellationToken);
         }
 
-        private async Task<string?> GetDotNetBinaryStorageChecksumsShaAsync(string productDownloadUrl)
+        private async Task<string?> GetDotNetBinaryStorageChecksumsShaAsync(string productDownloadUrl, CancellationToken cancellationToken)
         {
             string? sha = null;
 
@@ -199,11 +172,11 @@ namespace Dotnet.Docker
                 + ".sha512";
 
             Trace.TraceInformation($"Downloading '{shaUrl}'.");
-            using (HttpResponseMessage response = await s_httpClient.GetAsync(shaUrl))
+            using (HttpResponseMessage response = await s_httpClient.GetAsync(shaUrl, cancellationToken))
             {
                 if (response.IsSuccessStatusCode)
                 {
-                    sha = await response.Content.ReadAsStringAsync();
+                    sha = await response.Content.ReadAsStringAsync(cancellationToken);
                 }
                 else
                 {
@@ -214,39 +187,39 @@ namespace Dotnet.Docker
             return sha;
         }
 
-        private Task<string?> GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(string productDownloadUrl) =>
-            GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, GetRuntimeVersion());
+        private Task<string?> GetDotNetReleaseChecksumsShaFromRuntimeVersionAsync(string productDownloadUrl, CancellationToken cancellationToken) =>
+            GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, GetRuntimeVersion(), cancellationToken);
 
         private string? GetRuntimeVersion()
         {
-            string? version = _buildVersion;
+            string? version = BuildVersion;
             // The release checksum file contains content for all products in the release (runtime, sdk, etc.)
             // and is referenced by the runtime version.
             if (_productName.Contains("sdk", StringComparison.OrdinalIgnoreCase) ||
                 _productName.Contains("aspnet", StringComparison.OrdinalIgnoreCase))
             {
-                version = GetBuildVersion("runtime", _dockerfileVersion.ToString(), Variables, _options);
+                version = GetBuildVersion("runtime", _options.DockerfileVersion, _variables, _options);
             }
 
             return version;
         }
 
-        private Task<string?> GetDotNetReleaseChecksumsShaFromBuildVersionAsync(string productDownloadUrl) =>
-            GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, _buildVersion);
+        private Task<string?> GetDotNetReleaseChecksumsShaFromBuildVersionAsync(string productDownloadUrl, CancellationToken cancellationToken) =>
+            GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, BuildVersion, cancellationToken);
 
-        private Task<string?> GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(string productDownloadUrl)
+        private Task<string?> GetDotNetReleaseChecksumsShaFromPreviewVersionAsync(string productDownloadUrl, CancellationToken cancellationToken)
         {
             string? runtimeVersion = GetRuntimeVersion();
             if (runtimeVersion is not null && TryParsePreviewVersion(runtimeVersion, out string? previewVersion))
             {
-                return GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, previewVersion);
+                return GetDotNetReleaseChecksumsShaAsync(productDownloadUrl, previewVersion, cancellationToken);
             }
 
             return Task.FromResult<string?>(null);
         }
 
         private async Task<string?> GetDotNetReleaseChecksumsShaAsync(
-            string productDownloadUrl, string? version)
+            string productDownloadUrl, string? version, CancellationToken cancellationToken)
         {
             // Only use the release checksums file for base URLs that target the release blob storage. This is because the
             // release checksums file contains checksums for the official release files which will be signed. The same
@@ -254,7 +227,7 @@ namespace Dotnet.Docker
             // the daily build location, we wouldn't use the release checksums file and instead use the other means of
             // retrieving the checksums.
             string? baseUrl = ManifestHelper
-                .GetBaseUrls(Variables, _options)
+                .GetBaseUrls(_variables, _options)
                 .Where(url => url == ReleaseDotnetBaseCdnUrl)
                 .FirstOrDefault();
 
@@ -263,15 +236,15 @@ namespace Dotnet.Docker
                 return null;
             }
 
-            return GetProductChecksum(await GetDotnetReleaseChecksums(version), productDownloadUrl);
+            return GetProductChecksum(await GetDotnetReleaseChecksums(version, cancellationToken), productDownloadUrl);
         }
 
-        private async Task<string?> GetChecksumShaFromChecksumsFileAsync(string productDownloadUrl)
+        private async Task<string?> GetChecksumShaFromChecksumsFileAsync(string productDownloadUrl, CancellationToken cancellationToken)
         {
             if (string.IsNullOrEmpty(_options.ChecksumsFile))
                 return null;
 
-            return GetProductChecksum(await GetChecksumsFromChecksumsFile(), productDownloadUrl);
+            return GetProductChecksum(await GetChecksumsFromChecksumsFile(cancellationToken), productDownloadUrl);
         }
 
         private static string? GetProductChecksum(IDictionary<string, string> checksumEntries, string productDownloadUrl)
@@ -306,18 +279,18 @@ namespace Dotnet.Docker
             }
         }
 
-        private async Task<IDictionary<string, string>> GetChecksumsFromChecksumsFile()
+        private async Task<IDictionary<string, string>> GetChecksumsFromChecksumsFile(CancellationToken cancellationToken)
         {
             return await GetChecksums(
                 _options.ChecksumsFile,
                 () =>
                 {
                     Trace.TraceInformation($"Opening '{_options.ChecksumsFile}'.");
-                    return Task.FromResult(File.ReadAllText(_options.ChecksumsFile));
+                    return File.ReadAllTextAsync(_options.ChecksumsFile, cancellationToken);
                 });
         }
 
-        private async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version)
+        private async Task<IDictionary<string, string>> GetDotnetReleaseChecksums(string? version, CancellationToken cancellationToken)
         {
             string uri = $"{ReleaseDotnetBaseCdnUrl}/checksums/{version}-sha.txt";
 
@@ -326,11 +299,11 @@ namespace Dotnet.Docker
                 async () =>
                 {
                     Trace.TraceInformation($"Downloading '{uri}'.");
-                    using (HttpResponseMessage response = await s_httpClient.GetAsync(uri))
+                    using (HttpResponseMessage response = await s_httpClient.GetAsync(uri, cancellationToken))
                     {
                         if (response.IsSuccessStatusCode)
                         {
-                            return await response.Content.ReadAsStringAsync();
+                            return await response.Content.ReadAsStringAsync(cancellationToken);
                         }
                         else
                         {
@@ -349,13 +322,13 @@ namespace Dotnet.Docker
             }
 
             checksumEntries = new Dictionary<string, string>();
-            s_releaseChecksumCache.Add(sourceUrlOrPath, checksumEntries);
 
             string content = await getContentCallback();
 
             if (string.IsNullOrEmpty(content))
             {
                 // Return empty dictionary since there are no checksums
+                s_releaseChecksumCache.Add(sourceUrlOrPath, checksumEntries);
                 return checksumEntries;
             }
 
@@ -375,7 +348,7 @@ namespace Dotnet.Docker
                 string[] parts = checksumLines[i].Split(" ");
                 if (parts.Length != 2)
                 {
-                    Trace.TraceError($"Checksum file is not in the expected format: {sourceUrlOrPath}");
+                    throw new FormatException($"Checksum file is not in the expected format: {sourceUrlOrPath}");
                 }
 
                 string fileName = parts[1];
@@ -385,6 +358,7 @@ namespace Dotnet.Docker
                 Trace.TraceInformation($"Parsed checksum '{checksum}' for '{fileName}'");
             }
 
+            s_releaseChecksumCache.Add(sourceUrlOrPath, checksumEntries);
             return checksumEntries;
         }
 

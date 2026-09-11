@@ -9,7 +9,7 @@ internal sealed class ChiselVersionSource : IDependencyVersionSource
 {
     public async Task<ComponentVersionInfo> GetVersionInfoAsync(ComponentVersionChannel channel)
     {
-        GitHubReleaseInfo chiselReleaseInfo = await ChiselUpdater.GetBuildInfoAsync();
-        return new ComponentVersionInfo(chiselReleaseInfo.SimpleVersion);
+        GitHubReleaseInfo chiselReleaseInfo = await ChiselUpdater.GetReleaseAsync();
+        return new ComponentVersionInfo(chiselReleaseInfo.Release.TagName);
     }
 }

@@ -1,7 +1,7 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.DotNet.VersionTools.Dependencies;
+using System.Diagnostics;
 
 namespace Dotnet.Docker;
 
@@ -15,21 +15,59 @@ internal static class Tools
         MinGitUpdater.ToolName
     ];
 
-    public static async Task<GitHubReleaseInfo> GetToolBuildInfoAsync(string tool) =>
+    public static async Task<GitHubReleaseInfo> GetReleaseAsync(string tool) =>
         tool switch
         {
-            MinGitUpdater.ToolName => await MinGitUpdater.GetBuildInfoAsync(),
-            SyftUpdater.ToolName => await SyftUpdater.GetBuildInfoAsync(),
-            ChiselUpdater.ToolName => await ChiselUpdater.GetBuildInfoAsync(),
-            RocksToolboxUpdater.ToolName => await RocksToolboxUpdater.GetBuildInfoAsync(),
+            MinGitUpdater.ToolName => await MinGitUpdater.GetReleaseAsync(),
+            SyftUpdater.ToolName => await SyftUpdater.GetReleaseAsync(),
+            ChiselUpdater.ToolName => await ChiselUpdater.GetReleaseAsync(),
+            RocksToolboxUpdater.ToolName => await RocksToolboxUpdater.GetReleaseAsync(),
             _ => throw new ArgumentException($"Unknown tool {tool}", nameof(tool)),
         };
 
-    public static IEnumerable<IDependencyUpdater> GetToolUpdaters(ManifestVariables variables) =>
-    [
-        ..MinGitUpdater.GetUpdaters(variables),
-        ..ChiselUpdater.GetUpdaters(variables),
-        RocksToolboxUpdater.GetUpdater(variables),
-        SyftUpdater.GetUpdater(variables),
-    ];
+    public static async Task UpdateAsync(
+        ManifestVariables variables,
+        GitHubReleaseInfo release,
+        CancellationToken cancellationToken = default)
+    {
+        switch (release.ToolName)
+        {
+            case MinGitUpdater.ToolName:
+                MinGitUpdater.Update(variables, release.Release);
+                break;
+            case SyftUpdater.ToolName:
+                SyftUpdater.Update(variables, release.Release);
+                break;
+            case ChiselUpdater.ToolName:
+                await ChiselUpdater.UpdateAsync(variables, release.Release, cancellationToken);
+                break;
+            case RocksToolboxUpdater.ToolName:
+                RocksToolboxUpdater.Update(variables, release.Release);
+                break;
+            default:
+                throw new ArgumentException($"Unknown tool {release.ToolName}", nameof(release));
+        }
+    }
+
+    /// <summary>
+    /// Tool release updates preserve empty values and aliases, and only edit keys present on this branch.
+    /// Check before resolving assets so disabled variables do not require downloads.
+    /// </summary>
+    public static bool ShouldUpdateVariable(ManifestVariables variables, string variableName)
+    {
+        if (!variables.Contains(variableName))
+        {
+            Trace.TraceInformation($"Skipping absent manifest variable '{variableName}'.");
+            return false;
+        }
+
+        string currentValue = variables.GetRawValue(variableName);
+        if (currentValue.Length == 0 || ManifestHelper.IsManifestVariable(currentValue))
+        {
+            Trace.TraceInformation($"Leaving manifest variable '{variableName}' unchanged.");
+            return false;
+        }
+
+        return true;
+    }
 }

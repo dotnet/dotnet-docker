@@ -3,7 +3,6 @@
 
 using System.Text;
 using System.Xml.Linq;
-using Microsoft.DotNet.VersionTools.Dependencies;
 using Microsoft.DotNet.Docker.Shared;
 
 namespace Dotnet.Docker;
@@ -11,71 +10,46 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the NuGet.config test app artifact to add or remove an internal package feed.
 /// </summary>
-internal class NuGetConfigUpdater : IDependencyUpdater
+internal static class NuGetConfigUpdater
 {
     private const string PkgSrcSuffix = "_internal";
-    private readonly SpecificCommandOptions _options;
-    private readonly string _configPath;
 
-    public NuGetConfigUpdater(ManifestVariables manifestVariables, SpecificCommandOptions options)
+    public static void Update(ManifestVariables variables, SpecificCommandOptions options)
     {
-        _options = options;
+        if (!options.ProductVersions.TryGetValue("sdk", out string? sdkVersion))
+        {
+            return;
+        }
 
         // The upstream branch represents which GitHub branch the current
         // branch branched off of. This is either "nightly" or "main".
-        string upstreamBranch = manifestVariables.GetValue("branch");
+        string upstreamBranch = variables.GetValue("branch");
 
-        string configSuffix = (_options.IsInternal, upstreamBranch) switch
+        string configSuffix = (options.IsInternal, upstreamBranch) switch
         {
             (true, _) => ".internal",
             (false, "nightly") => ".nightly",
             _ => string.Empty
         };
 
-        _configPath = Path.Combine(_options.RepoRoot, $"tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/NuGet.config{configSuffix}");
-    }
+        string configPath = Path.Combine(
+            options.RepoRoot, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts", $"NuGet.config{configSuffix}");
+        string existingContent = File.ReadAllText(configPath);
+        DotNetVersion parsedSdkVersion = sdkVersion
+            ?? throw new InvalidOperationException("An SDK version is required to update NuGet.config.");
+        string pkgSrcName = $"dotnet{options.DockerfileVersion.Replace(".", "_")}{PkgSrcSuffix}";
 
-    public IEnumerable<DependencyUpdateTask> GetUpdateTasks(IEnumerable<IDependencyInfo> dependencyInfos)
-    {
-        string existingContent = File.ReadAllText(_configPath);
+        XDocument doc = XDocument.Parse(existingContent);
+        XElement configuration = doc.Root
+            ?? throw new InvalidOperationException($"Missing configuration root in '{configPath}'.");
+        UpdatePackageSources(parsedSdkVersion, pkgSrcName, configuration, options.IsInternal);
+        UpdatePackageSourceCredentials(pkgSrcName, configuration, options.IsInternal);
+        string newContent = ToStringWithDeclaration(doc) + Environment.NewLine;
 
-        IDependencyInfo? sdkInfo = dependencyInfos
-            .FirstOrDefault(info => info.SimpleName == "sdk");
-
-        if (sdkInfo is not null)
+        if (newContent != existingContent)
         {
-            string newContent = GetUpdatedNuGetConfigContent(sdkInfo.SimpleVersion);
-
-            if (newContent != existingContent)
-            {
-                return
-                [
-                    new DependencyUpdateTask(
-                        updateAction: () => File.WriteAllText(_configPath, newContent),
-                        usedInfos: [sdkInfo],
-                        readableDescriptionLines: []
-                    )
-                ];
-            }
+            File.WriteAllText(configPath, newContent);
         }
-
-        return [];
-    }
-
-    /// <summary>
-    /// Updates the NuGet.config file to include a URL to the internal package feed of the specified version.
-    /// </summary>
-    private string GetUpdatedNuGetConfigContent(DotNetVersion sdkVersion)
-    {
-        string pkgSrcName = $"dotnet{_options.DockerfileVersion.Replace(".", "_")}{PkgSrcSuffix}";
-
-        XDocument doc = XDocument.Load(_configPath);
-
-        XElement configuration = doc.Root!;
-        UpdatePackageSources(sdkVersion, pkgSrcName, configuration);
-        UpdatePackageSourceCredentials(sdkVersion, pkgSrcName, configuration);
-
-        return ToStringWithDeclaration(doc) + Environment.NewLine;
     }
 
     private static string ToStringWithDeclaration(XDocument doc)
@@ -95,10 +69,10 @@ internal class NuGetConfigUpdater : IDependencyUpdater
     /// Public preview builds use public feeds, so their credentials are removed if present.
     /// Only the current version's entry is modified — other versions' credentials are left intact.
     /// </summary>
-    private void UpdatePackageSourceCredentials(DotNetVersion sdkVersion, string pkgSrcName, XElement configuration)
+    private static void UpdatePackageSourceCredentials(string pkgSrcName, XElement configuration, bool isInternal)
     {
         XElement? pkgSourceCreds = configuration.Element("packageSourceCredentials");
-        if (_options.IsInternal)
+        if (isInternal)
         {
             pkgSourceCreds = GetOrCreateXObject(
                 pkgSourceCreds,
@@ -125,10 +99,11 @@ internal class NuGetConfigUpdater : IDependencyUpdater
         }
     }
 
-    private void UpdatePackageSources(DotNetVersion sdkVersion, string pkgSrcName, XElement configuration)
+    private static void UpdatePackageSources(
+        DotNetVersion sdkVersion, string pkgSrcName, XElement configuration, bool isInternal)
     {
         XElement? pkgSources = configuration.Element("packageSources");
-        if (_options.IsInternal)
+        if (isInternal)
         {
             pkgSources = GetOrCreateXObject(
                 node: pkgSources,

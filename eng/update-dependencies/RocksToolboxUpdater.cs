@@ -1,8 +1,7 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System.Threading.Tasks;
-using Microsoft.DotNet.VersionTools.Dependencies;
+using Octokit;
 
 namespace Dotnet.Docker;
 
@@ -14,16 +13,17 @@ internal static class RocksToolboxUpdater
 
     private const string Repo = "rocks-toolbox";
 
-    public static IDependencyUpdater GetUpdater(ManifestVariables variables) =>
-        new GitHubReleaseVersionUpdater(
-            variables: variables,
-            toolName: ToolName,
-            variableName: $"{ToolName}|latest|version",
-            owner: Owner,
-            repo: Repo);
+    public static void Update(ManifestVariables variables, Release release)
+    {
+        string variableName = $"{ToolName}|latest|version";
+        if (Tools.ShouldUpdateVariable(variables, variableName))
+        {
+            VariableUpdater.Update(variables, variableName, release.TagName);
+        }
+    }
 
-    public static async Task<GitHubReleaseInfo> GetBuildInfoAsync() =>
+    public static async Task<GitHubReleaseInfo> GetReleaseAsync() =>
         new GitHubReleaseInfo(
-            SimpleName: ToolName,
+            ToolName: ToolName,
             Release: await GitHubHelper.GetLatestRelease(Owner, Repo));
 }

@@ -1,58 +1,43 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.DotNet.VersionTools.Dependencies;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Diagnostics;
 using System.Text.RegularExpressions;
 
 namespace Dotnet.Docker
 {
     /// <summary>
-    /// An IDependencyUpdater that will update the specified version variables within the manifest to align with the
-    /// current product version.
+    /// Updates literal build and Docker tag versions without replacing aliases or disabled values.
     /// </summary>
-    internal partial class VersionUpdater : VariableUpdaterBase
+    internal static partial class VersionUpdater
     {
         private static readonly string[] s_excludedMonikers = { "servicing", "rtm" };
 
-        private readonly string _productName;
-        private readonly SpecificCommandOptions _options;
-        private readonly VersionType _versionType;
-
-        public VersionUpdater(
-            VersionType versionType,
+        public static void Update(
+            ManifestVariables variables,
             string productName,
-            string dockerfileVersion,
-            SpecificCommandOptions options,
-            ManifestVariables variables)
-            : base(variables, ManifestHelper.GetVersionVariableName(versionType, productName, dockerfileVersion))
+            string? buildVersion,
+            SpecificCommandOptions options)
         {
-            _productName = productName;
-            _options = options;
-            _versionType = versionType;
+            string buildVariable = ManifestHelper.GetVersionVariableName(VersionType.Build, productName, options.DockerfileVersion);
+            string productVariable = ManifestHelper.GetVersionVariableName(VersionType.Product, productName, options.DockerfileVersion);
+            string productVersion = GetProductVersion(buildVersion, options.StableBranding);
+
+            UpdateVersion(variables, buildVariable, buildVersion ?? string.Empty);
+            UpdateVersion(variables, productVariable, productVersion);
         }
 
         // Preserve the old selection rule: edit literal versions, not aliases or empty values.
-        protected override bool ShouldUpdate(string currentValue) => VersionValueRegex.IsMatch(currentValue);
-
-        protected override string TryGetDesiredValue(
-            IEnumerable<IDependencyInfo> dependencyBuildInfos, out IEnumerable<IDependencyInfo> usedBuildInfos)
+        private static void UpdateVersion(ManifestVariables variables, string variableName, string version)
         {
-            IDependencyInfo productInfo = dependencyBuildInfos.First(info => info.SimpleName == _productName);
-
-            usedBuildInfos = new IDependencyInfo[] { productInfo };
-
-            return _versionType switch
+            if (variables.Contains(variableName) && !VersionValueRegex.IsMatch(variables.GetRawValue(variableName)))
             {
-                VersionType.Build => GetBuildVersion(productInfo),
-                VersionType.Product => GetProductVersion(productInfo),
-                _ => throw new NotSupportedException($"Unsupported VersionType: {_versionType}"),
-            };
-        }
+                Trace.TraceInformation($"Leaving manifest variable '{variableName}' unchanged.");
+                return;
+            }
 
-        private static string GetBuildVersion(IDependencyInfo productInfo) => productInfo.SimpleVersion ?? string.Empty;
+            VariableUpdater.Update(variables, variableName, version);
+        }
 
         public static string GetBuildVersion(string productName, string dockerfileVersion, ManifestVariables variables)
         {
@@ -72,9 +57,9 @@ namespace Dotnet.Docker
             return version;
         }
 
-        private string GetProductVersion(IDependencyInfo productInfo)
+        private static string GetProductVersion(string? buildVersion, bool stableBranding)
         {
-            if (productInfo.SimpleVersion is null)
+            if (buildVersion is null)
             {
                 return string.Empty;
             }
@@ -82,8 +67,8 @@ namespace Dotnet.Docker
             // Derive the Docker tag version from the product build version.
             // 5.0.0-preview.2.19530.9 => 5.0.0-preview.2
             string versionRegexPattern = "[\\d]+.[\\d]+.[\\d]+(-[\\w]+(.[\\d]+)?)?";
-            Match versionMatch = Regex.Match(productInfo.SimpleVersion, versionRegexPattern);
-            string version = versionMatch.Success ? versionMatch.Value : productInfo.SimpleVersion;
+            Match versionMatch = Regex.Match(buildVersion, versionRegexPattern);
+            string version = versionMatch.Success ? versionMatch.Value : buildVersion;
 
             foreach (string excludedMoniker in s_excludedMonikers)
             {
@@ -94,7 +79,7 @@ namespace Dotnet.Docker
                 }
             }
 
-            return VersionHelper.ResolveProductVersion(version, _options.StableBranding);
+            return VersionHelper.ResolveProductVersion(version, stableBranding);
         }
 
         [GeneratedRegex(@"\Av?[\d]+.[\d]+.[\d]+(-[\w]+(.[\d]+)*)?\z")]
