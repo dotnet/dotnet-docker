@@ -51,7 +51,7 @@ You can use the following image tags:
 If your app requires additional packages besides `icu` and `tzdata`, you can follow the same pattern that .NET uses to install the .NET runtime dependencies.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:10.0-azurelinux3.0-distroless AS base
+FROM mcr.microsoft.com/dotnet/nightly/aspnet:11.0-azurelinux3.0-distroless AS base
 
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
@@ -132,7 +132,7 @@ Here's an example configuration based off of a simple ASP.NET Core app:
 ```diff
 # Learn about building .NET container images:
 # https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
-FROM mcr.microsoft.com/dotnet/aspnet:10.0-azurelinux3.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-azurelinux3.0 AS base
 - USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
@@ -142,7 +142,7 @@ EXPOSE 8081
 + FROM base AS debug
 + RUN tdnf install -y procps-ng # <-- Install tools needed for debugging (e.g. the `pidof` command)
 
-FROM mcr.microsoft.com/dotnet/sdk:10.0-azurelinux3.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0-azurelinux3.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["AspNetCoreRazorApp/AspNetCoreRazorApp.csproj", "AspNetCoreRazorApp/"]
