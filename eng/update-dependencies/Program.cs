@@ -29,6 +29,9 @@ var rootCommand = new RootCommand()
     FromComponentCommand.Create(
         name: "from-component",
         description: "Update a single image component"),
+    MonitorCommand.Create(
+        name: "monitor",
+        description: "Update .NET Monitor using a version or Azure DevOps pipeline run"),
     SpecificCommand.Create(
         name: "specific",
         description: "Update dependencies using specific product versions"),
@@ -139,6 +142,7 @@ config.UseHost(
                 services.AddCommand<FromChannelCommand, FromChannelOptions>();
                 services.AddCommand<FromStagingPipelineCommand, FromStagingPipelineOptions>();
                 services.AddCommand<FromComponentCommand, FromComponentOptions>();
+                services.AddCommand<MonitorCommand, MonitorOptions>();
                 services.AddCommand<SpecificCommand, SpecificCommandOptions>();
                 services.AddCommand<SyncInternalReleaseCommand, SyncInternalReleaseOptions>();
             }

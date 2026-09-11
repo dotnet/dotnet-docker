@@ -200,17 +200,31 @@ Use the [new .NET version release lifecycle](eng/developer-docs/dotnet-release-l
 
 The following examples illustrate how to run `update-dependencies`:
 
-- Update the 9.0 product versions (uses a helper script for running update-dependencies)
+- Update the 9.0 product versions
 
     ``` console
-    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 9.0 -SdkVersion 9.0.100 -RuntimeVersion 9.0.0 -AspnetVersion 9.0.0
+    > dotnet run --project .\eng\update-dependencies\ -- specific 9.0 --product-version sdk=9.0.100 --product-version runtime=9.0.0 --product-version aspnet=9.0.0 --product-version aspnet-composite=9.0.0 --version-source-name dotnet/sdk
     ```
 
-- Update the .NET Monitor version (uses a helper script for running update-dependencies)
+- Update .NET Monitor, including the base image and extension checksums
 
     ``` console
-    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 8.0 -MonitorVersion 8.0.5
+    > dotnet run --project .\eng\update-dependencies\ -- monitor 9.0.5
     ```
+
+- Update .NET Monitor from an Azure DevOps pipeline run
+
+    ``` console
+    > dotnet run --project .\eng\update-dependencies\ -- monitor --pipeline-run-id 1234567
+    ```
+
+    Specify either a version or `--pipeline-run-id`, not both.
+    This is the Azure DevOps run ID, not a BAR build ID.
+    The command reads `Build_Info/dotnet-monitor.nupkg.buildversion` from the run.
+    The source defaults to organization `https://dev.azure.com/dnceng` and project `internal`; use `--azdo-organization` and `--azdo-project` to override them.
+    Build access uses `SYSTEM_ACCESSTOKEN` in pipelines or Azure Developer CLI credentials locally.
+    Supplying a version directly does not require Azure DevOps authentication.
+    Neither form publishes a pull request unless publishing credentials are provided.
 
 - Update the PowerShell version used in the 9.0 images
 

@@ -29,6 +29,15 @@ internal interface IPipelineArtifactProvider
         string azdoOrganization,
         string azdoProject,
         int stagingPipelineRunId);
+
+    /// <summary>
+    /// Tries artifact files in order and returns the first successfully downloaded text.
+    /// </summary>
+    Task<string> GetArtifactTextContentAsync(
+        string azdoOrganization,
+        string azdoProject,
+        int pipelineRunId,
+        params IEnumerable<PipelineArtifactFile> artifactsToTry);
 }
 
 internal class PipelineArtifactProvider(
@@ -75,14 +84,14 @@ internal class PipelineArtifactProvider(
     /// For example: https://dev.azure.com/fabrikamfiber/.
     /// </param>
     /// <param name="azdoProject">Azure DevOps project</param>
-    /// <param name="stagingPipelineRunId">Pipeline run ID</param>
+    /// <param name="pipelineRunId">Pipeline run ID</param>
     /// <param name="artifactsToTry">The collection of artifact files to try, in order.</param>
     /// <returns>The artifact content as a string.</returns>
-    private async Task<string> GetArtifactTextContentAsync(
+    public async Task<string> GetArtifactTextContentAsync(
         string azdoOrganization,
         string azdoProject,
-        int stagingPipelineRunId,
-        IEnumerable<PipelineArtifactFile> artifactsToTry)
+        int pipelineRunId,
+        params IEnumerable<PipelineArtifactFile> artifactsToTry)
     {
         if (string.IsNullOrWhiteSpace(azdoOrganization))
         {
@@ -98,8 +107,8 @@ internal class PipelineArtifactProvider(
         foreach (PipelineArtifactFile pipelineArtifact in artifactsToTry)
         {
             _logger.LogInformation(
-                "Trying to get artifact from pipeline run {stagingPipelineRunId} using {artifactFile}",
-                stagingPipelineRunId, pipelineArtifact);
+                "Trying to get artifact from pipeline run {pipelineRunId} using {artifactFile}",
+                pipelineRunId, pipelineArtifact);
 
             try
             {
@@ -107,7 +116,7 @@ internal class PipelineArtifactProvider(
                 BuildArtifact resolvedArtifact = await _pipelinesService.GetArtifactAsync(
                     azdoOrganization,
                     azdoProject,
-                    stagingPipelineRunId,
+                    pipelineRunId,
                     pipelineArtifact.ArtifactName);
 
                 // If the artifact is found, download the specific file within it
