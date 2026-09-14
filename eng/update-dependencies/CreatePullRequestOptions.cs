@@ -14,6 +14,9 @@ public abstract record CreatePullRequestOptions
     /// </summary>
     public string RepoRoot { get; init; } = Directory.GetCurrentDirectory();
 
+    public string GitHubProject { get; } = "dotnet-docker";
+    public string GitHubUpstreamOwner { get; } = "dotnet";
+
     public string User { get; init; } = "";
     public string Email { get; init; } = "";
     public string Password { get; init; } = "";
@@ -28,6 +31,12 @@ public abstract record CreatePullRequestOptions
     public string SourceBranch { get; init; } = "";
     public string TargetBranch { get; init; } = "nightly";
     public string PrBranchPrefix { get; init; } = "pr";
+
+    public bool UpdateOnly =>
+        string.IsNullOrEmpty(Email)
+        || string.IsNullOrEmpty(Password)
+        || string.IsNullOrEmpty(User)
+        || string.IsNullOrEmpty(TargetBranch);
 
     // If new properties or options are added, they may need to be added to
     // SpecificCommandOptions.FromPullRequestOptions(...)

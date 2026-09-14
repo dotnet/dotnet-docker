@@ -59,7 +59,6 @@ public static partial class ManifestHelper
         {
             product = versionSourceName switch
             {
-                string v when v.Contains("dotnet-monitor") => "monitor",
                 string v when v.Contains("aspire-dashboard") => "aspire-dashboard",
                 _ => "dotnet",
             };

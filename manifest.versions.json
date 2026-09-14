@@ -112,12 +112,12 @@
     "dotnet|11.0|base-url|checksums|nightly": "$(base-url|public-checksums|preview|nightly)",
     "dotnet|11.0|use-final-version": "false",
 
-    "libicu|bookworm": 72,
-    "libicu|bullseye": 67,
-    "libicu|focal": 66,
-    "libicu|jammy": 70,
-    "libicu|noble": 74,
-    "libicu|resolute": 78,
+    "libicu|bookworm": "72",
+    "libicu|bullseye": "67",
+    "libicu|focal": "66",
+    "libicu|jammy": "70",
+    "libicu|noble": "74",
+    "libicu|resolute": "78",
 
     "libssl|alpine3.23": "3",
     "libssl|alpine3.24": "3",

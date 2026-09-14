@@ -5,6 +5,7 @@ using System.CommandLine;
 using System.CommandLine.Hosting;
 using System.Net;
 using System.Text;
+using System.Text.Json;
 using Dotnet.Docker;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,58 +17,45 @@ namespace UpdateDependencies.Tests;
 public sealed class MonitorCommandTests
 {
     [Theory]
-    [InlineData("9.0.5-servicing.25556.2", "9.0", true, "nightly", ReleaseState.Prerelease)]
-    [InlineData("9.0.0-rtm.12345.1", "9.0", true, "main", ReleaseState.Release)]
-    [InlineData("10.0.3-preview.1.26303.1", "10.0", false, "nightly", ReleaseState.Prerelease)]
-    [InlineData("9.0.5", "9.0", false, "main", ReleaseState.Release)]
-    [InlineData("9.0.5+build-rtm", "9.0", false, "main", ReleaseState.Release)]
-    [InlineData("9.0.5-servicing.25556.2+build.123", "9.0", true, "nightly", ReleaseState.Prerelease)]
+    [InlineData("9.0.5-servicing.25556.2", "9.0", "9.0.5", "nightly")]
+    [InlineData("9.0.0-rtm.12345.1", "9.0", "9.0.0", "main")]
+    [InlineData("10.0.3-preview.1.26303.1", "10.0", "10.0.3-preview.1", "nightly")]
+    [InlineData("9.0.5", "9.0", "9.0.5", "main")]
+    [InlineData("9.0.5+build-rtm", "9.0", "9.0.5", "main")]
+    [InlineData("9.0.5-servicing.25556.2+build.123", "9.0", "9.0.5", "nightly")]
     public async Task ExplicitVersion_UpdatesAllMonitorProducts(
         string version,
         string dockerfileVersion,
-        bool stableBranding,
-        string branch,
-        ReleaseState releaseState)
+        string productVersion,
+        string branch)
     {
         using var repo = new TempRepo();
-        WriteManifest(repo, branch);
+        WriteManifest(repo, branch, dockerfileVersion);
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
-        var specific = new Mock<ICommand<SpecificCommandOptions>>();
-        SpecificCommandOptions? appliedOptions = null;
-        specific.Setup(command => command.ExecuteAsync(It.IsAny<SpecificCommandOptions>()))
-            .Callback<SpecificCommandOptions>(options => appliedOptions = options)
-            .ReturnsAsync(17);
-        var command = new MonitorCommand(artifacts.Object, specific.Object, Mock.Of<ILogger<MonitorCommand>>());
+        using var httpClient = new HttpClient();
+        var command = new MonitorCommand(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorCommand>>());
         var options = new MonitorOptions
         {
             Version = version,
             RepoRoot = repo.LocalPath,
             TargetBranch = branch,
-            User = "bot",
-            Email = "bot@example.com",
-            Password = "test-token",
         };
 
         int exitCode = await command.ExecuteAsync(options);
 
-        exitCode.ShouldBe(17);
-        var applied = Assert.IsType<SpecificCommandOptions>(appliedOptions);
-        applied.RepoRoot.ShouldBe(repo.LocalPath);
-        applied.TargetBranch.ShouldBe(branch);
-        applied.User.ShouldBe(options.User);
-        applied.Email.ShouldBe(options.Email);
-        applied.Password.ShouldBe(options.Password);
-        applied.DockerfileVersion.ShouldBe(dockerfileVersion);
-        applied.VersionSourceName.ShouldBe($"dotnet/dotnet-monitor/{dockerfileVersion}");
-        applied.StableBranding.ShouldBe(stableBranding);
-        applied.ReleaseState.ShouldBe(releaseState);
-        applied.ProductVersions.ShouldBe(new Dictionary<string, string?>
+        exitCode.ShouldBe(0);
+        var variables = ManifestVariables.FromFile(Path.Combine(repo.LocalPath, "manifest.versions.json"));
+        foreach (string product in Products)
         {
-            { "monitor", version },
-            { "monitor-base", version },
-            { "monitor-ext-azureblobstorage", version },
-            { "monitor-ext-s3storage", version },
-        });
+            variables.GetRawValue($"{product}|{dockerfileVersion}|build-version").ShouldBe(version);
+            variables.GetRawValue($"{product}|{dockerfileVersion}|product-version").ShouldBe(productVersion);
+        }
+        string quality = branch == "main" ? "maintenance" : "preview";
+        variables.GetRawValue($"monitor|{dockerfileVersion}|base-url|{branch}")
+            .ShouldBe($"$(base-url|public|{quality}|{branch})");
+        variables.GetRawValue($"monitor|{dockerfileVersion}|base-url|checksums|{branch}")
+            .ShouldBe($"$(base-url|public-checksums|{quality}|{branch})");
+        File.ReadAllText(Path.Combine(repo.LocalPath, "generated-version.txt")).Trim().ShouldBe(version);
         artifacts.VerifyNoOtherCalls();
     }
 
@@ -90,9 +78,6 @@ public sealed class MonitorCommandTests
             1234567,
             It.Is<IEnumerable<PipelineArtifactFile>>(files => files.SequenceEqual(expectedFiles))))
             .ReturnsAsync("  9.0.5-servicing.25556.2\r\n");
-        var specific = new Mock<ICommand<SpecificCommandOptions>>();
-        specific.Setup(command => command.ExecuteAsync(It.IsAny<SpecificCommandOptions>()))
-            .ReturnsAsync(0);
         var root = new RootCommand
         {
             MonitorCommand.Create("monitor", "Update Monitor"),
@@ -103,7 +88,7 @@ public sealed class MonitorCommandTests
             host => host.ConfigureServices(services =>
             {
                 services.AddSingleton(artifacts.Object);
-                services.AddSingleton(specific.Object);
+                services.AddHttpClient();
                 services.AddCommand<MonitorCommand, MonitorOptions>();
             }));
         List<string> args = ["monitor", "--pipeline-run-id", "1234567", "--repo-root", repo.LocalPath];
@@ -120,10 +105,9 @@ public sealed class MonitorCommandTests
 
         exitCode.ShouldBe(0);
         artifacts.VerifyAll();
-        specific.Verify(command => command.ExecuteAsync(It.Is<SpecificCommandOptions>(
-            options => options.RepoRoot == repo.LocalPath
-                && options.ProductVersions["monitor"] == "9.0.5-servicing.25556.2"
-                && options.StableBranding)), Times.Once);
+        var variables = ManifestVariables.FromFile(Path.Combine(repo.LocalPath, "manifest.versions.json"));
+        variables.GetRawValue("monitor|9.0|build-version").ShouldBe("9.0.5-servicing.25556.2");
+        variables.GetRawValue("monitor|9.0|product-version").ShouldBe("9.0.5");
     }
 
     [Fact]
@@ -132,9 +116,6 @@ public sealed class MonitorCommandTests
         using var repo = new TempRepo();
         WriteManifest(repo);
         var auth = new Mock<IAzdoAuthProvider>(MockBehavior.Strict);
-        var specific = new Mock<ICommand<SpecificCommandOptions>>();
-        specific.Setup(command => command.ExecuteAsync(It.IsAny<SpecificCommandOptions>()))
-            .ReturnsAsync(0);
         var root = new RootCommand
         {
             MonitorCommand.Create("monitor", "Update Monitor"),
@@ -146,7 +127,6 @@ public sealed class MonitorCommandTests
             {
                 services.AddPipelineArtifactProvider();
                 services.AddSingleton(auth.Object);
-                services.AddSingleton(specific.Object);
                 services.AddCommand<MonitorCommand, MonitorOptions>();
             }));
 
@@ -156,8 +136,8 @@ public sealed class MonitorCommandTests
 
         exitCode.ShouldBe(0);
         auth.VerifyNoOtherCalls();
-        specific.Verify(command => command.ExecuteAsync(It.Is<SpecificCommandOptions>(
-            options => options.ProductVersions["monitor"] == "9.0.5")), Times.Once);
+        var variables = ManifestVariables.FromFile(Path.Combine(repo.LocalPath, "manifest.versions.json"));
+        variables.GetRawValue("monitor|9.0|build-version").ShouldBe("9.0.5");
     }
 
     [Theory]
@@ -172,15 +152,14 @@ public sealed class MonitorCommandTests
     public async Task InvalidInput_DoesNotReadArtifactsOrApplyUpdates(string? version, int? pipelineRunId)
     {
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
-        var specific = new Mock<ICommand<SpecificCommandOptions>>(MockBehavior.Strict);
-        var command = new MonitorCommand(artifacts.Object, specific.Object, Mock.Of<ILogger<MonitorCommand>>());
+        using var httpClient = new HttpClient();
+        var command = new MonitorCommand(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorCommand>>());
         var options = new MonitorOptions { Version = version, PipelineRunId = pipelineRunId };
 
         int exitCode = await command.ExecuteAsync(options);
 
         exitCode.ShouldBe(1);
         artifacts.VerifyNoOtherCalls();
-        specific.VerifyNoOtherCalls();
     }
 
     [Theory]
@@ -196,13 +175,12 @@ public sealed class MonitorCommandTests
             1234567,
             It.IsAny<IEnumerable<PipelineArtifactFile>>()))
             .ReturnsAsync(version);
-        var specific = new Mock<ICommand<SpecificCommandOptions>>(MockBehavior.Strict);
-        var command = new MonitorCommand(artifacts.Object, specific.Object, Mock.Of<ILogger<MonitorCommand>>());
+        using var httpClient = new HttpClient();
+        var command = new MonitorCommand(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorCommand>>());
 
         int exitCode = await command.ExecuteAsync(new MonitorOptions { PipelineRunId = 1234567 });
 
         exitCode.ShouldBe(1);
-        specific.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -241,10 +219,41 @@ public sealed class MonitorCommandTests
         pipelines.VerifyAll();
     }
 
-    private static void WriteManifest(TempRepo repo, string branch = "nightly") =>
-        File.WriteAllText(
-            Path.Combine(repo.LocalPath, "manifest.versions.json"),
-            $$$"""{"variables":{"branch":"{{{branch}}}"}}""");
+    private static readonly string[] Products =
+    [
+        "monitor", "monitor-base", "monitor-ext-azureblobstorage", "monitor-ext-s3storage",
+    ];
+
+    private static void WriteManifest(TempRepo repo, string branch = "nightly", string dockerfileVersion = "9.0")
+    {
+        var variables = new Dictionary<string, string>
+        {
+            ["branch"] = branch,
+            [$"monitor|{dockerfileVersion}|base-url|{branch}"] = "old",
+            [$"monitor|{dockerfileVersion}|base-url|checksums|{branch}"] = "old",
+        };
+        foreach (string product in Products)
+        {
+            variables[$"{product}|{dockerfileVersion}|build-version"] = "9.0.1";
+            variables[$"{product}|{dockerfileVersion}|product-version"] = "9.0.1";
+        }
+        File.WriteAllText(Path.Combine(repo.LocalPath, "manifest.versions.json"), JsonSerializer.Serialize(new { variables }));
+
+        string generator = $$"""
+            $manifest = Get-Content ./manifest.versions.json -Raw | ConvertFrom-Json
+            Set-Content ./generated-version.txt $manifest.variables.'monitor|{{dockerfileVersion}}|build-version'
+            """;
+        foreach (var (directory, script) in new[]
+        {
+            ("dockerfile-templates", "Get-GeneratedDockerfiles.ps1"),
+            ("readme-templates", "Get-GeneratedReadmes.ps1"),
+        })
+        {
+            string path = Path.Combine(repo.LocalPath, "eng", directory);
+            Directory.CreateDirectory(path);
+            File.WriteAllText(Path.Combine(path, script), generator);
+        }
+    }
 
     private sealed class ArtifactHandler(string content) : HttpMessageHandler
     {

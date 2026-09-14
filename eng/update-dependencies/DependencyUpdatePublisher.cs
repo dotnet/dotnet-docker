@@ -10,7 +10,7 @@ using Microsoft.DotNet.GitAutomation.GitHub;
 
 namespace Dotnet.Docker;
 
-internal sealed class DependencyUpdatePublisher(SpecificCommandOptions options)
+internal sealed class DependencyUpdatePublisher(CreatePullRequestOptions options)
 {
     public async Task PublishAsync(
         Func<IGitContext, CancellationToken, Task> applyUpdates,

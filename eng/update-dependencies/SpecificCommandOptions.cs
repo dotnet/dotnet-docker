@@ -7,9 +7,6 @@ namespace Dotnet.Docker
 {
     public record SpecificCommandOptions : CreatePullRequestOptions, IOptions
     {
-        public string GitHubProject { get; } = "dotnet-docker";
-        public string GitHubUpstreamOwner { get; } = "dotnet";
-
         // .NET Version options
         public string DockerfileVersion { get; init; } = "";
         public IDictionary<string, string?> ProductVersions { get; init; } = new Dictionary<string, string?>();
@@ -19,12 +16,6 @@ namespace Dotnet.Docker
 
         // Tool/image component version options
         public IEnumerable<string> Tools { get; init; } = [];
-
-        public bool UpdateOnly =>
-            string.IsNullOrEmpty(Email)
-            || string.IsNullOrEmpty(Password)
-            || string.IsNullOrEmpty(User)
-            || string.IsNullOrEmpty(TargetBranch);
 
         // Internal build options
         public string InternalBaseUrl { get; init; } = "";
