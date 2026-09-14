@@ -304,24 +304,70 @@ public sealed class ManifestUpdaterTests
     }
 
     [Fact]
-    public async Task ShaUpdater_SelectsExactKeysAndUsesUpdatedManifest()
+    public void ShaUpdater_SupportsOnlyProductsWithPinnedChecksums()
+    {
+        DockerfileShaUpdater.SupportedProducts.ShouldBe(["aspire-dashboard", "powershell"], ignoreOrder: true);
+    }
+
+    [Theory]
+    [InlineData("dotnet")]
+    [InlineData("runtime")]
+    [InlineData("aspnet")]
+    [InlineData("aspnet-composite")]
+    [InlineData("sdk")]
+    public async Task SpecificCommand_DoesNotResolveDotNetChecksums(string product)
+    {
+        using var repo = new TempRepo();
+        string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
+        File.WriteAllText(manifestPath, $$$"""
+            {"variables":{
+              "branch":"nightly",
+              "{{{product}}}|11.0|build-version":"11.0.1",
+              "{{{product}}}|11.0|product-version":"11.0.1",
+              "{{{product}}}|11.0|linux|x64|sha":"unchanged"
+            }}
+            """);
+        string configDirectory = Path.Combine(repo.LocalPath, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts");
+        Directory.CreateDirectory(configDirectory);
+        File.WriteAllText(Path.Combine(configDirectory, "NuGet.config.nightly"), "<configuration />");
+        WriteGenerators(repo.LocalPath, "exit 0");
+        var options = new SpecificCommandOptions
+        {
+            RepoRoot = repo.LocalPath,
+            DockerfileVersion = "11.0",
+            ChecksumsFile = Path.Combine(repo.LocalPath, "nonexistent-checksums.txt"),
+            ProductVersions = new Dictionary<string, string?> { [product] = "11.0.2" },
+        };
+
+        int exitCode = await new SpecificCommand().ExecuteAsync(options);
+
+        exitCode.ShouldBe(0);
+        var variables = ManifestVariables.FromFile(manifestPath);
+        variables.GetRawValue($"{product}|11.0|build-version").ShouldBe("11.0.2");
+        variables.GetRawValue($"{product}|11.0|product-version").ShouldBe("11.0.2");
+        variables.GetRawValue($"{product}|11.0|linux|x64|sha").ShouldBe("unchanged");
+    }
+
+    [Fact]
+    public async Task ShaUpdater_UpdatesPowerShellWithoutDotNetBaseUrls()
     {
         using var repo = new TempRepo();
         string checksumPath = Path.Combine(repo.LocalPath, "checksums.txt");
         File.WriteAllText(checksumPath, """
-            AAAA dotnet-runtime-11.0.2-linux-x64.tar.gz
-            BBBB dotnet-runtime-11.0.2-linux-arm64.tar.gz
+            AAAA PowerShell.Linux.x64.7.6.2.nupkg
+            BBBB PowerShell.Linux.arm64.7.6.2.nupkg
+            CCCC PowerShell.Linux.Alpine.7.6.2.nupkg
+            DDDD PowerShell.Windows.x64.7.6.2.nupkg
             """);
         var variables = new ManifestVariables("""
             {"variables":{
-              "branch":"nightly",
-              "dotnet|11.0|base-url|nightly":"$(public-url)",
-              "public-url":"https://example/public",
-              "runtime|11.0|build-version":"11.0.1",
-              "runtime|11.0|linux|x64|sha":"old",
-              "runtime|11.0|linux|arm64|sha":"old",
-              "runtime|11.0|linux|x64|sha384":"other",
-              "runtime|11.01|linux|x64|sha":"other",
+              "powershell|11.0|build-version":"7.6.1",
+              "powershell|11.0|Linux|x64|sha":"old",
+              "powershell|11.0|Linux|arm64|sha":"old",
+              "powershell|11.0|Linux.Alpine|sha":"old",
+              "powershell|11.0|Windows|x64|sha":"old",
+              "powershell|11.0|Linux|x64|sha384":"other",
+              "powershell|11.01|Linux|x64|sha":"other",
               "sdk|11.0|linux|x64|sha":"other"
             }}
             """);
@@ -329,18 +375,18 @@ public sealed class ManifestUpdaterTests
         {
             DockerfileVersion = "11.0",
             ChecksumsFile = checksumPath,
-            InternalBaseUrl = $"https://example/{Guid.NewGuid()}",
         };
 
-        BaseUrlUpdater.Update(variables, options);
-        VersionUpdater.Update(variables, "runtime", "11.0.2", options);
-        var updater = new DockerfileShaUpdater("runtime", options, variables);
+        VersionUpdater.Update(variables, "powershell", "7.6.2", options);
+        var updater = new DockerfileShaUpdater("powershell", options, variables);
         await updater.UpdateAsync(TestContext.Current.CancellationToken);
 
-        variables.GetRawValue("runtime|11.0|linux|x64|sha").ShouldBe("aaaa");
-        variables.GetRawValue("runtime|11.0|linux|arm64|sha").ShouldBe("bbbb");
-        variables.GetRawValue("runtime|11.0|linux|x64|sha384").ShouldBe("other");
-        variables.GetRawValue("runtime|11.01|linux|x64|sha").ShouldBe("other");
+        variables.GetRawValue("powershell|11.0|Linux|x64|sha").ShouldBe("aaaa");
+        variables.GetRawValue("powershell|11.0|Linux|arm64|sha").ShouldBe("bbbb");
+        variables.GetRawValue("powershell|11.0|Linux.Alpine|sha").ShouldBe("cccc");
+        variables.GetRawValue("powershell|11.0|Windows|x64|sha").ShouldBe("dddd");
+        variables.GetRawValue("powershell|11.0|Linux|x64|sha384").ShouldBe("other");
+        variables.GetRawValue("powershell|11.01|Linux|x64|sha").ShouldBe("other");
         variables.GetRawValue("sdk|11.0|linux|x64|sha").ShouldBe("other");
     }
 
@@ -349,7 +395,7 @@ public sealed class ManifestUpdaterTests
     {
         const string content = """{"variables":{}}""";
         var variables = new ManifestVariables(content);
-        var updater = new DockerfileShaUpdater("runtime", new SpecificCommandOptions(), variables);
+        var updater = new DockerfileShaUpdater("powershell", new SpecificCommandOptions(), variables);
 
         await updater.UpdateAsync(TestContext.Current.CancellationToken);
 
@@ -365,8 +411,8 @@ public sealed class ManifestUpdaterTests
             {"variables":{
               "branch":"nightly",
               "dotnet|11.0|base-url|nightly":"old",
-              "runtime|11.0|build-version":"11.0.1",
-              "runtime|11.0|linux|x64|sha":"old"
+              "powershell|11.0|build-version":"7.6.1",
+              "powershell|11.0|Linux|x64|sha":"old"
             }}
             """;
         File.WriteAllText(manifestPath, content);
@@ -379,7 +425,7 @@ public sealed class ManifestUpdaterTests
             DockerfileVersion = "11.0",
             ChecksumsFile = checksumPath,
             InternalBaseUrl = $"https://example/{Guid.NewGuid()}",
-            ProductVersions = new Dictionary<string, string?> { ["runtime"] = "11.0.2" },
+            ProductVersions = new Dictionary<string, string?> { ["powershell"] = "7.6.3" },
         };
 
         int exitCode = await new SpecificCommand().ExecuteAsync(options);

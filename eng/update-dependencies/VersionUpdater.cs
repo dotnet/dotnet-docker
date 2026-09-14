@@ -41,12 +41,6 @@ namespace Dotnet.Docker
 
         public static string GetBuildVersion(string productName, string dockerfileVersion, ManifestVariables variables)
         {
-            // Special case for handling the lzma NuGet package cache.
-            if (productName == "lzma")
-            {
-                productName = "sdk";
-            }
-
             string versionVariableName = ManifestHelper.GetVersionVariableName(VersionType.Build, productName, dockerfileVersion);
             string version = variables.GetRawValue(versionVariableName);
             if (!VersionValueRegex.IsMatch(version))

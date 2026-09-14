@@ -79,8 +79,7 @@ namespace Dotnet.Docker
                     VersionUpdater.Update(manifestVariables, productName, version, options);
                 }
 
-                // Checksums can depend on other products' versions as well as the updated base URLs.
-                foreach (string productName in options.ProductVersions.Keys)
+                foreach (string productName in options.ProductVersions.Keys.Intersect(DockerfileShaUpdater.SupportedProducts))
                 {
                     var checksumUpdater = new DockerfileShaUpdater(productName, options, manifestVariables);
                     await checksumUpdater.UpdateAsync(cancellationToken);
