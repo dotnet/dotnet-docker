@@ -1,13 +1,13 @@
 ## About
 
-This image contains the Aspire Dashboard.
+This image contains the [Aspire Dashboard](https://aspire.dev/dashboard/standalone/), a standalone browser-based app for viewing telemetry and run-time information about distributed applications. The source is available in the [microsoft/aspire](https://github.com/microsoft/aspire) repository.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
 ## Featured Tags
 
 * `13`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:13`
+  * `docker pull mcr.microsoft.com/aspire/dashboard:13`
 
 ## Related Repositories
 
@@ -19,7 +19,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 * [dotnet/runtime](https://mcr.microsoft.com/artifact/mar/dotnet/runtime/about): .NET Runtime
 * [dotnet/runtime-deps](https://mcr.microsoft.com/artifact/mar/dotnet/runtime-deps/about): .NET Runtime Dependencies
 * [dotnet/monitor](https://mcr.microsoft.com/artifact/mar/dotnet/monitor/about): .NET Monitor Tool
-* [dotnet/nightly/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/nightly/aspire-dashboard/about): Aspire Dashboard (Preview)
 * [dotnet/samples](https://mcr.microsoft.com/artifact/mar/dotnet/samples/about): .NET Samples
 
 .NET Framework:
@@ -110,7 +109,7 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 ### Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
+* [Microsoft Support for Aspire](https://aspire.dev/support/)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
