@@ -3,11 +3,11 @@
 ## Featured Tags
 
 * `13`
-  * `docker pull mcr.microsoft.com/dotnet/aspire-dashboard:13`
+  * `docker pull mcr.microsoft.com/aspire/dashboard:13`
 
 ## About
 
-This image contains the Aspire Dashboard.
+This image contains the [Aspire Dashboard](https://aspire.dev/dashboard/standalone/), a standalone browser-based app for viewing telemetry and run-time information about distributed applications. The source is available in the [microsoft/aspire](https://github.com/microsoft/aspire) repository.
 
 Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) for Docker-related .NET announcements.
 
@@ -100,7 +100,6 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 * [dotnet/runtime](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime.md): .NET Runtime
 * [dotnet/runtime-deps](https://github.com/dotnet/dotnet-docker/blob/main/README.runtime-deps.md): .NET Runtime Dependencies
 * [dotnet/monitor](https://github.com/dotnet/dotnet-docker/blob/main/README.monitor.md): .NET Monitor Tool
-* [dotnet/nightly/aspire-dashboard](https://github.com/dotnet/dotnet-docker/blob/nightly/README.aspire-dashboard.md): Aspire Dashboard (Preview)
 * [dotnet/samples](https://github.com/dotnet/dotnet-docker/blob/main/README.samples.md): .NET Samples
 
 .NET Framework:
@@ -124,13 +123,13 @@ Tags | Dockerfile | OS Version
 
 <!--End of generated tags-->
 
-*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/dotnet/aspire-dashboard/tags/list) for all supported and unsupported tags.*
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/aspire/dashboard/tags/list) for all supported and unsupported tags.*
 
 ## Support
 
 ### Lifecycle
 
-* [Microsoft Support for .NET](https://github.com/dotnet/core/blob/main/support.md)
+* [Microsoft Support for Aspire](https://aspire.dev/support/)
 * [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md)
 * [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md)
 
