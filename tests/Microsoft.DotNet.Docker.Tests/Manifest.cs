@@ -15,6 +15,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
     public class Repo
     {
+        public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public List<Image> Images { get; set; } = new List<Image>();
     }
