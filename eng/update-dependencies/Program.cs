@@ -32,6 +32,9 @@ var rootCommand = new RootCommand()
     MonitorCommand.Create(
         name: "monitor",
         description: "Update .NET Monitor using a version or Azure DevOps pipeline run"),
+    AspireCommand.Create(
+        name: "aspire",
+        description: "Update Aspire Dashboard using a BAR build or channel"),
     SpecificCommand.Create(
         name: "specific",
         description: "Update dependencies using specific product versions"),
@@ -125,7 +128,6 @@ config.UseHost(
 
                 // Individual build updater services that support different repos
                 services.AddKeyedSingleton<IBuildUpdaterService, VmrBuildUpdaterService>(BuildRepo.Vmr);
-                services.AddKeyedSingleton<IBuildUpdaterService, AspireBuildUpdaterService>(BuildRepo.Aspire);
 
                 services.AddEnvironmentService();
                 services.AddBuildLabelService();
@@ -134,8 +136,6 @@ config.UseHost(
 
                 // Dependencies that can be updated using the FromComponentCommand
                 services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
-                // Factory method for reading variables from manifest.versions.json
-                services.AddSingleton<Func<string, ManifestVariables>>(path => ManifestVariables.FromFile(path));
 
                 // Commands
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();
@@ -143,6 +143,7 @@ config.UseHost(
                 services.AddCommand<FromStagingPipelineCommand, FromStagingPipelineOptions>();
                 services.AddCommand<FromComponentCommand, FromComponentOptions>();
                 services.AddCommand<MonitorCommand, MonitorOptions>();
+                services.AddCommand<AspireCommand, AspireOptions>();
                 services.AddCommand<SpecificCommand, SpecificCommandOptions>();
                 services.AddCommand<SyncInternalReleaseCommand, SyncInternalReleaseOptions>();
             }

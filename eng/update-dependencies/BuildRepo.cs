@@ -10,6 +10,5 @@ namespace Dotnet.Docker;
 internal enum BuildRepo
 {
     Vmr,
-    Aspire,
     // When adding new repos, also update "BuildExtensions.GetBuildRepo()"
 }

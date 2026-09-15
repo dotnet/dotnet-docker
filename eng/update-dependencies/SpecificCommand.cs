@@ -7,11 +7,6 @@ namespace Dotnet.Docker
 {
     public class SpecificCommand : BaseCommand<SpecificCommandOptions>
     {
-        /// <summary>
-        /// Additional manifest values, resolved before choosing the workspace to update.
-        /// </summary>
-        internal List<VariableUpdateInfo> VariableUpdates { get; } = [];
-
         public override async Task<int> ExecuteAsync(SpecificCommandOptions options)
         {
             using TextWriterTraceListener consoleTraceListener = new(Console.Out);
@@ -90,11 +85,6 @@ namespace Dotnet.Docker
             {
                 cancellationToken.ThrowIfCancellationRequested();
                 await Tools.UpdateAsync(manifestVariables, release, cancellationToken);
-            }
-
-            foreach (VariableUpdateInfo update in VariableUpdates)
-            {
-                VariableUpdater.Update(manifestVariables, update.VariableName, update.Value);
             }
 
             cancellationToken.ThrowIfCancellationRequested();

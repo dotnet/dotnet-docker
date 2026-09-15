@@ -17,26 +17,30 @@ public sealed class ManifestUpdaterTests
         string repoRoot = Path.Combine(repo.LocalPath, "workspace with spaces");
         Directory.CreateDirectory(repoRoot);
         string manifestPath = Path.Combine(repoRoot, "manifest.versions.json");
-        const string original = """{"variables": { "value" : "old" }}""";
+        const string original = """{"variables": { "branch":"nightly", "runtime|11.0|build-version" : "11.0.1" }}""";
         File.WriteAllText(manifestPath, original);
 
         // Lightweight stand-ins for the generators assert that disk already contains the edit.
         const string generator = """
             $manifest = Get-Content ./manifest.versions.json -Raw | ConvertFrom-Json
-            if ($manifest.variables.value -ne 'new') { throw 'Manifest was not saved before generation' }
+            if ($manifest.variables.'runtime|11.0|build-version' -ne '11.0.2') { throw 'Manifest was not saved before generation' }
             Set-Content ./generated.txt 'generated'
             """;
         WriteGenerators(repoRoot, generator);
 
         var command = new SpecificCommand();
-        command.VariableUpdates.Add(new VariableUpdateInfo("value", "new"));
-        var options = new SpecificCommandOptions { RepoRoot = repoRoot };
+        var options = new SpecificCommandOptions
+        {
+            RepoRoot = repoRoot,
+            DockerfileVersion = "11.0",
+            ProductVersions = new Dictionary<string, string?> { ["runtime"] = "11.0.2" },
+        };
         string workingDirectory = Directory.GetCurrentDirectory();
 
         int exitCode = await command.ExecuteAsync(options);
 
         exitCode.ShouldBe(0);
-        string expected = original.Replace("\"old\"", "\"new\"");
+        string expected = original.Replace("\"11.0.1\"", "\"11.0.2\"");
         byte[] expectedBytes = Encoding.UTF8.GetBytes(expected);
         File.ReadAllBytes(manifestPath).ShouldBe(expectedBytes);
 

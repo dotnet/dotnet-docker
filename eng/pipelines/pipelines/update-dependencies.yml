@@ -71,10 +71,9 @@ extends:
                 scriptLocation: "inlineScript"
                 inlineScript: >-
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                  from-channel
+                  aspire
+                  --from-channel
                   ${{ parameters.aspireChannel }}
-                  https://github.com/microsoft/aspire
-                  --version-source-name 'microsoft/aspire'
                   ${{ parameters.gitHubAuthArgs }}
 
       - ${{ each tool in parameters.tools }}:

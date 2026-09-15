@@ -226,6 +226,23 @@ The following examples illustrate how to run `update-dependencies`:
     Supplying a version directly does not require Azure DevOps authentication.
     Neither form publishes a pull request unless publishing credentials are provided.
 
+- Update Aspire Dashboard from a BAR build
+
+    ``` console
+    > dotnet run --project .\eng\update-dependencies\ -- aspire --from-build-id 23456
+    ```
+
+- Update Aspire Dashboard from the latest build in a BAR channel
+
+    ``` console
+    > dotnet run --project .\eng\update-dependencies\ -- aspire --from-channel 5555
+    ```
+
+    Specify either `--from-build-id` or `--from-channel`, not both.
+    These are BAR IDs, not Azure DevOps pipeline run IDs.
+    The command selects the Aspire repository automatically.
+    Neither form publishes a pull request unless publishing credentials are provided.
+
 - Update the PowerShell version used in the 9.0 images
 
     ``` console

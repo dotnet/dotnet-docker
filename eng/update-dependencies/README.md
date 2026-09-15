@@ -13,18 +13,35 @@ component versions for images built from this repo. It is used to:
 Commands built with `System.CommandLine` and dependency injection retrieve
 version information from BAR builds/channels, staging pipeline artifacts, or
 component version sources. They pass product versions or resolved manifest
-values to [SpecificCommand](./SpecificCommand.cs).
+information to the updater responsible for that dependency.
 
-`SpecificCommand` owns the update flow. It loads a shared
+The [AspireCommand](./AspireCommand.cs) owns source discovery and updating
+Aspire Dashboard. Use `aspire --from-build-id <id>` for a specific BAR build
+or `aspire --from-channel <id>` for the latest Aspire build in a BAR channel.
+Specify exactly one source, using a positive ID. These replace Aspire's
+generic `from-build` and `from-channel` invocations; the generic commands
+remain available for .NET VMR updates.
+
+Its `ApplyAsync` method loads the manifest from the selected workspace,
+resolves artifact URLs and checksums, and saves the version, tag, and checksum
+changes. It does not generate files or publish. `ExecuteAsync` chooses local
+execution or publication and runs the generators after applying the update.
+Checksum failures prevent the manifest from being saved. The default version
+source name is `microsoft/aspire`, preserving existing automated PR identity.
+
+[MonitorCommand](./MonitorCommand.cs) also owns its update flow without
+invoking another command.
+
+The remaining flows use [SpecificCommand](./SpecificCommand.cs). It loads a shared
 [ManifestVariables](./ManifestVariables.cs) editor and directly calls the
 product and tool update functions. These functions keep their own selection
 policies, such as preserving aliases or empty values. Product versions and
 base URLs are updated before checksum retrieval so later operations can read
 the new values from the same editor. NuGet configuration is updated separately.
 
-The command writes [manifest.versions.json](../../manifest.versions.json) only
-if its content changed, preserving formatting outside edited values. It then
-runs the Dockerfile and README generators, even when the manifest is unchanged.
+These flows write [manifest.versions.json](../../manifest.versions.json) only
+if its content changed, preserving formatting outside edited values. They then
+run the Dockerfile and README generators, even when the manifest is unchanged.
 Update and generation failures propagate to the command boundary.
 
 In local-only mode, updates run in the supplied checkout.
