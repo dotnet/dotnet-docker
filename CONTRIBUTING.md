@@ -200,10 +200,10 @@ Use the [new .NET version release lifecycle](eng/developer-docs/dotnet-release-l
 
 The following examples illustrate how to run `update-dependencies`:
 
-- Update the 9.0 product versions
+- Update .NET from a BAR build
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- specific 9.0 --product-version sdk=9.0.100 --product-version runtime=9.0.0 --product-version aspnet=9.0.0 --product-version aspnet-composite=9.0.0 --version-source-name dotnet/sdk
+    > dotnet run --project .\eng\update-dependencies\ -- from-build 23456 --version-source-name dotnet/dotnet
     ```
 
 - Update .NET Monitor, including the base image and extension checksums
@@ -243,11 +243,42 @@ The following examples illustrate how to run `update-dependencies`:
     The command selects the Aspire repository automatically.
     Neither form publishes a pull request unless publishing credentials are provided.
 
-- Update the PowerShell version used in the 9.0 images
+- Update a tool from its latest GitHub release
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- specific 9.0 --product-version powershell=7.5.0
+    > dotnet run --project .\eng\update-dependencies\ -- from-component chisel
     ```
+
+    The registered GitHub release updaters are `chisel`, `syft`, `rocks-toolbox`,
+    and `mingit`. Their manifest variables are shared across image versions.
+
+    The historical `specific` command has been removed. Use `from-build`,
+    `from-channel`, or `from-staging-pipeline` for .NET updates, and the
+    dependency-specific commands for other components.
+
+#### Implementing dependency updaters
+
+Each dependency is registered once in `eng/update-dependencies/Program.cs` as a
+string-keyed singleton `IUpdater`. It implements only the source capabilities it
+supports: BAR build/channel, pipeline build, staging pipeline, or GitHub release.
+Commands resolve the keyed `IUpdater` and check the
+requested capability. There is no generic product-version update interface.
+
+Updaters receive the shared `ManifestVariables` editor directly, plus the workspace
+root when they need to edit related files. They resolve their sources and apply
+dependency-specific changes, including related files such as NuGet configuration,
+but do not save the manifest, generate Dockerfiles/READMEs, or publish.
+Manifest edits and change logging live on `ManifestVariables`; .NET version and
+tag formatting live in `DotNetUpdater`.
+Commands use `DependencyUpdateRunner` to load the manifest, apply a batch, save
+only changed content, and run generators even when the manifest is unchanged.
+The runner also handles publishing, applying the same batch in the publishing workspace.
+
+GitHub release updaters fetch their latest release internally. Add a tool by
+implementing `IGitHubReleaseUpdater` and registering its keyed singleton.
+The existing `from-component` command resolves the registration; no separate
+tool registry or command is needed. Updaters use Octokit's `IReleasesClient`
+directly to fetch release information.
 
 #### Checking Markdown links locally
 

@@ -5,7 +5,7 @@ using Octokit;
 
 namespace Dotnet.Docker;
 
-internal static class RocksToolboxUpdater
+public sealed class RocksToolboxUpdater(IReleasesClient releases) : IGitHubReleaseUpdater
 {
     public const string ToolName = Repo;
 
@@ -13,17 +13,16 @@ internal static class RocksToolboxUpdater
 
     private const string Repo = "rocks-toolbox";
 
-    public static void Update(ManifestVariables variables, Release release)
+    public async Task UpdateFromGitHubReleaseAsync(
+        ManifestVariables variables,
+        CancellationToken cancellationToken)
     {
+        Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
+
         string variableName = $"{ToolName}|latest|version";
-        if (Tools.ShouldUpdateVariable(variables, variableName))
+        if (variables.ShouldUpdateLiteral(variableName))
         {
-            VariableUpdater.Update(variables, variableName, release.TagName);
+            variables.SetValue(variableName, release.TagName);
         }
     }
-
-    public static async Task<GitHubReleaseInfo> GetReleaseAsync() =>
-        new GitHubReleaseInfo(
-            ToolName: ToolName,
-            Release: await GitHubHelper.GetLatestRelease(Owner, Repo));
 }

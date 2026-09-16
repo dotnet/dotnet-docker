@@ -6,7 +6,7 @@ using Octokit;
 
 namespace Dotnet.Docker;
 
-internal static partial class MinGitUpdater
+public sealed partial class MinGitUpdater(IReleasesClient releases) : IGitHubReleaseUpdater
 {
     public const string ToolName = "mingit";
 
@@ -14,23 +14,21 @@ internal static partial class MinGitUpdater
 
     private const string Repo = "git";
 
-    public static async Task<GitHubReleaseInfo> GetReleaseAsync()
-    {
-        Release minGitRelease = await GitHubHelper.GetLatestRelease(Owner, Repo);
-        return new GitHubReleaseInfo(ToolName, minGitRelease);
-    }
-
     [GeneratedRegex(@"^MinGit.*64-bit.*\.zip$")]
     private static partial Regex UrlRegex { get; }
 
     private static string GetManifestVariableName(string type) => "mingit|latest|x64|" + type;
 
-    public static void Update(ManifestVariables variables, Release release)
+    public async Task UpdateFromGitHubReleaseAsync(
+        ManifestVariables variables,
+        CancellationToken cancellationToken)
     {
+        Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
+
         string urlVariable = GetManifestVariableName("url");
         string shaVariable = GetManifestVariableName("sha");
-        bool updateUrl = Tools.ShouldUpdateVariable(variables, urlVariable);
-        bool updateSha = Tools.ShouldUpdateVariable(variables, shaVariable);
+        bool updateUrl = variables.ShouldUpdateLiteral(urlVariable);
+        bool updateSha = variables.ShouldUpdateLiteral(shaVariable);
         if (!updateUrl && !updateSha)
         {
             return;
@@ -41,7 +39,7 @@ internal static partial class MinGitUpdater
 
         if (updateUrl)
         {
-            VariableUpdater.Update(variables, urlVariable, asset.BrowserDownloadUrl);
+            variables.SetValue(urlVariable, asset.BrowserDownloadUrl);
         }
 
         if (updateSha)
@@ -54,7 +52,7 @@ internal static partial class MinGitUpdater
             }
 
             string sha = match.Groups["sha"].Value;
-            VariableUpdater.Update(variables, shaVariable, sha);
+            variables.SetValue(shaVariable, sha);
         }
     }
 }

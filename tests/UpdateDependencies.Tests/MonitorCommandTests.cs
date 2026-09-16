@@ -33,7 +33,8 @@ public sealed class MonitorCommandTests
         WriteManifest(repo, branch, dockerfileVersion);
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var httpClient = new HttpClient();
-        var command = new MonitorCommand(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorCommand>>());
+        using var services = CreateServices(artifacts.Object, httpClient);
+        var command = new MonitorCommand(artifacts.Object, services, Mock.Of<ILogger<MonitorCommand>>());
         var options = new MonitorOptions
         {
             Version = version,
@@ -41,7 +42,7 @@ public sealed class MonitorCommandTests
             TargetBranch = branch,
         };
 
-        int exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options, TestContext.Current.CancellationToken);
 
         exitCode.ShouldBe(0);
         var variables = ManifestVariables.FromFile(Path.Combine(repo.LocalPath, "manifest.versions.json"));
@@ -89,6 +90,7 @@ public sealed class MonitorCommandTests
             {
                 services.AddSingleton(artifacts.Object);
                 services.AddHttpClient();
+                services.AddKeyedSingleton<IUpdater, MonitorUpdater>("monitor");
                 services.AddCommand<MonitorCommand, MonitorOptions>();
             }));
         List<string> args = ["monitor", "--pipeline-run-id", "1234567", "--repo-root", repo.LocalPath];
@@ -105,6 +107,11 @@ public sealed class MonitorCommandTests
 
         exitCode.ShouldBe(0);
         artifacts.VerifyAll();
+        artifacts.Verify(provider => provider.GetArtifactTextContentAsync(
+            expectedOrganization,
+            expectedProject,
+            1234567,
+            It.IsAny<IEnumerable<PipelineArtifactFile>>()), Times.Once);
         var variables = ManifestVariables.FromFile(Path.Combine(repo.LocalPath, "manifest.versions.json"));
         variables.GetRawValue("monitor|9.0|build-version").ShouldBe("9.0.5-servicing.25556.2");
         variables.GetRawValue("monitor|9.0|product-version").ShouldBe("9.0.5");
@@ -127,6 +134,7 @@ public sealed class MonitorCommandTests
             {
                 services.AddPipelineArtifactProvider();
                 services.AddSingleton(auth.Object);
+                services.AddKeyedSingleton<IUpdater, MonitorUpdater>("monitor");
                 services.AddCommand<MonitorCommand, MonitorOptions>();
             }));
 
@@ -153,10 +161,11 @@ public sealed class MonitorCommandTests
     {
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var httpClient = new HttpClient();
-        var command = new MonitorCommand(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorCommand>>());
+        using var services = CreateServices(artifacts.Object, httpClient);
+        var command = new MonitorCommand(artifacts.Object, services, Mock.Of<ILogger<MonitorCommand>>());
         var options = new MonitorOptions { Version = version, PipelineRunId = pipelineRunId };
 
-        int exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options, TestContext.Current.CancellationToken);
 
         exitCode.ShouldBe(1);
         artifacts.VerifyNoOtherCalls();
@@ -176,11 +185,104 @@ public sealed class MonitorCommandTests
             It.IsAny<IEnumerable<PipelineArtifactFile>>()))
             .ReturnsAsync(version);
         using var httpClient = new HttpClient();
-        var command = new MonitorCommand(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorCommand>>());
+        using var services = CreateServices(artifacts.Object, httpClient);
+        var command = new MonitorCommand(artifacts.Object, services, Mock.Of<ILogger<MonitorCommand>>());
 
-        int exitCode = await command.ExecuteAsync(new MonitorOptions { PipelineRunId = 1234567 });
+        int exitCode = await command.ExecuteAsync(
+            new MonitorOptions { PipelineRunId = 1234567 }, TestContext.Current.CancellationToken);
 
         exitCode.ShouldBe(1);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_UsesKeyedPipelineCapability()
+    {
+        using var repo = new TempRepo();
+        WriteManifest(repo);
+        CancellationToken token = TestContext.Current.CancellationToken;
+        var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
+        var updater = new Mock<IPipelineBuildUpdater>(MockBehavior.Strict);
+        artifacts.Setup(provider => provider.GetArtifactTextContentAsync(
+            "https://dev.azure.com/dnceng", "internal", 1234567, It.IsAny<IEnumerable<PipelineArtifactFile>>()))
+            .ReturnsAsync(" 9.0.5 \r\n");
+        updater.Setup(service => service.UpdateFromPipelineBuildAsync(
+                It.IsAny<ManifestVariables>(),
+                It.Is<PipelineBuildReference>(build => build is MonitorPipelineBuildReference
+                    && ((MonitorPipelineBuildReference)build).Version == "9.0.5"
+                    && build.Organization == "https://dev.azure.com/dnceng"
+                    && build.Project == "internal"
+                    && build.RunId == 1234567),
+                token))
+                .Returns(Task.CompletedTask);
+        using var services = new ServiceCollection()
+            .AddKeyedSingleton<IUpdater>("monitor", updater.Object)
+            .AddKeyedSingleton<IUpdater>("other", Mock.Of<IUpdater>())
+            .BuildServiceProvider();
+        var command = new MonitorCommand(artifacts.Object, services, Mock.Of<ILogger<MonitorCommand>>());
+        var options = new MonitorOptions
+        {
+            PipelineRunId = 1234567,
+            RepoRoot = repo.LocalPath,
+        };
+
+        int exitCode = await command.ExecuteAsync(options, token);
+
+        exitCode.ShouldBe(0);
+        updater.VerifyAll();
+        updater.VerifyNoOtherCalls();
+        artifacts.VerifyAll();
+    }
+
+    [Theory]
+    [InlineData(false, nameof(MonitorUpdater))]
+    [InlineData(true, nameof(IPipelineBuildUpdater))]
+    public async Task ExecuteAsync_RejectsUnsupportedCapabilityBeforeReadingWorkspace(
+        bool fromPipeline, string capability)
+    {
+        var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
+        if (fromPipeline)
+        {
+            artifacts.Setup(provider => provider.GetArtifactTextContentAsync(
+                "https://dev.azure.com/dnceng", "internal", 1234567, It.IsAny<IEnumerable<PipelineArtifactFile>>()))
+                .ReturnsAsync("9.0.5");
+        }
+        using var services = new ServiceCollection()
+            .AddKeyedSingleton<IUpdater>("monitor", Mock.Of<IBarBuildUpdater>())
+            .BuildServiceProvider();
+        var command = new MonitorCommand(artifacts.Object, services, Mock.Of<ILogger<MonitorCommand>>());
+        var options = new MonitorOptions
+        {
+            Version = fromPipeline ? null : "9.0.5",
+            PipelineRunId = fromPipeline ? 1234567 : null,
+            RepoRoot = "missing-workspace",
+        };
+
+        var exception = await Should.ThrowAsync<InvalidOperationException>(() =>
+            command.ExecuteAsync(options, TestContext.Current.CancellationToken));
+
+        exception.Message.ShouldContain("monitor");
+        exception.Message.ShouldContain(capability);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_CancelsWhileReadingPipelineVersion()
+    {
+        using var cancellation = new CancellationTokenSource();
+        var pending = new TaskCompletionSource<string>(TaskCreationOptions.RunContinuationsAsynchronously);
+        var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
+        artifacts.Setup(provider => provider.GetArtifactTextContentAsync(
+            "https://dev.azure.com/dnceng", "internal", 1234567, It.IsAny<IEnumerable<PipelineArtifactFile>>()))
+            .Returns(pending.Task);
+        using var services = new ServiceCollection().BuildServiceProvider();
+        var command = new MonitorCommand(artifacts.Object, services, Mock.Of<ILogger<MonitorCommand>>());
+
+        Task<int> execution = command.ExecuteAsync(
+            new MonitorOptions { PipelineRunId = 1234567, RepoRoot = "missing-workspace" }, cancellation.Token);
+        cancellation.Cancel();
+
+        await Should.ThrowAsync<OperationCanceledException>(() => execution);
+        pending.SetResult("9.0.5");
+        artifacts.VerifyAll();
     }
 
     [Fact]
@@ -223,6 +325,14 @@ public sealed class MonitorCommandTests
     [
         "monitor", "monitor-base", "monitor-ext-azureblobstorage", "monitor-ext-s3storage",
     ];
+
+    private static ServiceProvider CreateServices(IPipelineArtifactProvider artifacts, HttpClient httpClient) =>
+        new ServiceCollection()
+            .AddSingleton(artifacts)
+            .AddSingleton(httpClient)
+            .AddLogging()
+            .AddKeyedSingleton<IUpdater, MonitorUpdater>("monitor")
+            .BuildServiceProvider();
 
     private static void WriteManifest(TempRepo repo, string branch = "nightly", string dockerfileVersion = "9.0")
     {

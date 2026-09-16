@@ -11,29 +11,6 @@ namespace Dotnet.Docker;
 public static partial class ManifestHelper
 {
     /// <summary>
-    /// Gets the base URLs based on the configured context.
-    /// </summary>
-    /// <param name="manifestVariables">Variables from the manifest.</param>
-    /// <param name="options">Configured options from the app.</param>
-    public static IEnumerable<string> GetBaseUrls(ManifestVariables manifestVariables, SpecificCommandOptions options)
-    {
-        // The upstream branch represents which GitHub branch the current
-        // branch branched off of. This is either "nightly" or "main".
-        var upstreamBranch = manifestVariables.GetValue("branch");
-
-        var baseUrlVariableNames = GetBaseUrlVariableNames(
-            dockerfileVersion: options.DockerfileVersion,
-            branch: upstreamBranch,
-            versionSourceName: options.VersionSourceName);
-
-        var baseUrlValues = baseUrlVariableNames
-            .Where(manifestVariables.Contains)
-            .Select(manifestVariables.GetValue);
-
-        return baseUrlValues;
-    }
-
-    /// <summary>
     /// Constructs the base URL variables for the given dockerfile, branch,
     /// and product combination.
     /// </summary>
@@ -86,9 +63,6 @@ public static partial class ManifestHelper
 
         return $"base-url|public|{qualityString}|{branch}";
     }
-
-    public static string GetVersionVariableName(VersionType versionType, string productName, string dockerfileVersion) =>
-        $"{productName}|{dockerfileVersion}|{versionType.ToString().ToLowerInvariant()}-version";
 
     /// <summary>
     /// Determines if the given value matches the pattern manifest variable. Does not check if the variable is defined

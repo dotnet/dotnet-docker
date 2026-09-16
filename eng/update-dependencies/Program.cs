@@ -35,9 +35,6 @@ var rootCommand = new RootCommand()
     AspireCommand.Create(
         name: "aspire",
         description: "Update Aspire Dashboard using a BAR build or channel"),
-    SpecificCommand.Create(
-        name: "specific",
-        description: "Update dependencies using specific product versions"),
     SyncInternalReleaseCommand.Create(
         name: "sync-internal-release",
         description: "Sync release/* branch to internal/release/* branch"),
@@ -126,16 +123,23 @@ config.UseHost(
                         new BarApiClient(null, null, disableInteractiveAuth: true));
                 services.AddSingleton<IBuildAssetService, BuildAssetService>();
 
-                // Individual build updater services that support different repos
-                services.AddKeyedSingleton<IBuildUpdaterService, VmrBuildUpdaterService>(BuildRepo.Vmr);
-
                 services.AddEnvironmentService();
                 services.AddBuildLabelService();
                 services.AddPipelineArtifactProvider();
                 services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
 
-                // Dependencies that can be updated using the FromComponentCommand
-                services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
+                services.AddSingleton<Octokit.IReleasesClient>(_ =>
+                    new Octokit.GitHubClient(new Octokit.ProductHeaderValue("dotnet-docker-update-dependencies"))
+                        .Repository.Release);
+
+                // Each dependency has one singleton, exposing only its supported update capabilities.
+                services.AddKeyedSingleton<IUpdater, DotNetUpdater>("dotnet");
+                services.AddKeyedSingleton<IUpdater, AspireUpdater>("aspire");
+                services.AddKeyedSingleton<IUpdater, MonitorUpdater>("monitor");
+                services.AddKeyedSingleton<IUpdater, ChiselUpdater>("chisel");
+                services.AddKeyedSingleton<IUpdater, SyftUpdater>("syft");
+                services.AddKeyedSingleton<IUpdater, RocksToolboxUpdater>("rocks-toolbox");
+                services.AddKeyedSingleton<IUpdater, MinGitUpdater>("mingit");
 
                 // Commands
                 services.AddCommand<FromBuildCommand, FromBuildOptions>();
@@ -144,7 +148,6 @@ config.UseHost(
                 services.AddCommand<FromComponentCommand, FromComponentOptions>();
                 services.AddCommand<MonitorCommand, MonitorOptions>();
                 services.AddCommand<AspireCommand, AspireOptions>();
-                services.AddCommand<SpecificCommand, SpecificCommandOptions>();
                 services.AddCommand<SyncInternalReleaseCommand, SyncInternalReleaseOptions>();
             }
         )

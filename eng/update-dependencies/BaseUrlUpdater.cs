@@ -8,20 +8,23 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the baseUrl variables in the manifest.versions.json file.
 /// </summary>
-internal static class BaseUrlUpdater
+public static class BaseUrlUpdater
 {
     /// <summary>
-    /// Replaces active base URLs with the requested internal URL or public release reference.
+    /// Replaces active base URLs with the requested internal URL.
     /// Missing and empty variables are left alone.
     /// </summary>
-    public static void Update(ManifestVariables manifestVariables, SpecificCommandOptions options)
+    public static void Update(
+        ManifestVariables manifestVariables,
+        string dockerfileVersion,
+        string internalBaseUrl,
+        bool sdkOnlyRelease)
     {
         var upstreamBranch = manifestVariables.GetValue("branch");
         var baseUrlVarNames = ManifestHelper.GetBaseUrlVariableNames(
-            dockerfileVersion: options.DockerfileVersion,
+            dockerfileVersion: dockerfileVersion,
             branch: upstreamBranch,
-            versionSourceName: options.VersionSourceName,
-            sdkOnlyRelease: options.IsSdkOnly);
+            sdkOnlyRelease: sdkOnlyRelease);
 
         foreach (string variableName in baseUrlVarNames)
         {
@@ -38,14 +41,9 @@ internal static class BaseUrlUpdater
             }
 
             // Without a release state, we cannot infer which public URL an internal URL replaced.
-            if (options.IsInternal)
+            if (!string.IsNullOrEmpty(internalBaseUrl))
             {
-                VariableUpdater.Update(manifestVariables, variableName, options.InternalBaseUrl);
-            }
-            else if (options.ReleaseState.HasValue)
-            {
-                string referenceName = ManifestHelper.GetBaseUrlVariableName(options.ReleaseState.Value, options.TargetBranch);
-                VariableUpdater.Update(manifestVariables, variableName, $"$({referenceName})");
+                manifestVariables.SetValue(variableName, internalBaseUrl);
             }
         }
     }

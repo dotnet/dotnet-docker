@@ -11,16 +11,16 @@ namespace Dotnet.Docker;
 internal static class BuildExtensions
 {
     /// <summary>
-    /// Given a <see cref="Build"/>, maps its source repository (either GitHub
-    /// or Azure Devops) to a supported <see cref="BuildRepo"/> enum value.
+    /// Maps a BAR build's repository to its registered updater.
     /// </summary>
-    public static BuildRepo GetBuildRepo(this Build build)
-    {
-        string repo = build.GitHubRepository ?? build.AzureDevOpsRepository;
-        return repo switch
+    public static string GetUpdaterKey(this Build build) =>
+        GetUpdaterKey(build.GitHubRepository ?? build.AzureDevOpsRepository);
+
+    public static string GetUpdaterKey(string repository) =>
+        repository switch
         {
-            "https://github.com/dotnet/dotnet" or "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet" => BuildRepo.Vmr,
-            _ => throw new InvalidOperationException($"Build {build.Id} was from unsupported repository '{repo}'"),
+            "https://github.com/dotnet/dotnet" or "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet" => DotNetUpdater.Key,
+            AspireUpdater.PublicRepository or AspireUpdater.InternalRepository => "aspire",
+            _ => throw new InvalidOperationException($"No updater registered for build repository '{repository}'."),
         };
-    }
 }

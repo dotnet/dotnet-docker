@@ -83,8 +83,7 @@ extends:
             updateSteps:
             - powershell: >-
                 dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                specific 9.0
-                --tool ${{ tool }}
+                from-component ${{ tool }}
                 --version-source-name ${{ tool }}
                 ${{ parameters.gitHubAuthArgs }}
               displayName: Update ${{ tool }}

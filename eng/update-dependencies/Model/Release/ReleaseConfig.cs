@@ -15,7 +15,7 @@ namespace Dotnet.Docker.Model.Release;
 /// This record is a subset of the model used by the .NET staging and release pipelines.
 /// This MUST stay in sync with https://dev.azure.com/dnceng/internal/_git/dotnet-release?path=%2Fsrc%2FMicrosoft.DotNet.Release%2FMicrosoft.DotNet.ReleaseLib%2FModels%2FMetadataConfig.cs
 /// </remarks>
-internal record ReleaseConfig
+public record ReleaseConfig
 {
     public required string Channel { get; init; }
 

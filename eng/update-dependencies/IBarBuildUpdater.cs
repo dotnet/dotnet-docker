@@ -5,7 +5,11 @@ using Microsoft.DotNet.ProductConstructionService.Client.Models;
 
 namespace Dotnet.Docker;
 
-internal interface IBuildUpdaterService
+public interface IBarBuildUpdater : IUpdater
 {
-    Task<int> UpdateFrom(Build build, CreatePullRequestOptions pullRequestOptions);
+    Task UpdateFromBarBuildAsync(
+        ManifestVariables variables,
+        string repoRoot,
+        Build build,
+        CancellationToken cancellationToken);
 }

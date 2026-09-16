@@ -10,22 +10,22 @@ namespace Dotnet.Docker;
 /// <summary>
 /// Updates the NuGet.config test app artifact to add or remove an internal package feed.
 /// </summary>
-internal static class NuGetConfigUpdater
+public static class NuGetConfigUpdater
 {
     private const string PkgSrcSuffix = "_internal";
 
-    public static void Update(ManifestVariables variables, SpecificCommandOptions options)
+    public static void Update(
+        ManifestVariables variables,
+        string repoRoot,
+        string dockerfileVersion,
+        string? sdkVersion,
+        bool isInternal)
     {
-        if (!options.ProductVersions.TryGetValue("sdk", out string? sdkVersion))
-        {
-            return;
-        }
-
         // The upstream branch represents which GitHub branch the current
         // branch branched off of. This is either "nightly" or "main".
         string upstreamBranch = variables.GetValue("branch");
 
-        string configSuffix = (options.IsInternal, upstreamBranch) switch
+        string configSuffix = (isInternal, upstreamBranch) switch
         {
             (true, _) => ".internal",
             (false, "nightly") => ".nightly",
@@ -33,17 +33,17 @@ internal static class NuGetConfigUpdater
         };
 
         string configPath = Path.Combine(
-            options.RepoRoot, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts", $"NuGet.config{configSuffix}");
+            repoRoot, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts", $"NuGet.config{configSuffix}");
         string existingContent = File.ReadAllText(configPath);
         DotNetVersion parsedSdkVersion = sdkVersion
             ?? throw new InvalidOperationException("An SDK version is required to update NuGet.config.");
-        string pkgSrcName = $"dotnet{options.DockerfileVersion.Replace(".", "_")}{PkgSrcSuffix}";
+        string pkgSrcName = $"dotnet{dockerfileVersion.Replace(".", "_")}{PkgSrcSuffix}";
 
         XDocument doc = XDocument.Parse(existingContent);
         XElement configuration = doc.Root
             ?? throw new InvalidOperationException($"Missing configuration root in '{configPath}'.");
-        UpdatePackageSources(parsedSdkVersion, pkgSrcName, configuration, options.IsInternal);
-        UpdatePackageSourceCredentials(pkgSrcName, configuration, options.IsInternal);
+        UpdatePackageSources(parsedSdkVersion, pkgSrcName, configuration, isInternal);
+        UpdatePackageSourceCredentials(pkgSrcName, configuration, isInternal);
         string newContent = ToStringWithDeclaration(doc) + Environment.NewLine;
 
         if (newContent != existingContent)

@@ -18,9 +18,9 @@ namespace Dotnet.Docker;
 /// <param name="SubPath">
 /// The sub-path of the specific file within the Artifact.
 /// </param>
-internal record PipelineArtifactFile(string ArtifactName, string SubPath);
+public record PipelineArtifactFile(string ArtifactName, string SubPath);
 
-internal interface IPipelineArtifactProvider
+public interface IPipelineArtifactProvider
 {
     /// <summary>
     /// Gets the .NET release config from a run of the staging pipeline.

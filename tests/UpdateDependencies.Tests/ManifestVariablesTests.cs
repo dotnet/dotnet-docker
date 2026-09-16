@@ -122,7 +122,7 @@ public sealed class ManifestVariablesTests
         variables.Contains("missing").ShouldBeFalse();
         Should.Throw<KeyNotFoundException>(() => variables.GetRawValue("missing"));
         Should.Throw<KeyNotFoundException>(() => variables.GetValue("missing"));
-        Should.Throw<KeyNotFoundException>(() => variables.SetValue("missing", "value"));
+        variables.SetValue("missing", "value").ShouldBeFalse();
         var error = Should.Throw<KeyNotFoundException>(() => variables.GetValue("alias"));
 
         error.Message.ShouldContain("alias -> missing");

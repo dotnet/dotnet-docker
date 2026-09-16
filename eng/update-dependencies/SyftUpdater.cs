@@ -5,7 +5,7 @@ using Octokit;
 
 namespace Dotnet.Docker;
 
-internal static class SyftUpdater
+public sealed class SyftUpdater(IReleasesClient releases) : IGitHubReleaseUpdater
 {
     public const string Owner = "anchore";
 
@@ -15,16 +15,15 @@ internal static class SyftUpdater
 
     public const string VariableName = "syft|version";
 
-    public static async Task<GitHubReleaseInfo> GetReleaseAsync() =>
-         new GitHubReleaseInfo(
-            ToolName: ToolName,
-            Release: await GitHubHelper.GetLatestRelease(Owner, Repo));
-
-    public static void Update(ManifestVariables variables, Release release)
+    public async Task UpdateFromGitHubReleaseAsync(
+        ManifestVariables variables,
+        CancellationToken cancellationToken)
     {
-        if (Tools.ShouldUpdateVariable(variables, VariableName))
+        Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
+
+        if (variables.ShouldUpdateLiteral(VariableName))
         {
-            VariableUpdater.Update(variables, VariableName, release.TagName);
+            variables.SetValue(VariableName, release.TagName);
         }
     }
 }

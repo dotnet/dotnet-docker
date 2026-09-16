@@ -6,7 +6,9 @@ using Octokit;
 
 namespace Dotnet.Docker;
 
-internal static class ChiselUpdater
+public sealed class ChiselUpdater(
+    IReleasesClient releases,
+    HttpClient httpClient) : IGitHubReleaseUpdater
 {
     public const string ToolName = Repo;
 
@@ -15,34 +17,28 @@ internal static class ChiselUpdater
     private const string Repo = "chisel";
 
     private static readonly string[] s_supportedArchitectures = ["amd64", "arm", "arm64"];
-    private static readonly HttpClient s_httpClient = new();
-
-    public static async Task<GitHubReleaseInfo> GetReleaseAsync() =>
-        new GitHubReleaseInfo(
-            ToolName: ToolName,
-            Release: await GitHubHelper.GetLatestRelease(Owner, Repo));
-
-    public static string GetChiselManifestVariable(string product, string arch, string type, string dockerfileVersion = "latest")
+    private static string GetChiselManifestVariable(string product, string arch, string type)
     {
         // Workaround for ambiguous method call, will be fixed with https://github.com/dotnet/csharplang/issues/8374
-        return string.Join('|', new string[] { product, dockerfileVersion, ToManifestArch(arch), type });
+        return string.Join('|', new string[] { product, "latest", ToManifestArch(arch), type });
     }
 
     private static Regex GetAssetRegex(string arch) => new(@"chisel_v\d+\.\d+\.\d+_linux_" + arch + @"\.tar\.gz");
 
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
 
-    public static async Task UpdateAsync(
+    public async Task UpdateFromGitHubReleaseAsync(
         ManifestVariables variables,
-        Release release,
-        CancellationToken cancellationToken = default)
+        CancellationToken cancellationToken)
     {
+        Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
+
         foreach (string arch in s_supportedArchitectures)
         {
             string urlVariable = GetChiselManifestVariable(ToolName, arch, "url");
             string shaVariable = GetChiselManifestVariable(ToolName, arch, "sha384");
-            bool updateUrl = Tools.ShouldUpdateVariable(variables, urlVariable);
-            bool updateSha = Tools.ShouldUpdateVariable(variables, shaVariable);
+            bool updateUrl = variables.ShouldUpdateLiteral(urlVariable);
+            bool updateSha = variables.ShouldUpdateLiteral(shaVariable);
             if (!updateUrl && !updateSha)
             {
                 continue;
@@ -54,17 +50,17 @@ internal static class ChiselUpdater
 
             if (updateUrl)
             {
-                VariableUpdater.Update(variables, urlVariable, asset.BrowserDownloadUrl);
+                variables.SetValue(urlVariable, asset.BrowserDownloadUrl);
             }
 
             if (updateSha)
             {
                 string checksumUrl = $"{asset.BrowserDownloadUrl}.sha384";
-                string content = await s_httpClient.GetStringAsync(checksumUrl, cancellationToken);
+                string content = await httpClient.GetStringAsync(checksumUrl, cancellationToken);
 
                 // Each checksum file contains "<sha384>  <archive name>".
                 string sha = content.Split("  ")[0].ToLowerInvariant();
-                VariableUpdater.Update(variables, shaVariable, sha);
+                variables.SetValue(shaVariable, sha);
             }
         }
     }

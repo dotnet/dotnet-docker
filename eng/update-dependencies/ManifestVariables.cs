@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Diagnostics;
 using System.Text;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -143,6 +144,23 @@ public sealed partial class ManifestVariables
     /// <param name="name">The exact, case-sensitive variable name.</param>
     public bool Contains(string name) => _variables.ContainsKey(name);
 
+    public bool ShouldUpdateLiteral(string name)
+    {
+        if (!_variables.TryGetValue(name, out Variable? variable))
+        {
+            Trace.TraceInformation($"Skipping absent manifest variable '{name}'.");
+            return false;
+        }
+
+        if (variable.Value.Length == 0 || ManifestHelper.IsManifestVariable(variable.Value))
+        {
+            Trace.TraceInformation($"Leaving manifest variable '{name}' unchanged.");
+            return false;
+        }
+
+        return true;
+    }
+
     /// <summary>
     /// Gets the current stored string with JSON escapes decoded but <c>$(name)</c> references intact.
     /// </summary>
@@ -167,25 +185,30 @@ public sealed partial class ManifestVariables
     /// Replaces exactly the named variable's stored string, even if it currently contains a reference.
     /// Referenced variables are never modified.
     /// </summary>
-    /// <param name="name">An existing, case-sensitive variable name. New variables cannot be inserted.</param>
+    /// <param name="name">A case-sensitive variable name. Missing variables are skipped, not inserted.</param>
     /// <param name="value">
     /// The decoded replacement string, which may be empty or contain references.
     /// JSON escaping is handled internally; references are not validated until GetValue is called.
     /// </param>
     /// <returns>
-    /// True if this call changed the stored string; false if it already equaled value.
+    /// True if this call changed the stored string; false if the variable is missing or already equals value.
     /// This is not a report of whether the whole manifest differs from its original content.
     /// </returns>
-    /// <exception cref="KeyNotFoundException">The named variable is not declared.</exception>
     public bool SetValue(string name, string value)
     {
-        Variable variable = GetVariable(name);
+        if (!_variables.TryGetValue(name, out Variable? variable))
+        {
+            Trace.TraceInformation($"Skipping absent manifest variable '{name}'.");
+            return false;
+        }
+
         if (variable.Value == value)
         {
             return false;
         }
 
         _variables[name] = variable with { Value = value };
+        Trace.TraceInformation($"Update '{name}' from '{variable.Value}' to '{value}'.");
         return true;
     }
 

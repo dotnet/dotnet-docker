@@ -33,11 +33,12 @@ public sealed class AspireCommandTests
         using var handler = new DashboardHandler();
         using var httpClient = new HttpClient(handler);
         var barClient = CreateBarClient();
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        using var services = CreateServices(barClient.Object, httpClient);
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
         var options = new AspireOptions { FromBuildId = 123, RepoRoot = repoRoot };
         string workingDirectory = Directory.GetCurrentDirectory();
 
-        int exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options, TestContext.Current.CancellationToken);
 
         exitCode.ShouldBe(0);
         AssertUpdatedManifest(manifestPath);
@@ -58,7 +59,7 @@ public sealed class AspireCommandTests
         File.SetLastWriteTimeUtc(manifestPath, new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         DateTime originalWriteTime = File.GetLastWriteTimeUtc(manifestPath);
 
-        int noOpExitCode = await command.ExecuteAsync(options);
+        int noOpExitCode = await command.ExecuteAsync(options, TestContext.Current.CancellationToken);
 
         noOpExitCode.ShouldBe(0);
         File.ReadAllBytes(manifestPath).ShouldBe(originalBytes);
@@ -70,30 +71,36 @@ public sealed class AspireCommandTests
     }
 
     [Fact]
-    public async Task ApplyAsync_UsesCurrentWorkspaceWithoutGenerating()
+    public async Task Updater_UsesSharedManifestWithoutSavingOrGenerating()
     {
         using var callerRepo = new TempRepo();
         using var targetRepo = new TempRepo();
         string callerManifest = WriteManifest(callerRepo.LocalPath, "main");
         string targetManifest = WriteManifest(targetRepo.LocalPath, "nightly");
         string callerContent = File.ReadAllText(callerManifest);
+        string targetContent = File.ReadAllText(targetManifest);
+        var callerVariables = new ManifestVariables(callerContent);
+        var targetVariables = new ManifestVariables(targetContent);
         using var handler = new DashboardHandler();
         using var httpClient = new HttpClient(handler);
         var barClient = new Mock<IBasicBarClient>(MockBehavior.Strict);
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        var updater = new AspireUpdater(barClient.Object, httpClient, Mock.Of<ILogger<AspireUpdater>>());
         var build = CreateBuild();
 
-        // Neither workspace has generators; applying alone must not require them.
-        await command.ApplyAsync(targetRepo.LocalPath, build, TestContext.Current.CancellationToken);
+        await updater.UpdateFromBarBuildAsync(
+            targetVariables, targetRepo.LocalPath, build, TestContext.Current.CancellationToken);
 
-        AssertUpdatedManifest(targetManifest);
+        AssertUpdatedVariables(targetVariables);
+        File.ReadAllText(targetManifest).ShouldBe(targetContent);
         File.ReadAllText(callerManifest).ShouldBe(callerContent);
         handler.Requests.ShouldAllBe(url => url.StartsWith("https://example.invalid/nightly/"));
         handler.Requests.Clear();
 
-        await command.ApplyAsync(callerRepo.LocalPath, build, TestContext.Current.CancellationToken);
+        await updater.UpdateFromBarBuildAsync(
+            callerVariables, callerRepo.LocalPath, build, TestContext.Current.CancellationToken);
 
-        AssertUpdatedManifest(callerManifest);
+        AssertUpdatedVariables(callerVariables);
+        File.ReadAllText(callerManifest).ShouldBe(callerContent);
         handler.Requests.ShouldAllBe(url => url.StartsWith("https://example.invalid/main/"));
         barClient.VerifyNoOtherCalls();
     }
@@ -110,10 +117,12 @@ public sealed class AspireCommandTests
         using var handler = new DashboardHandler(status);
         using var httpClient = new HttpClient(handler);
         var barClient = CreateBarClient();
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        using var services = CreateServices(barClient.Object, httpClient);
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
         var options = new AspireOptions { FromBuildId = 123, RepoRoot = repo.LocalPath };
 
-        var exception = await Should.ThrowAsync<InvalidOperationException>(() => command.ExecuteAsync(options));
+        var exception = await Should.ThrowAsync<InvalidOperationException>(() =>
+            command.ExecuteAsync(options, TestContext.Current.CancellationToken));
 
         exception.Message.ShouldContain("Unable to retrieve checksum");
         exception.Message.ShouldContain("aspire-dashboard-linux-arm64.zip");
@@ -133,10 +142,12 @@ public sealed class AspireCommandTests
         using var handler = new DashboardHandler();
         using var httpClient = new HttpClient(handler);
         var barClient = CreateBarClient(build);
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        using var services = CreateServices(barClient.Object, httpClient);
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
         var options = new AspireOptions { FromBuildId = 123, RepoRoot = repo.LocalPath };
 
-        var exception = await Should.ThrowAsync<InvalidOperationException>(() => command.ExecuteAsync(options));
+        var exception = await Should.ThrowAsync<InvalidOperationException>(() =>
+            command.ExecuteAsync(options, TestContext.Current.CancellationToken));
 
         exception.Message.ShouldContain("Could not find aspire-dashboard-linux-* assets");
         File.ReadAllText(manifestPath).ShouldBe(originalContent);
@@ -152,10 +163,11 @@ public sealed class AspireCommandTests
         using var handler = new DashboardHandler();
         using var httpClient = new HttpClient(handler);
         var barClient = CreateBarClient(build);
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        using var services = CreateServices(barClient.Object, httpClient);
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
         var options = new AspireOptions { FromBuildId = 123, RepoRoot = repo.LocalPath };
 
-        int exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options, TestContext.Current.CancellationToken);
 
         exitCode.ShouldBe(1);
         handler.Requests.ShouldBeEmpty();
@@ -170,10 +182,12 @@ public sealed class AspireCommandTests
         using var handler = new DashboardHandler();
         using var httpClient = new HttpClient(handler);
         var barClient = CreateBarClient();
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        using var services = CreateServices(barClient.Object, httpClient);
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
         var options = new AspireOptions { FromBuildId = 123, RepoRoot = repo.LocalPath };
 
-        var exception = await Should.ThrowAsync<InvalidOperationException>(() => command.ExecuteAsync(options));
+        var exception = await Should.ThrowAsync<InvalidOperationException>(() =>
+            command.ExecuteAsync(options, TestContext.Current.CancellationToken));
 
         exception.Message.ShouldContain("exited with code 1");
         AssertUpdatedManifest(manifestPath);
@@ -181,18 +195,23 @@ public sealed class AspireCommandTests
     }
 
     [Fact]
-    public async Task ApplyAsync_ObservesCancellationBeforeReadingWorkspace()
+    public async Task ExecuteAsync_CancelsBuildLookupBeforeReadingWorkspace()
     {
         using var repo = new TempRepo();
         using var handler = new DashboardHandler();
         using var httpClient = new HttpClient(handler);
         var barClient = new Mock<IBasicBarClient>(MockBehavior.Strict);
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        var pending = new TaskCompletionSource<Build>();
+        barClient.Setup(client => client.GetBuildAsync(123)).Returns(pending.Task);
+        using var services = CreateServices(barClient.Object, httpClient);
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
         var cancellationToken = new CancellationToken(canceled: true);
 
-        await Should.ThrowAsync<OperationCanceledException>(() => command.ApplyAsync(repo.LocalPath, CreateBuild(), cancellationToken));
+        await Should.ThrowAsync<OperationCanceledException>(() => command.ExecuteAsync(
+            new AspireOptions { FromBuildId = 123, RepoRoot = repo.LocalPath }, cancellationToken));
 
         handler.Requests.ShouldBeEmpty();
+        barClient.VerifyAll();
         barClient.VerifyNoOtherCalls();
     }
 
@@ -284,13 +303,63 @@ public sealed class AspireCommandTests
         var barClient = CreateBarClient(build);
         using var handler = new DashboardHandler();
         using var httpClient = new HttpClient(handler);
-        var command = new AspireCommand(barClient.Object, httpClient, Mock.Of<ILogger<AspireCommand>>());
+        using var services = CreateServices(barClient.Object, httpClient);
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
         var options = new AspireOptions { FromBuildId = 123, RepoRoot = repo.LocalPath };
 
-        int exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options, TestContext.Current.CancellationToken);
 
         exitCode.ShouldBe(0);
         AssertUpdatedManifest(manifestPath);
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_UsesKeyedBarBuildCapability()
+    {
+        using var repo = new TempRepo();
+        string manifestPath = WriteManifest(repo.LocalPath);
+        WriteGenerators(repo.LocalPath);
+        var build = CreateBuild();
+        var barClient = CreateBarClient(build);
+        var updater = new Mock<IBarBuildUpdater>(MockBehavior.Strict);
+        CancellationToken token = TestContext.Current.CancellationToken;
+        updater.Setup(service => service.UpdateFromBarBuildAsync(
+            It.IsAny<ManifestVariables>(), repo.LocalPath, build, token))
+            .Callback<ManifestVariables, string, Build, CancellationToken>((variables, _, _, _) =>
+                variables.SetValue("aspire-dashboard|build-version", BuildVersion))
+            .Returns(Task.CompletedTask);
+        using var services = new ServiceCollection()
+            .AddKeyedSingleton<IUpdater>("aspire", updater.Object)
+            .AddKeyedSingleton<IUpdater>("other", Mock.Of<IUpdater>())
+            .BuildServiceProvider();
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
+
+        int exitCode = await command.ExecuteAsync(
+            new AspireOptions { FromBuildId = 123, RepoRoot = repo.LocalPath }, token);
+
+        exitCode.ShouldBe(0);
+        ManifestVariables.FromFile(manifestPath).GetRawValue("aspire-dashboard|build-version").ShouldBe(BuildVersion);
+        File.ReadAllText(Path.Combine(repo.LocalPath, "generated-dockerfiles.txt")).Trim().ShouldBe(BuildVersion);
+        updater.VerifyAll();
+        updater.VerifyNoOtherCalls();
+    }
+
+    [Fact]
+    public async Task ExecuteAsync_RejectsUnsupportedCapabilityBeforeReadingWorkspace()
+    {
+        var barClient = CreateBarClient();
+        using var services = new ServiceCollection()
+            .AddKeyedSingleton<IUpdater>("aspire", Mock.Of<IUpdater>())
+            .BuildServiceProvider();
+        var command = new AspireCommand(barClient.Object, services, Mock.Of<ILogger<AspireCommand>>());
+
+        var exception = await Should.ThrowAsync<InvalidOperationException>(() =>
+            command.ExecuteAsync(
+                new AspireOptions { FromBuildId = 123, RepoRoot = "missing-workspace" },
+                TestContext.Current.CancellationToken));
+
+        exception.Message.ShouldContain("aspire");
+        exception.Message.ShouldContain(nameof(IBarBuildUpdater));
     }
 
     private static CommandLineConfiguration CreateCommandLine(IBasicBarClient barClient, HttpClient httpClient)
@@ -306,10 +375,19 @@ public sealed class AspireCommandTests
             {
                 services.AddSingleton(barClient);
                 services.AddSingleton(httpClient);
+                services.AddKeyedSingleton<IUpdater, AspireUpdater>("aspire");
                 services.AddCommand<AspireCommand, AspireOptions>();
             }));
         return config;
     }
+
+    private static ServiceProvider CreateServices(IBasicBarClient barClient, HttpClient httpClient) =>
+        new ServiceCollection()
+            .AddSingleton(barClient)
+            .AddSingleton(httpClient)
+            .AddLogging()
+            .AddKeyedSingleton<IUpdater, AspireUpdater>("aspire")
+            .BuildServiceProvider();
 
     private static Mock<IBasicBarClient> CreateBarClient(Build? build = null)
     {
@@ -375,6 +453,12 @@ public sealed class AspireCommandTests
     private static void AssertUpdatedManifest(string manifestPath)
     {
         var variables = ManifestVariables.FromFile(manifestPath);
+        AssertUpdatedVariables(variables);
+        File.ReadAllText(manifestPath).ReplaceLineEndings("\n").ShouldContain("\n\n");
+    }
+
+    private static void AssertUpdatedVariables(ManifestVariables variables)
+    {
         variables.GetRawValue("aspire-dashboard|build-version").ShouldBe(BuildVersion);
         variables.GetRawValue("aspire-dashboard|product-version").ShouldBe("13.6.0");
         variables.GetRawValue("aspire-dashboard|fixed-tag").ShouldBe("13.6.0");
@@ -387,7 +471,6 @@ public sealed class AspireCommandTests
         variables.GetRawValue("aspire-dashboard|base-url|main").ShouldBe("$(download-root)/main");
         variables.GetRawValue("aspire-dashboard|base-url|nightly").ShouldBe("$(download-root)/nightly");
         variables.GetRawValue("runtime|11.0|build-version").ShouldBe("unchanged");
-        File.ReadAllText(manifestPath).ReplaceLineEndings("\n").ShouldContain("\n\n");
     }
 
     private static void WriteGenerators(string repoRoot, string? dockerfileScript = null)

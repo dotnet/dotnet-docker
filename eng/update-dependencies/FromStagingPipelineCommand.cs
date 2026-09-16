@@ -24,12 +24,14 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     private readonly IPipelineArtifactProvider _pipelineArtifactProvider;
     private readonly IPipelinesService _pipelinesService;
     private readonly IInternalVersionsService _internalVersionsService;
+    private readonly IServiceProvider _services;
     private readonly IEnvironmentService _environmentService;
     private readonly IBuildLabelService _buildLabelService;
     private readonly Func<FromStagingPipelineOptions, Task<GitRepoContext>> _createGitRepoContextAsync;
 
     public FromStagingPipelineCommand(
         ILogger<FromStagingPipelineCommand> logger,
+        IServiceProvider services,
         IPipelineArtifactProvider pipelineArtifactProvider,
         IPipelinesService pipelinesService,
         IInternalVersionsService internalVersionsService,
@@ -38,6 +40,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         IGitRepoHelperFactory gitRepoHelperFactory)
     {
         _logger = logger;
+        _services = services;
         _pipelineArtifactProvider = pipelineArtifactProvider;
         _pipelinesService = pipelinesService;
         _internalVersionsService = internalVersionsService;
@@ -75,15 +78,10 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         {
             _logger.LogInformation("Processing stage container: {StageContainer}", stageContainer);
 
-            var (commitMessage, prBodySection, exitCode) = await ProcessStageContainerAsync(
+            var (commitMessage, prBodySection) = await ProcessStageContainerAsync(
                 options,
                 stageContainer,
                 gitRepoContext);
-
-            if (exitCode != 0)
-            {
-                return exitCode;
-            }
 
             // Commit changes for this stage container
             await gitRepoContext.CommitChanges(commitMessage);
@@ -107,14 +105,15 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     /// Processes a single stage container and applies the updates.
     /// </summary>
     /// <returns>
-    /// A tuple containing the commit message, PR body section, and exit code.
+    /// A tuple containing the commit message and PR body section.
     /// </returns>
-    private async Task<(string CommitMessage, string PrBodySection, int ExitCode)> ProcessStageContainerAsync(
+    private async Task<(string CommitMessage, string PrBodySection)> ProcessStageContainerAsync(
         FromStagingPipelineOptions options,
         string stageContainer,
         GitRepoContext gitRepoContext)
     {
         var stagingPipelineRunId = StagingPipelineOptionsExtensions.GetStagingPipelineRunId(stageContainer);
+        var updater = _services.GetUpdater<IStagingPipelineUpdater>(DotNetUpdater.Key);
 
         // Log staging pipeline tags for diagnostic purposes
         var stagingPipelineTags = await _pipelinesService.GetBuildTagsAsync(
@@ -157,45 +156,9 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                 stageContainer: stageContainer);
         }
 
-        var productVersions = (options.Internal, releaseConfig.SdkOnly) switch
-        {
-            // SDK-only internal/staging release
-            (true, true) => new Dictionary<string, string?>
-            {
-                // SDK-only releases are almost always one-off updates/bug
-                // fixes on top of an existing release of the Runtime and
-                // ASP.NET Core.
-                //
-                // If the release config tells us that this is an
-                // SDK-only release, we can assume that we have already
-                // released the runtime/aspnet versions that it's based on, and
-                // therefore we shouldn't update them unnecessarily.
-                { "sdk", VersionHelper.GetHighestSdkVersion(releaseConfig.SdkBuilds) }
-            },
-            // Internal/staging release
-            (true, false) => new Dictionary<string, string?>
-            {
-                { "dotnet", dotnetProductVersion },
-                { "runtime",  releaseConfig.RuntimeBuild },
-                { "aspnet", releaseConfig.AspBuild },
-                { "aspnet-composite", releaseConfig.AspBuild },
-                { "sdk", VersionHelper.GetHighestSdkVersion(releaseConfig.SdkBuilds) },
-            },
-            // Public release - whether or not it's an SDK-only release doesn't
-            // matter because the product versions will end up being the same.
-            (false, _) => new Dictionary<string, string?>
-            {
-                { "dotnet", dotnetProductVersion },
-                { "runtime", releaseConfig.Runtime },
-                { "aspnet", releaseConfig.Asp },
-                { "aspnet-composite", releaseConfig.Asp },
-                { "sdk", VersionHelper.GetHighestSdkVersion(releaseConfig.Sdks) },
-            }
-        };
-
-        _logger.LogInformation(
-            "Resolved product versions: {productVersions}",
-            string.Join(", ", productVersions.Select(kv => $"{kv.Key}: {kv.Value}")));
+        string sdkVersion = VersionHelper.GetHighestSdkVersion(options.Internal ? releaseConfig.SdkBuilds : releaseConfig.Sdks);
+        string runtimeVersion = options.Internal ? releaseConfig.RuntimeBuild : releaseConfig.Runtime;
+        string? aspnetVersion = options.Internal ? releaseConfig.AspBuild : releaseConfig.Asp;
 
         // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
         var buildUrl = $"{options.AzdoOrganization}/{options.AzdoProject}/_build/results?buildId={stagingPipelineRunId}";
@@ -203,37 +166,27 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             "Applying internal build {StageContainer} ({BuildUrl})",
             stageContainer, buildUrl);
 
-        _logger.LogInformation(
-            "Ignore any git-related logging output below, because git "
-            + "operations are being managed by a different command.");
-
-        // Run old update-dependencies command using the resolved versions.
-        // Do not use the old command to submit a pull request.
-        var updateDependencies = new SpecificCommand();
-        var updateDependenciesOptions = new SpecificCommandOptions()
-        {
-            RepoRoot = gitRepoContext.LocalRepoPath,
-            DockerfileVersion = majorMinorVersionString,
-            ProductVersions = productVersions,
-            InternalBaseUrl = internalBaseUrl,
-        };
-        var exitCode = await updateDependencies.ExecuteAsync(updateDependenciesOptions);
-        if (exitCode != 0)
-        {
-            _logger.LogError(
-                "Failed to apply stage container {StageContainer}. "
-                + "Command exited with code {ExitCode}.",
-                stageContainer, exitCode);
-            return (string.Empty, string.Empty, exitCode);
-        }
+        await DependencyUpdateRunner.ApplyAsync(
+            gitRepoContext.LocalRepoPath,
+            (variables, repoRoot, token) => updater.UpdateFromStagingPipelineAsync(
+                variables, repoRoot, releaseConfig, internalBaseUrl, token),
+            CancellationToken.None);
 
         var commitMessage = releaseConfig switch
         {
-            { SdkOnly: true } => $"Update .NET {majorMinorVersionString} SDK to {productVersions["sdk"]}",
-            _ => $"Update .NET {majorMinorVersionString} to {productVersions["sdk"]} SDK / {productVersions["runtime"]} Runtime",
+            { SdkOnly: true } => $"Update .NET {majorMinorVersionString} SDK to {sdkVersion}",
+            _ => $"Update .NET {majorMinorVersionString} to {sdkVersion} SDK / {runtimeVersion} Runtime",
         };
 
-        var newVersionsList = productVersions.Select(kvp => $"- {kvp.Key.ToUpper()}: {kvp.Value}");
+        List<string> newVersionsList = [];
+        if (!options.Internal || !releaseConfig.SdkOnly)
+        {
+            newVersionsList.Add($"- DOTNET: {dotnetProductVersion}");
+            newVersionsList.Add($"- RUNTIME: {runtimeVersion}");
+            newVersionsList.Add($"- ASPNET: {aspnetVersion}");
+            newVersionsList.Add($"- ASPNET-COMPOSITE: {aspnetVersion}");
+        }
+        newVersionsList.Add($"- SDK: {sdkVersion}");
         var prBodySection = $"""
             ## .NET {majorMinorVersionString}
 
@@ -244,7 +197,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             These versions are from .NET staging pipeline run [{stageContainer}]({buildUrl}).
             """;
 
-        return (commitMessage, prBodySection, 0);
+        return (commitMessage, prBodySection);
     }
 
     /// <summary>

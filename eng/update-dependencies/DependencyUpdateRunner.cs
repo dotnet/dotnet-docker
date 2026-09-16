@@ -10,14 +10,21 @@ using Microsoft.DotNet.GitAutomation.GitHub;
 
 namespace Dotnet.Docker;
 
-internal sealed class DependencyUpdatePublisher(CreatePullRequestOptions options)
+public static class DependencyUpdateRunner
 {
-    public async Task PublishAsync(
-        Func<IGitContext, CancellationToken, Task> applyUpdates,
-        CancellationToken cancellationToken = default)
+    public static async Task RunAsync(
+        CreatePullRequestOptions options,
+        Func<ManifestVariables, string, CancellationToken, Task> applyUpdates,
+        CancellationToken cancellationToken)
     {
+        if (options.UpdateOnly)
+        {
+            await ApplyAsync(options.RepoRoot, applyUpdates, cancellationToken);
+            return;
+        }
+
         using var httpClient = new HttpClient();
-        IPullRequestEndpoint endpoint = CreatePullRequestEndpoint(httpClient);
+        IPullRequestEndpoint endpoint = CreatePullRequestEndpoint(options, httpClient);
 
         string title = $"[{options.TargetBranch}] Update dependencies from {options.VersionSourceName}";
 
@@ -31,7 +38,7 @@ internal sealed class DependencyUpdatePublisher(CreatePullRequestOptions options
             Title: title,
             Body: string.Empty,
             TargetBranch: options.TargetBranch,
-            ApplyChanges: applyUpdates);
+            ApplyChanges: (git, token) => ApplyAsync(git.WorkspaceDirectory, applyUpdates, token));
 
         var manager = new PullRequestManager();
         PullRequestResult result = await manager.CreateOrUpdateAsync(
@@ -44,7 +51,29 @@ internal sealed class DependencyUpdatePublisher(CreatePullRequestOptions options
         Trace.TraceInformation($"Pull request: {result.Action} {result.Url}");
     }
 
-    private IPullRequestEndpoint CreatePullRequestEndpoint(HttpClient httpClient)
+    public static async Task ApplyAsync(
+        string repoRoot,
+        Func<ManifestVariables, string, CancellationToken, Task> applyUpdates,
+        CancellationToken cancellationToken)
+    {
+        repoRoot = Path.GetFullPath(repoRoot);
+        string manifestPath = Path.Combine(repoRoot, "manifest.versions.json");
+        var variables = ManifestVariables.FromFile(manifestPath);
+        string originalContent = variables.Content;
+
+        await applyUpdates(variables, repoRoot, cancellationToken);
+
+        if (variables.Content != originalContent)
+        {
+            await File.WriteAllTextAsync(manifestPath, variables.Content, cancellationToken);
+        }
+
+        // Generators can change files even when the manifest is unchanged.
+        await ScriptRunner.GenerateDockerfilesAsync(repoRoot, cancellationToken);
+        await ScriptRunner.GenerateReadmesAsync(repoRoot, cancellationToken);
+    }
+
+    private static IPullRequestEndpoint CreatePullRequestEndpoint(CreatePullRequestOptions options, HttpClient httpClient)
     {
         var identity = new AutomationIdentity(options.User, options.Email);
         bool useAzureDevOps =
@@ -62,7 +91,7 @@ internal sealed class DependencyUpdatePublisher(CreatePullRequestOptions options
             string encodedCredentials = Convert.ToBase64String(credentials);
             httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", encodedCredentials);
 
-            // PublishAsync owns the HTTP client for the lifetime of the endpoint.
+            // RunAsync owns the HTTP client for the lifetime of the endpoint.
             var client = new AzureDevOpsClient(httpClient);
             return new AzureDevOpsPullRequestEndpoint(
                 client,

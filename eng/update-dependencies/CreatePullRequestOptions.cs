@@ -38,9 +38,6 @@ public abstract record CreatePullRequestOptions
         || string.IsNullOrEmpty(User)
         || string.IsNullOrEmpty(TargetBranch);
 
-    // If new properties or options are added, they may need to be added to
-    // SpecificCommandOptions.FromPullRequestOptions(...)
-
     public static List<Option> Options =>
     [
         new Option<string>("--repo-root") { Description = "The root of the dotnet-docker repo to run against (defaults to current working directory)" },

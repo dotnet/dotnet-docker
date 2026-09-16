@@ -11,7 +11,7 @@ namespace UpdateDependencies.Tests;
 public sealed class ManifestUpdaterTests
 {
     [Fact]
-    public async Task SpecificCommand_WritesBeforeGenerationAndSkipsUnchangedContent()
+    public async Task UpdateBatch_WritesBeforeGenerationAndSkipsUnchangedContent()
     {
         using var repo = new TempRepo();
         string repoRoot = Path.Combine(repo.LocalPath, "workspace with spaces");
@@ -28,18 +28,15 @@ public sealed class ManifestUpdaterTests
             """;
         WriteGenerators(repoRoot, generator);
 
-        var command = new SpecificCommand();
-        var options = new SpecificCommandOptions
-        {
-            RepoRoot = repoRoot,
-            DockerfileVersion = "11.0",
-            ProductVersions = new Dictionary<string, string?> { ["runtime"] = "11.0.2" },
-        };
         string workingDirectory = Directory.GetCurrentDirectory();
 
-        int exitCode = await command.ExecuteAsync(options);
+        Task ApplyAsync(ManifestVariables variables, string root, CancellationToken token)
+        {
+            variables.SetValue("runtime|11.0|build-version", "11.0.2");
+            return Task.CompletedTask;
+        }
 
-        exitCode.ShouldBe(0);
+        await DependencyUpdateRunner.ApplyAsync(repoRoot, ApplyAsync, TestContext.Current.CancellationToken);
         string expected = original.Replace("\"11.0.1\"", "\"11.0.2\"");
         byte[] expectedBytes = Encoding.UTF8.GetBytes(expected);
         File.ReadAllBytes(manifestPath).ShouldBe(expectedBytes);
@@ -50,16 +47,15 @@ public sealed class ManifestUpdaterTests
         File.SetLastWriteTimeUtc(manifestPath, new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
         DateTime originalWriteTime = File.GetLastWriteTimeUtc(manifestPath);
 
-        int noOpExitCode = await command.ExecuteAsync(options);
+        await DependencyUpdateRunner.ApplyAsync(repoRoot, ApplyAsync, TestContext.Current.CancellationToken);
 
-        noOpExitCode.ShouldBe(0);
         File.GetLastWriteTimeUtc(manifestPath).ShouldBe(originalWriteTime);
         File.Exists(generatedPath).ShouldBeTrue();
         Directory.GetCurrentDirectory().ShouldBe(workingDirectory);
     }
 
     [Fact]
-    public async Task SpecificCommand_UpdatesNuGetConfigWithoutManifestChanges()
+    public async Task UpdateBatch_UpdatesNuGetConfigWithoutManifestChanges()
     {
         using var repo = new TempRepo();
         string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
@@ -78,17 +74,13 @@ public sealed class ManifestUpdaterTests
         string configPath = Path.Combine(configDirectory, "NuGet.config.internal");
         File.WriteAllText(configPath, "<configuration><packageSources /></configuration>");
         WriteGenerators(repo.LocalPath, "exit 0");
-        var options = new SpecificCommandOptions
+
+        await DependencyUpdateRunner.ApplyAsync(repo.LocalPath, (variables, root, token) =>
         {
-            RepoRoot = repo.LocalPath,
-            DockerfileVersion = "11.0",
-            InternalBaseUrl = "https://example/internal",
-            ProductVersions = new Dictionary<string, string?> { ["sdk"] = "11.0.100" },
-        };
+            NuGetConfigUpdater.Update(variables, root, "11.0", "11.0.100", isInternal: true);
+            return Task.CompletedTask;
+        }, TestContext.Current.CancellationToken);
 
-        int exitCode = await new SpecificCommand().ExecuteAsync(options);
-
-        exitCode.ShouldBe(0);
         File.GetLastWriteTimeUtc(manifestPath).ShouldBe(originalWriteTime);
         File.ReadAllText(manifestPath).ShouldBe(content);
         string config = File.ReadAllText(configPath);
@@ -97,16 +89,15 @@ public sealed class ManifestUpdaterTests
     }
 
     [Fact]
-    public async Task SpecificCommand_ReportsGeneratorFailure()
+    public async Task UpdateBatch_ReportsGeneratorFailure()
     {
         using var repo = new TempRepo();
         string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
         File.WriteAllText(manifestPath, """{"variables":{}}""");
         WriteGenerators(repo.LocalPath, "exit 1");
 
-        int exitCode = await new SpecificCommand().ExecuteAsync(new SpecificCommandOptions { RepoRoot = repo.LocalPath });
-
-        exitCode.ShouldBe(1);
+        await Should.ThrowAsync<InvalidOperationException>(() =>
+            DependencyUpdateRunner.ApplyAsync(repo.LocalPath, (_, _, _) => Task.CompletedTask, TestContext.Current.CancellationToken));
     }
 
     [Theory]
@@ -136,14 +127,7 @@ public sealed class ManifestUpdaterTests
               </packageSourceCredentials>
             </configuration>
             """);
-        var options = new SpecificCommandOptions
-        {
-            RepoRoot = repo.LocalPath,
-            DockerfileVersion = "11.0",
-            ProductVersions = new Dictionary<string, string?> { ["sdk"] = "11.0.100" },
-        };
-
-        NuGetConfigUpdater.Update(variables, options);
+        NuGetConfigUpdater.Update(variables, repo.LocalPath, "11.0", "11.0.100", isInternal: false);
 
         string config = File.ReadAllText(configPath);
         config.ShouldContain("https://api.nuget.org/v3/index.json");
@@ -152,64 +136,13 @@ public sealed class ManifestUpdaterTests
     }
 
     [Fact]
-    public void ProductUpdates_ShareEditorAndPreserveAliases()
-    {
-        var variables = new ManifestVariables("""
-            {"variables":{
-              "branch":"nightly",
-              "sdk|11.0|build-version":"11.0.100-preview.1.12345.1",
-              "sdk|11.0|product-version":"11.0.100-preview.1",
-              "aspnet-composite|11.0|build-version":"$(sdk|11.0|build-version)",
-              "dotnet|11.0|base-url|nightly":"$(public-url)",
-              "public-url":"https://example/public"
-            }}
-            """);
-        var options = new SpecificCommandOptions
-        {
-            DockerfileVersion = "11.0",
-            InternalBaseUrl = "https://example/internal",
-        };
-
-        BaseUrlUpdater.Update(variables, options);
-        VersionUpdater.Update(variables, "sdk", "11.0.100-preview.2.12345.2", options);
-        VersionUpdater.Update(variables, "aspnet-composite", "11.0.0-preview.2.12345.2", options);
-
-        variables.GetRawValue("sdk|11.0|build-version").ShouldBe("11.0.100-preview.2.12345.2");
-        variables.GetRawValue("sdk|11.0|product-version").ShouldBe("11.0.100-preview.2");
-        variables.GetRawValue("aspnet-composite|11.0|build-version").ShouldBe("$(sdk|11.0|build-version)");
-        ManifestHelper.GetBaseUrls(variables, options).ShouldBe(["https://example/internal"]);
-
-        string content = variables.Content;
-        BaseUrlUpdater.Update(variables, options);
-        VersionUpdater.Update(variables, "sdk", "11.0.100-preview.2.12345.2", options);
-        VersionUpdater.Update(variables, "aspnet-composite", "11.0.0-preview.2.12345.2", options);
-        variables.Content.ShouldBe(content);
-    }
-
-    [Theory]
-    [InlineData("", "")]
-    [InlineData("$(alias)", "$(alias)")]
-    [InlineData("not-a-version", "not-a-version")]
-    [InlineData("11.0.1", "11.0.2")]
-    public void VersionUpdater_PreservesValueSelection(string current, string expected)
-    {
-        var variables = new ManifestVariables("""{"variables":{"runtime|11.0|build-version":"11.0.1"}}""");
-        variables.SetValue("runtime|11.0|build-version", current);
-        var options = new SpecificCommandOptions { DockerfileVersion = "11.0" };
-
-        VersionUpdater.Update(variables, "runtime", "11.0.2", options);
-
-        variables.GetRawValue("runtime|11.0|build-version").ShouldBe(expected);
-    }
-
-    [Fact]
-    public void VariableUpdater_SkipsMissingKeysAndPreservesFormatting()
+    public void ManifestEdits_SkipMissingKeysAndPreserveFormatting()
     {
         const string content = """{"variables": { "value" : "old" }, "value":"unrelated"}""";
         var variables = new ManifestVariables(content);
 
-        VariableUpdater.Update(variables, "missing", "new");
-        VariableUpdater.Update(variables, "value", "new");
+        variables.SetValue("missing", "new").ShouldBeFalse();
+        variables.SetValue("value", "new").ShouldBeTrue();
 
         variables.Contains("missing").ShouldBeFalse();
         variables.Content.ShouldBe(content.Replace("\"old\"", "\"new\""));
@@ -224,27 +157,27 @@ public sealed class ManifestUpdaterTests
         var variables = new ManifestVariables("""{"variables":{"syft|version":"old","rocks-toolbox|latest|version":"unchanged"}}""");
         variables.SetValue("syft|version", current);
         var release = new SimpleJsonSerializer().Deserialize<Release>("""{"tag_name":"new"}""");
-        var info = new GitHubReleaseInfo(SyftUpdater.ToolName, release);
-
-        await Tools.UpdateAsync(variables, info, TestContext.Current.CancellationToken);
+        var updater = new SyftUpdater(CreateReleaseClient(release));
+        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
 
         variables.GetRawValue("syft|version").ShouldBe(expected);
         variables.GetRawValue("rocks-toolbox|latest|version").ShouldBe("unchanged");
     }
 
     [Fact]
-    public void MinGitUpdater_DoesNotResolveAssetsForDisabledVariables()
+    public async Task MinGitUpdater_DoesNotResolveAssetsForDisabledVariables()
     {
         const string content = """{"variables":{"mingit|latest|x64|url":"$(alias)","mingit|latest|x64|sha":""}}""";
         var variables = new ManifestVariables(content);
 
-        MinGitUpdater.Update(variables, new Release());
+        var updater = new MinGitUpdater(CreateReleaseClient(new Release()));
+        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
 
         variables.Content.ShouldBe(content);
     }
 
     [Fact]
-    public void MinGitUpdater_UpdatesUrlAndChecksumFromTheSameAsset()
+    public async Task MinGitUpdater_UpdatesUrlAndChecksumFromTheSameAsset()
     {
         var variables = new ManifestVariables("""{"variables":{"mingit|latest|x64|url":"old","mingit|latest|x64|sha":"old"}}""");
         var release = new SimpleJsonSerializer().Deserialize<Release>("""
@@ -256,14 +189,15 @@ public sealed class ManifestUpdaterTests
             }
             """);
 
-        MinGitUpdater.Update(variables, release);
+        var updater = new MinGitUpdater(CreateReleaseClient(release));
+        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
 
         variables.GetRawValue("mingit|latest|x64|url").ShouldBe("https://example/mingit.zip");
         variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("abcdef123456");
     }
 
     [Fact]
-    public void MinGitUpdater_RejectsMissingChecksum()
+    public async Task MinGitUpdater_RejectsMissingChecksum()
     {
         var variables = new ManifestVariables("""{"variables":{"mingit|latest|x64|sha":"old"}}""");
         var release = new SimpleJsonSerializer().Deserialize<Release>("""
@@ -275,7 +209,9 @@ public sealed class ManifestUpdaterTests
             }
             """);
 
-        Should.Throw<InvalidOperationException>(() => MinGitUpdater.Update(variables, release));
+        var updater = new MinGitUpdater(CreateReleaseClient(release));
+        await Should.ThrowAsync<InvalidOperationException>(() =>
+            updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken));
 
         variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("old");
     }
@@ -299,7 +235,9 @@ public sealed class ManifestUpdaterTests
             }
             """);
 
-        await ChiselUpdater.UpdateAsync(variables, release, TestContext.Current.CancellationToken);
+        using var httpClient = new HttpClient();
+        var updater = new ChiselUpdater(CreateReleaseClient(release), httpClient);
+        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
 
         variables.GetRawValue("chisel|latest|x64|url").ShouldBe("https://example/chisel.tar.gz");
         variables.GetRawValue("chisel|latest|x64|sha384").ShouldBe("");
@@ -308,135 +246,35 @@ public sealed class ManifestUpdaterTests
     }
 
     [Fact]
-    public void ShaUpdater_SupportsOnlyProductsWithPinnedChecksums()
-    {
-        DockerfileShaUpdater.SupportedProducts.ShouldBe(["aspire-dashboard", "powershell"], ignoreOrder: true);
-    }
-
-    [Theory]
-    [InlineData("dotnet")]
-    [InlineData("runtime")]
-    [InlineData("aspnet")]
-    [InlineData("aspnet-composite")]
-    [InlineData("sdk")]
-    public async Task SpecificCommand_DoesNotResolveDotNetChecksums(string product)
-    {
-        using var repo = new TempRepo();
-        string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
-        File.WriteAllText(manifestPath, $$$"""
-            {"variables":{
-              "branch":"nightly",
-              "{{{product}}}|11.0|build-version":"11.0.1",
-              "{{{product}}}|11.0|product-version":"11.0.1",
-              "{{{product}}}|11.0|linux|x64|sha":"unchanged"
-            }}
-            """);
-        string configDirectory = Path.Combine(repo.LocalPath, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts");
-        Directory.CreateDirectory(configDirectory);
-        File.WriteAllText(Path.Combine(configDirectory, "NuGet.config.nightly"), "<configuration />");
-        WriteGenerators(repo.LocalPath, "exit 0");
-        var options = new SpecificCommandOptions
-        {
-            RepoRoot = repo.LocalPath,
-            DockerfileVersion = "11.0",
-            ChecksumsFile = Path.Combine(repo.LocalPath, "nonexistent-checksums.txt"),
-            ProductVersions = new Dictionary<string, string?> { [product] = "11.0.2" },
-        };
-
-        int exitCode = await new SpecificCommand().ExecuteAsync(options);
-
-        exitCode.ShouldBe(0);
-        var variables = ManifestVariables.FromFile(manifestPath);
-        variables.GetRawValue($"{product}|11.0|build-version").ShouldBe("11.0.2");
-        variables.GetRawValue($"{product}|11.0|product-version").ShouldBe("11.0.2");
-        variables.GetRawValue($"{product}|11.0|linux|x64|sha").ShouldBe("unchanged");
-    }
-
-    [Fact]
-    public async Task ShaUpdater_UpdatesPowerShellWithoutDotNetBaseUrls()
-    {
-        using var repo = new TempRepo();
-        string checksumPath = Path.Combine(repo.LocalPath, "checksums.txt");
-        File.WriteAllText(checksumPath, """
-            AAAA PowerShell.Linux.x64.7.6.2.nupkg
-            BBBB PowerShell.Linux.arm64.7.6.2.nupkg
-            CCCC PowerShell.Linux.Alpine.7.6.2.nupkg
-            DDDD PowerShell.Windows.x64.7.6.2.nupkg
-            """);
-        var variables = new ManifestVariables("""
-            {"variables":{
-              "powershell|11.0|build-version":"7.6.1",
-              "powershell|11.0|Linux|x64|sha":"old",
-              "powershell|11.0|Linux|arm64|sha":"old",
-              "powershell|11.0|Linux.Alpine|sha":"old",
-              "powershell|11.0|Windows|x64|sha":"old",
-              "powershell|11.0|Linux|x64|sha384":"other",
-              "powershell|11.01|Linux|x64|sha":"other",
-              "sdk|11.0|linux|x64|sha":"other"
-            }}
-            """);
-        var options = new SpecificCommandOptions
-        {
-            DockerfileVersion = "11.0",
-            ChecksumsFile = checksumPath,
-        };
-
-        VersionUpdater.Update(variables, "powershell", "7.6.2", options);
-        var updater = new DockerfileShaUpdater("powershell", options, variables);
-        await updater.UpdateAsync(TestContext.Current.CancellationToken);
-
-        variables.GetRawValue("powershell|11.0|Linux|x64|sha").ShouldBe("aaaa");
-        variables.GetRawValue("powershell|11.0|Linux|arm64|sha").ShouldBe("bbbb");
-        variables.GetRawValue("powershell|11.0|Linux.Alpine|sha").ShouldBe("cccc");
-        variables.GetRawValue("powershell|11.0|Windows|x64|sha").ShouldBe("dddd");
-        variables.GetRawValue("powershell|11.0|Linux|x64|sha384").ShouldBe("other");
-        variables.GetRawValue("powershell|11.01|Linux|x64|sha").ShouldBe("other");
-        variables.GetRawValue("sdk|11.0|linux|x64|sha").ShouldBe("other");
-    }
-
-    [Fact]
-    public async Task ShaUpdater_SkipsProductsWithoutChecksumVariables()
-    {
-        const string content = """{"variables":{}}""";
-        var variables = new ManifestVariables(content);
-        var updater = new DockerfileShaUpdater("powershell", new SpecificCommandOptions(), variables);
-
-        await updater.UpdateAsync(TestContext.Current.CancellationToken);
-
-        variables.Content.ShouldBe(content);
-    }
-
-    [Fact]
-    public async Task SpecificCommand_DoesNotSaveManifestWhenChecksumResolutionFails()
+    public async Task UpdateBatch_DoesNotSaveManifestWhenUpdaterFails()
     {
         using var repo = new TempRepo();
         string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
         const string content = """
             {"variables":{
-              "branch":"nightly",
-              "dotnet|11.0|base-url|nightly":"old",
-              "powershell|11.0|build-version":"7.6.1",
-              "powershell|11.0|Linux|x64|sha":"old"
+              "runtime|11.0|build-version":"11.0.1"
             }}
             """;
         File.WriteAllText(manifestPath, content);
-        string checksumPath = Path.Combine(repo.LocalPath, "checksums.txt");
-        File.WriteAllText(checksumPath, "invalid checksum entry");
         WriteGenerators(repo.LocalPath, "Set-Content ./generated.txt 'generated'");
-        var options = new SpecificCommandOptions
-        {
-            RepoRoot = repo.LocalPath,
-            DockerfileVersion = "11.0",
-            ChecksumsFile = checksumPath,
-            InternalBaseUrl = $"https://example/{Guid.NewGuid()}",
-            ProductVersions = new Dictionary<string, string?> { ["powershell"] = "7.6.3" },
-        };
 
-        int exitCode = await new SpecificCommand().ExecuteAsync(options);
-
-        exitCode.ShouldBe(1);
+        await Should.ThrowAsync<InvalidOperationException>(() =>
+            DependencyUpdateRunner.ApplyAsync(repo.LocalPath,
+                (variables, _, _) =>
+                {
+                    variables.SetValue("runtime|11.0|build-version", "11.0.2");
+                    throw new InvalidOperationException("Updater failed.");
+                },
+                TestContext.Current.CancellationToken));
         File.ReadAllText(manifestPath).ShouldBe(content);
         File.Exists(Path.Combine(repo.LocalPath, "generated.txt")).ShouldBeFalse();
+    }
+
+    private static IReleasesClient CreateReleaseClient(Release release)
+    {
+        var client = new Mock<IReleasesClient>(MockBehavior.Strict);
+        client.Setup(source => source.GetLatest(It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(release);
+        return client.Object;
     }
 
     private static void WriteGenerators(string repoRoot, string script)
