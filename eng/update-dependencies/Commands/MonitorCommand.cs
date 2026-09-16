@@ -8,7 +8,6 @@ using NuGet.Versioning;
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal sealed class MonitorCommand(
-    IPipelineArtifactProvider pipelineArtifactProvider,
     IServiceProvider services,
     ILogger<MonitorCommand> logger)
         : BaseCommand<MonitorOptions>
@@ -22,8 +21,8 @@ internal sealed class MonitorCommand(
             return 1;
         }
 
+        var updater = services.GetUpdater<MonitorUpdater>("monitor");
         string? version = options.Version;
-        MonitorPipelineBuildReference? pipelineBuild = null;
         if (options.PipelineRunId is int pipelineRunId)
         {
             string organization = string.IsNullOrEmpty(options.AzdoOrganization)
@@ -34,9 +33,7 @@ internal sealed class MonitorCommand(
                 : options.AzdoProject;
 
             var reference = new PipelineBuildReference(organization, project, pipelineRunId);
-            pipelineBuild = await MonitorPipelineBuildReference.ResolveAsync(
-                pipelineArtifactProvider, reference, cancellationToken);
-            version = pipelineBuild.Version;
+            version = await updater.GetVersionFromPipelineAsync(reference, cancellationToken);
         }
 
         version = version?.Trim();
@@ -52,19 +49,11 @@ internal sealed class MonitorCommand(
             VersionSourceName = $"dotnet/dotnet-monitor/{parsedVersion.Major}.{parsedVersion.Minor}",
         };
 
-        Func<ManifestVariables, string, CancellationToken, Task> applyUpdates;
-        if (pipelineBuild is not null)
-        {
-            var updater = services.GetUpdater<IPipelineBuildUpdater>("monitor");
-            applyUpdates = (variables, _, token) => updater.UpdateFromPipelineBuildAsync(variables, pipelineBuild, token);
-        }
-        else
-        {
-            var updater = services.GetUpdater<MonitorUpdater>("monitor");
-            applyUpdates = (variables, _, token) => updater.UpdateFromVersionAsync(variables, version, token);
-        }
+        await DependencyUpdateRunner.RunAsync(
+            options,
+            (variables, _, token) => updater.UpdateFromVersionAsync(variables, version, token),
+            cancellationToken);
 
-        await DependencyUpdateRunner.RunAsync(options, applyUpdates, cancellationToken);
         if (options.UpdateOnly)
         {
             logger.LogInformation("Local updates completed without publishing.");

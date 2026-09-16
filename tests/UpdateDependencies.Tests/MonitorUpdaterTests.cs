@@ -116,7 +116,7 @@ public sealed class MonitorUpdaterTests
     }
 
     [Fact]
-    public async Task PreparedPipelineReferences_DoNotFetchAgainOrShareInvocationState()
+    public async Task ExplicitVersions_DoNotFetchOrShareInvocationState()
     {
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var handler = new ChecksumHandler();
@@ -126,13 +126,13 @@ public sealed class MonitorUpdaterTests
         var second = CreateVariables(pinnedChecksums: false);
 
         await Task.WhenAll(
-            updater.UpdateFromPipelineBuildAsync(
+            updater.UpdateFromVersionAsync(
                 first,
-                new MonitorPipelineBuildReference("organization", "project", 42, "9.0.5"),
+                "9.0.5",
                 TestContext.Current.CancellationToken),
-            updater.UpdateFromPipelineBuildAsync(
+            updater.UpdateFromVersionAsync(
                 second,
-                new MonitorPipelineBuildReference("organization", "project", 43, "9.0.6"),
+                "9.0.6",
                 TestContext.Current.CancellationToken));
 
         first.GetRawValue("monitor|9.0|build-version").ShouldBe("9.0.5");

@@ -26,8 +26,22 @@ public sealed class MonitorUpdater(
         PipelineBuildReference build,
         CancellationToken cancellationToken)
     {
-        var prepared = await MonitorPipelineBuildReference.ResolveAsync(pipelineArtifactProvider, build, cancellationToken);
-        await UpdateFromVersionAsync(variables, prepared.Version, cancellationToken);
+        string version = await GetVersionFromPipelineAsync(build, cancellationToken);
+        await UpdateFromVersionAsync(variables, version, cancellationToken);
+    }
+
+    public async Task<string> GetVersionFromPipelineAsync(
+        PipelineBuildReference build,
+        CancellationToken cancellationToken)
+    {
+        var versionFile = new PipelineArtifactFile("Build_Info", "dotnet-monitor.nupkg.buildversion");
+        string version = await pipelineArtifactProvider.GetArtifactTextContentAsync(
+            build.Organization,
+            build.Project,
+            build.RunId,
+            versionFile).WaitAsync(cancellationToken);
+
+        return version.Trim();
     }
 
     public async Task UpdateFromVersionAsync(
