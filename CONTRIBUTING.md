@@ -258,6 +258,12 @@ The following examples illustrate how to run `update-dependencies`:
 
 #### Implementing dependency updaters
 
+Updater implementations and interfaces live in `eng/update-dependencies/Updaters`,
+under the `Microsoft.DotNet.Docker.UpdateDependencies.Updaters` namespace.
+CLI commands, their options, and command-binding helpers live in
+`eng/update-dependencies/Commands`, under the
+`Microsoft.DotNet.Docker.UpdateDependencies.Commands` namespace.
+
 Each dependency is registered once in `eng/update-dependencies/Program.cs` as a
 string-keyed singleton `IUpdater`. It implements only the source capabilities it
 supports: BAR build/channel, pipeline build, staging pipeline, or GitHub release.

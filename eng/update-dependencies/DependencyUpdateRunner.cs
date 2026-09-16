@@ -4,6 +4,7 @@
 using System.Diagnostics;
 using System.Net.Http.Headers;
 using System.Text;
+using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.GitAutomation;
 using Microsoft.DotNet.GitAutomation.AzureDevOps;
 using Microsoft.DotNet.GitAutomation.GitHub;

@@ -3,6 +3,7 @@
 
 using System.Text;
 using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Octokit;
 using Octokit.Internal;
 

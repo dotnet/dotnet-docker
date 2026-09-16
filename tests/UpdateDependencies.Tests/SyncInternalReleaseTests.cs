@@ -3,6 +3,7 @@
 
 using System.Collections.Immutable;
 using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
 using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.DarcLib;
