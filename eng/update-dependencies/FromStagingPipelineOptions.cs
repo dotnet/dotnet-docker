@@ -4,7 +4,7 @@
 using System.CommandLine;
 using System.Text.RegularExpressions;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 internal partial record FromStagingPipelineOptions : CreatePullRequestOptions, IOptions
 {

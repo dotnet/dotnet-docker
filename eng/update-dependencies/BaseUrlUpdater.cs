@@ -3,7 +3,7 @@
 
 using System.Diagnostics;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Updates the baseUrl variables in the manifest.versions.json file.

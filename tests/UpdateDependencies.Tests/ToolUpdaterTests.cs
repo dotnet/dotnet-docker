@@ -4,7 +4,7 @@
 using System.CommandLine;
 using System.Net;
 using System.Text.Json;
-using Dotnet.Docker;
+using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Octokit;

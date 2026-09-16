@@ -8,7 +8,7 @@ using Microsoft.DotNet.GitAutomation;
 using Microsoft.DotNet.GitAutomation.AzureDevOps;
 using Microsoft.DotNet.GitAutomation.GitHub;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public static class DependencyUpdateRunner
 {

@@ -5,7 +5,7 @@ using System.Net;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public sealed class MonitorUpdater(
     IPipelineArtifactProvider pipelineArtifactProvider,

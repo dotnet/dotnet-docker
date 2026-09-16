@@ -3,7 +3,7 @@
 
 using System.CommandLine;
 
-namespace Dotnet.Docker.Sync;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 
 public sealed record SyncInternalReleaseOptions : CreatePullRequestOptions, IOptions
 {

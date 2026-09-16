@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Dotnet.Docker.Model.Release;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 
 /// <summary>
 /// This represents the configuration for a single run of the .NET release and staging pipelines. It contains

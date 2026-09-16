@@ -6,7 +6,7 @@ using System.CommandLine.NamingConventionBinder;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public abstract class BaseCommand<TOptions>() : ICommand<TOptions> where TOptions : IOptions
 {

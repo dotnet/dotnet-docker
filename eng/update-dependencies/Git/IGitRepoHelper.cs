@@ -4,7 +4,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace Dotnet.Docker.Git;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
 
 /// <summary>
 /// Handles operations that require interactions with both local and remote git repos.

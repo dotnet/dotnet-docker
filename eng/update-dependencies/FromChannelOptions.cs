@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.CommandLine;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 internal record FromChannelOptions : CreatePullRequestOptions, IOptions
 {

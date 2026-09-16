@@ -3,7 +3,7 @@
 
 using Octokit;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public sealed class SyftUpdater(IReleasesClient releases) : IGitHubReleaseUpdater
 {

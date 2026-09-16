@@ -1,12 +1,12 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Dotnet.Docker.Git;
-using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.UpdateDependencies.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.Docker.Shared;
 using Microsoft.Extensions.Logging;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipelineOptions>
 {

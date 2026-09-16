@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.Logging;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 internal interface IBuildAssetService
 {

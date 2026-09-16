@@ -3,7 +3,7 @@
 
 using System;
 
-namespace Dotnet.Docker.Git;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
 
 /// <summary>
 /// Exception thrown when a Git branch operation fails due to invalid branch conditions,

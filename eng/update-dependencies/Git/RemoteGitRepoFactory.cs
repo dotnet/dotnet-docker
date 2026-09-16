@@ -5,7 +5,7 @@ using System;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dotnet.Docker.Git;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
 
 /// <summary>
 /// Factory for creating <see cref="IRemoteGitRepo"/> instances based on repository URLs.

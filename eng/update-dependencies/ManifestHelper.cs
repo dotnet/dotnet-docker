@@ -3,7 +3,7 @@
 
 using System.Text.RegularExpressions;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Helper class for interacting with manifest files.

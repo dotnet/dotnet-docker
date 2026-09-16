@@ -1,10 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Dotnet.Docker;
-using Dotnet.Docker.Git;
-using Dotnet.Docker.Model.Release;
-using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
+using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;

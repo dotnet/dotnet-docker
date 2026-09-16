@@ -5,7 +5,7 @@ using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 internal class AzdoHttpClient(IAzdoAuthProvider azdoAuthProvider, HttpClient httpClient)
 {

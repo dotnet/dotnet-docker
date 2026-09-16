@@ -1,13 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using Azure.Core;
 using Azure.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public interface IAzdoAuthProvider
 {
@@ -81,7 +82,7 @@ public class AzdoAuthProvider : IAzdoAuthProvider
             + " See https://learn.microsoft.com/azure/devops/pipelines/build/variables#systemaccesstoken");
 
         var credential = new AzureDeveloperCliCredential();
-        var requestContext = new Azure.Core.TokenRequestContext([Scope]);
+        var requestContext = new TokenRequestContext([Scope]);
         accessToken = credential.GetToken(requestContext).Token;
         return accessToken;
     }

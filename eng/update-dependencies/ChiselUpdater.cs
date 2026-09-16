@@ -4,7 +4,7 @@
 using System.Text.RegularExpressions;
 using Octokit;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public sealed class ChiselUpdater(
     IReleasesClient releases,

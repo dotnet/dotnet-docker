@@ -4,9 +4,9 @@
 using System.CommandLine;
 using System.CommandLine.Help;
 using System.CommandLine.Hosting;
-using Dotnet.Docker;
-using Dotnet.Docker.Git;
-using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Maestro.Common;
 using Maestro.Common.AzureDevOpsTokens;
 using Microsoft.DotNet.DarcLib;

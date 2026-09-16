@@ -4,7 +4,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Dotnet.Docker.Git;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
 
 internal interface ILocalGitRepoHelper
 {

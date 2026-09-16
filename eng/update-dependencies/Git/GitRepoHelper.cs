@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.Logging;
 
-namespace Dotnet.Docker.Git;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
 
 /// <remarks>
 /// Use <see cref="IGitRepoHelperFactory"/> to instantiate this.

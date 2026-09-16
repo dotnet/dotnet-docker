@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text.Json;
-using Dotnet.Docker;
+using Microsoft.DotNet.Docker.UpdateDependencies;
 
 namespace UpdateDependencies.Tests;
 

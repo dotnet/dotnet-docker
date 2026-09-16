@@ -3,7 +3,7 @@
 
 using System.CommandLine;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public abstract record CreatePullRequestOptions
 {

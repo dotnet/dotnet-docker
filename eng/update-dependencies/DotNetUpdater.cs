@@ -1,13 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Dotnet.Docker.Model.Release;
+using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public sealed class DotNetUpdater(
     IBasicBarClient barClient,

@@ -3,7 +3,7 @@
 
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 public interface IBarBuildUpdater : IUpdater
 {

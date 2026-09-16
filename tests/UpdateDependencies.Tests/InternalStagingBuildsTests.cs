@@ -2,7 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Immutable;
-using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.Docker.Shared;
 
 namespace UpdateDependencies.Tests;

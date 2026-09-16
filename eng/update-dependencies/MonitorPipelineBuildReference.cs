@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 // Carry the version resolved before publishing with this invocation, not in the singleton updater.
 public sealed record MonitorPipelineBuildReference(

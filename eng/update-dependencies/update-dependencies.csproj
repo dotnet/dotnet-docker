@@ -6,7 +6,7 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Dotnet.Docker</RootNamespace>
+    <RootNamespace>Microsoft.DotNet.Docker.UpdateDependencies</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

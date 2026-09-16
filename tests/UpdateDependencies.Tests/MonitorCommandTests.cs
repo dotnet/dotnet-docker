@@ -6,7 +6,7 @@ using System.CommandLine.Hosting;
 using System.Net;
 using System.Text;
 using System.Text.Json;
-using Dotnet.Docker;
+using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;

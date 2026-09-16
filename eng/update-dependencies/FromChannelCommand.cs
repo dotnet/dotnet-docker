@@ -3,7 +3,7 @@
 
 using Microsoft.Extensions.Logging;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 internal class FromChannelCommand(
     IServiceProvider serviceProvider,

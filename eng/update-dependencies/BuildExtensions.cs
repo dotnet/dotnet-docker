@@ -3,7 +3,7 @@
 
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Extensions for .NET build asset registry <see cref="Build"/>s.

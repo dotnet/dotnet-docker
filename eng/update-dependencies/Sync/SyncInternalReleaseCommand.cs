@@ -3,10 +3,10 @@
 
 using System;
 using System.Threading.Tasks;
-using Dotnet.Docker.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Git;
 using Microsoft.Extensions.Logging;
 
-namespace Dotnet.Docker.Sync;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 
 /// <summary>
 /// This command is intended to update the state of an internal/release/* branch with the state of
