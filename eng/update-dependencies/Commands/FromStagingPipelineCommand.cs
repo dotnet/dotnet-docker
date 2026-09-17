@@ -22,6 +22,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     private delegate Task PushAndCreatePullRequest(string prTitle, string prBody);
 
     private readonly ILogger<FromStagingPipelineCommand> _logger;
+    private readonly UpdateDependenciesConfiguration _configuration;
     private readonly IPipelineArtifactProvider _pipelineArtifactProvider;
     private readonly IPipelinesService _pipelinesService;
     private readonly IInternalVersionsService _internalVersionsService;
@@ -31,6 +32,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     private readonly Func<FromStagingPipelineOptions, Task<GitRepoContext>> _createGitRepoContextAsync;
 
     public FromStagingPipelineCommand(
+        UpdateDependenciesConfiguration configuration,
         ILogger<FromStagingPipelineCommand> logger,
         IServiceProvider services,
         IPipelineArtifactProvider pipelineArtifactProvider,
@@ -40,6 +42,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         IBuildLabelService buildLabelService,
         IGitRepoHelperFactory gitRepoHelperFactory)
     {
+        _configuration = configuration;
         _logger = logger;
         _services = services;
         _pipelineArtifactProvider = pipelineArtifactProvider;
@@ -47,7 +50,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         _internalVersionsService = internalVersionsService;
         _environmentService = environmentService;
         _buildLabelService = buildLabelService;
-        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options, _environmentService);
+        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options, _environmentService, configuration);
     }
 
     public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
@@ -118,8 +121,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
 
         // Log staging pipeline tags for diagnostic purposes
         var stagingPipelineTags = await _pipelinesService.GetBuildTagsAsync(
-            options.AzdoOrganization,
-            options.AzdoProject,
+            _configuration.AzureDevOps.Organization,
+            _configuration.AzureDevOps.Project,
             stagingPipelineRunId);
         _logger.LogInformation("Staging pipeline tags: {Tags}", string.Join(", ", stagingPipelineTags));
 
@@ -140,8 +143,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         }
 
         var releaseConfig = await _pipelineArtifactProvider.GetReleaseConfigAsync(
-            options.AzdoOrganization,
-            options.AzdoProject,
+            _configuration.AzureDevOps.Organization,
+            _configuration.AzureDevOps.Project,
             stagingPipelineRunId);
 
         string dotnetProductVersion = VersionHelper.ResolveProductVersion(releaseConfig.RuntimeBuild);
@@ -162,7 +165,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         string? aspnetVersion = options.Internal ? releaseConfig.AspBuild : releaseConfig.Asp;
 
         // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
-        var buildUrl = $"{options.AzdoOrganization}/{options.AzdoProject}/_build/results?buildId={stagingPipelineRunId}";
+        var buildUrl = $"{_configuration.AzureDevOps.Organization.TrimEnd('/')}/{_configuration.AzureDevOps.Project}/_build/results?buildId={stagingPipelineRunId}";
         _logger.LogInformation(
             "Applying internal build {StageContainer} ({BuildUrl})",
             stageContainer, buildUrl);
@@ -250,7 +253,8 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
             ILogger logger,
             IGitRepoHelperFactory gitRepoFactory,
             FromStagingPipelineOptions options,
-            IEnvironmentService environmentService)
+            IEnvironmentService environmentService,
+            UpdateDependenciesConfiguration configuration)
         {
             CommitChanges commitChanges;
             PushAndCreatePullRequest pushAndCreatePullRequest;
@@ -258,7 +262,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
 
             if (options.Mode == ChangeMode.Remote)
             {
-                var remoteUrl = options.GetAzdoRepoUrl();
+                var remoteUrl = configuration.AzureDevOps.GetRepoUrl();
                 var targetBranch = options.TargetBranch;
                 var buildId = environmentService.GetBuildId() ?? "";
                 var stageContainerList = options.GetStageContainerList();
@@ -267,7 +271,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                     throw new ArgumentException("At least one stage container must be provided.");
                 }
                 var prBranch = options.CreatePrBranchName($"update-deps-int-{stageContainerList[0]}", buildId);
-                var committer = options.GetCommitterIdentity();
+                var committer = configuration.GetCommitterIdentity();
 
                 // Clone the repo and configure git identity for commits
                 var git = await gitRepoFactory.CreateAndCloneAsync(remoteUrl, gitIdentity: committer);

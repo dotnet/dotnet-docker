@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal class FromChannelCommand(
+    DependencyUpdateRunner runner,
     IServiceProvider serviceProvider,
     ILogger<FromChannelCommand> logger)
     : BaseCommand<FromChannelOptions>
@@ -20,7 +21,7 @@ internal class FromChannelCommand(
             options.Repo, options.Channel);
 
         var updater = _serviceProvider.GetUpdater<IBarChannelUpdater>(BuildExtensions.GetUpdaterKey(options.Repo));
-        await DependencyUpdateRunner.RunAsync(options,
+        await runner.RunAsync(options,
             (variables, repoRoot, token) => updater.UpdateFromBarChannelAsync(variables, repoRoot, options.Repo, options.Channel, token),
             CancellationToken.None);
         return 0;

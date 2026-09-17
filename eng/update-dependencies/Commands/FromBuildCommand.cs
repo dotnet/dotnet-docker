@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal class FromBuildCommand(
+    DependencyUpdateRunner runner,
     IBasicBarClient barClient,
     ILogger<FromBuildCommand> logger,
     IServiceProvider serviceProvider
@@ -24,7 +25,7 @@ internal class FromBuildCommand(
         Build build = await _barClient.GetBuildAsync(options.Id);
 
         var updater = _serviceProvider.GetUpdater<IBarBuildUpdater>(build.GetUpdaterKey());
-        await DependencyUpdateRunner.RunAsync(options,
+        await runner.RunAsync(options,
             (variables, repoRoot, token) => updater.UpdateFromBarBuildAsync(variables, repoRoot, build, token),
             CancellationToken.None);
         return 0;

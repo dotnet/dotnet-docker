@@ -16,6 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="appsettings*.json" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="../shared/Microsoft.DotNet.Docker.Shared.csproj" />
   </ItemGroup>
 

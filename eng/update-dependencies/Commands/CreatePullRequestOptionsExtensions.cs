@@ -13,37 +13,6 @@ internal static class CreatePullRequestOptionsExtensions
         Path.Combine(options.RepoRoot, "manifest.versions.json");
 
     /// <summary>
-    /// Constructs the Azure DevOps repository URL from the options.
-    /// </summary>
-    /// <exception cref="ArgumentException">
-    /// Thrown if any of the required options are null or whitespace.
-    /// </exception>
-    public static string GetAzdoRepoUrl(this CreatePullRequestOptions options)
-    {
-        // Validate that we have all the required pieces to construct the repo URL.
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoOrganization);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoProject);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.AzdoRepo);
-
-        // AzdoOrganization is a URL like https://dev.azure.com/<org>
-        // A valid Azure DevOps repository URL is formatted like https://dev.azure.com/<org>/<project>/_git/<repo>
-        return $"{options.AzdoOrganization}/{options.AzdoProject}/_git/{options.AzdoRepo}";
-    }
-
-    /// <summary>
-    /// Validates that the committer identity is present and returns it.
-    /// </summary>
-    /// <exception cref="ArgumentException">
-    /// Thrown if any of the required options are null or whitespace.
-    /// </exception>
-    public static (string Name, string Email) GetCommitterIdentity(this CreatePullRequestOptions options)
-    {
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.User);
-        ArgumentException.ThrowIfNullOrWhiteSpace(options.Email);
-        return (options.User, options.Email);
-    }
-
-    /// <summary>
     /// Automatically generates a branch name for the pull request. Uses the target branch, prefix,
     /// and <paramref name="name"/> to create a descriptive branch name.
     /// </summary>

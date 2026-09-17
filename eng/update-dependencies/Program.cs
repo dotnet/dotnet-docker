@@ -4,6 +4,8 @@
 using System.CommandLine;
 using System.CommandLine.Help;
 using System.CommandLine.Hosting;
+using Azure.Identity;
+using Azure.Security.KeyVault.Keys.Cryptography;
 using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
@@ -13,7 +15,12 @@ using Maestro.Common;
 using Maestro.Common.AzureDevOpsTokens;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
+using Microsoft.DotNet.GitAutomation;
+using Microsoft.DotNet.GitAutomation.AzureDevOps;
+using Microsoft.DotNet.GitAutomation.GitHub;
+using AzureDevOpsClient = Microsoft.DotNet.DarcLib.AzureDevOpsClient;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
@@ -56,7 +63,8 @@ config.UseHost(
                 throw new InvalidOperationException($"Unmatched tokens: {string.Join(" ", unmatchedArgs)}");
             }
 
-            return Host.CreateDefaultBuilder();
+            return Host.CreateDefaultBuilder()
+                .UseContentRoot(AppContext.BaseDirectory);
         },
     configureHost: host => host
         .ConfigureLogging(logging =>
@@ -68,8 +76,45 @@ config.UseHost(
                     options.SingleLine = false;
                 });
             })
-        .ConfigureServices(services =>
+        .ConfigureServices((context, services) =>
             {
+                var configuration = context.Configuration
+                    .GetRequiredSection("UpdateDependencies")
+                    .Get<UpdateDependenciesConfiguration>()
+                        ?? throw new InvalidOperationException("Failed to bind UpdateDependencies configuration.");
+
+                services.AddSingleton(configuration);
+
+                switch (configuration.PullRequestDestination)
+                {
+                    case GitRemote.GitHub:
+                        var githubConfig = configuration.GitHub;
+                        var accessProvider = CreateGitHubAccessProvider(configuration);
+                        var repo = new GitHubRepo(githubConfig.Owner, githubConfig.Repository);
+                        services.AddGitHubPullRequestAutomation(accessProvider, repo);
+                        services.AddTransient<IPullRequestEndpoint>(sp =>
+                            sp.GetRequiredService<GitHubPullRequestEndpoint>());
+                        break;
+
+                    case GitRemote.AzureDevOps:
+                        var azdoConfig = configuration.AzureDevOps;
+                        string organization = new Uri(azdoConfig.Organization).Segments.Last().TrimEnd('/');
+                        services.AddAzureDevOpsPullRequestAutomation(
+                            organization,
+                            azdoConfig.Project,
+                            azdoConfig.Repository,
+                            new AutomationIdentity(configuration.User, configuration.Email),
+                            azdoConfig.Token);
+                        services.AddTransient<IPullRequestEndpoint>(sp =>
+                            sp.GetRequiredService<AzureDevOpsPullRequestEndpoint>());
+                        break;
+
+                    default:
+                        throw new InvalidOperationException(
+                            $"Unsupported PR destination: {configuration.PullRequestDestination}");
+                }
+
+                services.AddSingleton<DependencyUpdateRunner>();
 
                 // Local services needed for DarcLib git operations
                 services.AddSingleton<ITelemetryRecorder, NoTelemetryRecorder>();
@@ -81,7 +126,7 @@ config.UseHost(
                 services.AddSingleton<IRemoteTokenProvider>(sp =>
                 {
                     var azdoTokenProvider = sp.GetRequiredService<IAzureDevOpsTokenProvider>();
-                    var gitHubTokenProvider = new ResolvedTokenProvider(null);
+                    var gitHubTokenProvider = new ResolvedTokenProvider(configuration.GitHub.Token);
                     return new RemoteTokenProvider(
                         azdoTokenProvider: azdoTokenProvider,
                         gitHubTokenProvider: gitHubTokenProvider);
@@ -89,12 +134,10 @@ config.UseHost(
                 services.AddSingleton<IAzureDevOpsTokenProvider, AzureDevOpsTokenProvider>();
                 services.Configure<AzureDevOpsTokenProviderOptions>(options =>
                     {
-                        // TODO: Find a way to use the same Azure DevOps token/auth between here and CreatePullRequestOptions
                         options["default"] = new AzureDevOpsCredentialResolverOptions
                         {
-                            // Interactive auth can be enabled in order to run locally using your own user identity.
-                            // Use with caution. Disable by default since this tool runs in CI.
-                            DisableInteractiveAuth = true
+                            Token = configuration.AzureDevOps.Token,
+                            DisableInteractiveAuth = configuration.AzureDevOps.DisableInteractiveAuth
                         };
                     }
                 );
@@ -130,9 +173,17 @@ config.UseHost(
                 services.AddPipelineArtifactProvider();
                 services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
 
-                services.AddSingleton<Octokit.IReleasesClient>(_ =>
-                    new Octokit.GitHubClient(new Octokit.ProductHeaderValue("dotnet-docker-update-dependencies"))
-                        .Repository.Release);
+                services.AddSingleton(_ =>
+                {
+                    var productHeader = new Octokit.ProductHeaderValue("dotnet-docker-update-dependencies");
+                    var client = new Octokit.GitHubClient(productHeader);
+                    if (!string.IsNullOrWhiteSpace(configuration.GitHub.Token))
+                    {
+                        client.Credentials = new Octokit.Credentials(configuration.GitHub.Token);
+                    }
+
+                    return client.Repository.Release;
+                });
 
                 // Each dependency has one singleton, exposing only its supported update capabilities.
                 services.AddKeyedSingleton<IUpdater, DotNetUpdater>("dotnet");
@@ -156,3 +207,19 @@ config.UseHost(
     );
 
 return await config.InvokeAsync(args);
+
+static IGitHubAccessProvider CreateGitHubAccessProvider(UpdateDependenciesConfiguration configuration)
+{
+    var github = configuration.GitHub;
+    if (!string.IsNullOrEmpty(github.Token))
+    {
+        var identity = new AutomationIdentity(configuration.User, configuration.Email);
+        return new StaticGitHubAccessProvider(github.Token, identity);
+    }
+
+    ArgumentException.ThrowIfNullOrWhiteSpace(github.AppClientId);
+    ArgumentException.ThrowIfNullOrWhiteSpace(github.AppKeyUri);
+    var credential = new AzureCliCredential();
+    var cryptographyClient = new CryptographyClient(new Uri(github.AppKeyUri), credential);
+    return new GitHubAppAccessProvider(github.AppClientId, cryptographyClient);
+}

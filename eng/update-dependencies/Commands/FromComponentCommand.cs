@@ -12,6 +12,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 /// Command that updates a single component using a registered GitHub release updater.
 /// </summary>
 public sealed class FromComponentCommand(
+    DependencyUpdateRunner runner,
     IServiceProvider serviceProvider,
     ILogger<FromComponentCommand> logger
 ) : BaseCommand<FromComponentOptions>
@@ -31,7 +32,7 @@ public sealed class FromComponentCommand(
             VersionSourceName = string.IsNullOrEmpty(options.VersionSourceName) ? options.Component : options.VersionSourceName,
         };
 
-        await DependencyUpdateRunner.RunAsync(
+        await runner.RunAsync(
             options,
             (variables, _, token) => updater.UpdateFromGitHubReleaseAsync(variables, token),
             CancellationToken.None);

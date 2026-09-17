@@ -8,6 +8,8 @@ using NuGet.Versioning;
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal sealed class MonitorCommand(
+    DependencyUpdateRunner runner,
+    UpdateDependenciesConfiguration configuration,
     IServiceProvider services,
     ILogger<MonitorCommand> logger)
         : BaseCommand<MonitorOptions>
@@ -25,12 +27,8 @@ internal sealed class MonitorCommand(
         string? version = options.Version;
         if (options.PipelineRunId is int pipelineRunId)
         {
-            string organization = string.IsNullOrEmpty(options.AzdoOrganization)
-                ? "https://dev.azure.com/dnceng"
-                : options.AzdoOrganization;
-            string project = string.IsNullOrEmpty(options.AzdoProject)
-                ? "internal"
-                : options.AzdoProject;
+            string organization = configuration.AzureDevOps.Organization;
+            string project = configuration.AzureDevOps.Project;
 
             var reference = new PipelineBuildReference(organization, project, pipelineRunId);
             version = await updater.GetVersionFromPipelineAsync(reference, cancellationToken);
@@ -49,7 +47,7 @@ internal sealed class MonitorCommand(
             VersionSourceName = $"dotnet/dotnet-monitor/{parsedVersion.Major}.{parsedVersion.Minor}",
         };
 
-        await DependencyUpdateRunner.RunAsync(
+        await runner.RunAsync(
             options,
             (variables, _, token) => updater.UpdateFromVersionAsync(variables, version, token),
             cancellationToken);

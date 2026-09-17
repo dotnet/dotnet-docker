@@ -20,6 +20,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 /// "In sync" does not necessarily mean that the commit SHAs of both branches are identical.
 /// </remarks>
 internal sealed class SyncInternalReleaseCommand(
+    UpdateDependenciesConfiguration configuration,
     IGitRepoHelperFactory gitRepoHelperFactory,
     ICommand<FromStagingPipelineOptions> updateFromStagingPipeline,
     IInternalVersionsService internalVersionsService,
@@ -35,7 +36,7 @@ internal sealed class SyncInternalReleaseCommand(
 
     public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
     {
-        var remoteUrl = options.GetAzdoRepoUrl();
+        var remoteUrl = configuration.AzureDevOps.GetRepoUrl();
 
         // Do not allow syncing starting from an internal branch.
         if (options.SourceBranch.StartsWith("internal/", StringComparison.OrdinalIgnoreCase))
@@ -45,8 +46,8 @@ internal sealed class SyncInternalReleaseCommand(
         }
 
         // Get git identity if available (required for commits, optional for read-only operations)
-        var gitIdentity = !string.IsNullOrWhiteSpace(options.User) && !string.IsNullOrWhiteSpace(options.Email)
-            ? options.GetCommitterIdentity()
+        var gitIdentity = !string.IsNullOrWhiteSpace(configuration.User) && !string.IsNullOrWhiteSpace(configuration.Email)
+            ? configuration.GetCommitterIdentity()
             : ((string, string)?)null;
 
         using var repo = await _gitRepoHelperFactory.CreateAndCloneAsync(
@@ -138,7 +139,7 @@ internal sealed class SyncInternalReleaseCommand(
         // At this point, we need to verify that we have everything we need to
         // access internal builds, commit changes, and submit a pull request.
         ArgumentException.ThrowIfNullOrWhiteSpace(options.StagingStorageAccount);
-        var commitAuthor = options.GetCommitterIdentity();
+        var commitAuthor = configuration.GetCommitterIdentity();
 
         // Checkout both branches locally so that we can work with them directly.
         await repo.CheckoutRemoteBranchAsync(options.SourceBranch);
@@ -204,9 +205,6 @@ internal sealed class SyncInternalReleaseCommand(
             Internal = true,
             StageContainers = stageContainer,
             StagingStorageAccount = stagingStorageAccount,
-            AzdoOrganization = options.AzdoOrganization,
-            AzdoProject = options.AzdoProject,
-            AzdoRepo = options.AzdoRepo,
         };
 
         var exitCode = await _updateFromStagingPipeline.ExecuteAsync(fromStagingPipelineOptions);

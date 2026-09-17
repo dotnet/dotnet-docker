@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal sealed class AspireCommand(
+    DependencyUpdateRunner runner,
     IBasicBarClient barClient,
     IServiceProvider services,
     ILogger<AspireCommand> logger)
@@ -49,7 +50,7 @@ internal sealed class AspireCommand(
         };
 
         var updater = services.GetUpdater<IBarBuildUpdater>("aspire");
-        await DependencyUpdateRunner.RunAsync(
+        await runner.RunAsync(
             options,
             (variables, repoRoot, token) => updater.UpdateFromBarBuildAsync(variables, repoRoot, build, token),
             cancellationToken);

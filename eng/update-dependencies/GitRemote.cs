@@ -3,7 +3,7 @@
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
-internal enum GitRemote
+public enum GitRemote
 {
     None,
     AzureDevOps,
