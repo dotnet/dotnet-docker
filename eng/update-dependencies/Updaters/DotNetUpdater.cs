@@ -9,9 +9,7 @@ using NuGet.Versioning;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
-public sealed class DotNetUpdater(
-    IBasicBarClient barClient,
-    ILogger<DotNetUpdater> logger)
+public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdater> logger)
     : IBarBuildUpdater, IBarChannelUpdater, IStagingPipelineUpdater
 {
     public const string Key = "dotnet";

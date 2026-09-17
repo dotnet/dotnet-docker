@@ -10,7 +10,7 @@ internal record MonitorOptions : CreatePullRequestOptions, IOptions
     public string? Version { get; init; }
     public int? PipelineRunId { get; init; }
 
-    public static new List<Argument> Arguments { get; } =
+    public static List<Argument> Arguments { get; } =
     [
         new Argument<string?>("version")
         {

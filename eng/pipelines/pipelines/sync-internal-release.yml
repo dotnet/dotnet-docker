@@ -61,7 +61,6 @@ extends:
               --azdo-repo "$env:BUILD_REPOSITORY_NAME"
               --source-branch "$sourceBranch"
               --target-branch "$targetBranch"
-              --pr-branch-prefix "pr"
               --user "$env:DOTNETDOCKERBOT_USERNAME"
               --email "$env:DOTNETDOCKERBOT_EMAIL"
               --staging-storage-account "dotnetstage"

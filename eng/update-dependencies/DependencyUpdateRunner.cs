@@ -11,6 +11,7 @@ public sealed class DependencyUpdateRunner(PullRequestManager manager, IPullRequ
 {
     public async Task RunAsync(
         CreatePullRequestOptions options,
+        string versionSourceName,
         Func<ManifestVariables, string, CancellationToken, Task> applyUpdates,
         CancellationToken cancellationToken)
     {
@@ -20,10 +21,10 @@ public sealed class DependencyUpdateRunner(PullRequestManager manager, IPullRequ
             return;
         }
 
-        string title = $"[{options.TargetBranch}] Update dependencies from {options.VersionSourceName}";
+        string title = $"[{options.TargetBranch}] Update dependencies from {versionSourceName}";
 
         // Keep the existing GitHub branch name so scheduled runs find their open PRs.
-        string branchSuffix = $"UpdateDependencies-{options.TargetBranch}-From-{options.VersionSourceName}";
+        string branchSuffix = $"UpdateDependencies-{options.TargetBranch}-From-{versionSourceName}";
         branchSuffix = branchSuffix.Replace('/', '-');
         string branchName = $"{options.TargetBranch}-{branchSuffix}";
 

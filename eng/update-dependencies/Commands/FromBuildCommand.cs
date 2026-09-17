@@ -25,7 +25,9 @@ internal class FromBuildCommand(
         Build build = await _barClient.GetBuildAsync(options.Id);
 
         var updater = _serviceProvider.GetUpdater<IBarBuildUpdater>(build.GetUpdaterKey());
-        await runner.RunAsync(options,
+        await runner.RunAsync(
+            options,
+            build.GetVersionSourceName(),
             (variables, repoRoot, token) => updater.UpdateFromBarBuildAsync(variables, repoRoot, build, token),
             CancellationToken.None);
         return 0;

@@ -17,6 +17,17 @@ internal static class BuildExtensions
     public static string GetUpdaterKey(this Build build) =>
         GetUpdaterKey(build.GitHubRepository ?? build.AzureDevOpsRepository);
 
+    public static string GetVersionSourceName(this Build build) =>
+        GetVersionSourceName(build.GitHubRepository ?? build.AzureDevOpsRepository);
+
+    public static string GetVersionSourceName(string repository) =>
+        GetUpdaterKey(repository) switch
+        {
+            DotNetUpdater.Key => "dotnet/dotnet",
+            "aspire" => "microsoft/aspire",
+            _ => throw new InvalidOperationException($"No version source name registered for build repository '{repository}'."),
+        };
+
     public static string GetUpdaterKey(string repository) =>
         repository switch
         {

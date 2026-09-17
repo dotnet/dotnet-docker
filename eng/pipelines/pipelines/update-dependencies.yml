@@ -55,7 +55,6 @@ extends:
                   from-channel
                   ${{ parameters.vmrChannel }}
                   https://github.com/dotnet/dotnet
-                  --version-source-name 'dotnet/dotnet'
                   ${{ parameters.gitHubAuthArgs }}
 
       - ${{ if parameters.updateAspire }}:
@@ -84,6 +83,5 @@ extends:
             - powershell: >-
                 dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                 from-component ${{ tool }}
-                --version-source-name ${{ tool }}
                 ${{ parameters.gitHubAuthArgs }}
               displayName: Update ${{ tool }}

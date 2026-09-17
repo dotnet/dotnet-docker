@@ -21,7 +21,9 @@ internal class FromChannelCommand(
             options.Repo, options.Channel);
 
         var updater = _serviceProvider.GetUpdater<IBarChannelUpdater>(BuildExtensions.GetUpdaterKey(options.Repo));
-        await runner.RunAsync(options,
+        await runner.RunAsync(
+            options,
+            BuildExtensions.GetVersionSourceName(options.Repo),
             (variables, repoRoot, token) => updater.UpdateFromBarChannelAsync(variables, repoRoot, options.Repo, options.Channel, token),
             CancellationToken.None);
         return 0;

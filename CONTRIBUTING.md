@@ -203,7 +203,7 @@ The following examples illustrate how to run `update-dependencies`:
 - Update .NET from a BAR build
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- from-build 23456 --version-source-name dotnet/dotnet
+    > dotnet run --project .\eng\update-dependencies\ -- from-build 23456
     ```
 
 - Update .NET Monitor, including the base image and extension checksums

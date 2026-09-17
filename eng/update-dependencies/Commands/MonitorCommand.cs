@@ -42,13 +42,11 @@ internal sealed class MonitorCommand(
         }
 
         logger.LogInformation("Updating .NET Monitor to {Version}", version);
-        options = options with
-        {
-            VersionSourceName = $"dotnet/dotnet-monitor/{parsedVersion.Major}.{parsedVersion.Minor}",
-        };
+        string versionSourceName = $"dotnet/dotnet-monitor/{parsedVersion.Major}.{parsedVersion.Minor}";
 
         await runner.RunAsync(
             options,
+            versionSourceName,
             (variables, _, token) => updater.UpdateFromVersionAsync(variables, version, token),
             cancellationToken);
 

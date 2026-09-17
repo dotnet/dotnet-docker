@@ -106,7 +106,9 @@ internal sealed class SyncInternalReleaseCommand(
                 options.TargetBranch, options.SourceBranch);
 
             // "ff" here is an abbreviation for "fast-forward" - just want to keep branch names short
-            var fastForwardPrBranch = options.CreatePrBranchName("ff", buildId);
+            var fastForwardPrBranch = options.CreatePullRequestBranchName(
+                "ff",
+                buildId);
             await repo.Remote.CreateRemoteBranchAsync(
                 newBranch: fastForwardPrBranch,
                 baseBranch: options.SourceBranch);
@@ -148,7 +150,9 @@ internal sealed class SyncInternalReleaseCommand(
         var internalBuilds = _internalVersionsService.GetInternalStagingBuilds(repo.Local.LocalPath);
 
         // Reset the target branch to match the source branch.
-        var prBranchName = options.CreatePrBranchName(name: "sync", buildId: buildId);
+        var prBranchName = options.CreatePullRequestBranchName(
+            name: "sync",
+            buildId: buildId);
         await repo.Local.CreateAndCheckoutLocalBranchAsync(prBranchName);
         await repo.Local.RestoreAsync(source: sourceSha);
         await repo.Local.StageAsync(".");

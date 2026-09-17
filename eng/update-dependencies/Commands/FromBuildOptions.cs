@@ -10,14 +10,13 @@ internal record FromBuildOptions : CreatePullRequestOptions, IOptions
 {
     public required int Id { get; init; }
 
-    public static new List<Argument> Arguments { get; } =
+    public static List<Argument> Arguments { get; } =
     [
         new Argument<int>("id")
         {
             Arity = ArgumentArity.ExactlyOne,
             Description = "The BAR build ID to use as a source for the update (see https://aka.ms/bar)"
         },
-        ..CreatePullRequestOptions.Arguments,
     ];
 
     public static new List<Option> Options { get; } =

@@ -182,7 +182,7 @@ public sealed class SyncInternalReleaseTests
         remoteRepoMock.Verify(r =>
             r.CreatePullRequestAsync(It.Is<PullRequestCreationInfo>(p =>
                 p.BaseBranch == options.TargetBranch
-                && p.HeadBranch.StartsWith(options.PrBranchPrefix)
+                && p.HeadBranch.StartsWith($"{options.TargetBranch.Replace('/', '-')}/ff")
                 && p.Title.Contains("fast-forward", StringComparison.OrdinalIgnoreCase))
             ),
             Times.Once

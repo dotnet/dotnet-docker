@@ -16,14 +16,13 @@ public record FromComponentOptions : CreatePullRequestOptions, IOptions
     /// </summary>
     public required string Component { get; init; }
 
-    public static new List<Argument> Arguments { get; } =
+    public static List<Argument> Arguments { get; } =
     [
         new Argument<string>("component")
         {
             Arity = ArgumentArity.ExactlyOne,
             Description = "The key of a registered GitHub release updater"
         },
-        ..CreatePullRequestOptions.Arguments,
     ];
 
     public static new List<Option> Options { get; } =

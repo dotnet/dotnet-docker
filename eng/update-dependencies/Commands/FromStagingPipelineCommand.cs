@@ -270,7 +270,9 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
                 {
                     throw new ArgumentException("At least one stage container must be provided.");
                 }
-                var prBranch = options.CreatePrBranchName($"update-deps-int-{stageContainerList[0]}", buildId);
+                var prBranch = options.CreatePullRequestBranchName(
+                    $"update-deps-int-{stageContainerList[0]}",
+                    buildId);
                 var committer = configuration.GetCommitterIdentity();
 
                 // Clone the repo and configure git identity for commits

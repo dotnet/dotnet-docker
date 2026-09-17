@@ -11,7 +11,7 @@ internal record FromChannelOptions : CreatePullRequestOptions, IOptions
     public required int Channel { get; init; }
     public required string Repo { get; init; }
 
-    public static new List<Argument> Arguments { get; } =
+    public static List<Argument> Arguments { get; } =
     [
         new Argument<int>("channel")
         {
@@ -23,7 +23,6 @@ internal record FromChannelOptions : CreatePullRequestOptions, IOptions
             Arity = ArgumentArity.ExactlyOne,
             Description = "The repository to get the latest build from (e.g. https://github.com/dotnet/dotnet)"
         },
-        ..CreatePullRequestOptions.Arguments,
     ];
 
     public static new List<Option> Options { get; } =

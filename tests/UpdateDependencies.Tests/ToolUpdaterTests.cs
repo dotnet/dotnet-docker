@@ -257,16 +257,15 @@ public sealed class ToolUpdaterTests
     {
         Command command = FromComponentCommand.Create("from-component", "Update component");
         var componentArgument = (Argument<string>)command.Arguments.Single();
-        var sourceOption = (Option<string>)command.Options.Single(option => option.Name == "--version-source-name");
 
-        var result = command.Parse(["syft", "--version-source-name", "scheduled-tools"]);
+        var result = command.Parse(["syft"]);
 
         result.Errors.ShouldBeEmpty();
         result.GetValue(componentArgument).ShouldBe("syft");
-        result.GetValue(sourceOption).ShouldBe("scheduled-tools");
         command.Parse([]).Errors.ShouldNotBeEmpty();
         command.Parse(["9.0", "syft"]).Errors.ShouldNotBeEmpty();
         command.Parse(["syft", "--channel", "stable"]).Errors.ShouldNotBeEmpty();
+        command.Parse(["syft", "--version-source-name", "scheduled-tools"]).Errors.ShouldNotBeEmpty();
     }
 
     private static ServiceProvider CreateServices(IReleasesClient releases, HttpClient httpClient) =>

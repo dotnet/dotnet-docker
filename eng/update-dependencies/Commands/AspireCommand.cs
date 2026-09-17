@@ -26,10 +26,12 @@ internal sealed class AspireCommand(
                 logger.LogInformation("Getting Aspire BAR build with ID {BuildId}", buildId);
                 build = await barClient.GetBuildAsync(buildId).WaitAsync(cancellationToken);
                 break;
+
             case { FromBuildId: null, FromChannel: int channel } when channel > 0:
                 logger.LogInformation("Getting latest Aspire build from channel {Channel}", channel);
                 build = await barClient.GetLatestBuildAsync(AspireUpdater.PublicRepository, channel).WaitAsync(cancellationToken);
                 break;
+
             default:
                 logger.LogError("Specify either --from-build-id or --from-channel with a positive ID, but not both.");
                 return 1;
@@ -42,16 +44,10 @@ internal sealed class AspireCommand(
             return 1;
         }
 
-        options = options with
-        {
-            VersionSourceName = string.IsNullOrEmpty(options.VersionSourceName)
-                ? "microsoft/aspire"
-                : options.VersionSourceName,
-        };
-
         var updater = services.GetUpdater<IBarBuildUpdater>("aspire");
         await runner.RunAsync(
             options,
+            "microsoft/aspire",
             (variables, repoRoot, token) => updater.UpdateFromBarBuildAsync(variables, repoRoot, build, token),
             cancellationToken);
 

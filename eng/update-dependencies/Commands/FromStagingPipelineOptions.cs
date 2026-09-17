@@ -33,14 +33,13 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions, I
     /// </summary>
     public string? StagingStorageAccount { get; init; }
 
-    public static new List<Argument> Arguments { get; } =
+    public static List<Argument> Arguments { get; } =
     [
         new Argument<string>("stage-containers")
         {
             Arity = ArgumentArity.ExactlyOne,
             Description = "A comma-delimited list of stage container names to use as a source for the update (e.g., 'stage-1234567,stage-2345678')"
         },
-        ..CreatePullRequestOptions.Arguments,
     ];
 
     public static Option<string> StagingStorageAccountOption = new(StagingStorageAccountOptionName)

@@ -27,13 +27,10 @@ public sealed class FromComponentCommand(
             options.Component);
 
         var updater = _serviceProvider.GetUpdater<IGitHubReleaseUpdater>(options.Component);
-        options = options with
-        {
-            VersionSourceName = string.IsNullOrEmpty(options.VersionSourceName) ? options.Component : options.VersionSourceName,
-        };
 
         await runner.RunAsync(
             options,
+            options.Component,
             (variables, _, token) => updater.UpdateFromGitHubReleaseAsync(variables, token),
             CancellationToken.None);
         return 0;

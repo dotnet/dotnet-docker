@@ -14,9 +14,4 @@ public sealed record SyncInternalReleaseOptions : CreatePullRequestOptions, IOpt
         FromStagingPipelineOptions.StagingStorageAccountOption,
         ..CreatePullRequestOptions.Options,
     ];
-
-    public static new List<Argument> Arguments =>
-    [
-        ..CreatePullRequestOptions.Arguments,
-    ];
 }
