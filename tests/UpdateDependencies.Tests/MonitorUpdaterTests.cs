@@ -48,7 +48,8 @@ public sealed class MonitorUpdaterTests
         using var handler = new ChecksumHandler(publishedChecksum ? HttpStatusCode.OK : HttpStatusCode.NotFound);
         using var httpClient = new HttpClient(handler);
         var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
-        await updater.UpdateFromVersionAsync(variables, version, TestContext.Current.CancellationToken);
+        await (await updater.ResolveFromVersionAsync(version, TestContext.Current.CancellationToken))
+            .ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
 
         variables.GetRawValue("monitor|9.0|base-url|" + branch)
             .ShouldBe($"$(base-url|public|{quality}|{branch})");
@@ -104,10 +105,10 @@ public sealed class MonitorUpdaterTests
         versionUpdater.ShouldBeSameAs(services.GetRequiredService<MonitorUpdater>());
         var variables = CreateVariables(pinnedChecksums: false);
 
-        await pipelineUpdater.UpdateFromPipelineBuildAsync(
-            variables,
-            new PipelineBuildReference("organization", "project", 42),
-            TestContext.Current.CancellationToken);
+        await (await pipelineUpdater.ResolveFromPipelineBuildAsync(
+                new PipelineBuildReference("organization", "project", 42),
+                TestContext.Current.CancellationToken))
+            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetValue("monitor|9.0|build-version").ShouldBe("9.0.5-servicing.25556.2");
         variables.GetValue("monitor|9.0|product-version").ShouldBe("9.0.5");
@@ -126,15 +127,12 @@ public sealed class MonitorUpdaterTests
         var first = CreateVariables(pinnedChecksums: false);
         var second = CreateVariables(pinnedChecksums: false);
 
+        var firstUpdate = await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken);
+        var secondUpdate = await updater.ResolveFromVersionAsync("9.0.6", TestContext.Current.CancellationToken);
+
         await Task.WhenAll(
-            updater.UpdateFromVersionAsync(
-                first,
-                "9.0.5",
-                TestContext.Current.CancellationToken),
-            updater.UpdateFromVersionAsync(
-                second,
-                "9.0.6",
-                TestContext.Current.CancellationToken));
+            firstUpdate.ApplyAsync(first, "", TestContext.Current.CancellationToken),
+            secondUpdate.ApplyAsync(second, "", TestContext.Current.CancellationToken));
 
         first.GetRawValue("monitor|9.0|build-version").ShouldBe("9.0.5");
         second.GetRawValue("monitor|9.0|build-version").ShouldBe("9.0.6");
@@ -154,10 +152,9 @@ public sealed class MonitorUpdaterTests
         var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
         var variables = CreateVariables();
 
-        var exception = await Should.ThrowAsync<FormatException>(() => updater.UpdateFromVersionAsync(
-            variables,
-            "9.0.5",
-            TestContext.Current.CancellationToken));
+        var exception = await Should.ThrowAsync<FormatException>(async () =>
+            await (await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken))
+                .ApplyAsync(variables, "", TestContext.Current.CancellationToken));
 
         exception.Message.ShouldContain("128 hexadecimal characters");
         handler.Requests.Count.ShouldBe(1);
@@ -174,10 +171,9 @@ public sealed class MonitorUpdaterTests
         using var httpClient = new HttpClient(handler);
         var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
 
-        await Should.ThrowAsync<HttpRequestException>(() => updater.UpdateFromVersionAsync(
-            CreateVariables(),
-            "9.0.5",
-            TestContext.Current.CancellationToken));
+        await Should.ThrowAsync<HttpRequestException>(async () =>
+            await (await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken))
+                .ApplyAsync(CreateVariables(), "", TestContext.Current.CancellationToken));
 
         handler.Requests.Count.ShouldBe(1);
         handler.Requests.ShouldAllBe(url => url.EndsWith(".sha512"));
@@ -191,10 +187,9 @@ public sealed class MonitorUpdaterTests
         using var httpClient = new HttpClient(handler);
         var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
 
-        var exception = await Should.ThrowAsync<InvalidOperationException>(() => updater.UpdateFromVersionAsync(
-            CreateVariables(),
-            "9.0.5",
-            TestContext.Current.CancellationToken));
+        var exception = await Should.ThrowAsync<InvalidOperationException>(async () =>
+            await (await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken))
+                .ApplyAsync(CreateVariables(), "", TestContext.Current.CancellationToken));
 
         exception.Message.ShouldContain("Unable to retrieve checksum");
         handler.Requests.Count.ShouldBe(2);
@@ -209,8 +204,9 @@ public sealed class MonitorUpdaterTests
         using var httpClient = new HttpClient(handler);
         var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
 
-        await Should.ThrowAsync<OperationCanceledException>(() => updater.UpdateFromVersionAsync(
-            CreateVariables(), "9.0.5", cancellation.Token));
+        await Should.ThrowAsync<OperationCanceledException>(async () =>
+            await (await updater.ResolveFromVersionAsync("9.0.5", cancellation.Token))
+                .ApplyAsync(CreateVariables(), "", cancellation.Token));
 
         handler.Requests.Count.ShouldBe(1);
         artifacts.VerifyNoOtherCalls();

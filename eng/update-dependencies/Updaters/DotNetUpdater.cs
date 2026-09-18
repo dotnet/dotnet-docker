@@ -18,11 +18,7 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
     public static string Name => "dotnet";
     public static string VersionSourceName => "dotnet/dotnet";
 
-    public async Task UpdateFromBarBuildAsync(
-        ManifestVariables variables,
-        string repoRoot,
-        Build build,
-        CancellationToken cancellationToken)
+    public async Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken)
     {
         ValidateRepository(build.GitHubRepository ?? build.AzureDevOpsRepository);
         logger.LogInformation("Updating .NET from BAR build {BuildId} at {Commit}", build.Id, build.Commit);
@@ -39,17 +35,21 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
             ["sdk"] = versions.Sdk.Version,
         };
 
-        ApplyProductVersions(variables, repoRoot, dockerfileVersion, productVersions, "");
+        return new DependencyUpdate(
+            Scope: dockerfileVersion,
+            Description:
+                $"Update .NET {dockerfileVersion} to {versions.Sdk.Version} SDK / {versions.Runtime.Version} Runtime",
+            ApplyAsync: (variables, repoRoot, _) =>
+            {
+                ApplyProductVersions(variables, repoRoot, dockerfileVersion, productVersions, "");
+                return Task.CompletedTask;
+            });
     }
 
-    public async Task UpdateFromBarChannelAsync(
-        ManifestVariables variables,
-        string repoRoot,
-        int channelId,
-        CancellationToken cancellationToken)
+    public async Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken)
     {
         Build build = await barClient.GetLatestBuildAsync(PublicRepository, channelId).WaitAsync(cancellationToken);
-        await UpdateFromBarBuildAsync(variables, repoRoot, build, cancellationToken);
+        return await ResolveFromBarBuildAsync(build, cancellationToken);
     }
 
     public Task UpdateFromStagingPipelineAsync(

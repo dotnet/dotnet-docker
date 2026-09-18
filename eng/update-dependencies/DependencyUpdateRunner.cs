@@ -5,6 +5,7 @@ using System.Diagnostics;
 using Azure.Identity;
 using Azure.Security.KeyVault.Keys.Cryptography;
 using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
+using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.DotNet.GitAutomation;
 using Microsoft.DotNet.GitAutomation.AzureDevOps;
 using Microsoft.DotNet.GitAutomation.GitHub;
@@ -19,19 +20,25 @@ public sealed class DependencyUpdateRunner(
     public async Task RunAsync(
         CreatePullRequestOptions options,
         string versionSourceName,
-        Func<ManifestVariables, string, CancellationToken, Task> applyUpdates,
+        DependencyUpdate update,
         CancellationToken cancellationToken)
     {
         if (options.UpdateOnly)
         {
-            await ApplyAsync(options.RepoRoot, applyUpdates, cancellationToken);
+            await ApplyAsync(options.RepoRoot, update.ApplyAsync, cancellationToken);
             return;
         }
 
-        string title = $"[{options.TargetBranch}] Update dependencies from {versionSourceName}";
+        string title = $"[{options.TargetBranch}] {update.Description}";
 
-        // Keep the existing GitHub branch name so scheduled runs find their open PRs.
+        // The scope keeps updates that can be open at the same time, such as different
+        // .NET versions, on separate branches.
         string branchSuffix = $"UpdateDependencies-{options.TargetBranch}-From-{versionSourceName}";
+        if (update.Scope.Length > 0)
+        {
+            branchSuffix += $"-{update.Scope}";
+        }
+
         branchSuffix = branchSuffix.Replace('/', '-');
         string branchName = $"{options.TargetBranch}-{branchSuffix}";
 
@@ -40,7 +47,7 @@ public sealed class DependencyUpdateRunner(
             Title: title,
             Body: string.Empty,
             TargetBranch: options.TargetBranch,
-            ApplyChanges: (git, token) => ApplyAsync(git.WorkspaceDirectory, applyUpdates, token));
+            ApplyChanges: (git, token) => ApplyAsync(git.WorkspaceDirectory, update.ApplyAsync, token));
 
         var manager = new PullRequestManager(loggerFactory);
         PullRequestResult result = await manager.CreateOrUpdateAsync(

@@ -24,13 +24,12 @@ public sealed class MonitorUpdater(
         ("monitor-ext-s3storage", "dotnet-monitor-egress-s3storage"),
     ];
 
-    public async Task UpdateFromPipelineBuildAsync(
-        ManifestVariables variables,
+    public async Task<DependencyUpdate> ResolveFromPipelineBuildAsync(
         PipelineBuildReference build,
         CancellationToken cancellationToken)
     {
         string version = await GetVersionFromPipelineAsync(build, cancellationToken);
-        await UpdateFromVersionAsync(variables, version, cancellationToken);
+        return await ResolveFromVersionAsync(version, cancellationToken);
     }
 
     public async Task<string> GetVersionFromPipelineAsync(
@@ -45,13 +44,24 @@ public sealed class MonitorUpdater(
         return version.Trim();
     }
 
-    public async Task UpdateFromVersionAsync(
-        ManifestVariables variables,
-        string version,
-        CancellationToken cancellationToken)
+    public Task<DependencyUpdate> ResolveFromVersionAsync(string version, CancellationToken cancellationToken)
     {
         version = version.Trim();
         var parsedVersion = SemanticVersion.Parse(version);
+        string dockerfileVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}";
+
+        return Task.FromResult(new DependencyUpdate(
+            Scope: dockerfileVersion,
+            Description: $"Update .NET Monitor {dockerfileVersion} to {version}",
+            ApplyAsync: (variables, _, token) => ApplyAsync(variables, version, parsedVersion, token)));
+    }
+
+    private async Task ApplyAsync(
+        ManifestVariables variables,
+        string version,
+        SemanticVersion parsedVersion,
+        CancellationToken cancellationToken)
+    {
         string dockerfileVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}";
         bool stableBranding = parsedVersion.ReleaseLabels.FirstOrDefault() is "servicing" or "rtm";
         string productVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}.{parsedVersion.Patch}";

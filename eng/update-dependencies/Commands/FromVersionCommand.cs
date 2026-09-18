@@ -14,17 +14,14 @@ internal static class FromVersionCommand
         var command = new Command("version", "Update to a specific version");
         FromVersionOptions.AddTo(command);
 
-        command.SetAction((result, cancellationToken) =>
+        command.SetAction(async (result, cancellationToken) =>
         {
             FromVersionOptions options = FromVersionOptions.Bind(result);
             var updater = (IVersionUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            DependencyUpdate update = await updater.ResolveFromVersionAsync(options.Version, cancellationToken);
 
-            return runner.RunAsync(
-                options,
-                TUpdater.VersionSourceName,
-                (variables, _, token) => updater.UpdateFromVersionAsync(variables, options.Version, token),
-                cancellationToken);
+            await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });
 
         return command;

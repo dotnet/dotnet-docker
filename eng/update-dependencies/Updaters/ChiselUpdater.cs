@@ -25,10 +25,21 @@ public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClien
 
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
 
-    public async Task UpdateFromGitHubReleaseAsync(ManifestVariables variables, CancellationToken cancellationToken)
+    public async Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken)
     {
         Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
 
+        return new DependencyUpdate(
+            Scope: "",
+            Description: $"Update Chisel to {release.TagName}",
+            ApplyAsync: (variables, _, token) => ApplyAsync(variables, release, token));
+    }
+
+    private async Task ApplyAsync(
+        ManifestVariables variables,
+        Release release,
+        CancellationToken cancellationToken)
+    {
         foreach (string arch in s_supportedArchitectures)
         {
             string urlVariable = GetChiselManifestVariable(Name, arch, "url");

@@ -7,8 +7,7 @@ public record PipelineBuildReference(string Organization, string Project, int Ru
 
 public interface IPipelineBuildUpdater : IUpdater
 {
-    Task UpdateFromPipelineBuildAsync(
-        ManifestVariables variables,
+    Task<DependencyUpdate> ResolveFromPipelineBuildAsync(
         // TODO: Reduce to just run ID since org/project are static in Configuration
         PipelineBuildReference build,
         CancellationToken cancellationToken);

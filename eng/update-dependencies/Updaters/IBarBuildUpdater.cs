@@ -7,9 +7,5 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public interface IBarBuildUpdater : IUpdater
 {
-    Task UpdateFromBarBuildAsync(
-        ManifestVariables variables,
-        string repoRoot,
-        Build build,
-        CancellationToken cancellationToken);
+    Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken);
 }

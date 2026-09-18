@@ -19,12 +19,22 @@ public sealed partial class MinGitUpdater(IReleasesClient releases) : IGitHubRel
 
     private static string GetManifestVariableName(string type) => "mingit|latest|x64|" + type;
 
-    public async Task UpdateFromGitHubReleaseAsync(
-        ManifestVariables variables,
-        CancellationToken cancellationToken)
+    public async Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken)
     {
         Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
 
+        return new DependencyUpdate(
+            Scope: "",
+            Description: $"Update MinGit to {release.TagName}",
+            ApplyAsync: (variables, _, _) =>
+            {
+                Apply(variables, release);
+                return Task.CompletedTask;
+            });
+    }
+
+    private static void Apply(ManifestVariables variables, Release release)
+    {
         string urlVariable = GetManifestVariableName("url");
         string shaVariable = GetManifestVariableName("sha");
         bool updateUrl = variables.ShouldUpdateLiteral(urlVariable);

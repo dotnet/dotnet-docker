@@ -5,8 +5,5 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public interface IVersionUpdater : IUpdater
 {
-    Task UpdateFromVersionAsync(
-        ManifestVariables variables,
-        string version,
-        CancellationToken cancellationToken);
+    Task<DependencyUpdate> ResolveFromVersionAsync(string version, CancellationToken cancellationToken);
 }

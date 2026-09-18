@@ -264,7 +264,7 @@ public sealed class DependencyCommandTests
         await Should.ThrowAsync<ArgumentException>(() => runner.RunAsync(
             new CreatePullRequestOptions(),
             "sample/source",
-            (_, _, _) => Task.CompletedTask,
+            new DependencyUpdate("", "Update sample", (_, _, _) => Task.CompletedTask),
             TestContext.Current.CancellationToken));
     }
 
@@ -281,19 +281,11 @@ public sealed class DependencyCommandTests
         public static string Name => "sample";
         public static string VersionSourceName => "sample/source";
 
-        public Task UpdateFromBarBuildAsync(
-            ManifestVariables variables,
-            string repoRoot,
-            Build build,
-            CancellationToken cancellationToken) =>
-            Task.CompletedTask;
+        public Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken) =>
+            Task.FromResult(NoOpUpdate);
 
-        public Task UpdateFromBarChannelAsync(
-            ManifestVariables variables,
-            string repoRoot,
-            int channelId,
-            CancellationToken cancellationToken) =>
-            Task.CompletedTask;
+        public Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken) =>
+            Task.FromResult(NoOpUpdate);
     }
 
     private sealed class ReleaseUpdater : IGitHubReleaseUpdater
@@ -301,11 +293,12 @@ public sealed class DependencyCommandTests
         public static string Name => "sample";
         public static string VersionSourceName => "sample";
 
-        public Task UpdateFromGitHubReleaseAsync(
-            ManifestVariables variables,
-            CancellationToken cancellationToken) =>
-            Task.CompletedTask;
+        public Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken) =>
+            Task.FromResult(NoOpUpdate);
     }
+
+    private static DependencyUpdate NoOpUpdate =>
+        new("", "Update sample", (_, _, _) => Task.CompletedTask);
 
     private sealed class RecordingUpdater : IBarBuildUpdater, IBarChannelUpdater,
         IPipelineBuildUpdater, IVersionUpdater, IGitHubReleaseUpdater
@@ -316,33 +309,36 @@ public sealed class DependencyCommandTests
         public int Calls { get; private set; }
         public PipelineBuildReference? Pipeline { get; private set; }
 
-        public Task UpdateFromBarBuildAsync(
-            ManifestVariables variables, string repoRoot, Build build, CancellationToken cancellationToken) =>
-            Record(variables, $"build:{build.Id}");
+        public Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken) =>
+            Record($"build:{build.Id}");
 
-        public Task UpdateFromBarChannelAsync(
-            ManifestVariables variables, string repoRoot, int channelId, CancellationToken cancellationToken) =>
-            Record(variables, $"channel:{channelId}");
+        public Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken) =>
+            Record($"channel:{channelId}");
 
-        public Task UpdateFromPipelineBuildAsync(
-            ManifestVariables variables, PipelineBuildReference build, CancellationToken cancellationToken)
+        public Task<DependencyUpdate> ResolveFromPipelineBuildAsync(
+            PipelineBuildReference build, CancellationToken cancellationToken)
         {
             Pipeline = build;
-            return Record(variables, $"pipeline:{build.RunId}");
+            return Record($"pipeline:{build.RunId}");
         }
 
-        public Task UpdateFromVersionAsync(
-            ManifestVariables variables, string version, CancellationToken cancellationToken) =>
-            Record(variables, $"version:{version}");
+        public Task<DependencyUpdate> ResolveFromVersionAsync(string version, CancellationToken cancellationToken) =>
+            Record($"version:{version}");
 
-        public Task UpdateFromGitHubReleaseAsync(ManifestVariables variables, CancellationToken cancellationToken) =>
-            Record(variables, "release");
+        public Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken) =>
+            Record("release");
 
-        private Task Record(ManifestVariables variables, string source)
+        private Task<DependencyUpdate> Record(string source)
         {
             Calls++;
-            variables.SetValue("source", source);
-            return Task.CompletedTask;
+            return Task.FromResult(new DependencyUpdate(
+                Scope: "",
+                Description: $"Update sample from {source}",
+                ApplyAsync: (variables, _, _) =>
+                {
+                    variables.SetValue("source", source);
+                    return Task.CompletedTask;
+                }));
         }
     }
 }

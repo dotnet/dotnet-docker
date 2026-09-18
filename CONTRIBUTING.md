@@ -272,7 +272,7 @@ Each dependency is listed once in the `RootCommand` in
 `eng/update-dependencies/Program.cs`, and registered once in the same file. Each
 updater implements the `IUpdater`
 static abstract properties `Name` (the CLI name) and `VersionSourceName` (the
-publishing identity used in PR titles and branch names). Command creation reads
+publishing identity used in branch names). Command creation reads
 this metadata without constructing the updater or resolving services.
 Its implemented capability interfaces generate only the source commands it
 supports: BAR build/channel, pipeline build, staging pipeline, explicit version,
@@ -283,10 +283,14 @@ Each source command owns its creation and execution, and its options class owns
 symbol definitions and `Bind(ParseResult)`. `DependencyCommand` only assembles
 the supported commands. There is no generic product-version update interface.
 
-Updaters receive the shared `ManifestVariables` editor directly, plus the workspace
-root when they need to edit related files. They resolve their sources and apply
-dependency-specific changes, including related files such as NuGet configuration,
-but do not save the manifest, generate Dockerfiles/READMEs, or publish.
+Updaters resolve their sources first and return a `DependencyUpdate` describing the
+versions they found, before anything is written. Its `Description` becomes the pull
+request title and commit message, and its `Scope` distinguishes updates that can be
+open at the same time, such as different .NET versions, by becoming part of the
+branch name. `Scope` is empty when only one update of a dependency can be open at once.
+An update's `ApplyAsync` receives the shared `ManifestVariables` editor, plus the
+workspace root when it needs to edit related files such as NuGet configuration, but
+does not save the manifest, generate Dockerfiles/READMEs, or publish.
 Manifest edits and change logging live on `ManifestVariables`; .NET version and
 tag formatting live in `DotNetUpdater`.
 Commands use `DependencyUpdateRunner` to load the manifest, apply a batch, save

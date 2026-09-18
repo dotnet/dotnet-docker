@@ -159,7 +159,8 @@ public sealed class ManifestUpdaterTests
         variables.SetValue("syft|version", current);
         var release = new SimpleJsonSerializer().Deserialize<Release>("""{"tag_name":"new"}""");
         var updater = new SyftUpdater(CreateReleaseClient(release));
-        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
+        await (await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken))
+            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetRawValue("syft|version").ShouldBe(expected);
         variables.GetRawValue("rocks-toolbox|latest|version").ShouldBe("unchanged");
@@ -172,7 +173,8 @@ public sealed class ManifestUpdaterTests
         var variables = new ManifestVariables(content);
 
         var updater = new MinGitUpdater(CreateReleaseClient(new Release()));
-        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
+        await (await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken))
+            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.Content.ShouldBe(content);
     }
@@ -191,7 +193,8 @@ public sealed class ManifestUpdaterTests
             """);
 
         var updater = new MinGitUpdater(CreateReleaseClient(release));
-        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
+        await (await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken))
+            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetRawValue("mingit|latest|x64|url").ShouldBe("https://example/mingit.zip");
         variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("abcdef123456");
@@ -211,8 +214,9 @@ public sealed class ManifestUpdaterTests
             """);
 
         var updater = new MinGitUpdater(CreateReleaseClient(release));
+        DependencyUpdate update = await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken);
         await Should.ThrowAsync<InvalidOperationException>(() =>
-            updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken));
+            update.ApplyAsync(variables, "", TestContext.Current.CancellationToken));
 
         variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("old");
     }
@@ -238,7 +242,8 @@ public sealed class ManifestUpdaterTests
 
         using var httpClient = new HttpClient();
         var updater = new ChiselUpdater(CreateReleaseClient(release), httpClient);
-        await updater.UpdateFromGitHubReleaseAsync(variables, TestContext.Current.CancellationToken);
+        await (await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken))
+            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetRawValue("chisel|latest|x64|url").ShouldBe("https://example/chisel.tar.gz");
         variables.GetRawValue("chisel|latest|x64|sha384").ShouldBe("");

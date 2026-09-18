@@ -36,8 +36,8 @@ public sealed class AspireUpdaterTests
         updater.ShouldBeSameAs(services.GetRequiredService<AspireUpdater>());
         var variables = CreateVariables();
         variables.SetValue("aspire-dashboard|base-url|nightly", "https://example.invalid/shared-editor");
-        await channelUpdater.UpdateFromBarChannelAsync(
-            variables, "missing-workspace", 5555, TestContext.Current.CancellationToken);
+        await (await channelUpdater.ResolveFromBarChannelAsync(5555, TestContext.Current.CancellationToken))
+            .ApplyAsync(variables, "missing-workspace", TestContext.Current.CancellationToken);
 
         variables.GetRawValue("aspire-dashboard|build-version").ShouldBe("13.6.0-preview.1.26453.4");
         variables.GetRawValue("aspire-dashboard|product-version").ShouldBe("13.6.0");
@@ -62,8 +62,9 @@ public sealed class AspireUpdaterTests
         var variables = CreateVariables();
         string original = variables.Content;
 
-        await Should.ThrowAsync<OperationCanceledException>(() => updater.UpdateFromBarBuildAsync(
-            variables, "missing-workspace", CreateBuild(), cancellation.Token));
+        DependencyUpdate update = await updater.ResolveFromBarBuildAsync(CreateBuild(), cancellation.Token);
+        await Should.ThrowAsync<OperationCanceledException>(() =>
+            update.ApplyAsync(variables, "missing-workspace", cancellation.Token));
 
         variables.Content.ShouldBe(original);
         handler.Requests.Count.ShouldBe(1);
@@ -79,10 +80,9 @@ public sealed class AspireUpdaterTests
         using var handler = new ArchiveHandler();
         using var httpClient = new HttpClient(handler);
         var updater = new AspireUpdater(barClient.Object, httpClient, Mock.Of<ILogger<AspireUpdater>>());
-        var variables = new ManifestVariables("""{"variables":{}}""");
 
         var exception = await Should.ThrowAsync<ArgumentException>(() =>
-            updater.UpdateFromBarBuildAsync(variables, "missing-workspace", build, TestContext.Current.CancellationToken));
+            updater.ResolveFromBarBuildAsync(build, TestContext.Current.CancellationToken));
 
         exception.Message.ShouldContain("not an Aspire build");
         handler.Requests.ShouldBeEmpty();

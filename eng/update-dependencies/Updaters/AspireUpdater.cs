@@ -25,29 +25,19 @@ public sealed class AspireUpdater(
         return repository is PublicRepository or InternalRepository;
     }
 
-    public async Task UpdateFromBarChannelAsync(
-        ManifestVariables variables,
-        string repoRoot,
-        int channelId,
-        CancellationToken cancellationToken)
+    public async Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken)
     {
         Build build = await barClient.GetLatestBuildAsync(PublicRepository, channelId).WaitAsync(cancellationToken);
-        await UpdateFromBarBuildAsync(variables, repoRoot, build, cancellationToken);
+        return await ResolveFromBarBuildAsync(build, cancellationToken);
     }
 
-    public async Task UpdateFromBarBuildAsync(
-        ManifestVariables variables,
-        string repoRoot,
-        Build build,
-        CancellationToken cancellationToken)
+    public Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken)
     {
         if (!IsAspireBuild(build))
         {
             throw new ArgumentException($"BAR build {build.Id} is not an Aspire build.", nameof(build));
         }
 
-        string branch = variables.GetValue("branch");
-        string dashboardBaseUrl = variables.GetValue($"aspire-dashboard|base-url|{branch}");
         var dashboardAssets = build.Assets.Where(asset =>
             asset.Name.Contains("aspire-dashboard-linux-x64")
             || asset.Name.Contains("aspire-dashboard-linux-arm64"))
@@ -60,6 +50,21 @@ public sealed class AspireUpdater(
 
         string version = dashboardAssets.First().Version;
         logger.LogInformation("Found Aspire build version: {Version}", version);
+
+        return Task.FromResult(new DependencyUpdate(
+            Scope: "",
+            Description: $"Update Aspire Dashboard to {version}",
+            ApplyAsync: (variables, _, token) => ApplyAsync(variables, dashboardAssets, version, token)));
+    }
+
+    private async Task ApplyAsync(
+        ManifestVariables variables,
+        IReadOnlyList<Asset> dashboardAssets,
+        string version,
+        CancellationToken cancellationToken)
+    {
+        string branch = variables.GetValue("branch");
+        string dashboardBaseUrl = variables.GetValue($"aspire-dashboard|base-url|{branch}");
 
         var dashboardChecksums = await Task.WhenAll(dashboardAssets
             .Select(asset => GetChecksumAsync($"{dashboardBaseUrl}/{asset.Name}", cancellationToken)));

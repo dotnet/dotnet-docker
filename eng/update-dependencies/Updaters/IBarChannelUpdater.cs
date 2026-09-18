@@ -5,9 +5,5 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public interface IBarChannelUpdater : IUpdater
 {
-    Task UpdateFromBarChannelAsync(
-        ManifestVariables variables,
-        string repoRoot,
-        int channelId,
-        CancellationToken cancellationToken);
+    Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken);
 }

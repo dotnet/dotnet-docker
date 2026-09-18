@@ -14,7 +14,7 @@ internal static class FromPipelineBuildCommand
         var command = new Command("pipeline-build", "Update from an Azure DevOps pipeline run");
         FromPipelineBuildOptions.AddTo(command);
 
-        command.SetAction((result, cancellationToken) =>
+        command.SetAction(async (result, cancellationToken) =>
         {
             FromPipelineBuildOptions options = FromPipelineBuildOptions.Bind(result);
             var updater = (IPipelineBuildUpdater)services.GetRequiredService<TUpdater>();
@@ -25,11 +25,9 @@ internal static class FromPipelineBuildCommand
                 configuration.AzureDevOps.Project,
                 options.RunId);
 
-            return runner.RunAsync(
-                options,
-                TUpdater.VersionSourceName,
-                (variables, _, token) => updater.UpdateFromPipelineBuildAsync(variables, build, token),
-                cancellationToken);
+            DependencyUpdate update = await updater.ResolveFromPipelineBuildAsync(build, cancellationToken);
+
+            await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });
 
         return command;

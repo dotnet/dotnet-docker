@@ -14,17 +14,14 @@ internal static class FromGitHubReleaseCommand
     {
         CreatePullRequestOptions.AddTo(command);
 
-        command.SetAction((result, cancellationToken) =>
+        command.SetAction(async (result, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(result);
             var updater = (IGitHubReleaseUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            DependencyUpdate update = await updater.ResolveFromGitHubReleaseAsync(cancellationToken);
 
-            return runner.RunAsync(
-                options,
-                TUpdater.VersionSourceName,
-                (variables, _, token) => updater.UpdateFromGitHubReleaseAsync(variables, token),
-                cancellationToken);
+            await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });
     }
 }

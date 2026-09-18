@@ -14,15 +14,21 @@ public sealed class SyftUpdater(IReleasesClient releases) : IGitHubReleaseUpdate
     public static string Name => "syft";
     public static string VersionSourceName => Name;
 
-    public async Task UpdateFromGitHubReleaseAsync(
-        ManifestVariables variables,
-        CancellationToken cancellationToken)
+    public async Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken)
     {
         Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
 
-        if (variables.ShouldUpdateLiteral(VariableName))
-        {
-            variables.SetValue(VariableName, release.TagName);
-        }
+        return new DependencyUpdate(
+            Scope: "",
+            Description: $"Update Syft to {release.TagName}",
+            ApplyAsync: (variables, _, _) =>
+            {
+                if (variables.ShouldUpdateLiteral(VariableName))
+                {
+                    variables.SetValue(VariableName, release.TagName);
+                }
+
+                return Task.CompletedTask;
+            });
     }
 }

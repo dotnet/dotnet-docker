@@ -35,11 +35,11 @@ public sealed class ToolUpdaterTests
         using var httpClient = new HttpClient(handler);
         IGitHubReleaseUpdater updater = CreateUpdater(tool, releases.Object, httpClient);
 
-        await updater.UpdateFromGitHubReleaseAsync(variables, token);
+        await (await updater.ResolveFromGitHubReleaseAsync(token)).ApplyAsync(variables, workspace.Root, token);
 
         variables.GetRawValue(variable).ShouldBe(expected);
         var secondVariables = CreateVariables((variable, "old"));
-        await updater.UpdateFromGitHubReleaseAsync(secondVariables, token);
+        await (await updater.ResolveFromGitHubReleaseAsync(token)).ApplyAsync(secondVariables, workspace.Root, token);
 
         secondVariables.GetRawValue(variable).ShouldBe(expected);
         releases.Verify(source => source.GetLatest(owner, repo), Times.Exactly(2));
@@ -64,6 +64,8 @@ public sealed class ToolUpdaterTests
         using var handler = new ChecksumHandler([]);
         using var httpClient = new HttpClient(handler);
         IGitHubReleaseUpdater updater = CreateUpdater(tool, releases.Object, httpClient);
+        CancellationToken token = TestContext.Current.CancellationToken;
+        DependencyUpdate update = await updater.ResolveFromGitHubReleaseAsync(token);
 
         foreach (string? value in new string?[] { null, "", "$(alias)" })
         {
@@ -72,8 +74,7 @@ public sealed class ToolUpdaterTests
                 : CreateVariables((firstVariable, value), (secondVariable, value));
             string original = variables.Content;
 
-            await updater.UpdateFromGitHubReleaseAsync(
-                variables, TestContext.Current.CancellationToken);
+            await update.ApplyAsync(variables, "", token);
 
             variables.Content.ShouldBe(original);
         }
@@ -101,9 +102,9 @@ public sealed class ToolUpdaterTests
         });
         using var httpClient = new HttpClient(handler);
         var updater = new ChiselUpdater(releases.Object, httpClient);
+        CancellationToken token = TestContext.Current.CancellationToken;
 
-        await updater.UpdateFromGitHubReleaseAsync(
-            variables, TestContext.Current.CancellationToken);
+        await (await updater.ResolveFromGitHubReleaseAsync(token)).ApplyAsync(variables, "", token);
 
         variables.GetRawValue("chisel|latest|x64|url").ShouldBe("https://example/chisel-amd64.tar.gz");
         variables.GetRawValue("chisel|latest|x64|sha384").ShouldBe("abcdef1234");
@@ -127,9 +128,9 @@ public sealed class ToolUpdaterTests
         releases.Setup(source => source.GetLatest(
             "git-for-windows", "git")).ReturnsAsync(CreateRelease());
         var updater = new MinGitUpdater(releases.Object);
+        CancellationToken token = TestContext.Current.CancellationToken;
 
-        await updater.UpdateFromGitHubReleaseAsync(
-            variables, TestContext.Current.CancellationToken);
+        await (await updater.ResolveFromGitHubReleaseAsync(token)).ApplyAsync(variables, "", token);
 
         variables.GetRawValue("mingit|latest|x64|url").ShouldBe("https://example/mingit64.zip");
         variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("abcdef123456");
@@ -165,11 +166,14 @@ public sealed class ToolUpdaterTests
             calls.Add("second");
             return Task.CompletedTask;
         });
-        await DependencyUpdateRunner.ApplyAsync(workspace.Root, async (variables, _, token) =>
+        CancellationToken token = TestContext.Current.CancellationToken;
+        DependencyUpdate firstUpdate = await first.ResolveFromGitHubReleaseAsync(token);
+        DependencyUpdate secondUpdate = await second.ResolveFromGitHubReleaseAsync(token);
+        await DependencyUpdateRunner.ApplyAsync(workspace.Root, async (variables, repoRoot, applyToken) =>
         {
-            await first.UpdateFromGitHubReleaseAsync(variables, token);
-            await second.UpdateFromGitHubReleaseAsync(variables, token);
-        }, TestContext.Current.CancellationToken);
+            await firstUpdate.ApplyAsync(variables, repoRoot, applyToken);
+            await secondUpdate.ApplyAsync(variables, repoRoot, applyToken);
+        }, token);
 
         calls.ShouldBe(["first", "second"]);
         File.ReadAllText(workspace.ManifestPath).ShouldBe(
@@ -194,8 +198,11 @@ public sealed class ToolUpdaterTests
         public static string Name => "sample";
         public static string VersionSourceName => "sample";
 
-        public Task UpdateFromGitHubReleaseAsync(ManifestVariables variables, CancellationToken cancellationToken) =>
-            update(variables, cancellationToken);
+        public Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken) =>
+            Task.FromResult(new DependencyUpdate(
+                Scope: "",
+                Description: "Update sample",
+                ApplyAsync: (variables, _, token) => update(variables, token)));
     }
 
     private static ManifestVariables CreateVariables(params (string Name, string Value)[] values) =>

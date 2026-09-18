@@ -14,17 +14,14 @@ internal static class FromChannelCommand
         var command = new Command("channel", "Update from the latest build in a BAR channel");
         FromChannelOptions.AddTo(command);
 
-        command.SetAction((result, cancellationToken) =>
+        command.SetAction(async (result, cancellationToken) =>
         {
             FromChannelOptions options = FromChannelOptions.Bind(result);
             var updater = (IBarChannelUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            DependencyUpdate update = await updater.ResolveFromBarChannelAsync(options.Channel, cancellationToken);
 
-            return runner.RunAsync(
-                options,
-                TUpdater.VersionSourceName,
-                (variables, repoRoot, token) => updater.UpdateFromBarChannelAsync(variables, repoRoot, options.Channel, token),
-                cancellationToken);
+            await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });
 
         return command;

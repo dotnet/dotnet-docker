@@ -23,12 +23,9 @@ internal static class FromBuildCommand
             var updater = (IBarBuildUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
             Build build = await barClient.GetBuildAsync(options.Id).WaitAsync(cancellationToken);
+            DependencyUpdate update = await updater.ResolveFromBarBuildAsync(build, cancellationToken);
 
-            await runner.RunAsync(
-                options,
-                TUpdater.VersionSourceName,
-                (variables, repoRoot, token) => updater.UpdateFromBarBuildAsync(variables, repoRoot, build, token),
-                cancellationToken);
+            await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });
 
         return command;

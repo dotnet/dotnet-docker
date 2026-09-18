@@ -13,16 +13,22 @@ public sealed class RocksToolboxUpdater(IReleasesClient releases) : IGitHubRelea
     public static string Name => "rocks-toolbox";
     public static string VersionSourceName => Name;
 
-    public async Task UpdateFromGitHubReleaseAsync(
-        ManifestVariables variables,
-        CancellationToken cancellationToken)
+    public async Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken)
     {
         Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
-
         string variableName = $"{Name}|latest|version";
-        if (variables.ShouldUpdateLiteral(variableName))
-        {
-            variables.SetValue(variableName, release.TagName);
-        }
+
+        return new DependencyUpdate(
+            Scope: "",
+            Description: $"Update {Name} to {release.TagName}",
+            ApplyAsync: (variables, _, _) =>
+            {
+                if (variables.ShouldUpdateLiteral(variableName))
+                {
+                    variables.SetValue(variableName, release.TagName);
+                }
+
+                return Task.CompletedTask;
+            });
     }
 }

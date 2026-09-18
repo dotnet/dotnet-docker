@@ -50,13 +50,15 @@ public sealed class DotNetUpdaterTests
         Assert.Same((IBarBuildUpdater)registeredUpdater, (IBarChannelUpdater)registeredUpdater);
         if (fromChannel)
         {
-            await ((IBarChannelUpdater)registeredUpdater).UpdateFromBarChannelAsync(
-                variables, repo.LocalPath, 42, TestContext.Current.CancellationToken);
+            await (await ((IBarChannelUpdater)registeredUpdater).ResolveFromBarChannelAsync(
+                42, TestContext.Current.CancellationToken))
+                .ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
         }
         else
         {
-            await ((IBarBuildUpdater)registeredUpdater).UpdateFromBarBuildAsync(
-                variables, repo.LocalPath, build, TestContext.Current.CancellationToken);
+            await (await ((IBarBuildUpdater)registeredUpdater).ResolveFromBarBuildAsync(
+                build, TestContext.Current.CancellationToken))
+                .ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
         }
 
         variables.GetRawValue("runtime|11.0|build-version").ShouldBe("11.0.2");
@@ -168,8 +170,8 @@ public sealed class DotNetUpdaterTests
         var updater = CreateUpdater(bar: bar.Object);
         var variables = new ManifestVariables("""{"variables":{}}""");
 
-        await Should.ThrowAsync<OperationCanceledException>(() => updater.UpdateFromBarChannelAsync(
-            variables, "unused", 42, new CancellationToken(true)));
+        await Should.ThrowAsync<OperationCanceledException>(() =>
+            updater.ResolveFromBarChannelAsync(42, new CancellationToken(true)));
 
         bar.VerifyAll();
         bar.VerifyNoOtherCalls();
