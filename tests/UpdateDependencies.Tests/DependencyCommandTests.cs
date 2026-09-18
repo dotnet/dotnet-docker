@@ -7,8 +7,6 @@ using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
-using Microsoft.DotNet.GitAutomation;
-using Microsoft.DotNet.GitAutomation.GitHub;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 
@@ -199,7 +197,7 @@ public sealed class DependencyCommandTests
     [InlineData("pipeline-build 789", "pipeline:789")]
     [InlineData("version 9.0.5", "version:9.0.5")]
     [InlineData("", "release")]
-    public async Task SourceCommands_UpdateOnlyDoesNotResolveEndpoint(string source, string expected)
+    public async Task SourceCommands_UpdateOnlyDoesNotRequirePublishingCredentials(string source, string expected)
     {
         using var repo = new TempRepo();
         string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
@@ -232,18 +230,6 @@ public sealed class DependencyCommandTests
                 },
             })
             .AddSingleton<DependencyUpdateRunner>();
-        services.AddGitHubPullRequestAutomation(
-            new GitHubRepo("example", "repository"),
-            new AutomationIdentity("Test User", "test@example.com"),
-            "unused-local-test-token");
-        int endpointResolutions = 0;
-        services.AddTransient<IPullRequestEndpoint>(_ =>
-        {
-            endpointResolutions++;
-            return Mock.Of<IPullRequestEndpoint>(MockBehavior.Strict);
-        });
-        services.AddSingleton(sp =>
-            new Lazy<IPullRequestEndpoint>(() => sp.GetRequiredService<IPullRequestEndpoint>()));
         using ServiceProvider provider = services.BuildServiceProvider();
         Command command = DependencyCommand.Create<RecordingUpdater>(() => provider);
         string[] args =
@@ -256,7 +242,6 @@ public sealed class DependencyCommandTests
 
         exitCode.ShouldBe(0);
         updater.Calls.ShouldBe(1);
-        endpointResolutions.ShouldBe(0);
         ManifestVariables.FromFile(manifestPath).GetRawValue("source").ShouldBe(expected);
         File.ReadAllLines(Path.Combine(repo.LocalPath, "generated.txt")).Length.ShouldBe(2);
         if (source.StartsWith("pipeline-build"))
@@ -267,33 +252,20 @@ public sealed class DependencyCommandTests
     }
 
     [Fact]
-    public async Task RunAsync_NormalModeResolvesEndpoint()
+    public async Task RunAsync_NormalModeRequiresPublishingCredentials()
     {
-        int endpointResolutions = 0;
         var services = new ServiceCollection()
             .AddLogging()
+            .AddSingleton(new UpdateDependenciesConfiguration())
             .AddSingleton<DependencyUpdateRunner>();
-        services.AddGitHubPullRequestAutomation(
-            new GitHubRepo("example", "repository"),
-            new AutomationIdentity("Test User", "test@example.com"),
-            "unused-local-test-token");
-        services.AddTransient<IPullRequestEndpoint>(_ =>
-        {
-            endpointResolutions++;
-            throw new InvalidOperationException("Endpoint resolved.");
-        });
-        services.AddSingleton(sp =>
-            new Lazy<IPullRequestEndpoint>(() => sp.GetRequiredService<IPullRequestEndpoint>()));
         using ServiceProvider provider = services.BuildServiceProvider();
         var runner = provider.GetRequiredService<DependencyUpdateRunner>();
 
-        await Should.ThrowAsync<InvalidOperationException>(() => runner.RunAsync(
+        await Should.ThrowAsync<ArgumentException>(() => runner.RunAsync(
             new CreatePullRequestOptions(),
             "sample/source",
             (_, _, _) => Task.CompletedTask,
             TestContext.Current.CancellationToken));
-
-        endpointResolutions.ShouldBe(1);
     }
 
     private static IServiceProvider ThrowIfResolved() =>

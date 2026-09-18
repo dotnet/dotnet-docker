@@ -2,8 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.CommandLine;
-using Azure.Identity;
-using Azure.Security.KeyVault.Keys.Cryptography;
 using Maestro.Common;
 using Maestro.Common.AzureDevOpsTokens;
 using Microsoft.DotNet.DarcLib;
@@ -13,9 +11,6 @@ using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
 using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
-using Microsoft.DotNet.GitAutomation;
-using Microsoft.DotNet.GitAutomation.AzureDevOps;
-using Microsoft.DotNet.GitAutomation.GitHub;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -75,45 +70,6 @@ static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
 
     IServiceCollection services = builder.Services;
     services.AddSingleton(configuration);
-
-    switch (configuration.PullRequestDestination)
-    {
-        case GitRemote.GitHub:
-            var githubConfig = configuration.GitHub;
-            var repo = new GitHubRepo(githubConfig.Owner, githubConfig.Repository);
-            if (!string.IsNullOrEmpty(githubConfig.AppClientId)
-                && !string.IsNullOrEmpty(githubConfig.AppKeyUri))
-            {
-                services.AddGitHubPullRequestAutomation(CreateGitHubAppAccessProvider(configuration), repo);
-            }
-            else
-            {
-                var identity = new AutomationIdentity(configuration.User, configuration.Email);
-                services.AddGitHubPullRequestAutomation(repo, identity, githubConfig.Token);
-            }
-            services.AddTransient<IPullRequestEndpoint>(sp =>
-                sp.GetRequiredService<GitHubPullRequestEndpoint>());
-            break;
-
-        case GitRemote.AzureDevOps:
-            var azdoConfig = configuration.AzureDevOps;
-            string organization = new Uri(azdoConfig.Organization).Segments.Last().TrimEnd('/');
-            services.AddAzureDevOpsPullRequestAutomation(
-                organization,
-                azdoConfig.Project,
-                azdoConfig.Repository,
-                new AutomationIdentity(configuration.User, configuration.Email),
-                azdoConfig.Token);
-            services.AddTransient<IPullRequestEndpoint>(sp =>
-                sp.GetRequiredService<AzureDevOpsPullRequestEndpoint>());
-            break;
-
-        default:
-            throw new InvalidOperationException(
-                $"Unsupported PR destination: {configuration.PullRequestDestination}");
-    }
-
-    services.AddSingleton(sp => new Lazy<IPullRequestEndpoint>(() => sp.GetRequiredService<IPullRequestEndpoint>()));
     services.AddSingleton<DependencyUpdateRunner>();
 
     // Local services needed for DarcLib git operations
@@ -195,14 +151,4 @@ static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
     services.AddSingleton<SyncInternalReleaseCommand>();
 
     return builder.Build();
-}
-
-static IGitHubAccessProvider CreateGitHubAppAccessProvider(UpdateDependenciesConfiguration configuration)
-{
-    var github = configuration.GitHub;
-    ArgumentException.ThrowIfNullOrWhiteSpace(github.AppClientId);
-    ArgumentException.ThrowIfNullOrWhiteSpace(github.AppKeyUri);
-    var credential = new AzureCliCredential();
-    var cryptographyClient = new CryptographyClient(new Uri(github.AppKeyUri), credential);
-    return new GitHubAppAccessProvider(github.AppClientId, cryptographyClient);
 }
