@@ -203,58 +203,62 @@ The following examples illustrate how to run `update-dependencies`:
 - Update .NET from a BAR build
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- from-build 23456
+    > dotnet run --project .\eng\update-dependencies\ -- dotnet build-id 23456
     ```
 
 - Update .NET Monitor, including the base image and extension checksums
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- monitor 9.0.5
+    > dotnet run --project .\eng\update-dependencies\ -- monitor version 9.0.5
     ```
 
 - Update .NET Monitor from an Azure DevOps pipeline run
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- monitor --pipeline-run-id 1234567
+    > dotnet run --project .\eng\update-dependencies\ -- monitor pipeline-build 1234567
     ```
 
-    Specify either a version or `--pipeline-run-id`, not both.
     This is the Azure DevOps run ID, not a BAR build ID.
     The command reads `Build_Info/dotnet-monitor.nupkg.buildversion` from the run.
-    The source defaults to organization `https://dev.azure.com/dnceng` and project `internal`; use `--azdo-organization` and `--azdo-project` to override them.
+    The source defaults to organization `https://dev.azure.com/dnceng` and project `internal`.
+    Override them through `UpdateDependencies__AzureDevOps__Organization` and
+    `UpdateDependencies__AzureDevOps__Project` environment variables or the
+    `UpdateDependencies:AzureDevOps` section in `appsettings*.json`.
     Build access uses `SYSTEM_ACCESSTOKEN` in pipelines or Azure Developer CLI credentials locally.
     Supplying a version directly does not require Azure DevOps authentication.
-    Neither form publishes a pull request unless publishing credentials are provided.
+    Use `--update-only` to apply changes locally without publishing a pull request.
 
 - Update Aspire Dashboard from a BAR build
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- aspire --from-build-id 23456
+    > dotnet run --project .\eng\update-dependencies\ -- aspire build-id 23456
     ```
 
 - Update Aspire Dashboard from the latest build in a BAR channel
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- aspire --from-channel 5555
+    > dotnet run --project .\eng\update-dependencies\ -- aspire channel 5555
     ```
 
-    Specify either `--from-build-id` or `--from-channel`, not both.
     These are BAR IDs, not Azure DevOps pipeline run IDs.
     The command selects the Aspire repository automatically.
-    Neither form publishes a pull request unless publishing credentials are provided.
+    Use `--update-only` to apply changes locally without publishing a pull request.
 
 - Update a tool from its latest GitHub release
 
     ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- from-component chisel
+    > dotnet run --project .\eng\update-dependencies\ -- chisel
     ```
 
     The registered GitHub release updaters are `chisel`, `syft`, `rocks-toolbox`,
     and `mingit`. Their manifest variables are shared across image versions.
 
-    The historical `specific` command has been removed. Use `from-build`,
-    `from-channel`, or `from-staging-pipeline` for .NET updates, and the
-    dependency-specific commands for other components.
+    Run a dependency command with `--help` to see only its supported update sources.
+
+Authentication and repository settings come from `Microsoft.Extensions.Configuration`,
+not CLI options. Use `appsettings.json`, `appsettings.{Environment}.json`, or
+environment variables such as `UpdateDependencies__User`, `UpdateDependencies__Email`,
+and `UpdateDependencies__GitHub__Token`. Environment variables override JSON settings.
 
 #### Implementing dependency updaters
 
@@ -264,11 +268,13 @@ CLI commands, their options, and command-binding helpers live in
 `eng/update-dependencies/Commands`, under the
 `Microsoft.DotNet.Docker.UpdateDependencies.Commands` namespace.
 
-Each dependency is registered once in `eng/update-dependencies/Program.cs` as a
-string-keyed singleton `IUpdater`. It implements only the source capabilities it
-supports: BAR build/channel, pipeline build, staging pipeline, or GitHub release.
-Commands resolve the keyed `IUpdater` and check the
-requested capability. There is no generic product-version update interface.
+Each dependency is registered once in `eng/update-dependencies/Program.cs`.
+Its implemented capability interfaces generate only the source commands it
+supports: BAR build/channel, pipeline build, explicit version, or GitHub release.
+The .NET command also includes its staging-pipeline workflow.
+Each source command owns its creation and execution, and its options class owns
+symbol definitions and `Bind(ParseResult)`. `DependencyCommand` only assembles
+the supported commands. There is no generic product-version update interface.
 
 Updaters receive the shared `ManifestVariables` editor directly, plus the workspace
 root when they need to edit related files. They resolve their sources and apply
@@ -281,10 +287,9 @@ only changed content, and run generators even when the manifest is unchanged.
 The runner also handles publishing, applying the same batch in the publishing workspace.
 
 GitHub release updaters fetch their latest release internally. Add a tool by
-implementing `IGitHubReleaseUpdater` and registering its keyed singleton.
-The existing `from-component` command resolves the registration; no separate
-tool registry or command is needed. Updaters use Octokit's `IReleasesClient`
-directly to fetch release information.
+implementing `IGitHubReleaseUpdater` and adding its updater registration.
+Its dependency command will run the updater directly. Updaters use Octokit's
+`IReleasesClient` to fetch release information.
 
 #### Checking Markdown links locally
 

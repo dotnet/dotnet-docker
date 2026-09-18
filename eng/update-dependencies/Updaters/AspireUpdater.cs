@@ -13,6 +13,7 @@ public sealed class AspireUpdater(
     ILogger<AspireUpdater> logger)
         : IBarBuildUpdater, IBarChannelUpdater
 {
+    public const string Key = "aspire";
     public const string PublicRepository = "https://github.com/microsoft/aspire";
     public const string InternalRepository = "https://dev.azure.com/dnceng/internal/_git/microsoft-aspire";
 
@@ -25,11 +26,10 @@ public sealed class AspireUpdater(
     public async Task UpdateFromBarChannelAsync(
         ManifestVariables variables,
         string repoRoot,
-        string repository,
         int channelId,
         CancellationToken cancellationToken)
     {
-        Build build = await barClient.GetLatestBuildAsync(repository, channelId).WaitAsync(cancellationToken);
+        Build build = await barClient.GetLatestBuildAsync(PublicRepository, channelId).WaitAsync(cancellationToken);
         await UpdateFromBarBuildAsync(variables, repoRoot, build, cancellationToken);
     }
 

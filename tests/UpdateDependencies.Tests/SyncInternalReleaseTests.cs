@@ -30,32 +30,9 @@ public sealed class SyncInternalReleaseTests
     /// </summary>
     private static readonly SyncInternalReleaseOptions s_defaultOptions = new()
     {
-        AzdoOrganization = AzdoOrgUrl,
-        AzdoProject = AzdoProject,
-        AzdoRepo = AzdoRepo,
         SourceBranch = ReleaseBranch,
         TargetBranch = InternalReleaseBranch
     };
-
-    /// <summary>
-    /// Calling the command with null or whitespace for any of the arguments should fail.
-    /// </summary>
-    [Fact]
-    public async Task WhitespaceArgumentsFails()
-    {
-        var options = new SyncInternalReleaseOptions
-        {
-            AzdoOrganization = "   ",
-            AzdoProject = "   ",
-            AzdoRepo = "   ",
-            SourceBranch = "   ",
-            TargetBranch = "   "
-        };
-
-        var command = CreateCommand();
-
-        await Should.ThrowAsync<ArgumentException>(() => command.ExecuteAsync(options));
-    }
 
     /// <summary>
     /// If the source branch is an internal branch (i.e. "internal/foo"), the command should fail.
@@ -83,7 +60,7 @@ public sealed class SyncInternalReleaseTests
 
         var repoMock = new Mock<IGitRepoHelper>();
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup:
         // Target branch does not exist on remote
@@ -113,7 +90,7 @@ public sealed class SyncInternalReleaseTests
         // not explicitly set up in this test.
         var repoMock = new Mock<IGitRepoHelper>(MockBehavior.Strict);
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -150,7 +127,7 @@ public sealed class SyncInternalReleaseTests
         repoMock.Setup(r => r.Remote).Returns(remoteRepoMock.Object);
 
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -200,8 +177,6 @@ public sealed class SyncInternalReleaseTests
     {
         var options = s_defaultOptions with
         {
-            User = "Test User",
-            Email = "test@example.com",
             StagingStorageAccount = "dotnetstage"
         };
 
@@ -266,7 +241,7 @@ public sealed class SyncInternalReleaseTests
             repo => repo.Local.CommitAsync(
                 It.IsAny<string>(),
                 It.Is<(string Name, string Email)>(
-                    author => author.Name == options.User && author.Email == options.Email
+                    author => author.Name == "Test User" && author.Email == "test@example.com"
                 )
             ),
             Times.Exactly(numberOfCommits)
@@ -297,7 +272,18 @@ public sealed class SyncInternalReleaseTests
         IEnvironmentService? environmentService = null,
         ILogger<SyncInternalReleaseCommand>? logger = null) =>
             // New parameters should be null by default and initialized with mocks if not specified.
-            new(repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
+            new(new UpdateDependenciesConfiguration
+                {
+                    User = "Test User",
+                    Email = "test@example.com",
+                    AzureDevOps = new()
+                    {
+                        Organization = AzdoOrgUrl,
+                        Project = AzdoProject,
+                        Repository = AzdoRepo,
+                    },
+                },
+                repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
                 fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
                 environmentService ?? Mock.Of<IEnvironmentService>(),

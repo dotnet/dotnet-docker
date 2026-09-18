@@ -11,7 +11,7 @@ public sealed class MonitorUpdater(
     IPipelineArtifactProvider pipelineArtifactProvider,
     HttpClient httpClient,
     ILogger<MonitorUpdater> logger)
-        : IPipelineBuildUpdater
+        : IPipelineBuildUpdater, IVersionUpdater
 {
     private static readonly (string Product, string ArchiveName)[] s_products =
     [

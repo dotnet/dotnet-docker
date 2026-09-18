@@ -95,11 +95,11 @@ internal class PipelineArtifactProvider(
     {
         if (string.IsNullOrWhiteSpace(azdoOrganization))
         {
-            throw new ArgumentException("--azdo-organization is required", nameof(azdoOrganization));
+            throw new ArgumentException("Azure DevOps organization is required", nameof(azdoOrganization));
         }
         if (string.IsNullOrWhiteSpace(azdoProject))
         {
-            throw new ArgumentException("--azdo-project is required", nameof(azdoProject));
+            throw new ArgumentException("Azure DevOps project is required", nameof(azdoProject));
         }
 
         List<Exception> exceptions = [];

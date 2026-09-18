@@ -5,13 +5,19 @@ using System.CommandLine;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
-public sealed record SyncInternalReleaseOptions : CreatePullRequestOptions, IOptions
+public sealed record SyncInternalReleaseOptions : CreatePullRequestOptions
 {
     public string StagingStorageAccount { get; set; } = string.Empty;
 
-    public static new List<Option> Options =>
-    [
-        FromStagingPipelineOptions.StagingStorageAccountOption,
-        ..CreatePullRequestOptions.Options,
-    ];
+    public static new void AddTo(Command command)
+    {
+        CreatePullRequestOptions.AddTo(command);
+        command.Options.Add(FromStagingPipelineOptions.StagingStorageAccountOption);
+    }
+
+    public static new SyncInternalReleaseOptions Bind(ParseResult result) =>
+        Bind(result, new SyncInternalReleaseOptions
+        {
+            StagingStorageAccount = result.GetRequiredValue(FromStagingPipelineOptions.StagingStorageAccountOption),
+        });
 }

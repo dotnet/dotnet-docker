@@ -2,9 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System;
+using System.CommandLine;
 using System.Threading.Tasks;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
 using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
@@ -26,7 +28,7 @@ internal sealed class SyncInternalReleaseCommand(
     IInternalVersionsService internalVersionsService,
     IEnvironmentService environmentService,
     ILogger<SyncInternalReleaseCommand> logger
-) : BaseCommand<SyncInternalReleaseOptions>
+) : ICommand<SyncInternalReleaseOptions>
 {
     private readonly IGitRepoHelperFactory _gitRepoHelperFactory = gitRepoHelperFactory;
     private readonly ICommand<FromStagingPipelineOptions> _updateFromStagingPipeline = updateFromStagingPipeline;
@@ -34,7 +36,19 @@ internal sealed class SyncInternalReleaseCommand(
     private readonly IEnvironmentService _environmentService = environmentService;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 
-    public override async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
+    public static Command Create(Func<IServiceProvider> getServices)
+    {
+        var command = new Command("sync-internal-release", "Sync release/* branch to internal/release/* branch");
+        SyncInternalReleaseOptions.AddTo(command);
+        command.SetAction((result, _) =>
+        {
+            SyncInternalReleaseOptions options = SyncInternalReleaseOptions.Bind(result);
+            return getServices().GetRequiredService<SyncInternalReleaseCommand>().ExecuteAsync(options);
+        });
+        return command;
+    }
+
+    public async Task<int> ExecuteAsync(SyncInternalReleaseOptions options)
     {
         var remoteUrl = configuration.AzureDevOps.GetRepoUrl();
 

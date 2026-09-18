@@ -139,11 +139,9 @@ public sealed class FromStagingPipelineCommandTests
         var updater = new DotNetUpdater(
             Mock.Of<IBasicBarClient>(),
             Mock.Of<ILogger<DotNetUpdater>>());
-        var services = new ServiceCollection()
-            .AddKeyedSingleton<IUpdater>(DotNetUpdater.Key, updater)
-            .BuildServiceProvider();
-        return new(logger ?? Mock.Of<ILogger<FromStagingPipelineCommand>>(),
-                services,
+        return new(new UpdateDependenciesConfiguration(),
+                logger ?? Mock.Of<ILogger<FromStagingPipelineCommand>>(),
+                updater,
                 pipelineArtifactProvider ?? CreateMockPipelineArtifactProvider(),
                 pipelinesService ?? CreateMockPipelinesService(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),

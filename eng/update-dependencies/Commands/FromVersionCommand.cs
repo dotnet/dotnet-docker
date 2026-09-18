@@ -7,24 +7,24 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
-internal static class FromChannelCommand
+internal static class FromVersionCommand
 {
     public static Command Create(UpdaterRegistration registration, Func<IServiceProvider> getServices)
     {
-        var command = new Command("channel", "Update from the latest build in a BAR channel");
-        FromChannelOptions.AddTo(command);
+        var command = new Command("version", "Update to a specific version");
+        FromVersionOptions.AddTo(command);
 
         command.SetAction((result, cancellationToken) =>
         {
-            FromChannelOptions options = FromChannelOptions.Bind(result);
+            FromVersionOptions options = FromVersionOptions.Bind(result);
             IServiceProvider services = getServices();
-            var updater = (IBarChannelUpdater)services.GetRequiredService(registration.Type);
+            var updater = (IVersionUpdater)services.GetRequiredService(registration.Type);
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(
                 options,
                 registration.VersionSourceName,
-                (variables, repoRoot, token) => updater.UpdateFromBarChannelAsync(variables, repoRoot, options.Channel, token),
+                (variables, _, token) => updater.UpdateFromVersionAsync(variables, options.Version, token),
                 cancellationToken);
         });
 

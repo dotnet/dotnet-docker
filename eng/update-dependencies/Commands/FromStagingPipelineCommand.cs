@@ -1,15 +1,17 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.CommandLine;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
 using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.DotNet.Docker.Shared;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
-internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipelineOptions>
+internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipelineOptions>
 {
     /// <summary>
     /// Callback that stages all changes and commits them.
@@ -26,7 +28,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     private readonly IPipelineArtifactProvider _pipelineArtifactProvider;
     private readonly IPipelinesService _pipelinesService;
     private readonly IInternalVersionsService _internalVersionsService;
-    private readonly IServiceProvider _services;
+    private readonly DotNetUpdater _updater;
     private readonly IEnvironmentService _environmentService;
     private readonly IBuildLabelService _buildLabelService;
     private readonly Func<FromStagingPipelineOptions, Task<GitRepoContext>> _createGitRepoContextAsync;
@@ -34,7 +36,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     public FromStagingPipelineCommand(
         UpdateDependenciesConfiguration configuration,
         ILogger<FromStagingPipelineCommand> logger,
-        IServiceProvider services,
+        DotNetUpdater updater,
         IPipelineArtifactProvider pipelineArtifactProvider,
         IPipelinesService pipelinesService,
         IInternalVersionsService internalVersionsService,
@@ -44,7 +46,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
     {
         _configuration = configuration;
         _logger = logger;
-        _services = services;
+        _updater = updater;
         _pipelineArtifactProvider = pipelineArtifactProvider;
         _pipelinesService = pipelinesService;
         _internalVersionsService = internalVersionsService;
@@ -53,7 +55,19 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options, _environmentService, configuration);
     }
 
-    public override async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
+    public static Command Create(Func<IServiceProvider> getServices)
+    {
+        var command = new Command("staging-pipeline", "Update .NET from staging pipeline runs");
+        FromStagingPipelineOptions.AddTo(command);
+        command.SetAction((result, _) =>
+        {
+            FromStagingPipelineOptions options = FromStagingPipelineOptions.Bind(result);
+            return getServices().GetRequiredService<FromStagingPipelineCommand>().ExecuteAsync(options);
+        });
+        return command;
+    }
+
+    public async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
         var stageContainers = options.GetStageContainerList();
 
@@ -117,7 +131,6 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
         GitRepoContext gitRepoContext)
     {
         var stagingPipelineRunId = StagingPipelineOptionsExtensions.GetStagingPipelineRunId(stageContainer);
-        var updater = _services.GetUpdater<IStagingPipelineUpdater>(DotNetUpdater.Key);
 
         // Log staging pipeline tags for diagnostic purposes
         var stagingPipelineTags = await _pipelinesService.GetBuildTagsAsync(
@@ -172,7 +185,7 @@ internal partial class FromStagingPipelineCommand : BaseCommand<FromStagingPipel
 
         await DependencyUpdateRunner.ApplyAsync(
             gitRepoContext.LocalRepoPath,
-            (variables, repoRoot, token) => updater.UpdateFromStagingPipelineAsync(
+            (variables, repoRoot, token) => _updater.UpdateFromStagingPipelineAsync(
                 variables, repoRoot, releaseConfig, internalBaseUrl, token),
             CancellationToken.None);
 

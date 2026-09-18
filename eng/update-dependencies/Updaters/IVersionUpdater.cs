@@ -3,11 +3,10 @@
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
-public interface IBarChannelUpdater : IUpdater
+public interface IVersionUpdater : IUpdater
 {
-    Task UpdateFromBarChannelAsync(
+    Task UpdateFromVersionAsync(
         ManifestVariables variables,
-        string repoRoot,
-        int channelId,
+        string version,
         CancellationToken cancellationToken);
 }

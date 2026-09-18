@@ -9,8 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 /// <typeparam name="TOptions">
 /// The type of options that the command accepts.
 /// </typeparam>
-/// <seealso cref="BaseCommand"/>
-public interface ICommand<TOptions> where TOptions : IOptions
+public interface ICommand<TOptions> where TOptions : CreatePullRequestOptions
 {
     Task<int> ExecuteAsync(TOptions options);
 }

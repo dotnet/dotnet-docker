@@ -7,27 +7,27 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
-internal static class FromChannelCommand
+internal static class FromGitHubReleaseCommand
 {
-    public static Command Create(UpdaterRegistration registration, Func<IServiceProvider> getServices)
+    public static void Configure(
+        Command command,
+        UpdaterRegistration registration,
+        Func<IServiceProvider> getServices)
     {
-        var command = new Command("channel", "Update from the latest build in a BAR channel");
-        FromChannelOptions.AddTo(command);
+        CreatePullRequestOptions.AddTo(command);
 
         command.SetAction((result, cancellationToken) =>
         {
-            FromChannelOptions options = FromChannelOptions.Bind(result);
+            CreatePullRequestOptions options = CreatePullRequestOptions.Bind(result);
             IServiceProvider services = getServices();
-            var updater = (IBarChannelUpdater)services.GetRequiredService(registration.Type);
+            var updater = (IGitHubReleaseUpdater)services.GetRequiredService(registration.Type);
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(
                 options,
                 registration.VersionSourceName,
-                (variables, repoRoot, token) => updater.UpdateFromBarChannelAsync(variables, repoRoot, options.Channel, token),
+                (variables, _, token) => updater.UpdateFromGitHubReleaseAsync(variables, token),
                 cancellationToken);
         });
-
-        return command;
     }
 }

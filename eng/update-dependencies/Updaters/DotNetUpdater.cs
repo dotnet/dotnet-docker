@@ -13,6 +13,8 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
     : IBarBuildUpdater, IBarChannelUpdater, IStagingPipelineUpdater
 {
     public const string Key = "dotnet";
+    public const string PublicRepository = "https://github.com/dotnet/dotnet";
+    public const string InternalRepository = "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet";
 
     public async Task UpdateFromBarBuildAsync(
         ManifestVariables variables,
@@ -41,12 +43,10 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
     public async Task UpdateFromBarChannelAsync(
         ManifestVariables variables,
         string repoRoot,
-        string repository,
         int channelId,
         CancellationToken cancellationToken)
     {
-        ValidateRepository(repository);
-        Build build = await barClient.GetLatestBuildAsync(repository, channelId).WaitAsync(cancellationToken);
+        Build build = await barClient.GetLatestBuildAsync(PublicRepository, channelId).WaitAsync(cancellationToken);
         await UpdateFromBarBuildAsync(variables, repoRoot, build, cancellationToken);
     }
 
@@ -125,7 +125,7 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
 
     private static void ValidateRepository(string repository)
     {
-        if (repository is not ("https://github.com/dotnet/dotnet" or "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet"))
+        if (repository is not (PublicRepository or InternalRepository))
         {
             throw new InvalidOperationException($"Unsupported .NET build repository '{repository}'.");
         }

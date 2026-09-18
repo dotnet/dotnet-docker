@@ -52,8 +52,9 @@ extends:
     updateAspire: ${{ parameters.updateAspire }}
     aspireChannel: $(aspireChannel)
     tools: ${{ parameters.tools }}
+    updateOnly: ${{ parameters.skipPullRequest }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
-      gitHubAuthArgs: >-
-        --user $(dotnetDockerBot.userName)
-        --email $(dotnetDockerBot.email)
-        --password $(BotAccount-dotnet-docker-bot-PAT)
+      updateEnvironment:
+        UpdateDependencies__User: $(dotnetDockerBot.userName)
+        UpdateDependencies__Email: $(dotnetDockerBot.email)
+        UpdateDependencies__GitHub__Token: $(BotAccount-dotnet-docker-bot-PAT)

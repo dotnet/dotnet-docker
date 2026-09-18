@@ -7,24 +7,29 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
-internal static class FromChannelCommand
+internal static class FromPipelineBuildCommand
 {
     public static Command Create(UpdaterRegistration registration, Func<IServiceProvider> getServices)
     {
-        var command = new Command("channel", "Update from the latest build in a BAR channel");
-        FromChannelOptions.AddTo(command);
+        var command = new Command("pipeline-build", "Update from an Azure DevOps pipeline run");
+        FromPipelineBuildOptions.AddTo(command);
 
         command.SetAction((result, cancellationToken) =>
         {
-            FromChannelOptions options = FromChannelOptions.Bind(result);
+            FromPipelineBuildOptions options = FromPipelineBuildOptions.Bind(result);
             IServiceProvider services = getServices();
-            var updater = (IBarChannelUpdater)services.GetRequiredService(registration.Type);
+            var updater = (IPipelineBuildUpdater)services.GetRequiredService(registration.Type);
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            var configuration = services.GetRequiredService<UpdateDependenciesConfiguration>();
+            var build = new PipelineBuildReference(
+                configuration.AzureDevOps.Organization,
+                configuration.AzureDevOps.Project,
+                options.RunId);
 
             return runner.RunAsync(
                 options,
                 registration.VersionSourceName,
-                (variables, repoRoot, token) => updater.UpdateFromBarChannelAsync(variables, repoRoot, options.Channel, token),
+                (variables, _, token) => updater.UpdateFromPipelineBuildAsync(variables, build, token),
                 cancellationToken);
         });
 

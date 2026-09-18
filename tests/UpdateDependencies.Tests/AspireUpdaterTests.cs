@@ -29,13 +29,14 @@ public sealed class AspireUpdaterTests
             .AddLogging()
             .AddKeyedSingleton<IUpdater, AspireUpdater>("aspire")
             .BuildServiceProvider();
-        var channelUpdater = services.GetUpdater<IBarChannelUpdater>("aspire");
-        var buildUpdater = services.GetUpdater<IBarBuildUpdater>("aspire");
+        var updater = services.GetRequiredKeyedService<IUpdater>("aspire");
+        var channelUpdater = (IBarChannelUpdater)updater;
+        var buildUpdater = (IBarBuildUpdater)updater;
         channelUpdater.ShouldBeSameAs(buildUpdater);
         var variables = CreateVariables();
         variables.SetValue("aspire-dashboard|base-url|nightly", "https://example.invalid/shared-editor");
         await channelUpdater.UpdateFromBarChannelAsync(
-            variables, "missing-workspace", AspireUpdater.PublicRepository, 5555, TestContext.Current.CancellationToken);
+            variables, "missing-workspace", 5555, TestContext.Current.CancellationToken);
 
         variables.GetRawValue("aspire-dashboard|build-version").ShouldBe("13.6.0-preview.1.26453.4");
         variables.GetRawValue("aspire-dashboard|product-version").ShouldBe("13.6.0");

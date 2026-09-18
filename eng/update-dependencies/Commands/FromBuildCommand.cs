@@ -1,35 +1,37 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.CommandLine;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
-using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
-internal class FromBuildCommand(
-    DependencyUpdateRunner runner,
-    IBasicBarClient barClient,
-    ILogger<FromBuildCommand> logger,
-    IServiceProvider serviceProvider
-) : BaseCommand<FromBuildOptions>
+internal static class FromBuildCommand
 {
-    private readonly IBasicBarClient _barClient = barClient;
-    private readonly ILogger<FromBuildCommand> _logger = logger;
-    private readonly IServiceProvider _serviceProvider = serviceProvider;
-
-    public override async Task<int> ExecuteAsync(FromBuildOptions options)
+    public static Command Create(UpdaterRegistration registration, Func<IServiceProvider> getServices)
     {
-        _logger.LogInformation("Getting BAR build with ID {options.Id}", options.Id);
-        Build build = await _barClient.GetBuildAsync(options.Id);
+        var command = new Command("build-id", "Update from a specific BAR build");
+        FromBuildOptions.AddTo(command);
 
-        var updater = _serviceProvider.GetUpdater<IBarBuildUpdater>(build.GetUpdaterKey());
-        await runner.RunAsync(
-            options,
-            build.GetVersionSourceName(),
-            (variables, repoRoot, token) => updater.UpdateFromBarBuildAsync(variables, repoRoot, build, token),
-            CancellationToken.None);
-        return 0;
+        command.SetAction(async (result, cancellationToken) =>
+        {
+            FromBuildOptions options = FromBuildOptions.Bind(result);
+            IServiceProvider services = getServices();
+            var barClient = services.GetRequiredService<IBasicBarClient>();
+            var updater = (IBarBuildUpdater)services.GetRequiredService(registration.Type);
+            var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            Build build = await barClient.GetBuildAsync(options.Id).WaitAsync(cancellationToken);
+
+            await runner.RunAsync(
+                options,
+                registration.VersionSourceName,
+                (variables, repoRoot, token) => updater.UpdateFromBarBuildAsync(variables, repoRoot, build, token),
+                cancellationToken);
+        });
+
+        return command;
     }
 }

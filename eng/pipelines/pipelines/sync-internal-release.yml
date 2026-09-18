@@ -56,14 +56,15 @@ extends:
 
               dotnet run --configuration Release --project ./eng/update-dependencies/update-dependencies.csproj --
               sync-internal-release
-              --azdo-organization "$env:SYSTEM_COLLECTIONURI"
-              --azdo-project "$env:SYSTEM_TEAMPROJECT"
-              --azdo-repo "$env:BUILD_REPOSITORY_NAME"
               --source-branch "$sourceBranch"
               --target-branch "$targetBranch"
-              --user "$env:DOTNETDOCKERBOT_USERNAME"
-              --email "$env:DOTNETDOCKERBOT_EMAIL"
               --staging-storage-account "dotnetstage"
           env:
+            UpdateDependencies__PullRequestDestination: AzureDevOps
+            UpdateDependencies__AzureDevOps__Organization: $(System.CollectionUri)
+            UpdateDependencies__AzureDevOps__Project: $(System.TeamProject)
+            UpdateDependencies__AzureDevOps__Repository: $(Build.Repository.Name)
+            UpdateDependencies__User: $(dotnetDockerBot.userName)
+            UpdateDependencies__Email: $(dotnetDockerBot.email)
             # Used to download build artifacts containing .NET version information.
             SYSTEM_ACCESSTOKEN: $(System.AccessToken)

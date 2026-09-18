@@ -26,10 +26,14 @@ parameters:
 - name: updateAspire
   type: boolean
   default: true
-# Additional authentication arguments to pass to update-dependencies
-- name: gitHubAuthArgs
-  type: string
-  default: ""
+# Whether to apply updates without publishing a pull request
+- name: updateOnly
+  type: boolean
+  default: true
+# Configuration environment variables passed to update-dependencies
+- name: updateEnvironment
+  type: object
+  default: {}
 
 extends:
   template: /eng/docker-tools/templates/1es.yml@self
@@ -52,10 +56,10 @@ extends:
                 scriptLocation: "inlineScript"
                 inlineScript: >-
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                  from-channel
+                  dotnet channel
                   ${{ parameters.vmrChannel }}
-                  https://github.com/dotnet/dotnet
-                  ${{ parameters.gitHubAuthArgs }}
+                  --update-only ${{ parameters.updateOnly }}
+              env: ${{ parameters.updateEnvironment }}
 
       - ${{ if parameters.updateAspire }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
@@ -70,10 +74,10 @@ extends:
                 scriptLocation: "inlineScript"
                 inlineScript: >-
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                  aspire
-                  --from-channel
+                  aspire channel
                   ${{ parameters.aspireChannel }}
-                  ${{ parameters.gitHubAuthArgs }}
+                  --update-only ${{ parameters.updateOnly }}
+              env: ${{ parameters.updateEnvironment }}
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
@@ -82,6 +86,7 @@ extends:
             updateSteps:
             - powershell: >-
                 dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                from-component ${{ tool }}
-                ${{ parameters.gitHubAuthArgs }}
+                ${{ tool }}
+                --update-only ${{ parameters.updateOnly }}
               displayName: Update ${{ tool }}
+              env: ${{ parameters.updateEnvironment }}

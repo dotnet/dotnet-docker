@@ -98,8 +98,8 @@ public sealed class MonitorUpdaterTests
             .AddLogging()
             .AddKeyedSingleton<IUpdater, MonitorUpdater>("monitor")
             .BuildServiceProvider();
-        var pipelineUpdater = services.GetUpdater<IPipelineBuildUpdater>("monitor");
-        var versionUpdater = services.GetUpdater<MonitorUpdater>("monitor");
+        var versionUpdater = (MonitorUpdater)services.GetRequiredKeyedService<IUpdater>("monitor");
+        var pipelineUpdater = (IPipelineBuildUpdater)versionUpdater;
         pipelineUpdater.ShouldBeSameAs(versionUpdater);
         var variables = CreateVariables(pinnedChecksums: false);
 

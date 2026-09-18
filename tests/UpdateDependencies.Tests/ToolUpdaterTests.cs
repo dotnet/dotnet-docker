@@ -38,8 +38,8 @@ public sealed class ToolUpdaterTests
         using var handler = new ChecksumHandler([]);
         using var httpClient = new HttpClient(handler);
         using var services = CreateServices(releases.Object, httpClient);
-        var updater = services.GetUpdater<IGitHubReleaseUpdater>(tool);
-        updater.ShouldBeSameAs(services.GetKeyedService<IUpdater>(tool));
+        var registeredUpdater = services.GetRequiredKeyedService<IUpdater>(tool);
+        var updater = (IGitHubReleaseUpdater)registeredUpdater;
 
         await updater.UpdateFromGitHubReleaseAsync(variables, token);
 
@@ -70,7 +70,7 @@ public sealed class ToolUpdaterTests
         using var handler = new ChecksumHandler([]);
         using var httpClient = new HttpClient(handler);
         using var services = CreateServices(releases.Object, httpClient);
-        var updater = services.GetUpdater<IGitHubReleaseUpdater>(tool);
+        var updater = (IGitHubReleaseUpdater)services.GetRequiredKeyedService<IUpdater>(tool);
 
         foreach (string? value in new string?[] { null, "", "$(alias)" })
         {
@@ -142,62 +142,6 @@ public sealed class ToolUpdaterTests
         variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("abcdef123456");
     }
 
-    [Theory]
-    [InlineData(false, "No updater registered")]
-    [InlineData(true, "does not support IGitHubReleaseUpdater")]
-    public async Task FromComponentCommand_ValidatesCapabilityBeforeManifestAccess(
-        bool registered,
-        string expectedMessage)
-    {
-        var services = new ServiceCollection();
-        if (registered)
-        {
-            services.AddKeyedSingleton<IUpdater>("invalid", Mock.Of<IUpdater>());
-        }
-
-        using ServiceProvider provider = services.BuildServiceProvider();
-        var command = new FromComponentCommand(provider, Mock.Of<ILogger<FromComponentCommand>>());
-        var options = new FromComponentOptions
-        {
-            Component = "invalid",
-            RepoRoot = Path.Combine(Directory.GetCurrentDirectory(), Guid.NewGuid().ToString("N")),
-        };
-
-        var error = await Should.ThrowAsync<InvalidOperationException>(() => command.ExecuteAsync(options));
-
-        error.Message.ShouldContain(expectedMessage);
-        error.Message.ShouldContain("invalid");
-        Directory.Exists(options.RepoRoot).ShouldBeFalse();
-    }
-
-    [Fact]
-    public async Task FromComponentCommand_UpdatesManifestAndGenerates()
-    {
-        using var workspace = new Workspace();
-        File.WriteAllText(workspace.ManifestPath, """{"variables":{"syft|version":"old"}}""");
-        workspace.WriteGenerators("""
-            $manifest = Get-Content ./manifest.versions.json -Raw | ConvertFrom-Json
-            if ($manifest.variables.'syft|version' -ne 'v1.0.0') { throw 'Manifest was not saved' }
-            """);
-        var releases = new Mock<IReleasesClient>(MockBehavior.Strict);
-        releases.Setup(client => client.GetLatest("anchore", "syft")).ReturnsAsync(CreateRelease());
-        using var httpClient = new HttpClient();
-        using var services = CreateServices(releases.Object, httpClient);
-        var command = new FromComponentCommand(services, Mock.Of<ILogger<FromComponentCommand>>());
-
-        int exitCode = await command.ExecuteAsync(new FromComponentOptions
-        {
-            Component = "syft",
-            RepoRoot = workspace.Root,
-        });
-
-        exitCode.ShouldBe(0);
-        ManifestVariables.FromFile(workspace.ManifestPath).GetRawValue("syft|version").ShouldBe("v1.0.0");
-        File.ReadAllLines(Path.Combine(workspace.Root, "dockerfile-generations.txt")).ShouldBe(["generated"]);
-        File.ReadAllLines(Path.Combine(workspace.Root, "readme-generations.txt")).ShouldBe(["generated"]);
-        releases.Verify(client => client.GetLatest("anchore", "syft"), Times.Once);
-    }
-
     [Fact]
     public async Task UpdateBatch_UsesOneEditorAndSavesBeforeGeneratingOnce()
     {
@@ -240,8 +184,10 @@ public sealed class ToolUpdaterTests
             .BuildServiceProvider();
         await DependencyUpdateRunner.ApplyAsync(workspace.Root, async (variables, _, token) =>
         {
-            await services.GetUpdater<IGitHubReleaseUpdater>("first").UpdateFromGitHubReleaseAsync(variables, token);
-            await services.GetUpdater<IGitHubReleaseUpdater>("second").UpdateFromGitHubReleaseAsync(variables, token);
+            await ((IGitHubReleaseUpdater)services.GetRequiredKeyedService<IUpdater>("first"))
+                .UpdateFromGitHubReleaseAsync(variables, token);
+            await ((IGitHubReleaseUpdater)services.GetRequiredKeyedService<IUpdater>("second"))
+                .UpdateFromGitHubReleaseAsync(variables, token);
         }, TestContext.Current.CancellationToken);
 
         calls.ShouldBe(["first", "second"]);
@@ -250,22 +196,6 @@ public sealed class ToolUpdaterTests
                 .Replace("\"second\" : \"old\"", "\"second\" : \"new-second\""));
         File.ReadAllLines(Path.Combine(workspace.Root, "dockerfile-generations.txt")).ShouldBe(["generated"]);
         File.ReadAllLines(Path.Combine(workspace.Root, "readme-generations.txt")).ShouldBe(["generated"]);
-    }
-
-    [Fact]
-    public void FromComponentOptions_RequireOnlyComponentAndRejectUnusedOptions()
-    {
-        Command command = FromComponentCommand.Create("from-component", "Update component");
-        var componentArgument = (Argument<string>)command.Arguments.Single();
-
-        var result = command.Parse(["syft"]);
-
-        result.Errors.ShouldBeEmpty();
-        result.GetValue(componentArgument).ShouldBe("syft");
-        command.Parse([]).Errors.ShouldNotBeEmpty();
-        command.Parse(["9.0", "syft"]).Errors.ShouldNotBeEmpty();
-        command.Parse(["syft", "--channel", "stable"]).Errors.ShouldNotBeEmpty();
-        command.Parse(["syft", "--version-source-name", "scheduled-tools"]).Errors.ShouldNotBeEmpty();
     }
 
     private static ServiceProvider CreateServices(IReleasesClient releases, HttpClient httpClient) =>

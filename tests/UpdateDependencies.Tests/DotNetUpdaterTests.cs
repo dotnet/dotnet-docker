@@ -45,16 +45,17 @@ public sealed class DotNetUpdaterTests
             .AddKeyedSingleton<IUpdater>(DotNetUpdater.Key, updater)
             .BuildServiceProvider();
 
-        services.GetUpdater<IBarBuildUpdater>(DotNetUpdater.Key)
-            .ShouldBeSameAs(services.GetUpdater<IBarChannelUpdater>(DotNetUpdater.Key));
+        var registeredUpdater = services.GetRequiredKeyedService<IUpdater>(DotNetUpdater.Key);
+        ((IBarBuildUpdater)registeredUpdater)
+            .ShouldBeSameAs((IBarChannelUpdater)registeredUpdater);
         if (fromChannel)
         {
-            await services.GetUpdater<IBarChannelUpdater>(DotNetUpdater.Key).UpdateFromBarChannelAsync(
-                variables, repo.LocalPath, "https://github.com/dotnet/dotnet", 42, TestContext.Current.CancellationToken);
+            await ((IBarChannelUpdater)registeredUpdater).UpdateFromBarChannelAsync(
+                variables, repo.LocalPath, 42, TestContext.Current.CancellationToken);
         }
         else
         {
-            await services.GetUpdater<IBarBuildUpdater>(DotNetUpdater.Key).UpdateFromBarBuildAsync(
+            await ((IBarBuildUpdater)registeredUpdater).UpdateFromBarBuildAsync(
                 variables, repo.LocalPath, build, TestContext.Current.CancellationToken);
         }
 
@@ -168,7 +169,7 @@ public sealed class DotNetUpdaterTests
         var variables = new ManifestVariables("""{"variables":{}}""");
 
         await Should.ThrowAsync<OperationCanceledException>(() => updater.UpdateFromBarChannelAsync(
-            variables, "unused", "https://github.com/dotnet/dotnet", 42, new CancellationToken(true)));
+            variables, "unused", 42, new CancellationToken(true)));
 
         bar.VerifyAll();
         bar.VerifyNoOtherCalls();
