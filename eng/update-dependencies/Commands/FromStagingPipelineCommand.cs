@@ -62,7 +62,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         command.SetAction((result, _) =>
         {
             FromStagingPipelineOptions options = FromStagingPipelineOptions.Bind(result);
-            return services.GetRequiredService<FromStagingPipelineCommand>().ExecuteAsync(options);
+            return services.GetRequiredService<ICommand<FromStagingPipelineOptions>>().ExecuteAsync(options);
         });
         return command;
     }

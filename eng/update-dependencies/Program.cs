@@ -104,8 +104,7 @@ services.AddSingleton(_ =>
     return client.Repository.Release;
 });
 
-// Updaters, and the commands that are invoked through an interface rather than
-// created directly by the CLI.
+// Updaters and the commands that are resolved when invoked.
 services.AddSingleton<AspireUpdater>();
 services.AddSingleton<ChiselUpdater>();
 services.AddSingleton<DotNetUpdater>();
@@ -114,8 +113,7 @@ services.AddSingleton<MonitorUpdater>();
 services.AddSingleton<RocksToolboxUpdater>();
 services.AddSingleton<SyftUpdater>();
 
-services.AddSingleton<FromStagingPipelineCommand>();
-services.AddSingleton<ICommand<FromStagingPipelineOptions>>(sp => sp.GetRequiredService<FromStagingPipelineCommand>());
+services.AddSingleton<ICommand<FromStagingPipelineOptions>, FromStagingPipelineCommand>();
 services.AddSingleton<SyncInternalReleaseCommand>();
 
 using IHost host = builder.Build();
