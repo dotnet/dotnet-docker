@@ -12,7 +12,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 /// </param>
 /// <param name="repoRoot">
 /// The absolute path of the repo to update. This is not always the repo the command was run
-/// from: the same update is applied again in a separate workspace when publishing.
+/// from: when creating a pull request, the update is applied to a temporary clone instead.
 /// </param>
 public delegate Task ApplyUpdateAsync(
     ManifestVariables variables,
