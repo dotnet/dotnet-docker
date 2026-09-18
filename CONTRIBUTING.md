@@ -268,18 +268,18 @@ CLI commands, their options, and command-binding helpers live in
 `eng/update-dependencies/Commands`, under the
 `Microsoft.DotNet.Docker.UpdateDependencies.Commands` namespace.
 
-Each dependency is registered once with `AddUpdater<TUpdater>()` in
+Each dependency is listed once in the `RootCommand` in
 `eng/update-dependencies/Program.cs`. Each updater implements the `IUpdater`
 static abstract properties `Name` (the CLI name) and `VersionSourceName` (the
 publishing identity used in PR titles and branch names). Command creation reads
 this metadata without constructing the updater or resolving services.
 Its implemented capability interfaces generate only the source commands it
-supports: BAR build/channel, pipeline build, explicit version, or GitHub release.
-Custom commands are declared once with the command registration helpers, which
-attach the command to its parent and register its implementation with the lazy host.
-The .NET updater declaration attaches its staging-pipeline workflow this way;
-its adjacent `ICommand<FromStagingPipelineOptions>` registration allows the
-sync command to invoke that workflow.
+supports: BAR build/channel, pipeline build, staging pipeline, explicit version,
+or GitHub release. Updaters are constructed on demand by the command that runs
+them, so an updater only needs a DI registration when something else injects it.
+`DotNetUpdater` has one because the staging-pipeline command depends on it, and
+its `ICommand<FromStagingPipelineOptions>` registration allows the sync command
+to invoke that workflow.
 Each source command owns its creation and execution, and its options class owns
 symbol definitions and `Bind(ParseResult)`. `DependencyCommand` only assembles
 the supported commands. There is no generic product-version update interface.
@@ -295,7 +295,7 @@ only changed content, and run generators even when the manifest is unchanged.
 The runner also handles publishing, applying the same batch in the publishing workspace.
 
 GitHub release updaters fetch their latest release internally. Add a tool by
-implementing `IGitHubReleaseUpdater` and adding its updater registration.
+implementing `IGitHubReleaseUpdater` and adding it to the `RootCommand` list.
 Its dependency command will run the updater directly. Updaters use Octokit's
 `IReleasesClient` to fetch release information.
 

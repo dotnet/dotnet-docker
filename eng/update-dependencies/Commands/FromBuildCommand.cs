@@ -11,7 +11,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromBuildCommand
 {
-    public static Command Create<TUpdater>(Func<IServiceProvider> getServices) where TUpdater : class, IUpdater
+    public static Command Create<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command("build-id", "Update from a specific BAR build");
         FromBuildOptions.AddTo(command);
@@ -19,9 +19,8 @@ internal static class FromBuildCommand
         command.SetAction(async (result, cancellationToken) =>
         {
             FromBuildOptions options = FromBuildOptions.Bind(result);
-            IServiceProvider services = getServices();
             var barClient = services.GetRequiredService<IBasicBarClient>();
-            var updater = (IBarBuildUpdater)services.GetRequiredService<TUpdater>();
+            var updater = (IBarBuildUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
             Build build = await barClient.GetBuildAsync(options.Id).WaitAsync(cancellationToken);
 

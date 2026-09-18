@@ -55,14 +55,14 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options, _environmentService, configuration);
     }
 
-    public static Command Create(Func<IServiceProvider> getServices)
+    public static Command Create(IServiceProvider services)
     {
         var command = new Command("staging-pipeline", "Update .NET from staging pipeline runs");
         FromStagingPipelineOptions.AddTo(command);
         command.SetAction((result, _) =>
         {
             FromStagingPipelineOptions options = FromStagingPipelineOptions.Bind(result);
-            return getServices().GetRequiredService<FromStagingPipelineCommand>().ExecuteAsync(options);
+            return services.GetRequiredService<FromStagingPipelineCommand>().ExecuteAsync(options);
         });
         return command;
     }

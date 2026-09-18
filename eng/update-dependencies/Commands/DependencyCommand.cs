@@ -8,24 +8,27 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class DependencyCommand
 {
-    public static Command Create<TUpdater>(Func<IServiceProvider> getServices) where TUpdater : class, IUpdater
+    public static Command Create<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command(TUpdater.Name, $"Update {TUpdater.Name}");
 
         if (typeof(IBarBuildUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromBuildCommand.Create<TUpdater>(getServices));
+            command.Subcommands.Add(FromBuildCommand.Create<TUpdater>(services));
 
         if (typeof(IBarChannelUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromChannelCommand.Create<TUpdater>(getServices));
+            command.Subcommands.Add(FromChannelCommand.Create<TUpdater>(services));
 
         if (typeof(IPipelineBuildUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromPipelineBuildCommand.Create<TUpdater>(getServices));
+            command.Subcommands.Add(FromPipelineBuildCommand.Create<TUpdater>(services));
+
+        if (typeof(IStagingPipelineUpdater).IsAssignableFrom(typeof(TUpdater)))
+            command.Subcommands.Add(FromStagingPipelineCommand.Create(services));
 
         if (typeof(IVersionUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromVersionCommand.Create<TUpdater>(getServices));
+            command.Subcommands.Add(FromVersionCommand.Create<TUpdater>(services));
 
         if (typeof(IGitHubReleaseUpdater).IsAssignableFrom(typeof(TUpdater)))
-            FromGitHubReleaseCommand.Configure<TUpdater>(command, getServices);
+            FromGitHubReleaseCommand.Configure<TUpdater>(command, services);
 
         return command;
     }

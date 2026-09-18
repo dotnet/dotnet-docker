@@ -17,57 +17,24 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AzureDevOpsClient = Microsoft.DotNet.DarcLib.AzureDevOpsClient;
 
-var serviceRegistrations = new ServiceCollection();
-IHost? host = null;
+using IHost host = CreateHost();
+IServiceProvider services = host.Services;
 
-var rootCommand = new RootCommand("Update dotnet-docker dependencies");
-IServiceProvider GetServices() => (host ??= CreateHost(serviceRegistrations)).Services;
-
-AddUpdater<AspireUpdater>();
-AddUpdater<ChiselUpdater>();
-Command dotnetCommand = AddUpdater<DotNetUpdater>();
-AddCommand<FromStagingPipelineCommand>(
-    dotnetCommand,
-    FromStagingPipelineCommand.Create(GetServices));
-serviceRegistrations.AddSingleton<ICommand<FromStagingPipelineOptions>>(services =>
-    services.GetRequiredService<FromStagingPipelineCommand>());
-AddUpdater<MinGitUpdater>();
-AddUpdater<MonitorUpdater>();
-AddUpdater<RocksToolboxUpdater>();
-AddUpdater<SyftUpdater>();
-
-AddCommand<SyncInternalReleaseCommand>(
-    rootCommand,
-    SyncInternalReleaseCommand.Create(GetServices));
-
-try
+var rootCommand = new RootCommand("Update dotnet-docker dependencies")
 {
-    var parseResult = rootCommand.Parse(args.Length == 0 ? ["--help"] : args);
-    return await parseResult.InvokeAsync();
-}
-finally
-{
-    host?.Dispose();
-}
+    DependencyCommand.Create<AspireUpdater>(services),
+    DependencyCommand.Create<ChiselUpdater>(services),
+    DependencyCommand.Create<DotNetUpdater>(services),
+    DependencyCommand.Create<MinGitUpdater>(services),
+    DependencyCommand.Create<MonitorUpdater>(services),
+    DependencyCommand.Create<RocksToolboxUpdater>(services),
+    DependencyCommand.Create<SyftUpdater>(services),
+    SyncInternalReleaseCommand.Create(services),
+};
 
-Command AddUpdater<TUpdater>() where TUpdater : class, IUpdater
-{
-    serviceRegistrations.AddSingleton<TUpdater>();
-    Command command = DependencyCommand.Create<TUpdater>(GetServices);
-    rootCommand.Subcommands.Add(command);
-    return command;
-}
+return await rootCommand.Parse(args.Length == 0 ? ["--help"] : args).InvokeAsync();
 
-void AddCommand<TCommand>(
-    Command parent,
-    Command command)
-    where TCommand : class
-{
-    serviceRegistrations.AddSingleton<TCommand>();
-    parent.Subcommands.Add(command);
-}
-
-static IHost CreateHost(IEnumerable<ServiceDescriptor> serviceRegistrations)
+static IHost CreateHost()
 {
     var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
     {
@@ -156,11 +123,13 @@ static IHost CreateHost(IEnumerable<ServiceDescriptor> serviceRegistrations)
         return client.Repository.Release;
     });
 
-    // Each dependency has one singleton, exposing only its supported update capabilities.
-    foreach (ServiceDescriptor registration in serviceRegistrations)
-    {
-        services.Add(registration);
-    }
+    // The staging pipeline and sync commands are resolved from the container when
+    // invoked. Every other updater is created on demand by the command that runs it.
+    services.AddSingleton<DotNetUpdater>();
+    services.AddSingleton<FromStagingPipelineCommand>();
+    services.AddSingleton<ICommand<FromStagingPipelineOptions>>(sp =>
+        sp.GetRequiredService<FromStagingPipelineCommand>());
+    services.AddSingleton<SyncInternalReleaseCommand>();
 
     return builder.Build();
 }

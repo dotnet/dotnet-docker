@@ -36,14 +36,14 @@ internal sealed class SyncInternalReleaseCommand(
     private readonly IEnvironmentService _environmentService = environmentService;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 
-    public static Command Create(Func<IServiceProvider> getServices)
+    public static Command Create(IServiceProvider services)
     {
         var command = new Command("sync-internal-release", "Sync release/* branch to internal/release/* branch");
         SyncInternalReleaseOptions.AddTo(command);
         command.SetAction((result, _) =>
         {
             SyncInternalReleaseOptions options = SyncInternalReleaseOptions.Bind(result);
-            return getServices().GetRequiredService<SyncInternalReleaseCommand>().ExecuteAsync(options);
+            return services.GetRequiredService<SyncInternalReleaseCommand>().ExecuteAsync(options);
         });
         return command;
     }

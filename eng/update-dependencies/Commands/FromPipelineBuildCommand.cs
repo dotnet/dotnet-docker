@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromPipelineBuildCommand
 {
-    public static Command Create<TUpdater>(Func<IServiceProvider> getServices) where TUpdater : class, IUpdater
+    public static Command Create<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command("pipeline-build", "Update from an Azure DevOps pipeline run");
         FromPipelineBuildOptions.AddTo(command);
@@ -17,8 +17,7 @@ internal static class FromPipelineBuildCommand
         command.SetAction((result, cancellationToken) =>
         {
             FromPipelineBuildOptions options = FromPipelineBuildOptions.Bind(result);
-            IServiceProvider services = getServices();
-            var updater = (IPipelineBuildUpdater)services.GetRequiredService<TUpdater>();
+            var updater = (IPipelineBuildUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
             var configuration = services.GetRequiredService<UpdateDependenciesConfiguration>();
             var build = new PipelineBuildReference(

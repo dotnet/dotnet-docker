@@ -49,7 +49,7 @@ public sealed class DependencyCommandTests
     public void Create_ExposesExpectedMetadataAndSources()
     {
         Check<AspireUpdater>("aspire", "microsoft/aspire", "build-id", "channel");
-        Check<DotNetUpdater>("dotnet", "dotnet/dotnet", "build-id", "channel");
+        Check<DotNetUpdater>("dotnet", "dotnet/dotnet", "build-id", "channel", "staging-pipeline");
         Check<MonitorUpdater>("monitor", "dotnet/dotnet-monitor", "pipeline-build", "version");
         Check<ChiselUpdater>("chisel", "chisel");
         Check<MinGitUpdater>("mingit", "mingit");
@@ -231,7 +231,7 @@ public sealed class DependencyCommandTests
             })
             .AddSingleton<DependencyUpdateRunner>();
         using ServiceProvider provider = services.BuildServiceProvider();
-        Command command = DependencyCommand.Create<RecordingUpdater>(() => provider);
+        Command command = DependencyCommand.Create<RecordingUpdater>(provider);
         string[] args =
         [
             ..source.Split(' ', StringSplitOptions.RemoveEmptyEntries),
@@ -268,8 +268,13 @@ public sealed class DependencyCommandTests
             TestContext.Current.CancellationToken));
     }
 
-    private static IServiceProvider ThrowIfResolved() =>
-        throw new InvalidOperationException("Parsing commands should not resolve services.");
+    private static readonly IServiceProvider ThrowIfResolved = new ThrowingServiceProvider();
+
+    private sealed class ThrowingServiceProvider : IServiceProvider
+    {
+        public object GetService(Type serviceType) =>
+            throw new InvalidOperationException("Parsing commands should not resolve services.");
+    }
 
     private sealed class BarUpdater : IBarBuildUpdater, IBarChannelUpdater
     {

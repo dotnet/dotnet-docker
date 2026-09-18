@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromGitHubReleaseCommand
 {
-    public static void Configure<TUpdater>(Command command, Func<IServiceProvider> getServices)
+    public static void Configure<TUpdater>(Command command, IServiceProvider services)
         where TUpdater : class, IUpdater
     {
         CreatePullRequestOptions.AddTo(command);
@@ -17,8 +17,7 @@ internal static class FromGitHubReleaseCommand
         command.SetAction((result, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(result);
-            IServiceProvider services = getServices();
-            var updater = (IGitHubReleaseUpdater)services.GetRequiredService<TUpdater>();
+            var updater = (IGitHubReleaseUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(
