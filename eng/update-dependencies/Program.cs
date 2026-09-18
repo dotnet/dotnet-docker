@@ -147,8 +147,7 @@ static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
     // Process-based git client
     services.AddSingleton<ILocalGitClient, LocalGitClient>();
     // LocalGitClient wants a non-generic ILogger, for some reason.
-    services.AddSingleton<ILogger>(sp =>
-        sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
+    services.AddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
     // Git repo cloner that calls out to the `git` executable. It is lighter on memory
     // than the LibGit2Sharp-based implementation.
     services.AddSingleton<IGitRepoCloner, GitNativeRepoCloner>();
@@ -162,8 +161,7 @@ static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
     services.AddSingleton<IGitRepoHelperFactory, GitRepoHelperFactory>();
 
     // Services needed for BAR build access/updates
-    services.AddSingleton<IBasicBarClient>(_ =>
-        new BarApiClient(null, null, disableInteractiveAuth: true));
+    services.AddSingleton<IBasicBarClient>(_ => new BarApiClient(null, null, disableInteractiveAuth: true));
     services.AddSingleton<IBuildAssetService, BuildAssetService>();
 
     services.AddEnvironmentService();

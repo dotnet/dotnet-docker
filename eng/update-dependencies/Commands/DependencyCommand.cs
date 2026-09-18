@@ -8,8 +8,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class DependencyCommand
 {
-    public static Command Create<TUpdater>(Func<IServiceProvider> getServices)
-        where TUpdater : class, IUpdater
+    public static Command Create<TUpdater>(Func<IServiceProvider> getServices) where TUpdater : class, IUpdater
     {
         var command = new Command(TUpdater.Name, $"Update {TUpdater.Name}");
 
