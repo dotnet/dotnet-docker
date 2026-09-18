@@ -17,7 +17,7 @@ public sealed class DependencyCommandTests
     [Fact]
     public void Create_AddsOnlySupportedSourceCommands()
     {
-        Command command = DependencyCommand.Create<BarUpdater>(ThrowIfResolved);
+        Command command = DependencyCommand.CreateCliCommand<BarUpdater>(ThrowIfResolved);
 
         command.Subcommands.Select(subcommand => subcommand.Name)
             .ShouldBe(["build-id", "channel"]);
@@ -26,7 +26,7 @@ public sealed class DependencyCommandTests
     [Fact]
     public void Create_MakesGitHubReleaseUpdaterDirectlyExecutable()
     {
-        Command command = DependencyCommand.Create<ReleaseUpdater>(ThrowIfResolved);
+        Command command = DependencyCommand.CreateCliCommand<ReleaseUpdater>(ThrowIfResolved);
 
         command.Action.ShouldNotBeNull();
         command.Subcommands.ShouldBeEmpty();
@@ -37,7 +37,7 @@ public sealed class DependencyCommandTests
     {
         var root = new RootCommand
         {
-            DependencyCommand.Create<BarUpdater>(ThrowIfResolved),
+            DependencyCommand.CreateCliCommand<BarUpdater>(ThrowIfResolved),
         };
 
         root.Parse(["sample", "pipeline-build", "123"]).Errors.ShouldNotBeEmpty();
@@ -59,7 +59,7 @@ public sealed class DependencyCommandTests
         static void Check<TUpdater>(string name, string versionSourceName, params string[] sources)
             where TUpdater : class, IUpdater
         {
-            Command command = DependencyCommand.Create<TUpdater>(ThrowIfResolved);
+            Command command = DependencyCommand.CreateCliCommand<TUpdater>(ThrowIfResolved);
 
             command.Name.ShouldBe(name);
             TUpdater.VersionSourceName.ShouldBe(versionSourceName);
@@ -78,10 +78,10 @@ public sealed class DependencyCommandTests
     {
         var root = new RootCommand
         {
-            DependencyCommand.Create<AspireUpdater>(ThrowIfResolved),
-            DependencyCommand.Create<ChiselUpdater>(ThrowIfResolved),
-            DependencyCommand.Create<MonitorUpdater>(ThrowIfResolved),
-            SyncInternalReleaseCommand.Create(ThrowIfResolved),
+            DependencyCommand.CreateCliCommand<AspireUpdater>(ThrowIfResolved),
+            DependencyCommand.CreateCliCommand<ChiselUpdater>(ThrowIfResolved),
+            DependencyCommand.CreateCliCommand<MonitorUpdater>(ThrowIfResolved),
+            SyncInternalReleaseCommand.CreateCliCommand(ThrowIfResolved),
         };
 
         foreach (string[] args in new string[][]
@@ -104,7 +104,7 @@ public sealed class DependencyCommandTests
     [InlineData("channel", "456")]
     public void BarOptions_BindSourceAndCommonValues(string source, string id)
     {
-        Command command = DependencyCommand.Create<AspireUpdater>(ThrowIfResolved);
+        Command command = DependencyCommand.CreateCliCommand<AspireUpdater>(ThrowIfResolved);
         ParseResult result = command.Parse([
             source, id, "--repo-root", "workspace with spaces", "--update-only",
             "--source-branch", "release/11.0", "--target-branch", "nightly"]);
@@ -133,7 +133,7 @@ public sealed class DependencyCommandTests
     [Fact]
     public void MonitorOptions_BindPipelineAndVersionSeparately()
     {
-        Command command = DependencyCommand.Create<MonitorUpdater>(ThrowIfResolved);
+        Command command = DependencyCommand.CreateCliCommand<MonitorUpdater>(ThrowIfResolved);
         ParseResult pipeline = command.Parse(["pipeline-build", "123"]);
         ParseResult version = command.Parse(["version", "9.0.5", "--update-only", "false"]);
         pipeline.Errors.ShouldBeEmpty();
@@ -147,7 +147,7 @@ public sealed class DependencyCommandTests
     [Fact]
     public void StagingAndSyncOptions_BindTheirOwnValues()
     {
-        Command staging = FromStagingPipelineCommand.Create(ThrowIfResolved);
+        Command staging = FromStagingPipelineCommand.CreateCliCommand(ThrowIfResolved);
         ParseResult stagingResult = staging.Parse([
             "stage-123,stage-456", "--staging-storage-account", "dotnetstage",
             "--internal", "--mode", "Remote", "--target-branch", "internal/release/11.0"]);
@@ -160,7 +160,7 @@ public sealed class DependencyCommandTests
         stagingOptions.Mode.ShouldBe(ChangeMode.Remote);
         stagingOptions.TargetBranch.ShouldBe("internal/release/11.0");
 
-        Command sync = SyncInternalReleaseCommand.Create(ThrowIfResolved);
+        Command sync = SyncInternalReleaseCommand.CreateCliCommand(ThrowIfResolved);
         ParseResult syncResult = sync.Parse([
             "--source-branch", "release/11.0", "--target-branch", "internal/release/11.0",
             "--staging-storage-account", "dotnetstage"]);
@@ -175,8 +175,8 @@ public sealed class DependencyCommandTests
     [Fact]
     public void CommonOptions_BindDefaultsWithoutLeakingAcrossCommands()
     {
-        Command first = DependencyCommand.Create<ChiselUpdater>(ThrowIfResolved);
-        Command second = DependencyCommand.Create<SyftUpdater>(ThrowIfResolved);
+        Command first = DependencyCommand.CreateCliCommand<ChiselUpdater>(ThrowIfResolved);
+        Command second = DependencyCommand.CreateCliCommand<SyftUpdater>(ThrowIfResolved);
         var root = new RootCommand { first, second };
         ParseResult firstResult = root.Parse(["chisel", "--repo-root", "first-workspace", "--update-only"]);
         ParseResult secondResult = root.Parse(["syft"]);
@@ -231,7 +231,7 @@ public sealed class DependencyCommandTests
             })
             .AddSingleton<DependencyUpdateRunner>();
         using ServiceProvider provider = services.BuildServiceProvider();
-        Command command = DependencyCommand.Create<RecordingUpdater>(provider);
+        Command command = DependencyCommand.CreateCliCommand<RecordingUpdater>(provider);
         string[] args =
         [
             ..source.Split(' ', StringSplitOptions.RemoveEmptyEntries),

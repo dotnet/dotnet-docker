@@ -36,7 +36,7 @@ internal sealed class SyncInternalReleaseCommand(
     private readonly IEnvironmentService _environmentService = environmentService;
     private readonly ILogger<SyncInternalReleaseCommand> _logger = logger;
 
-    public static Command Create(IServiceProvider services)
+    public static Command CreateCliCommand(IServiceProvider services)
     {
         var command = new Command("sync-internal-release", "Sync release/* branch to internal/release/* branch");
         SyncInternalReleaseOptions.AddTo(command);

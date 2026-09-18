@@ -11,7 +11,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromBuildCommand
 {
-    public static Command Create<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
+    public static Command CreateCliCommand<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command("build-id", "Update from a specific BAR build");
         FromBuildOptions.AddTo(command);

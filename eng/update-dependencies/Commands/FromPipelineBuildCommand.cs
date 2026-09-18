@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromPipelineBuildCommand
 {
-    public static Command Create<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
+    public static Command CreateCliCommand<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command("pipeline-build", "Update from an Azure DevOps pipeline run");
         FromPipelineBuildOptions.AddTo(command);

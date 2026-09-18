@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromChannelCommand
 {
-    public static Command Create<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
+    public static Command CreateCliCommand<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command("channel", "Update from the latest build in a BAR channel");
         FromChannelOptions.AddTo(command);

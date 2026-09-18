@@ -52,10 +52,15 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         _internalVersionsService = internalVersionsService;
         _environmentService = environmentService;
         _buildLabelService = buildLabelService;
-        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(_logger, gitRepoHelperFactory, options, _environmentService, configuration);
+        _createGitRepoContextAsync = options => GitRepoContext.CreateAsync(
+            _logger,
+            gitRepoHelperFactory,
+            options,
+            _environmentService,
+            configuration);
     }
 
-    public static Command Create(IServiceProvider services)
+    public static Command CreateCliCommand(IServiceProvider services)
     {
         var command = new Command("staging-pipeline", "Update .NET from staging pipeline runs");
         FromStagingPipelineOptions.AddTo(command);

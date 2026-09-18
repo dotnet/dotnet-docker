@@ -104,7 +104,7 @@ services.AddSingleton(_ =>
     return client.Repository.Release;
 });
 
-// Updaters and the commands that are resolved when invoked.
+// Updaters
 services.AddSingleton<AspireUpdater>();
 services.AddSingleton<ChiselUpdater>();
 services.AddSingleton<DotNetUpdater>();
@@ -113,6 +113,10 @@ services.AddSingleton<MonitorUpdater>();
 services.AddSingleton<RocksToolboxUpdater>();
 services.AddSingleton<SyftUpdater>();
 
+// Additional commands
+//
+// In addition to being automatically created as part of DependencyCommand.CreateCliCommand, FromStagingPipelineCommand
+// is used in SyncInternalReleaseCommand, so we need to register it here.
 services.AddSingleton<ICommand<FromStagingPipelineOptions>, FromStagingPipelineCommand>();
 services.AddSingleton<SyncInternalReleaseCommand>();
 
@@ -120,14 +124,14 @@ using IHost host = builder.Build();
 
 var rootCommand = new RootCommand("Update dotnet-docker dependencies")
 {
-    DependencyCommand.Create<AspireUpdater>(host.Services),
-    DependencyCommand.Create<ChiselUpdater>(host.Services),
-    DependencyCommand.Create<DotNetUpdater>(host.Services),
-    DependencyCommand.Create<MinGitUpdater>(host.Services),
-    DependencyCommand.Create<MonitorUpdater>(host.Services),
-    DependencyCommand.Create<RocksToolboxUpdater>(host.Services),
-    DependencyCommand.Create<SyftUpdater>(host.Services),
-    SyncInternalReleaseCommand.Create(host.Services),
+    DependencyCommand.CreateCliCommand<AspireUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<ChiselUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<DotNetUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<MinGitUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<MonitorUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<RocksToolboxUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<SyftUpdater>(host.Services),
+    SyncInternalReleaseCommand.CreateCliCommand(host.Services),
 };
 
 return await rootCommand.Parse(args.Length == 0 ? ["--help"] : args).InvokeAsync();

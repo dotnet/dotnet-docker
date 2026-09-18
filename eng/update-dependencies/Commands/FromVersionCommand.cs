@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromVersionCommand
 {
-    public static Command Create<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
+    public static Command CreateCliCommand<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command("version", "Update to a specific version");
         FromVersionOptions.AddTo(command);
