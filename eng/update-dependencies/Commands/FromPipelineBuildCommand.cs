@@ -19,13 +19,10 @@ internal static class FromPipelineBuildCommand
             FromPipelineBuildOptions options = FromPipelineBuildOptions.Bind(result);
             var updater = (IPipelineBuildUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
-            var configuration = services.GetRequiredService<UpdateDependenciesConfiguration>();
-            var build = new PipelineBuildReference(
-                configuration.AzureDevOps.Organization,
-                configuration.AzureDevOps.Project,
-                options.RunId);
 
-            DependencyUpdate update = await updater.ResolveFromPipelineBuildAsync(build, cancellationToken);
+            DependencyUpdate update = await updater.ResolveFromPipelineBuildAsync(
+                options.RunId,
+                cancellationToken);
 
             await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });

@@ -221,14 +221,7 @@ public sealed class DependencyCommandTests
             .AddLogging()
             .AddSingleton(updater)
             .AddSingleton(bar.Object)
-            .AddSingleton(new UpdateDependenciesConfiguration
-            {
-                AzureDevOps = new()
-                {
-                    Organization = "https://dev.azure.com/configured-org",
-                    Project = "configured-project",
-                },
-            })
+            .AddSingleton(new UpdateDependenciesConfiguration())
             .AddSingleton<DependencyUpdateRunner>();
         using ServiceProvider provider = services.BuildServiceProvider();
         Command command = DependencyCommand.CreateCliCommand<RecordingUpdater>(provider);
@@ -244,11 +237,6 @@ public sealed class DependencyCommandTests
         updater.Calls.ShouldBe(1);
         ManifestVariables.FromFile(manifestPath).GetRawValue("source").ShouldBe(expected);
         File.ReadAllLines(Path.Combine(repo.LocalPath, "generated.txt")).Length.ShouldBe(2);
-        if (source.StartsWith("pipeline-build"))
-        {
-            updater.Pipeline.ShouldBe(new PipelineBuildReference(
-                "https://dev.azure.com/configured-org", "configured-project", 789));
-        }
     }
 
     [Fact]
@@ -307,7 +295,6 @@ public sealed class DependencyCommandTests
         public static string VersionSourceName => "sample/source";
 
         public int Calls { get; private set; }
-        public PipelineBuildReference? Pipeline { get; private set; }
 
         public Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken) =>
             Record($"build:{build.Id}");
@@ -316,11 +303,8 @@ public sealed class DependencyCommandTests
             Record($"channel:{channelId}");
 
         public Task<DependencyUpdate> ResolveFromPipelineBuildAsync(
-            PipelineBuildReference build, CancellationToken cancellationToken)
-        {
-            Pipeline = build;
-            return Record($"pipeline:{build.RunId}");
-        }
+            int pipelineRunId, CancellationToken cancellationToken) =>
+            Record($"pipeline:{pipelineRunId}");
 
         public Task<DependencyUpdate> ResolveFromVersionAsync(string version, CancellationToken cancellationToken) =>
             Record($"version:{version}");

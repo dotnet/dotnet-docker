@@ -10,6 +10,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 public sealed class MonitorUpdater(
     IPipelineArtifactProvider pipelineArtifactProvider,
     HttpClient httpClient,
+    UpdateDependenciesConfiguration configuration,
     ILogger<MonitorUpdater> logger)
         : IPipelineBuildUpdater, IVersionUpdater
 {
@@ -25,20 +26,24 @@ public sealed class MonitorUpdater(
     ];
 
     public async Task<DependencyUpdate> ResolveFromPipelineBuildAsync(
-        PipelineBuildReference build,
+        int pipelineRunId,
         CancellationToken cancellationToken)
     {
-        string version = await GetVersionFromPipelineAsync(build, cancellationToken);
+        string version = await GetVersionFromPipelineAsync(pipelineRunId, cancellationToken);
         return await ResolveFromVersionAsync(version, cancellationToken);
     }
 
-    public async Task<string> GetVersionFromPipelineAsync(
-        PipelineBuildReference build,
+    private async Task<string> GetVersionFromPipelineAsync(
+        int pipelineRunId,
         CancellationToken cancellationToken)
     {
         var versionFile = new PipelineArtifactFile("Build_Info", "dotnet-monitor.nupkg.buildversion");
         string version = await pipelineArtifactProvider
-            .GetArtifactTextContentAsync(build.Organization, build.Project, build.RunId, versionFile)
+            .GetArtifactTextContentAsync(
+                configuration.AzureDevOps.Organization,
+                configuration.AzureDevOps.Project,
+                pipelineRunId,
+                versionFile)
             .WaitAsync(cancellationToken);
 
         return version.Trim();

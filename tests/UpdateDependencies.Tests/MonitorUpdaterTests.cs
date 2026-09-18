@@ -47,7 +47,7 @@ public sealed class MonitorUpdaterTests
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var handler = new ChecksumHandler(publishedChecksum ? HttpStatusCode.OK : HttpStatusCode.NotFound);
         using var httpClient = new HttpClient(handler);
-        var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
+        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
         await (await updater.ResolveFromVersionAsync(version, TestContext.Current.CancellationToken))
             .ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
 
@@ -97,6 +97,7 @@ public sealed class MonitorUpdaterTests
             .AddSingleton(artifacts.Object)
             .AddSingleton(httpClient)
             .AddLogging()
+            .AddSingleton(CreateConfiguration())
             .AddSingleton<MonitorUpdater>()
             .BuildServiceProvider();
         var versionUpdater = services.GetRequiredService<MonitorUpdater>();
@@ -106,7 +107,7 @@ public sealed class MonitorUpdaterTests
         var variables = CreateVariables(pinnedChecksums: false);
 
         await (await pipelineUpdater.ResolveFromPipelineBuildAsync(
-                new PipelineBuildReference("organization", "project", 42),
+                42,
                 TestContext.Current.CancellationToken))
             .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
@@ -123,7 +124,7 @@ public sealed class MonitorUpdaterTests
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var handler = new ChecksumHandler();
         using var httpClient = new HttpClient(handler);
-        var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
+        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
         var first = CreateVariables(pinnedChecksums: false);
         var second = CreateVariables(pinnedChecksums: false);
 
@@ -149,7 +150,7 @@ public sealed class MonitorUpdaterTests
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var handler = new ChecksumHandler(checksum: string.Concat(Enumerable.Repeat(value, repeat)));
         using var httpClient = new HttpClient(handler);
-        var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
+        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
         var variables = CreateVariables();
 
         var exception = await Should.ThrowAsync<FormatException>(async () =>
@@ -169,7 +170,7 @@ public sealed class MonitorUpdaterTests
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var handler = new ChecksumHandler(status);
         using var httpClient = new HttpClient(handler);
-        var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
+        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
 
         await Should.ThrowAsync<HttpRequestException>(async () =>
             await (await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken))
@@ -185,7 +186,7 @@ public sealed class MonitorUpdaterTests
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         using var handler = new ChecksumHandler(HttpStatusCode.NotFound, archiveStatus: HttpStatusCode.NotFound);
         using var httpClient = new HttpClient(handler);
-        var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
+        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
 
         var exception = await Should.ThrowAsync<InvalidOperationException>(async () =>
             await (await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken))
@@ -202,7 +203,7 @@ public sealed class MonitorUpdaterTests
         using var cancellation = new CancellationTokenSource();
         using var handler = new ChecksumHandler(cancellation: cancellation);
         using var httpClient = new HttpClient(handler);
-        var updater = new MonitorUpdater(artifacts.Object, httpClient, Mock.Of<ILogger<MonitorUpdater>>());
+        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
 
         await Should.ThrowAsync<OperationCanceledException>(async () =>
             await (await updater.ResolveFromVersionAsync("9.0.5", cancellation.Token))
@@ -211,6 +212,9 @@ public sealed class MonitorUpdaterTests
         handler.Requests.Count.ShouldBe(1);
         artifacts.VerifyNoOtherCalls();
     }
+
+    private static UpdateDependenciesConfiguration CreateConfiguration() =>
+        new() { AzureDevOps = new() { Organization = "organization", Project = "project" } };
 
     private static ManifestVariables CreateVariables(string branch = "nightly", bool pinnedChecksums = true)
     {
