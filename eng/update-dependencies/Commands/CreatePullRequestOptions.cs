@@ -10,16 +10,17 @@ public record CreatePullRequestOptions
     public string RepoRoot { get; set; } = Directory.GetCurrentDirectory();
     public string SourceBranch { get; set; } = "";
     public string TargetBranch { get; set; } = "nightly";
-    public bool UpdateOnly { get; set; }
+    public bool SubmitPullRequest { get; set; }
 
     private static readonly Option<string> s_repoRoot = new("--repo-root")
     {
         Description = "The root of the dotnet-docker repo to run against (defaults to current working directory)",
         DefaultValueFactory = _ => Directory.GetCurrentDirectory(),
     };
-    private static readonly Option<bool> s_updateOnly = new("--update-only")
+    private static readonly Option<bool> s_submitPullRequest = new("--submit-pr")
     {
-        Description = "Apply updates locally without creating a pull request",
+        Description = "Apply updates in a temporary clone and submit a pull request with them."
+            + " By default, updates are applied to the local repo and no git operations are run.",
     };
     private static readonly Option<string> s_sourceBranch = new("--source-branch")
     {
@@ -35,7 +36,7 @@ public record CreatePullRequestOptions
     public static void AddTo(Command command)
     {
         command.Options.Add(s_repoRoot);
-        command.Options.Add(s_updateOnly);
+        command.Options.Add(s_submitPullRequest);
         command.Options.Add(s_sourceBranch);
         command.Options.Add(s_targetBranch);
     }
@@ -47,7 +48,7 @@ public record CreatePullRequestOptions
         where TOptions : CreatePullRequestOptions
     {
         options.RepoRoot = result.GetRequiredValue(s_repoRoot);
-        options.UpdateOnly = result.GetValue(s_updateOnly);
+        options.SubmitPullRequest = result.GetValue(s_submitPullRequest);
         options.SourceBranch = result.GetRequiredValue(s_sourceBranch);
         options.TargetBranch = result.GetRequiredValue(s_targetBranch);
         return options;

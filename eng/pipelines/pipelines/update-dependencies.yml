@@ -26,10 +26,10 @@ parameters:
 - name: updateAspire
   type: boolean
   default: true
-# Whether to apply updates without publishing a pull request
-- name: updateOnly
+# Whether to submit a pull request with the updates instead of applying them locally
+- name: submitPullRequest
   type: boolean
-  default: true
+  default: false
 # Configuration environment variables passed to update-dependencies
 - name: updateEnvironment
   type: object
@@ -58,7 +58,7 @@ extends:
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                   dotnet channel
                   ${{ parameters.vmrChannel }}
-                  --update-only ${{ parameters.updateOnly }}
+                  --submit-pr ${{ parameters.submitPullRequest }}
               env: ${{ parameters.updateEnvironment }}
 
       - ${{ if parameters.updateAspire }}:
@@ -76,7 +76,7 @@ extends:
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                   aspire channel
                   ${{ parameters.aspireChannel }}
-                  --update-only ${{ parameters.updateOnly }}
+                  --submit-pr ${{ parameters.submitPullRequest }}
               env: ${{ parameters.updateEnvironment }}
 
       - ${{ each tool in parameters.tools }}:
@@ -87,6 +87,6 @@ extends:
             - powershell: >-
                 dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                 ${{ tool }}
-                --update-only ${{ parameters.updateOnly }}
+                --submit-pr ${{ parameters.submitPullRequest }}
               displayName: Update ${{ tool }}
               env: ${{ parameters.updateEnvironment }}

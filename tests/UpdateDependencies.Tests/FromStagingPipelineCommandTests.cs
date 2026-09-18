@@ -34,7 +34,6 @@ public sealed class FromStagingPipelineCommandTests
             StageContainers = stageContainer,
             Internal = true,
             StagingStorageAccount = "https://dotnetstagetest.blob.core.windows.net/",
-            Mode = ChangeMode.Local,
             RepoRoot = repo.LocalPath
         };
 
@@ -58,7 +57,6 @@ public sealed class FromStagingPipelineCommandTests
         {
             StageContainers = "stage-1234567",
             Internal = false,
-            Mode = ChangeMode.Local,
             RepoRoot = repo.LocalPath
         };
 

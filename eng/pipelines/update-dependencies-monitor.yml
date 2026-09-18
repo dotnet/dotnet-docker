@@ -41,8 +41,8 @@ stages:
           "monitor"
           "pipeline-build"
           "$(resources.pipeline.dotnet-monitor.runID)"
-          "--update-only"
-          "${{ parameters.skipPullRequest }}"
+          "--submit-pr"
+          "${{ not(parameters.skipPullRequest) }}"
         )
 
         dotnet run --project "$(engPath)/update-dependencies/update-dependencies.csproj" -- @updateArgs

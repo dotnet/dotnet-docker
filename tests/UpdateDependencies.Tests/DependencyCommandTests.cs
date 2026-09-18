@@ -106,7 +106,7 @@ public sealed class DependencyCommandTests
     {
         Command command = DependencyCommand.CreateCliCommand<AspireUpdater>(ThrowIfResolved);
         ParseResult result = command.Parse([
-            source, id, "--repo-root", "workspace with spaces", "--update-only",
+            source, id, "--repo-root", "workspace with spaces", "--submit-pr",
             "--source-branch", "release/11.0", "--target-branch", "nightly"]);
         result.Errors.ShouldBeEmpty();
 
@@ -125,7 +125,7 @@ public sealed class DependencyCommandTests
         }
 
         options.RepoRoot.ShouldBe("workspace with spaces");
-        options.UpdateOnly.ShouldBeTrue();
+        options.SubmitPullRequest.ShouldBeTrue();
         options.SourceBranch.ShouldBe("release/11.0");
         options.TargetBranch.ShouldBe("nightly");
     }
@@ -135,13 +135,13 @@ public sealed class DependencyCommandTests
     {
         Command command = DependencyCommand.CreateCliCommand<MonitorUpdater>(ThrowIfResolved);
         ParseResult pipeline = command.Parse(["pipeline-build", "123"]);
-        ParseResult version = command.Parse(["version", "9.0.5", "--update-only", "false"]);
+        ParseResult version = command.Parse(["version", "9.0.5", "--submit-pr", "false"]);
         pipeline.Errors.ShouldBeEmpty();
         version.Errors.ShouldBeEmpty();
 
         FromPipelineBuildOptions.Bind(pipeline).RunId.ShouldBe(123);
         FromVersionOptions.Bind(version).Version.ShouldBe("9.0.5");
-        FromVersionOptions.Bind(version).UpdateOnly.ShouldBeFalse();
+        FromVersionOptions.Bind(version).SubmitPullRequest.ShouldBeFalse();
     }
 
     [Fact]
@@ -150,14 +150,14 @@ public sealed class DependencyCommandTests
         Command staging = FromStagingPipelineCommand.CreateCliCommand(ThrowIfResolved);
         ParseResult stagingResult = staging.Parse([
             "stage-123,stage-456", "--staging-storage-account", "dotnetstage",
-            "--internal", "--mode", "Remote", "--target-branch", "internal/release/11.0"]);
+            "--internal", "--submit-pr", "--target-branch", "internal/release/11.0"]);
         stagingResult.Errors.ShouldBeEmpty();
         FromStagingPipelineOptions stagingOptions = FromStagingPipelineOptions.Bind(stagingResult);
 
         stagingOptions.GetStageContainerList().ShouldBe(["stage-123", "stage-456"]);
         stagingOptions.StagingStorageAccount.ShouldBe("dotnetstage");
         stagingOptions.Internal.ShouldBeTrue();
-        stagingOptions.Mode.ShouldBe(ChangeMode.Remote);
+        stagingOptions.SubmitPullRequest.ShouldBeTrue();
         stagingOptions.TargetBranch.ShouldBe("internal/release/11.0");
 
         Command sync = SyncInternalReleaseCommand.CreateCliCommand(ThrowIfResolved);
@@ -178,15 +178,15 @@ public sealed class DependencyCommandTests
         Command first = DependencyCommand.CreateCliCommand<ChiselUpdater>(ThrowIfResolved);
         Command second = DependencyCommand.CreateCliCommand<SyftUpdater>(ThrowIfResolved);
         var root = new RootCommand { first, second };
-        ParseResult firstResult = root.Parse(["chisel", "--repo-root", "first-workspace", "--update-only"]);
+        ParseResult firstResult = root.Parse(["chisel", "--repo-root", "first-workspace", "--submit-pr"]);
         ParseResult secondResult = root.Parse(["syft"]);
         firstResult.Errors.ShouldBeEmpty();
         secondResult.Errors.ShouldBeEmpty();
 
-        CreatePullRequestOptions.Bind(firstResult).UpdateOnly.ShouldBeTrue();
+        CreatePullRequestOptions.Bind(firstResult).SubmitPullRequest.ShouldBeTrue();
         CreatePullRequestOptions defaults = CreatePullRequestOptions.Bind(secondResult);
         defaults.RepoRoot.ShouldBe(Directory.GetCurrentDirectory());
-        defaults.UpdateOnly.ShouldBeFalse();
+        defaults.SubmitPullRequest.ShouldBeFalse();
         defaults.SourceBranch.ShouldBe("");
         defaults.TargetBranch.ShouldBe("nightly");
     }
@@ -197,7 +197,7 @@ public sealed class DependencyCommandTests
     [InlineData("pipeline-build 789", "pipeline:789")]
     [InlineData("version 9.0.5", "version:9.0.5")]
     [InlineData("", "release")]
-    public async Task SourceCommands_UpdateOnlyDoesNotRequirePublishingCredentials(string source, string expected)
+    public async Task SourceCommands_LocalUpdateDoesNotRequirePublishingCredentials(string source, string expected)
     {
         using var repo = new TempRepo();
         string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
@@ -235,7 +235,7 @@ public sealed class DependencyCommandTests
         string[] args =
         [
             ..source.Split(' ', StringSplitOptions.RemoveEmptyEntries),
-            "--repo-root", repo.LocalPath, "--update-only",
+            "--repo-root", repo.LocalPath,
         ];
 
         int exitCode = await command.Parse(args).InvokeAsync(cancellationToken: TestContext.Current.CancellationToken);
@@ -252,7 +252,7 @@ public sealed class DependencyCommandTests
     }
 
     [Fact]
-    public async Task RunAsync_NormalModeRequiresPublishingCredentials()
+    public async Task RunAsync_SubmitPullRequestRequiresPublishingCredentials()
     {
         var services = new ServiceCollection()
             .AddLogging()
@@ -262,7 +262,7 @@ public sealed class DependencyCommandTests
         var runner = provider.GetRequiredService<DependencyUpdateRunner>();
 
         await Should.ThrowAsync<ArgumentException>(() => runner.RunAsync(
-            new CreatePullRequestOptions(),
+            new CreatePullRequestOptions { SubmitPullRequest = true },
             "sample/source",
             new DependencyUpdate("Update sample", (_, _, _) => Task.CompletedTask),
             TestContext.Current.CancellationToken));

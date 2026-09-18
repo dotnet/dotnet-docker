@@ -52,7 +52,7 @@ extends:
     updateAspire: ${{ parameters.updateAspire }}
     aspireChannel: $(aspireChannel)
     tools: ${{ parameters.tools }}
-    updateOnly: ${{ parameters.skipPullRequest }}
+    submitPullRequest: ${{ not(parameters.skipPullRequest) }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
       updateEnvironment:
         UpdateDependencies__User: $(dotnetDockerBot.userName)

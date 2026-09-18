@@ -226,7 +226,7 @@ The following examples illustrate how to run `update-dependencies`:
     `UpdateDependencies:AzureDevOps` section in `appsettings*.json`.
     Build access uses `SYSTEM_ACCESSTOKEN` in pipelines or Azure Developer CLI credentials locally.
     Supplying a version directly does not require Azure DevOps authentication.
-    Use `--update-only` to apply changes locally without publishing a pull request.
+    Use `--submit-pr` to publish a pull request instead of updating the local repo.
 
 - Update Aspire Dashboard from a BAR build
 
@@ -242,7 +242,7 @@ The following examples illustrate how to run `update-dependencies`:
 
     These are BAR IDs, not Azure DevOps pipeline run IDs.
     The command selects the Aspire repository automatically.
-    Use `--update-only` to apply changes locally without publishing a pull request.
+    Use `--submit-pr` to publish a pull request instead of updating the local repo.
 
 - Update a tool from its latest GitHub release
 

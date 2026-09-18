@@ -46,7 +46,7 @@ extends:
                 dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                 dotnet staging-pipeline
                 "${{ parameters.stageContainers }}"
-                --mode Remote
+                --submit-pr
                 --internal
                 --staging-storage-account ${{ parameters.stagingStorageAccount }}
                 --target-branch "${{ parameters.targetBranch }}"

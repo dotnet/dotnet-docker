@@ -23,11 +23,6 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions
     public bool Internal { get; init; } = false;
 
     /// <summary>
-    /// The mode in which to run the command.
-    /// </summary>
-    public ChangeMode Mode { get; init; } = ChangeMode.Local;
-
-    /// <summary>
     /// This Azure Storage Account will be used as a source for the update.
     /// This should be one of two storage accounts: dotnetstagetest or dotnetstage.
     /// </summary>
@@ -51,13 +46,6 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions
             + " internal build, Dockerfiles will be updated with internal download links and will only be buildable"
             + " by using an internal Azure DevOps access token.",
     };
-    private static readonly Option<ChangeMode> s_mode = new("--mode")
-    {
-        Description = "The mode in which to run the command. Local mode makes changes directly to the local repo"
-            + " without running any Git operations. Remote mode makes changes to a remote repo and submits a pull"
-            + " request with the changes.",
-        DefaultValueFactory = _ => ChangeMode.Local,
-    };
 
     public static new void AddTo(Command command)
     {
@@ -65,7 +53,6 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions
         command.Arguments.Add(s_stageContainers);
         command.Options.Add(StagingStorageAccountOption);
         command.Options.Add(s_internal);
-        command.Options.Add(s_mode);
     }
 
     public static new FromStagingPipelineOptions Bind(ParseResult result) =>
@@ -74,7 +61,6 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions
             StageContainers = result.GetRequiredValue(s_stageContainers),
             StagingStorageAccount = result.GetRequiredValue(StagingStorageAccountOption),
             Internal = result.GetValue(s_internal),
-            Mode = result.GetValue(s_mode),
         });
 
     /// <summary>

@@ -264,7 +264,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         /// then use <see cref="PushAndCreatePullRequest"/> to push all commits and create a pull request.
         /// </summary>
         /// <remarks>
-        /// If <see cref="FromStagingPipelineOptions.Mode"/> is <see cref="ChangeMode.Local"/>,
+        /// If <see cref="CreatePullRequestOptions.SubmitPullRequest"/> is false,
         /// no git operations will be performed.
         /// </remarks>
         public static async Task<GitRepoContext> CreateAsync(
@@ -278,7 +278,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
             PushAndCreatePullRequest pushAndCreatePullRequest;
             string localRepoPath;
 
-            if (options.Mode == ChangeMode.Remote)
+            if (options.SubmitPullRequest)
             {
                 var remoteUrl = configuration.AzureDevOps.GetRepoUrl();
                 var targetBranch = options.TargetBranch;
@@ -322,18 +322,18 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
             }
             else
             {
-                logger.LogInformation("No git operations will be performed in {Mode} mode.", options.Mode);
+                logger.LogInformation("No git operations will be performed.");
                 localRepoPath = options.RepoRoot;
 
                 commitChanges = async (commitMessage) =>
                 {
-                    logger.LogInformation("Skipping commit in {Mode} mode.", options.Mode);
+                    logger.LogInformation("Skipping commit.");
                     logger.LogInformation("Commit message: {CommitMessage}", commitMessage);
                 };
 
                 pushAndCreatePullRequest = async (prTitle, prBody) =>
                 {
-                    logger.LogInformation("Skipping push and pull request creation in {Mode} mode.", options.Mode);
+                    logger.LogInformation("Skipping push and pull request creation.");
                     logger.LogInformation("Pull request title: {PullRequestTitle}", prTitle);
                     logger.LogInformation("Pull request body:\n{PullRequestBody}", prBody);
                 };

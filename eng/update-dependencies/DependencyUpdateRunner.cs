@@ -23,7 +23,7 @@ public sealed class DependencyUpdateRunner(
         DependencyUpdate update,
         CancellationToken cancellationToken)
     {
-        if (options.UpdateOnly)
+        if (!options.SubmitPullRequest)
         {
             await ApplyAsync(options.RepoRoot, update.ApplyAsync, cancellationToken);
             return;
