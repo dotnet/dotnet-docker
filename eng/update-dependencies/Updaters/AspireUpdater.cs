@@ -13,9 +13,11 @@ public sealed class AspireUpdater(
     ILogger<AspireUpdater> logger)
         : IBarBuildUpdater, IBarChannelUpdater
 {
-    public const string Key = "aspire";
     public const string PublicRepository = "https://github.com/microsoft/aspire";
     public const string InternalRepository = "https://dev.azure.com/dnceng/internal/_git/microsoft-aspire";
+
+    public static string Name => "aspire";
+    public static string VersionSourceName => "microsoft/aspire";
 
     public static bool IsAspireBuild(Build build)
     {

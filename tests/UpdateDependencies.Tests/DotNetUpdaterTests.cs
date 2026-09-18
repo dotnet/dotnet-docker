@@ -42,12 +42,12 @@ public sealed class DotNetUpdaterTests
         }
         var updater = CreateUpdater(bar: bar.Object);
         using var services = new ServiceCollection()
-            .AddKeyedSingleton<IUpdater>(DotNetUpdater.Key, updater)
+            .AddSingleton(updater)
             .BuildServiceProvider();
 
-        var registeredUpdater = services.GetRequiredKeyedService<IUpdater>(DotNetUpdater.Key);
-        ((IBarBuildUpdater)registeredUpdater)
-            .ShouldBeSameAs((IBarChannelUpdater)registeredUpdater);
+        var registeredUpdater = services.GetRequiredService<DotNetUpdater>();
+        registeredUpdater.ShouldBeSameAs(updater);
+        Assert.Same((IBarBuildUpdater)registeredUpdater, (IBarChannelUpdater)registeredUpdater);
         if (fromChannel)
         {
             await ((IBarChannelUpdater)registeredUpdater).UpdateFromBarChannelAsync(

@@ -22,27 +22,19 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AzureDevOpsClient = Microsoft.DotNet.DarcLib.AzureDevOpsClient;
 
-UpdaterRegistration[] updaters =
-[
-    new(AspireUpdater.Key, "microsoft/aspire", typeof(AspireUpdater)),
-    new(ChiselUpdater.ToolName, ChiselUpdater.ToolName, typeof(ChiselUpdater)),
-    new(DotNetUpdater.Key, "dotnet/dotnet", typeof(DotNetUpdater)),
-    new(MinGitUpdater.ToolName, MinGitUpdater.ToolName, typeof(MinGitUpdater)),
-    new("monitor", "dotnet/dotnet-monitor", typeof(MonitorUpdater)),
-    new(RocksToolboxUpdater.ToolName, RocksToolboxUpdater.ToolName, typeof(RocksToolboxUpdater)),
-    new(SyftUpdater.ToolName, SyftUpdater.ToolName, typeof(SyftUpdater)),
-];
-
+var updaterServices = new ServiceCollection();
 IHost? host = null;
 
 var rootCommand = new RootCommand("Update dotnet-docker dependencies");
-IServiceProvider GetServices() => (host ??= CreateHost(updaters)).Services;
+IServiceProvider GetServices() => (host ??= CreateHost(updaterServices)).Services;
 
-foreach (UpdaterRegistration updater in updaters)
-{
-    Command command = DependencyCommand.Create(updater, GetServices);
-    rootCommand.Subcommands.Add(command);
-}
+AddUpdater<AspireUpdater>();
+AddUpdater<ChiselUpdater>();
+AddUpdater<DotNetUpdater>();
+AddUpdater<MinGitUpdater>();
+AddUpdater<MonitorUpdater>();
+AddUpdater<RocksToolboxUpdater>();
+AddUpdater<SyftUpdater>();
 
 rootCommand.Subcommands.Add(SyncInternalReleaseCommand.Create(GetServices));
 
@@ -56,7 +48,13 @@ finally
     host?.Dispose();
 }
 
-static IHost CreateHost(IEnumerable<UpdaterRegistration> updaters)
+void AddUpdater<TUpdater>() where TUpdater : class, IUpdater
+{
+    updaterServices.AddSingleton<TUpdater>();
+    rootCommand.Subcommands.Add(DependencyCommand.Create<TUpdater>(GetServices));
+}
+
+static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
 {
     var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
     {
@@ -186,10 +184,9 @@ static IHost CreateHost(IEnumerable<UpdaterRegistration> updaters)
     });
 
     // Each dependency has one singleton, exposing only its supported update capabilities.
-    foreach (UpdaterRegistration updater in updaters)
+    foreach (ServiceDescriptor updater in updaterServices)
     {
-        services.AddSingleton(updater.Type);
-        services.AddSingleton(typeof(IUpdater), sp => sp.GetRequiredService(updater.Type));
+        services.Add(updater);
     }
 
     // Commands

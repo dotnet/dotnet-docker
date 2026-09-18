@@ -8,12 +8,11 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 public sealed class SyftUpdater(IReleasesClient releases) : IGitHubReleaseUpdater
 {
     public const string Owner = "anchore";
-
     public const string Repo = "syft";
-
-    public const string ToolName = Repo;
-
     public const string VariableName = "syft|version";
+
+    public static string Name => "syft";
+    public static string VersionSourceName => Name;
 
     public async Task UpdateFromGitHubReleaseAsync(
         ManifestVariables variables,

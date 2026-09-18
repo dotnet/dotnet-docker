@@ -16,7 +16,7 @@ namespace UpdateDependencies.Tests;
 public sealed class AspireUpdaterTests
 {
     [Fact]
-    public async Task Channel_UpdatesSharedEditorUsingOneKeyedSingleton()
+    public async Task Channel_UpdatesSharedEditorUsingOneSingleton()
     {
         var build = CreateBuild();
         var barClient = new Mock<IBasicBarClient>(MockBehavior.Strict);
@@ -27,12 +27,13 @@ public sealed class AspireUpdaterTests
             .AddSingleton(barClient.Object)
             .AddSingleton(httpClient)
             .AddLogging()
-            .AddKeyedSingleton<IUpdater, AspireUpdater>("aspire")
+            .AddSingleton<AspireUpdater>()
             .BuildServiceProvider();
-        var updater = services.GetRequiredKeyedService<IUpdater>("aspire");
+        var updater = services.GetRequiredService<AspireUpdater>();
         var channelUpdater = (IBarChannelUpdater)updater;
         var buildUpdater = (IBarBuildUpdater)updater;
-        channelUpdater.ShouldBeSameAs(buildUpdater);
+        Assert.Same(buildUpdater, channelUpdater);
+        updater.ShouldBeSameAs(services.GetRequiredService<AspireUpdater>());
         var variables = CreateVariables();
         variables.SetValue("aspire-dashboard|base-url|nightly", "https://example.invalid/shared-editor");
         await channelUpdater.UpdateFromBarChannelAsync(

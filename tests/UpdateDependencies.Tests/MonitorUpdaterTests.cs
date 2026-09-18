@@ -82,7 +82,7 @@ public sealed class MonitorUpdaterTests
     }
 
     [Fact]
-    public async Task Pipeline_ResolvesVersionUsingSameKeyedSingletonAsExplicitVersion()
+    public async Task Pipeline_ResolvesVersionUsingSameSingletonAsExplicitVersion()
     {
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         PipelineArtifactFile[] expectedFiles = [new("Build_Info", "dotnet-monitor.nupkg.buildversion")];
@@ -96,11 +96,12 @@ public sealed class MonitorUpdaterTests
             .AddSingleton(artifacts.Object)
             .AddSingleton(httpClient)
             .AddLogging()
-            .AddKeyedSingleton<IUpdater, MonitorUpdater>("monitor")
+            .AddSingleton<MonitorUpdater>()
             .BuildServiceProvider();
-        var versionUpdater = (MonitorUpdater)services.GetRequiredKeyedService<IUpdater>("monitor");
+        var versionUpdater = services.GetRequiredService<MonitorUpdater>();
         var pipelineUpdater = (IPipelineBuildUpdater)versionUpdater;
-        pipelineUpdater.ShouldBeSameAs(versionUpdater);
+        Assert.Same(versionUpdater, pipelineUpdater);
+        versionUpdater.ShouldBeSameAs(services.GetRequiredService<MonitorUpdater>());
         var variables = CreateVariables(pinnedChecksums: false);
 
         await pipelineUpdater.UpdateFromPipelineBuildAsync(

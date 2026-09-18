@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromVersionCommand
 {
-    public static Command Create(UpdaterRegistration registration, Func<IServiceProvider> getServices)
+    public static Command Create<TUpdater>(Func<IServiceProvider> getServices) where TUpdater : class, IUpdater
     {
         var command = new Command("version", "Update to a specific version");
         FromVersionOptions.AddTo(command);
@@ -18,12 +18,12 @@ internal static class FromVersionCommand
         {
             FromVersionOptions options = FromVersionOptions.Bind(result);
             IServiceProvider services = getServices();
-            var updater = (IVersionUpdater)services.GetRequiredService(registration.Type);
+            var updater = (IVersionUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(
                 options,
-                registration.VersionSourceName,
+                TUpdater.VersionSourceName,
                 (variables, _, token) => updater.UpdateFromVersionAsync(variables, options.Version, token),
                 cancellationToken);
         });

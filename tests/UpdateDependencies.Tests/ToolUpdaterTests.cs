@@ -1,14 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.CommandLine;
 using System.Net;
 using System.Text.Json;
 using Microsoft.DotNet.Docker.UpdateDependencies;
-using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Octokit;
 using Octokit.Internal;
 
@@ -37,9 +33,7 @@ public sealed class ToolUpdaterTests
         releases.Setup(source => source.GetLatest(owner, repo)).ReturnsAsync(CreateRelease());
         using var handler = new ChecksumHandler([]);
         using var httpClient = new HttpClient(handler);
-        using var services = CreateServices(releases.Object, httpClient);
-        var registeredUpdater = services.GetRequiredKeyedService<IUpdater>(tool);
-        var updater = (IGitHubReleaseUpdater)registeredUpdater;
+        IGitHubReleaseUpdater updater = CreateUpdater(tool, releases.Object, httpClient);
 
         await updater.UpdateFromGitHubReleaseAsync(variables, token);
 
@@ -69,8 +63,7 @@ public sealed class ToolUpdaterTests
             It.IsAny<string>(), It.IsAny<string>())).ReturnsAsync(new Release());
         using var handler = new ChecksumHandler([]);
         using var httpClient = new HttpClient(handler);
-        using var services = CreateServices(releases.Object, httpClient);
-        var updater = (IGitHubReleaseUpdater)services.GetRequiredKeyedService<IUpdater>(tool);
+        IGitHubReleaseUpdater updater = CreateUpdater(tool, releases.Object, httpClient);
 
         foreach (string? value in new string?[] { null, "", "$(alias)" })
         {
@@ -155,39 +148,27 @@ public sealed class ToolUpdaterTests
             """);
         ManifestVariables? sharedVariables = null;
         var calls = new List<string>();
-        var first = new Mock<IGitHubReleaseUpdater>();
-        first.Setup(updater => updater.UpdateFromGitHubReleaseAsync(
-            It.IsAny<ManifestVariables>(), It.IsAny<CancellationToken>()))
-            .Returns(async (ManifestVariables variables, CancellationToken cancellationToken) =>
-            {
-                sharedVariables = variables;
-                variables.SetValue("first", "new-first");
-                await Task.Yield();
-                calls.Add("first");
-            });
-        var second = new Mock<IGitHubReleaseUpdater>();
-        second.Setup(updater => updater.UpdateFromGitHubReleaseAsync(
-            It.IsAny<ManifestVariables>(), It.IsAny<CancellationToken>()))
-            .Returns((ManifestVariables variables, CancellationToken cancellationToken) =>
-            {
-                variables.ShouldBeSameAs(sharedVariables);
-                variables.GetRawValue("first").ShouldBe("new-first");
-                File.ReadAllText(workspace.ManifestPath).ShouldBe(original);
-                calls.ShouldBe(["first"]);
-                variables.SetValue("second", "new-second");
-                calls.Add("second");
-                return Task.CompletedTask;
-            });
-        using ServiceProvider services = new ServiceCollection()
-            .AddKeyedSingleton<IUpdater>("first", first.Object)
-            .AddKeyedSingleton<IUpdater>("second", second.Object)
-            .BuildServiceProvider();
+        var first = new CallbackUpdater(async (variables, cancellationToken) =>
+        {
+            sharedVariables = variables;
+            variables.SetValue("first", "new-first");
+            await Task.Yield();
+            calls.Add("first");
+        });
+        var second = new CallbackUpdater((variables, cancellationToken) =>
+        {
+            variables.ShouldBeSameAs(sharedVariables);
+            variables.GetRawValue("first").ShouldBe("new-first");
+            File.ReadAllText(workspace.ManifestPath).ShouldBe(original);
+            calls.ShouldBe(["first"]);
+            variables.SetValue("second", "new-second");
+            calls.Add("second");
+            return Task.CompletedTask;
+        });
         await DependencyUpdateRunner.ApplyAsync(workspace.Root, async (variables, _, token) =>
         {
-            await ((IGitHubReleaseUpdater)services.GetRequiredKeyedService<IUpdater>("first"))
-                .UpdateFromGitHubReleaseAsync(variables, token);
-            await ((IGitHubReleaseUpdater)services.GetRequiredKeyedService<IUpdater>("second"))
-                .UpdateFromGitHubReleaseAsync(variables, token);
+            await first.UpdateFromGitHubReleaseAsync(variables, token);
+            await second.UpdateFromGitHubReleaseAsync(variables, token);
         }, TestContext.Current.CancellationToken);
 
         calls.ShouldBe(["first", "second"]);
@@ -198,15 +179,24 @@ public sealed class ToolUpdaterTests
         File.ReadAllLines(Path.Combine(workspace.Root, "readme-generations.txt")).ShouldBe(["generated"]);
     }
 
-    private static ServiceProvider CreateServices(IReleasesClient releases, HttpClient httpClient) =>
-        new ServiceCollection()
-            .AddSingleton(releases)
-            .AddSingleton(httpClient)
-            .AddKeyedSingleton<IUpdater, ChiselUpdater>(ChiselUpdater.ToolName)
-            .AddKeyedSingleton<IUpdater, SyftUpdater>(SyftUpdater.ToolName)
-            .AddKeyedSingleton<IUpdater, RocksToolboxUpdater>(RocksToolboxUpdater.ToolName)
-            .AddKeyedSingleton<IUpdater, MinGitUpdater>(MinGitUpdater.ToolName)
-            .BuildServiceProvider();
+    private static IGitHubReleaseUpdater CreateUpdater(string tool, IReleasesClient releases, HttpClient httpClient) =>
+        tool switch
+        {
+            "chisel" => new ChiselUpdater(releases, httpClient),
+            "syft" => new SyftUpdater(releases),
+            "rocks-toolbox" => new RocksToolboxUpdater(releases),
+            "mingit" => new MinGitUpdater(releases),
+            _ => throw new ArgumentException($"Unknown tool: {tool}", nameof(tool)),
+        };
+
+    private sealed class CallbackUpdater(Func<ManifestVariables, CancellationToken, Task> update) : IGitHubReleaseUpdater
+    {
+        public static string Name => "sample";
+        public static string VersionSourceName => "sample";
+
+        public Task UpdateFromGitHubReleaseAsync(ManifestVariables variables, CancellationToken cancellationToken) =>
+            update(variables, cancellationToken);
+    }
 
     private static ManifestVariables CreateVariables(params (string Name, string Value)[] values) =>
         new(JsonSerializer.Serialize(new { variables = values.ToDictionary(value => value.Name, value => value.Value) }));

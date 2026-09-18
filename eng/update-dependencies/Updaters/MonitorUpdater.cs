@@ -13,6 +13,9 @@ public sealed class MonitorUpdater(
     ILogger<MonitorUpdater> logger)
         : IPipelineBuildUpdater, IVersionUpdater
 {
+    public static string Name => "monitor";
+    public static string VersionSourceName => "dotnet/dotnet-monitor";
+
     private static readonly (string Product, string ArchiveName)[] s_products =
     [
         ("monitor", "dotnet-monitor"),
@@ -35,11 +38,9 @@ public sealed class MonitorUpdater(
         CancellationToken cancellationToken)
     {
         var versionFile = new PipelineArtifactFile("Build_Info", "dotnet-monitor.nupkg.buildversion");
-        string version = await pipelineArtifactProvider.GetArtifactTextContentAsync(
-            build.Organization,
-            build.Project,
-            build.RunId,
-            versionFile).WaitAsync(cancellationToken);
+        string version = await pipelineArtifactProvider
+            .GetArtifactTextContentAsync(build.Organization, build.Project, build.RunId, versionFile)
+            .WaitAsync(cancellationToken);
 
         return version.Trim();
     }

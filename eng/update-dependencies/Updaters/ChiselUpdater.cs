@@ -6,15 +6,13 @@ using Octokit;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
-public sealed class ChiselUpdater(
-    IReleasesClient releases,
-    HttpClient httpClient) : IGitHubReleaseUpdater
+public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClient) : IGitHubReleaseUpdater
 {
-    public const string ToolName = Repo;
-
     private const string Owner = "canonical";
-
     private const string Repo = "chisel";
+
+    public static string Name => "chisel";
+    public static string VersionSourceName => "chisel";
 
     private static readonly string[] s_supportedArchitectures = ["amd64", "arm", "arm64"];
     private static string GetChiselManifestVariable(string product, string arch, string type)
@@ -27,16 +25,14 @@ public sealed class ChiselUpdater(
 
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
 
-    public async Task UpdateFromGitHubReleaseAsync(
-        ManifestVariables variables,
-        CancellationToken cancellationToken)
+    public async Task UpdateFromGitHubReleaseAsync(ManifestVariables variables, CancellationToken cancellationToken)
     {
         Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
 
         foreach (string arch in s_supportedArchitectures)
         {
-            string urlVariable = GetChiselManifestVariable(ToolName, arch, "url");
-            string shaVariable = GetChiselManifestVariable(ToolName, arch, "sha384");
+            string urlVariable = GetChiselManifestVariable(Name, arch, "url");
+            string shaVariable = GetChiselManifestVariable(Name, arch, "sha384");
             bool updateUrl = variables.ShouldUpdateLiteral(urlVariable);
             bool updateSha = variables.ShouldUpdateLiteral(shaVariable);
             if (!updateUrl && !updateSha)

@@ -5,4 +5,6 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public interface IUpdater
 {
+    static abstract string Name { get; }
+    static abstract string VersionSourceName { get; }
 }

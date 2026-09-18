@@ -8,26 +8,27 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class DependencyCommand
 {
-    public static Command Create(UpdaterRegistration registration, Func<IServiceProvider> getServices)
+    public static Command Create<TUpdater>(Func<IServiceProvider> getServices)
+        where TUpdater : class, IUpdater
     {
-        var command = new Command(registration.Name, $"Update {registration.Name}");
+        var command = new Command(TUpdater.Name, $"Update {TUpdater.Name}");
 
-        if (typeof(IBarBuildUpdater).IsAssignableFrom(registration.Type))
-            command.Subcommands.Add(FromBuildCommand.Create(registration, getServices));
+        if (typeof(IBarBuildUpdater).IsAssignableFrom(typeof(TUpdater)))
+            command.Subcommands.Add(FromBuildCommand.Create<TUpdater>(getServices));
 
-        if (typeof(IBarChannelUpdater).IsAssignableFrom(registration.Type))
-            command.Subcommands.Add(FromChannelCommand.Create(registration, getServices));
+        if (typeof(IBarChannelUpdater).IsAssignableFrom(typeof(TUpdater)))
+            command.Subcommands.Add(FromChannelCommand.Create<TUpdater>(getServices));
 
-        if (typeof(IPipelineBuildUpdater).IsAssignableFrom(registration.Type))
-            command.Subcommands.Add(FromPipelineBuildCommand.Create(registration, getServices));
+        if (typeof(IPipelineBuildUpdater).IsAssignableFrom(typeof(TUpdater)))
+            command.Subcommands.Add(FromPipelineBuildCommand.Create<TUpdater>(getServices));
 
-        if (typeof(IVersionUpdater).IsAssignableFrom(registration.Type))
-            command.Subcommands.Add(FromVersionCommand.Create(registration, getServices));
+        if (typeof(IVersionUpdater).IsAssignableFrom(typeof(TUpdater)))
+            command.Subcommands.Add(FromVersionCommand.Create<TUpdater>(getServices));
 
-        if (typeof(IGitHubReleaseUpdater).IsAssignableFrom(registration.Type))
-            FromGitHubReleaseCommand.Configure(command, registration, getServices);
+        if (typeof(IGitHubReleaseUpdater).IsAssignableFrom(typeof(TUpdater)))
+            FromGitHubReleaseCommand.Configure<TUpdater>(command, getServices);
 
-        if (registration.Type == typeof(DotNetUpdater))
+        if (typeof(TUpdater) == typeof(DotNetUpdater))
             command.Subcommands.Add(FromStagingPipelineCommand.Create(getServices));
 
         return command;

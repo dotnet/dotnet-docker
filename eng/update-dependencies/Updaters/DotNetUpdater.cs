@@ -12,9 +12,11 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdater> logger)
     : IBarBuildUpdater, IBarChannelUpdater, IStagingPipelineUpdater
 {
-    public const string Key = "dotnet";
     public const string PublicRepository = "https://github.com/dotnet/dotnet";
     public const string InternalRepository = "https://dev.azure.com/dnceng/internal/_git/dotnet-dotnet";
+
+    public static string Name => "dotnet";
+    public static string VersionSourceName => "dotnet/dotnet";
 
     public async Task UpdateFromBarBuildAsync(
         ManifestVariables variables,

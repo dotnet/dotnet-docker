@@ -8,11 +8,11 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public sealed partial class MinGitUpdater(IReleasesClient releases) : IGitHubReleaseUpdater
 {
-    public const string ToolName = "mingit";
-
     private const string Owner = "git-for-windows";
-
     private const string Repo = "git";
+
+    public static string Name => "mingit";
+    public static string VersionSourceName => Name;
 
     [GeneratedRegex(@"^MinGit.*64-bit.*\.zip$")]
     private static partial Regex UrlRegex { get; }

@@ -19,9 +19,7 @@ public sealed class DependencyCommandTests
     [Fact]
     public void Create_AddsOnlySupportedSourceCommands()
     {
-        Command command = DependencyCommand.Create(
-            new("sample", "sample/source", typeof(BarUpdater)),
-            ThrowIfResolved);
+        Command command = DependencyCommand.Create<BarUpdater>(ThrowIfResolved);
 
         command.Subcommands.Select(subcommand => subcommand.Name)
             .ShouldBe(["build-id", "channel"]);
@@ -30,9 +28,7 @@ public sealed class DependencyCommandTests
     [Fact]
     public void Create_MakesGitHubReleaseUpdaterDirectlyExecutable()
     {
-        Command command = DependencyCommand.Create(
-            new("sample", "sample", typeof(ReleaseUpdater)),
-            ThrowIfResolved);
+        Command command = DependencyCommand.Create<ReleaseUpdater>(ThrowIfResolved);
 
         command.Action.ShouldNotBeNull();
         command.Subcommands.ShouldBeEmpty();
@@ -43,9 +39,7 @@ public sealed class DependencyCommandTests
     {
         var root = new RootCommand
         {
-            DependencyCommand.Create(
-                new("sample", "sample/source", typeof(BarUpdater)),
-                ThrowIfResolved),
+            DependencyCommand.Create<BarUpdater>(ThrowIfResolved),
         };
 
         root.Parse(["sample", "pipeline-build", "123"]).Errors.ShouldNotBeEmpty();
@@ -53,16 +47,26 @@ public sealed class DependencyCommandTests
         root.Parse(["sample", "channel", "0"]).Errors.ShouldNotBeEmpty();
     }
 
-    [Theory]
-    [InlineData("aspire", typeof(AspireUpdater), "build-id,channel")]
-    [InlineData("dotnet", typeof(DotNetUpdater), "build-id,channel,staging-pipeline")]
-    [InlineData("monitor", typeof(MonitorUpdater), "pipeline-build,version")]
-    [InlineData("chisel", typeof(ChiselUpdater), "")]
-    public void Create_ExposesExpectedSources(string name, Type type, string sources)
+    [Fact]
+    public void Create_ExposesExpectedMetadataAndSources()
     {
-        Command command = DependencyCommand.Create(new(name, name, type), ThrowIfResolved);
+        Check<AspireUpdater>("aspire", "microsoft/aspire", "build-id", "channel");
+        Check<DotNetUpdater>("dotnet", "dotnet/dotnet", "build-id", "channel", "staging-pipeline");
+        Check<MonitorUpdater>("monitor", "dotnet/dotnet-monitor", "pipeline-build", "version");
+        Check<ChiselUpdater>("chisel", "chisel");
+        Check<MinGitUpdater>("mingit", "mingit");
+        Check<RocksToolboxUpdater>("rocks-toolbox", "rocks-toolbox");
+        Check<SyftUpdater>("syft", "syft");
 
-        string.Join(",", command.Subcommands.Select(subcommand => subcommand.Name)).ShouldBe(sources);
+        static void Check<TUpdater>(string name, string versionSourceName, params string[] sources)
+            where TUpdater : class, IUpdater
+        {
+            Command command = DependencyCommand.Create<TUpdater>(ThrowIfResolved);
+
+            command.Name.ShouldBe(name);
+            TUpdater.VersionSourceName.ShouldBe(versionSourceName);
+            command.Subcommands.Select(subcommand => subcommand.Name).ShouldBe(sources);
+        }
     }
 
     [Theory]
@@ -76,9 +80,9 @@ public sealed class DependencyCommandTests
     {
         var root = new RootCommand
         {
-            DependencyCommand.Create(new("aspire", "microsoft/aspire", typeof(AspireUpdater)), ThrowIfResolved),
-            DependencyCommand.Create(new("chisel", "chisel", typeof(ChiselUpdater)), ThrowIfResolved),
-            DependencyCommand.Create(new("monitor", "dotnet/dotnet-monitor", typeof(MonitorUpdater)), ThrowIfResolved),
+            DependencyCommand.Create<AspireUpdater>(ThrowIfResolved),
+            DependencyCommand.Create<ChiselUpdater>(ThrowIfResolved),
+            DependencyCommand.Create<MonitorUpdater>(ThrowIfResolved),
             SyncInternalReleaseCommand.Create(ThrowIfResolved),
         };
 
@@ -102,7 +106,7 @@ public sealed class DependencyCommandTests
     [InlineData("channel", "456")]
     public void BarOptions_BindSourceAndCommonValues(string source, string id)
     {
-        Command command = DependencyCommand.Create(new("aspire", "microsoft/aspire", typeof(AspireUpdater)), ThrowIfResolved);
+        Command command = DependencyCommand.Create<AspireUpdater>(ThrowIfResolved);
         ParseResult result = command.Parse([
             source, id, "--repo-root", "workspace with spaces", "--update-only",
             "--source-branch", "release/11.0", "--target-branch", "nightly"]);
@@ -131,7 +135,7 @@ public sealed class DependencyCommandTests
     [Fact]
     public void MonitorOptions_BindPipelineAndVersionSeparately()
     {
-        Command command = DependencyCommand.Create(new("monitor", "dotnet/dotnet-monitor", typeof(MonitorUpdater)), ThrowIfResolved);
+        Command command = DependencyCommand.Create<MonitorUpdater>(ThrowIfResolved);
         ParseResult pipeline = command.Parse(["pipeline-build", "123"]);
         ParseResult version = command.Parse(["version", "9.0.5", "--update-only", "false"]);
         pipeline.Errors.ShouldBeEmpty();
@@ -173,11 +177,11 @@ public sealed class DependencyCommandTests
     [Fact]
     public void CommonOptions_BindDefaultsWithoutLeakingAcrossCommands()
     {
-        Command first = DependencyCommand.Create(new("first", "first", typeof(ReleaseUpdater)), ThrowIfResolved);
-        Command second = DependencyCommand.Create(new("second", "second", typeof(ReleaseUpdater)), ThrowIfResolved);
+        Command first = DependencyCommand.Create<ChiselUpdater>(ThrowIfResolved);
+        Command second = DependencyCommand.Create<SyftUpdater>(ThrowIfResolved);
         var root = new RootCommand { first, second };
-        ParseResult firstResult = root.Parse(["first", "--repo-root", "first-workspace", "--update-only"]);
-        ParseResult secondResult = root.Parse(["second"]);
+        ParseResult firstResult = root.Parse(["chisel", "--repo-root", "first-workspace", "--update-only"]);
+        ParseResult secondResult = root.Parse(["syft"]);
         firstResult.Errors.ShouldBeEmpty();
         secondResult.Errors.ShouldBeEmpty();
 
@@ -234,8 +238,7 @@ public sealed class DependencyCommandTests
             "unused-local-test-token");
         services.AddSingleton<IPullRequestEndpoint>(Mock.Of<IPullRequestEndpoint>(MockBehavior.Strict));
         using ServiceProvider provider = services.BuildServiceProvider();
-        Command command = DependencyCommand.Create(
-            new("sample", "sample/source", typeof(RecordingUpdater)), () => provider);
+        Command command = DependencyCommand.Create<RecordingUpdater>(() => provider);
         string[] args =
         [
             ..source.Split(' ', StringSplitOptions.RemoveEmptyEntries),
@@ -260,6 +263,9 @@ public sealed class DependencyCommandTests
 
     private sealed class BarUpdater : IBarBuildUpdater, IBarChannelUpdater
     {
+        public static string Name => "sample";
+        public static string VersionSourceName => "sample/source";
+
         public Task UpdateFromBarBuildAsync(
             ManifestVariables variables,
             string repoRoot,
@@ -277,6 +283,9 @@ public sealed class DependencyCommandTests
 
     private sealed class ReleaseUpdater : IGitHubReleaseUpdater
     {
+        public static string Name => "sample";
+        public static string VersionSourceName => "sample";
+
         public Task UpdateFromGitHubReleaseAsync(
             ManifestVariables variables,
             CancellationToken cancellationToken) =>
@@ -286,6 +295,9 @@ public sealed class DependencyCommandTests
     private sealed class RecordingUpdater : IBarBuildUpdater, IBarChannelUpdater,
         IPipelineBuildUpdater, IVersionUpdater, IGitHubReleaseUpdater
     {
+        public static string Name => "sample";
+        public static string VersionSourceName => "sample/source";
+
         public int Calls { get; private set; }
         public PipelineBuildReference? Pipeline { get; private set; }
 

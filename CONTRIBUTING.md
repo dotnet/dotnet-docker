@@ -268,7 +268,11 @@ CLI commands, their options, and command-binding helpers live in
 `eng/update-dependencies/Commands`, under the
 `Microsoft.DotNet.Docker.UpdateDependencies.Commands` namespace.
 
-Each dependency is registered once in `eng/update-dependencies/Program.cs`.
+Each dependency is registered once with `AddUpdater<TUpdater>()` in
+`eng/update-dependencies/Program.cs`. Each updater implements the `IUpdater`
+static abstract properties `Name` (the CLI name) and `VersionSourceName` (the
+publishing identity used in PR titles and branch names). Command creation reads
+this metadata without constructing the updater or resolving services.
 Its implemented capability interfaces generate only the source commands it
 supports: BAR build/channel, pipeline build, explicit version, or GitHub release.
 The .NET command also includes its staging-pipeline workflow.

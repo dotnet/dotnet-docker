@@ -9,7 +9,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
 internal static class FromChannelCommand
 {
-    public static Command Create(UpdaterRegistration registration, Func<IServiceProvider> getServices)
+    public static Command Create<TUpdater>(Func<IServiceProvider> getServices) where TUpdater : class, IUpdater
     {
         var command = new Command("channel", "Update from the latest build in a BAR channel");
         FromChannelOptions.AddTo(command);
@@ -18,12 +18,12 @@ internal static class FromChannelCommand
         {
             FromChannelOptions options = FromChannelOptions.Bind(result);
             IServiceProvider services = getServices();
-            var updater = (IBarChannelUpdater)services.GetRequiredService(registration.Type);
+            var updater = (IBarChannelUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(
                 options,
-                registration.VersionSourceName,
+                TUpdater.VersionSourceName,
                 (variables, repoRoot, token) => updater.UpdateFromBarChannelAsync(variables, repoRoot, options.Channel, token),
                 cancellationToken);
         });
