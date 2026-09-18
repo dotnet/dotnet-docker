@@ -30,7 +30,6 @@ public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClien
         Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
 
         return new DependencyUpdate(
-            Scope: "",
             Description: $"Update Chisel to {release.TagName}",
             ApplyAsync: (variables, _, token) => ApplyAsync(variables, release, token));
     }

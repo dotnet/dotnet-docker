@@ -264,7 +264,7 @@ public sealed class DependencyCommandTests
         await Should.ThrowAsync<ArgumentException>(() => runner.RunAsync(
             new CreatePullRequestOptions(),
             "sample/source",
-            new DependencyUpdate("", "Update sample", (_, _, _) => Task.CompletedTask),
+            new DependencyUpdate("Update sample", (_, _, _) => Task.CompletedTask),
             TestContext.Current.CancellationToken));
     }
 
@@ -298,7 +298,7 @@ public sealed class DependencyCommandTests
     }
 
     private static DependencyUpdate NoOpUpdate =>
-        new("", "Update sample", (_, _, _) => Task.CompletedTask);
+        new("Update sample", (_, _, _) => Task.CompletedTask);
 
     private sealed class RecordingUpdater : IBarBuildUpdater, IBarChannelUpdater,
         IPipelineBuildUpdater, IVersionUpdater, IGitHubReleaseUpdater
@@ -332,7 +332,6 @@ public sealed class DependencyCommandTests
         {
             Calls++;
             return Task.FromResult(new DependencyUpdate(
-                Scope: "",
                 Description: $"Update sample from {source}",
                 ApplyAsync: (variables, _, _) =>
                 {

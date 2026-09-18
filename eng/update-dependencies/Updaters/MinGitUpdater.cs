@@ -24,7 +24,6 @@ public sealed partial class MinGitUpdater(IReleasesClient releases) : IGitHubRel
         Release release = await releases.GetLatest(Owner, Repo).WaitAsync(cancellationToken);
 
         return new DependencyUpdate(
-            Scope: "",
             Description: $"Update MinGit to {release.TagName}",
             ApplyAsync: (variables, _, _) =>
             {

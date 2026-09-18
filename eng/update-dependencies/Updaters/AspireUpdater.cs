@@ -52,7 +52,6 @@ public sealed class AspireUpdater(
         logger.LogInformation("Found Aspire build version: {Version}", version);
 
         return Task.FromResult(new DependencyUpdate(
-            Scope: "",
             Description: $"Update Aspire Dashboard to {version}",
             ApplyAsync: (variables, _, token) => ApplyAsync(variables, dashboardAssets, version, token)));
     }

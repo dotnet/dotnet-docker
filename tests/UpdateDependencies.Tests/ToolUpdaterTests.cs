@@ -200,7 +200,6 @@ public sealed class ToolUpdaterTests
 
         public Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken) =>
             Task.FromResult(new DependencyUpdate(
-                Scope: "",
                 Description: "Update sample",
                 ApplyAsync: (variables, _, token) => update(variables, token)));
     }

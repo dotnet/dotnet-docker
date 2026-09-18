@@ -51,9 +51,9 @@ public sealed class MonitorUpdater(
         string dockerfileVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}";
 
         return Task.FromResult(new DependencyUpdate(
-            Scope: dockerfileVersion,
             Description: $"Update .NET Monitor {dockerfileVersion} to {version}",
-            ApplyAsync: (variables, _, token) => ApplyAsync(variables, version, parsedVersion, token)));
+            ApplyAsync: (variables, _, token) => ApplyAsync(variables, version, parsedVersion, token),
+            Scope: dockerfileVersion));
     }
 
     private async Task ApplyAsync(

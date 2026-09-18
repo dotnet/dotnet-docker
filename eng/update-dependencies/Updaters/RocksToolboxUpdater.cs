@@ -19,7 +19,6 @@ public sealed class RocksToolboxUpdater(IReleasesClient releases) : IGitHubRelea
         string variableName = $"{Name}|latest|version";
 
         return new DependencyUpdate(
-            Scope: "",
             Description: $"Update {Name} to {release.TagName}",
             ApplyAsync: (variables, _, _) =>
             {

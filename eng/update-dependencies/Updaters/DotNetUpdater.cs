@@ -36,14 +36,14 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
         };
 
         return new DependencyUpdate(
-            Scope: dockerfileVersion,
             Description:
                 $"Update .NET {dockerfileVersion} to {versions.Sdk.Version} SDK / {versions.Runtime.Version} Runtime",
             ApplyAsync: (variables, repoRoot, _) =>
             {
                 ApplyProductVersions(variables, repoRoot, dockerfileVersion, productVersions, "");
                 return Task.CompletedTask;
-            });
+            },
+            Scope: dockerfileVersion);
     }
 
     public async Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken)

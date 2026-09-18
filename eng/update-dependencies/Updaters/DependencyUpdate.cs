@@ -23,16 +23,17 @@ public delegate Task ApplyUpdateAsync(
 /// An update whose new versions are known but which has not been written to the manifest yet.
 /// Resolving first lets the pull request describe the update it is about to make.
 /// </summary>
-/// <param name="Scope">
-/// Distinguishes updates of the same dependency that may be open at the same time, such as a
-/// .NET major.minor version. It becomes part of the pull request branch name, so updates sharing
-/// a scope replace each other. Empty when only one update of the dependency can be open at once.
-/// </param>
 /// <param name="Description">
 /// The update in one line, used as the pull request title and the commit message.
 /// </param>
 /// <param name="ApplyAsync">Makes the update.</param>
+/// <param name="Scope">
+/// Distinguishes updates of the same dependency that may be open at the same time, such as a
+/// .NET major.minor version. It becomes part of the pull request branch name, so updates sharing
+/// a scope replace each other. Defaults to empty, meaning only one update of the dependency can
+/// be open at once.
+/// </param>
 public sealed record DependencyUpdate(
-    string Scope,
     string Description,
-    ApplyUpdateAsync ApplyAsync);
+    ApplyUpdateAsync ApplyAsync,
+    string Scope = "");
