@@ -4,6 +4,15 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-08-10: Pre-ImageBuilder build customization
+
+Build pipeline templates now accept `customPreImageBuilderBuildSteps`. These steps run after
+ImageBuilder is available but before repository content is copied into the Linux ImageBuilder
+image. Repositories can use the hook to stage files into Docker build contexts, such as shared
+`eng/common` content required by Dockerfiles.
+
+---
+
 ## 2026-06-11: Configurable per-registry referrer-lookup rate limit
 
 - Issue: [#2141](https://github.com/dotnet/docker-tools/issues/2141)

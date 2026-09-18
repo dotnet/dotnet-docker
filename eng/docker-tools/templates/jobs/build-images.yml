@@ -10,6 +10,8 @@ parameters:
   # Custom steps that run after ImageBuilder is set up but before the build starts.
   # Use for build-specific initialization (e.g., setting variables, additional setup).
   customBuildInitSteps: []
+  # Custom steps that modify repository content before it is copied into the ImageBuilder image.
+  customPreImageBuilderBuildSteps: []
   publishConfig: null
   versionsRepoRef: ""
   noCache: false
@@ -41,6 +43,7 @@ jobs:
       versionsRepoRef: ${{ parameters.versionsRepoRef }}
       cleanupDocker: true
       customInitSteps: ${{ parameters.customInitSteps }}
+      customPreImageBuilderBuildSteps: ${{ parameters.customPreImageBuilderBuildSteps }}
   - ${{ parameters.customBuildInitSteps }}
   - template: /eng/docker-tools/templates/steps/reference-service-connections.yml@self
     parameters:
