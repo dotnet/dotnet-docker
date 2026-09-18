@@ -21,6 +21,10 @@ parameters:
   type: stepList
   default: []
 
+- name: customPreImageBuilderBuildSteps
+  type: stepList
+  default: []
+
 steps:
 # Custom ImageBuilder setup (e.g., bootstrap from source)
 - ${{ if gt(length(parameters.customInitSteps), 0) }}:
@@ -67,6 +71,7 @@ steps:
 # The withrepo image layers the checked-out repository into the ImageBuilder
 # container at /repo, so ImageBuilder can access manifests and Dockerfiles
 - ${{ if eq(parameters.dockerClientOS, 'linux') }}:
+  - ${{ parameters.customPreImageBuilderBuildSteps }}
   - script: >-
       docker build
       -t $(imageNames.imageBuilder.withrepo)

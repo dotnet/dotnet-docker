@@ -21,6 +21,7 @@ parameters:
   linuxArmBuildJobTimeout: 60
   windowsAmdBuildJobTimeout: 60
   customBuildInitSteps: []
+  customPreImageBuilderBuildSteps: []
 
   # Test parameters
   testMatrixType: platformVersionedOs
@@ -60,6 +61,7 @@ stages:
     linuxArmBuildJobTimeout: ${{ parameters.linuxArmBuildJobTimeout }}
     windowsAmdBuildJobTimeout: ${{ parameters.windowsAmdBuildJobTimeout }}
     customBuildInitSteps: ${{ parameters.customBuildInitSteps }}
+    customPreImageBuilderBuildSteps: ${{ parameters.customPreImageBuilderBuildSteps }}
     customInitSteps: ${{ parameters.customInitSteps }}
     # Test
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}

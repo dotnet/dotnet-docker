@@ -389,6 +389,22 @@ To force a rebuild regardless of cache state, set the `noCache` parameter to `tr
 
 ## Common Customization Patterns
 
+### Pattern: Staging Files into Docker Build Contexts
+
+Use `customPreImageBuilderBuildSteps` to modify repository content immediately before the
+repository is copied into the Linux ImageBuilder image. For example, a repository can stage
+shared `eng/common` files next to Dockerfiles whose build contexts cannot access the repository
+root:
+
+```yaml
+customPreImageBuilderBuildSteps:
+- powershell: ./eng/Stage-EngCommon.ps1
+  displayName: Stage eng/common in Docker Build Contexts
+```
+
+The steps run once per Linux build job, after ImageBuilder is available and before the
+`Dockerfile.WithRepo` image is built.
+
 ### Pattern: Adding Build Arguments
 
 Pass Dockerfile `ARG` values via ImageBuilder:

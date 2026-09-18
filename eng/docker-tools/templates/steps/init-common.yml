@@ -34,6 +34,11 @@ parameters:
   type: stepList
   default: []
 
+# Custom steps that modify repository content before it is copied into the ImageBuilder image.
+- name: customPreImageBuilderBuildSteps
+  type: stepList
+  default: []
+
 # Registry and authentication configuration for publishing images.
 # Contains server URLs, repo prefixes, subscriptions, and resource groups.
 # When null, build/publish steps that require registry access will be skipped.
@@ -245,3 +250,4 @@ steps:
       publishConfig: ${{ parameters.publishConfig }}
       condition: ${{ parameters.condition }}
       customInitSteps: ${{ parameters.customInitSteps }}
+      customPreImageBuilderBuildSteps: ${{ parameters.customPreImageBuilderBuildSteps }}
