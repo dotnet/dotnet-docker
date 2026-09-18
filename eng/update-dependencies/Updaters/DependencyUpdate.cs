@@ -4,6 +4,22 @@
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 /// <summary>
+/// Writes an update's resolved versions to the manifest, and to any related files in the repo.
+/// </summary>
+/// <param name="variables">
+/// The manifest variables to update. The caller loads and saves the manifest, so an
+/// implementation only edits variables.
+/// </param>
+/// <param name="repoRoot">
+/// The absolute path of the repo to update. This is not always the repo the command was run
+/// from: the same update is applied again in a separate workspace when publishing.
+/// </param>
+public delegate Task ApplyUpdateAsync(
+    ManifestVariables variables,
+    string repoRoot,
+    CancellationToken cancellationToken);
+
+/// <summary>
 /// An update whose new versions are known but which has not been written to the manifest yet.
 /// Resolving first lets the pull request describe the update it is about to make.
 /// </summary>
@@ -15,8 +31,8 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 /// <param name="Description">
 /// The update in one line, used as the pull request title and the commit message.
 /// </param>
-/// <param name="ApplyAsync">Writes the resolved versions to the manifest and the repo.</param>
+/// <param name="ApplyAsync">Makes the update.</param>
 public sealed record DependencyUpdate(
     string Scope,
     string Description,
-    Func<ManifestVariables, string, CancellationToken, Task> ApplyAsync);
+    ApplyUpdateAsync ApplyAsync);

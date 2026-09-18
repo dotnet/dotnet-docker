@@ -60,7 +60,7 @@ public sealed class DependencyUpdateRunner(
 
     public static async Task ApplyAsync(
         string repoRoot,
-        Func<ManifestVariables, string, CancellationToken, Task> applyUpdates,
+        ApplyUpdateAsync applyUpdate,
         CancellationToken cancellationToken)
     {
         repoRoot = Path.GetFullPath(repoRoot);
@@ -68,7 +68,7 @@ public sealed class DependencyUpdateRunner(
         var variables = ManifestVariables.FromFile(manifestPath);
         string originalContent = variables.Content;
 
-        await applyUpdates(variables, repoRoot, cancellationToken);
+        await applyUpdate(variables, repoRoot, cancellationToken);
 
         if (variables.Content != originalContent)
         {
