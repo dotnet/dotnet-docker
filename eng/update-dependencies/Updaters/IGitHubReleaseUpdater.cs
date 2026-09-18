@@ -5,7 +5,5 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public interface IGitHubReleaseUpdater : IUpdater
 {
-    Task UpdateFromGitHubReleaseAsync(
-        ManifestVariables variables,
-        CancellationToken cancellationToken);
+    Task UpdateFromGitHubReleaseAsync(ManifestVariables variables, CancellationToken cancellationToken);
 }

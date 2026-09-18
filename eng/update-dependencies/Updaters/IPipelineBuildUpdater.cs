@@ -9,6 +9,7 @@ public interface IPipelineBuildUpdater : IUpdater
 {
     Task UpdateFromPipelineBuildAsync(
         ManifestVariables variables,
+        // TODO: Reduce to just run ID since org/project are static in Configuration
         PipelineBuildReference build,
         CancellationToken cancellationToken);
 }

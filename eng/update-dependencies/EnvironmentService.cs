@@ -3,7 +3,6 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.VisualStudio.Services.Profile;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
