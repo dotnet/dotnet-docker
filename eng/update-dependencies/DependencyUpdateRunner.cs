@@ -7,7 +7,9 @@ using Microsoft.DotNet.GitAutomation;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
-public sealed class DependencyUpdateRunner(PullRequestManager manager, IPullRequestEndpoint endpoint)
+public sealed class DependencyUpdateRunner(
+    PullRequestManager manager,
+    Lazy<IPullRequestEndpoint> endpoint)
 {
     public async Task RunAsync(
         CreatePullRequestOptions options,
@@ -37,7 +39,7 @@ public sealed class DependencyUpdateRunner(PullRequestManager manager, IPullRequ
 
         PullRequestResult result = await manager.CreateOrUpdateAsync(
             definition,
-            endpoint,
+            endpoint.Value,
             cancellationToken: cancellationToken);
 
         Trace.TraceInformation($"Pull request: {result.Action} {result.Url}");

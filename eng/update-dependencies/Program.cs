@@ -113,6 +113,7 @@ static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
                 $"Unsupported PR destination: {configuration.PullRequestDestination}");
     }
 
+    services.AddSingleton(sp => new Lazy<IPullRequestEndpoint>(() => sp.GetRequiredService<IPullRequestEndpoint>()));
     services.AddSingleton<DependencyUpdateRunner>();
 
     // Local services needed for DarcLib git operations
