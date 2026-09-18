@@ -27,9 +27,6 @@ internal static class DependencyCommand
         if (typeof(IGitHubReleaseUpdater).IsAssignableFrom(typeof(TUpdater)))
             FromGitHubReleaseCommand.Configure<TUpdater>(command, getServices);
 
-        if (typeof(TUpdater) == typeof(DotNetUpdater))
-            command.Subcommands.Add(FromStagingPipelineCommand.Create(getServices));
-
         return command;
     }
 }

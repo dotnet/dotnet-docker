@@ -17,21 +17,28 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AzureDevOpsClient = Microsoft.DotNet.DarcLib.AzureDevOpsClient;
 
-var updaterServices = new ServiceCollection();
+var serviceRegistrations = new ServiceCollection();
 IHost? host = null;
 
 var rootCommand = new RootCommand("Update dotnet-docker dependencies");
-IServiceProvider GetServices() => (host ??= CreateHost(updaterServices)).Services;
+IServiceProvider GetServices() => (host ??= CreateHost(serviceRegistrations)).Services;
 
 AddUpdater<AspireUpdater>();
 AddUpdater<ChiselUpdater>();
-AddUpdater<DotNetUpdater>();
+Command dotnetCommand = AddUpdater<DotNetUpdater>();
+AddCommand<FromStagingPipelineCommand>(
+    dotnetCommand,
+    FromStagingPipelineCommand.Create(GetServices));
+serviceRegistrations.AddSingleton<ICommand<FromStagingPipelineOptions>>(services =>
+    services.GetRequiredService<FromStagingPipelineCommand>());
 AddUpdater<MinGitUpdater>();
 AddUpdater<MonitorUpdater>();
 AddUpdater<RocksToolboxUpdater>();
 AddUpdater<SyftUpdater>();
 
-rootCommand.Subcommands.Add(SyncInternalReleaseCommand.Create(GetServices));
+AddCommand<SyncInternalReleaseCommand>(
+    rootCommand,
+    SyncInternalReleaseCommand.Create(GetServices));
 
 try
 {
@@ -43,13 +50,24 @@ finally
     host?.Dispose();
 }
 
-void AddUpdater<TUpdater>() where TUpdater : class, IUpdater
+Command AddUpdater<TUpdater>() where TUpdater : class, IUpdater
 {
-    updaterServices.AddSingleton<TUpdater>();
-    rootCommand.Subcommands.Add(DependencyCommand.Create<TUpdater>(GetServices));
+    serviceRegistrations.AddSingleton<TUpdater>();
+    Command command = DependencyCommand.Create<TUpdater>(GetServices);
+    rootCommand.Subcommands.Add(command);
+    return command;
 }
 
-static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
+void AddCommand<TCommand>(
+    Command parent,
+    Command command)
+    where TCommand : class
+{
+    serviceRegistrations.AddSingleton<TCommand>();
+    parent.Subcommands.Add(command);
+}
+
+static IHost CreateHost(IEnumerable<ServiceDescriptor> serviceRegistrations)
 {
     var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
     {
@@ -139,16 +157,10 @@ static IHost CreateHost(IEnumerable<ServiceDescriptor> updaterServices)
     });
 
     // Each dependency has one singleton, exposing only its supported update capabilities.
-    foreach (ServiceDescriptor updater in updaterServices)
+    foreach (ServiceDescriptor registration in serviceRegistrations)
     {
-        services.Add(updater);
+        services.Add(registration);
     }
-
-    // Commands
-    services.AddSingleton<FromStagingPipelineCommand>();
-    services.AddSingleton<ICommand<FromStagingPipelineOptions>>(sp =>
-        sp.GetRequiredService<FromStagingPipelineCommand>());
-    services.AddSingleton<SyncInternalReleaseCommand>();
 
     return builder.Build();
 }

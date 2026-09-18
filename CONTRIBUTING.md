@@ -275,7 +275,11 @@ publishing identity used in PR titles and branch names). Command creation reads
 this metadata without constructing the updater or resolving services.
 Its implemented capability interfaces generate only the source commands it
 supports: BAR build/channel, pipeline build, explicit version, or GitHub release.
-The .NET command also includes its staging-pipeline workflow.
+Custom commands are declared once with the command registration helpers, which
+attach the command to its parent and register its implementation with the lazy host.
+The .NET updater declaration attaches its staging-pipeline workflow this way;
+its adjacent `ICommand<FromStagingPipelineOptions>` registration allows the
+sync command to invoke that workflow.
 Each source command owns its creation and execution, and its options class owns
 symbol definitions and `Bind(ParseResult)`. `DependencyCommand` only assembles
 the supported commands. There is no generic product-version update interface.

@@ -49,7 +49,7 @@ public sealed class DependencyCommandTests
     public void Create_ExposesExpectedMetadataAndSources()
     {
         Check<AspireUpdater>("aspire", "microsoft/aspire", "build-id", "channel");
-        Check<DotNetUpdater>("dotnet", "dotnet/dotnet", "build-id", "channel", "staging-pipeline");
+        Check<DotNetUpdater>("dotnet", "dotnet/dotnet", "build-id", "channel");
         Check<MonitorUpdater>("monitor", "dotnet/dotnet-monitor", "pipeline-build", "version");
         Check<ChiselUpdater>("chisel", "chisel");
         Check<MinGitUpdater>("mingit", "mingit");
