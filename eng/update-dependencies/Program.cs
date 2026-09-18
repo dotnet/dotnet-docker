@@ -104,12 +104,18 @@ services.AddSingleton(_ =>
     return client.Repository.Release;
 });
 
-// The staging pipeline and sync commands are resolved from the container when
-// invoked. Every other updater is created on demand by the command that runs it.
+// Updaters, and the commands that are invoked through an interface rather than
+// created directly by the CLI.
+services.AddSingleton<AspireUpdater>();
+services.AddSingleton<ChiselUpdater>();
 services.AddSingleton<DotNetUpdater>();
+services.AddSingleton<MinGitUpdater>();
+services.AddSingleton<MonitorUpdater>();
+services.AddSingleton<RocksToolboxUpdater>();
+services.AddSingleton<SyftUpdater>();
+
 services.AddSingleton<FromStagingPipelineCommand>();
-services.AddSingleton<ICommand<FromStagingPipelineOptions>>(sp =>
-    sp.GetRequiredService<FromStagingPipelineCommand>());
+services.AddSingleton<ICommand<FromStagingPipelineOptions>>(sp => sp.GetRequiredService<FromStagingPipelineCommand>());
 services.AddSingleton<SyncInternalReleaseCommand>();
 
 using IHost host = builder.Build();

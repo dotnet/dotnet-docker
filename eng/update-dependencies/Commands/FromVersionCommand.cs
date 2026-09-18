@@ -17,7 +17,7 @@ internal static class FromVersionCommand
         command.SetAction((result, cancellationToken) =>
         {
             FromVersionOptions options = FromVersionOptions.Bind(result);
-            var updater = (IVersionUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
+            var updater = (IVersionUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(

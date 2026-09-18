@@ -20,7 +20,7 @@ internal static class FromBuildCommand
         {
             FromBuildOptions options = FromBuildOptions.Bind(result);
             var barClient = services.GetRequiredService<IBasicBarClient>();
-            var updater = (IBarBuildUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
+            var updater = (IBarBuildUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
             Build build = await barClient.GetBuildAsync(options.Id).WaitAsync(cancellationToken);
 

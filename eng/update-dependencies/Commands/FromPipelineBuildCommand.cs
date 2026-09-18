@@ -17,7 +17,7 @@ internal static class FromPipelineBuildCommand
         command.SetAction((result, cancellationToken) =>
         {
             FromPipelineBuildOptions options = FromPipelineBuildOptions.Bind(result);
-            var updater = (IPipelineBuildUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
+            var updater = (IPipelineBuildUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
             var configuration = services.GetRequiredService<UpdateDependenciesConfiguration>();
             var build = new PipelineBuildReference(

@@ -17,7 +17,7 @@ internal static class FromChannelCommand
         command.SetAction((result, cancellationToken) =>
         {
             FromChannelOptions options = FromChannelOptions.Bind(result);
-            var updater = (IBarChannelUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
+            var updater = (IBarChannelUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(

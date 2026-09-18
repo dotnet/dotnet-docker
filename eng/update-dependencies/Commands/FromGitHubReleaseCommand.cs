@@ -17,7 +17,7 @@ internal static class FromGitHubReleaseCommand
         command.SetAction((result, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(result);
-            var updater = (IGitHubReleaseUpdater)ActivatorUtilities.GetServiceOrCreateInstance<TUpdater>(services);
+            var updater = (IGitHubReleaseUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             return runner.RunAsync(
