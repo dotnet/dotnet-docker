@@ -8,6 +8,20 @@ namespace UpdateDependencies.Tests;
 
 public sealed class ManifestVariablesTests
 {
+    [Theory]
+    [InlineData("missing", false)]
+    [InlineData("empty", false)]
+    [InlineData("reference", false)]
+    [InlineData("literal", true)]
+    public void ShouldUpdateLiteral_ExcludesMissingEmptyAndReferenceValues(string name, bool expected)
+    {
+        var variables = new ManifestVariables("""
+            {"variables":{"empty":"","reference":"$(literal)","literal":"1.2.3"}}
+            """);
+
+        variables.ShouldUpdateLiteral(name).ShouldBe(expected);
+    }
+
     [Fact]
     public void SetValue_PreservesEverythingOutsideTheValueToken()
     {
