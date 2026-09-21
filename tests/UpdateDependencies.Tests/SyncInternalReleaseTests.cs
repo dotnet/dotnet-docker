@@ -35,6 +35,31 @@ public sealed class SyncInternalReleaseTests
     };
 
     /// <summary>
+    /// Whitespace repository settings must fail before attempting to clone.
+    /// These settings now come from configuration rather than command options.
+    /// </summary>
+    [Fact]
+    public async Task WhitespaceArgumentsFails()
+    {
+        var configuration = new UpdateDependenciesConfiguration
+        {
+            AzureDevOps = new()
+            {
+                Organization = "   ",
+                Project = "   ",
+                Repository = "   ",
+            },
+        };
+        var options = s_defaultOptions with { SourceBranch = "   ", TargetBranch = "   " };
+        var repoFactory = new Mock<IGitRepoHelperFactory>(MockBehavior.Strict);
+        var command = CreateCommand(repoFactory: repoFactory.Object, configuration: configuration);
+
+        await Should.ThrowAsync<ArgumentException>(() => command.ExecuteAsync(options));
+
+        repoFactory.VerifyNoOtherCalls();
+    }
+
+    /// <summary>
     /// If the source branch is an internal branch (i.e. "internal/foo"), the command should fail.
     /// Internal branches should always be the target branch of a sync operation, never the source
     /// branch.
@@ -270,9 +295,10 @@ public sealed class SyncInternalReleaseTests
         ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
         IInternalVersionsService? internalVersionsService = null,
         IEnvironmentService? environmentService = null,
-        ILogger<SyncInternalReleaseCommand>? logger = null) =>
+        ILogger<SyncInternalReleaseCommand>? logger = null,
+        UpdateDependenciesConfiguration? configuration = null) =>
             // New parameters should be null by default and initialized with mocks if not specified.
-            new(new UpdateDependenciesConfiguration
+            new(configuration ?? new UpdateDependenciesConfiguration
                 {
                     User = "Test User",
                     Email = "test@example.com",

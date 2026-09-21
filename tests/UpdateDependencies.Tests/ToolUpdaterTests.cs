@@ -27,7 +27,7 @@ public sealed class ToolUpdaterTests
         using var workspace = new Workspace();
         const string onDisk = """{"variables":{"sentinel":"unchanged"}}""";
         File.WriteAllText(workspace.ManifestPath, onDisk);
-        var variables = CreateVariables((variable, "old"));
+        var variables = CreateVariables((variable, "old"), ("unrelated|version", "unchanged"));
         var releases = new Mock<IReleasesClient>(MockBehavior.Strict);
         CancellationToken token = TestContext.Current.CancellationToken;
         releases.Setup(source => source.GetLatest(owner, repo)).ReturnsAsync(CreateRelease());
@@ -38,6 +38,7 @@ public sealed class ToolUpdaterTests
         await (await updater.ResolveFromGitHubReleaseAsync(token)).ApplyAsync(variables, workspace.Root, token);
 
         variables.GetRawValue(variable).ShouldBe(expected);
+        variables.GetRawValue("unrelated|version").ShouldBe("unchanged");
         var secondVariables = CreateVariables((variable, "old"));
         await (await updater.ResolveFromGitHubReleaseAsync(token)).ApplyAsync(secondVariables, workspace.Root, token);
 
@@ -67,11 +68,17 @@ public sealed class ToolUpdaterTests
         CancellationToken token = TestContext.Current.CancellationToken;
         DependencyUpdate update = await updater.ResolveFromGitHubReleaseAsync(token);
 
-        foreach (string? value in new string?[] { null, "", "$(alias)" })
+        foreach (var (first, second) in new (string?, string)[]
         {
-            ManifestVariables variables = value is null
+            (null, ""),
+            ("", ""),
+            ("$(alias)", "$(alias)"),
+            ("$(alias)", ""),
+        })
+        {
+            ManifestVariables variables = first is null
                 ? new ManifestVariables("""{"variables":{}}""")
-                : CreateVariables((firstVariable, value), (secondVariable, value));
+                : CreateVariables((firstVariable, first), (secondVariable, second));
             string original = variables.Content;
 
             await update.ApplyAsync(variables, "", token);
@@ -115,7 +122,7 @@ public sealed class ToolUpdaterTests
         handler.Requests.ShouldBe([
             "https://example/chisel-amd64.tar.gz.sha384",
             "https://example/chisel-arm.tar.gz.sha384",
-        ]);
+        ], ignoreOrder: true);
     }
 
     [Fact]
@@ -136,53 +143,6 @@ public sealed class ToolUpdaterTests
         variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("abcdef123456");
     }
 
-    [Fact]
-    public async Task UpdateBatch_UsesOneEditorAndSavesBeforeGeneratingOnce()
-    {
-        using var workspace = new Workspace();
-        const string original = """{"variables": { "first" : "old", "second" : "old" }}""";
-        File.WriteAllText(workspace.ManifestPath, original);
-        workspace.WriteGenerators("""
-            $manifest = Get-Content ./manifest.versions.json -Raw | ConvertFrom-Json
-            if ($manifest.variables.first -ne 'new-first') { throw 'First edit was not saved' }
-            if ($manifest.variables.second -ne 'new-second') { throw 'Second edit was not saved' }
-            """);
-        ManifestVariables? sharedVariables = null;
-        var calls = new List<string>();
-        var first = new CallbackUpdater(async (variables, cancellationToken) =>
-        {
-            sharedVariables = variables;
-            variables.SetValue("first", "new-first");
-            await Task.Yield();
-            calls.Add("first");
-        });
-        var second = new CallbackUpdater((variables, cancellationToken) =>
-        {
-            variables.ShouldBeSameAs(sharedVariables);
-            variables.GetRawValue("first").ShouldBe("new-first");
-            File.ReadAllText(workspace.ManifestPath).ShouldBe(original);
-            calls.ShouldBe(["first"]);
-            variables.SetValue("second", "new-second");
-            calls.Add("second");
-            return Task.CompletedTask;
-        });
-        CancellationToken token = TestContext.Current.CancellationToken;
-        DependencyUpdate firstUpdate = await first.ResolveFromGitHubReleaseAsync(token);
-        DependencyUpdate secondUpdate = await second.ResolveFromGitHubReleaseAsync(token);
-        await DependencyUpdateRunner.ApplyAsync(workspace.Root, async (variables, repoRoot, applyToken) =>
-        {
-            await firstUpdate.ApplyAsync(variables, repoRoot, applyToken);
-            await secondUpdate.ApplyAsync(variables, repoRoot, applyToken);
-        }, token);
-
-        calls.ShouldBe(["first", "second"]);
-        File.ReadAllText(workspace.ManifestPath).ShouldBe(
-            original.Replace("\"first\" : \"old\"", "\"first\" : \"new-first\"")
-                .Replace("\"second\" : \"old\"", "\"second\" : \"new-second\""));
-        File.ReadAllLines(Path.Combine(workspace.Root, "dockerfile-generations.txt")).ShouldBe(["generated"]);
-        File.ReadAllLines(Path.Combine(workspace.Root, "readme-generations.txt")).ShouldBe(["generated"]);
-    }
-
     private static IGitHubReleaseUpdater CreateUpdater(string tool, IReleasesClient releases, HttpClient httpClient) =>
         tool switch
         {
@@ -192,17 +152,6 @@ public sealed class ToolUpdaterTests
             "mingit" => new MinGitUpdater(releases),
             _ => throw new ArgumentException($"Unknown tool: {tool}", nameof(tool)),
         };
-
-    private sealed class CallbackUpdater(Func<ManifestVariables, CancellationToken, Task> update) : IGitHubReleaseUpdater
-    {
-        public static string Name => "sample";
-        public static string VersionSourceName => "sample";
-
-        public Task<DependencyUpdate> ResolveFromGitHubReleaseAsync(CancellationToken cancellationToken) =>
-            Task.FromResult(new DependencyUpdate(
-                Description: "Update sample",
-                ApplyAsync: (variables, _, token) => update(variables, token)));
-    }
 
     private static ManifestVariables CreateVariables(params (string Name, string Value)[] values) =>
         new(JsonSerializer.Serialize(new { variables = values.ToDictionary(value => value.Name, value => value.Value) }));
@@ -247,20 +196,6 @@ public sealed class ToolUpdaterTests
         public Workspace()
         {
             Directory.CreateDirectory(Root);
-        }
-
-        public void WriteGenerators(string assertions)
-        {
-            string dockerfileDirectory = Path.Combine(Root, "eng", "dockerfile-templates");
-            string readmeDirectory = Path.Combine(Root, "eng", "readme-templates");
-            Directory.CreateDirectory(dockerfileDirectory);
-            Directory.CreateDirectory(readmeDirectory);
-            File.WriteAllText(
-                Path.Combine(dockerfileDirectory, "Get-GeneratedDockerfiles.ps1"),
-                assertions + "\nAdd-Content ./dockerfile-generations.txt 'generated'");
-            File.WriteAllText(
-                Path.Combine(readmeDirectory, "Get-GeneratedReadmes.ps1"),
-                assertions + "\nAdd-Content ./readme-generations.txt 'generated'");
         }
 
         public void Dispose() => Directory.Delete(Root, recursive: true);

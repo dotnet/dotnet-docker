@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Text;
 using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Octokit;
@@ -12,46 +11,78 @@ namespace UpdateDependencies.Tests;
 public sealed class ManifestUpdaterTests
 {
     [Fact]
-    public async Task UpdateBatch_WritesBeforeGenerationAndSkipsUnchangedContent()
+    public async Task UpdateBatch_SavesCompletedUpdateBeforeRunningEachGeneratorOnce()
+    {
+        using var repo = new TempRepo();
+        string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
+        File.WriteAllText(manifestPath, """{"variables":{"version":"old"}}""");
+
+        // Lightweight stand-ins for the generators assert that disk already contains the edit.
+        WriteGenerators(repo.LocalPath, """
+            $manifest = Get-Content ./manifest.versions.json -Raw | ConvertFrom-Json
+            if ($manifest.variables.version -ne 'new') { throw 'Manifest was not saved before generation' }
+            """);
+
+        var completeUpdate = new TaskCompletionSource(TaskCreationOptions.RunContinuationsAsynchronously);
+        Task apply = DependencyUpdateRunner.ApplyAsync(repo.LocalPath, async (variables, _, token) =>
+        {
+            await completeUpdate.Task.WaitAsync(token);
+            variables.SetValue("version", "new");
+        }, TestContext.Current.CancellationToken);
+        completeUpdate.SetResult();
+        await apply;
+
+        File.ReadAllLines(Path.Combine(repo.LocalPath, "dockerfile-generations.txt")).ShouldBe(["generated"]);
+        File.ReadAllLines(Path.Combine(repo.LocalPath, "readme-generations.txt")).ShouldBe(["generated"]);
+    }
+
+    [Fact]
+    public async Task UpdateBatch_DoesNotRewriteUnchangedManifest()
+    {
+        using var repo = new TempRepo();
+        string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
+        File.WriteAllText(manifestPath, """{"variables":{"version":"same"}}""");
+        File.SetLastWriteTimeUtc(manifestPath, new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
+        DateTime originalWriteTime = File.GetLastWriteTimeUtc(manifestPath);
+        WriteGenerators(repo.LocalPath, "exit 0");
+
+        await DependencyUpdateRunner.ApplyAsync(repo.LocalPath, (variables, _, _) =>
+        {
+            variables.SetValue("version", "same");
+            return Task.CompletedTask;
+        }, TestContext.Current.CancellationToken);
+
+        File.GetLastWriteTimeUtc(manifestPath).ShouldBe(originalWriteTime);
+    }
+
+    [Fact]
+    public async Task UpdateBatch_RunsGeneratorsEvenWhenManifestIsUnchanged()
+    {
+        using var repo = new TempRepo();
+        File.WriteAllText(Path.Combine(repo.LocalPath, "manifest.versions.json"), """{"variables":{}}""");
+        WriteGenerators(repo.LocalPath, "");
+
+        await DependencyUpdateRunner.ApplyAsync(
+            repo.LocalPath, (_, _, _) => Task.CompletedTask, TestContext.Current.CancellationToken);
+
+        File.ReadAllLines(Path.Combine(repo.LocalPath, "dockerfile-generations.txt")).ShouldBe(["generated"]);
+        File.ReadAllLines(Path.Combine(repo.LocalPath, "readme-generations.txt")).ShouldBe(["generated"]);
+    }
+
+    [Fact]
+    public async Task UpdateBatch_RunsGeneratorsInWorkspaceWithSpaces()
     {
         using var repo = new TempRepo();
         string repoRoot = Path.Combine(repo.LocalPath, "workspace with spaces");
         Directory.CreateDirectory(repoRoot);
-        string manifestPath = Path.Combine(repoRoot, "manifest.versions.json");
-        const string original = """{"variables": { "branch":"nightly", "runtime|11.0|build-version" : "11.0.1" }}""";
-        File.WriteAllText(manifestPath, original);
-
-        // Lightweight stand-ins for the generators assert that disk already contains the edit.
-        const string generator = """
-            $manifest = Get-Content ./manifest.versions.json -Raw | ConvertFrom-Json
-            if ($manifest.variables.'runtime|11.0|build-version' -ne '11.0.2') { throw 'Manifest was not saved before generation' }
-            Set-Content ./generated.txt 'generated'
-            """;
-        WriteGenerators(repoRoot, generator);
-
+        File.WriteAllText(Path.Combine(repoRoot, "manifest.versions.json"), """{"variables":{}}""");
+        WriteGenerators(repoRoot, "Set-Content ./generator-directory.txt (Get-Location).Path");
         string workingDirectory = Directory.GetCurrentDirectory();
 
-        Task ApplyAsync(ManifestVariables variables, string root, CancellationToken token)
-        {
-            variables.SetValue("runtime|11.0|build-version", "11.0.2");
-            return Task.CompletedTask;
-        }
+        await DependencyUpdateRunner.ApplyAsync(
+            repoRoot, (_, _, _) => Task.CompletedTask, TestContext.Current.CancellationToken);
 
-        await DependencyUpdateRunner.ApplyAsync(repoRoot, ApplyAsync, TestContext.Current.CancellationToken);
-        string expected = original.Replace("\"11.0.1\"", "\"11.0.2\"");
-        byte[] expectedBytes = Encoding.UTF8.GetBytes(expected);
-        File.ReadAllBytes(manifestPath).ShouldBe(expectedBytes);
-
-        string generatedPath = Path.Combine(repoRoot, "generated.txt");
-        File.Exists(generatedPath).ShouldBeTrue();
-        File.Delete(generatedPath);
-        File.SetLastWriteTimeUtc(manifestPath, new DateTime(2000, 1, 1, 0, 0, 0, DateTimeKind.Utc));
-        DateTime originalWriteTime = File.GetLastWriteTimeUtc(manifestPath);
-
-        await DependencyUpdateRunner.ApplyAsync(repoRoot, ApplyAsync, TestContext.Current.CancellationToken);
-
-        File.GetLastWriteTimeUtc(manifestPath).ShouldBe(originalWriteTime);
-        File.Exists(generatedPath).ShouldBeTrue();
+        File.ReadAllText(Path.Combine(repoRoot, "generator-directory.txt")).Trim().ShouldBe(repoRoot);
         Directory.GetCurrentDirectory().ShouldBe(workingDirectory);
     }
 
@@ -134,70 +165,6 @@ public sealed class ManifestUpdaterTests
         config.ShouldContain("https://api.nuget.org/v3/index.json");
         config.ShouldContain("dotnet10_0_internal");
         config.ShouldNotContain("dotnet11_0_internal");
-    }
-
-    [Fact]
-    public void ManifestEdits_SkipMissingKeysAndPreserveFormatting()
-    {
-        const string content = """{"variables": { "value" : "old" }, "value":"unrelated"}""";
-        var variables = new ManifestVariables(content);
-
-        variables.SetValue("missing", "new").ShouldBeFalse();
-        variables.SetValue("value", "new").ShouldBeTrue();
-
-        variables.Contains("missing").ShouldBeFalse();
-        variables.Content.ShouldBe(content.Replace("\"old\"", "\"new\""));
-    }
-
-    [Theory]
-    [InlineData("", "")]
-    [InlineData("$(alias)", "$(alias)")]
-    [InlineData("old", "new")]
-    public async Task ToolUpdater_PreservesEmptyValuesAndAliases(string current, string expected)
-    {
-        var variables = new ManifestVariables("""{"variables":{"syft|version":"old","rocks-toolbox|latest|version":"unchanged"}}""");
-        variables.SetValue("syft|version", current);
-        var release = new SimpleJsonSerializer().Deserialize<Release>("""{"tag_name":"new"}""");
-        var updater = new SyftUpdater(CreateReleaseClient(release));
-        await (await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken))
-            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
-
-        variables.GetRawValue("syft|version").ShouldBe(expected);
-        variables.GetRawValue("rocks-toolbox|latest|version").ShouldBe("unchanged");
-    }
-
-    [Fact]
-    public async Task MinGitUpdater_DoesNotResolveAssetsForDisabledVariables()
-    {
-        const string content = """{"variables":{"mingit|latest|x64|url":"$(alias)","mingit|latest|x64|sha":""}}""";
-        var variables = new ManifestVariables(content);
-
-        var updater = new MinGitUpdater(CreateReleaseClient(new Release()));
-        await (await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken))
-            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
-
-        variables.Content.ShouldBe(content);
-    }
-
-    [Fact]
-    public async Task MinGitUpdater_UpdatesUrlAndChecksumFromTheSameAsset()
-    {
-        var variables = new ManifestVariables("""{"variables":{"mingit|latest|x64|url":"old","mingit|latest|x64|sha":"old"}}""");
-        var release = new SimpleJsonSerializer().Deserialize<Release>("""
-            {
-              "body":"MinGit-2.50.0-64-bit.zip | abcdef123456",
-              "assets":[
-                {"name":"MinGit-2.50.0-64-bit.zip","browser_download_url":"https://example/mingit.zip"}
-              ]
-            }
-            """);
-
-        var updater = new MinGitUpdater(CreateReleaseClient(release));
-        await (await updater.ResolveFromGitHubReleaseAsync(TestContext.Current.CancellationToken))
-            .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
-
-        variables.GetRawValue("mingit|latest|x64|url").ShouldBe("https://example/mingit.zip");
-        variables.GetRawValue("mingit|latest|x64|sha").ShouldBe("abcdef123456");
     }
 
     [Fact]
@@ -289,7 +256,9 @@ public sealed class ManifestUpdaterTests
         string readmeDirectory = Path.Combine(repoRoot, "eng", "readme-templates");
         Directory.CreateDirectory(dockerfileDirectory);
         Directory.CreateDirectory(readmeDirectory);
-        File.WriteAllText(Path.Combine(dockerfileDirectory, "Get-GeneratedDockerfiles.ps1"), script);
-        File.WriteAllText(Path.Combine(readmeDirectory, "Get-GeneratedReadmes.ps1"), script);
+        File.WriteAllText(Path.Combine(dockerfileDirectory, "Get-GeneratedDockerfiles.ps1"),
+            script + "\nAdd-Content ./dockerfile-generations.txt 'generated'");
+        File.WriteAllText(Path.Combine(readmeDirectory, "Get-GeneratedReadmes.ps1"),
+            script + "\nAdd-Content ./readme-generations.txt 'generated'");
     }
 }

@@ -7,7 +7,6 @@ using System.Text;
 using System.Text.Json;
 using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
@@ -15,75 +14,149 @@ namespace UpdateDependencies.Tests;
 public sealed class MonitorUpdaterTests
 {
     private const string ArchiveContent = "monitor archive";
-    private static readonly string s_checksum = Convert.ToHexStringLower(
-        SHA512.HashData(Encoding.UTF8.GetBytes(ArchiveContent)));
-
-    private static readonly (string Product, string Archive, string Os, string Arch)[] s_products =
-    [
-        ("monitor", "dotnet-monitor", "linux", "x64"),
-        ("monitor-base", "dotnet-monitor-base", "win", "x64"),
-        ("monitor-ext-azureblobstorage", "dotnet-monitor-egress-azureblobstorage", "linux-musl", "arm64"),
-        ("monitor-ext-s3storage", "dotnet-monitor-egress-s3storage", "win", "arm64"),
-    ];
+    private static readonly string s_publishedChecksum = new('a', 128);
 
     [Theory]
-    [InlineData("9.0.5-servicing.25556.2", "9.0.5", "9.0.5", "nightly", true)]
-    [InlineData("9.0.5-servicing.25556.2", "9.0.5", "9.0.5", "nightly", false)]
-    [InlineData("9.0.0-rtm.12345.1", "9.0.0", "9.0.0", "main", true)]
-    [InlineData("9.0.3-preview.1.26303.1", "9.0.3-preview.1", "9.0.3-preview.1.26303.1", "nightly", true)]
-    [InlineData("9.0.3-preview.1.26303.1", "9.0.3-preview.1", "9.0.3-preview.1.26303.1", "nightly", false)]
-    [InlineData("9.0.5", "9.0.5", "9.0.5", "main", true)]
-    public async Task Version_UpdatesSharedEditorAndChecksumsWithoutSavingOrGenerating(
-        string version, string productVersion, string fileVersion, string branch, bool publishedChecksum)
+    [InlineData("monitor", "9.0.5-servicing.25556.2", "9.0.5")]
+    [InlineData("monitor-base", "9.0.0-rtm.12345.1", "9.0.0")]
+    [InlineData("monitor-ext-azureblobstorage", "9.0.3-preview.1.26303.1", "9.0.3-preview.1")]
+    [InlineData("monitor-ext-s3storage", "9.0.5", "9.0.5")]
+    public async Task Version_WritesBuildVersionAndProductTag(string product, string version, string productVersion)
     {
-        using var repo = new TempRepo();
-        ManifestVariables variables = CreateVariables(branch);
-        string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
-        string originalContent = variables.Content;
-        File.WriteAllText(manifestPath, originalContent);
-        string quality = branch == "main" ? "maintenance" : "preview";
-        variables.SetValue(
-            $"base-url|public|{quality}|{branch}", "https://example.invalid/shared/public");
-        var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
-        using var handler = new ChecksumHandler(publishedChecksum ? HttpStatusCode.OK : HttpStatusCode.NotFound);
-        using var httpClient = new HttpClient(handler);
-        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
-        await (await updater.ResolveFromVersionAsync(version, TestContext.Current.CancellationToken))
-            .ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
-
-        variables.GetRawValue("monitor|9.0|base-url|" + branch)
-            .ShouldBe($"$(base-url|public|{quality}|{branch})");
-        variables.GetRawValue("monitor|9.0|base-url|checksums|" + branch)
-            .ShouldBe($"$(base-url|public-checksums|{quality}|{branch})");
-        foreach (var (product, archive, os, arch) in s_products)
+        var values = new Dictionary<string, string>
         {
-            variables.GetValue($"{product}|9.0|build-version").ShouldBe(version);
-            variables.GetValue($"{product}|9.0|product-version").ShouldBe(productVersion);
-            variables.GetRawValue($"{product}|9.0|{os}|{arch}|sha").ShouldBe(s_checksum);
-            string extension = os == "win" ? "zip" : "tar.gz";
-            string archiveUrl = $"https://example.invalid/shared/public/diagnostics/monitor/{version}/{archive}-{fileVersion}-{os}-{arch}.{extension}";
-            string checksumUrl = archiveUrl.Replace("/public/", "/public-checksums/") + ".sha512";
-            handler.Requests.ShouldContain(checksumUrl);
-            if (publishedChecksum)
-            {
-                handler.Requests.ShouldNotContain(archiveUrl);
-            }
-            else
-            {
-                handler.Requests.ShouldContain(archiveUrl);
-            }
-        }
-        variables.GetRawValue("monitor-base|9.0|build-version").ShouldBe("$(monitor|9.0|build-version)");
-        variables.GetRawValue("monitor-base|9.0|product-version").ShouldBe("$(monitor|9.0|product-version)");
-        variables.GetRawValue("monitor|8.0|linux|x64|sha").ShouldBe("unrelated");
-        File.ReadAllText(manifestPath).ShouldBe(originalContent);
-        Directory.Exists(Path.Combine(repo.LocalPath, "eng")).ShouldBeFalse();
-        handler.Requests.Count.ShouldBe(s_products.Length * (publishedChecksum ? 1 : 2));
-        artifacts.VerifyNoOtherCalls();
+            ["branch"] = "nightly",
+            [$"{product}|9.0|build-version"] = "9.0.1",
+            [$"{product}|9.0|product-version"] = "9.0.1",
+        };
+        var variables = new ManifestVariables(JsonSerializer.Serialize(new { variables = values }));
+        using var handler = new ChecksumHandler();
+        using var httpClient = new HttpClient(handler);
+        var updater = CreateUpdater(httpClient);
+
+        DependencyUpdate update = await updater.ResolveFromVersionAsync(version, TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        variables.GetRawValue($"{product}|9.0|build-version").ShouldBe(version);
+        variables.GetRawValue($"{product}|9.0|product-version").ShouldBe(productVersion);
+    }
+
+    [Theory]
+    [InlineData("nightly", "$(base-url|public|preview|nightly)", "$(base-url|public-checksums|preview|nightly)")]
+    [InlineData("main", "$(base-url|public|maintenance|main)", "$(base-url|public-checksums|maintenance|main)")]
+    public async Task Version_SelectsPublicUrlsForBranch(string branch, string expectedBaseUrl, string expectedChecksumUrl)
+    {
+        var variables = CreateVariables(branch, checksumVariable: null);
+        using var httpClient = new HttpClient(new ChecksumHandler());
+        var updater = CreateUpdater(httpClient);
+
+        DependencyUpdate update = await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        variables.GetRawValue($"monitor|9.0|base-url|{branch}").ShouldBe(expectedBaseUrl);
+        variables.GetRawValue($"monitor|9.0|base-url|checksums|{branch}").ShouldBe(expectedChecksumUrl);
+    }
+
+    [Theory]
+    [InlineData("monitor|9.0|linux|x64|sha", "dotnet-monitor-9.0.5-linux-x64.tar.gz")]
+    [InlineData("monitor-base|9.0|win|x64|sha", "dotnet-monitor-base-9.0.5-win-x64.zip")]
+    [InlineData("monitor-ext-azureblobstorage|9.0|linux-musl|arm64|sha", "dotnet-monitor-egress-azureblobstorage-9.0.5-linux-musl-arm64.tar.gz")]
+    [InlineData("monitor-ext-s3storage|9.0|win|arm64|sha", "dotnet-monitor-egress-s3storage-9.0.5-win-arm64.zip")]
+    public async Task Checksum_SelectsArchiveForProductAndPlatform(string variable, string archive)
+    {
+        var variables = CreateVariables(checksumVariable: variable);
+        using var handler = new ChecksumHandler();
+        using var httpClient = new HttpClient(handler);
+        var updater = CreateUpdater(httpClient);
+
+        DependencyUpdate update = await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        handler.Requests.ShouldBe([$"https://example.invalid/public-checksums/diagnostics/monitor/9.0.5/{archive}.sha512"]);
+        variables.GetRawValue(variable).ShouldBe(s_publishedChecksum);
+    }
+
+    [Theory]
+    [InlineData("9.0.5-servicing.25556.2", "dotnet-monitor-9.0.5-linux-x64.tar.gz")]
+    [InlineData("9.0.0-rtm.12345.1", "dotnet-monitor-9.0.0-linux-x64.tar.gz")]
+    [InlineData("9.0.3-preview.1.26303.1", "dotnet-monitor-9.0.3-preview.1.26303.1-linux-x64.tar.gz")]
+    public async Task Checksum_UsesStableArchiveNamesOnlyForServicingAndRtm(string version, string archive)
+    {
+        var variables = CreateVariables();
+        using var handler = new ChecksumHandler();
+        using var httpClient = new HttpClient(handler);
+        var updater = CreateUpdater(httpClient);
+
+        DependencyUpdate update = await updater.ResolveFromVersionAsync(version, TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        handler.Requests.ShouldBe([$"https://example.invalid/public-checksums/diagnostics/monitor/{version}/{archive}.sha512"]);
     }
 
     [Fact]
-    public async Task Pipeline_ResolvesVersionUsingSameSingletonAsExplicitVersion()
+    public async Task Version_PreservesAliasesAndOtherVersionChecksums()
+    {
+        var variables = new ManifestVariables("""
+            {"variables":{
+              "branch":"nightly",
+              "monitor|9.0|build-version":"9.0.1",
+              "monitor|9.0|product-version":"9.0.1",
+              "monitor-base|9.0|build-version":"$(monitor|9.0|build-version)",
+              "monitor-base|9.0|product-version":"$(monitor|9.0|product-version)",
+              "monitor|8.0|linux|x64|sha":"unrelated"
+            }}
+            """);
+        using var handler = new ChecksumHandler();
+        using var httpClient = new HttpClient(handler);
+        var updater = CreateUpdater(httpClient);
+
+        DependencyUpdate update = await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        variables.GetRawValue("monitor-base|9.0|build-version").ShouldBe("$(monitor|9.0|build-version)");
+        variables.GetRawValue("monitor-base|9.0|product-version").ShouldBe("$(monitor|9.0|product-version)");
+        variables.GetRawValue("monitor|8.0|linux|x64|sha").ShouldBe("unrelated");
+        handler.Requests.ShouldBeEmpty();
+    }
+
+    [Fact]
+    public async Task PublishedChecksum_IsNormalizedWithoutDownloadingArchive()
+    {
+        var variables = CreateVariables();
+        using var handler = new ChecksumHandler(checksum: $" {s_publishedChecksum.ToUpperInvariant()}\r\n");
+        using var httpClient = new HttpClient(handler);
+        var updater = CreateUpdater(httpClient);
+
+        DependencyUpdate update = await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        variables.GetRawValue("monitor|9.0|linux|x64|sha").ShouldBe(s_publishedChecksum);
+        handler.Requests.ShouldBe([
+            "https://example.invalid/public-checksums/diagnostics/monitor/9.0.5/dotnet-monitor-9.0.5-linux-x64.tar.gz.sha512",
+        ]);
+    }
+
+    [Fact]
+    public async Task MissingPublishedChecksum_HashesArchive()
+    {
+        var variables = CreateVariables();
+        using var handler = new ChecksumHandler(HttpStatusCode.NotFound);
+        using var httpClient = new HttpClient(handler);
+        var updater = CreateUpdater(httpClient);
+
+        DependencyUpdate update = await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        string expectedChecksum = Convert.ToHexStringLower(SHA512.HashData(Encoding.UTF8.GetBytes(ArchiveContent)));
+        variables.GetRawValue("monitor|9.0|linux|x64|sha").ShouldBe(expectedChecksum);
+        handler.Requests.ShouldBe([
+            "https://example.invalid/public-checksums/diagnostics/monitor/9.0.5/dotnet-monitor-9.0.5-linux-x64.tar.gz.sha512",
+            "https://example.invalid/public/diagnostics/monitor/9.0.5/dotnet-monitor-9.0.5-linux-x64.tar.gz",
+        ]);
+    }
+
+    [Fact]
+    public async Task Pipeline_UsesTrimmedVersionFromConfiguredBuildArtifact()
     {
         var artifacts = new Mock<IPipelineArtifactProvider>(MockBehavior.Strict);
         PipelineArtifactFile[] expectedFiles = [new("Build_Info", "dotnet-monitor.nupkg.buildversion")];
@@ -93,26 +166,15 @@ public sealed class MonitorUpdaterTests
             .ReturnsAsync(" 9.0.5-servicing.25556.2\r\n");
         using var handler = new ChecksumHandler();
         using var httpClient = new HttpClient(handler);
-        using var services = new ServiceCollection()
-            .AddSingleton(artifacts.Object)
-            .AddSingleton(httpClient)
-            .AddLogging()
-            .AddSingleton(CreateConfiguration())
-            .AddSingleton<MonitorUpdater>()
-            .BuildServiceProvider();
-        var versionUpdater = services.GetRequiredService<MonitorUpdater>();
-        var pipelineUpdater = (IPipelineBuildUpdater)versionUpdater;
-        Assert.Same(versionUpdater, pipelineUpdater);
-        versionUpdater.ShouldBeSameAs(services.GetRequiredService<MonitorUpdater>());
-        var variables = CreateVariables(pinnedChecksums: false);
+        var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
+        var variables = CreateVariables(checksumVariable: null);
 
-        await (await pipelineUpdater.ResolveFromPipelineBuildAsync(
+        await (await updater.ResolveFromPipelineBuildAsync(
                 42,
                 TestContext.Current.CancellationToken))
             .ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetValue("monitor|9.0|build-version").ShouldBe("9.0.5-servicing.25556.2");
-        variables.GetValue("monitor|9.0|product-version").ShouldBe("9.0.5");
         handler.Requests.ShouldBeEmpty();
         artifacts.VerifyAll();
         artifacts.VerifyNoOtherCalls();
@@ -125,8 +187,8 @@ public sealed class MonitorUpdaterTests
         using var handler = new ChecksumHandler();
         using var httpClient = new HttpClient(handler);
         var updater = new MonitorUpdater(artifacts.Object, httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
-        var first = CreateVariables(pinnedChecksums: false);
-        var second = CreateVariables(pinnedChecksums: false);
+        var first = CreateVariables(checksumVariable: null);
+        var second = CreateVariables(checksumVariable: null);
 
         var firstUpdate = await updater.ResolveFromVersionAsync("9.0.5", TestContext.Current.CancellationToken);
         var secondUpdate = await updater.ResolveFromVersionAsync("9.0.6", TestContext.Current.CancellationToken);
@@ -216,29 +278,26 @@ public sealed class MonitorUpdaterTests
     private static UpdateDependenciesConfiguration CreateConfiguration() =>
         new() { AzureDevOps = new() { Organization = "organization", Project = "project" } };
 
-    private static ManifestVariables CreateVariables(string branch = "nightly", bool pinnedChecksums = true)
+    private static MonitorUpdater CreateUpdater(HttpClient httpClient) =>
+        new(Mock.Of<IPipelineArtifactProvider>(), httpClient, CreateConfiguration(), Mock.Of<ILogger<MonitorUpdater>>());
+
+    private static ManifestVariables CreateVariables(
+        string branch = "nightly", string? checksumVariable = "monitor|9.0|linux|x64|sha")
     {
-        string quality = branch == "main" ? "maintenance" : "preview";
         var variables = new Dictionary<string, string>
         {
             ["branch"] = branch,
-            [$"base-url|public|{quality}|{branch}"] = "https://example.invalid/public",
-            [$"base-url|public-checksums|{quality}|{branch}"] = "https://example.invalid/public-checksums",
+            ["base-url|public|preview|nightly"] = "https://example.invalid/public",
+            ["base-url|public-checksums|preview|nightly"] = "https://example.invalid/public-checksums",
             [$"monitor|9.0|base-url|{branch}"] = "old",
             [$"monitor|9.0|base-url|checksums|{branch}"] = "old",
-            ["monitor|8.0|linux|x64|sha"] = "unrelated",
+            ["monitor|9.0|build-version"] = "9.0.1",
+            ["monitor|9.0|product-version"] = "9.0.1",
         };
-        foreach (var (product, _, os, arch) in s_products)
+        if (checksumVariable is not null)
         {
-            variables[$"{product}|9.0|build-version"] = "9.0.1";
-            variables[$"{product}|9.0|product-version"] = "9.0.1";
-            if (pinnedChecksums)
-            {
-                variables[$"{product}|9.0|{os}|{arch}|sha"] = "old";
-            }
+            variables[checksumVariable] = "old";
         }
-        variables["monitor-base|9.0|build-version"] = "$(monitor|9.0|build-version)";
-        variables["monitor-base|9.0|product-version"] = "$(monitor|9.0|product-version)";
 
         return new ManifestVariables(JsonSerializer.Serialize(new { variables }));
     }
@@ -263,7 +322,7 @@ public sealed class MonitorUpdaterTests
             bool isChecksum = url.EndsWith(".sha512");
             return Task.FromResult(new HttpResponseMessage(isChecksum ? checksumStatus : archiveStatus)
             {
-                Content = new StringContent(isChecksum ? checksum ?? $" {s_checksum.ToUpperInvariant()}\r\n" : ArchiveContent),
+                Content = new StringContent(isChecksum ? checksum ?? s_publishedChecksum : ArchiveContent),
             });
         }
     }

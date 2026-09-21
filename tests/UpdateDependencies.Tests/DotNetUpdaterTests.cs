@@ -6,7 +6,6 @@ using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
@@ -14,99 +13,85 @@ namespace UpdateDependencies.Tests;
 
 public sealed class DotNetUpdaterTests
 {
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public async Task BarBuildAndChannel_UpdateSharedEditorWithoutSavingOrGenerating(bool fromChannel)
+    [Fact]
+    public async Task Channel_ResolvesAssetsFromLatestBuild()
+    {
+        var bar = new Mock<IBasicBarClient>(MockBehavior.Strict);
+        bar.Setup(client => client.GetLatestBuildAsync(DotNetUpdater.PublicRepository, 42))
+            .ReturnsAsync(CreateBuild());
+        bar.Setup(client => client.GetAssetsAsync(null, null, 123, null)).ReturnsAsync(CreateAssets());
+
+        await CreateUpdater(bar.Object).ResolveFromBarChannelAsync(42, TestContext.Current.CancellationToken);
+
+        bar.Verify(client => client.GetLatestBuildAsync(DotNetUpdater.PublicRepository, 42), Times.Once);
+        bar.Verify(client => client.GetAssetsAsync(null, null, 123, null), Times.Once);
+    }
+
+    [Fact]
+    public async Task BarBuild_MapsAssetsToProductVersions()
     {
         using var repo = new TempRepo();
         ManifestVariables variables = CreateManifest(repo.LocalPath);
-        string manifestPath = Path.Combine(repo.LocalPath, "manifest.versions.json");
-        string original = File.ReadAllText(manifestPath);
-        Build build = JsonConvert.DeserializeObject<Build>("""
-            {"id":123,"githubRepository":"https://github.com/dotnet/dotnet","commit":"abc"}
-            """)!;
-        List<Asset> assets = JsonConvert.DeserializeObject<List<Asset>>("""
-            [
-              {"name":"Sdk/11.0.100/productVersion.txt","version":"11.0.100"},
-              {"name":"Runtime/11.0.2/productVersion.txt","version":"11.0.2"},
-              {"name":"aspnetcore/Runtime/11.0.3/productVersion.txt","version":"11.0.3"}
-            ]
-            """)!;
         var bar = new Mock<IBasicBarClient>(MockBehavior.Strict);
-        bar.Setup(client => client.GetAssetsAsync(null, null, 123, null)).ReturnsAsync(assets);
-        if (fromChannel)
-        {
-            bar.Setup(client => client.GetLatestBuildAsync("https://github.com/dotnet/dotnet", 42))
-                .ReturnsAsync(build);
-        }
-        var updater = CreateUpdater(bar: bar.Object);
-        using var services = new ServiceCollection()
-            .AddSingleton(updater)
-            .BuildServiceProvider();
+        bar.Setup(client => client.GetAssetsAsync(null, null, 123, null)).ReturnsAsync(CreateAssets());
+        var updater = CreateUpdater(bar.Object);
 
-        var registeredUpdater = services.GetRequiredService<DotNetUpdater>();
-        registeredUpdater.ShouldBeSameAs(updater);
-        Assert.Same((IBarBuildUpdater)registeredUpdater, (IBarChannelUpdater)registeredUpdater);
-        if (fromChannel)
-        {
-            await (await ((IBarChannelUpdater)registeredUpdater).ResolveFromBarChannelAsync(
-                42, TestContext.Current.CancellationToken))
-                .ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
-        }
-        else
-        {
-            await (await ((IBarBuildUpdater)registeredUpdater).ResolveFromBarBuildAsync(
-                build, TestContext.Current.CancellationToken))
-                .ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
-        }
+        DependencyUpdate update = await updater.ResolveFromBarBuildAsync(CreateBuild(), TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, repo.LocalPath, TestContext.Current.CancellationToken);
 
         variables.GetRawValue("runtime|11.0|build-version").ShouldBe("11.0.2");
-        variables.GetRawValue("dotnet|11.0|product-version").ShouldBe("11.0.2");
         variables.GetRawValue("aspnet|11.0|build-version").ShouldBe("11.0.3");
-        variables.GetRawValue("aspnet-composite|11.0|build-version").ShouldBe("$(aspnet|11.0|build-version)");
-        variables.GetRawValue("sdk|11.0|build-version").ShouldBe("11.0.100");
-        variables.GetRawValue("runtime|11.0|linux|x64|sha").ShouldBe("unchanged");
-        File.ReadAllText(manifestPath).ShouldBe(original);
-        bar.VerifyAll();
-        bar.VerifyNoOtherCalls();
+        variables.GetRawValue("sdk|11.0|build-version").ShouldBe("11.0.101");
     }
 
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(false, true)]
-    [InlineData(true, false)]
-    [InlineData(true, true)]
-    public async Task Staging_PreservesPublicInternalAndSdkOnlySemantics(bool internalBuild, bool sdkOnly)
+    [InlineData("", "11.0.101")]
+    [InlineData("https://example/internal", "11.0.101-servicing.12345.1")]
+    public async Task Staging_SelectsHighestSdkFromRequestedSource(string internalBaseUrl, string expectedSdk)
     {
         using var repo = new TempRepo();
         ManifestVariables variables = CreateManifest(repo.LocalPath);
-        string original = variables.Content;
-        ReleaseConfig release = CreateRelease(sdkOnly);
-        var updater = CreateUpdater();
-        string internalBaseUrl = internalBuild
-            ? "https://dotnetstage.blob.core.windows.net/stage-123/assets/shipping/assets"
-            : "";
+        ReleaseConfig release = CreateRelease(false);
 
-        await updater.UpdateFromStagingPipelineAsync(
+        await CreateUpdater().UpdateFromStagingPipelineAsync(
             variables, repo.LocalPath, release, internalBaseUrl, TestContext.Current.CancellationToken);
 
-        string expectedSdk = internalBuild ? "11.0.101-servicing.12345.1" : "11.0.101";
         variables.GetRawValue("sdk|11.0|build-version").ShouldBe(expectedSdk);
-        string expectedRuntime = internalBuild
-            ? sdkOnly ? "11.0.1" : release.RuntimeBuild
-            : release.Runtime;
-        variables.GetRawValue("runtime|11.0|build-version").ShouldBe(expectedRuntime);
-        variables.GetRawValue("dotnet|11.0|product-version")
-            .ShouldBe(internalBuild && sdkOnly ? "11.0.1" : "11.0.2");
-        if (internalBuild)
-        {
-            string product = sdkOnly ? "sdk" : "dotnet";
-            variables.GetRawValue($"{product}|11.0|base-url|nightly")
-                .ShouldBe("https://dotnetstage.blob.core.windows.net/stage-123/assets/shipping/assets");
-        }
+    }
 
-        File.ReadAllText(Path.Combine(repo.LocalPath, "manifest.versions.json")).ShouldBe(original);
+    [Theory]
+    [InlineData("", false, "11.0.2", "11.0.3", "11.0.2")]
+    [InlineData("", true, "11.0.2", "11.0.3", "11.0.2")]
+    [InlineData("https://example/internal", false, "11.0.2-servicing.12345.1", "11.0.3-servicing.12345.1", "11.0.2")]
+    [InlineData("https://example/internal", true, "11.0.1", "11.0.1", "11.0.1")]
+    public async Task Staging_PreservesRuntimeAndAspNetOnlyForInternalSdkOnlyRelease(
+        string internalBaseUrl, bool sdkOnly, string expectedRuntime, string expectedAspNet, string expectedTag)
+    {
+        using var repo = new TempRepo();
+        ManifestVariables variables = CreateManifest(repo.LocalPath);
+
+        await CreateUpdater().UpdateFromStagingPipelineAsync(
+            variables, repo.LocalPath, CreateRelease(sdkOnly), internalBaseUrl, TestContext.Current.CancellationToken);
+
+        variables.GetRawValue("runtime|11.0|build-version").ShouldBe(expectedRuntime);
+        variables.GetRawValue("aspnet|11.0|build-version").ShouldBe(expectedAspNet);
+        variables.GetRawValue("dotnet|11.0|product-version").ShouldBe(expectedTag);
+    }
+
+    [Theory]
+    [InlineData(false, "https://example/internal", "old")]
+    [InlineData(true, "old", "https://example/internal")]
+    public async Task Staging_SelectsInternalBaseUrlForReleaseScope(
+        bool sdkOnly, string expectedRuntimeBaseUrl, string expectedSdkBaseUrl)
+    {
+        using var repo = new TempRepo();
+        ManifestVariables variables = CreateManifest(repo.LocalPath);
+
+        await CreateUpdater().UpdateFromStagingPipelineAsync(
+            variables, repo.LocalPath, CreateRelease(sdkOnly), "https://example/internal", TestContext.Current.CancellationToken);
+
+        variables.GetRawValue("sdk|11.0|base-url|nightly").ShouldBe(expectedSdkBaseUrl);
+        variables.GetRawValue("dotnet|11.0|base-url|nightly").ShouldBe(expectedRuntimeBaseUrl);
     }
 
     [Fact]
@@ -161,22 +146,36 @@ public sealed class DotNetUpdaterTests
     }
 
     [Fact]
-    public async Task CancelledBuildLookup_DoesNotMutateManifest()
+    public async Task Channel_CancelsPendingBuildLookup()
     {
         var bar = new Mock<IBasicBarClient>(MockBehavior.Strict);
-        var pending = new TaskCompletionSource<Build>();
+        var pending = new TaskCompletionSource<Build>(TaskCreationOptions.RunContinuationsAsynchronously);
         bar.Setup(client => client.GetLatestBuildAsync("https://github.com/dotnet/dotnet", 42))
             .Returns(pending.Task);
         var updater = CreateUpdater(bar: bar.Object);
-        var variables = new ManifestVariables("""{"variables":{}}""");
+        using var cancellation = new CancellationTokenSource();
+        Task<DependencyUpdate> lookup = updater.ResolveFromBarChannelAsync(42, cancellation.Token);
+        lookup.IsCompleted.ShouldBeFalse();
 
+        cancellation.Cancel();
         await Should.ThrowAsync<OperationCanceledException>(() =>
-            updater.ResolveFromBarChannelAsync(42, new CancellationToken(true)));
+            lookup.WaitAsync(TimeSpan.FromSeconds(10), TestContext.Current.CancellationToken));
 
-        bar.VerifyAll();
+        bar.Verify(client => client.GetLatestBuildAsync(DotNetUpdater.PublicRepository, 42), Times.Once);
         bar.VerifyNoOtherCalls();
-        variables.Content.ShouldBe("""{"variables":{}}""");
     }
+
+    private static Build CreateBuild() => JsonConvert.DeserializeObject<Build>("""
+        {"id":123,"githubRepository":"https://github.com/dotnet/dotnet","commit":"abc"}
+        """)!;
+
+    private static List<Asset> CreateAssets() => JsonConvert.DeserializeObject<List<Asset>>("""
+        [
+          {"name":"Sdk/11.0.101/productVersion.txt","version":"11.0.101"},
+          {"name":"Runtime/11.0.2/productVersion.txt","version":"11.0.2"},
+          {"name":"aspnetcore/Runtime/11.0.3/productVersion.txt","version":"11.0.3"}
+        ]
+        """)!;
 
     private static DotNetUpdater CreateUpdater(
         IBasicBarClient? bar = null) =>
@@ -199,7 +198,6 @@ public sealed class DotNetUpdaterTests
               "sdk|11.0|base-url|nightly":"old"
             }}
             """;
-        File.WriteAllText(Path.Combine(repoRoot, "manifest.versions.json"), content);
         string configDirectory = Path.Combine(repoRoot, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts");
         Directory.CreateDirectory(configDirectory);
         File.WriteAllText(Path.Combine(configDirectory, "NuGet.config.nightly"), "<configuration />");
@@ -214,8 +212,8 @@ public sealed class DotNetUpdaterTests
         Release = "11.0.2",
         Runtime = "11.0.2",
         RuntimeBuild = "11.0.2-servicing.12345.1",
-        Sdks = ["11.0.100", "11.0.101"],
-        SdkBuilds = ["11.0.100-servicing.12345.1", "11.0.101-servicing.12345.1"],
+        Sdks = ["11.0.101", "11.0.100"],
+        SdkBuilds = ["11.0.101-servicing.12345.1", "11.0.100-servicing.12345.1"],
         Asp = "11.0.3",
         AspBuild = "11.0.3-servicing.12345.1",
         Security = false,

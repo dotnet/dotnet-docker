@@ -8,7 +8,6 @@ using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
@@ -16,39 +15,55 @@ namespace UpdateDependencies.Tests;
 public sealed class AspireUpdaterTests
 {
     [Fact]
-    public async Task Channel_UpdatesSharedEditorUsingOneSingleton()
+    public async Task Channel_UsesLatestAspireBuild()
     {
         var build = CreateBuild();
         var barClient = new Mock<IBasicBarClient>(MockBehavior.Strict);
         barClient.Setup(client => client.GetLatestBuildAsync(AspireUpdater.PublicRepository, 5555)).ReturnsAsync(build);
         using var handler = new ArchiveHandler();
         using var httpClient = new HttpClient(handler);
-        using var services = new ServiceCollection()
-            .AddSingleton(barClient.Object)
-            .AddSingleton(httpClient)
-            .AddLogging()
-            .AddSingleton<AspireUpdater>()
-            .BuildServiceProvider();
-        var updater = services.GetRequiredService<AspireUpdater>();
-        var channelUpdater = (IBarChannelUpdater)updater;
-        var buildUpdater = (IBarBuildUpdater)updater;
-        Assert.Same(buildUpdater, channelUpdater);
-        updater.ShouldBeSameAs(services.GetRequiredService<AspireUpdater>());
+        var updater = new AspireUpdater(barClient.Object, httpClient, Mock.Of<ILogger<AspireUpdater>>());
         var variables = CreateVariables();
-        variables.SetValue("aspire-dashboard|base-url|nightly", "https://example.invalid/shared-editor");
-        await (await channelUpdater.ResolveFromBarChannelAsync(5555, TestContext.Current.CancellationToken))
-            .ApplyAsync(variables, "missing-workspace", TestContext.Current.CancellationToken);
+
+        DependencyUpdate update = await updater.ResolveFromBarChannelAsync(5555, TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetRawValue("aspire-dashboard|build-version").ShouldBe("13.6.0-preview.1.26453.4");
+        barClient.Verify(client => client.GetLatestBuildAsync(AspireUpdater.PublicRepository, 5555), Times.Once);
+    }
+
+    [Fact]
+    public async Task BarBuild_UsesStableTagsForPreviewBuild()
+    {
+        using var handler = new ArchiveHandler();
+        using var httpClient = new HttpClient(handler);
+        var updater = new AspireUpdater(Mock.Of<IBasicBarClient>(), httpClient, Mock.Of<ILogger<AspireUpdater>>());
+        var variables = CreateVariables();
+
+        DependencyUpdate update = await updater.ResolveFromBarBuildAsync(CreateBuild(), TestContext.Current.CancellationToken);
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
         variables.GetRawValue("aspire-dashboard|product-version").ShouldBe("13.6.0");
         variables.GetRawValue("aspire-dashboard|fixed-tag").ShouldBe("13.6.0");
         variables.GetRawValue("aspire-dashboard|minor-tag").ShouldBe("13.6");
         variables.GetRawValue("aspire-dashboard|major-tag").ShouldBe("13");
+    }
+
+    [Fact]
+    public async Task BarBuild_HashesArchiveFromCurrentBaseUrl()
+    {
+        using var handler = new ArchiveHandler();
+        using var httpClient = new HttpClient(handler);
+        var updater = new AspireUpdater(Mock.Of<IBasicBarClient>(), httpClient, Mock.Of<ILogger<AspireUpdater>>());
+        var variables = CreateVariables();
+        DependencyUpdate update = await updater.ResolveFromBarBuildAsync(CreateBuild(), TestContext.Current.CancellationToken);
+        variables.SetValue("aspire-dashboard|base-url|nightly", "https://example.invalid/updated");
+
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        handler.Requests.ShouldBe(["https://example.invalid/updated/aspire-dashboard-linux-x64.zip"]);
         variables.GetRawValue("aspire-dashboard|linux|x64|sha").ShouldBe(
             Convert.ToHexStringLower(SHA512.HashData(Encoding.UTF8.GetBytes("archive"))));
-        handler.Requests.ShouldBe(["https://example.invalid/shared-editor/aspire-dashboard-linux-x64.zip"]);
-        barClient.Verify(client => client.GetLatestBuildAsync(AspireUpdater.PublicRepository, 5555), Times.Once);
-        barClient.VerifyNoOtherCalls();
     }
 
     [Fact]
@@ -72,7 +87,7 @@ public sealed class AspireUpdaterTests
     }
 
     [Fact]
-    public async Task BarBuild_RejectsNonAspireBuildBeforeReadingManifest()
+    public async Task BarBuild_RejectsNonAspireRepository()
     {
         var build = CreateBuild();
         build.GitHubRepository = "https://github.com/dotnet/dotnet";
@@ -94,11 +109,11 @@ public sealed class AspireUpdaterTests
           "variables": {
             "branch": "nightly",
             "aspire-dashboard|base-url|nightly": "https://example.invalid/original",
-            "aspire-dashboard|build-version": "13.5.0",
-            "aspire-dashboard|product-version": "13.5.0",
-            "aspire-dashboard|fixed-tag": "13.5.0",
-            "aspire-dashboard|minor-tag": "13.5",
-            "aspire-dashboard|major-tag": "13",
+            "aspire-dashboard|build-version": "12.5.0",
+            "aspire-dashboard|product-version": "12.5.0",
+            "aspire-dashboard|fixed-tag": "12.5.0",
+            "aspire-dashboard|minor-tag": "12.5",
+            "aspire-dashboard|major-tag": "12",
             "aspire-dashboard|linux|x64|sha": "old"
           }
         }

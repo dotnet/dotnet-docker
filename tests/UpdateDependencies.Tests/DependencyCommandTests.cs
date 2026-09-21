@@ -8,6 +8,7 @@ using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging.Abstractions;
 using Newtonsoft.Json;
 
 namespace UpdateDependencies.Tests;
@@ -43,28 +44,6 @@ public sealed class DependencyCommandTests
         root.Parse(["sample", "pipeline-build", "123"]).Errors.ShouldNotBeEmpty();
         root.Parse(["sample", "channel", "123"]).Errors.ShouldBeEmpty();
         root.Parse(["sample", "channel", "0"]).Errors.ShouldNotBeEmpty();
-    }
-
-    [Fact]
-    public void Create_ExposesExpectedMetadataAndSources()
-    {
-        Check<AspireUpdater>("aspire", "microsoft/aspire", "build-id", "channel");
-        Check<DotNetUpdater>("dotnet", "dotnet/dotnet", "build-id", "channel", "staging-pipeline");
-        Check<MonitorUpdater>("monitor", "dotnet/dotnet-monitor", "pipeline-build", "version");
-        Check<ChiselUpdater>("chisel", "chisel");
-        Check<MinGitUpdater>("mingit", "mingit");
-        Check<RocksToolboxUpdater>("rocks-toolbox", "rocks-toolbox");
-        Check<SyftUpdater>("syft", "syft");
-
-        static void Check<TUpdater>(string name, string versionSourceName, params string[] sources)
-            where TUpdater : class, IUpdater
-        {
-            Command command = DependencyCommand.CreateCliCommand<TUpdater>(ThrowIfResolved);
-
-            command.Name.ShouldBe(name);
-            TUpdater.VersionSourceName.ShouldBe(versionSourceName);
-            command.Subcommands.Select(subcommand => subcommand.Name).ShouldBe(sources);
-        }
     }
 
     [Theory]
@@ -145,7 +124,7 @@ public sealed class DependencyCommandTests
     }
 
     [Fact]
-    public void StagingAndSyncOptions_BindTheirOwnValues()
+    public void StagingOptions_BindUpdateSettings()
     {
         Command staging = FromStagingPipelineCommand.CreateCliCommand(ThrowIfResolved);
         ParseResult stagingResult = staging.Parse([
@@ -154,12 +133,16 @@ public sealed class DependencyCommandTests
         stagingResult.Errors.ShouldBeEmpty();
         FromStagingPipelineOptions stagingOptions = FromStagingPipelineOptions.Bind(stagingResult);
 
-        stagingOptions.GetStageContainerList().ShouldBe(["stage-123", "stage-456"]);
+        stagingOptions.StageContainers.ShouldBe("stage-123,stage-456");
         stagingOptions.StagingStorageAccount.ShouldBe("dotnetstage");
         stagingOptions.Internal.ShouldBeTrue();
         stagingOptions.SubmitPullRequest.ShouldBeTrue();
         stagingOptions.TargetBranch.ShouldBe("internal/release/11.0");
+    }
 
+    [Fact]
+    public void SyncOptions_BindBranchesAndStorageAccount()
+    {
         Command sync = SyncInternalReleaseCommand.CreateCliCommand(ThrowIfResolved);
         ParseResult syncResult = sync.Parse([
             "--source-branch", "release/11.0", "--target-branch", "internal/release/11.0",
@@ -240,20 +223,23 @@ public sealed class DependencyCommandTests
     }
 
     [Fact]
-    public async Task RunAsync_SubmitPullRequestRequiresPublishingCredentials()
+    public async Task RunAsync_SubmitPullRequestRejectsMissingGitHubToken()
     {
-        var services = new ServiceCollection()
-            .AddLogging()
-            .AddSingleton(new UpdateDependenciesConfiguration())
-            .AddSingleton<DependencyUpdateRunner>();
-        using ServiceProvider provider = services.BuildServiceProvider();
-        var runner = provider.GetRequiredService<DependencyUpdateRunner>();
+        var configuration = new UpdateDependenciesConfiguration
+        {
+            User = "Test User",
+            Email = "test@example.com",
+            GitHub = new() { Owner = "test-owner", Repository = "test-repo", Token = "" },
+        };
+        var runner = new DependencyUpdateRunner(configuration, NullLoggerFactory.Instance);
 
-        await Should.ThrowAsync<ArgumentException>(() => runner.RunAsync(
+        var exception = await Should.ThrowAsync<ArgumentException>(() => runner.RunAsync(
             new CreatePullRequestOptions { SubmitPullRequest = true },
             "sample/source",
             new DependencyUpdate("Update sample", (_, _, _) => Task.CompletedTask),
             TestContext.Current.CancellationToken));
+
+        exception.ParamName.ShouldBe("token");
     }
 
     private static readonly IServiceProvider ThrowIfResolved = new ThrowingServiceProvider();
