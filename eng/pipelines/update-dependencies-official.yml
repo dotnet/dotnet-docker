@@ -48,7 +48,8 @@ extends:
     updateDotnet: ${{ parameters.updateDotnet }}
     vmrChannel: $(vmrChannel)
     updateAspire: ${{ parameters.updateAspire }}
-    aspireChannel: $(aspireChannel)
+    aspireDailyChannel: $(aspireDailyChannel)
+    aspireGaChannel: $(aspireGaChannel)
     tools: ${{ parameters.tools }}
     submitPullRequest: ${{ not(parameters.skipPullRequest) }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
