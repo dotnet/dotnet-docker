@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Maestro.Common.AzureDevOpsTokens;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.VisualStudio.Services.Common;
 using Microsoft.VisualStudio.Services.WebApi;
@@ -21,12 +22,24 @@ public interface IAzdoAuthProvider
     VssConnection GetVssConnection(string azdoOrg);
 }
 
-public class AzdoAuthProvider(IAzureDevOpsTokenProvider tokenProvider) : IAzdoAuthProvider
+public class AzdoAuthProvider(
+    IAzureDevOpsTokenProvider tokenProvider,
+    IConfiguration configuration) : IAzdoAuthProvider
 {
     /// <summary>
-    /// Gets an Azure DevOps REST API access token.
+    /// Uses the pipeline token for artifact access, falling back to configured Azure DevOps authentication.
     /// </summary>
-    public string AccessToken => tokenProvider.GetTokenForAccount("default");
+    public string AccessToken
+    {
+        get
+        {
+            // Git operations use the token provider directly to retain the service connection identity.
+            string? pipelineToken = configuration["SYSTEM_ACCESSTOKEN"];
+            return !string.IsNullOrWhiteSpace(pipelineToken)
+                ? pipelineToken
+                : tokenProvider.GetTokenForAccount("default");
+        }
+    }
 
     /// <summary>
     /// Gets a connection to Azure DevOps Services.
