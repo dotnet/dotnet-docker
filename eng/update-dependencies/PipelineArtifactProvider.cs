@@ -1,13 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Dotnet.Docker.Model.Release;
+using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Logging;
 using Microsoft.TeamFoundation.Build.WebApi;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Represents a single file in an artifact from a pipeline run.
@@ -18,9 +18,9 @@ namespace Dotnet.Docker;
 /// <param name="SubPath">
 /// The sub-path of the specific file within the Artifact.
 /// </param>
-internal record PipelineArtifactFile(string ArtifactName, string SubPath);
+public record PipelineArtifactFile(string ArtifactName, string SubPath);
 
-internal interface IPipelineArtifactProvider
+public interface IPipelineArtifactProvider
 {
     /// <summary>
     /// Gets the .NET release config from a run of the staging pipeline.
@@ -29,6 +29,15 @@ internal interface IPipelineArtifactProvider
         string azdoOrganization,
         string azdoProject,
         int stagingPipelineRunId);
+
+    /// <summary>
+    /// Tries artifact files in order and returns the first successfully downloaded text.
+    /// </summary>
+    Task<string> GetArtifactTextContentAsync(
+        string azdoOrganization,
+        string azdoProject,
+        int pipelineRunId,
+        params IEnumerable<PipelineArtifactFile> artifactsToTry);
 }
 
 internal class PipelineArtifactProvider(
@@ -75,22 +84,22 @@ internal class PipelineArtifactProvider(
     /// For example: https://dev.azure.com/fabrikamfiber/.
     /// </param>
     /// <param name="azdoProject">Azure DevOps project</param>
-    /// <param name="stagingPipelineRunId">Pipeline run ID</param>
+    /// <param name="pipelineRunId">Pipeline run ID</param>
     /// <param name="artifactsToTry">The collection of artifact files to try, in order.</param>
     /// <returns>The artifact content as a string.</returns>
-    private async Task<string> GetArtifactTextContentAsync(
+    public async Task<string> GetArtifactTextContentAsync(
         string azdoOrganization,
         string azdoProject,
-        int stagingPipelineRunId,
-        IEnumerable<PipelineArtifactFile> artifactsToTry)
+        int pipelineRunId,
+        params IEnumerable<PipelineArtifactFile> artifactsToTry)
     {
         if (string.IsNullOrWhiteSpace(azdoOrganization))
         {
-            throw new ArgumentException("--azdo-organization is required", nameof(azdoOrganization));
+            throw new ArgumentException("Azure DevOps organization is required", nameof(azdoOrganization));
         }
         if (string.IsNullOrWhiteSpace(azdoProject))
         {
-            throw new ArgumentException("--azdo-project is required", nameof(azdoProject));
+            throw new ArgumentException("Azure DevOps project is required", nameof(azdoProject));
         }
 
         List<Exception> exceptions = [];
@@ -98,8 +107,8 @@ internal class PipelineArtifactProvider(
         foreach (PipelineArtifactFile pipelineArtifact in artifactsToTry)
         {
             _logger.LogInformation(
-                "Trying to get artifact from pipeline run {stagingPipelineRunId} using {artifactFile}",
-                stagingPipelineRunId, pipelineArtifact);
+                "Trying to get artifact from pipeline run {pipelineRunId} using {artifactFile}",
+                pipelineRunId, pipelineArtifact);
 
             try
             {
@@ -107,7 +116,7 @@ internal class PipelineArtifactProvider(
                 BuildArtifact resolvedArtifact = await _pipelinesService.GetArtifactAsync(
                     azdoOrganization,
                     azdoProject,
-                    stagingPipelineRunId,
+                    pipelineRunId,
                     pipelineArtifact.ArtifactName);
 
                 // If the artifact is found, download the specific file within it

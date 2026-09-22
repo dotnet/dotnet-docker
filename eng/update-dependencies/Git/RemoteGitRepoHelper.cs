@@ -4,7 +4,7 @@
 using Microsoft.DotNet.DarcLib;
 using Microsoft.Extensions.Logging;
 
-namespace Dotnet.Docker.Git;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
 
 internal sealed class RemoteGitRepoHelper(
     string remoteRepoUrl,
