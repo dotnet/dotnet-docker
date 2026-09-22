@@ -14999,11 +14999,11 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
-          "path": ".portal-docs/mar/README.aspire-dashboard.portal.md",
+          "path": ".portal-docs/mar/README.dashboard.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspire-dashboard-tags.yml",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/dashboard-tags.yml",
       "images": [
         {
           "productVersion": "$(aspire-dashboard|product-version)",
