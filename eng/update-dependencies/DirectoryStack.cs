@@ -1,7 +1,7 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Helper class to manage a stack of directories for changing the current

@@ -23,7 +23,6 @@ parameters:
 
 variables:
 - template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
-- template: /eng/docker-tools/templates/variables/dotnet/secrets.yml@self
 
 stages:
 - stage: Monitor
@@ -33,29 +32,28 @@ stages:
     pool:
       vmImage: $(defaultLinuxAmd64PoolImage)
     steps:
-    - download: dotnet-monitor
-      artifact: Build_Info
-      displayName: "Download Build Info (Branch: $(resources.pipeline.dotnet-monitor.sourceBranch))"
-    - pwsh: $(engPath)/Get-MonitorDropVersions.ps1 -BuildVersionFilePath "$(Pipeline.Workspace)/dotnet-monitor/Build_Info/dotnet-monitor.nupkg.buildversion"
-      displayName: Get Versions
-    - powershell: |
-        Import-Module -force $(engPath)/DependencyManagement.psm1
-
-        $scriptArgs = @{
-          ProductVersion = "$(monitorMajorMinorVersion)"
-          MonitorVersion = "$(monitorVer)"
-          AzdoVariableName = 'updateDepsArgs'
-          UseStableBranding = [bool]::Parse("$(stableBranding)")
-          ReleaseState = $(Get-ProductReleaseState)
-        }
-
-        $(engPath)/Set-DotnetVersions.ps1 @scriptArgs
-      displayName: Get update-dependencies args
-    - powershell: |
-        $customArgsArray = @("$(updateDepsArgs)")
-        echo "##vso[task.setvariable variable=customArgsArray]$($customArgsArray | ConvertTo-Json -Compress -AsArray)"
-      displayName: Set Custom Args
-    - template: steps/update-dependencies-specific.yml
-      parameters:
-        customArgsArray: $(customArgsArray)
-        skipPullRequest: ${{ parameters.skipPullRequest }}
+    - checkout: self
+      fetchDepth: 0
+    - template: steps/install-dotnet.yml
+    - ${{ if not(parameters.skipPullRequest) }}:
+      - task: AzureCLI@2
+        displayName: Update .NET Monitor
+        inputs:
+          azureSubscription: DotnetContainersGitHubBot
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: >-
+            dotnet run --project "$(engPath)/update-dependencies/update-dependencies.csproj" --
+            monitor pipeline-build "$(resources.pipeline.dotnet-monitor.runID)"
+            --submit-pr
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          UpdateDependencies__GitHub__AppClientId: $(dotnetContainersBot.gitHubApp.clientId)
+          UpdateDependencies__GitHub__AppKeyUri: $(dotnetContainersBot.gitHubApp.privateKeyUri)
+    - ${{ else }}:
+      - pwsh: >-
+          dotnet run --project "$(engPath)/update-dependencies/update-dependencies.csproj" --
+          monitor pipeline-build "$(resources.pipeline.dotnet-monitor.runID)"
+        displayName: Update .NET Monitor
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)

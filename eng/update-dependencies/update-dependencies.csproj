@@ -6,13 +6,17 @@
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Dotnet.Docker</RootNamespace>
+    <RootNamespace>Microsoft.DotNet.Docker.UpdateDependencies</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <InternalsVisibleTo Include="UpdateDependencies.Tests" />
     <!-- Allows Moq to create mocks of internal types -->
     <InternalsVisibleTo Include="DynamicProxyGenAssembly2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="appsettings*.json" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
   <ItemGroup>
@@ -24,17 +28,10 @@
     <PackageReference Include="Azure.Storage.Blobs" Version="12.24.0" />
     <PackageReference Include="LibGit2Sharp" Version="0.30.0" />
     <PackageReference Include="Microsoft.DotNet.DarcLib" Version="1.1.0-beta.25461.2" />
-    <PackageReference Include="Microsoft.DotNet.VersionTools" Version="9.0.0-beta.24151.5" />
+    <PackageReference Include="Microsoft.DotNet.GitAutomation" Version="0.3.0-beta.26453.2" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11" />
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.232.0-preview" />
-    <PackageReference Include="Octokit" Version="13.0.1" />
-    <PackageReference Include="System.CommandLine" Version="2.0.0-beta5.25210.1" />
-    <PackageReference Include="System.CommandLine.Hosting" Version="0.4.0-alpha.25210.1" />
-    <PackageReference Include="System.CommandLine.NamingConventionBinder" Version="2.0.0-beta5.25210.1" />
-
-    <!-- Fixes CVE-2025-55247 -->
-    <!-- Microsoft.Build.Utilities.Core is transitively referenced by Microsoft.DotNet.VersionTools -->
-    <!-- Remove when https://github.com/dotnet/docker-tools/issues/1658 is complete -->
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.43" />
+    <PackageReference Include="Octokit" Version="14.0.0" />
+    <PackageReference Include="System.CommandLine" Version="2.0.2" />
   </ItemGroup>
 </Project>

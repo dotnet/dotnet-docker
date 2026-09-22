@@ -4,7 +4,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Service for adding build tags to Azure Pipelines runs.

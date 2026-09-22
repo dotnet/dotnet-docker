@@ -5,28 +5,22 @@ using System.Net.Http.Headers;
 using System.Text;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
-internal class AzdoHttpClient
+internal class AzdoHttpClient(IAzdoAuthProvider azdoAuthProvider, HttpClient httpClient)
 {
-    private readonly IAzdoAuthProvider _azdoAuthProvider;
-    private readonly HttpClient _httpClient;
-
-    public AzdoHttpClient(IAzdoAuthProvider azdoAuthProvider, HttpClient httpClient)
+    public async Task<HttpResponseMessage> GetAsync(string requestUri, CancellationToken ct = default)
     {
-        _azdoAuthProvider = azdoAuthProvider;
-        _httpClient = httpClient;
-
-        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+        using var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+        request.Headers.Authorization = new AuthenticationHeaderValue(
             "Basic",
             Convert.ToBase64String(
-                Encoding.ASCII.GetBytes($":{_azdoAuthProvider.AccessToken}")
+                Encoding.ASCII.GetBytes($":{azdoAuthProvider.AccessToken}")
             )
         );
-    }
 
-    public async Task<HttpResponseMessage> GetAsync(string requestUri, CancellationToken ct = default) =>
-        await _httpClient.GetAsync(requestUri, ct);
+        return await httpClient.SendAsync(request, ct);
+    }
 }
 
 internal static class AzdoHttpClientExtensions

@@ -44,17 +44,18 @@ extends:
               scriptLocation: "inlineScript"
               inlineScript: >-
                 dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                from-staging-pipeline
+                dotnet staging-pipeline
                 "${{ parameters.stageContainers }}"
-                --mode Remote
-                --azdo-organization "$(System.CollectionUri)"
-                --azdo-project "$(System.TeamProject)"
-                --azdo-repo "$(Build.Repository.Name)"
+                --submit-pr
                 --internal
                 --staging-storage-account ${{ parameters.stagingStorageAccount }}
                 --target-branch "${{ parameters.targetBranch }}"
-                --user "$(dotnetDockerBot.userName)"
-                --email "$(dotnetDockerBot.email)"
             env:
+              UpdateDependencies__PullRequestDestination: AzureDevOps
+              UpdateDependencies__AzureDevOps__Organization: $(System.CollectionUri)
+              UpdateDependencies__AzureDevOps__Project: $(System.TeamProject)
+              UpdateDependencies__AzureDevOps__Repository: $(Build.Repository.Name)
+              UpdateDependencies__User: $(dotnetDockerBot.userName)
+              UpdateDependencies__Email: $(dotnetDockerBot.email)
               # Used to download build artifacts from .NET release staging pipeline
               SYSTEM_ACCESSTOKEN: $(System.AccessToken)

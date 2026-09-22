@@ -2,147 +2,137 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.CommandLine;
-using System.CommandLine.Help;
-using System.CommandLine.Hosting;
-using Dotnet.Docker;
-using Dotnet.Docker.Git;
-using Dotnet.Docker.Sync;
 using Maestro.Common;
 using Maestro.Common.AzureDevOpsTokens;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
+using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
+using Microsoft.DotNet.Docker.UpdateDependencies.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
+using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using AzureDevOpsClient = Microsoft.DotNet.DarcLib.AzureDevOpsClient;
 
-var rootCommand = new RootCommand()
+var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
 {
-    FromBuildCommand.Create(
-        name: "from-build",
-        description: "Update dependencies using a specific BAR build"),
-    FromChannelCommand.Create(
-        name: "from-channel",
-        description: "Update dependencies using the latest build from a channel"),
-    FromStagingPipelineCommand.Create(
-        name: "from-staging-pipeline",
-        description: "Update dependencies using a specific staging pipeline run"),
-    FromComponentCommand.Create(
-        name: "from-component",
-        description: "Update a single image component"),
-    SpecificCommand.Create(
-        name: "specific",
-        description: "Update dependencies using specific product versions"),
-    SyncInternalReleaseCommand.Create(
-        name: "sync-internal-release",
-        description: "Sync release/* branch to internal/release/* branch"),
+    ContentRootPath = AppContext.BaseDirectory,
+});
+
+builder.Logging.ClearProviders();
+builder.Logging.AddSimpleConsole(options =>
+{
+    options.IncludeScopes = true;
+    options.SingleLine = false;
+});
+
+var configuration = builder.Configuration
+    .GetRequiredSection("UpdateDependencies")
+    .Get<UpdateDependenciesConfiguration>()
+        ?? throw new InvalidOperationException("Failed to bind UpdateDependencies configuration.");
+
+IServiceCollection services = builder.Services;
+services.AddSingleton(configuration);
+services.AddSingleton<DependencyUpdateRunner>();
+
+// Local services needed for DarcLib git operations
+services.AddSingleton<ITelemetryRecorder, NoTelemetryRecorder>();
+services.AddSingleton<IProcessManager>(sp =>
+    new ProcessManager(sp.GetRequiredService<ILogger<ProcessManager>>(), "git"));
+services.AddTransient<IFileSystem, FileSystem>();
+
+// Auth services needed for DarcLib remote git operations
+services.AddSingleton<IRemoteTokenProvider>(sp =>
+{
+    var azdoTokenProvider = sp.GetRequiredService<IAzureDevOpsTokenProvider>();
+    var gitHubTokenProvider = new ResolvedTokenProvider(configuration.GitHub.Token);
+    return new RemoteTokenProvider(
+        azdoTokenProvider: azdoTokenProvider,
+        gitHubTokenProvider: gitHubTokenProvider);
+});
+services.AddSingleton<IAzureDevOpsTokenProvider, AzureDevOpsTokenProvider>();
+services.Configure<AzureDevOpsTokenProviderOptions>(options =>
+{
+    options["default"] = new AzureDevOpsCredentialResolverOptions
+    {
+        Token = configuration.AzureDevOps.Token,
+        DisableInteractiveAuth = configuration.AzureDevOps.DisableInteractiveAuth,
+    };
+});
+
+services.AddKeyedSingleton<IRemoteGitRepo, AzureDevOpsClient>(GitRemote.AzureDevOps);
+services.AddKeyedSingleton<IRemoteGitRepo, GitHubClient>(GitRemote.GitHub);
+services.AddSingleton<IRemoteGitRepoFactory, RemoteGitRepoFactory>();
+
+// Process-based git client
+services.AddSingleton<ILocalGitClient, LocalGitClient>();
+// LocalGitClient wants a non-generic ILogger, for some reason.
+services.AddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
+// Git repo cloner that calls out to the `git` executable. It is lighter on memory
+// than the LibGit2Sharp-based implementation.
+services.AddSingleton<IGitRepoCloner, GitNativeRepoCloner>();
+// LibGit2Sharp-based git client - has some operations that are not supported by
+// the process-based client (namely "push" operations).
+services.AddSingleton<ILocalLibGit2Client, LocalLibGit2Client>();
+services.AddSingleton<ILocalGitRepoFactory, LocalGitRepoFactory>();
+
+// Finally, this project's own Git client abstraction that abstracts over the
+// various DarcLib implementations
+services.AddSingleton<IGitRepoHelperFactory, GitRepoHelperFactory>();
+
+// Services needed for BAR build access/updates
+services.AddSingleton<IBasicBarClient>(_ =>
+    new BarApiClient(configuration.BarToken, null, disableInteractiveAuth: true));
+services.AddSingleton<IBuildAssetService, BuildAssetService>();
+
+services.AddEnvironmentService();
+services.AddBuildLabelService();
+services.AddPipelineArtifactProvider();
+services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
+
+services.AddSingleton(_ =>
+{
+    var productHeader = new Octokit.ProductHeaderValue("dotnet-docker-update-dependencies");
+    var client = new Octokit.GitHubClient(productHeader);
+    if (!string.IsNullOrWhiteSpace(configuration.GitHub.Token))
+    {
+        client.Credentials = new Octokit.Credentials(configuration.GitHub.Token);
+    }
+
+    return client.Repository.Release;
+});
+
+// Updaters
+services.AddSingleton<AspireUpdater>();
+services.AddSingleton<ChiselUpdater>();
+services.AddSingleton<DotNetUpdater>();
+services.AddSingleton<MinGitUpdater>();
+services.AddSingleton<MonitorUpdater>();
+services.AddSingleton<RocksToolboxUpdater>();
+services.AddSingleton<SyftUpdater>();
+
+// Additional commands
+//
+// In addition to being automatically created as part of DependencyCommand.CreateCliCommand, FromStagingPipelineCommand
+// is used in SyncInternalReleaseCommand, so we need to register it here.
+services.AddSingleton<ICommand<FromStagingPipelineOptions>, FromStagingPipelineCommand>();
+services.AddSingleton<SyncInternalReleaseCommand>();
+
+using IHost host = builder.Build();
+
+var rootCommand = new RootCommand("Update dotnet-docker dependencies")
+{
+    DependencyCommand.CreateCliCommand<AspireUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<ChiselUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<DotNetUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<MinGitUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<MonitorUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<RocksToolboxUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<SyftUpdater>(host.Services),
+    SyncInternalReleaseCommand.CreateCliCommand(host.Services),
 };
 
-var config = new CommandLineConfiguration(rootCommand);
-
-config.UseHost(
-    hostBuilderFactory: unmatchedArgs =>
-        {
-            if (unmatchedArgs.Length > 0)
-            {
-                var helpBuilder = new HelpBuilder();
-                using var stringWriter = new StringWriter();
-                helpBuilder.Write(rootCommand, stringWriter);
-                Console.WriteLine(stringWriter.ToString());
-                throw new InvalidOperationException($"Unmatched tokens: {string.Join(" ", unmatchedArgs)}");
-            }
-
-            return Host.CreateDefaultBuilder();
-        },
-    configureHost: host => host
-        .ConfigureLogging(logging =>
-            {
-                logging.ClearProviders();
-                logging.AddSimpleConsole(options =>
-                {
-                    options.IncludeScopes = true;
-                    options.SingleLine = false;
-                });
-            })
-        .ConfigureServices(services =>
-            {
-
-                // Local services needed for DarcLib git operations
-                services.AddSingleton<ITelemetryRecorder, NoTelemetryRecorder>();
-                services.AddSingleton<IProcessManager>(sp =>
-                    new ProcessManager(sp.GetRequiredService<ILogger<ProcessManager>>(), "git"));
-                services.AddTransient<IFileSystem, FileSystem>();
-
-                // Auth services needed for DarcLib remote git operations
-                services.AddSingleton<IRemoteTokenProvider>(sp =>
-                {
-                    var azdoTokenProvider = sp.GetRequiredService<IAzureDevOpsTokenProvider>();
-                    var gitHubTokenProvider = new ResolvedTokenProvider(null);
-                    return new RemoteTokenProvider(
-                        azdoTokenProvider: azdoTokenProvider,
-                        gitHubTokenProvider: gitHubTokenProvider);
-                });
-                services.AddSingleton<IAzureDevOpsTokenProvider, AzureDevOpsTokenProvider>();
-                services.Configure<AzureDevOpsTokenProviderOptions>(options =>
-                    {
-                        // TODO: Find a way to use the same Azure DevOps token/auth between here and CreatePullRequestOptions
-                        options["default"] = new AzureDevOpsCredentialResolverOptions
-                        {
-                            // Interactive auth can be enabled in order to run locally using your own user identity.
-                            // Use with caution. Disable by default since this tool runs in CI.
-                            DisableInteractiveAuth = true
-                        };
-                    }
-                );
-
-                services.AddKeyedSingleton<IRemoteGitRepo, AzureDevOpsClient>(GitRemote.AzureDevOps);
-                services.AddKeyedSingleton<IRemoteGitRepo, GitHubClient>(GitRemote.GitHub);
-                services.AddSingleton<IRemoteGitRepoFactory, RemoteGitRepoFactory>();
-
-                // Process-based git client
-                services.AddSingleton<ILocalGitClient, LocalGitClient>();
-                // LocalGitClient wants a non-generic ILogger, for some reason.
-                services.AddSingleton<ILogger>(sp =>
-                    sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
-                // Git repo cloner that calls out to the `git` executable. It is lighter on memory
-                // than the LibGit2Sharp-based implementation.
-                services.AddSingleton<IGitRepoCloner, GitNativeRepoCloner>();
-                // LibGit2Sharp-based git client - has some operations that are not supported by
-                // the process-based client (namely "push" operations).
-                services.AddSingleton<ILocalLibGit2Client, LocalLibGit2Client>();
-                services.AddSingleton<ILocalGitRepoFactory, LocalGitRepoFactory>();
-
-                // Finally, this project's own Git client abstraction that abstracts over the
-                // various DarcLib implementations
-                services.AddSingleton<IGitRepoHelperFactory, GitRepoHelperFactory>();
-
-                // Services needed for BAR build access/updates
-                services.AddSingleton<IBasicBarClient>(_ =>
-                        new BarApiClient(null, null, disableInteractiveAuth: true));
-                services.AddSingleton<IBuildAssetService, BuildAssetService>();
-
-                // Individual build updater services that support different repos
-                services.AddKeyedSingleton<IBuildUpdaterService, VmrBuildUpdaterService>(BuildRepo.Vmr);
-                services.AddKeyedSingleton<IBuildUpdaterService, AspireBuildUpdaterService>(BuildRepo.Aspire);
-
-                services.AddEnvironmentService();
-                services.AddBuildLabelService();
-                services.AddPipelineArtifactProvider();
-                services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
-
-                // Dependencies that can be updated using the FromComponentCommand
-                services.AddKeyedSingleton<IDependencyVersionSource, ChiselVersionSource>("chisel");
-                // Factory method for reading variables from manifest.versions.json
-                services.AddSingleton<Func<string, IManifestVariables>>(path => ManifestVariables.FromFile(path));
-
-                // Commands
-                services.AddCommand<FromBuildCommand, FromBuildOptions>();
-                services.AddCommand<FromChannelCommand, FromChannelOptions>();
-                services.AddCommand<FromStagingPipelineCommand, FromStagingPipelineOptions>();
-                services.AddCommand<FromComponentCommand, FromComponentOptions>();
-                services.AddCommand<SpecificCommand, SpecificCommandOptions>();
-                services.AddCommand<SyncInternalReleaseCommand, SyncInternalReleaseOptions>();
-            }
-        )
-    );
-
-return await config.InvokeAsync(args);
+return await rootCommand.Parse(args.Length == 0 ? ["--help"] : args).InvokeAsync();

@@ -190,33 +190,23 @@ When adding or removing Dockerfiles, it is important to update the `manifest.jso
 
 ### Updating Product Versions
 
-Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, etc.) contained within the images is typically performed by automation. All of the product version information is stored in the [`manifest.versions.json`](https://github.com/dotnet/dotnet-docker/blob/main/manifest.versions.json) file. The Dockerfile templates reference the product versions numbers and checksums from this file. Updating a product version involves updating the `manifest.versions.json` and regenerating the Dockerfiles. If there are cases where you need to update a product version, you can use the [update-dependencies](https://github.com/dotnet/dotnet-docker/tree/main/eng/update-dependencies) tool.  The tool will do the following:
+All of the product version information is stored in [`manifest.versions.json`].
+The Dockerfile templates reference the product versions from this file and use
+them as template variables. Updating a product version involves updating
+`manifest.versions.json` and regenerating the Dockerfiles.
 
-1. Update the product versions and checksums stored in `manifest.versions.json`
-1. Regenerate the Dockerfiles
-1. Update the tags listing in the readmes
+Updating product versions is typically performed by automation.
+The [update-dependencies] tool can update the versions of many image components
+from many different sources. It can be run locally or in a pipeline. To run it
+locally, use `dotnet run --project eng/update-dependencies -- <args>`.
 
-Use the [new .NET version release lifecycle](eng/developer-docs/dotnet-release-lifecycle.md) when planning work for a .NET release.
+For more details:
 
-The following examples illustrate how to run `update-dependencies`:
+- [README.md](eng/update-dependencies/README.md): Usage guidelines
+- [AGENTS.md](eng/update-dependencies/AGENTS.md): Coding guidelines
 
-- Update the 9.0 product versions (uses a helper script for running update-dependencies)
-
-    ``` console
-    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 9.0 -SdkVersion 9.0.100 -RuntimeVersion 9.0.0 -AspnetVersion 9.0.0
-    ```
-
-- Update the .NET Monitor version (uses a helper script for running update-dependencies)
-
-    ``` console
-    > ./eng/Set-DotnetVersions.ps1 -ProductVersion 8.0 -MonitorVersion 8.0.5
-    ```
-
-- Update the PowerShell version used in the 9.0 images
-
-    ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- specific 9.0 --product-version powershell=7.5.0
-    ```
+[`manifest.versions.json`]: manifest.versions.json
+[update-dependencies]: eng/update-dependencies
 
 #### Checking Markdown links locally
 

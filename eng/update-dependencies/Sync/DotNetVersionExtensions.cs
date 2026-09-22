@@ -4,7 +4,7 @@
 using Microsoft.DotNet.Docker.Shared;
 using NuGet.Versioning;
 
-namespace Dotnet.Docker.Sync;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 
 /// <summary>
 /// <see cref="DotNetVersion"/> Extensions that are only used for release branch synchronization.

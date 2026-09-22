@@ -14,26 +14,6 @@ function Get-Branch() {
     }
 }
 
-function Get-IsStableBranding([string] $version) {
-    return $Version.Contains("-servicing") -or $Version.Contains("-rtm")
-}
-
-function Resolve-DotnetProductUrl([string] $akaMsUrl) {
-    Write-Host "Querying $akaMsUrl"
-    $response = Invoke-WebRequest -Uri $akaMsUrl -Method Head
-    $resolvedUrl = $response.BaseResponse.RequestMessage.RequestUri.AbsoluteUri
-    Write-Host "Resolved URL: $resolvedUrl"
-    return $resolvedUrl
-}
-
-function Get-ProductReleaseState() {
-    if ($(Get-Branch) -ieq 'main') {
-        return 'Release'
-    } else {
-        return 'Prerelease'
-    }
-}
-
 function Get-DockerOs() {
     return docker version -f "{{ .Server.Os }}"
 }

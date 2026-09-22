@@ -4,7 +4,7 @@
 using System.Collections.Immutable;
 using Microsoft.DotNet.Docker.Shared;
 
-namespace Dotnet.Docker.Sync;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 
 /// <inheritdoc/>
 internal sealed class InternalVersionsService : IInternalVersionsService
