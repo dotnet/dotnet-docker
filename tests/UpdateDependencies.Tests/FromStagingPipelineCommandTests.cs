@@ -1,10 +1,14 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Dotnet.Docker;
-using Dotnet.Docker.Git;
-using Dotnet.Docker.Model.Release;
-using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
+using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
+using Microsoft.DotNet.Docker.UpdateDependencies.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
+using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
+using Microsoft.DotNet.DarcLib;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
@@ -16,6 +20,7 @@ public sealed class FromStagingPipelineCommandTests
     {
         const string stageContainer = "stage-1234567";
         var expectedTag = $"Container - {stageContainer}";
+        using var repo = CreateRepo();
 
         using var output = new StringWriter();
         var buildLabelService = new BuildLabelService(output);
@@ -29,8 +34,7 @@ public sealed class FromStagingPipelineCommandTests
             StageContainers = stageContainer,
             Internal = true,
             StagingStorageAccount = "https://dotnetstagetest.blob.core.windows.net/",
-            Mode = ChangeMode.Local,
-            RepoRoot = "/tmp/repo"
+            RepoRoot = repo.LocalPath
         };
 
         await command.ExecuteAsync(options);
@@ -41,6 +45,7 @@ public sealed class FromStagingPipelineCommandTests
     [Fact]
     public async Task ExecuteAsync_NotInternalMode_DoesNotAddBuildTag()
     {
+        using var repo = CreateRepo();
         using var output = new StringWriter();
         var buildLabelService = new BuildLabelService(output);
 
@@ -52,8 +57,7 @@ public sealed class FromStagingPipelineCommandTests
         {
             StageContainers = "stage-1234567",
             Internal = false,
-            Mode = ChangeMode.Local,
-            RepoRoot = "/tmp/repo"
+            RepoRoot = repo.LocalPath
         };
 
         await command.ExecuteAsync(options);
@@ -128,14 +132,44 @@ public sealed class FromStagingPipelineCommandTests
         IInternalVersionsService? internalVersionsService = null,
         IEnvironmentService? environmentService = null,
         IBuildLabelService? buildLabelService = null,
-        IGitRepoHelperFactory? gitRepoHelperFactory = null) =>
-            new(logger ?? Mock.Of<ILogger<FromStagingPipelineCommand>>(),
+        IGitRepoHelperFactory? gitRepoHelperFactory = null)
+    {
+        var updater = new DotNetUpdater(
+            Mock.Of<IBasicBarClient>(),
+            Mock.Of<ILogger<DotNetUpdater>>());
+        return new(new UpdateDependenciesConfiguration(),
+                logger ?? Mock.Of<ILogger<FromStagingPipelineCommand>>(),
+                updater,
                 pipelineArtifactProvider ?? CreateMockPipelineArtifactProvider(),
                 pipelinesService ?? CreateMockPipelinesService(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
                 environmentService ?? Mock.Of<IEnvironmentService>(),
                 buildLabelService ?? Mock.Of<IBuildLabelService>(),
                 gitRepoHelperFactory ?? Mock.Of<IGitRepoHelperFactory>());
+    }
+
+    private static TempRepo CreateRepo()
+    {
+        var repo = new TempRepo();
+        File.WriteAllText(Path.Combine(repo.LocalPath, "manifest.versions.json"), """
+            {"variables":{"branch":"nightly","sdk|9.0|build-version":"9.0.100"}}
+            """);
+        string configDirectory = Path.Combine(repo.LocalPath, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts");
+        Directory.CreateDirectory(configDirectory);
+        File.WriteAllText(Path.Combine(configDirectory, "NuGet.config.internal"), "<configuration />");
+        File.WriteAllText(Path.Combine(configDirectory, "NuGet.config.nightly"), "<configuration />");
+        foreach (var (directory, file) in new[]
+        {
+            ("dockerfile-templates", "Get-GeneratedDockerfiles.ps1"),
+            ("readme-templates", "Get-GeneratedReadmes.ps1"),
+        })
+        {
+            string path = Path.Combine(repo.LocalPath, "eng", directory);
+            Directory.CreateDirectory(path);
+            File.WriteAllText(Path.Combine(path, file), "exit 0");
+        }
+        return repo;
+    }
 
     private static IPipelineArtifactProvider CreateMockPipelineArtifactProvider()
     {

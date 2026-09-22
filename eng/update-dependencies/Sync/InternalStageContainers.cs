@@ -4,7 +4,7 @@
 using System.Collections.Immutable;
 using Microsoft.DotNet.Docker.Shared;
 
-namespace Dotnet.Docker.Sync;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 
 /// <summary>
 /// Records information about what stage containers were used for which .NET Dockerfile versions.

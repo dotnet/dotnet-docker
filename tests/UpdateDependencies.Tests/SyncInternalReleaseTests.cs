@@ -2,9 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Immutable;
-using Dotnet.Docker;
-using Dotnet.Docker.Git;
-using Dotnet.Docker.Sync;
+using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
+using Microsoft.DotNet.Docker.UpdateDependencies.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.Docker.Shared;
 using Microsoft.Extensions.Logging;
@@ -29,31 +30,33 @@ public sealed class SyncInternalReleaseTests
     /// </summary>
     private static readonly SyncInternalReleaseOptions s_defaultOptions = new()
     {
-        AzdoOrganization = AzdoOrgUrl,
-        AzdoProject = AzdoProject,
-        AzdoRepo = AzdoRepo,
         SourceBranch = ReleaseBranch,
         TargetBranch = InternalReleaseBranch
     };
 
     /// <summary>
-    /// Calling the command with null or whitespace for any of the arguments should fail.
+    /// Whitespace repository settings must fail before attempting to clone.
+    /// These settings now come from configuration rather than command options.
     /// </summary>
     [Fact]
     public async Task WhitespaceArgumentsFails()
     {
-        var options = new SyncInternalReleaseOptions
+        var configuration = new UpdateDependenciesConfiguration
         {
-            AzdoOrganization = "   ",
-            AzdoProject = "   ",
-            AzdoRepo = "   ",
-            SourceBranch = "   ",
-            TargetBranch = "   "
+            AzureDevOps = new()
+            {
+                Organization = "   ",
+                Project = "   ",
+                Repository = "   ",
+            },
         };
-
-        var command = CreateCommand();
+        var options = s_defaultOptions with { SourceBranch = "   ", TargetBranch = "   " };
+        var repoFactory = new Mock<IGitRepoHelperFactory>(MockBehavior.Strict);
+        var command = CreateCommand(repoFactory: repoFactory.Object, configuration: configuration);
 
         await Should.ThrowAsync<ArgumentException>(() => command.ExecuteAsync(options));
+
+        repoFactory.VerifyNoOtherCalls();
     }
 
     /// <summary>
@@ -82,7 +85,7 @@ public sealed class SyncInternalReleaseTests
 
         var repoMock = new Mock<IGitRepoHelper>();
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup:
         // Target branch does not exist on remote
@@ -112,7 +115,7 @@ public sealed class SyncInternalReleaseTests
         // not explicitly set up in this test.
         var repoMock = new Mock<IGitRepoHelper>(MockBehavior.Strict);
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -149,7 +152,7 @@ public sealed class SyncInternalReleaseTests
         repoMock.Setup(r => r.Remote).Returns(remoteRepoMock.Object);
 
         var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
-        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(options.GetAzdoRepoUrl(), null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
+        repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
@@ -181,7 +184,7 @@ public sealed class SyncInternalReleaseTests
         remoteRepoMock.Verify(r =>
             r.CreatePullRequestAsync(It.Is<PullRequestCreationInfo>(p =>
                 p.BaseBranch == options.TargetBranch
-                && p.HeadBranch.StartsWith(options.PrBranchPrefix)
+                && p.HeadBranch.StartsWith($"{options.TargetBranch.Replace('/', '-')}/ff")
                 && p.Title.Contains("fast-forward", StringComparison.OrdinalIgnoreCase))
             ),
             Times.Once
@@ -199,8 +202,6 @@ public sealed class SyncInternalReleaseTests
     {
         var options = s_defaultOptions with
         {
-            User = "Test User",
-            Email = "test@example.com",
             StagingStorageAccount = "dotnetstage"
         };
 
@@ -265,7 +266,7 @@ public sealed class SyncInternalReleaseTests
             repo => repo.Local.CommitAsync(
                 It.IsAny<string>(),
                 It.Is<(string Name, string Email)>(
-                    author => author.Name == options.User && author.Email == options.Email
+                    author => author.Name == "Test User" && author.Email == "test@example.com"
                 )
             ),
             Times.Exactly(numberOfCommits)
@@ -294,9 +295,21 @@ public sealed class SyncInternalReleaseTests
         ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
         IInternalVersionsService? internalVersionsService = null,
         IEnvironmentService? environmentService = null,
-        ILogger<SyncInternalReleaseCommand>? logger = null) =>
+        ILogger<SyncInternalReleaseCommand>? logger = null,
+        UpdateDependenciesConfiguration? configuration = null) =>
             // New parameters should be null by default and initialized with mocks if not specified.
-            new(repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
+            new(configuration ?? new UpdateDependenciesConfiguration
+                {
+                    User = "Test User",
+                    Email = "test@example.com",
+                    AzureDevOps = new()
+                    {
+                        Organization = AzdoOrgUrl,
+                        Project = AzdoProject,
+                        Repository = AzdoRepo,
+                    },
+                },
+                repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
                 fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
                 environmentService ?? Mock.Of<IEnvironmentService>(),

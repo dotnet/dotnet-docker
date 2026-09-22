@@ -3,9 +3,8 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.VisualStudio.Services.Profile;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Provides access to environment variables and runtime context.
