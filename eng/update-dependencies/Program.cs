@@ -84,7 +84,8 @@ services.AddSingleton<ILocalGitRepoFactory, LocalGitRepoFactory>();
 services.AddSingleton<IGitRepoHelperFactory, GitRepoHelperFactory>();
 
 // Services needed for BAR build access/updates
-services.AddSingleton<IBasicBarClient>(_ => new BarApiClient(null, null, disableInteractiveAuth: true));
+services.AddSingleton<IBasicBarClient>(_ =>
+    new BarApiClient(configuration.BarToken, null, disableInteractiveAuth: true));
 services.AddSingleton<IBuildAssetService, BuildAssetService>();
 
 services.AddEnvironmentService();

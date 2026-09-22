@@ -48,10 +48,15 @@ extends:
           parameters:
             dependencyName: dotnet
             updateSteps:
+            - ${{ if parameters.submitPullRequest }}:
+              - template: /eng/pipelines/steps/get-bar-token.yml@self
             - task: AzureCLI@2
               displayName: Update .NET
               inputs:
-                azureSubscription: "Darc: Maestro Production"
+                ${{ if parameters.submitPullRequest }}:
+                  azureSubscription: DotnetContainersGitHubBot
+                ${{ else }}:
+                  azureSubscription: "Darc: Maestro Production"
                 scriptType: "pscore"
                 scriptLocation: "inlineScript"
                 inlineScript: >-
@@ -59,17 +64,25 @@ extends:
                   dotnet channel
                   ${{ parameters.vmrChannel }}
                   --submit-pr ${{ parameters.submitPullRequest }}
-              env: ${{ parameters.updateEnvironment }}
+              env:
+                ${{ insert }}: ${{ parameters.updateEnvironment }}
+                ${{ if parameters.submitPullRequest }}:
+                  UpdateDependencies__BarToken: $(barAccessToken)
 
       - ${{ if parameters.updateAspire }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
           parameters:
             dependencyName: aspire
             updateSteps:
+            - ${{ if parameters.submitPullRequest }}:
+              - template: /eng/pipelines/steps/get-bar-token.yml@self
             - task: AzureCLI@2
               displayName: Update Aspire
               inputs:
-                azureSubscription: "Darc: Maestro Production"
+                ${{ if parameters.submitPullRequest }}:
+                  azureSubscription: DotnetContainersGitHubBot
+                ${{ else }}:
+                  azureSubscription: "Darc: Maestro Production"
                 scriptType: "pscore"
                 scriptLocation: "inlineScript"
                 inlineScript: >-
@@ -77,16 +90,31 @@ extends:
                   aspire channel
                   ${{ parameters.aspireChannel }}
                   --submit-pr ${{ parameters.submitPullRequest }}
-              env: ${{ parameters.updateEnvironment }}
+              env:
+                ${{ insert }}: ${{ parameters.updateEnvironment }}
+                ${{ if parameters.submitPullRequest }}:
+                  UpdateDependencies__BarToken: $(barAccessToken)
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
           parameters:
             dependencyName: ${{ tool }}
             updateSteps:
-            - powershell: >-
-                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                ${{ tool }}
-                --submit-pr ${{ parameters.submitPullRequest }}
-              displayName: Update ${{ tool }}
-              env: ${{ parameters.updateEnvironment }}
+            - ${{ if parameters.submitPullRequest }}:
+              - task: AzureCLI@2
+                displayName: Update ${{ tool }}
+                inputs:
+                  azureSubscription: DotnetContainersGitHubBot
+                  scriptType: pscore
+                  scriptLocation: inlineScript
+                  inlineScript: >-
+                    dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                    ${{ tool }}
+                    --submit-pr
+                env: ${{ parameters.updateEnvironment }}
+            - ${{ else }}:
+              - powershell: >-
+                  dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                  ${{ tool }}
+                displayName: Update ${{ tool }}
+                env: ${{ parameters.updateEnvironment }}

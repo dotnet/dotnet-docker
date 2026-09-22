@@ -8,6 +8,7 @@ public sealed class UpdateDependenciesConfiguration
     public GitRemote PullRequestDestination { get; set; } = GitRemote.GitHub;
     public string User { get; set; } = "";
     public string Email { get; set; } = "";
+    public string BarToken { get; set; } = "";
     public AzureDevOpsConfiguration AzureDevOps { get; set; } = new();
     public GitHubConfiguration GitHub { get; set; } = new();
 

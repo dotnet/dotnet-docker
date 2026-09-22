@@ -41,8 +41,6 @@ parameters:
 
 variables:
 - template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
-# Uses GitHub token to create pull requests
-- template: /eng/docker-tools/templates/variables/dotnet/secrets.yml@self
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
@@ -55,6 +53,5 @@ extends:
     submitPullRequest: ${{ not(parameters.skipPullRequest) }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
       updateEnvironment:
-        UpdateDependencies__User: $(dotnetDockerBot.userName)
-        UpdateDependencies__Email: $(dotnetDockerBot.email)
-        UpdateDependencies__GitHub__Token: $(BotAccount-dotnet-docker-bot-PAT)
+        UpdateDependencies__GitHub__AppClientId: $(dotnetContainersBot.gitHubApp.clientId)
+        UpdateDependencies__GitHub__AppKeyUri: $(dotnetContainersBot.gitHubApp.privateKeyUri)

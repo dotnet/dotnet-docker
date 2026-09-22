@@ -1,0 +1,19 @@
+steps:
+- task: AzureCLI@2
+  displayName: Authenticate to BAR
+  inputs:
+    azureSubscription: "Darc: Maestro Production"
+    scriptType: pscore
+    scriptLocation: inlineScript
+    inlineScript: |
+      # Keep BAR authentication separate from the GitHub App's Key Vault signing identity.
+      $token = az account get-access-token `
+        --resource 54c17f3d-7325-4eca-9db7-f090bfc765a8 `
+        --query accessToken `
+        --output tsv
+
+      if ($LASTEXITCODE -ne 0 -or [string]::IsNullOrWhiteSpace($token)) {
+        throw "Failed to acquire a BAR access token."
+      }
+
+      Write-Host "##vso[task.setvariable variable=barAccessToken;issecret=true]$token"

@@ -23,7 +23,6 @@ parameters:
 
 variables:
 - template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
-- template: /eng/docker-tools/templates/variables/dotnet/secrets.yml@self
 
 stages:
 - stage: Monitor
@@ -36,21 +35,25 @@ stages:
     - checkout: self
       fetchDepth: 0
     - template: steps/install-dotnet.yml
-    - pwsh: |
-        $updateArgs = @(
-          "monitor"
-          "pipeline-build"
-          "$(resources.pipeline.dotnet-monitor.runID)"
-          "--submit-pr"
-          "${{ not(parameters.skipPullRequest) }}"
-        )
-
-        dotnet run --project "$(engPath)/update-dependencies/update-dependencies.csproj" -- @updateArgs
-        exit $LASTEXITCODE
-      displayName: Update .NET Monitor
-      env:
-        SYSTEM_ACCESSTOKEN: $(System.AccessToken)
-        ${{ if ne(parameters.skipPullRequest, true) }}:
-          UpdateDependencies__User: $(dotnetDockerBot.userName)
-          UpdateDependencies__Email: $(dotnetDockerBot.email)
-          UpdateDependencies__GitHub__Token: $(BotAccount-dotnet-docker-bot-PAT)
+    - ${{ if not(parameters.skipPullRequest) }}:
+      - task: AzureCLI@2
+        displayName: Update .NET Monitor
+        inputs:
+          azureSubscription: DotnetContainersGitHubBot
+          scriptType: pscore
+          scriptLocation: inlineScript
+          inlineScript: >-
+            dotnet run --project "$(engPath)/update-dependencies/update-dependencies.csproj" --
+            monitor pipeline-build "$(resources.pipeline.dotnet-monitor.runID)"
+            --submit-pr
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          UpdateDependencies__GitHub__AppClientId: $(dotnetContainersBot.gitHubApp.clientId)
+          UpdateDependencies__GitHub__AppKeyUri: $(dotnetContainersBot.gitHubApp.privateKeyUri)
+    - ${{ else }}:
+      - pwsh: >-
+          dotnet run --project "$(engPath)/update-dependencies/update-dependencies.csproj" --
+          monitor pipeline-build "$(resources.pipeline.dotnet-monitor.runID)"
+        displayName: Update .NET Monitor
+        env:
+          SYSTEM_ACCESSTOKEN: $(System.AccessToken)
