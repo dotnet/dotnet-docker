@@ -44,7 +44,7 @@ $onDockerfilesGenerated = {
         CopyReadme $ContainerName ".portal-docs/docker-hub/README.samples.md"
         CopyReadme $ContainerName ".portal-docs/docker-hub/README.sdk.md"
 
-        CopyReadme $ContainerName ".portal-docs/mar/README.aspire-dashboard.portal.md"
+        CopyReadme $ContainerName ".portal-docs/mar/README.dashboard.md"
         CopyReadme $ContainerName ".portal-docs/mar/README.aspnet.portal.md"
         CopyReadme $ContainerName ".portal-docs/mar/README.monitor.portal.md"
         CopyReadme $ContainerName ".portal-docs/mar/README.monitor-base.portal.md"
