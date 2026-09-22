@@ -190,118 +190,23 @@ When adding or removing Dockerfiles, it is important to update the `manifest.jso
 
 ### Updating Product Versions
 
-Updating the product versions (e.g. .NET runtime, ASP.NET runtime, PowerShell, etc.) contained within the images is typically performed by automation. All of the product version information is stored in the [`manifest.versions.json`](https://github.com/dotnet/dotnet-docker/blob/main/manifest.versions.json) file. The Dockerfile templates reference the product versions numbers and checksums from this file. Updating a product version involves updating the `manifest.versions.json` and regenerating the Dockerfiles. If there are cases where you need to update a product version, you can use the [update-dependencies](https://github.com/dotnet/dotnet-docker/tree/main/eng/update-dependencies) tool.  The tool will do the following:
+All of the product version information is stored in [`manifest.versions.json`].
+The Dockerfile templates reference the product versions from this file and use
+them as template variables. Updating a product version involves updating
+`manifest.versions.json` and regenerating the Dockerfiles.
 
-1. Update the product versions and checksums stored in `manifest.versions.json`
-1. Regenerate the Dockerfiles
-1. Update the tags listing in the readmes
+Updating product versions is typically performed by automation.
+The [update-dependencies] tool can update the versions of many image components
+from many different sources. It can be run locally or in a pipeline. To run it
+locally, use `dotnet run --project eng/update-dependencies -- <args>`.
 
-Use the [new .NET version release lifecycle](eng/developer-docs/dotnet-release-lifecycle.md) when planning work for a .NET release.
+For more details:
 
-The following examples illustrate how to run `update-dependencies`:
+- [README.md](eng/update-dependencies/README.md): Usage guidelines
+- [AGENTS.md](eng/update-dependencies/AGENTS.md): Coding guidelines
 
-- Update .NET from a BAR build
-
-    ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- dotnet build-id 23456
-    ```
-
-- Update .NET Monitor, including the base image and extension checksums
-
-    ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- monitor version 9.0.5
-    ```
-
-- Update .NET Monitor from an Azure DevOps pipeline run
-
-    ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- monitor pipeline-build 1234567
-    ```
-
-    This is the Azure DevOps run ID, not a BAR build ID.
-    The command reads `Build_Info/dotnet-monitor.nupkg.buildversion` from the run.
-    The source defaults to organization `https://dev.azure.com/dnceng` and project `internal`.
-    Override them through `UpdateDependencies__AzureDevOps__Organization` and
-    `UpdateDependencies__AzureDevOps__Project` environment variables or the
-    `UpdateDependencies:AzureDevOps` section in `appsettings*.json`.
-    Build access uses `SYSTEM_ACCESSTOKEN` in pipelines or Azure Developer CLI credentials locally.
-    Supplying a version directly does not require Azure DevOps authentication.
-    Use `--submit-pr` to publish a pull request instead of updating the local repo.
-
-- Update Aspire Dashboard from a BAR build
-
-    ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- aspire build-id 23456
-    ```
-
-- Update Aspire Dashboard from the latest build in a BAR channel
-
-    ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- aspire channel 5555
-    ```
-
-    These are BAR IDs, not Azure DevOps pipeline run IDs.
-    The command selects the Aspire repository automatically.
-    Use `--submit-pr` to publish a pull request instead of updating the local repo.
-
-- Update a tool from its latest GitHub release
-
-    ``` console
-    > dotnet run --project .\eng\update-dependencies\ -- chisel
-    ```
-
-    The registered GitHub release updaters are `chisel`, `syft`, `rocks-toolbox`,
-    and `mingit`. Their manifest variables are shared across image versions.
-
-    Run a dependency command with `--help` to see only its supported update sources.
-
-Authentication and repository settings come from `Microsoft.Extensions.Configuration`,
-not CLI options. Use `appsettings.json`, `appsettings.{Environment}.json`, or
-environment variables such as `UpdateDependencies__User`, `UpdateDependencies__Email`,
-and `UpdateDependencies__GitHub__Token`. Environment variables override JSON settings.
-
-#### Implementing dependency updaters
-
-Updater implementations and interfaces live in `eng/update-dependencies/Updaters`,
-under the `Microsoft.DotNet.Docker.UpdateDependencies.Updaters` namespace.
-CLI commands, their options, and command-binding helpers live in
-`eng/update-dependencies/Commands`, under the
-`Microsoft.DotNet.Docker.UpdateDependencies.Commands` namespace.
-
-Each dependency is listed once in the `RootCommand` in
-`eng/update-dependencies/Program.cs`, and registered once in the same file. Each
-updater implements the `IUpdater`
-static abstract properties `Name` (the CLI name) and `VersionSourceName` (the
-publishing identity used in branch names). Command creation reads
-this metadata without constructing the updater or resolving services.
-Its implemented capability interfaces generate only the source commands it
-supports: BAR build/channel, pipeline build, staging pipeline, explicit version,
-or GitHub release. Each updater is also registered as a singleton alongside the
-other services. `DotNetUpdater`'s `ICommand<FromStagingPipelineOptions>`
-registration allows the sync command to invoke that workflow.
-Each source command owns its creation and execution, and its options class owns
-symbol definitions and `Bind(ParseResult)`. `DependencyCommand` only assembles
-the supported commands. There is no generic product-version update interface.
-
-Updaters resolve their sources first and return a `DependencyUpdate` describing the
-versions they found, before anything is written. Its `Description` becomes the pull
-request title and commit message, and its `Scope` distinguishes updates that can be
-open at the same time, such as different .NET versions, by becoming part of the
-branch name. `Scope` is empty when only one update of a dependency can be open at once.
-An update's `ApplyAsync` receives the shared `ManifestVariables` editor, plus the
-workspace root when it needs to edit related files such as NuGet configuration, but
-does not save the manifest, generate Dockerfiles/READMEs, or publish.
-Manifest edits and change logging live on `ManifestVariables`; .NET version and
-tag formatting live in `DotNetUpdater`.
-Commands use `DependencyUpdateRunner` to load the manifest, apply a batch, save
-only changed content, and run generators even when the manifest is unchanged.
-The runner also handles publishing, applying the same batch in the publishing workspace.
-
-GitHub release updaters fetch their latest release internally. Add a tool by
-implementing `IGitHubReleaseUpdater`, adding it to the `RootCommand` list, and
-registering it.
-Its dependency command will run the updater directly. Updaters use Octokit's
-`IReleasesClient` to fetch release information.
+[`manifest.versions.json`]: manifest.versions.json
+[update-dependencies]: eng/update-dependencies
 
 #### Checking Markdown links locally
 
