@@ -4,10 +4,11 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:resolute-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-rc.2.26467.104 \
+RUN dotnet_version=11.0.0 \
+    && dotnet_build_version=$dotnet_version-rtm.26472.124 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
     && echo "$(cat dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512| tr 'A-F' 'a-f')  dotnet-runtime-$dotnet_version-linux-x64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-x64.tar.gz --directory /dotnet \
@@ -17,10 +18,10 @@ RUN dotnet_version=11.0.0-rc.2.26467.104 \
 
 
 # .NET runtime image
-FROM $REPO:11.0.0-rc.2-resolute-amd64
+FROM $REPO:11.0.0-resolute-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-rc.2.26467.104
+ENV DOTNET_VERSION=11.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

@@ -1,16 +1,17 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:11.0.0-rc.2-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:11.0.0-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-rc.2.26467.104 \
+RUN dotnet_sdk_version=11.0.100 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.26472.124 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
+        --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
+        --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512 \
     && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz" | sha512sum -c - \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
@@ -26,7 +27,7 @@ RUN powershell_version=7.7.0-preview.2 \
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-rc.2-azurelinux3.0-arm64v8
+FROM $REPO:11.0.0-azurelinux3.0-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -34,7 +35,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-rc.2.26467.104 \
+    DOTNET_SDK_VERSION=11.0.100 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
