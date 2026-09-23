@@ -43,6 +43,7 @@ extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
   parameters:
     vmrChannel: ${{ parameters.vmrChannel }}
-    aspireChannel: ${{ parameters.aspireChannel }}
+    updateAspire: ${{ parameters.updateAspire }}
+    aspireDailyChannel: ${{ parameters.aspireChannel }}
     updateDotnet: ${{ parameters.updateDotnet }}
     tools: ${{ parameters.tools }}

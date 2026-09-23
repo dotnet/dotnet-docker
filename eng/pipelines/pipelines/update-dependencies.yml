@@ -8,8 +8,12 @@ parameters:
 - name: vmrChannel
   type: string
   default: ""
-# BAR channel to read Aspire versions from
-- name: aspireChannel
+# BAR channel to read daily Aspire versions from. Controls updates to the nightly branch.
+- name: aspireDailyChannel
+  type: string
+  default: ""
+# BAR channel to read stable Aspire versions from. Controls updates to the main branch.
+- name: aspireGaChannel
   type: string
   default: ""
 # .NET image components to update. This should be a list of strings.
@@ -72,7 +76,7 @@ extends:
       - ${{ if parameters.updateAspire }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
           parameters:
-            dependencyName: aspire
+            dependencyName: aspire-nightly
             updateSteps:
             - ${{ if parameters.submitPullRequest }}:
               - template: /eng/pipelines/steps/get-bar-token.yml@self
@@ -88,12 +92,39 @@ extends:
                 inlineScript: >-
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
                   aspire channel
-                  ${{ parameters.aspireChannel }}
+                  ${{ parameters.aspireDailyChannel }}
                   --submit-pr ${{ parameters.submitPullRequest }}
               env:
                 ${{ insert }}: ${{ parameters.updateEnvironment }}
                 ${{ if parameters.submitPullRequest }}:
                   UpdateDependencies__BarToken: $(barAccessToken)
+
+        - ${{ if ne(parameters.aspireGaChannel, '') }}:
+          - template: /eng/pipelines/jobs/update-dependency.yml@self
+            parameters:
+              dependencyName: aspire-main
+              updateSteps:
+              - ${{ if parameters.submitPullRequest }}:
+                - template: /eng/pipelines/steps/get-bar-token.yml@self
+              - task: AzureCLI@2
+                displayName: Update Aspire from GA channel
+                inputs:
+                  ${{ if parameters.submitPullRequest }}:
+                    azureSubscription: DotnetContainersGitHubBot
+                  ${{ else }}:
+                    azureSubscription: "Darc: Maestro Production"
+                  scriptType: "pscore"
+                  scriptLocation: "inlineScript"
+                  inlineScript: >-
+                    dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                    aspire channel
+                    ${{ parameters.aspireGaChannel }}
+                    --submit-pr ${{ parameters.submitPullRequest }}
+                    --target-branch main
+                env:
+                  ${{ insert }}: ${{ parameters.updateEnvironment }}
+                  ${{ if parameters.submitPullRequest }}:
+                    UpdateDependencies__BarToken: $(barAccessToken)
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
