@@ -9,7 +9,7 @@ RUN dnf install -y \
     && dnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-rc.2.26467.104 \
+RUN dotnet_version=11.0.0-rc.2.26472.122 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
@@ -25,7 +25,7 @@ RUN dotnet_version=11.0.0-rc.2.26467.104 \
 FROM $REPO:11.0.0-rc.2-azurelinux4.0-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-rc.2.26467.104
+ENV DOTNET_VERSION=11.0.0-rc.2.26472.122
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
