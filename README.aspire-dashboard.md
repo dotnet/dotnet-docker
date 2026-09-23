@@ -116,13 +116,13 @@ Limits are per-resource. For example, a `MaxLogCount` value of 10,000 configures
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-13.6.0, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/amd64/Dockerfile) | Azure Linux 3.0
+14.0.0, 14.0, 14, latest | [Dockerfile](src/aspire-dashboard/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-13.6.0, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/arm64v8/Dockerfile) | Azure Linux 3.0
+14.0.0, 14.0, 14, latest | [Dockerfile](src/aspire-dashboard/arm64v8/Dockerfile) | Azure Linux 3.0
 
 <!--End of generated tags-->
 
