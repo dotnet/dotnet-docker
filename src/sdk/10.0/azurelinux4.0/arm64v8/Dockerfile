@@ -21,7 +21,7 @@ RUN dotnet_sdk_version=10.0.401 \
 
 # Download PowerShell
 RUN powershell_version=7.6.6 \
-    && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
+    && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/7.6.6/PowerShell.Linux.arm64.$powershell_version.nupkg \
     && powershell_sha256='dd5f73fcc41052007c11b14a02bcb8c8c084853349500dace5494a4f61967774' \
     && echo "$powershell_sha256  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha256sum -c -
 

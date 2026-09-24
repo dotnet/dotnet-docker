@@ -67,6 +67,7 @@ public class GeneratedArtifactTests
 
         // Override base URLs to make templates generate internal versions of Dockerfiles
         const string InternalBaseUrl = "https://dotnetstage.blob.core.windows.net";
+        const string InternalPowerShellBaseUrl = "https://pscoretestdata.blob.core.windows.net";
         string customImageBuilderArgs =
             $" --var 'base-url|public|maintenance|main={InternalBaseUrl}'" +
             $" --var 'base-url|public|maintenance|nightly={InternalBaseUrl}'" +
@@ -75,7 +76,8 @@ public class GeneratedArtifactTests
             $" --var 'base-url|public-checksums|maintenance|main={InternalBaseUrl}'" +
             $" --var 'base-url|public-checksums|maintenance|nightly={InternalBaseUrl}'" +
             $" --var 'base-url|public-checksums|preview|main={InternalBaseUrl}'" +
-            $" --var 'base-url|public-checksums|preview|nightly={InternalBaseUrl}'";
+            $" --var 'base-url|public-checksums|preview|nightly={InternalBaseUrl}'" +
+            $" --var 'powershell|base-url|public={InternalPowerShellBaseUrl}'";
 
         // Generate internal Dockerfiles
         ExecuteScript(
