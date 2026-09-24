@@ -13,6 +13,22 @@ image. Repositories can use the hook to stage files into Docker build contexts, 
 
 ---
 
+## 2026-07-28: Publish stage artifacts consolidated
+
+The Publish stage now uploads `$(Build.ArtifactStagingDirectory)` once as
+`publish-attempt-$(System.JobAttempt)`. This replaces these separate artifacts:
+
+- `image-info-final-$(System.JobAttempt)`
+- `eol-annotation-data-$(System.JobAttempt)`
+- `annotation-digests-<registry>-$(System.JobAttempt)`
+- `source-build-id`
+
+Consumers of those artifact names must download the consolidated artifact instead. Files retain
+their staging-directory paths, including `imageInfo/`, `eol-annotation-data/`,
+`annotation-digests/`, and `sourceBuildId/source-build-id.txt`.
+
+---
+
 ## 2026-06-11: Configurable per-registry referrer-lookup rate limit
 
 - Issue: [#2141](https://github.com/dotnet/docker-tools/issues/2141)
