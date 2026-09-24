@@ -31,5 +31,5 @@ extends:
         parameters:
           # This should match the latest .NET version used across all projects in the repo, including samples.
           # Otherwise, the pipeline will fail to build projects.
-          dotnetVersionChannel: '10.0'
+          dotnetVersionChannel: '11.0'
           cgDryRun: ${{ parameters.cgDryRun }}
