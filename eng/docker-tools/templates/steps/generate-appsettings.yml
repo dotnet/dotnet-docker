@@ -20,7 +20,16 @@ steps:
 - powershell: |-
     # Escape backslashes for JSON compatibility (Windows paths like D:\a\_work become D:\\a\\_work)
     $artifactStagingDirectory = "${{ parameters.artifactStagingDirectory }}" -replace '\\', '\\'
-    $appsettingsJsonContent = @"
+
+    $pullRequestAppsettingsJsonContent = @"
+    {
+      "BuildConfiguration": {
+        "ArtifactStagingDirectory": "$artifactStagingDirectory"
+      }
+    }
+    "@
+
+    $publishAppsettingsJsonContent = @"
     {
       "PublishConfiguration": ${{ convertToJson(parameters.publishConfig) }},
       "BuildConfiguration": {
@@ -28,7 +37,14 @@ steps:
       }
     }
     "@
+
+    if ("$(Build.Reason)" -eq "PullRequest") {
+      $appsettingsJsonContent = $pullRequestAppsettingsJsonContent
+    } else {
+      $appsettingsJsonContent = $publishAppsettingsJsonContent
+    }
+
     Set-Content -Path "appsettings.json" -Value $appsettingsJsonContent
     Get-Content -Path "appsettings.json"
-  displayName: Output publish configuration
-  condition: and(succeeded(), ne(variables['Build.Reason'], 'PullRequest'), ${{ parameters.condition }})
+  displayName: Output ImageBuilder configuration
+  condition: and(succeeded(), ${{ parameters.condition }})

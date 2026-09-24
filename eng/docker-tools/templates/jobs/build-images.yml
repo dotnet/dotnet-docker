@@ -143,4 +143,4 @@ jobs:
         displayName: Publish SBOM
         internalProjectName: ${{ parameters.internalProjectName }}
         publicProjectName: ${{ parameters.publicProjectName }}
-        condition: ne(variables['BuildImages.builtImages'], '')
+        condition: and(succeeded(), ne(variables['BuildImages.builtImages'], ''))
