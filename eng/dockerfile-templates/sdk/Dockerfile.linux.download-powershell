@@ -7,9 +7,17 @@
     set shaFunction to VARIABLES[cat("powershell|", dotnetVersion, "|sha-function")] ^
     set shaVarName to cat("powershell_sha", shaFunction) ^
     set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") ^
-    set url to cat(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], "/", nupkgName)
+    _ Refer to the version through shell variables so it is only written once. Internal storage
+      uses a dashed version (e.g. v7-5-11-nuget) in its directory names. ^
+    set replace(subject, old, new) to:{{ return join(split(subject, old), new) }} ^
+    set dashedVersion to replace(powershellVersion, ".", "-") ^
+    set baseUrl to replace(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], powershellVersion, "$powershell_version") ^
+    set useDashedVersion to find(baseUrl, dashedVersion) >= 0 ^
+    set baseUrl to replace(baseUrl, dashedVersion, "$powershell_url_version") ^
+    set url to cat(baseUrl, "/", nupkgName)
 }}powershell_version={{powershellVersion}} \
-    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
+{{if useDashedVersion:    && powershell_url_version=$(printf '%s' "$powershell_version" | tr '.' '-') \
+}}    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
         "url": url,
         "out-file": nupkgName
     ]]], "    ")}} \

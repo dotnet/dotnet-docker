@@ -2,12 +2,20 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set rootDir to "\" ^
     set nupkgFile to "PowerShell.Windows.x64.$powershell_version.nupkg" ^
-    set url to cat(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], "/", nupkgFile) ^
     set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")] ^
+    _ Refer to the version through PowerShell variables so it is only written once. Internal storage
+      uses a dashed version (e.g. v7-5-11-nuget) in its directory names. ^
+    set replace(subject, old, new) to:{{ return join(split(subject, old), new) }} ^
+    set dashedVersion to replace(powershellVersion, ".", "-") ^
+    set baseUrl to replace(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], powershellVersion, "$powershell_version") ^
+    set useDashedVersion to find(baseUrl, dashedVersion) >= 0 ^
+    set baseUrl to replace(baseUrl, dashedVersion, "$powershell_url_version") ^
+    set url to cat(baseUrl, "/", nupkgFile) ^
     set shaFunction to VARIABLES[cat("powershell|", dotnetVersion, "|sha-function")]
 }}# Install PowerShell global tool
-$powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
-{{InsertTemplate("../Dockerfile.windows.download-files", ["files": [[
+$powershell_version = '{{powershellVersion}}'; `
+{{if useDashedVersion:$powershell_url_version = $powershell_version.Replace('.', '-'); `
+}}{{InsertTemplate("../Dockerfile.windows.download-files", ["files": [[
     "out-file": nupkgFile,
     "url": url
 ]]])}}; `
