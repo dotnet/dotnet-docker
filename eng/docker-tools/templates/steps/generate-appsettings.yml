@@ -21,15 +21,16 @@ steps:
     # Escape backslashes for JSON compatibility (Windows paths like D:\a\_work become D:\\a\\_work)
     $artifactStagingDirectory = "${{ parameters.artifactStagingDirectory }}" -replace '\\', '\\'
 
-    $pullRequestAppsettingsJsonContent = @"
+    if ("$(Build.Reason)" -eq "PullRequest") {
+      $appsettingsJsonContent = @"
     {
       "BuildConfiguration": {
         "ArtifactStagingDirectory": "$artifactStagingDirectory"
       }
     }
     "@
-
-    $publishAppsettingsJsonContent = @"
+    } else {
+      $appsettingsJsonContent = @"
     {
       "PublishConfiguration": ${{ convertToJson(parameters.publishConfig) }},
       "BuildConfiguration": {
@@ -37,11 +38,6 @@ steps:
       }
     }
     "@
-
-    if ("$(Build.Reason)" -eq "PullRequest") {
-      $appsettingsJsonContent = $pullRequestAppsettingsJsonContent
-    } else {
-      $appsettingsJsonContent = $publishAppsettingsJsonContent
     }
 
     Set-Content -Path "appsettings.json" -Value $appsettingsJsonContent
