@@ -19,7 +19,12 @@ internal static class FromVersionCommand
             FromVersionOptions options = FromVersionOptions.Bind(result);
             var updater = (IVersionUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
-            DependencyUpdate update = await updater.ResolveFromVersionAsync(options.Version, cancellationToken);
+            DependencyUpdate update = await updater.ResolveFromVersionAsync(
+                options.Version,
+                options.Internal,
+                options.BaseUrl,
+                options.DotnetVersion,
+                cancellationToken);
 
             await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });

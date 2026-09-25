@@ -27,9 +27,6 @@ internal static class DependencyCommand
         if (typeof(IVersionUpdater).IsAssignableFrom(typeof(TUpdater)))
             command.Subcommands.Add(FromVersionCommand.CreateCliCommand<TUpdater>(services));
 
-        if (typeof(IVersionSourceUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromVersionSourceCommand.CreateCliCommand<TUpdater>(services));
-
         if (typeof(IGitHubReleaseUpdater).IsAssignableFrom(typeof(TUpdater)))
             FromGitHubReleaseCommand.Configure<TUpdater>(command, services);
 

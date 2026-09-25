@@ -30,7 +30,12 @@ public sealed class MonitorUpdater(
         CancellationToken cancellationToken)
     {
         string version = await GetVersionFromPipelineAsync(pipelineRunId, cancellationToken);
-        return await ResolveFromVersionAsync(version, cancellationToken);
+        return await ResolveFromVersionAsync(
+            version,
+            isInternal: false,
+            baseUrl: null,
+            dotnetVersion: null,
+            cancellationToken);
     }
 
     private async Task<string> GetVersionFromPipelineAsync(
@@ -49,8 +54,19 @@ public sealed class MonitorUpdater(
         return version.Trim();
     }
 
-    public Task<DependencyUpdate> ResolveFromVersionAsync(string version, CancellationToken cancellationToken)
+    public Task<DependencyUpdate> ResolveFromVersionAsync(
+        string version,
+        bool isInternal,
+        string? baseUrl,
+        string? dotnetVersion,
+        CancellationToken cancellationToken)
     {
+        if (isInternal || baseUrl is not null || dotnetVersion is not null)
+        {
+            throw new NotSupportedException(
+                ".NET Monitor does not support --internal, --base-url, or --dotnet-version.");
+        }
+
         version = version.Trim();
         var parsedVersion = SemanticVersion.Parse(version);
         string dockerfileVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}";
