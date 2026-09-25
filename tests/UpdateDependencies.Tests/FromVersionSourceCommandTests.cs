@@ -1,0 +1,47 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+using System.CommandLine;
+using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
+using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
+using Microsoft.Extensions.DependencyInjection;
+
+namespace UpdateDependencies.Tests;
+
+public sealed class FromVersionSourceCommandTests
+{
+    [Fact]
+    public void BindsVersionSourceOptions()
+    {
+        ParseResult result = CreateCommand().Parse(
+            ["version", "1.2.3", "--internal", "--base-url", "https://example.com/1.2.3", "--dotnet-version", "9.0"]);
+
+        result.Errors.ShouldBeEmpty();
+        VersionSourceOptions.Bind(result).ShouldBe(
+            new VersionSource(Internal: true, BaseUrl: "https://example.com/1.2.3", DotnetVersion: "9.0"));
+    }
+
+    [Fact]
+    public void DefaultsToPublicSource()
+    {
+        ParseResult result = CreateCommand().Parse(["version", "1.2.3"]);
+
+        result.Errors.ShouldBeEmpty();
+        VersionSourceOptions.Bind(result).ShouldBe(new VersionSource());
+    }
+
+    private static Command CreateCommand() =>
+        DependencyCommand.CreateCliCommand<FakeUpdater>(new ServiceCollection().BuildServiceProvider());
+
+    private sealed class FakeUpdater : IVersionSourceUpdater
+    {
+        public static string Name => "fake";
+        public static string VersionSourceName => "fake";
+
+        public Task<DependencyUpdate> ResolveFromVersionAsync(
+            string version,
+            VersionSource source,
+            CancellationToken cancellationToken) =>
+            throw new NotImplementedException();
+    }
+}

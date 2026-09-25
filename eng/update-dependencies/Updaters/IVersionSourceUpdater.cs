@@ -4,17 +4,13 @@
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 /// <summary>
-/// An <see cref="IVersionUpdater"/> whose versions can come from more than one location.
+/// Like <see cref="IVersionUpdater"/>, for dependencies whose versions are published to more
+/// than one location.
 /// </summary>
-public interface IVersionSourceUpdater : IVersionUpdater
+public interface IVersionSourceUpdater : IUpdater
 {
     Task<DependencyUpdate> ResolveFromVersionAsync(
         string version,
         VersionSource source,
         CancellationToken cancellationToken);
-
-    Task<DependencyUpdate> IVersionUpdater.ResolveFromVersionAsync(
-        string version,
-        CancellationToken cancellationToken) =>
-        ResolveFromVersionAsync(version, new VersionSource(), cancellationToken);
 }

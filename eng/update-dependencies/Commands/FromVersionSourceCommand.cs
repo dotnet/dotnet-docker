@@ -7,19 +7,21 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 
-internal static class FromVersionCommand
+internal static class FromVersionSourceCommand
 {
     public static Command CreateCliCommand<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
         var command = new Command("version", "Update to a specific version");
         FromVersionOptions.AddTo(command);
+        VersionSourceOptions.AddTo(command, includeBaseUrl: true);
 
         command.SetAction(async (result, cancellationToken) =>
         {
             FromVersionOptions options = FromVersionOptions.Bind(result);
-            var updater = (IVersionUpdater)services.GetRequiredService<TUpdater>();
+            VersionSource source = VersionSourceOptions.Bind(result);
+            var updater = (IVersionSourceUpdater)services.GetRequiredService<TUpdater>();
             var runner = services.GetRequiredService<DependencyUpdateRunner>();
-            DependencyUpdate update = await updater.ResolveFromVersionAsync(options.Version, cancellationToken);
+            DependencyUpdate update = await updater.ResolveFromVersionAsync(options.Version, source, cancellationToken);
 
             await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);
         });
