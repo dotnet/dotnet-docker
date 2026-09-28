@@ -9,6 +9,7 @@
     }} ^
 
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
+    set isAspireDashboard to SHORT_REPO = "aspire-dashboard" || (split(REPO, "/")[0] = "aspire" && SHORT_REPO = "dashboard") ^
     set readmeRepoName to when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)
 
 }}{{insertReposListTemplate("Announcement.md", [ "trailing-line-break": "true" ])}}{{
@@ -20,10 +21,10 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
 {{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0 && find(REPO, "yarp") < 0):
 
-{{InsertTemplate("About.variants.md", commonArgs)}}}}
+{{InsertTemplate("About.variants.md", commonArgs)}}}}{{if !isAspireDashboard:
 
 {{insertReposListTemplate("RelatedRepos.md")}}
-{{if !IS_PRODUCT_FAMILY:
+}}{{if !IS_PRODUCT_FAMILY:
 {{ARGS["top-header"]}} Full Tag Listing
 {{if ARGS["readme-host"] = "github":<!--End of generated tags-->
 *Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/{{REPO}}/tags/list) for all supported and unsupported tags.*
