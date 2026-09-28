@@ -10,8 +10,9 @@
         return repo[0]
     }} ^
 
-    set nonNightlyRepo to when(IS_PRODUCT_FAMILY, "dotnet", join(split(REPO, "/nightly"), "")) ^
-    set announcementFamily to split(nonNightlyRepo, "/")[0] ^
+    set isAspireDashboard to SHORT_REPO = "aspire-dashboard" || (split(REPO, "/")[0] = "aspire" && SHORT_REPO = "dashboard") ^
+    set nonNightlyRepo to when(isAspireDashboard, "dotnet/aspire-dashboard",
+        when(IS_PRODUCT_FAMILY, "dotnet", join(split(REPO, "/nightly"), ""))) ^
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
     set productFamilyRepo to ARGS["product-family-repos"][0][0] ^
     set isNightlyOnly to find(map(ARGS["nightly-only-repos"],getRepoName), nonNightlyRepo) >= 0 ^
@@ -22,7 +23,7 @@
 
 }}{{if isNightlyRepo || VARIABLES["branch"] = "nightly"
 :{{if ARGS["leading-line-break"]:
-}}{{if announcementFamily = "aspire":> **Important**: The {{REPO}} image is a preview build of the Aspire Dashboard and is not signed. See [{{nonNightlyRepo}}]({{url}}) for stable releases.
+}}{{if isAspireDashboard:> **Important**: The {{REPO}} image is a preview build of the Aspire Dashboard and is not signed. See [{{nonNightlyRepo}}]({{url}}) for stable releases.
 ^else:> **Important**: The images from the dotnet/nightly repositories include last-known-good (LKG) builds for the next release of [.NET](https://github.com/dotnet/core).
 >
 > See [dotnet]({{url}}) for images with official releases of [.NET](https://github.com/dotnet/core).

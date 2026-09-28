@@ -5,12 +5,20 @@
     set isRuntimeDeps to match(SHORT_REPO, "runtime-deps") ^
     set isSamples to match(SHORT_REPO, "samples") ^
     set isMonitor to match(SHORT_REPO, "monitor") || match(SHORT_REPO, "base") ^
-    set isAspireDashboard to split(REPO, "/")[0] = "aspire" ^
+    set isAspireDashboard to SHORT_REPO = "aspire-dashboard" || (split(REPO, "/")[0] = "aspire" && SHORT_REPO = "dashboard") ^
     set isReverseProxy to match(SHORT_REPO, "yarp")
 
 }}{{ARGS["top-header"]}} Support
 
-{{if isSamples:These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment.
+{{if isAspireDashboard:See the [Aspire support policy](https://aspire.dev/support/) for supported versions and lifecycle information. Container images are also covered by the [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md), [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md), and [Image Update Policy](https://github.com/dotnet/dotnet-docker/blob/main/README.md#image-update-policy).
+
+For container security and vulnerability reporting, see the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md).
+
+{{ARGS["top-header"]}}# Feedback
+
+* [Dashboard issues and feature requests](https://github.com/microsoft/aspire/issues).
+* [Container image issues](https://github.com/dotnet/dotnet-docker/issues/new/choose).
+* [Contact Microsoft Support](https://support.microsoft.com/contactus/).^else:{{if isSamples:These sample images are not intended for production use and may be subject to breaking changes or removal at any time. They are provided as a starting point for developers to experiment with and learn about .NET in a containerized environment.
 
 }}{{ARGS["top-header"]}}# Lifecycle
 
@@ -40,12 +48,12 @@ Please refer to the [Security Policy](https://github.com/dotnet/dotnet-docker/bl
 {{ARGS["top-header"]}}# Feedback
 
 * [File an issue](https://github.com/dotnet/dotnet-docker/issues/new/choose)
-* [Contact Microsoft Support](https://support.microsoft.com/contactus/)
+* [Contact Microsoft Support](https://support.microsoft.com/contactus/)}}
 
 {{ARGS["top-header"]}} License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
-* [.NET license](https://github.com/dotnet/dotnet-docker/blob/main/LICENSE)
+* [{{when(isAspireDashboard, "Aspire MIT license", ".NET license")}}]({{when(isAspireDashboard, "https://github.com/microsoft/aspire/blob/main/LICENSE.TXT", "https://github.com/dotnet/dotnet-docker/blob/main/LICENSE")}})
 * [Discover licensing for Linux image contents](https://github.com/dotnet/dotnet-docker/blob/main/documentation/image-artifact-details.md){{if !(isRuntimeDeps || isMonitor || isAspireDashboard):
 * [Windows base image license](https://learn.microsoft.com/virtualization/windowscontainers/images-eula) (only applies to Windows containers)
 * [Pricing and licensing for Windows Server](https://www.microsoft.com/windows-server/pricing)}}

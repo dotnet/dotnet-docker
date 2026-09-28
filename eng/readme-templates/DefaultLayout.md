@@ -9,6 +9,7 @@
     }} ^
 
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
+    set isAspireDashboard to SHORT_REPO = "aspire-dashboard" || (split(REPO, "/")[0] = "aspire" && SHORT_REPO = "dashboard") ^
     set readmeRepoName to when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)
 
 }}{{insertReposListTemplate("Announcement.md", [ "trailing-line-break": "true" ])}}{{
@@ -22,7 +23,7 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
 {{InsertTemplate("About.variants.md", commonArgs)}}}}
 
-{{insertReposListTemplate("RelatedRepos.md")}}
+{{if !isAspireDashboard:{{insertReposListTemplate("RelatedRepos.md")}}}}
 {{if !IS_PRODUCT_FAMILY:
 {{ARGS["top-header"]}} Full Tag Listing
 {{if ARGS["readme-host"] = "github":<!--End of generated tags-->

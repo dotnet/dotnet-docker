@@ -14999,6 +14999,10 @@
           "templatePath": "eng/readme-templates/README.github.md"
         },
         {
+          "path": ".portal-docs/mar/README.dashboard.md",
+          "templatePath": "eng/readme-templates/README.mcr.md"
+        },
+        {
           "path": ".portal-docs/mar/README.dashboard.portal.md",
           "templatePath": "eng/readme-templates/README.mcr.md"
         }

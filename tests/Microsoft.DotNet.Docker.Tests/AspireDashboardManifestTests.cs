@@ -3,6 +3,7 @@
 // See the LICENSE file in the project root for more information.
 
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
@@ -35,6 +36,37 @@ public sealed class AspireDashboardManifestTests
         Assert.Equal(
             ImageData.GetRepoName(AspireDashboardId, repoNameModifier),
             GetAspireDashboardRepo().Value<string>("name"));
+    }
+
+    [Fact]
+    public void Manifest_DeclaresBothMarReadmesWithoutDockerHub()
+    {
+        JObject[] readmes = GetAspireDashboardRepo()["readmes"]!.Children<JObject>().ToArray();
+
+        Assert.Equal(
+            [
+                "README.aspire-dashboard.md",
+                ".portal-docs/mar/README.dashboard.md",
+                ".portal-docs/mar/README.dashboard.portal.md"
+            ],
+            readmes.Select(readme => readme.Value<string>("path")));
+        Assert.Equal(
+            [
+                "eng/readme-templates/README.github.md",
+                "eng/readme-templates/README.mcr.md",
+                "eng/readme-templates/README.mcr.md"
+            ],
+            readmes.Select(readme => readme.Value<string>("templatePath")));
+    }
+
+    [Fact]
+    public void MarReadmes_HaveIdenticalContent()
+    {
+        string readmeDirectory = Path.Combine(Config.SourceRepoRoot, ".portal-docs", "mar");
+
+        Assert.Equal(
+            File.ReadAllBytes(Path.Combine(readmeDirectory, "README.dashboard.md")),
+            File.ReadAllBytes(Path.Combine(readmeDirectory, "README.dashboard.portal.md")));
     }
 
     [Fact]
