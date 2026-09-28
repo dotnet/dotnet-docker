@@ -71,17 +71,9 @@ public sealed class PowerShellUpdaterTests
             [$"{InternalRoot}/v7-7-0-preview-6-nuget/globaltool/SHA512SUMS"] = CreateChecksums("7.7.0-preview.6"),
         });
 
-        var credential = new Mock<TokenCredential>();
-        credential
-            .Setup(c => c.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new AccessToken("test-token", DateTimeOffset.MaxValue));
-
-        var credentialProvider = Mock.Of<IAzureCredentialProvider>(
-            p => p.GetCredential(ServiceConnectionNames.Staging) == credential.Object);
-
         var variables = new ManifestVariables(Manifest);
 
-        await ApplyAsync(CreateUpdater(handler, credentialProvider), variables, "7.7.0-preview.6", isInternal: true);
+        await ApplyAsync(CreateInternalUpdater(handler), variables, "7.7.0-preview.6", isInternal: true);
 
         variables.GetRawValue("powershell|11.0|build-version").ShouldBe("7.7.0-preview.6");
         variables.GetRawValue("powershell|11.0|base-url")
@@ -146,6 +138,51 @@ public sealed class PowerShellUpdaterTests
         await Should.ThrowAsync<InvalidOperationException>(() => ApplyAsync(CreateUpdater(handler), variables, "7.5.12"));
     }
 
+    [Fact]
+    public async Task Latest_FollowsPreviewThenRcThenRelease()
+    {
+        var handler = new StubHandler(new()
+        {
+            [$"{PublicRoot}/7.7.0-preview.6/SHA512SUMS"] = "",
+            [$"{PublicRoot}/7.7.0-rc.1/SHA512SUMS"] = "",
+            [$"{PublicRoot}/7.7.0/SHA512SUMS"] = "",
+            [$"{PublicRoot}/7.7.1/SHA512SUMS"] = CreateChecksums("7.7.1"),
+        });
+
+        var variables = new ManifestVariables(Manifest);
+
+        PowerShellUpdater updater = CreateUpdater(handler);
+
+        IReadOnlyList<DependencyUpdate> updates = await updater.ResolveLatestAsync(
+            variables, isInternal: false, dotnetVersion: null, TestContext.Current.CancellationToken);
+
+        DependencyUpdate update = updates.ShouldHaveSingleItem();
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        variables.GetRawValue("powershell|11.0|build-version").ShouldBe("7.7.1");
+    }
+
+    [Fact]
+    public async Task Latest_Internal_UsesInternalLayout()
+    {
+        var handler = new StubHandler(new()
+        {
+            [$"{InternalRoot}/v7-5-12-nuget/globaltool/SHA512SUMS"] = CreateChecksums("7.5.12"),
+        });
+
+        var variables = new ManifestVariables(Manifest);
+
+        PowerShellUpdater updater = CreateInternalUpdater(handler);
+
+        IReadOnlyList<DependencyUpdate> updates = await updater.ResolveLatestAsync(
+            variables, isInternal: true, dotnetVersion: "9.0", TestContext.Current.CancellationToken);
+
+        DependencyUpdate update = updates.ShouldHaveSingleItem();
+        await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
+
+        variables.GetRawValue("powershell|9.0|build-version").ShouldBe("7.5.12");
+    }
+
     private static async Task ApplyAsync(
         PowerShellUpdater updater,
         ManifestVariables variables,
@@ -161,10 +198,20 @@ public sealed class PowerShellUpdaterTests
     }
 
     private static PowerShellUpdater CreateUpdater(StubHandler handler) =>
-        CreateUpdater(handler, Mock.Of<IAzureCredentialProvider>());
+        new(new HttpClient(handler), Mock.Of<IAzureCredentialProvider>(), Mock.Of<ILogger<PowerShellUpdater>>());
 
-    private static PowerShellUpdater CreateUpdater(StubHandler handler, IAzureCredentialProvider credentialProvider) =>
-        new(new HttpClient(handler), credentialProvider, Mock.Of<ILogger<PowerShellUpdater>>());
+    private static PowerShellUpdater CreateInternalUpdater(StubHandler handler)
+    {
+        var credential = new Mock<TokenCredential>();
+        credential
+            .Setup(c => c.GetTokenAsync(It.IsAny<TokenRequestContext>(), It.IsAny<CancellationToken>()))
+            .ReturnsAsync(new AccessToken("test-token", DateTimeOffset.MaxValue));
+
+        var credentialProvider = Mock.Of<IAzureCredentialProvider>(
+            p => p.GetCredential(ServiceConnectionNames.Staging) == credential.Object);
+
+        return new(new HttpClient(handler), credentialProvider, Mock.Of<ILogger<PowerShellUpdater>>());
+    }
 
     private static string CreateChecksums(string version) =>
         $"{s_alpineSha} *PowerShell.Linux.Alpine.{version}.nupkg\r\n"
@@ -181,9 +228,10 @@ public sealed class PowerShellUpdaterTests
         {
             Requests.Add(request);
 
-            HttpResponseMessage response = responses.TryGetValue(request.RequestUri!.ToString(), out string? content)
+            // BlobClient.ExistsAsync only treats a 404 as missing when it has a storage error code.
+            HttpResponseMessage response = responses.TryGetValue($"{request.RequestUri}", out string? content)
                 ? new HttpResponseMessage(HttpStatusCode.OK) { Content = new StringContent(content) }
-                : new HttpResponseMessage(HttpStatusCode.NotFound);
+                : new HttpResponseMessage(HttpStatusCode.NotFound) { Headers = { { "x-ms-error-code", "BlobNotFound" } } };
 
             return Task.FromResult(response);
         }

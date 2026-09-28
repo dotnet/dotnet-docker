@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Net;
 using Azure;
 using Azure.Core;
 using Azure.Core.Pipeline;
@@ -23,7 +24,7 @@ public sealed class PowerShellUpdater(
     HttpClient httpClient,
     IAzureCredentialProvider credentialProvider,
     ILogger<PowerShellUpdater> logger)
-        : IVersionUpdater
+        : IVersionUpdater, ILatestVersionUpdater
 {
     private const string ChecksumsFileName = "SHA512SUMS";
 
@@ -37,7 +38,7 @@ public sealed class PowerShellUpdater(
         string? dotnetVersion,
         CancellationToken cancellationToken)
     {
-        string series = GetSeries(version);
+        string series = GetSeries(SemanticVersion.Parse(version));
 
         var update = new DependencyUpdate(
             Description: $"Update PowerShell {series} to {version}",
@@ -46,6 +47,52 @@ public sealed class PowerShellUpdater(
             Scope: series);
 
         return Task.FromResult(update);
+    }
+
+    public async Task<IReadOnlyList<DependencyUpdate>> ResolveLatestAsync(
+        ManifestVariables variables,
+        bool isInternal,
+        string? dotnetVersion,
+        CancellationToken cancellationToken)
+    {
+        IEnumerable<string> dotnetVersions = dotnetVersion is null
+            ? GetAllDotnetVersions(variables)
+            : [dotnetVersion];
+
+        // .NET versions on the same PowerShell series share one update. Starting from the newest of their versions
+        // means the update never lowers any of them.
+        IEnumerable<SemanticVersion> currentVersions = dotnetVersions
+            .Select(version => GetCurrentVersion(variables, version))
+            .OrderDescending()
+            .DistinctBy(GetSeries);
+
+        // The manifest's base-url values refer to the current build-version, so candidate URLs are built from the root.
+        string rootVariableName = isInternal ? "powershell|base-url|internal" : "powershell|base-url|public";
+        string root = variables.GetValue(rootVariableName);
+
+        List<DependencyUpdate> updates = [];
+
+        foreach (SemanticVersion currentVersion in currentVersions)
+        {
+            SemanticVersion latestVersion = await FindLatestAsync(root, currentVersion, isInternal, cancellationToken);
+
+            if (latestVersion == currentVersion)
+            {
+                logger.LogInformation("PowerShell {Version} is the latest available version.", currentVersion);
+                continue;
+            }
+
+            DependencyUpdate update = await ResolveFromVersionAsync(
+                latestVersion.ToNormalizedString(),
+                isInternal,
+                baseUrl: null,
+                dotnetVersion,
+                cancellationToken);
+
+            updates.Add(update);
+        }
+
+        return updates;
     }
 
     private async Task ApplyAsync(
@@ -86,12 +133,64 @@ public sealed class PowerShellUpdater(
 
     private async Task<string> DownloadInternalAsync(string url, CancellationToken cancellationToken)
     {
+        BlobClient blobClient = CreateBlobClient(url);
+        Response<BlobDownloadResult> response = await blobClient.DownloadContentAsync(cancellationToken);
+
+        return response.Value.Content.ToString();
+    }
+
+    // Walks forward from the version until no later version exists.
+    private async Task<SemanticVersion> FindLatestAsync(
+        string root,
+        SemanticVersion version,
+        bool isInternal,
+        CancellationToken cancellationToken)
+    {
+        foreach (SemanticVersion candidate in GetNextVersions(version))
+        {
+            if (await ExistsAsync(root, candidate, isInternal, cancellationToken))
+            {
+                return await FindLatestAsync(root, candidate, isInternal, cancellationToken);
+            }
+        }
+
+        return version;
+    }
+
+    private async Task<bool> ExistsAsync(
+        string root,
+        SemanticVersion version,
+        bool isInternal,
+        CancellationToken cancellationToken)
+    {
+        string normalizedVersion = version.ToNormalizedString();
+        string directory = isInternal ? GetInternalDirectory(normalizedVersion) : normalizedVersion;
+        string checksumsUrl = $"{root}/{directory}/{ChecksumsFileName}";
+
+        if (isInternal)
+        {
+            return await CreateBlobClient(checksumsUrl).ExistsAsync(cancellationToken);
+        }
+
+        using var request = new HttpRequestMessage(HttpMethod.Head, checksumsUrl);
+        using HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken);
+
+        if (response.StatusCode == HttpStatusCode.NotFound)
+        {
+            return false;
+        }
+
+        response.EnsureSuccessStatusCode();
+
+        return true;
+    }
+
+    private BlobClient CreateBlobClient(string url)
+    {
         TokenCredential credential = credentialProvider.GetCredential(ServiceConnectionNames.Staging);
         var options = new BlobClientOptions { Transport = new HttpClientTransport(httpClient) };
-        var blobClient = new BlobClient(new Uri(url), credential, options);
 
-        Response<BlobDownloadResult> response = await blobClient.DownloadContentAsync(cancellationToken);
-        return response.Value.Content.ToString();
+        return new BlobClient(new Uri(url), credential, options);
     }
 
     /// <summary>
@@ -111,10 +210,8 @@ public sealed class PowerShellUpdater(
             return [dotnetVersion];
         }
 
-        List<string> dotnetVersions = variables.Names
-            .Where(name => name.Split('|') is ["powershell", _, "build-version"])
-            .Where(name => GetSeries(variables.GetValue(name)) == series)
-            .Select(name => name.Split('|')[1])
+        List<string> dotnetVersions = GetAllDotnetVersions(variables)
+            .Where(version => GetSeries(GetCurrentVersion(variables, version)) == series)
             .ToList();
 
         if (dotnetVersions.Count == 0)
@@ -133,11 +230,13 @@ public sealed class PowerShellUpdater(
             return baseUrl;
         }
 
-        // Internal storage uses the version with dots replaced by dashes, e.g. v7-5-11-nuget.
         return isInternal
-            ? $"$(powershell|base-url|internal)/v{version.Replace('.', '-')}-nuget/globaltool"
+            ? $"$(powershell|base-url|internal)/{GetInternalDirectory(version)}"
             : $"$(powershell|base-url|public)/$(powershell|{dotnetVersion}|build-version)";
     }
+
+    // Internal storage uses the version with dots replaced by dashes, e.g. v7-5-11-nuget.
+    private static string GetInternalDirectory(string version) => $"v{version.Replace('.', '-')}-nuget/globaltool";
 
     // Parses lines of the form "<hash> *<file name>", where '*' marks binary mode and is optional.
     private static Dictionary<string, string> ParseChecksums(string content)
@@ -196,11 +295,33 @@ public sealed class PowerShellUpdater(
             _ => throw new FormatException($"Unexpected checksum length {checksum.Length}: '{checksum}'"),
         };
 
-    private static string GetSeries(string version)
+    // Versions that can follow the given one within its series, in the order they would be released. A gap stops the walk.
+    private static SemanticVersion[] GetNextVersions(SemanticVersion version)
     {
-        var parsedVersion = SemanticVersion.Parse(version);
-        return $"{parsedVersion.Major}.{parsedVersion.Minor}";
+        var release = new SemanticVersion(version.Major, version.Minor, version.Patch);
+
+        SemanticVersion Prerelease(string label, int number) =>
+            new(version.Major, version.Minor, version.Patch, $"{label}.{number}");
+
+        return version.ReleaseLabels.ToArray() switch
+        {
+            [] => [new SemanticVersion(version.Major, version.Minor, version.Patch + 1)],
+            ["preview", var number] => [Prerelease("preview", int.Parse(number) + 1), Prerelease("rc", 1), release],
+            ["rc", var number] => [Prerelease("rc", int.Parse(number) + 1), release],
+            _ => throw new FormatException($"Unexpected PowerShell version '{version}'."),
+        };
     }
+
+    private static IEnumerable<string> GetAllDotnetVersions(ManifestVariables variables) =>
+        variables.Names
+            .Select(name => name.Split('|'))
+            .Where(parts => parts is ["powershell", _, "build-version"])
+            .Select(parts => parts[1]);
+
+    private static SemanticVersion GetCurrentVersion(ManifestVariables variables, string dotnetVersion) =>
+        SemanticVersion.Parse(variables.GetValue(GetManifestVariableName(dotnetVersion, "build-version")));
+
+    private static string GetSeries(SemanticVersion version) => $"{version.Major}.{version.Minor}";
 
     private static string GetManifestVariableName(string dotnetVersion, string type) =>
         $"powershell|{dotnetVersion}|{type}";
