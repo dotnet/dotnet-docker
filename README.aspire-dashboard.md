@@ -19,7 +19,7 @@ Run the dashboard locally:
 docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 mcr.microsoft.com/aspire/nightly/dashboard:13
 ```
 
-Open <http://localhost:18888>. To sign in, use the login URL or token printed in the container logs:
+Open `http://localhost:18888`. To sign in, use the login URL or token printed in the container logs:
 
 ```console
 docker logs aspire-dashboard
@@ -48,8 +48,6 @@ For applications in other containers, use the dashboard container's name and por
 * [JavaScript and Node.js telemetry tutorial](https://aspire.dev/dashboard/standalone-for-nodejs/).
 * [Standalone dashboard sample (C#)](https://github.com/microsoft/aspire-samples/tree/main/samples/standalone-dashboard).
 * [Dashboard configuration reference](https://aspire.dev/dashboard/configuration/).
-
-
 
 ## Full Tag Listing
 

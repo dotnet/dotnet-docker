@@ -8,7 +8,7 @@
 docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 {{FULL_REPO}}:13
 ```
 
-Open <http://localhost:18888>. To sign in, use the login URL or token printed in the container logs:
+Open `http://localhost:18888`. To sign in, use the login URL or token printed in the container logs:
 
 ```console
 docker logs aspire-dashboard

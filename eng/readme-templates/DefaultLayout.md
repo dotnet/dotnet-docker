@@ -21,9 +21,9 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 
 {{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0 && find(REPO, "yarp") < 0):
 
-{{InsertTemplate("About.variants.md", commonArgs)}}}}
+{{InsertTemplate("About.variants.md", commonArgs)}}}}{{if !isAspireDashboard:
 
-{{if !isAspireDashboard:{{insertReposListTemplate("RelatedRepos.md")}}}}
+{{insertReposListTemplate("RelatedRepos.md")}}}}
 {{if !IS_PRODUCT_FAMILY:
 {{ARGS["top-header"]}} Full Tag Listing
 {{if ARGS["readme-host"] = "github":<!--End of generated tags-->
