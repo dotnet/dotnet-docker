@@ -25,17 +25,10 @@ public sealed class MonitorUpdaterTests
                 }
             }
             """);
-
         using var httpClient = new HttpClient();
         var updater = CreateUpdater(httpClient);
 
-        DependencyUpdate update = await updater.ResolveFromVersionAsync(
-            version,
-            isInternal: false,
-            baseUrl: null,
-            dotnetVersion: null,
-            TestContext.Current.CancellationToken);
-
+        DependencyUpdate update = updater.ResolveFromVersion(version);
         await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetRawValue("monitor|9.0|build-version").ShouldBe(version);
@@ -57,17 +50,10 @@ public sealed class MonitorUpdaterTests
                 }
             }
             """);
-
         using var httpClient = new HttpClient();
         var updater = CreateUpdater(httpClient);
 
-        DependencyUpdate update = await updater.ResolveFromVersionAsync(
-            "9.0.5",
-            isInternal: false,
-            baseUrl: null,
-            dotnetVersion: null,
-            TestContext.Current.CancellationToken);
-
+        DependencyUpdate update = updater.ResolveFromVersion("9.0.5");
         await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
         variables.GetRawValue("monitor-base|9.0|build-version").ShouldBe("$(monitor|9.0|build-version)");

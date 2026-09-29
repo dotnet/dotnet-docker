@@ -18,17 +18,8 @@ internal static class DependencyCommand
         if (typeof(IBarChannelUpdater).IsAssignableFrom(typeof(TUpdater)))
             command.Subcommands.Add(FromChannelCommand.CreateCliCommand<TUpdater>(services));
 
-        if (typeof(IPipelineBuildUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromPipelineBuildCommand.CreateCliCommand<TUpdater>(services));
-
         if (typeof(IStagingPipelineUpdater).IsAssignableFrom(typeof(TUpdater)))
             command.Subcommands.Add(FromStagingPipelineCommand.CreateCliCommand(services));
-
-        if (typeof(IVersionUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromVersionCommand.CreateCliCommand<TUpdater>(services));
-
-        if (typeof(ILatestVersionUpdater).IsAssignableFrom(typeof(TUpdater)))
-            command.Subcommands.Add(FromLatestVersionCommand.CreateCliCommand<TUpdater>(services));
 
         if (typeof(IGitHubReleaseUpdater).IsAssignableFrom(typeof(TUpdater)))
             FromGitHubReleaseCommand.Configure<TUpdater>(command, services);

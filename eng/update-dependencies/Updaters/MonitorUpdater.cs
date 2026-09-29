@@ -12,11 +12,7 @@ public sealed class MonitorUpdater(
     HttpClient httpClient,
     UpdateDependenciesConfiguration configuration,
     ILogger<MonitorUpdater> logger)
-        : IPipelineBuildUpdater, IVersionUpdater
 {
-    public static string Name => "monitor";
-    public static string VersionSourceName => "dotnet/dotnet-monitor";
-
     private static readonly (string Product, string ArchiveName)[] s_products =
     [
         ("monitor", "dotnet-monitor"),
@@ -30,17 +26,10 @@ public sealed class MonitorUpdater(
         CancellationToken cancellationToken)
     {
         string version = await GetVersionFromPipelineAsync(pipelineRunId, cancellationToken);
-        return await ResolveFromVersionAsync(
-            version,
-            isInternal: false,
-            baseUrl: null,
-            dotnetVersion: null,
-            cancellationToken);
+        return ResolveFromVersion(version);
     }
 
-    private async Task<string> GetVersionFromPipelineAsync(
-        int pipelineRunId,
-        CancellationToken cancellationToken)
+    private async Task<string> GetVersionFromPipelineAsync(int pipelineRunId, CancellationToken cancellationToken)
     {
         var versionFile = new PipelineArtifactFile("Build_Info", "dotnet-monitor.nupkg.buildversion");
         string version = await pipelineArtifactProvider
@@ -54,27 +43,16 @@ public sealed class MonitorUpdater(
         return version.Trim();
     }
 
-    public Task<DependencyUpdate> ResolveFromVersionAsync(
-        string version,
-        bool isInternal,
-        string? baseUrl,
-        string? dotnetVersion,
-        CancellationToken cancellationToken)
+    public DependencyUpdate ResolveFromVersion(string version)
     {
-        if (isInternal || baseUrl is not null || dotnetVersion is not null)
-        {
-            throw new NotSupportedException(
-                ".NET Monitor does not support --internal, --base-url, or --dotnet-version.");
-        }
-
         version = version.Trim();
         var parsedVersion = SemanticVersion.Parse(version);
         string dockerfileVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}";
 
-        return Task.FromResult(new DependencyUpdate(
+        return new DependencyUpdate(
             Description: $"Update .NET Monitor {dockerfileVersion} to {version}",
             ApplyAsync: (variables, _, token) => ApplyAsync(variables, version, parsedVersion, token),
-            Scope: dockerfileVersion));
+            Scope: dockerfileVersion);
     }
 
     private async Task ApplyAsync(

@@ -24,29 +24,18 @@ public sealed class PowerShellUpdater(
     HttpClient httpClient,
     IAzureCredentialProvider credentialProvider,
     ILogger<PowerShellUpdater> logger)
-        : IVersionUpdater, ILatestVersionUpdater
 {
     private const string ChecksumsFileName = "SHA512SUMS";
 
-    public static string Name => "powershell";
-    public static string VersionSourceName => "PowerShell/PowerShell";
-
-    public Task<DependencyUpdate> ResolveFromVersionAsync(
-        string version,
-        bool isInternal,
-        string? baseUrl,
-        string? dotnetVersion,
-        CancellationToken cancellationToken)
+    public DependencyUpdate ResolveFromVersion(string version, bool isInternal, string? baseUrl, string? dotnetVersion)
     {
-        string series = GetSeries(SemanticVersion.Parse(version));
+        string majorMinorVersion = GetMajorMinorVersion(SemanticVersion.Parse(version));
 
-        var update = new DependencyUpdate(
-            Description: $"Update PowerShell {series} to {version}",
+        return new DependencyUpdate(
+            Description: $"Update PowerShell {majorMinorVersion} to {version}",
             ApplyAsync: (manifestVariables, _, ct) =>
-                ApplyAsync(manifestVariables, version, series, isInternal, baseUrl, dotnetVersion, ct),
-            Scope: series);
-
-        return Task.FromResult(update);
+                ApplyAsync(manifestVariables, version, majorMinorVersion, isInternal, baseUrl, dotnetVersion, ct),
+            Scope: majorMinorVersion);
     }
 
     public async Task<IReadOnlyList<DependencyUpdate>> ResolveLatestAsync(
@@ -59,12 +48,12 @@ public sealed class PowerShellUpdater(
             ? GetAllDotnetVersions(variables)
             : [dotnetVersion];
 
-        // .NET versions on the same PowerShell series share one update. Starting from the newest of their versions
-        // means the update never lowers any of them.
+        // .NET versions on the same PowerShell major.minor version share one update. Starting from the newest of their
+        // versions means the update never lowers any of them.
         IEnumerable<SemanticVersion> currentVersions = dotnetVersions
             .Select(version => GetCurrentVersion(variables, version))
             .OrderDescending()
-            .DistinctBy(GetSeries);
+            .DistinctBy(GetMajorMinorVersion);
 
         // The manifest's base-url values refer to the current build-version, so candidate URLs are built from the root.
         string rootVariableName = isInternal ? "powershell|base-url|internal" : "powershell|base-url|public";
@@ -82,12 +71,11 @@ public sealed class PowerShellUpdater(
                 continue;
             }
 
-            DependencyUpdate update = await ResolveFromVersionAsync(
+            DependencyUpdate update = ResolveFromVersion(
                 latestVersion.ToNormalizedString(),
                 isInternal,
                 baseUrl: null,
-                dotnetVersion,
-                cancellationToken);
+                dotnetVersion);
 
             updates.Add(update);
         }
@@ -98,13 +86,13 @@ public sealed class PowerShellUpdater(
     private async Task ApplyAsync(
         ManifestVariables variables,
         string version,
-        string series,
+        string majorMinorVersion,
         bool isInternal,
         string? baseUrl,
         string? dotnetVersion,
         CancellationToken cancellationToken)
     {
-        List<string> targetDotnetVersions = GetDotnetVersions(variables, series, dotnetVersion);
+        List<string> targetDotnetVersions = GetDotnetVersions(variables, majorMinorVersion, dotnetVersion);
 
         foreach (string targetDotnetVersion in targetDotnetVersions)
         {
@@ -195,9 +183,12 @@ public sealed class PowerShellUpdater(
 
     /// <summary>
     /// Gets the .NET versions to update: the requested one, or else every .NET version whose
-    /// current PowerShell version is in the same major.minor series.
+    /// current PowerShell version has the same major.minor version.
     /// </summary>
-    private static List<string> GetDotnetVersions(ManifestVariables variables, string series, string? dotnetVersion)
+    private static List<string> GetDotnetVersions(
+        ManifestVariables variables,
+        string majorMinorVersion,
+        string? dotnetVersion)
     {
         if (dotnetVersion is not null)
         {
@@ -211,13 +202,13 @@ public sealed class PowerShellUpdater(
         }
 
         List<string> dotnetVersions = GetAllDotnetVersions(variables)
-            .Where(version => GetSeries(GetCurrentVersion(variables, version)) == series)
+            .Where(version => GetMajorMinorVersion(GetCurrentVersion(variables, version)) == majorMinorVersion)
             .ToList();
 
         if (dotnetVersions.Count == 0)
         {
             throw new InvalidOperationException(
-                $"No .NET version currently uses PowerShell {series}. Use --dotnet-version to choose one.");
+                $"No .NET version currently uses PowerShell {majorMinorVersion}. Use --dotnet-version to choose one.");
         }
 
         return dotnetVersions;
@@ -295,19 +286,33 @@ public sealed class PowerShellUpdater(
             _ => throw new FormatException($"Unexpected checksum length {checksum.Length}: '{checksum}'"),
         };
 
-    // Versions that can follow the given one within its series, in the order they would be released. A gap stops the walk.
     private static SemanticVersion[] GetNextVersions(SemanticVersion version)
     {
-        var release = new SemanticVersion(version.Major, version.Minor, version.Patch);
+        // Given a version, return its potential follow-up versions (with the
+        // assumption that we will not update major or minor versions):
+        // 7.5.11          -> 7.5.12
+        // 7.6.0-preview.5 -> 7.6.0-preview.6, 7.6.0-rc.1, 7.6.0
+        // 7.6.0-rc.2      -> 7.6.0-rc.3, 7.6.0
 
-        SemanticVersion Prerelease(string label, int number) =>
-            new(version.Major, version.Minor, version.Patch, $"{label}.{number}");
+        var stableRelease = new SemanticVersion(version.Major, version.Minor, version.Patch);
+
+        var getPrerelease = (string label, int number) =>
+            new SemanticVersion(version.Major, version.Minor, version.Patch, $"{label}.{number}");
 
         return version.ReleaseLabels.ToArray() switch
         {
             [] => [new SemanticVersion(version.Major, version.Minor, version.Patch + 1)],
-            ["preview", var number] => [Prerelease("preview", int.Parse(number) + 1), Prerelease("rc", 1), release],
-            ["rc", var number] => [Prerelease("rc", int.Parse(number) + 1), release],
+            ["preview", var number] =>
+                [
+                    getPrerelease("preview", int.Parse(number) + 1),
+                    getPrerelease("rc", 1),
+                    stableRelease
+                ],
+            ["rc", var number] =>
+                [
+                    getPrerelease("rc", int.Parse(number) + 1),
+                    stableRelease
+                ],
             _ => throw new FormatException($"Unexpected PowerShell version '{version}'."),
         };
     }
@@ -321,7 +326,8 @@ public sealed class PowerShellUpdater(
     private static SemanticVersion GetCurrentVersion(ManifestVariables variables, string dotnetVersion) =>
         SemanticVersion.Parse(variables.GetValue(GetManifestVariableName(dotnetVersion, "build-version")));
 
-    private static string GetSeries(SemanticVersion version) => $"{version.Major}.{version.Minor}";
+    private static string GetMajorMinorVersion(SemanticVersion version) =>
+        $"{version.Major}.{version.Minor}";
 
     private static string GetManifestVariableName(string dotnetVersion, string type) =>
         $"powershell|{dotnetVersion}|{type}";

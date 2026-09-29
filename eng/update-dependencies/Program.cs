@@ -131,10 +131,10 @@ var rootCommand = new RootCommand("Update dotnet-docker dependencies")
     DependencyCommand.CreateCliCommand<ChiselUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<DotNetUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<MinGitUpdater>(host.Services),
-    DependencyCommand.CreateCliCommand<MonitorUpdater>(host.Services),
-    DependencyCommand.CreateCliCommand<PowerShellUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<RocksToolboxUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<SyftUpdater>(host.Services),
+    MonitorCommand.CreateCliCommand(host.Services),
+    PowerShellCommand.CreateCliCommand(host.Services),
     SyncInternalReleaseCommand.CreateCliCommand(host.Services),
 };
 

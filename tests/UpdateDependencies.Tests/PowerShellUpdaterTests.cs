@@ -42,7 +42,7 @@ public sealed class PowerShellUpdaterTests
     private static readonly string s_windowsSha = new('c', 64);
 
     [Fact]
-    public async Task Public_UpdatesMatchingSeries()
+    public async Task Public_UpdatesMatchingMajorMinorVersion()
     {
         var handler = new StubHandler(new()
         {
@@ -101,7 +101,7 @@ public sealed class PowerShellUpdaterTests
     }
 
     [Fact]
-    public async Task DotnetVersion_SelectsImagesOutsideTheSeries()
+    public async Task DotnetVersion_SelectsImagesOutsideTheMajorMinorVersion()
     {
         var handler = new StubHandler(new()
         {
@@ -117,7 +117,7 @@ public sealed class PowerShellUpdaterTests
     }
 
     [Fact]
-    public async Task NoMatchingSeries_Throws()
+    public async Task NoMatchingMajorMinorVersion_Throws()
     {
         var variables = new ManifestVariables(Manifest);
 
@@ -191,8 +191,7 @@ public sealed class PowerShellUpdaterTests
         string? baseUrl = null,
         string? dotnetVersion = null)
     {
-        DependencyUpdate update = await updater.ResolveFromVersionAsync(
-            version, isInternal, baseUrl, dotnetVersion, TestContext.Current.CancellationToken);
+        DependencyUpdate update = updater.ResolveFromVersion(version, isInternal, baseUrl, dotnetVersion);
 
         await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
     }
