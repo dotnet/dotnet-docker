@@ -321,7 +321,6 @@ namespace Microsoft.DotNet.Docker.Tests
                         "libzstd",
                         "libzstd1",
                         "openssl",
-                        "openssl-provider-legacy",
                         "zlib",
                         "zlib1g"
                     ],
