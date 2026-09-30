@@ -169,7 +169,7 @@
     "monitor-ext-s3storage|9.0|linux|x64|sha": "0ac83d2d95b575c4f891a1190fc92d4dc5d53203fd50a55ab081d9e0652d5ce11a743cd81dea94f8c96acdc2614b2627009b8f0ffb16ae708061cbf8ed27e1ad",
     "monitor-ext-s3storage|9.0|linux|arm64|sha": "08a3a4613c3095d1980938ac0ea6a6dc743ce169b9ba9ac861715252b7bd45d1b3027fdfc30fc8d9c5948e56ef34f53c3c6eed9dea3271c2635867a2064ad5fc",
 
-    "monitor|10.0|build-version": "10.0.4-preview.1.26474.3",
+    "monitor|10.0|build-version": "10.0.4-preview.1.26479.3",
     "monitor|10.0|product-version": "10.0.4-preview.1",
     "monitor|10.0|fixed-tag": "$(monitor|10.0|product-version)",
     "monitor|10.0|minor-tag": "10.0",
