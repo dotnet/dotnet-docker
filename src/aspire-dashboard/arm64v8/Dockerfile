@@ -33,4 +33,4 @@ ENV \
     DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL=http://+:18890 \
     DOTNET_DASHBOARD_MCP_ENDPOINT_URL=http://+:18891
 
-ENTRYPOINT [ "dotnet", "/app/Aspire.Dashboard.dll" ]
+ENTRYPOINT [ "/app/Aspire.Dashboard" ]
