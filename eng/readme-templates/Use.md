@@ -6,9 +6,9 @@
         "samples",
         when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO))
 }}{{ARGS["top-header"]}} Usage
-{{if templateQualifier != "aspire-dashboard":
+
 The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md) show various ways to use .NET and Docker together. See [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/introduction){{
     if templateQualifier = "aspnet" || templateQualifier = "runtime-deps": and [Host ASP.NET Core in Docker containers](https://learn.microsoft.com/aspnet/core/host-and-deploy/docker)}} to learn more.
-}}
+
 {{InsertTemplate(join(["Use", templateQualifier, "md"], "."),
   [ "top-header": ARGS["top-header"], "readme-host": ARGS["readme-host"]])}}
