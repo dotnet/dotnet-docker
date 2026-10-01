@@ -123,17 +123,6 @@ namespace Microsoft.DotNet.Docker.Tests
                 Arch = imageData.Arch,
             };
 
-            // Special case for Aspire Dashboard 9.0 images:
-            // Aspire Dashboard 9.0 is based on .NET 8 since Azure Linux 3.0 does not yet have FedRAMP certification.
-            // Remove workaround once https://github.com/dotnet/dotnet-docker/issues/5375 is fixed.
-            if (imageRepo == DotNetImageRepo.Aspire_Dashboard && imageData.VersionFamily == ImageVersion.V9_0)
-            {
-                runtimeDepsImageData = runtimeDepsImageData with
-                {
-                    Version = ImageVersion.V8_0
-                };
-            }
-
             // Make sure we don't try to get an image that we don't need before we specify that we want the distro-full
             // version. The image might not be on disk. The correct, distro-full versino will be pulled in the helper
             // image build.
