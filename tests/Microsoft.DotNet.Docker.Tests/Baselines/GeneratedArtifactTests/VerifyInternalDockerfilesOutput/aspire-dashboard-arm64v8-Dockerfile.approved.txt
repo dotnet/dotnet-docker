@@ -1,4 +1,4 @@
-ARG REPO=mcr.microsoft.com/dotnet/aspnet
+ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
@@ -33,4 +33,4 @@ ENV \
     DOTNET_DASHBOARD_OTLP_HTTP_ENDPOINT_URL=http://+:18890 \
     DOTNET_DASHBOARD_MCP_ENDPOINT_URL=http://+:18891
 
-ENTRYPOINT [ "dotnet", "/app/Aspire.Dashboard.dll" ]
+ENTRYPOINT [ "/app/Aspire.Dashboard" ]
