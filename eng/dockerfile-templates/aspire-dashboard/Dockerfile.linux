@@ -3,7 +3,7 @@
     set aspireMajorMinor to cat(aspireVersionParts[0], ".", aspireVersionParts[1]) ^
 
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
-    set aspnetBaseTag to
+    set runtimeDepsBaseTag to
         cat("$REPO:", VARIABLES[cat("dotnet|8.0|product-version")], "-", OS_VERSION, "-extra", ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
@@ -25,7 +25,7 @@
     set appDir to "/app" ^
     set sha to VARIABLES[join(["aspire-dashboard", "linux", ARCH_SHORT, "sha"], "|")]
 
-}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
+}}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
 FROM {{installerImageTag}} AS installer{{if isInternal:
@@ -46,11 +46,11 @@ RUN dotnet_aspire_version={{aspireVersion}} \
 
 
 # Aspire Dashboard image
-FROM {{aspnetBaseTag}}
+FROM {{runtimeDepsBaseTag}}
 
 WORKDIR {{appDir}}
 COPY --from=installer {{appDir}} .
 
 {{InsertTemplate("Dockerfile.envs")}}
 
-ENTRYPOINT [ "dotnet", "{{appDir}}/Aspire.Dashboard.dll" ]
+ENTRYPOINT [ "{{appDir}}/Aspire.Dashboard" ]
