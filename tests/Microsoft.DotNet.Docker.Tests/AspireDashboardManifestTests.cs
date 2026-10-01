@@ -50,8 +50,8 @@ public sealed class AspireDashboardManifestTests
             readmes.Select(readme => readme.Value<string>("path")));
         Assert.Equal(
             [
-                "eng/readme-templates/README.github.md",
-                "eng/readme-templates/README.mcr.md"
+                "eng/readme-templates/README.aspire-dashboard.github.md",
+                "eng/readme-templates/README.aspire-dashboard.mcr.md"
             ],
             readmes.Select(readme => readme.Value<string>("templatePath")));
     }

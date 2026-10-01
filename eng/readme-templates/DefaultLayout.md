@@ -7,9 +7,8 @@
     set insertReposListTemplate(template, args) to:{{
         return InsertTemplate("ReposProvider.md", union([ "template": template ], commonArgs, args))
     }} ^
-
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
-    set isAspireDashboard to SHORT_REPO = "aspire-dashboard" || (split(REPO, "/")[0] = "aspire" && SHORT_REPO = "dashboard") ^
+    set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
     set readmeRepoName to when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)
 
 }}{{insertReposListTemplate("Announcement.md", [ "trailing-line-break": "true" ])}}{{
@@ -19,11 +18,11 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 }}
 {{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0 && find(REPO, "yarp") < 0):
+{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "yarp") < 0):
 
-{{InsertTemplate("About.variants.md", commonArgs)}}}}{{if !isAspireDashboard:
+{{InsertTemplate("About.variants.md", commonArgs)}}}}
 
-{{insertReposListTemplate("RelatedRepos.md")}}}}
+{{insertReposListTemplate("RelatedRepos.md")}}
 {{if !IS_PRODUCT_FAMILY:
 {{ARGS["top-header"]}} Full Tag Listing
 {{if ARGS["readme-host"] = "github":<!--End of generated tags-->
