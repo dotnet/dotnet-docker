@@ -37,8 +37,6 @@ jobs:
       value: $[ replace(variables['System.PullRequest.SourceBranch'], 'refs/heads/', '') ]
   - name: imageInfoHostDir
     value: $(Build.ArtifactStagingDirectory)/imageInfo
-  - name: imageInfoContainerDir
-    value: $(artifactsPath)/imageInfo
   - name: sourceBuildIdOutputDir
     value: $(Build.ArtifactStagingDirectory)/sourceBuildId
   - name: commitOverrideArg
@@ -99,7 +97,7 @@ jobs:
 
   - script: >
       $(runImageBuilderCmd) trimUnchangedPlatforms
-      '$(imageInfoContainerDir)/image-info.json'
+      'imageInfo/image-info.json'
     displayName: Trim Unchanged Images
 
   - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
@@ -113,23 +111,15 @@ jobs:
         --os-type '*'
         --architecture '*'
         --repo-prefix '${{ parameters.publishConfig.PublishRegistry.repoPrefix }}'
-        --image-info '$(imageInfoContainerDir)/image-info.json'
+        --image-info 'imageInfo/image-info.json'
         $(dryRunArg)
         $(imageBuilder.pathArgs)
         $(imageBuilder.commonCmdArgs)
 
-  - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
-    parameters:
-      path: $(imageInfoHostDir)
-      artifactName: image-info-final-$(System.JobAttempt)
-      displayName: Publish Image Info File Artifact
-      internalProjectName: ${{ parameters.internalProjectName }}
-      publicProjectName: ${{ parameters.publicProjectName }}
-
   - template: /eng/docker-tools/templates/steps/wait-for-mcr-image-ingestion.yml@self
     parameters:
       publishConfig: ${{ parameters.publishConfig }}
-      imageInfoPath: '$(imageinfoContainerDir)/image-info.json'
+      imageInfoPath: 'imageInfo/image-info.json'
       minQueueTime: $(imageQueueTime)
       dryRunArg: $(dryRunArg)
       condition: succeeded()
@@ -138,9 +128,6 @@ jobs:
     parameters:
       dryRunArg: $(dryRunArg)
       condition: and(succeeded(), eq(variables['publishReadme'], 'true'))
-
-  - script: mkdir -p $(Build.ArtifactStagingDirectory)/eol-annotation-data
-    displayName: Create EOL Annotation Data Directory
 
   - script: |-
       cd $(versionsRepoRoot)
@@ -155,13 +142,13 @@ jobs:
 
   - script: >
       $(runImageBuilderCmd) mergeImageInfo
-      $(imageInfoContainerDir)
-      $(imageInfoContainerDir)/full-image-info-new.json
+      imageInfo
+      imageInfo/full-image-info-new.json
       $(manifestVariables)
       $(dryRunArg)
       --manifest $(manifest)
       --publish
-      --initial-image-info-path $(imageInfoContainerDir)/full-image-info-orig.json
+      --initial-image-info-path imageInfo/full-image-info-orig.json
       $(commitOverrideArg)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Merge Image Info
@@ -178,7 +165,7 @@ jobs:
       condition: and(succeeded(), eq(variables['ingestKustoImageInfo'], 'true'))
       args: >-
         ingestKustoImageInfo
-        '$(imageInfoContainerDir)/image-info.json'
+        'imageInfo/image-info.json'
         '$(kusto.cluster)'
         '$(kusto.database)'
         '$(kusto.imageTable)'
@@ -197,29 +184,21 @@ jobs:
         generateEolAnnotationDataForPublish
         '${{ parameters.publishConfig.PublishRegistry.server }}'
         '${{ parameters.publishConfig.PublishRegistry.repoPrefix }}'
-        '$(artifactsPath)/eol-annotation-data/eol-annotation-data.json'
-        '$(imageInfoContainerDir)/full-image-info-orig.json'
-        '$(imageInfoContainerDir)/full-image-info-new.json'
+        'eol-annotation-data/eol-annotation-data.json'
+        'imageInfo/full-image-info-orig.json'
+        'imageInfo/full-image-info-new.json'
         $(generateEolAnnotationDataExtraOptions)
         $(dryRunArg)
-
-  - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
-    parameters:
-      path: $(Build.ArtifactStagingDirectory)/eol-annotation-data
-      artifactName: eol-annotation-data-$(System.JobAttempt)
-      displayName: Publish EOL Annotation Data Artifact
-      internalProjectName: internal
-      publicProjectName: public
-      condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
 
   - template: /eng/docker-tools/templates/steps/annotate-eol-digests.yml@self
     parameters:
       acr: ${{ parameters.publishConfig.PublishRegistry }}
-      dataFile: $(artifactsPath)/eol-annotation-data/eol-annotation-data.json
+      dataFile: eol-annotation-data/eol-annotation-data.json
+      skipArtifactPublish: true
 
   - script: >
       $(runImageBuilderCmd) publishImageInfo
-      '$(imageInfoContainerDir)/full-image-info-new.json'
+      'imageInfo/full-image-info-new.json'
       '$(gitHubVersionsRepoInfo.userName)'
       '$(gitHubVersionsRepoInfo.email)'
       $(gitHubVersionsRepoInfo.authArgs)
@@ -248,7 +227,7 @@ jobs:
       $(runImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
       '$(branchName)'
-      '$(imageInfoContainerDir)/image-info.json'
+      'imageInfo/image-info.json'
       $(Build.BuildId)
       '$(System.AccessToken)'
       '$(azdoOrgName)'
@@ -285,8 +264,10 @@ jobs:
 
   - template: /eng/docker-tools/templates/steps/publish-artifact.yml@self
     parameters:
-      path: $(sourceBuildIdOutputDir)
-      artifactName: source-build-id
-      displayName: Publish Source Build ID Artifact
+      path: $(Build.ArtifactStagingDirectory)
+      artifactName: publish-attempt-$(System.JobAttempt)
+      displayName: Publish Artifacts
       internalProjectName: ${{ parameters.internalProjectName }}
       publicProjectName: ${{ parameters.publicProjectName }}
+      # Always upload, even if the pipeline fails or is canceled.
+      condition: always()

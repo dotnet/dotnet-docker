@@ -11,7 +11,6 @@ jobs:
   variables:
     imageInfosSubDir: "/image-infos"
     imageInfosHostDir: "$(Build.ArtifactStagingDirectory)$(imageInfosSubDir)"
-    imageInfosContainerDir: "$(artifactsPath)$(imageInfosSubDir)"
     imageInfosOutputSubDir: "/output"
     sbomOutputDir: "$(Build.ArtifactStagingDirectory)/sbom"
   steps:
@@ -73,11 +72,10 @@ jobs:
         exit 0
       }
 
-      New-Item -ItemType Directory -Path $(imageInfosHostDir)$(imageInfosOutputSubDir) -Force
       $(runImageBuilderCmd) mergeImageInfo `
         --manifest $(manifest) `
-        $(imageInfosContainerDir) `
-        $(imageInfosContainerDir)$(imageInfosOutputSubDir)/image-info.json `
+        image-infos `
+        image-infos/output/image-info.json `
         $(manifestVariables)
     name: MergeImageInfoFiles
     displayName: Merge Image Info Files
@@ -89,7 +87,7 @@ jobs:
         condition: and(succeeded(), ne(variables['MergeImageInfoFiles.noImageInfos'], 'true'), ne(variables['Build.Reason'], 'PullRequest'))
         args: >-
           createManifestList
-          '$(imageInfosContainerDir)$(imageInfosOutputSubDir)/image-info.json'
+          'image-infos/output/image-info.json'
           --repo-prefix '${{ parameters.publishConfig.BuildRegistry.repoPrefix }}'
           --os-type '*'
           --architecture '*'
