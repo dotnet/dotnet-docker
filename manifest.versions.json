@@ -178,7 +178,11 @@
     "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|maintenance|main)",
     "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|maintenance|nightly)",
 
+    "powershell|base-url|public": "https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool",
+    "powershell|base-url|internal": "https://pscoretestdata.blob.core.windows.net",
+
     "powershell|8.0|build-version": "7.4.20",
+    "powershell|8.0|base-url": "$(powershell|base-url|public)/$(powershell|8.0|build-version)",
     "powershell|8.0|sha-function": "256",
     "powershell|8.0|Linux.Alpine|sha": "2daafc8b8d57ba4ae3b47fd9ee8135eb80ac09e74293affd4afc1d042a61ee8e",
     "powershell|8.0|Linux|arm32|sha": "9a9c887442a8e152172ef5b053a916c90e8d58387a506469d233b411d41a413c",
@@ -187,6 +191,7 @@
     "powershell|8.0|Windows|x64|sha": "bf87b7f235e921fff15378d3331ad2f45ba28fec9f2fc3447235241e0e95de41",
 
     "powershell|9.0|build-version": "7.5.11",
+    "powershell|9.0|base-url": "$(powershell|base-url|public)/$(powershell|9.0|build-version)",
     "powershell|9.0|sha-function": "256",
     "powershell|9.0|Linux.Alpine|sha": "6ae7328e032eabd3cfaa6786108636b6670170acde023ed58400f5c062f15189",
     "powershell|9.0|Linux|arm32|sha": "2b24bb77b83d393f5b5d74438b3f60dd04dd0a4a20d377e4ef1e9ac5a641eed4",
@@ -195,6 +200,7 @@
     "powershell|9.0|Windows|x64|sha": "0823750d39529d4a7aaf13323fd6f3789efc5cc6ca384a6357480e74e01e7210",
 
     "powershell|10.0|build-version": "7.6.6",
+    "powershell|10.0|base-url": "$(powershell|base-url|public)/$(powershell|10.0|build-version)",
     "powershell|10.0|sha-function": "256",
     "powershell|10.0|Linux.Alpine|sha": "be4064c6d68d2ef10c482f84687a0a668bfe16fd41be4b8905b7d472f834d38b",
     "powershell|10.0|Linux|arm32|sha": "bc94cc5038625cdf41c1e0610d2720d150100893fe202f2d81cb899a7d37d04c",
@@ -203,6 +209,7 @@
     "powershell|10.0|Windows|x64|sha": "a1dc276cb6741d681c1532d2704262e8342607cb1dadc0a0337e6e58e0143dec",
 
     "powershell|11.0|build-version": "7.7.0-preview.5",
+    "powershell|11.0|base-url": "$(powershell|base-url|public)/$(powershell|11.0|build-version)",
     "powershell|11.0|sha-function": "512",
     "powershell|11.0|Linux.Alpine|sha": "e3d3e80b026760f173a268b2ff5630a28741be33f67c6628141d75e854e20299fb89d61e819da32ba988a055baaa049d20ba355b196a0c3297221c2032dd706a",
     "powershell|11.0|Linux|arm32|sha": "d45bcb6d129a2bb068b47528ed0ec554e5860d113baeed1e8e28920fcb7d8669bf2d2d9a46f442c53dac6030fbc93c4ee577e7e9f7fd496bf37354cea3a4f6e7",

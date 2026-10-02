@@ -5,16 +5,20 @@ For usage, see [README.md](./README.md).
 ## Design/Concepts
 
 - An [Updater](./Updaters) contains all details needed to update one specific
-  product. It implements `IUpdater` and one or more of the other `I.*Updater`
-  interfaces.
+  product. Updaters with shared update sources implement `IUpdater` and one or
+  more of the other `I.*Updater` interfaces.
 - [Commands](./Commands) map to the sources for dependency updates. These are
   typically implemented as static `Command` factories that bind to command line
   arguments. Commands know how to pass the correct values to the corresponding
   `I.*Updater` interface.
-  - If the command fits within the standard updater/command split, it should be
-    registered in [DependencyCommands.cs](./Commands/DependencyCommand.cs).
-    The exception is if it's a one-off workflow type of command, like
-    [SyncInternalReleaseCommand](./Commands/SyncInternalReleaseCommand.cs).
+- If the command fits within the standard updater/command split, it should be
+  registered in [DependencyCommands.cs](./Commands/DependencyCommand.cs).
+  The exception is if it's a one-off workflow type of command, like
+  [SyncInternalReleaseCommand](./Commands/SyncInternalReleaseCommand.cs).
+- Updaters with sources that no other updater shares, like
+  [PowerShellCommand](./Commands/PowerShellCommand.cs) and
+  [MonitorCommand](./Commands/MonitorCommand.cs), define their own commands
+  instead of a single-use `I.*Updater` interface.
 
 Example:
 
@@ -36,8 +40,8 @@ updater interfaces.
 
 ## Command line
 
-Updaters and commands are automatically composed together in the CLI without any
-extra work: `update-dependencies <updater> <command>`.
+Updaters with shared update sources are composed together with their commands
+in the CLI without any extra work: `update-dependencies <updater> <command>`.
 
 ## Inputs/Configuration
 
