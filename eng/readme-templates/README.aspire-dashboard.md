@@ -1,9 +1,22 @@
-> **Important**: The aspire/nightly/dashboard image is a preview build of the Aspire Dashboard and is not signed. See [dotnet/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about) for stable releases.
+{{
+    _ ARGS:
+      readme-host: Moniker of the site that will host the readme ^
 
-## Featured Tags
+    set isGitHub to ARGS["readme-host"] = "github" ^
+    set isNightlyRepo to match(split(REPO, "/")[1], "nightly") || VARIABLES["branch"] = "nightly" ^
+    set stableUrl to when(
+        isGitHub,
+        "https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md",
+        "https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about")
+
+}}{{if isGitHub:# Aspire Dashboard
+
+}}{{if isNightlyRepo:> **Important**: The {{REPO}} image is a preview build of the Aspire Dashboard and is not signed. See [dotnet/aspire-dashboard]({{stableUrl}}) for stable releases.
+
+}}## Featured Tags
 
 * `13`
-  * `docker pull mcr.microsoft.com/aspire/nightly/dashboard:13`
+  * `docker pull {{FULL_REPO}}:13`
 
 ## About
 
@@ -14,7 +27,7 @@ The [Aspire Dashboard](https://aspire.dev/dashboard/standalone/) is a standalone
 Run the dashboard locally:
 
 ```console
-docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 mcr.microsoft.com/aspire/nightly/dashboard:13
+docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 {{FULL_REPO}}:13
 ```
 
 Open `http://localhost:18888`. To sign in, use the login URL or token printed in the container logs:
@@ -47,7 +60,11 @@ For applications in other containers, use the dashboard container's name and por
 * [Standalone dashboard sample (C#)](https://github.com/microsoft/aspire-samples/tree/main/samples/standalone-dashboard).
 * [Dashboard configuration reference](https://aspire.dev/dashboard/configuration/).
 
-## Support
+{{if isGitHub:## Full Tag Listing
+<!--End of generated tags-->
+*Tags not listed in the table above are not supported. See the [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md). See the [full list of tags](https://mcr.microsoft.com/v2/{{REPO}}/tags/list) for all supported and unsupported tags.*
+
+}}## Support
 
 See the [Aspire support policy](https://aspire.dev/support/) for supported versions and lifecycle information. Container images are also covered by the [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md), [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md), and [Image Update Policy](https://github.com/dotnet/dotnet-docker/blob/main/README.md#image-update-policy).
 
