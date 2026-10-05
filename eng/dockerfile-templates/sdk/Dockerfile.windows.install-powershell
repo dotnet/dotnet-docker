@@ -1,20 +1,20 @@
 {{
-    _ ARGS:
-        dotnet-is-internal (optional): Whether the Dockerfile is targeting an internal build of the .NET product. ^
-
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set rootDir to "\" ^
     set nupkgFile to "PowerShell.Windows.x64.$powershell_version.nupkg" ^
-    set url to when(
-        ARGS["dotnet-is-internal"],
-        cat("https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/", nupkgFile),
-        cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgFile)
-    ) ^
     set powershellVersion to VARIABLES[cat("powershell|", dotnetVersion, "|build-version")] ^
+    _ Refer to the version through PowerShell variables so it is only written once. Internal storage
+      uses a dashed version (e.g. v7-5-11-nuget) in its directory names. ^
+    set replace(subject, old, new) to:{{ return join(split(subject, old), new) }} ^
+    set dashedVersion to replace(powershellVersion, ".", "-") ^
+    set baseUrl to replace(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], powershellVersion, "$powershell_version") ^
+    set useDashedVersion to find(baseUrl, dashedVersion) >= 0 ^
+    set baseUrl to replace(baseUrl, dashedVersion, "$powershell_url_version") ^
+    set url to cat(baseUrl, "/", nupkgFile) ^
     set shaFunction to VARIABLES[cat("powershell|", dotnetVersion, "|sha-function")]
 }}# Install PowerShell global tool
-$powershell_version = '{{VARIABLES[cat("powershell|", dotnetVersion, "|build-version")]}}'; `
-{{if ARGS["dotnet-is-internal"]:$powershell_url_version = $powershell_version.Replace('.', '-'); `
+$powershell_version = '{{powershellVersion}}'; `
+{{if useDashedVersion:$powershell_url_version = $powershell_version.Replace('.', '-'); `
 }}{{InsertTemplate("../Dockerfile.windows.download-files", ["files": [[
     "out-file": nupkgFile,
     "url": url

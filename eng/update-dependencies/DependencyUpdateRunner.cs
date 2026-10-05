@@ -58,13 +58,37 @@ public sealed class DependencyUpdateRunner(
         Trace.TraceInformation($"Pull request: {result.Action} {result.Url}");
     }
 
+    /// <summary>
+    /// Loads the manifest that updates will be applied to: the local repo, or the pull request's target branch.
+    /// </summary>
+    public async Task<ManifestVariables> GetTargetManifestAsync(
+        CreatePullRequestOptions options,
+        CancellationToken cancellationToken)
+    {
+        if (!options.SubmitPullRequest)
+        {
+            return ManifestVariables.FromFile(GetManifestPath(options.RepoRoot));
+        }
+
+        // This clone is only read. PullRequestManager makes its own clone when it applies updates.
+        IPullRequestEndpoint endpoint = CreatePullRequestEndpoint(configuration);
+        var processRunner = new ProcessRunner(loggerFactory.CreateLogger<ProcessRunner>());
+
+        using var workingCopy = new GitWorkingCopy(processRunner, loggerFactory.CreateLogger<GitWorkingCopy>());
+
+        AutomationIdentity identity = await endpoint.GetIdentityAsync(cancellationToken);
+        await endpoint.CloneTargetAsync(workingCopy, options.TargetBranch, identity, cancellationToken);
+
+        return ManifestVariables.FromFile(GetManifestPath(workingCopy.WorkspaceDirectory));
+    }
+
     public static async Task ApplyAsync(
         string repoRoot,
         ApplyUpdateAsync applyUpdate,
         CancellationToken cancellationToken)
     {
         repoRoot = Path.GetFullPath(repoRoot);
-        string manifestPath = Path.Combine(repoRoot, "manifest.versions.json");
+        string manifestPath = GetManifestPath(repoRoot);
         var variables = ManifestVariables.FromFile(manifestPath);
         string originalContent = variables.Content;
 
@@ -130,4 +154,6 @@ public sealed class DependencyUpdateRunner(
             azureDevOps.Token,
             identity);
     }
+
+    private static string GetManifestPath(string repoRoot) => Path.Combine(repoRoot, "manifest.versions.json");
 }
