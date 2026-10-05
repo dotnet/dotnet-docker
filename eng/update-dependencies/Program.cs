@@ -89,6 +89,7 @@ services.AddSingleton<IBasicBarClient>(_ =>
 services.AddSingleton<IBuildAssetService, BuildAssetService>();
 
 services.AddEnvironmentService();
+services.AddAzureCredentialProvider();
 services.AddBuildLabelService();
 services.AddPipelineArtifactProvider();
 services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
@@ -111,6 +112,7 @@ services.AddSingleton<ChiselUpdater>();
 services.AddSingleton<DotNetUpdater>();
 services.AddSingleton<MinGitUpdater>();
 services.AddSingleton<MonitorUpdater>();
+services.AddSingleton<PowerShellUpdater>();
 services.AddSingleton<RocksToolboxUpdater>();
 services.AddSingleton<SyftUpdater>();
 
@@ -129,9 +131,10 @@ var rootCommand = new RootCommand("Update dotnet-docker dependencies")
     DependencyCommand.CreateCliCommand<ChiselUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<DotNetUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<MinGitUpdater>(host.Services),
-    DependencyCommand.CreateCliCommand<MonitorUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<RocksToolboxUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<SyftUpdater>(host.Services),
+    MonitorCommand.CreateCliCommand(host.Services),
+    PowerShellCommand.CreateCliCommand(host.Services),
     SyncInternalReleaseCommand.CreateCliCommand(host.Services),
 };
 
