@@ -3,7 +3,9 @@
 // See the LICENSE file in the project root for more information.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Newtonsoft.Json.Linq;
 
@@ -66,6 +68,9 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public static string GetVariableValue(string variableName) =>
             GetVariableValue(variableName, (JObject)ManifestVersions.Value["variables"]);
+
+        public static IEnumerable<string> GetVariableNames() =>
+            ((JObject)ManifestVersions.Value["variables"]).Properties().Select(property => property.Name);
 
         public static bool TryGetVariableValue(string variableName, out string value)
         {

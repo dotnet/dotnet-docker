@@ -1,7 +1,4 @@
 {{
-    _ ARGS:
-        dotnet-is-internal (optional): Whether the Dockerfile is targeting an internal build of the .NET product. ^
-
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set nupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
@@ -10,13 +7,16 @@
     set shaFunction to VARIABLES[cat("powershell|", dotnetVersion, "|sha-function")] ^
     set shaVarName to cat("powershell_sha", shaFunction) ^
     set nupkgName to cat("PowerShell.", nupkgPlatform, ".$powershell_version.nupkg") ^
-    set url to when(
-        ARGS["dotnet-is-internal"],
-        cat("https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/", nupkgName),
-        cat("https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/", nupkgName)
-    )
+    _ Refer to the version through shell variables so it is only written once. Internal storage
+      uses a dashed version (e.g. v7-5-11-nuget) in its directory names. ^
+    set replace(subject, old, new) to:{{ return join(split(subject, old), new) }} ^
+    set dashedVersion to replace(powershellVersion, ".", "-") ^
+    set baseUrl to replace(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], powershellVersion, "$powershell_version") ^
+    set useDashedVersion to find(baseUrl, dashedVersion) >= 0 ^
+    set baseUrl to replace(baseUrl, dashedVersion, "$powershell_url_version") ^
+    set url to cat(baseUrl, "/", nupkgName)
 }}powershell_version={{powershellVersion}} \
-{{if ARGS["dotnet-is-internal"]:    && powershell_url_version=$(printf '%s' "$powershell_version" | tr '.' '-') \
+{{if useDashedVersion:    && powershell_url_version=$(printf '%s' "$powershell_version" | tr '.' '-') \
 }}    && {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
         "url": url,
         "out-file": nupkgName

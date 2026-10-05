@@ -2,7 +2,9 @@
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set baseUrl to VARIABLES[cat("sdk|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
-    set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !isInternal) ^
+    set isPowerShellInternal to find(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], "pscoretestdata") >= 0 ^
+    set useAccessToken to isInternal || isPowerShellInternal ^
+    set isSingleStage to (find(OS_VERSION, "windowsservercore") >= 0 && !useAccessToken) ^
 
     set installerStageFromImage to cat("mcr.microsoft.com/windows/servercore:", OS_VERSION_NUMBER, "-amd64") ^
 
@@ -21,13 +23,13 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
 FROM {{installerStageFromImage}} AS installer
-{{if isInternal:
+{{if useAccessToken:
 ARG ACCESSTOKEN
 }}
 {{InsertTemplate("Dockerfile.windows.install-components",
     [
         "use-local-version-var": "true",
-        "dotnet-is-internal": isInternal,
+        "use-access-token": useAccessToken,
     ])}}
 
 
