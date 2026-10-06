@@ -4,6 +4,31 @@ All breaking changes and new features in `eng/docker-tools` will be documented i
 
 ---
 
+## 2026-10-05: Lifecycle metadata commands combined
+
+- Pull request: [#2252](https://github.com/dotnet/docker-tools/pull/2252)
+- Issues: [#2153](https://github.com/dotnet/docker-tools/issues/2153), [#2066](https://github.com/dotnet/docker-tools/issues/2066)
+
+ImageBuilder now uses one command, `attachLifecycleMetadata`, to add lifecycle metadata to images.
+The shared publish and cleanup templates use the new command. Repositories that only use these
+templates do not need to make any changes.
+
+Repositories that call ImageBuilder commands directly must use these replacements:
+
+| Old command | New command |
+| --- | --- |
+| `generateEolAnnotationDataForPublish` and `annotateEolDigests` | `attachLifecycleMetadata unsupported` |
+| `generateEolAnnotationDataForAllImages` and `annotateEolDigests` | `attachLifecycleMetadata all` |
+| `annotateEolDigests` with a data file | `attachLifecycleMetadata file` |
+| `waitForMarAnnotationIngestion` | Add `--wait-for-ingestion` to an `attachLifecycleMetadata` command |
+
+The publish job no longer creates lifecycle metadata data files before it attaches the metadata.
+Update any automation that reads those intermediate files.
+
+Lifecycle metadata can now be marked as internal. Internal metadata is never published.
+
+---
+
 ## 2026-08-10: Pre-ImageBuilder build customization
 
 Build pipeline templates now accept `customPreImageBuilderBuildSteps`. These steps run after

@@ -44,6 +44,8 @@ jobs:
       value: --commit-override $(Build.SourceVersion)
     ${{ else }}:
       value: ''
+  - name: eolAnnotationsWaitArg
+    value: $[ iif(eq(variables['waitForIngestionEnabled'], 'true'), '--wait-for-ingestion', '') ]
   - ${{ parameters.customPublishVariables }}
 
   steps:
@@ -177,24 +179,22 @@ jobs:
 
   - template: /eng/docker-tools/templates/steps/run-imagebuilder.yml@self
     parameters:
-      displayName: Generate EOL Annotation Data
+      displayName: Attach Lifecycle Metadata
+      serviceConnections:
+      - name: mar
+        id: $(marStatus.serviceConnection.id)
+        tenantId: $(marStatus.serviceConnection.tenantId)
+        clientId: $(marStatus.serviceConnection.clientId)
       internalProjectName: internal
       condition: and(succeeded(), eq(variables['publishEolAnnotations'], 'true'))
       args: >-
-        generateEolAnnotationDataForPublish
+        attachLifecycleMetadata unsupported
         '${{ parameters.publishConfig.PublishRegistry.server }}'
         '${{ parameters.publishConfig.PublishRegistry.repoPrefix }}'
-        'eol-annotation-data/eol-annotation-data.json'
         'imageInfo/full-image-info-orig.json'
         'imageInfo/full-image-info-new.json'
-        $(generateEolAnnotationDataExtraOptions)
+        $(eolAnnotationsWaitArg)
         $(dryRunArg)
-
-  - template: /eng/docker-tools/templates/steps/annotate-eol-digests.yml@self
-    parameters:
-      acr: ${{ parameters.publishConfig.PublishRegistry }}
-      dataFile: eol-annotation-data/eol-annotation-data.json
-      skipArtifactPublish: true
 
   - script: >
       $(runImageBuilderCmd) publishImageInfo
@@ -242,9 +242,7 @@ jobs:
       --task "🟪 Wait for MCR Doc Ingestion"
       --task "🟪 Publish Image Info"
       --task "🟪 Ingest Kusto Image Info"
-      --task "🟪 Generate EOL Annotation Data"
-      --task "🟪 Annotate EOL Images (${{ parameters.publishConfig.PublishRegistry.server }})"
-      --task "🟪 Wait for Annotation Ingestion (${{ parameters.publishConfig.PublishRegistry.server }})"
+      --task "🟪 Attach Lifecycle Metadata"
       $(dryRunArg)
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
