@@ -19,7 +19,7 @@ RUN dotnet_aspire_version=13.6.0-preview.1.26471.1 \
 
 
 # Aspire Dashboard image
-FROM $REPO:11.0.0-rc.1-azurelinux3.0-distroless-extra-amd64
+FROM $REPO:11.0.0-rc.2-azurelinux3.0-distroless-extra-amd64
 
 WORKDIR /app
 COPY --from=installer /app .
