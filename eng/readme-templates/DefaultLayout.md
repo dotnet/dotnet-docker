@@ -8,7 +8,6 @@
         return InsertTemplate("ReposProvider.md", union([ "template": template ], commonArgs, args))
     }} ^
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
-    set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
     set readmeRepoName to when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)
 
 }}{{insertReposListTemplate("Announcement.md", [ "trailing-line-break": "true" ])}}{{
