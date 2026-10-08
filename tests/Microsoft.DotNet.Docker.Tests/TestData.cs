@@ -470,7 +470,7 @@ namespace Microsoft.DotNet.Docker.Tests
         {
             new() {
                 Version = V13_6,
-                VersionFamily = V9_0,
+                VersionFamily = V11_0,
                 OS = OS.AzureLinux30Distroless,
                 OSTag = "",
                 OSDir = OS.AzureLinuxDistroless,
@@ -479,7 +479,7 @@ namespace Microsoft.DotNet.Docker.Tests
             },
             new() {
                 Version = V13_6,
-                VersionFamily = V9_0,
+                VersionFamily = V11_0,
                 OS = OS.AzureLinux30Distroless,
                 OSTag = "",
                 OSDir = OS.AzureLinuxDistroless,
