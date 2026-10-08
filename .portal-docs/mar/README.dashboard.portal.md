@@ -23,11 +23,11 @@ Open `http://localhost:18888`. To sign in, use the login URL or token printed in
 docker logs aspire-dashboard
 ```
 
-This example keeps browser-token authentication enabled and binds the published ports to the host's loopback interface. Incoming OTLP telemetry is unauthenticated by default in standalone mode; the browser token does not secure telemetry ingestion. Only accept telemetry from trusted applications; configure authentication, HTTPS, and network controls before exposing the dashboard beyond your machine. See [dashboard security guidance](https://aspire.dev/dashboard/security-considerations/).
+This example keeps browser-token authentication enabled and binds the published ports to the host's loopback interface. Incoming OTLP telemetry is unauthenticated by default in standalone mode; the browser token does not secure telemetry ingestion. Only accept telemetry from trusted applications; configure HTTPS, authentication, and network controls before exposing the dashboard beyond your machine. See [dashboard security guidance](https://aspire.dev/dashboard/security-considerations/).
 
 ### Send telemetry
 
-Instrument your application with its language's OpenTelemetry SDK and configure an OTLP exporter. Starting the dashboard does not instrument your application automatically. For applications running on the host, use the endpoint and matching exporter protocol:
+Instrument your application with its language's OpenTelemetry SDK and configure an OTLP exporter with the matching protocol and endpoint. Starting the dashboard does not instrument your application automatically. For applications running on the host, use:
 
 * OTLP/gRPC: `http://localhost:4317` (mapped to container port `18889`).
 * OTLP/HTTP: `http://localhost:4318` (mapped to container port `18890`).
