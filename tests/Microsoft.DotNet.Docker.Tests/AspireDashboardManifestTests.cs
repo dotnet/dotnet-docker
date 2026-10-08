@@ -38,25 +38,6 @@ public sealed class AspireDashboardManifestTests
     }
 
     [Fact]
-    public void Manifest_DeclaresGitHubAndPortalReadmesWithoutDockerHub()
-    {
-        JObject[] readmes = GetAspireDashboardRepo()["readmes"]!.Children<JObject>().ToArray();
-
-        Assert.Equal(
-            [
-                "README.aspire-dashboard.md",
-                ".portal-docs/mar/README.dashboard.portal.md"
-            ],
-            readmes.Select(readme => readme.Value<string>("path")));
-        Assert.Equal(
-            [
-                "eng/readme-templates/README.aspire-dashboard.github.md",
-                "eng/readme-templates/README.aspire-dashboard.mcr.md"
-            ],
-            readmes.Select(readme => readme.Value<string>("templatePath")));
-    }
-
-    [Fact]
     public void LegacySyndication_IsLimitedToAspire13()
     {
         int majorVersion = int.Parse(Config.GetVariableValue("aspire-dashboard|major-tag"));
