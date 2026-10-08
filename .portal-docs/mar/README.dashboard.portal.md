@@ -1,4 +1,4 @@
-> **Important**: The aspire/nightly/dashboard image is a preview build of the Aspire Dashboard and is not signed. See [dotnet/aspire-dashboard](https://mcr.microsoft.com/artifact/mar/dotnet/aspire-dashboard/about) for stable releases.
+> **Important**: The aspire/nightly/dashboard image is a preview build of the Aspire Dashboard and is not signed. See [aspire/dashboard](https://mcr.microsoft.com/artifact/mar/aspire/dashboard/about) for stable releases.
 
 ## Featured Tags
 
@@ -7,7 +7,7 @@
 
 ## About
 
-The [Aspire Dashboard](https://aspire.dev/dashboard/standalone/) is a standalone viewer for logs, traces, and metrics from OpenTelemetry-enabled applications in any language. No Aspire AppHost or .NET application is required. Source code is available in [microsoft/aspire](https://github.com/microsoft/aspire).
+The [Aspire Dashboard](https://aspire.dev/dashboard/standalone/) is a standalone viewer for logs, traces, and metrics from OpenTelemetry-enabled applications in any language. Source code is available in [microsoft/aspire](https://github.com/microsoft/aspire).
 
 ## Usage
 
@@ -51,7 +51,7 @@ For applications in other containers, use the dashboard container's name and por
 
 See the [Aspire support policy](https://aspire.dev/support/) for supported versions and lifecycle information. Container images are also covered by the [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md), [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md), and [Image Update Policy](https://github.com/dotnet/dotnet-docker/blob/main/README.md#image-update-policy).
 
-For container security and vulnerability reporting, see the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md).
+For container security and vulnerability reporting, see the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md). Additional security information can be found on [aspire.dev/dashboard/security-considerations](https://aspire.dev/dashboard/security-considerations/#standalone-mode).
 
 ### Feedback
 
