@@ -77,6 +77,12 @@ namespace Microsoft.DotNet.Docker.Tests
 
         public string GetDockerfilePath(DotNetImageRepo imageRepo)
         {
+            // Aspire Dashboard Dockerfiles are not organized by product version or OS.
+            if (imageRepo == DotNetImageRepo.Aspire_Dashboard)
+            {
+                return $"{GetRepoSrcPath(imageRepo)}/{GetArchLabel()}";
+            }
+
             IEnumerable<string> pathComponents =
             [
                 GetRepoSrcPath(imageRepo),
