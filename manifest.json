@@ -12427,6 +12427,10 @@
           "templatePath": "eng/readme-templates/README.aspire-dashboard.github.md"
         },
         {
+          "path": ".portal-docs/docker-hub/README.aspire-dashboard.md",
+          "templatePath": "eng/readme-templates/README.aspire-dashboard.dockerhub.md"
+        },
+        {
           "path": ".portal-docs/mar/README.dashboard.portal.md",
           "templatePath": "eng/readme-templates/README.aspire-dashboard.mcr.md"
         }
