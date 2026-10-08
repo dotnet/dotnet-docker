@@ -14201,11 +14201,11 @@
       "readmes": [
         {
           "path": "README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.github.md"
+          "templatePath": "eng/readme-templates/README.aspire-dashboard.github.md"
         },
         {
           "path": ".portal-docs/mar/README.dashboard.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
+          "templatePath": "eng/readme-templates/README.aspire-dashboard.mcr.md"
         }
       ],
       "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/dashboard-tags.yml",
