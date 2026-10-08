@@ -18,9 +18,7 @@
         when(isProductFamily,
             "",
             cat(
-                when(repoParts[0] = "aspire",
-                    "aspire-dashboard",
-                    join(slice(repoParts, when(isNightlyRepo || isFrameworkRepo, 2, 1)), "-")),
+                join(slice(repoParts, when(isNightlyRepo || isFrameworkRepo, 2, 1)), "-"),
                 ".")),
         "md")
 

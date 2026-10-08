@@ -15,8 +15,6 @@
 
     set currentRepo to when(IS_PRODUCT_FAMILY,
         ARGS["product-family-repos"],
-        when(split(REPO, "/")[0] = "aspire",
-            [["aspire/dashboard", "Aspire Dashboard"]],
-            cat(filter(repos, isCurrentRepo))))
+        cat(filter(repos, isCurrentRepo)))
 
 }}# {{currentRepo[0][1]}}
