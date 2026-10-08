@@ -29,6 +29,21 @@ Lifecycle metadata can now be marked as internal. Internal metadata is never pub
 
 ---
 
+## 2026-10-05: Image-level syndication
+
+- Issue: [#2240](https://github.com/dotnet/docker-tools/issues/2240)
+
+Syndication has moved from tag-level to image-level. All platform tags, shared
+tags, signatures, and referrers are replicated 1:1 during publishing.
+
+`Build` and `Post_Build` stages no longer create syndicated tags or manifest
+lists. Image info records the destination as `syndicatedRepo` instead of
+recording separate `syndicatedDigests`, because syndicated images have the same
+digests as the primary images. Custom destination tag names and selective
+platform syndication are no longer supported.
+
+---
+
 ## 2026-08-10: Pre-ImageBuilder build customization
 
 Build pipeline templates now accept `customPreImageBuilderBuildSteps`. These steps run after
