@@ -2,13 +2,18 @@ FROM amd64/buildpack-deps:jammy-curl AS chisel
 
 RUN apt-get update && apt-get install -y file
 
-RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.4.2/chisel_v1.4.2_linux_amd64.tar.gz \
-    && chisel_sha384='8e5e8df4dc783dcfa827ca9990ba871af350738de67c51706b3c06bfd4725ab0edbddd9ad4110d1047ecfdc586f7dac6' \
+RUN curl --fail --show-error --location --output chisel.tar.gz https://github.com/canonical/chisel/releases/download/v1.5.0/chisel_v1.5.0_linux_amd64.tar.gz \
+    && chisel_sha384='f8ba3f3d04165b50d91aae7eb3bcaca2a714f1877d2af005989617937cf2e375ab30d4a50b1308263e61a61ecb79de5c' \
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar --gzip --extract --no-same-owner --file chisel.tar.gz --directory /usr/bin/ \
     && rm chisel.tar.gz \
     && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
-    && chmod 755 /usr/bin/chisel-wrapper
+    && chmod 755 /usr/bin/chisel-wrapper \
+    # Workaround for https://github.com/canonical/rocks-toolbox/issues/55
+    && sed --in-place \
+        -e 's|dir="$CHISEL_CACHE_DIR/chisel/sha256"|dir="$CHISEL_CACHE_DIR/chisel"|' \
+        -e 's|for f in "$dir"/\*; do|for f in "$dir"/sha*/*; do|' \
+        /usr/bin/chisel-wrapper
 
 RUN groupadd \
         --gid=1654 \
