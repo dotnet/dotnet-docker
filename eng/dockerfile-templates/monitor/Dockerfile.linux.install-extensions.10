@@ -6,7 +6,7 @@
     set azBlobShaUrl to cat(ARGS["monitorBaseChecksumUrl"], "dotnet-monitor-egress-azureblobstorage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz.sha512") ^
     set s3ShaUrl to cat(ARGS["monitorBaseChecksumUrl"], "dotnet-monitor-egress-s3storage-$dotnet_monitor_extension_version-linux-", ARCH_SHORT, ".tar.gz.sha512")
 
-}}RUN dotnet_monitor_extension_version={{ARGS["monitorVersion"]}} \
+}}RUN {{if (find(ARGS["monitorBaseUrl"], "dotnetstage") >= 0):--mount=type=secret,id=ACCESSTOKEN,required=true }}dotnet_monitor_extension_version={{ARGS["monitorVersion"]}} \
     && {{InsertTemplate("../Dockerfile.linux.download-files", [
         "files": [
             [

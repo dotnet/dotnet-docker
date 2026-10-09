@@ -2,12 +2,10 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
 FROM $REPO:0.0.0-alpine3.XX-amd64 AS installer
 
-ARG ACCESSTOKEN
-
 # Install .NET SDK
-RUN dotnet_sdk_version=0.0.0 \
+RUN --mount=type=secret,id=ACCESSTOKEN,required=true dotnet_sdk_version=0.0.0 \
     && dotnet_sdk_build_version=$dotnet_sdk_version \
-    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" \
+    && wget --header "Authorization: Bearer $(cat /run/secrets/ACCESSTOKEN)" --header "x-ms-version: 2017-11-09" \
         https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_build_version-linux-musl-x64.tar.gz \
         https://dotnetstage.blob.core.windows.net/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_build_version-linux-musl-x64.tar.gz.sha512 \
     && echo "$(cat dotnet-sdk-$dotnet_sdk_build_version-linux-musl-x64.tar.gz.sha512)  dotnet-sdk-$dotnet_sdk_build_version-linux-musl-x64.tar.gz" | sha512sum -c - \
@@ -18,9 +16,9 @@ RUN dotnet_sdk_version=0.0.0 \
         dotnet-sdk-$dotnet_sdk_build_version-linux-musl-x64.tar.gz.sha512
 
 # Download PowerShell
-RUN powershell_version=0.0.0 \
+RUN --mount=type=secret,id=ACCESSTOKEN,required=true powershell_version=0.0.0 \
     && powershell_url_version=$(printf '%s' "$powershell_version" | tr '.' '-') \
-    && wget --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/PowerShell.Linux.Alpine.$powershell_version.nupkg \
+    && wget --header "Authorization: Bearer $(cat /run/secrets/ACCESSTOKEN)" --header "x-ms-version: 2017-11-09" --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/PowerShell.Linux.Alpine.$powershell_version.nupkg \
     && powershell_sha256='{sha256_placeholder}' \
     && echo "$powershell_sha256  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha256sum -c -
 

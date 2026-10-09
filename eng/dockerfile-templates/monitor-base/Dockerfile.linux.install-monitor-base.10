@@ -1,5 +1,5 @@
 
-RUN dotnet_monitor_version={{ARGS["monitorVersion"]}} \
+RUN {{if (find(ARGS["monitorBaseUrl"], "dotnetstage") >= 0):--mount=type=secret,id=ACCESSTOKEN,required=true }}dotnet_monitor_version={{ARGS["monitorVersion"]}} \
     && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
         "product": "dotnet_monitor_base",
         "download-url": cat(ARGS["monitorBaseUrl"], "dotnet-monitor-base-$dotnet_monitor_version-linux-", ARCH_SHORT, ".tar.gz"),

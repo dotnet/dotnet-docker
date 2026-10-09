@@ -3,8 +3,6 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
-ARG ACCESSTOKEN
-
 RUN tdnf install -y \
         ca-certificates \
         gzip \
@@ -12,9 +10,9 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=0.0.0 \
+RUN --mount=type=secret,id=ACCESSTOKEN,required=true aspnetcore_version=0.0.0 \
     && aspnetcore_build_version=$aspnetcore_version \
-    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+    && curl --header "Authorization: Bearer $(cat /run/secrets/ACCESSTOKEN)" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
         --remote-name https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_build_version-linux-arm64.tar.gz \
         --remote-name https://dotnetstage.blob.core.windows.net/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-$aspnetcore_build_version-linux-arm64.tar.gz.sha512 \
     && echo "$(cat aspnetcore-runtime-$aspnetcore_build_version-linux-arm64.tar.gz.sha512)  aspnetcore-runtime-$aspnetcore_build_version-linux-arm64.tar.gz" | sha512sum -c - \
