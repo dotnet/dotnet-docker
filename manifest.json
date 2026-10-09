@@ -5,6 +5,7 @@
   },
   "registry": "mcr.microsoft.com",
   "variables": {
+    "syndicatedAspireDashboardRepo": "dotnet/aspire-dashboard",
     "syndicatedRuntimeDepsRepo": "dotnet/core/runtime-deps",
     "syndicatedRuntimeRepo": "dotnet/core/runtime",
     "syndicatedAspnetRepo": "dotnet/core/aspnet",
@@ -14196,29 +14197,45 @@
     },
     {
       "id": "aspire-dashboard",
-      "name": "dotnet/aspire-dashboard",
+      "name": "aspire/dashboard",
       "readmes": [
         {
           "path": "README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.github.md"
+          "templatePath": "eng/readme-templates/README.aspire-dashboard.github.md"
         },
         {
           "path": ".portal-docs/docker-hub/README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.dockerhub.md"
+          "templatePath": "eng/readme-templates/README.aspire-dashboard.dockerhub.md"
         },
         {
-          "path": ".portal-docs/mar/README.aspire-dashboard.portal.md",
-          "templatePath": "eng/readme-templates/README.mcr.md"
+          "path": ".portal-docs/mar/README.dashboard.portal.md",
+          "templatePath": "eng/readme-templates/README.aspire-dashboard.mcr.md"
         }
       ],
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspire-dashboard-tags.yml",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/dashboard-tags.yml",
       "images": [
         {
           "productVersion": "$(aspire-dashboard|product-version)",
           "sharedTags": {
-            "$(aspire-dashboard|fixed-tag)": {},
-            "$(aspire-dashboard|minor-tag)": {},
-            "$(aspire-dashboard|major-tag)": {},
+            "$(aspire-dashboard|fixed-tag)": {
+              "syndication": {
+                "repo": "$(syndicatedAspireDashboardRepo)"
+              }
+            },
+            "$(aspire-dashboard|minor-tag)": {
+              "syndication": {
+                "repo": "$(syndicatedAspireDashboardRepo)"
+              }
+            },
+            "$(aspire-dashboard|major-tag)": {
+              "syndication": {
+                "repo": "$(syndicatedAspireDashboardRepo)",
+                "destinationTags": [
+                  "$(aspire-dashboard|major-tag)",
+                  "latest"
+                ]
+              }
+            },
             "latest": {}
           },
           "platforms": [
@@ -14232,13 +14249,22 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|fixed-tag)-amd64": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|minor-tag)-amd64": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|major-tag)-amd64": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 }
               }
             },
@@ -14253,13 +14279,22 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|fixed-tag)-arm64v8": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|minor-tag)-arm64v8": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 },
                 "$(aspire-dashboard|major-tag)-arm64v8": {
-                  "docType": "Undocumented"
+                  "docType": "Undocumented",
+                  "syndication": {
+                    "repo": "$(syndicatedAspireDashboardRepo)"
+                  }
                 }
               },
               "variant": "v8"
