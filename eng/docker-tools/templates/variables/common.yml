@@ -16,8 +16,6 @@ variables:
   value: ""
 - name: imageBuilderDockerRunExtraOptions
   value: ""
-- name: generateEolAnnotationDataExtraOptions
-  value: ""
 - name: productVersionComponents
   value: 2
 - name: imageInfoVariant
