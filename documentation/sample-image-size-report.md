@@ -74,7 +74,7 @@ for more details on all of the supported options for publishing .NET apps.
 [`runtime-deps:10.0`]:                      https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/noble
 [`runtime-deps:10.0-noble-chiseled`]:       https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/noble-chiseled
 [`runtime-deps:10.0-noble-chiseled-extra`]: https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/noble-chiseled-extra
-[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/alpine3.23
-[`aspnet:10.0-alpine-extra`]:               https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/alpine3.23-extra
-[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/alpine3.23
-[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/alpine3.23-extra
+[`aspnet:10.0-alpine`]:                     https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/alpine3.24
+[`aspnet:10.0-alpine-extra`]:               https://github.com/dotnet/dotnet-docker/tree/main/src/aspnet/10.0/alpine3.24-extra
+[`runtime-deps:10.0-alpine`]:               https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/alpine3.24
+[`runtime-deps:10.0-alpine-extra`]:         https://github.com/dotnet/dotnet-docker/tree/main/src/runtime-deps/10.0/alpine3.24-extra

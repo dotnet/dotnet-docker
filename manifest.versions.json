@@ -21,13 +21,13 @@
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
-    "aspire-dashboard|build-version": "13.6.0-preview.1.26471.1",
+    "aspire-dashboard|build-version": "13.6.0-preview.1.26479.8",
     "aspire-dashboard|product-version": "13.6.0",
     "aspire-dashboard|fixed-tag": "13.6.0",
     "aspire-dashboard|minor-tag": "13.6",
     "aspire-dashboard|major-tag": "13",
-    "aspire-dashboard|linux|x64|sha": "4b7f04d2e17faa6512e5c060ef885a007eef0eccd78592773670dce7dfc33c2f205359b8e414d22b6749211493aacbe421bcdb5e8dc6c7671d362598ad5e43ac",
-    "aspire-dashboard|linux|arm64|sha": "03ac294885faaecdaa09f84c0984da629a2370b5899aa0343ecb81737272fd7c56154107a241ea75957a4ed85b3638d99d7c89f19a81f2fd07512a828ca92ea9",
+    "aspire-dashboard|linux|x64|sha": "4d047a9ee97fd3a500cf8de64a74ebd77bb3012a020bc594d9a7e4830a3f165ee0f76f6999af0e949dd8fd2cade3d32b5cd98e8a8f91015dc58fff89fb0246b5",
+    "aspire-dashboard|linux|arm64|sha": "b6e1ffaa74b7b8c4f38f828ac700e645cdd6133e0b8239b31373f06f6f570d9edbe9551daa9a4809c8d5ee0665dd1b8c8a000f60a802eaa2585c203830c3f56d",
     "aspire-dashboard|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|base-url|nightly": "$(base-url|public|preview|nightly)",
 
@@ -40,7 +40,7 @@
     "aspnet|10.0|build-version": "10.0.12",
     "aspnet-composite|10.0|build-version": "$(aspnet|10.0|build-version)",
 
-    "aspnet|11.0|build-version": "11.0.0-rc.2.26472.122",
+    "aspnet|11.0|build-version": "11.0.0-rc.2.26473.112",
     "aspnet-composite|11.0|build-version": "$(aspnet|11.0|build-version)",
 
     "chisel|latest|build-version": "v1.4.2",
@@ -119,7 +119,6 @@
     "libicu|noble": "74",
     "libicu|resolute": "78",
 
-    "libssl|alpine3.23": "3",
     "libssl|alpine3.24": "3",
     "libssl|bookworm": "3",
     "libssl|bullseye": "1.1",
@@ -128,8 +127,8 @@
     "libssl|noble": "3t64",
     "libssl|resolute": "3t64",
 
-    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.55.0.windows.5/MinGit-2.55.0.5-64-bit.zip",
-    "mingit|latest|x64|sha": "56d7b226b7693196cfc71fef26568f536c4a021ab6c37ff2db4287bed908e96e",
+    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.2/MinGit-2.56.0.2-64-bit.zip",
+    "mingit|latest|x64|sha": "da35e72aa21c005a5a0d298cfbae110bc1609a815730ea0dde84b01a1b3cd3be",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
@@ -178,7 +177,11 @@
     "monitor|10.0|base-url|checksums|main": "$(base-url|public-checksums|maintenance|main)",
     "monitor|10.0|base-url|checksums|nightly": "$(base-url|public-checksums|maintenance|nightly)",
 
+    "powershell|base-url|public": "https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool",
+    "powershell|base-url|internal": "https://pscoretestdata.blob.core.windows.net",
+
     "powershell|8.0|build-version": "7.4.20",
+    "powershell|8.0|base-url": "$(powershell|base-url|public)/$(powershell|8.0|build-version)",
     "powershell|8.0|sha-function": "256",
     "powershell|8.0|Linux.Alpine|sha": "2daafc8b8d57ba4ae3b47fd9ee8135eb80ac09e74293affd4afc1d042a61ee8e",
     "powershell|8.0|Linux|arm32|sha": "9a9c887442a8e152172ef5b053a916c90e8d58387a506469d233b411d41a413c",
@@ -187,6 +190,7 @@
     "powershell|8.0|Windows|x64|sha": "bf87b7f235e921fff15378d3331ad2f45ba28fec9f2fc3447235241e0e95de41",
 
     "powershell|9.0|build-version": "7.5.11",
+    "powershell|9.0|base-url": "$(powershell|base-url|public)/$(powershell|9.0|build-version)",
     "powershell|9.0|sha-function": "256",
     "powershell|9.0|Linux.Alpine|sha": "6ae7328e032eabd3cfaa6786108636b6670170acde023ed58400f5c062f15189",
     "powershell|9.0|Linux|arm32|sha": "2b24bb77b83d393f5b5d74438b3f60dd04dd0a4a20d377e4ef1e9ac5a641eed4",
@@ -195,6 +199,7 @@
     "powershell|9.0|Windows|x64|sha": "0823750d39529d4a7aaf13323fd6f3789efc5cc6ca384a6357480e74e01e7210",
 
     "powershell|10.0|build-version": "7.6.6",
+    "powershell|10.0|base-url": "$(powershell|base-url|public)/$(powershell|10.0|build-version)",
     "powershell|10.0|sha-function": "256",
     "powershell|10.0|Linux.Alpine|sha": "be4064c6d68d2ef10c482f84687a0a668bfe16fd41be4b8905b7d472f834d38b",
     "powershell|10.0|Linux|arm32|sha": "bc94cc5038625cdf41c1e0610d2720d150100893fe202f2d81cb899a7d37d04c",
@@ -203,6 +208,7 @@
     "powershell|10.0|Windows|x64|sha": "a1dc276cb6741d681c1532d2704262e8342607cb1dadc0a0337e6e58e0143dec",
 
     "powershell|11.0|build-version": "7.7.0-preview.5",
+    "powershell|11.0|base-url": "$(powershell|base-url|public)/$(powershell|11.0|build-version)",
     "powershell|11.0|sha-function": "512",
     "powershell|11.0|Linux.Alpine|sha": "e3d3e80b026760f173a268b2ff5630a28741be33f67c6628141d75e854e20299fb89d61e819da32ba988a055baaa049d20ba355b196a0c3297221c2032dd706a",
     "powershell|11.0|Linux|arm32|sha": "d45bcb6d129a2bb068b47528ed0ec554e5860d113baeed1e8e28920fcb7d8669bf2d2d9a46f442c53dac6030fbc93c4ee577e7e9f7fd496bf37354cea3a4f6e7",
@@ -236,7 +242,7 @@
     "runtime|8.0|build-version": "8.0.31",
     "runtime|9.0|build-version": "9.0.20",
     "runtime|10.0|build-version": "10.0.12",
-    "runtime|11.0|build-version": "11.0.0-rc.2.26472.122",
+    "runtime|11.0|build-version": "11.0.0-rc.2.26473.112",
 
     "sdk|8.0|build-version": "8.0.425",
     "sdk|8.0|product-version": "8.0.425",
@@ -265,7 +271,7 @@
     "sdk|10.0|fixed-tag": "$(sdk|10.0|product-version)",
     "sdk|10.0|minor-tag": "$(dotnet|10.0|minor-tag)",
 
-    "sdk|11.0|build-version": "11.0.100-rc.2.26472.122",
+    "sdk|11.0|build-version": "11.0.100-rc.2.26473.112",
     "sdk|11.0|product-version": "11.0.100-rc.2",
     "sdk|11.0|base-url|main": "$(dotnet|11.0|base-url|main)",
     "sdk|11.0|base-url|nightly": "$(dotnet|11.0|base-url|nightly)",
@@ -276,7 +282,7 @@
     "sdk|11.0|minor-tag": "$(dotnet|11.0|minor-tag)",
 
     "syft|repo": "anchore/syft",
-    "syft|version": "v1.52.0",
+    "syft|version": "v1.54.1",
     "syft|tag": "$(syft|version)-debug"
   }
 }
