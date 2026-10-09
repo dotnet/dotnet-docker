@@ -83,7 +83,12 @@ RUN {{InsertTemplate("../Dockerfile.linux.download-files", ["files": [[
         "url": rocksToolboxUrl,
         "out-file": "/usr/bin/chisel-wrapper"
     ]]], "    ")}} \
-    && chmod 755 /usr/bin/chisel-wrapper
+    && chmod 755 /usr/bin/chisel-wrapper \
+    # Workaround for https://github.com/canonical/rocks-toolbox/issues/55
+    && sed --in-place \
+        -e 's|dir="$CHISEL_CACHE_DIR/chisel/sha256"|dir="$CHISEL_CACHE_DIR/chisel"|' \
+        -e 's|for f in "$dir"/\*; do|for f in "$dir"/sha*/*; do|' \
+        /usr/bin/chisel-wrapper
 
 RUN {{InsertTemplate("Dockerfile.linux.non-root-user-staged", [
         "staging-dir": "/rootfs",
