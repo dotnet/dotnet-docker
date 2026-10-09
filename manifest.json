@@ -13230,26 +13230,11 @@
       "images": [
         {
           "productVersion": "$(aspire-dashboard|product-version)",
+          "syndication": "$(syndicatedAspireDashboardRepo)",
           "sharedTags": {
-            "$(aspire-dashboard|fixed-tag)": {
-              "syndication": {
-                "repo": "$(syndicatedAspireDashboardRepo)"
-              }
-            },
-            "$(aspire-dashboard|minor-tag)": {
-              "syndication": {
-                "repo": "$(syndicatedAspireDashboardRepo)"
-              }
-            },
-            "$(aspire-dashboard|major-tag)": {
-              "syndication": {
-                "repo": "$(syndicatedAspireDashboardRepo)",
-                "destinationTags": [
-                  "$(aspire-dashboard|major-tag)",
-                  "latest"
-                ]
-              }
-            },
+            "$(aspire-dashboard|fixed-tag)": {},
+            "$(aspire-dashboard|minor-tag)": {},
+            "$(aspire-dashboard|major-tag)": {},
             "latest": {}
           },
           "platforms": [
@@ -13263,22 +13248,13 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|fixed-tag)-amd64": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspireDashboardRepo)"
-                  }
+                  "docType": "Undocumented"
                 },
                 "$(aspire-dashboard|minor-tag)-amd64": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspireDashboardRepo)"
-                  }
+                  "docType": "Undocumented"
                 },
                 "$(aspire-dashboard|major-tag)-amd64": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspireDashboardRepo)"
-                  }
+                  "docType": "Undocumented"
                 }
               }
             },
@@ -13293,22 +13269,13 @@
               "osVersion": "azurelinux3.0-distroless",
               "tags": {
                 "$(aspire-dashboard|fixed-tag)-arm64v8": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspireDashboardRepo)"
-                  }
+                  "docType": "Undocumented"
                 },
                 "$(aspire-dashboard|minor-tag)-arm64v8": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspireDashboardRepo)"
-                  }
+                  "docType": "Undocumented"
                 },
                 "$(aspire-dashboard|major-tag)-arm64v8": {
-                  "docType": "Undocumented",
-                  "syndication": {
-                    "repo": "$(syndicatedAspireDashboardRepo)"
-                  }
+                  "docType": "Undocumented"
                 }
               },
               "variant": "v8"
