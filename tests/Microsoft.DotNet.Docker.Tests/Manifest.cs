@@ -24,6 +24,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public Dictionary<string, object> SharedTags { get; set; } = new Dictionary<string, object>();
         public string ProductVersion { get; set; } = string.Empty;
+        public string Syndication { get; set; } = string.Empty;
         public List<Platform> Platforms { get; set; } = new List<Platform>();
     }
 
