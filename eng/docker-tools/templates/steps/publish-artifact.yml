@@ -11,7 +11,7 @@ parameters:
   type: string
 - name: condition
   type: string
-  default: 'true'
+  default: succeeded()
 
 steps:
 - ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
@@ -20,9 +20,9 @@ steps:
       path: ${{ parameters.path }}
       artifact: ${{ parameters.artifactName }}
     displayName: ${{ parameters.displayName }}
-    condition: and(succeeded(), ${{ parameters.condition }})
+    condition: ${{ parameters.condition }}
 - ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
   - publish: ${{ parameters.path }}
     artifact: ${{ parameters.artifactName }}
     displayName: ${{ parameters.displayName }}
-    condition: and(succeeded(), ${{ parameters.condition }})
+    condition: ${{ parameters.condition }}

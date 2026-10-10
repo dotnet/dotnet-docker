@@ -15,6 +15,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
     public class Repo
     {
+        public string Id { get; set; } = string.Empty;
         public string Name { get; set; } = string.Empty;
         public List<Image> Images { get; set; } = new List<Image>();
     }
@@ -23,6 +24,7 @@ namespace Microsoft.DotNet.Docker.Tests
     {
         public Dictionary<string, object> SharedTags { get; set; } = new Dictionary<string, object>();
         public string ProductVersion { get; set; } = string.Empty;
+        public string Syndication { get; set; } = string.Empty;
         public List<Platform> Platforms { get; set; } = new List<Platform>();
     }
 

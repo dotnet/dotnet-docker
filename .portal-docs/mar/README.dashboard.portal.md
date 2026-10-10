@@ -1,15 +1,15 @@
-# Featured Tags
+## Featured Tags
 
 * `13`
   * `docker pull mcr.microsoft.com/aspire/dashboard:13`
 
-# About
+## About
 
 The [Aspire Dashboard](https://aspire.dev/dashboard/standalone/) is a standalone viewer for logs, traces, and metrics from OpenTelemetry-enabled applications in any language. Source code is available in [microsoft/aspire](https://github.com/microsoft/aspire).
 
 For preview builds, see the [nightly Aspire Dashboard image](https://mcr.microsoft.com/artifact/mar/aspire/nightly/dashboard/about).
 
-# Usage
+## Usage
 
 Run the dashboard locally:
 
@@ -25,7 +25,7 @@ docker logs aspire-dashboard
 
 This example keeps browser-token authentication enabled and binds the published ports to the host's loopback interface. Incoming OTLP telemetry is unauthenticated by default in standalone mode; the browser token does not secure telemetry ingestion. Only accept telemetry from trusted applications; configure HTTPS, authentication, and network controls before exposing the dashboard beyond your machine. See [dashboard security guidance](https://aspire.dev/dashboard/security-considerations/).
 
-## Send telemetry
+### Send telemetry
 
 Instrument your application with its language's OpenTelemetry SDK and configure an OTLP exporter with the matching protocol and endpoint. Starting the dashboard does not instrument your application automatically. For applications running on the host, use:
 
@@ -34,12 +34,12 @@ Instrument your application with its language's OpenTelemetry SDK and configure 
 
 For applications in other containers, use the dashboard container's name and port (`18889` or `18890`) on a shared Docker network, not their own `localhost`.
 
-## Operational notes
+### Operational notes
 
 * Telemetry is stored in memory with configurable limits and is lost when the dashboard restarts. The dashboard is intended for development and short-term diagnostics, not durable telemetry storage.
 * Standalone mode displays telemetry without an AppHost. Resource listings and captured console logs require a configured [resource service](https://aspire.dev/dashboard/configuration/#resources).
 
-## Documentation and examples
+### Documentation and examples
 
 * [Run the standalone dashboard](https://aspire.dev/dashboard/standalone/).
 * [Python telemetry tutorial](https://aspire.dev/dashboard/standalone-for-python/).
@@ -47,23 +47,19 @@ For applications in other containers, use the dashboard container's name and por
 * [Standalone dashboard sample (C#)](https://github.com/microsoft/aspire-samples/tree/main/samples/standalone-dashboard).
 * [Dashboard configuration reference](https://aspire.dev/dashboard/configuration/).
 
-# Full Tag Listing
-
-View the current tags at the [Microsoft Artifact Registry portal](https://mcr.microsoft.com/artifact/mar/aspire/dashboard/tags) or on [GitHub](https://github.com/dotnet/dotnet-docker/blob/main/README.aspire-dashboard.md#full-tag-listing).
-
-# Support
+## Support
 
 See the [Aspire support policy](https://aspire.dev/support/) for supported versions and lifecycle information. Container images are also covered by the [Supported Container Platforms Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-platforms.md), [Supported Tags Policy](https://github.com/dotnet/dotnet-docker/blob/main/documentation/supported-tags.md), and [Image Update Policy](https://github.com/dotnet/dotnet-docker/blob/main/README.md#image-update-policy).
 
 For container security and vulnerability reporting, see the [Security Policy](https://github.com/dotnet/dotnet-docker/blob/main/SECURITY.md) and [Container Vulnerability Workflow](https://github.com/dotnet/dotnet-docker/blob/main/documentation/vulnerability-reporting.md). Additional security information can be found on [aspire.dev/dashboard/security-considerations](https://aspire.dev/dashboard/security-considerations/#standalone-mode).
 
-## Feedback
+### Feedback
 
 * [Dashboard issues and feature requests](https://github.com/microsoft/aspire/issues).
 * [Container image issues](https://github.com/dotnet/dotnet-docker/issues/new/choose).
 * [Contact Microsoft Support](https://support.microsoft.com/contactus/).
 
-# License
+## License
 
 * Legal Notice: [Container License Information](https://aka.ms/mcr/osslegalnotice)
 * [Aspire MIT license](https://github.com/microsoft/aspire/blob/main/LICENSE.TXT)
