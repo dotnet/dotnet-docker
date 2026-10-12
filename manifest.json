@@ -5,7 +5,6 @@
   },
   "registry": "mcr.microsoft.com",
   "variables": {
-    "syndicatedAspireDashboardRepo": "dotnet/aspire-dashboard",
     "syndicatedRuntimeDepsRepo": "dotnet/core/runtime-deps",
     "syndicatedRuntimeRepo": "dotnet/core/runtime",
     "syndicatedAspnetRepo": "dotnet/core/aspnet",
@@ -12420,26 +12419,25 @@
     },
     {
       "id": "aspire-dashboard",
-      "name": "aspire/dashboard",
+      "name": "dotnet/aspire-dashboard",
       "readmes": [
         {
           "path": "README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.aspire-dashboard.github.md"
+          "templatePath": "eng/readme-templates/README.github.md"
         },
         {
           "path": ".portal-docs/docker-hub/README.aspire-dashboard.md",
-          "templatePath": "eng/readme-templates/README.aspire-dashboard.dockerhub.md"
+          "templatePath": "eng/readme-templates/README.dockerhub.md"
         },
         {
-          "path": ".portal-docs/mar/README.dashboard.portal.md",
-          "templatePath": "eng/readme-templates/README.aspire-dashboard.mcr.md"
+          "path": ".portal-docs/mar/README.aspire-dashboard.portal.md",
+          "templatePath": "eng/readme-templates/README.mcr.md"
         }
       ],
-      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/dashboard-tags.yml",
+      "mcrTagsMetadataTemplate": "eng/mcr-tags-metadata-templates/aspire-dashboard-tags.yml",
       "images": [
         {
           "productVersion": "$(aspire-dashboard|product-version)",
-          "syndication": "$(syndicatedAspireDashboardRepo)",
           "sharedTags": {
             "$(aspire-dashboard|fixed-tag)": {},
             "$(aspire-dashboard|minor-tag)": {},

@@ -13,8 +13,6 @@
         return shortRepo = SHORT_REPO
     }} ^
 
-    set currentRepo to when(IS_PRODUCT_FAMILY,
-        ARGS["product-family-repos"],
-        cat(filter(repos, isCurrentRepo)))
+    set currentRepo to when(IS_PRODUCT_FAMILY, ARGS["product-family-repos"], cat(filter(repos, isCurrentRepo)))
 
 }}# {{currentRepo[0][1]}}
