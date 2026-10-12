@@ -12,7 +12,7 @@
         cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
 
     set baseUrl to VARIABLES[cat("aspire-dashboard|base-url|", VARIABLES["branch"])] ^
-    set isInternal to find(baseUrl, "artifacts.visualstudio.com") >= 0 ^
+    set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
     set buildVersion to VARIABLES["aspire-dashboard|build-version"] ^
     set aspireVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
@@ -28,13 +28,12 @@
 }}ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM {{installerImageTag}} AS installer{{if isInternal:
-ARG ACCESSTOKEN}}
+FROM {{installerImageTag}} AS installer
 {{if isAzureLinux:
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs", [ "is-zip": "true" ])}}
 }}
 # Retrieve Aspire Dashboard
-RUN dotnet_aspire_version={{aspireVersion}} \
+RUN {{if isInternal:--mount=type=secret,id=ACCESSTOKEN,required=true }}dotnet_aspire_version={{aspireVersion}} \
     && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
         "product": "aspire_dashboard",
         "productVersion": aspireVersion,
