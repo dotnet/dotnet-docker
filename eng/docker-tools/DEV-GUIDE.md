@@ -302,7 +302,7 @@ The publish stage does more than just push images. Here's the sequence:
 5. **Wait for Doc Ingestion** — Ensures README changes are live
 6. **Merge & Publish Image Info** — Updates the versions repo with new image metadata
 7. **Ingest Kusto Image Info** — Sends telemetry to Kusto for analytics
-8. **Generate & Apply EOL Annotations** — Marks images with end-of-life dates
+8. **Attach Lifecycle Metadata** - `attachLifecycleMetadata unsupported` marks unsupported images with end-of-life dates
 9. **Post Publish Notification** — Creates GitHub issues/notifications about the publish
 
 ### Dry-Run Mode

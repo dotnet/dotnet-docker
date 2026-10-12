@@ -143,7 +143,9 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         public static string GetRepoName(string repoName, string repoNameModifier = null) =>
-            $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
+            repoName == "aspire-dashboard"
+                ? $"aspire{repoNameModifier ?? GetRepoNameModifier()}/dashboard"
+                : $"dotnet{repoNameModifier ?? GetRepoNameModifier()}/{repoName}";
 
         protected string GetTagName(string tagPrefix, string os, string tagPostfix = null)
         {

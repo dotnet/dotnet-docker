@@ -8,6 +8,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClient) : IGitHubReleaseUpdater
 {
+    private const string BuildVersionVariable = "chisel|latest|build-version";
     private const string Owner = "canonical";
     private const string Repo = "chisel";
 
@@ -22,6 +23,12 @@ public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClien
     }
 
     private static Regex GetAssetRegex(string arch) => new(@"chisel_v\d+\.\d+\.\d+_linux_" + arch + @"\.tar\.gz");
+
+    private static string GetDownloadUrl(string arch)
+    {
+        string buildVersion = $"$({BuildVersionVariable})";
+        return $"https://github.com/{Owner}/{Repo}/releases/download/{buildVersion}/chisel_{buildVersion}_linux_{arch}.tar.gz";
+    }
 
     private static string ToManifestArch(string arch) => arch == "amd64" ? "x64" : arch;
 
@@ -39,13 +46,20 @@ public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClien
         Release release,
         CancellationToken cancellationToken)
     {
+        if (!variables.ShouldUpdateLiteral(BuildVersionVariable))
+        {
+            return;
+        }
+
+        variables.SetValue(BuildVersionVariable, release.TagName);
+
         foreach (string arch in s_supportedArchitectures)
         {
             string urlVariable = GetChiselManifestVariable(Name, arch, "url");
             string shaVariable = GetChiselManifestVariable(Name, arch, "sha384");
-            bool updateUrl = variables.ShouldUpdateLiteral(urlVariable);
-            bool updateSha = variables.ShouldUpdateLiteral(shaVariable);
-            if (!updateUrl && !updateSha)
+            variables.SetValue(urlVariable, GetDownloadUrl(arch));
+
+            if (!variables.ShouldUpdateLiteral(shaVariable))
             {
                 continue;
             }
@@ -54,20 +68,12 @@ public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClien
             ReleaseAsset asset = release.Assets.FirstOrDefault(asset => assetRegex.IsMatch(asset.Name))
                 ?? throw new InvalidOperationException($"Could not find Chisel release asset matching regex {assetRegex}.");
 
-            if (updateUrl)
-            {
-                variables.SetValue(urlVariable, asset.BrowserDownloadUrl);
-            }
+            string checksumUrl = $"{asset.BrowserDownloadUrl}.sha384";
+            string content = await httpClient.GetStringAsync(checksumUrl, cancellationToken);
 
-            if (updateSha)
-            {
-                string checksumUrl = $"{asset.BrowserDownloadUrl}.sha384";
-                string content = await httpClient.GetStringAsync(checksumUrl, cancellationToken);
-
-                // Each checksum file contains "<sha384>  <archive name>".
-                string sha = content.Split("  ")[0].ToLowerInvariant();
-                variables.SetValue(shaVariable, sha);
-            }
+            // Each checksum file contains "<sha384>  <archive name>".
+            string sha = content.Split("  ")[0].ToLowerInvariant();
+            variables.SetValue(shaVariable, sha);
         }
     }
 }

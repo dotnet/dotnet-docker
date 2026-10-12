@@ -91,6 +91,7 @@ for verifying .NET images:
     {
       "name": "supplychain",
       "registryScopes": [
+          "mcr.microsoft.com/aspire/dashboard",
           "mcr.microsoft.com/dotnet/aspire-dashboard",
           "mcr.microsoft.com/dotnet/aspnet",
           "mcr.microsoft.com/dotnet/monitor",

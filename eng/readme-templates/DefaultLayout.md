@@ -7,7 +7,6 @@
     set insertReposListTemplate(template, args) to:{{
         return InsertTemplate("ReposProvider.md", union([ "template": template ], commonArgs, args))
     }} ^
-
     set isNightlyRepo to match(split(REPO, "/")[1], "nightly") ^
     set readmeRepoName to when(PARENT_REPO = "monitor", cat("monitor-", SHORT_REPO), SHORT_REPO)
 
@@ -18,7 +17,7 @@ if !IS_PRODUCT_FAMILY:{{InsertTemplate("FeaturedTags.md", commonArgs)}}
 }}
 {{InsertTemplate("About.md", commonArgs)}}
 
-{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "aspire") < 0 && find(REPO, "yarp") < 0):
+{{InsertTemplate("Use.md", commonArgs)}}{{if (find(REPO, "monitor") < 0 && find(REPO, "yarp") < 0):
 
 {{InsertTemplate("About.variants.md", commonArgs)}}}}
 
