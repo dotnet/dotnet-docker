@@ -86,9 +86,9 @@ namespace Microsoft.DotNet.Docker.Tests
         }
 
         [Fact]
-        public void VerifyComplexAppSample()
+        public void VerifyMultiProjectAppSample()
         {
-            // complexapp sample doesn't currently support building on Windows.
+            // MultiProjectApp sample doesn't currently support building on Windows.
             if (!DockerHelper.IsLinuxContainerModeEnabled)
             {
                 return;
@@ -96,7 +96,7 @@ namespace Microsoft.DotNet.Docker.Tests
 
             string appTag = SampleImageData.GetImageName("complexapp-local-app");
             string testTag = SampleImageData.GetImageName("complexapp-local-test");
-            string sampleFolder = Path.Combine(s_samplesPath, "complexapp");
+            string sampleFolder = Path.Combine(s_samplesPath, "MultiProjectApp");
             string dockerfilePath = $"{sampleFolder}/Dockerfile";
             string testContainerName = ImageData.GenerateContainerName("sample-complex-test");
             string tempDir = null;
@@ -115,7 +115,7 @@ namespace Microsoft.DotNet.Docker.Tests
                 // Copy the test log from the container to the host
                 tempDir = Directory.CreateDirectory(
                     Path.Combine(Path.GetTempPath(), Path.GetRandomFileName())).FullName;
-                DockerHelper.Copy($"{testContainerName}:/source/tests/TestResults", tempDir);
+                DockerHelper.Copy($"{testContainerName}:/source/Tests/TestResults", tempDir);
                 string testLogFile = new DirectoryInfo($"{tempDir}/TestResults").GetFiles("*.trx").First().FullName;
 
                 // Open the test log file and verify the tests passed
@@ -150,7 +150,13 @@ namespace Microsoft.DotNet.Docker.Tests
             {
                 if (!imageData.IsPublished)
                 {
-                    string sampleFolder = Path.Combine(s_samplesPath, imageType);
+                    string sampleName = sampleImageType switch
+                    {
+                        SampleImageType.Dotnetapp => "ConsoleApp",
+                        SampleImageType.Aspnetapp => "AspNetCoreRazorApp",
+                        _ => throw new ArgumentOutOfRangeException(nameof(sampleImageType))
+                    };
+                    string sampleFolder = Path.Combine(s_samplesPath, sampleName);
                     string dockerfilePath = $"{sampleFolder}/Dockerfile";
                     if (!string.IsNullOrEmpty(imageData.DockerfileSuffix))
                     {

@@ -18,7 +18,6 @@
     set isPowerShellSupported to !(isAlpine && ARCH_SHORT != "x64") ^
     set isPowerShellInternal to isPowerShellSupported &&
         find(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], "pscoretestdata") >= 0 ^
-    set useAccessToken to isInternal || isPowerShellInternal ^
     set includePowerShellVars to isPowerShellSupported || dotnetVersion = "8.0" || dotnetVersion = "9.0" ^
     set powershellNupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
     set powershellNupkgName to cat(
@@ -78,9 +77,7 @@
 
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM {{internalInstallerBase}} AS installer{{if useAccessToken:
-
-ARG ACCESSTOKEN}}
+FROM {{internalInstallerBase}} AS installer
 {{if isAzureLinux:
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     [
@@ -88,14 +85,14 @@ RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
     ])}}
 }}
 # Install .NET SDK
-RUN {{InsertTemplate("../Dockerfile.download-dotnet", [
+RUN {{if isInternal:--mount=type=secret,id=ACCESSTOKEN,required=true }}{{InsertTemplate("../Dockerfile.download-dotnet", [
     "product": "sdk",
     "extract-to": "/dotnet",
     "extract-paths": sdkExtractPaths
 ], "    ")}}{{if isPowerShellSupported:
 
 # Download PowerShell
-RUN {{InsertTemplate("Dockerfile.linux.download-powershell")}}}}
+RUN {{if isPowerShellInternal:--mount=type=secret,id=ACCESSTOKEN,required=true }}{{InsertTemplate("Dockerfile.linux.download-powershell")}}}}
 
 
 # .NET SDK image

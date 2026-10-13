@@ -25,8 +25,8 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '9.0.318'; `
-        $dotnet_version = '9.0.20'; `
+        $dotnet_sdk_version = '9.0.319'; `
+        $dotnet_version = '9.0.21'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
@@ -54,9 +54,9 @@ RUN powershell -Command " `
             $dotnet_checksums_file; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.5.11'; `
+        $powershell_version = '7.5.12'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha256 = '0823750d39529d4a7aaf13323fd6f3789efc5cc6ca384a6357480e74e01e7210'; `
+        $powershell_sha256 = '5da8df48da8762a737ce4dad9d41bc4e10933dc15255347b25d152c83c0771b0'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha256).Hash -ne $powershell_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -74,7 +74,7 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:9.0.20-nanoserver-ltsc2025
+FROM $REPO:9.0.21-nanoserver-ltsc2025
 
 ENV `
     # Do not generate certificate
@@ -82,7 +82,7 @@ ENV `
     # Do not show first run text
     DOTNET_NOLOGO=true `
     # SDK version
-    DOTNET_SDK_VERSION=9.0.318 `
+    DOTNET_SDK_VERSION=9.0.319 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

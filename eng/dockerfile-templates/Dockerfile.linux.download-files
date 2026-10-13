@@ -22,12 +22,12 @@
 
     set downloadCommand to when(useWget, "wget", "curl") ^
 
-    _ Add authentication header for internal builds, if appropriate. The same
-      header works for both wget and curl. ^
+    _ Internal downloads require the ACCESSTOKEN BuildKit secret to be mounted
+      on the enclosing RUN instruction. The same header works for wget and curl. ^
     _ When downloading multiple files, the same header argument applies to all
       files in the download. ^
     if (isInternal):{{
-        set downloadCommand to cat(downloadCommand, ' --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09"')
+        set downloadCommand to cat(downloadCommand, ' --header "Authorization: Bearer $(cat /run/secrets/ACCESSTOKEN)" --header "x-ms-version: 2017-11-09"')
     }}^
 
     _ Add extra arguments required by curl ^

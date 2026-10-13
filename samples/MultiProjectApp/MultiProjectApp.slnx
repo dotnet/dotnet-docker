@@ -1,0 +1,6 @@
+<Solution>
+  <Project Path="MultiProjectApp/MultiProjectApp.csproj" />
+  <Project Path="LibBar/LibBar.csproj" />
+  <Project Path="LibFoo/LibFoo.csproj" />
+  <Project Path="Tests/Tests.csproj" />
+</Solution>

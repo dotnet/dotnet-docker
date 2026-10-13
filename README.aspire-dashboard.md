@@ -55,13 +55,13 @@ For applications in other containers, use the dashboard container's name and por
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-13.6.0, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/amd64/Dockerfile) | Azure Linux 3.0
+13.6.1, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-13.6.0, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/arm64v8/Dockerfile) | Azure Linux 3.0
+13.6.1, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/arm64v8/Dockerfile) | Azure Linux 3.0
 
 <!--End of generated tags-->
 

@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:noble-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=8.0.425 \
-    && dotnet_version=8.0.31 \
+RUN dotnet_sdk_version=8.0.426 \
+    && dotnet_version=8.0.32 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -17,14 +17,14 @@ RUN dotnet_sdk_version=8.0.425 \
         $dotnet_version-sha.txt
 
 # Download PowerShell
-RUN powershell_version=7.4.20 \
+RUN powershell_version=7.4.21 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha256='350ba631e875380dc4dd596777e870a0dddd26c1d2ea5247e84eed020a77e950' \
+    && powershell_sha256='5ed717c841a5f91387be85a08986009671d800cf80421668e4a79b961773377a' \
     && echo "$powershell_sha256  PowerShell.Linux.x64.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
-FROM $REPO:8.0.31-noble-amd64
+FROM $REPO:8.0.32-noble-amd64
 
 ENV \
     # Do not generate certificate
@@ -32,7 +32,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.425 \
+    DOTNET_SDK_VERSION=8.0.426 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -50,13 +50,13 @@ RUN apt-get update \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.x64.7.4.20.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.x64.7.4.21.nupkg", "/"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.4.20 \
+RUN powershell_version=7.4.21 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
     && dotnet nuget locals all --clear \

@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:9.0.20-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:9.0.21-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=9.0.318 \
-    && dotnet_version=9.0.20 \
+RUN dotnet_sdk_version=9.0.319 \
+    && dotnet_version=9.0.21 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -21,14 +21,14 @@ RUN dotnet_sdk_version=9.0.318 \
         $dotnet_version-sha.txt
 
 # Download PowerShell
-RUN powershell_version=7.5.11 \
+RUN powershell_version=7.5.12 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha256='4216b75c9fba0e5ce17216d6234dfb72448d26188e8cd5605aaf1732f91ddd06' \
+    && powershell_sha256='b9e57518fc31dbae55f5c2f9b0a9e75d556e23cca4e0fce04e049e264cf9aa7c' \
     && echo "$powershell_sha256  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
-FROM $REPO:9.0.20-azurelinux3.0-arm64v8
+FROM $REPO:9.0.21-azurelinux3.0-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -36,7 +36,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=9.0.318 \
+    DOTNET_SDK_VERSION=9.0.319 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -52,13 +52,13 @@ RUN tdnf install -y \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.arm64.7.5.11.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.arm64.7.5.12.nupkg", "/"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.5.11 \
+RUN powershell_version=7.5.12 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
     && dotnet nuget locals all --clear \

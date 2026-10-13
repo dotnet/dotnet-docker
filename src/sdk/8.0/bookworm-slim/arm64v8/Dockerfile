@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm64v8/buildpack-deps:bookworm-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=8.0.425 \
-    && dotnet_version=8.0.31 \
+RUN dotnet_sdk_version=8.0.426 \
+    && dotnet_version=8.0.32 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -17,14 +17,14 @@ RUN dotnet_sdk_version=8.0.425 \
         $dotnet_version-sha.txt
 
 # Download PowerShell
-RUN powershell_version=7.4.20 \
+RUN powershell_version=7.4.21 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm64.$powershell_version.nupkg \
-    && powershell_sha256='8f3b815a253c04b11f7f9125abadb15609528d1b58921757ada64d9c43f35a8c' \
+    && powershell_sha256='bbc1531a61590ae137f945d35495ee971c2883f94a167189f4f651fed928e96e' \
     && echo "$powershell_sha256  PowerShell.Linux.arm64.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
-FROM $REPO:8.0.31-bookworm-slim-arm64v8
+FROM $REPO:8.0.32-bookworm-slim-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -32,7 +32,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.425 \
+    DOTNET_SDK_VERSION=8.0.426 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
@@ -50,13 +50,13 @@ RUN apt-get update \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.arm64.7.4.20.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.arm64.7.4.21.nupkg", "/"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.4.20 \
+RUN powershell_version=7.4.21 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm64 \
     && dotnet nuget locals all --clear \

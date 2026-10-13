@@ -1,0 +1,22 @@
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:11.0-resolute AS build
+ARG TARGETARCH
+WORKDIR /source
+
+# Copy project file and restore as distinct layers
+COPY --link AspNetCoreRazorApp/*.csproj .
+RUN dotnet restore -a $TARGETARCH
+
+# Copy source code and publish app
+COPY --link AspNetCoreRazorApp/. .
+RUN dotnet publish -a $TARGETARCH --no-restore -o /app
+
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-resolute
+EXPOSE 8080
+WORKDIR /app
+COPY --link --from=build /app .
+USER $APP_UID
+ENTRYPOINT ["./AspNetCoreRazorApp"]

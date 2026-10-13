@@ -10,7 +10,7 @@ Build the application per the [ASP.NET Core Docker Sample](README.md) instructio
 
 ```console
 cd samples
-cd aspnetapp
+cd AspNetCoreRazorApp
 docker build --pull -t aspnetapp -f Dockerfile .
 ```
 
