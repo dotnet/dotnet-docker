@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
 using Microsoft.DotNet.Docker.Tests.Extensions;
 using Shouldly;
@@ -76,6 +77,19 @@ public class GeneratedArtifactTests
             $" --var 'base-url|public-checksums|maintenance|nightly={InternalBaseUrl}'" +
             $" --var 'base-url|public-checksums|preview|main={InternalBaseUrl}'" +
             $" --var 'base-url|public-checksums|preview|nightly={InternalBaseUrl}'";
+
+        // PowerShell's internal storage uses a different layout than its public storage
+        const string InternalPowerShellBaseUrl = "https://pscoretestdata.blob.core.windows.net";
+        foreach (Match match in Config.GetVariableNames()
+            .Select(name => Regex.Match(name, @"^powershell\|(?<dotnetVersion>[\d.]+)\|base-url$"))
+            .Where(match => match.Success))
+        {
+            string dotnetVersion = match.Groups["dotnetVersion"].Value;
+            string powershellVersion = Config.GetVariableValue($"powershell|{dotnetVersion}|build-version");
+            string internalUrl =
+                $"{InternalPowerShellBaseUrl}/v{powershellVersion.Replace('.', '-')}-nuget/globaltool";
+            customImageBuilderArgs += $" --var '{match.Value}={internalUrl}'";
+        }
 
         // Generate internal Dockerfiles
         ExecuteScript(

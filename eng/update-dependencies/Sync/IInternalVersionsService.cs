@@ -3,7 +3,7 @@
 
 using Microsoft.DotNet.Docker.Shared;
 
-namespace Dotnet.Docker.Sync;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 
 /// <summary>
 /// Abstraction for recording and reading internal staging build information

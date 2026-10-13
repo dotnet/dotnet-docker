@@ -4,7 +4,7 @@
 using System.Text.RegularExpressions;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 
-namespace Dotnet.Docker;
+namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 /// <summary>
 /// Represents the product versions for the SDK, runtime, and ASP.NET Core.

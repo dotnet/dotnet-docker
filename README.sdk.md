@@ -27,7 +27,7 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 ### Building .NET Apps with Docker
 
-* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleApp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/ConsoleApp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
+* [.NET Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/MultiProjectApp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/MultiProjectApp/Dockerfile) builds, tests, and runs the sample. It includes and builds multiple projects.
 * [ASP.NET Core Docker Sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/README.md) - This [sample](https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/Dockerfile) demonstrates using Docker with an ASP.NET Core Web App.
 
 ### Develop .NET Apps in a Container
@@ -66,111 +66,100 @@ The [Image Variants documentation](https://github.com/dotnet/dotnet-docker/blob/
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.100-rc.1-resolute-amd64, 11.0-resolute-amd64, 11.0.100-rc.1-resolute, 11.0-resolute, 11.0.100-rc.1, 11.0 | [Dockerfile](src/sdk/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
-11.0.100-rc.1-resolute-aot-amd64, 11.0-resolute-aot-amd64, 11.0.100-rc.1-resolute-aot, 11.0-resolute-aot, 11.0.100-rc.1-aot, 11.0-aot | [Dockerfile](src/sdk/11.0/resolute-aot/amd64/Dockerfile) | Ubuntu 26.04
-11.0.100-rc.1-alpine3.24-amd64, 11.0-alpine3.24-amd64, 11.0-alpine-amd64, 11.0.100-rc.1-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
-11.0.100-rc.1-alpine3.24-aot-amd64, 11.0-alpine3.24-aot-amd64, 11.0-alpine-aot-amd64, 11.0.100-rc.1-alpine3.24-aot, 11.0-alpine3.24-aot, 11.0-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
-11.0.100-rc.1-azurelinux3.0-amd64, 11.0-azurelinux3.0-amd64, 11.0.100-rc.1-azurelinux3.0, 11.0-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-11.0.100-rc.1-azurelinux3.0-aot-amd64, 11.0-azurelinux3.0-aot-amd64, 11.0.100-rc.1-azurelinux3.0-aot, 11.0-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
-11.0.100-rc.1-azurelinux4.0-amd64, 11.0-azurelinux4.0-amd64, 11.0.100-rc.1-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
-11.0.100-rc.1-azurelinux4.0-aot-amd64, 11.0-azurelinux4.0-aot-amd64, 11.0.100-rc.1-azurelinux4.0-aot, 11.0-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
-10.0.401-noble-amd64, 10.0-noble-amd64, 10.0.401-noble, 10.0-noble, 10.0.401, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-10.0.401-noble-aot-amd64, 10.0-noble-aot-amd64, 10.0.401-noble-aot, 10.0-noble-aot, 10.0.401-aot, 10.0-aot | [Dockerfile](src/sdk/10.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
-10.0.401-resolute-amd64, 10.0-resolute-amd64, 10.0.401-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
-10.0.401-resolute-aot-amd64, 10.0-resolute-aot-amd64, 10.0.401-resolute-aot, 10.0-resolute-aot | [Dockerfile](src/sdk/10.0/resolute-aot/amd64/Dockerfile) | Ubuntu 26.04
-10.0.401-alpine3.23-amd64, 10.0-alpine3.23-amd64, 10.0.401-alpine3.23, 10.0-alpine3.23 | [Dockerfile](src/sdk/10.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-10.0.401-alpine3.24-amd64, 10.0-alpine3.24-amd64, 10.0-alpine-amd64, 10.0.401-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/sdk/10.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
-10.0.401-alpine3.23-aot-amd64, 10.0-alpine3.23-aot-amd64, 10.0.401-alpine3.23-aot, 10.0-alpine3.23-aot | [Dockerfile](src/sdk/10.0/alpine3.23-aot/amd64/Dockerfile) | Alpine 3.23
-10.0.401-alpine3.24-aot-amd64, 10.0-alpine3.24-aot-amd64, 10.0-alpine-aot-amd64, 10.0.401-alpine3.24-aot, 10.0-alpine3.24-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
-10.0.401-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.401-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-10.0.401-azurelinux3.0-aot-amd64, 10.0-azurelinux3.0-aot-amd64, 10.0.401-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
-9.0.318-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.318-bookworm-slim, 9.0-bookworm-slim, 9.0.318, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-9.0.318-alpine3.23-amd64, 9.0-alpine3.23-amd64, 9.0.318-alpine3.23, 9.0-alpine3.23 | [Dockerfile](src/sdk/9.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-9.0.318-alpine3.24-amd64, 9.0-alpine3.24-amd64, 9.0-alpine-amd64, 9.0.318-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
-9.0.318-noble-amd64, 9.0-noble-amd64, 9.0.318-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-9.0.318-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.318-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-8.0.425-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.425-bookworm-slim, 8.0-bookworm-slim, 8.0.425, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
-8.0.425-alpine3.23-amd64, 8.0-alpine3.23-amd64, 8.0.425-alpine3.23, 8.0-alpine3.23 | [Dockerfile](src/sdk/8.0/alpine3.23/amd64/Dockerfile) | Alpine 3.23
-8.0.425-alpine3.24-amd64, 8.0-alpine3.24-amd64, 8.0-alpine-amd64, 8.0.425-alpine3.24, 8.0-alpine3.24, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
-8.0.425-noble-amd64, 8.0-noble-amd64, 8.0.425-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-8.0.425-jammy-amd64, 8.0-jammy-amd64, 8.0.425-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
-8.0.425-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.425-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.2-resolute-amd64, 11.0-resolute-amd64, 11.0.100-rc.2-resolute, 11.0-resolute, 11.0.100-rc.2, 11.0 | [Dockerfile](src/sdk/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.2-resolute-aot-amd64, 11.0-resolute-aot-amd64, 11.0.100-rc.2-resolute-aot, 11.0-resolute-aot, 11.0.100-rc.2-aot, 11.0-aot | [Dockerfile](src/sdk/11.0/resolute-aot/amd64/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.2-alpine3.24-amd64, 11.0-alpine3.24-amd64, 11.0-alpine-amd64, 11.0.100-rc.2-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
+11.0.100-rc.2-alpine3.24-aot-amd64, 11.0-alpine3.24-aot-amd64, 11.0-alpine-aot-amd64, 11.0.100-rc.2-alpine3.24-aot, 11.0-alpine3.24-aot, 11.0-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
+11.0.100-rc.2-azurelinux3.0-amd64, 11.0-azurelinux3.0-amd64, 11.0.100-rc.2-azurelinux3.0, 11.0-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.2-azurelinux3.0-aot-amd64, 11.0-azurelinux3.0-aot-amd64, 11.0.100-rc.2-azurelinux3.0-aot, 11.0-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.2-azurelinux4.0-amd64, 11.0-azurelinux4.0-amd64, 11.0.100-rc.2-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+11.0.100-rc.2-azurelinux4.0-aot-amd64, 11.0-azurelinux4.0-aot-amd64, 11.0.100-rc.2-azurelinux4.0-aot, 11.0-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
+10.0.402-noble-amd64, 10.0-noble-amd64, 10.0.402-noble, 10.0-noble, 10.0.402, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+10.0.402-noble-aot-amd64, 10.0-noble-aot-amd64, 10.0.402-noble-aot, 10.0-noble-aot, 10.0.402-aot, 10.0-aot | [Dockerfile](src/sdk/10.0/noble-aot/amd64/Dockerfile) | Ubuntu 24.04
+10.0.402-resolute-amd64, 10.0-resolute-amd64, 10.0.402-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+10.0.402-resolute-aot-amd64, 10.0-resolute-aot-amd64, 10.0.402-resolute-aot, 10.0-resolute-aot | [Dockerfile](src/sdk/10.0/resolute-aot/amd64/Dockerfile) | Ubuntu 26.04
+10.0.402-alpine3.24-amd64, 10.0-alpine3.24-amd64, 10.0-alpine-amd64, 10.0.402-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/sdk/10.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
+10.0.402-alpine3.24-aot-amd64, 10.0-alpine3.24-aot-amd64, 10.0-alpine-aot-amd64, 10.0.402-alpine3.24-aot, 10.0-alpine3.24-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
+10.0.402-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.402-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+10.0.402-azurelinux3.0-aot-amd64, 10.0-azurelinux3.0-aot-amd64, 10.0.402-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+9.0.319-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.319-bookworm-slim, 9.0-bookworm-slim, 9.0.319, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+9.0.319-alpine3.24-amd64, 9.0-alpine3.24-amd64, 9.0-alpine-amd64, 9.0.319-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
+9.0.319-noble-amd64, 9.0-noble-amd64, 9.0.319-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+9.0.319-azurelinux3.0-amd64, 9.0-azurelinux3.0-amd64, 9.0.319-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+8.0.426-bookworm-slim-amd64, 8.0-bookworm-slim-amd64, 8.0.426-bookworm-slim, 8.0-bookworm-slim, 8.0.426, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/amd64/Dockerfile) | Debian 12
+8.0.426-alpine3.24-amd64, 8.0-alpine3.24-amd64, 8.0-alpine-amd64, 8.0.426-alpine3.24, 8.0-alpine3.24, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
+8.0.426-noble-amd64, 8.0-noble-amd64, 8.0.426-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+8.0.426-jammy-amd64, 8.0-jammy-amd64, 8.0.426-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/amd64/Dockerfile) | Ubuntu 22.04
+8.0.426-azurelinux3.0-amd64, 8.0-azurelinux3.0-amd64, 8.0.426-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.100-rc.1-resolute-arm64v8, 11.0-resolute-arm64v8, 11.0.100-rc.1-resolute, 11.0-resolute, 11.0.100-rc.1, 11.0 | [Dockerfile](src/sdk/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.100-rc.1-resolute-aot-arm64v8, 11.0-resolute-aot-arm64v8, 11.0.100-rc.1-resolute-aot, 11.0-resolute-aot, 11.0.100-rc.1-aot, 11.0-aot | [Dockerfile](src/sdk/11.0/resolute-aot/arm64v8/Dockerfile) | Ubuntu 26.04
-11.0.100-rc.1-alpine3.24-arm64v8, 11.0-alpine3.24-arm64v8, 11.0-alpine-arm64v8, 11.0.100-rc.1-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
-11.0.100-rc.1-alpine3.24-aot-arm64v8, 11.0-alpine3.24-aot-arm64v8, 11.0-alpine-aot-arm64v8, 11.0.100-rc.1-alpine3.24-aot, 11.0-alpine3.24-aot, 11.0-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
-11.0.100-rc.1-azurelinux3.0-arm64v8, 11.0-azurelinux3.0-arm64v8, 11.0.100-rc.1-azurelinux3.0, 11.0-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.100-rc.1-azurelinux3.0-aot-arm64v8, 11.0-azurelinux3.0-aot-arm64v8, 11.0.100-rc.1-azurelinux3.0-aot, 11.0-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
-11.0.100-rc.1-azurelinux4.0-arm64v8, 11.0-azurelinux4.0-arm64v8, 11.0.100-rc.1-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
-11.0.100-rc.1-azurelinux4.0-aot-arm64v8, 11.0-azurelinux4.0-aot-arm64v8, 11.0.100-rc.1-azurelinux4.0-aot, 11.0-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
-10.0.401-noble-arm64v8, 10.0-noble-arm64v8, 10.0.401-noble, 10.0-noble, 10.0.401, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.401-noble-aot-arm64v8, 10.0-noble-aot-arm64v8, 10.0.401-noble-aot, 10.0-noble-aot, 10.0.401-aot, 10.0-aot | [Dockerfile](src/sdk/10.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.401-resolute-arm64v8, 10.0-resolute-arm64v8, 10.0.401-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
-10.0.401-resolute-aot-arm64v8, 10.0-resolute-aot-arm64v8, 10.0.401-resolute-aot, 10.0-resolute-aot | [Dockerfile](src/sdk/10.0/resolute-aot/arm64v8/Dockerfile) | Ubuntu 26.04
-10.0.401-alpine3.23-arm64v8, 10.0-alpine3.23-arm64v8, 10.0.401-alpine3.23, 10.0-alpine3.23 | [Dockerfile](src/sdk/10.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-10.0.401-alpine3.24-arm64v8, 10.0-alpine3.24-arm64v8, 10.0-alpine-arm64v8, 10.0.401-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/sdk/10.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
-10.0.401-alpine3.23-aot-arm64v8, 10.0-alpine3.23-aot-arm64v8, 10.0.401-alpine3.23-aot, 10.0-alpine3.23-aot | [Dockerfile](src/sdk/10.0/alpine3.23-aot/arm64v8/Dockerfile) | Alpine 3.23
-10.0.401-alpine3.24-aot-arm64v8, 10.0-alpine3.24-aot-arm64v8, 10.0-alpine-aot-arm64v8, 10.0.401-alpine3.24-aot, 10.0-alpine3.24-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
-10.0.401-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.401-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.401-azurelinux3.0-aot-arm64v8, 10.0-azurelinux3.0-aot-arm64v8, 10.0.401-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.318-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.318-bookworm-slim, 9.0-bookworm-slim, 9.0.318, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-9.0.318-alpine3.23-arm64v8, 9.0-alpine3.23-arm64v8, 9.0.318-alpine3.23, 9.0-alpine3.23 | [Dockerfile](src/sdk/9.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-9.0.318-alpine3.24-arm64v8, 9.0-alpine3.24-arm64v8, 9.0-alpine-arm64v8, 9.0.318-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
-9.0.318-noble-arm64v8, 9.0-noble-arm64v8, 9.0.318-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-9.0.318-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.318-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-8.0.425-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.425-bookworm-slim, 8.0-bookworm-slim, 8.0.425, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
-8.0.425-alpine3.23-arm64v8, 8.0-alpine3.23-arm64v8, 8.0.425-alpine3.23, 8.0-alpine3.23 | [Dockerfile](src/sdk/8.0/alpine3.23/arm64v8/Dockerfile) | Alpine 3.23
-8.0.425-alpine3.24-arm64v8, 8.0-alpine3.24-arm64v8, 8.0-alpine-arm64v8, 8.0.425-alpine3.24, 8.0-alpine3.24, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
-8.0.425-noble-arm64v8, 8.0-noble-arm64v8, 8.0.425-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-8.0.425-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.425-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
-8.0.425-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.425-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.2-resolute-arm64v8, 11.0-resolute-arm64v8, 11.0.100-rc.2-resolute, 11.0-resolute, 11.0.100-rc.2, 11.0 | [Dockerfile](src/sdk/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.2-resolute-aot-arm64v8, 11.0-resolute-aot-arm64v8, 11.0.100-rc.2-resolute-aot, 11.0-resolute-aot, 11.0.100-rc.2-aot, 11.0-aot | [Dockerfile](src/sdk/11.0/resolute-aot/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.2-alpine3.24-arm64v8, 11.0-alpine3.24-arm64v8, 11.0-alpine-arm64v8, 11.0.100-rc.2-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
+11.0.100-rc.2-alpine3.24-aot-arm64v8, 11.0-alpine3.24-aot-arm64v8, 11.0-alpine-aot-arm64v8, 11.0.100-rc.2-alpine3.24-aot, 11.0-alpine3.24-aot, 11.0-alpine-aot | [Dockerfile](src/sdk/11.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
+11.0.100-rc.2-azurelinux3.0-arm64v8, 11.0-azurelinux3.0-arm64v8, 11.0.100-rc.2-azurelinux3.0, 11.0-azurelinux3.0 | [Dockerfile](src/sdk/11.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.2-azurelinux3.0-aot-arm64v8, 11.0-azurelinux3.0-aot-arm64v8, 11.0.100-rc.2-azurelinux3.0-aot, 11.0-azurelinux3.0-aot | [Dockerfile](src/sdk/11.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+11.0.100-rc.2-azurelinux4.0-arm64v8, 11.0-azurelinux4.0-arm64v8, 11.0.100-rc.2-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/sdk/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+11.0.100-rc.2-azurelinux4.0-aot-arm64v8, 11.0-azurelinux4.0-aot-arm64v8, 11.0.100-rc.2-azurelinux4.0-aot, 11.0-azurelinux4.0-aot | [Dockerfile](src/sdk/11.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
+10.0.402-noble-arm64v8, 10.0-noble-arm64v8, 10.0.402-noble, 10.0-noble, 10.0.402, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.402-noble-aot-arm64v8, 10.0-noble-aot-arm64v8, 10.0.402-noble-aot, 10.0-noble-aot, 10.0.402-aot, 10.0-aot | [Dockerfile](src/sdk/10.0/noble-aot/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.402-resolute-arm64v8, 10.0-resolute-arm64v8, 10.0.402-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+10.0.402-resolute-aot-arm64v8, 10.0-resolute-aot-arm64v8, 10.0.402-resolute-aot, 10.0-resolute-aot | [Dockerfile](src/sdk/10.0/resolute-aot/arm64v8/Dockerfile) | Ubuntu 26.04
+10.0.402-alpine3.24-arm64v8, 10.0-alpine3.24-arm64v8, 10.0-alpine-arm64v8, 10.0.402-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/sdk/10.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
+10.0.402-alpine3.24-aot-arm64v8, 10.0-alpine3.24-aot-arm64v8, 10.0-alpine-aot-arm64v8, 10.0.402-alpine3.24-aot, 10.0-alpine3.24-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
+10.0.402-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.402-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.402-azurelinux3.0-aot-arm64v8, 10.0-azurelinux3.0-aot-arm64v8, 10.0.402-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+9.0.319-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.319-bookworm-slim, 9.0-bookworm-slim, 9.0.319, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+9.0.319-alpine3.24-arm64v8, 9.0-alpine3.24-arm64v8, 9.0-alpine-arm64v8, 9.0.319-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
+9.0.319-noble-arm64v8, 9.0-noble-arm64v8, 9.0.319-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+9.0.319-azurelinux3.0-arm64v8, 9.0-azurelinux3.0-arm64v8, 9.0.319-azurelinux3.0, 9.0-azurelinux3.0 | [Dockerfile](src/sdk/9.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+8.0.426-bookworm-slim-arm64v8, 8.0-bookworm-slim-arm64v8, 8.0.426-bookworm-slim, 8.0-bookworm-slim, 8.0.426, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
+8.0.426-alpine3.24-arm64v8, 8.0-alpine3.24-arm64v8, 8.0-alpine-arm64v8, 8.0.426-alpine3.24, 8.0-alpine3.24, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
+8.0.426-noble-arm64v8, 8.0-noble-arm64v8, 8.0.426-noble, 8.0-noble | [Dockerfile](src/sdk/8.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+8.0.426-jammy-arm64v8, 8.0-jammy-arm64v8, 8.0.426-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm64v8/Dockerfile) | Ubuntu 22.04
+8.0.426-azurelinux3.0-arm64v8, 8.0-azurelinux3.0-arm64v8, 8.0.426-azurelinux3.0, 8.0-azurelinux3.0 | [Dockerfile](src/sdk/8.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm32 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.100-rc.1-resolute-arm32v7, 11.0-resolute-arm32v7, 11.0.100-rc.1-resolute, 11.0-resolute, 11.0.100-rc.1, 11.0 | [Dockerfile](src/sdk/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
-11.0.100-rc.1-alpine3.24-arm32v7, 11.0-alpine3.24-arm32v7, 11.0-alpine-arm32v7, 11.0.100-rc.1-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
-10.0.401-noble-arm32v7, 10.0-noble-arm32v7, 10.0.401-noble, 10.0-noble, 10.0.401, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.401-resolute-arm32v7, 10.0-resolute-arm32v7, 10.0.401-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
-10.0.401-alpine3.23-arm32v7, 10.0-alpine3.23-arm32v7, 10.0.401-alpine3.23, 10.0-alpine3.23 | [Dockerfile](src/sdk/10.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-10.0.401-alpine3.24-arm32v7, 10.0-alpine3.24-arm32v7, 10.0-alpine-arm32v7, 10.0.401-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/sdk/10.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
-9.0.318-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.318-bookworm-slim, 9.0-bookworm-slim, 9.0.318, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-9.0.318-alpine3.23-arm32v7, 9.0-alpine3.23-arm32v7, 9.0.318-alpine3.23, 9.0-alpine3.23 | [Dockerfile](src/sdk/9.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-9.0.318-alpine3.24-arm32v7, 9.0-alpine3.24-arm32v7, 9.0-alpine-arm32v7, 9.0.318-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
-9.0.318-noble-arm32v7, 9.0-noble-arm32v7, 9.0.318-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-8.0.425-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.425-bookworm-slim, 8.0-bookworm-slim, 8.0.425, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
-8.0.425-alpine3.23-arm32v7, 8.0-alpine3.23-arm32v7, 8.0.425-alpine3.23, 8.0-alpine3.23 | [Dockerfile](src/sdk/8.0/alpine3.23/arm32v7/Dockerfile) | Alpine 3.23
-8.0.425-alpine3.24-arm32v7, 8.0-alpine3.24-arm32v7, 8.0-alpine-arm32v7, 8.0.425-alpine3.24, 8.0-alpine3.24, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
-8.0.425-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.425-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
+11.0.100-rc.2-resolute-arm32v7, 11.0-resolute-arm32v7, 11.0.100-rc.2-resolute, 11.0-resolute, 11.0.100-rc.2, 11.0 | [Dockerfile](src/sdk/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.100-rc.2-alpine3.24-arm32v7, 11.0-alpine3.24-arm32v7, 11.0-alpine-arm32v7, 11.0.100-rc.2-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/sdk/11.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
+10.0.402-noble-arm32v7, 10.0-noble-arm32v7, 10.0.402-noble, 10.0-noble, 10.0.402, 10.0, latest | [Dockerfile](src/sdk/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.402-resolute-arm32v7, 10.0-resolute-arm32v7, 10.0.402-resolute, 10.0-resolute | [Dockerfile](src/sdk/10.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
+10.0.402-alpine3.24-arm32v7, 10.0-alpine3.24-arm32v7, 10.0-alpine-arm32v7, 10.0.402-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/sdk/10.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
+9.0.319-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.319-bookworm-slim, 9.0-bookworm-slim, 9.0.319, 9.0 | [Dockerfile](src/sdk/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+9.0.319-alpine3.24-arm32v7, 9.0-alpine3.24-arm32v7, 9.0-alpine-arm32v7, 9.0.319-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/sdk/9.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
+9.0.319-noble-arm32v7, 9.0-noble-arm32v7, 9.0.319-noble, 9.0-noble | [Dockerfile](src/sdk/9.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+8.0.426-bookworm-slim-arm32v7, 8.0-bookworm-slim-arm32v7, 8.0.426-bookworm-slim, 8.0-bookworm-slim, 8.0.426, 8.0 | [Dockerfile](src/sdk/8.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
+8.0.426-alpine3.24-arm32v7, 8.0-alpine3.24-arm32v7, 8.0-alpine-arm32v7, 8.0.426-alpine3.24, 8.0-alpine3.24, 8.0-alpine | [Dockerfile](src/sdk/8.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
+8.0.426-jammy-arm32v7, 8.0-jammy-arm32v7, 8.0.426-jammy, 8.0-jammy | [Dockerfile](src/sdk/8.0/jammy/arm32v7/Dockerfile) | Ubuntu 22.04
 
 ### Windows amd64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.100-rc.1-nanoserver-ltsc2025, 11.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/11.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-11.0.100-rc.1-windowsservercore-ltsc2025, 11.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/11.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-10.0.401-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-10.0.401-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-10.0.401-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-10.0.401-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
-9.0.318-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-9.0.318-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-9.0.318-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-9.0.318-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
-9.0.318-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/sdk/9.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
-9.0.318-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
-8.0.425-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-8.0.425-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-8.0.425-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-8.0.425-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
-8.0.425-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/sdk/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
-8.0.425-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
+11.0.100-rc.2-nanoserver-ltsc2025, 11.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/11.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+11.0.100-rc.2-windowsservercore-ltsc2025, 11.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/11.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+10.0.402-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+10.0.402-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+10.0.402-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+10.0.402-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.319-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+9.0.319-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+9.0.319-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+9.0.319-windowsservercore-ltsc2022, 9.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+9.0.319-nanoserver-1809, 9.0-nanoserver-1809 | [Dockerfile](src/sdk/9.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+9.0.319-windowsservercore-ltsc2019, 9.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/9.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
+8.0.426-nanoserver-ltsc2025, 8.0-nanoserver-ltsc2025 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+8.0.426-windowsservercore-ltsc2025, 8.0-windowsservercore-ltsc2025 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+8.0.426-nanoserver-ltsc2022, 8.0-nanoserver-ltsc2022 | [Dockerfile](src/sdk/8.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+8.0.426-windowsservercore-ltsc2022, 8.0-windowsservercore-ltsc2022 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+8.0.426-nanoserver-1809, 8.0-nanoserver-1809 | [Dockerfile](src/sdk/8.0/nanoserver-1809/amd64/Dockerfile) | Nano Server, version 1809
+8.0.426-windowsservercore-ltsc2019, 8.0-windowsservercore-ltsc2019 | [Dockerfile](src/sdk/8.0/windowsservercore-ltsc2019/amd64/Dockerfile) | Windows Server Core 2019
 
 <!--End of generated tags-->
 

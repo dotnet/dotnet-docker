@@ -5,7 +5,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Dotnet.Docker.Model.Release;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 
 /// <summary>
 /// This represents the configuration for a single run of the .NET release and staging pipelines. It contains
@@ -15,7 +15,7 @@ namespace Dotnet.Docker.Model.Release;
 /// This record is a subset of the model used by the .NET staging and release pipelines.
 /// This MUST stay in sync with https://dev.azure.com/dnceng/internal/_git/dotnet-release?path=%2Fsrc%2FMicrosoft.DotNet.Release%2FMicrosoft.DotNet.ReleaseLib%2FModels%2FMetadataConfig.cs
 /// </remarks>
-internal record ReleaseConfig
+public record ReleaseConfig
 {
     public required string Channel { get; init; }
 

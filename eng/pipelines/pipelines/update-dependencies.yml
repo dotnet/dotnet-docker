@@ -8,8 +8,12 @@ parameters:
 - name: vmrChannel
   type: string
   default: ""
-# BAR channel to read Aspire versions from
-- name: aspireChannel
+# BAR channel to read daily Aspire versions from. Controls updates to the nightly branch.
+- name: aspireDailyChannel
+  type: string
+  default: ""
+# BAR channel to read stable Aspire versions from. Controls updates to the main branch.
+- name: aspireGaChannel
   type: string
   default: ""
 # .NET image components to update. This should be a list of strings.
@@ -26,10 +30,14 @@ parameters:
 - name: updateAspire
   type: boolean
   default: true
-# Additional authentication arguments to pass to update-dependencies
-- name: gitHubAuthArgs
-  type: string
-  default: ""
+# Whether to submit a pull request with the updates instead of applying them locally
+- name: submitPullRequest
+  type: boolean
+  default: false
+# Configuration environment variables passed to update-dependencies
+- name: updateEnvironment
+  type: object
+  default: {}
 
 extends:
   template: /eng/docker-tools/templates/1es.yml@self
@@ -44,48 +52,100 @@ extends:
           parameters:
             dependencyName: dotnet
             updateSteps:
+            - ${{ if parameters.submitPullRequest }}:
+              - template: /eng/pipelines/steps/get-bar-token.yml@self
             - task: AzureCLI@2
               displayName: Update .NET
               inputs:
-                azureSubscription: "Darc: Maestro Production"
+                ${{ if parameters.submitPullRequest }}:
+                  azureSubscription: DotnetContainersGitHubBot
+                ${{ else }}:
+                  azureSubscription: "Darc: Maestro Production"
                 scriptType: "pscore"
                 scriptLocation: "inlineScript"
                 inlineScript: >-
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                  from-channel
+                  dotnet channel
                   ${{ parameters.vmrChannel }}
-                  https://github.com/dotnet/dotnet
-                  --version-source-name 'dotnet/dotnet'
-                  ${{ parameters.gitHubAuthArgs }}
+                  --submit-pr ${{ parameters.submitPullRequest }}
+              env:
+                ${{ insert }}: ${{ parameters.updateEnvironment }}
+                ${{ if parameters.submitPullRequest }}:
+                  UpdateDependencies__BarToken: $(barAccessToken)
 
       - ${{ if parameters.updateAspire }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
           parameters:
-            dependencyName: aspire
+            dependencyName: aspire-nightly
             updateSteps:
+            - ${{ if parameters.submitPullRequest }}:
+              - template: /eng/pipelines/steps/get-bar-token.yml@self
             - task: AzureCLI@2
               displayName: Update Aspire
               inputs:
-                azureSubscription: "Darc: Maestro Production"
+                ${{ if parameters.submitPullRequest }}:
+                  azureSubscription: DotnetContainersGitHubBot
+                ${{ else }}:
+                  azureSubscription: "Darc: Maestro Production"
                 scriptType: "pscore"
                 scriptLocation: "inlineScript"
                 inlineScript: >-
                   dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                  from-channel
-                  ${{ parameters.aspireChannel }}
-                  https://github.com/microsoft/aspire
-                  --version-source-name 'microsoft/aspire'
-                  ${{ parameters.gitHubAuthArgs }}
+                  aspire channel
+                  ${{ parameters.aspireDailyChannel }}
+                  --submit-pr ${{ parameters.submitPullRequest }}
+              env:
+                ${{ insert }}: ${{ parameters.updateEnvironment }}
+                ${{ if parameters.submitPullRequest }}:
+                  UpdateDependencies__BarToken: $(barAccessToken)
+
+        - ${{ if ne(parameters.aspireGaChannel, '') }}:
+          - template: /eng/pipelines/jobs/update-dependency.yml@self
+            parameters:
+              dependencyName: aspire-main
+              updateSteps:
+              - ${{ if parameters.submitPullRequest }}:
+                - template: /eng/pipelines/steps/get-bar-token.yml@self
+              - task: AzureCLI@2
+                displayName: Update Aspire from GA channel
+                inputs:
+                  ${{ if parameters.submitPullRequest }}:
+                    azureSubscription: DotnetContainersGitHubBot
+                  ${{ else }}:
+                    azureSubscription: "Darc: Maestro Production"
+                  scriptType: "pscore"
+                  scriptLocation: "inlineScript"
+                  inlineScript: >-
+                    dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                    aspire channel
+                    ${{ parameters.aspireGaChannel }}
+                    --submit-pr ${{ parameters.submitPullRequest }}
+                    --target-branch main
+                env:
+                  ${{ insert }}: ${{ parameters.updateEnvironment }}
+                  ${{ if parameters.submitPullRequest }}:
+                    UpdateDependencies__BarToken: $(barAccessToken)
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self
           parameters:
             dependencyName: ${{ tool }}
             updateSteps:
-            - powershell: >-
-                dotnet run --project eng/update-dependencies/update-dependencies.csproj --
-                specific 9.0
-                --tool ${{ tool }}
-                --version-source-name ${{ tool }}
-                ${{ parameters.gitHubAuthArgs }}
-              displayName: Update ${{ tool }}
+            - ${{ if parameters.submitPullRequest }}:
+              - task: AzureCLI@2
+                displayName: Update ${{ tool }}
+                inputs:
+                  azureSubscription: DotnetContainersGitHubBot
+                  scriptType: pscore
+                  scriptLocation: inlineScript
+                  inlineScript: >-
+                    dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                    ${{ tool }}
+                    --submit-pr
+                env: ${{ parameters.updateEnvironment }}
+            - ${{ else }}:
+              - powershell: >-
+                  dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                  ${{ tool }}
+                displayName: Update ${{ tool }}
+                env: ${{ parameters.updateEnvironment }}

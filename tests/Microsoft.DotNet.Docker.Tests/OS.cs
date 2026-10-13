@@ -16,7 +16,6 @@ internal static class OS
 
     // Alpine
     public static OSInfo AlpineFloating { get; } = new(OSType.Linux, OSFamily.Alpine, "");
-    public static OSInfo Alpine323 { get; } = AlpineFloating with { Version = "3.23" };
     public static OSInfo Alpine324 { get; } = AlpineFloating with { Version = "3.24" };
 
     // Azure Linux

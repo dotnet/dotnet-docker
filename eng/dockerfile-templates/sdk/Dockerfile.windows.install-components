@@ -2,7 +2,8 @@
     _ ARGS:
         use-local-version-var (optional): Whether to define a local variable for the SDK version
             instead of referencing the environment variable.
-        dotnet-is-internal (optional): Whether the Dockerfile is targeting an internal build of the .NET product. ^
+        use-access-token (optional): Whether any component is downloaded from internal storage using the
+            ACCESSTOKEN build arg. ^
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
@@ -59,7 +60,7 @@ RUN powershell -Command " `
             ], "        ")}}; `
         Remove-Item -Force mingit.zip"
 
-{{if ARGS["dotnet-is-internal"]:SHELL ["powershell", "-command"]
+{{if ARGS["use-access-token"]:SHELL ["powershell", "-command"]
 RUN `^else:RUN powershell -Command " `}}
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
@@ -70,11 +71,9 @@ RUN `^else:RUN powershell -Command " `}}
             "extract-to": "dotnet"
         ], "        ")}}; `
         `
-        {{InsertTemplate("Dockerfile.windows.install-powershell", [
-            "dotnet-is-internal": ARGS["dotnet-is-internal"]
-        ], "        ")}}{{if !isSingleStage: `
+        {{InsertTemplate("Dockerfile.windows.install-powershell", [], "        ")}}{{if !isSingleStage: `
         `
         # Delete everything in the dotnet folder that's not needed in the SDK layer but will instead be derived from base layers{{
 for i, group in sdkExtractGroups:
         Get-ChildItem -Exclude {{join(map(group.paths, getFormattedPath), ",")}} -Path {{group.dir}} `
-            | Remove-Item -Force -Recurse{{if i < len(group.paths) - 1:; `}}}}}}{{if !ARGS["dotnet-is-internal"]:"}}
+            | Remove-Item -Force -Recurse{{if i < len(group.paths) - 1:; `}}}}}}{{if !ARGS["use-access-token"]:"}}

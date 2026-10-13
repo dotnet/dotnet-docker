@@ -1,0 +1,15 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
+
+/// <summary>
+/// A generic CLI command that takes an options object.
+/// </summary>
+/// <typeparam name="TOptions">
+/// The type of options that the command accepts.
+/// </typeparam>
+public interface ICommand<TOptions> where TOptions : CreatePullRequestOptions
+{
+    Task<int> ExecuteAsync(TOptions options);
+}

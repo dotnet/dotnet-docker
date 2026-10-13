@@ -41,8 +41,6 @@ parameters:
 
 variables:
 - template: /eng/docker-tools/templates/variables/dotnet/common.yml@self
-# Uses GitHub token to create pull requests
-- template: /eng/docker-tools/templates/variables/dotnet/secrets.yml@self
 
 extends:
   template: /eng/pipelines/pipelines/update-dependencies.yml@self
@@ -50,10 +48,11 @@ extends:
     updateDotnet: ${{ parameters.updateDotnet }}
     vmrChannel: $(vmrChannel)
     updateAspire: ${{ parameters.updateAspire }}
-    aspireChannel: $(aspireChannel)
+    aspireDailyChannel: $(aspireDailyChannel)
+    aspireGaChannel: $(aspireGaChannel)
     tools: ${{ parameters.tools }}
+    submitPullRequest: ${{ not(parameters.skipPullRequest) }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
-      gitHubAuthArgs: >-
-        --user $(dotnetDockerBot.userName)
-        --email $(dotnetDockerBot.email)
-        --password $(BotAccount-dotnet-docker-bot-PAT)
+      updateEnvironment:
+        UpdateDependencies__GitHub__AppClientId: $(dotnetContainersBot.gitHubApp.clientId)
+        UpdateDependencies__GitHub__AppKeyUri: $(dotnetContainersBot.gitHubApp.privateKeyUri)

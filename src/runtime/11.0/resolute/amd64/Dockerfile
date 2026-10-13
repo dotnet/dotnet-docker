@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 FROM amd64/buildpack-deps:resolute-curl AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-rc.1.26425.128 \
+RUN dotnet_version=11.0.0-rc.2.26504.105 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
@@ -17,10 +17,10 @@ RUN dotnet_version=11.0.0-rc.1.26425.128 \
 
 
 # .NET runtime image
-FROM $REPO:11.0.0-rc.1-resolute-amd64
+FROM $REPO:11.0.0-rc.2-resolute-amd64
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-rc.1.26425.128
+ENV DOTNET_VERSION=11.0.0-rc.2.26504.105
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 

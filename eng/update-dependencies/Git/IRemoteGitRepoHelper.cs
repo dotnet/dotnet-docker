@@ -3,7 +3,7 @@
 
 using Microsoft.DotNet.DarcLib;
 
-namespace Dotnet.Docker.Git;
+namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
 
 internal interface IRemoteGitRepoHelper
 {

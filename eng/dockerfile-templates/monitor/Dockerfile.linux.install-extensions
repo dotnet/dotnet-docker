@@ -4,7 +4,7 @@
     set azBlobFileName to "dotnet-monitor-egress-azureblobstorage.tar.gz" ^
     set s3FileName to "dotnet-monitor-egress-s3storage.tar.gz"
 
-}}RUN dotnet_monitor_extension_version={{ARGS["monitorVersion"]}} \
+}}RUN {{if (find(ARGS["monitorBaseUrl"], "dotnetstage") >= 0):--mount=type=secret,id=ACCESSTOKEN,required=true }}dotnet_monitor_extension_version={{ARGS["monitorVersion"]}} \
     && {{InsertTemplate("../Dockerfile.linux.download-files", [
         "files": [
             [

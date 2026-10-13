@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:11.0.0-rc.1-alpine3.24-amd64 AS installer
+FROM $REPO:11.0.0-rc.2-alpine3.24-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-rc.1.26425.128 \
+RUN dotnet_sdk_version=11.0.100-rc.2.26504.105 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
@@ -15,14 +15,14 @@ RUN dotnet_sdk_version=11.0.100-rc.1.26425.128 \
         dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512
 
 # Download PowerShell
-RUN powershell_version=7.7.0-preview.2 \
+RUN powershell_version=7.7.0-preview.5 \
     && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='4eba9c9b057620bef0b33d01e04b2d448d6c95896a27d4659c3b173e989f7c900e204b9b987d0587bc8941015f75a4bc2ab8f8cec6dd2e9860ffc02b98b72f62' \
+    && powershell_sha512='e3d3e80b026760f173a268b2ff5630a28741be33f67c6628141d75e854e20299fb89d61e819da32ba988a055baaa049d20ba355b196a0c3297221c2032dd706a' \
     && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c -
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-rc.1-alpine3.24-amd64
+FROM $REPO:11.0.0-rc.2-alpine3.24-amd64
 
 ENV \
     # Do not generate certificate
@@ -30,7 +30,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-rc.1.26425.128 \
+    DOTNET_SDK_VERSION=11.0.100-rc.2.26504.105 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -50,7 +50,7 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.Alpine.7.7.0-preview.2.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.Alpine.7.7.0-preview.5.nupkg", "/"]
 
 # Workaround for https://github.com/dotnet/sdk/issues/55238
 RUN printf '%s\n' \
@@ -63,7 +63,7 @@ RUN printf '%s\n' \
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.7.0-preview.2 \
+RUN powershell_version=7.7.0-preview.5 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
     && dotnet nuget locals all --clear \
