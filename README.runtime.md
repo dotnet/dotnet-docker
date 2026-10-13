@@ -81,17 +81,17 @@ Tags | Dockerfile | OS Version
 11.0.0-rc.1-azurelinux4.0-amd64, 11.0-azurelinux4.0-amd64, 11.0.0-rc.1-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/runtime/11.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
 11.0.0-rc.1-azurelinux4.0-distroless-amd64, 11.0-azurelinux4.0-distroless-amd64, 11.0.0-rc.1-azurelinux4.0-distroless, 11.0-azurelinux4.0-distroless | [Dockerfile](src/runtime/11.0/azurelinux4.0-distroless/amd64/Dockerfile) | Azure Linux 4.0
 11.0.0-rc.1-azurelinux4.0-distroless-extra-amd64, 11.0-azurelinux4.0-distroless-extra-amd64, 11.0.0-rc.1-azurelinux4.0-distroless-extra, 11.0-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime/11.0/azurelinux4.0-distroless-extra/amd64/Dockerfile) | Azure Linux 4.0
-10.0.12-noble-amd64, 10.0-noble-amd64, 10.0.12-noble, 10.0-noble, 10.0.12, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
-10.0.12-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.12-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
-10.0.12-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.12-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
-10.0.12-resolute-amd64, 10.0-resolute-amd64, 10.0.12-resolute, 10.0-resolute | [Dockerfile](src/runtime/10.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
-10.0.12-resolute-chiseled-amd64, 10.0-resolute-chiseled-amd64, 10.0.12-resolute-chiseled, 10.0-resolute-chiseled | [Dockerfile](src/runtime/10.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 26.04
-10.0.12-resolute-chiseled-extra-amd64, 10.0-resolute-chiseled-extra-amd64, 10.0.12-resolute-chiseled-extra, 10.0-resolute-chiseled-extra | [Dockerfile](src/runtime/10.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 26.04
-10.0.12-alpine3.24-amd64, 10.0-alpine3.24-amd64, 10.0-alpine-amd64, 10.0.12-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
-10.0.12-alpine3.24-extra-amd64, 10.0-alpine3.24-extra-amd64, 10.0-alpine-extra-amd64, 10.0.12-alpine3.24-extra, 10.0-alpine3.24-extra, 10.0-alpine-extra | [Dockerfile](src/runtime/10.0/alpine3.24-extra/amd64/Dockerfile) | Alpine 3.24
-10.0.12-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.12-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
-10.0.12-azurelinux3.0-distroless-amd64, 10.0-azurelinux3.0-distroless-amd64, 10.0.12-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
-10.0.12-azurelinux3.0-distroless-extra-amd64, 10.0-azurelinux3.0-distroless-extra-amd64, 10.0.12-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
+10.0.13-noble-amd64, 10.0-noble-amd64, 10.0.13-noble, 10.0-noble, 10.0.13, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+10.0.13-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.13-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
+10.0.13-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.13-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
+10.0.13-resolute-amd64, 10.0-resolute-amd64, 10.0.13-resolute, 10.0-resolute | [Dockerfile](src/runtime/10.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+10.0.13-resolute-chiseled-amd64, 10.0-resolute-chiseled-amd64, 10.0.13-resolute-chiseled, 10.0-resolute-chiseled | [Dockerfile](src/runtime/10.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 26.04
+10.0.13-resolute-chiseled-extra-amd64, 10.0-resolute-chiseled-extra-amd64, 10.0.13-resolute-chiseled-extra, 10.0-resolute-chiseled-extra | [Dockerfile](src/runtime/10.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 26.04
+10.0.13-alpine3.24-amd64, 10.0-alpine3.24-amd64, 10.0-alpine-amd64, 10.0.13-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
+10.0.13-alpine3.24-extra-amd64, 10.0-alpine3.24-extra-amd64, 10.0-alpine-extra-amd64, 10.0.13-alpine3.24-extra, 10.0-alpine3.24-extra, 10.0-alpine-extra | [Dockerfile](src/runtime/10.0/alpine3.24-extra/amd64/Dockerfile) | Alpine 3.24
+10.0.13-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.13-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
+10.0.13-azurelinux3.0-distroless-amd64, 10.0-azurelinux3.0-distroless-amd64, 10.0.13-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/amd64/Dockerfile) | Azure Linux 3.0
+10.0.13-azurelinux3.0-distroless-extra-amd64, 10.0-azurelinux3.0-distroless-extra-amd64, 10.0.13-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/amd64/Dockerfile) | Azure Linux 3.0
 9.0.21-bookworm-slim-amd64, 9.0-bookworm-slim-amd64, 9.0.21-bookworm-slim, 9.0-bookworm-slim, 9.0.21, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/amd64/Dockerfile) | Debian 12
 9.0.21-alpine3.24-amd64, 9.0-alpine3.24-amd64, 9.0-alpine-amd64, 9.0.21-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.24/amd64/Dockerfile) | Alpine 3.24
 9.0.21-alpine3.24-extra-amd64, 9.0-alpine3.24-extra-amd64, 9.0-alpine-extra-amd64, 9.0.21-alpine3.24-extra, 9.0-alpine3.24-extra, 9.0-alpine-extra | [Dockerfile](src/runtime/9.0/alpine3.24-extra/amd64/Dockerfile) | Alpine 3.24
@@ -129,17 +129,17 @@ Tags | Dockerfile | OS Version
 11.0.0-rc.1-azurelinux4.0-arm64v8, 11.0-azurelinux4.0-arm64v8, 11.0.0-rc.1-azurelinux4.0, 11.0-azurelinux4.0 | [Dockerfile](src/runtime/11.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
 11.0.0-rc.1-azurelinux4.0-distroless-arm64v8, 11.0-azurelinux4.0-distroless-arm64v8, 11.0.0-rc.1-azurelinux4.0-distroless, 11.0-azurelinux4.0-distroless | [Dockerfile](src/runtime/11.0/azurelinux4.0-distroless/arm64v8/Dockerfile) | Azure Linux 4.0
 11.0.0-rc.1-azurelinux4.0-distroless-extra-arm64v8, 11.0-azurelinux4.0-distroless-extra-arm64v8, 11.0.0-rc.1-azurelinux4.0-distroless-extra, 11.0-azurelinux4.0-distroless-extra | [Dockerfile](src/runtime/11.0/azurelinux4.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 4.0
-10.0.12-noble-arm64v8, 10.0-noble-arm64v8, 10.0.12-noble, 10.0-noble, 10.0.12, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.12-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.12-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.12-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.12-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
-10.0.12-resolute-arm64v8, 10.0-resolute-arm64v8, 10.0.12-resolute, 10.0-resolute | [Dockerfile](src/runtime/10.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
-10.0.12-resolute-chiseled-arm64v8, 10.0-resolute-chiseled-arm64v8, 10.0.12-resolute-chiseled, 10.0-resolute-chiseled | [Dockerfile](src/runtime/10.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 26.04
-10.0.12-resolute-chiseled-extra-arm64v8, 10.0-resolute-chiseled-extra-arm64v8, 10.0.12-resolute-chiseled-extra, 10.0-resolute-chiseled-extra | [Dockerfile](src/runtime/10.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 26.04
-10.0.12-alpine3.24-arm64v8, 10.0-alpine3.24-arm64v8, 10.0-alpine-arm64v8, 10.0.12-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
-10.0.12-alpine3.24-extra-arm64v8, 10.0-alpine3.24-extra-arm64v8, 10.0-alpine-extra-arm64v8, 10.0.12-alpine3.24-extra, 10.0-alpine3.24-extra, 10.0-alpine-extra | [Dockerfile](src/runtime/10.0/alpine3.24-extra/arm64v8/Dockerfile) | Alpine 3.24
-10.0.12-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.12-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.12-azurelinux3.0-distroless-arm64v8, 10.0-azurelinux3.0-distroless-arm64v8, 10.0.12-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-10.0.12-azurelinux3.0-distroless-extra-arm64v8, 10.0-azurelinux3.0-distroless-extra-arm64v8, 10.0.12-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.13-noble-arm64v8, 10.0-noble-arm64v8, 10.0.13-noble, 10.0-noble, 10.0.13, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.13-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.13-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.13-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.13-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.13-resolute-arm64v8, 10.0-resolute-arm64v8, 10.0.13-resolute, 10.0-resolute | [Dockerfile](src/runtime/10.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+10.0.13-resolute-chiseled-arm64v8, 10.0-resolute-chiseled-arm64v8, 10.0.13-resolute-chiseled, 10.0-resolute-chiseled | [Dockerfile](src/runtime/10.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 26.04
+10.0.13-resolute-chiseled-extra-arm64v8, 10.0-resolute-chiseled-extra-arm64v8, 10.0.13-resolute-chiseled-extra, 10.0-resolute-chiseled-extra | [Dockerfile](src/runtime/10.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 26.04
+10.0.13-alpine3.24-arm64v8, 10.0-alpine3.24-arm64v8, 10.0-alpine-arm64v8, 10.0.13-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
+10.0.13-alpine3.24-extra-arm64v8, 10.0-alpine3.24-extra-arm64v8, 10.0-alpine-extra-arm64v8, 10.0.13-alpine3.24-extra, 10.0-alpine3.24-extra, 10.0-alpine-extra | [Dockerfile](src/runtime/10.0/alpine3.24-extra/arm64v8/Dockerfile) | Alpine 3.24
+10.0.13-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.13-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/runtime/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.13-azurelinux3.0-distroless-arm64v8, 10.0-azurelinux3.0-distroless-arm64v8, 10.0.13-azurelinux3.0-distroless, 10.0-azurelinux3.0-distroless | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.13-azurelinux3.0-distroless-extra-arm64v8, 10.0-azurelinux3.0-distroless-extra-arm64v8, 10.0.13-azurelinux3.0-distroless-extra, 10.0-azurelinux3.0-distroless-extra | [Dockerfile](src/runtime/10.0/azurelinux3.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 3.0
 9.0.21-bookworm-slim-arm64v8, 9.0-bookworm-slim-arm64v8, 9.0.21-bookworm-slim, 9.0-bookworm-slim, 9.0.21, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/arm64v8/Dockerfile) | Debian 12
 9.0.21-alpine3.24-arm64v8, 9.0-alpine3.24-arm64v8, 9.0-alpine-arm64v8, 9.0.21-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.24/arm64v8/Dockerfile) | Alpine 3.24
 9.0.21-alpine3.24-extra-arm64v8, 9.0-alpine3.24-extra-arm64v8, 9.0-alpine-extra-arm64v8, 9.0.21-alpine3.24-extra, 9.0-alpine3.24-extra, 9.0-alpine-extra | [Dockerfile](src/runtime/9.0/alpine3.24-extra/arm64v8/Dockerfile) | Alpine 3.24
@@ -171,14 +171,14 @@ Tags | Dockerfile | OS Version
 11.0.0-rc.1-resolute-chiseled-extra-arm32v7, 11.0-resolute-chiseled-extra-arm32v7, 11.0.0-rc.1-resolute-chiseled-extra, 11.0-resolute-chiseled-extra | [Dockerfile](src/runtime/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.0-rc.1-alpine3.24-arm32v7, 11.0-alpine3.24-arm32v7, 11.0-alpine-arm32v7, 11.0.0-rc.1-alpine3.24, 11.0-alpine3.24, 11.0-alpine | [Dockerfile](src/runtime/11.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
 11.0.0-rc.1-alpine3.24-extra-arm32v7, 11.0-alpine3.24-extra-arm32v7, 11.0-alpine-extra-arm32v7, 11.0.0-rc.1-alpine3.24-extra, 11.0-alpine3.24-extra, 11.0-alpine-extra | [Dockerfile](src/runtime/11.0/alpine3.24-extra/arm32v7/Dockerfile) | Alpine 3.24
-10.0.12-noble-arm32v7, 10.0-noble-arm32v7, 10.0.12-noble, 10.0-noble, 10.0.12, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.12-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.12-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.12-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.12-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
-10.0.12-resolute-arm32v7, 10.0-resolute-arm32v7, 10.0.12-resolute, 10.0-resolute | [Dockerfile](src/runtime/10.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
-10.0.12-resolute-chiseled-arm32v7, 10.0-resolute-chiseled-arm32v7, 10.0.12-resolute-chiseled, 10.0-resolute-chiseled | [Dockerfile](src/runtime/10.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 26.04
-10.0.12-resolute-chiseled-extra-arm32v7, 10.0-resolute-chiseled-extra-arm32v7, 10.0.12-resolute-chiseled-extra, 10.0-resolute-chiseled-extra | [Dockerfile](src/runtime/10.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
-10.0.12-alpine3.24-arm32v7, 10.0-alpine3.24-arm32v7, 10.0-alpine-arm32v7, 10.0.12-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
-10.0.12-alpine3.24-extra-arm32v7, 10.0-alpine3.24-extra-arm32v7, 10.0-alpine-extra-arm32v7, 10.0.12-alpine3.24-extra, 10.0-alpine3.24-extra, 10.0-alpine-extra | [Dockerfile](src/runtime/10.0/alpine3.24-extra/arm32v7/Dockerfile) | Alpine 3.24
+10.0.13-noble-arm32v7, 10.0-noble-arm32v7, 10.0.13-noble, 10.0-noble, 10.0.13, 10.0, latest | [Dockerfile](src/runtime/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.13-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.13-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/runtime/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.13-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.13-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/runtime/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.13-resolute-arm32v7, 10.0-resolute-arm32v7, 10.0.13-resolute, 10.0-resolute | [Dockerfile](src/runtime/10.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
+10.0.13-resolute-chiseled-arm32v7, 10.0-resolute-chiseled-arm32v7, 10.0.13-resolute-chiseled, 10.0-resolute-chiseled | [Dockerfile](src/runtime/10.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 26.04
+10.0.13-resolute-chiseled-extra-arm32v7, 10.0-resolute-chiseled-extra-arm32v7, 10.0.13-resolute-chiseled-extra, 10.0-resolute-chiseled-extra | [Dockerfile](src/runtime/10.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
+10.0.13-alpine3.24-arm32v7, 10.0-alpine3.24-arm32v7, 10.0-alpine-arm32v7, 10.0.13-alpine3.24, 10.0-alpine3.24, 10.0-alpine | [Dockerfile](src/runtime/10.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
+10.0.13-alpine3.24-extra-arm32v7, 10.0-alpine3.24-extra-arm32v7, 10.0-alpine-extra-arm32v7, 10.0.13-alpine3.24-extra, 10.0-alpine3.24-extra, 10.0-alpine-extra | [Dockerfile](src/runtime/10.0/alpine3.24-extra/arm32v7/Dockerfile) | Alpine 3.24
 9.0.21-bookworm-slim-arm32v7, 9.0-bookworm-slim-arm32v7, 9.0.21-bookworm-slim, 9.0-bookworm-slim, 9.0.21, 9.0 | [Dockerfile](src/runtime/9.0/bookworm-slim/arm32v7/Dockerfile) | Debian 12
 9.0.21-alpine3.24-arm32v7, 9.0-alpine3.24-arm32v7, 9.0-alpine-arm32v7, 9.0.21-alpine3.24, 9.0-alpine3.24, 9.0-alpine | [Dockerfile](src/runtime/9.0/alpine3.24/arm32v7/Dockerfile) | Alpine 3.24
 9.0.21-alpine3.24-extra-arm32v7, 9.0-alpine3.24-extra-arm32v7, 9.0-alpine-extra-arm32v7, 9.0.21-alpine3.24-extra, 9.0-alpine3.24-extra, 9.0-alpine-extra | [Dockerfile](src/runtime/9.0/alpine3.24-extra/arm32v7/Dockerfile) | Alpine 3.24
@@ -198,10 +198,10 @@ Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
 11.0.0-rc.1-nanoserver-ltsc2025, 11.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/11.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
 11.0.0-rc.1-windowsservercore-ltsc2025, 11.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/11.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-10.0.12-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
-10.0.12-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
-10.0.12-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
-10.0.12-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
+10.0.13-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
+10.0.13-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+10.0.13-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+10.0.13-windowsservercore-ltsc2022, 10.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
 9.0.21-nanoserver-ltsc2025, 9.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
 9.0.21-windowsservercore-ltsc2025, 9.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/9.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 9.0.21-nanoserver-ltsc2022, 9.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/9.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
