@@ -17,9 +17,9 @@ RUN dotnet_sdk_version=9.0.319 \
         $dotnet_version-sha.txt
 
 # Download PowerShell
-RUN powershell_version=7.5.11 \
+RUN powershell_version=7.5.12 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm32.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha256='2b24bb77b83d393f5b5d74438b3f60dd04dd0a4a20d377e4ef1e9ac5a641eed4' \
+    && powershell_sha256='6a48afe4347227c697c5959196049aad11967bf4ae0aa945a66c7cc83eda2bd5' \
     && echo "$powershell_sha256  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha256sum -c -
 
 
@@ -50,13 +50,13 @@ RUN apt-get update \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.arm32.7.5.11.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.arm32.7.5.12.nupkg", "/"]
 
 # Trigger first run experience by running arbitrary cmd
 RUN dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.5.11 \
+RUN powershell_version=7.5.12 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
     && dotnet nuget locals all --clear \

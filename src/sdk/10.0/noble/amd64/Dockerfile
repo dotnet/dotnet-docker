@@ -15,9 +15,9 @@ RUN dotnet_sdk_version=10.0.402 \
         dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512
 
 # Download PowerShell
-RUN powershell_version=7.6.6 \
+RUN powershell_version=7.6.7 \
     && curl --fail --show-error --location --output PowerShell.Linux.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.x64.$powershell_version.nupkg \
-    && powershell_sha256='4227dacda5fd8817655a0aecd92b7ee923d915a98083fae0e46e31e5c125a0d8' \
+    && powershell_sha256='198d713d6d16a55dcc46343271cc85a582af08e95875cc6179ee33a0b1aa2614' \
     && echo "$powershell_sha256  PowerShell.Linux.x64.$powershell_version.nupkg" | sha256sum -c -
 
 
@@ -48,14 +48,14 @@ RUN apt-get update \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.x64.7.6.6.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.x64.7.6.7.nupkg", "/"]
 
 RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.6.6 \
+RUN powershell_version=7.6.7 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.x64 \
     && dotnet nuget locals all --clear \
