@@ -1,0 +1,23 @@
+# escape=`
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+FROM mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 AS build
+WORKDIR /source
+
+# Copy project file and restore as distinct layers
+COPY --link AspNetCoreRazorApp/*.csproj .
+RUN dotnet restore
+
+# Copy source code and publish app
+COPY --link AspNetCoreRazorApp/. .
+RUN dotnet publish --no-restore -o /app
+
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-nanoserver-ltsc2025
+EXPOSE 8080
+WORKDIR /app
+COPY --link --from=build /app .
+HEALTHCHECK CMD curl -sf --show-error http://localhost:8080/healthz || exit 1
+
+ENTRYPOINT ["AspNetCoreRazorApp"]

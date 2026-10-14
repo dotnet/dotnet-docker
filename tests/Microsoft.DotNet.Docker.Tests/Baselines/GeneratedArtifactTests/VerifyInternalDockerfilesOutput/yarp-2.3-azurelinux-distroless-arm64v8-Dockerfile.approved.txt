@@ -10,8 +10,8 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve YARP
-RUN yarp_version=0.0.0 \
-    && curl --header "Authorization: Bearer $ACCESSTOKEN" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
+RUN --mount=type=secret,id=ACCESSTOKEN,required=true yarp_version=0.0.0 \
+    && curl --header "Authorization: Bearer $(cat /run/secrets/ACCESSTOKEN)" --header "x-ms-version: 2017-11-09" --fail --show-error --location \
         --remote-name https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz \
         --remote-name https://dotnetstage.blob.core.windows.net/reverse-proxy/$yarp_version/reverse-proxy-linux-arm64.tar.gz.sha512 \
     && echo "$(cat reverse-proxy-linux-arm64.tar.gz.sha512)  reverse-proxy-linux-arm64.tar.gz" | sha512sum -c - \

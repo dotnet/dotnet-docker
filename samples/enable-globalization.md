@@ -4,7 +4,7 @@
 
 The .NET team has various policies for making these libraries available in containers and for configuring the .NET product to use them (or not).
 
-The [globalapp](globalapp/README.md) samples demonstrates using globalization capabilities in containers.
+The [ConsoleAppWithGlobalization](ConsoleAppWithGlobalization/README.md) samples demonstrates using globalization capabilities in containers.
 
 ## ICU
 
@@ -39,7 +39,7 @@ This is by design. `Microsoft.Data.SqlClient` requires ICU to be installed. See 
 
 ### Alpine images
 
-ICU can be added to a .NET Alpine image by adding the following instructions to the final stage within a `Dockerfile`, as demonstrated in [Dockerfile.alpine-icu](aspnetapp/Dockerfile.alpine-icu). This Dockerfile fragment adds and configures ICU and disables Globalization invariant mode.
+ICU can be added to a .NET Alpine image by adding the following instructions to the final stage within a `Dockerfile`, as demonstrated in [Dockerfile.alpine-icu](AspNetCoreRazorApp/Dockerfile.alpine-icu). This Dockerfile fragment adds and configures ICU and disables Globalization invariant mode.
 
 ```Dockerfile
 ENV \

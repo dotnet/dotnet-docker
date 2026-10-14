@@ -7,7 +7,7 @@ make the best base image choice for your apps and environment.
 
 The table below shows how base image choice and publish type affects typical
 image sizes and for a simple .NET minimal web API. These images were produced
-from the ["releasesapi" sample](../samples/releasesapi).
+from the ["AspNetCoreNativeAot" sample](../samples/AspNetCoreNativeAot).
 
 | Base Image                                 | Publish Type                  | Distroless | Globalization | Compressed Size |
 | ------------------------------------------ | ----------------------------- | ---------- | ------------- | --------------: |

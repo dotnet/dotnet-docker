@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <EnableSdkContainerSupport>true</EnableSdkContainerSupport>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="../LibBar/LibBar.csproj" />
+    <ProjectReference Include="../LibFoo/LibFoo.csproj" />
+  </ItemGroup>
+
+</Project>

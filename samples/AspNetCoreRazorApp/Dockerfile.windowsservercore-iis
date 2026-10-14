@@ -1,0 +1,44 @@
+# escape=`
+# Learn about building .NET container images:
+# https://github.com/dotnet/dotnet-docker/blob/main/samples/README.md
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-windowsservercore-ltsc2025 AS final
+
+RUN powershell -Command `
+        $ErrorActionPreference = 'Stop'; `
+        $ProgressPreference = 'SilentlyContinue'; `
+        `
+        # Install IIS
+        Add-WindowsFeature Web-Server; `
+        Remove-Item -Recurse C:\inetpub\wwwroot\*; `
+        `
+        # Acquire ServiceMonitor
+        Invoke-WebRequest -OutFile C:\ServiceMonitor.exe -Uri https://github.com/microsoft/IIS.ServiceMonitor/releases/download/v2.0.1.10/ServiceMonitor.exe; `
+        `
+        # .NET 11 hosting bundle is not available yet. Use .NET 10 instead.
+        Invoke-WebRequest -OutFile c:\dotnet-hosting-win.exe https://aka.ms/dotnet/10.0/dotnet-hosting-win.exe; `
+        $process = Start-Process -Filepath C:\dotnet-hosting-win.exe -ArgumentList  @('/install', '/q', '/norestart', 'OPT_NO_RUNTIME=1', 'OPT_NO_X86=1', 'OPT_NO_SHAREDFX=1') -Wait -PassThru ; `
+        if ($process.ExitCode -ne 0) { `
+            exit $process.ExitCode; `
+        } `
+        Remove-Item -Force C:\dotnet-hosting-win.exe; `
+        Remove-Item -Force -Recurse $Env:Temp\*
+
+FROM mcr.microsoft.com/dotnet/sdk:11.0-windowsservercore-ltsc2025 AS build
+WORKDIR /source
+
+# Copy project file and restore as distinct layers
+COPY --link AspNetCoreRazorApp/*.csproj .
+RUN dotnet restore
+
+# Copy source code and publish app
+COPY --link AspNetCoreRazorApp/. .
+RUN dotnet publish --no-restore -o /app
+
+
+FROM final
+WORKDIR /inetpub/wwwroot
+COPY --link --from=build /app .
+
+EXPOSE 80
+ENTRYPOINT ["C:\\ServiceMonitor.exe", "w3svc"]
