@@ -4,8 +4,8 @@
 
 ## Featured Tags
 
-* `13`
-  * `docker pull mcr.microsoft.com/aspire/nightly/dashboard:13`
+* `17`
+  * `docker pull mcr.microsoft.com/aspire/nightly/dashboard:17`
 
 ## About
 
@@ -16,7 +16,7 @@ The [Aspire Dashboard](https://aspire.dev/dashboard/standalone/) is a standalone
 Run the dashboard locally:
 
 ```console
-docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 mcr.microsoft.com/aspire/nightly/dashboard:13
+docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 mcr.microsoft.com/aspire/nightly/dashboard:17
 ```
 
 Open `http://localhost:18888`. To sign in, use the login URL or token printed in the container logs:
@@ -55,13 +55,13 @@ For applications in other containers, use the dashboard container's name and por
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-13.6.1, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/amd64/Dockerfile) | Azure Linux 3.0
+17.0.0, 17.0, 17, latest | [Dockerfile](src/aspire-dashboard/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-13.6.1, 13.6, 13, latest | [Dockerfile](src/aspire-dashboard/arm64v8/Dockerfile) | Azure Linux 3.0
+17.0.0, 17.0, 17, latest | [Dockerfile](src/aspire-dashboard/arm64v8/Dockerfile) | Azure Linux 3.0
 
 <!--End of generated tags-->
 
