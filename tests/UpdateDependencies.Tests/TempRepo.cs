@@ -2,8 +2,10 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Maestro.Common;
+using Maestro.Common.Telemetry;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
+using Microsoft.DotNet.Internal.Credentials;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
