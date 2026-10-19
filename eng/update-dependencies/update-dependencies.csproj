@@ -33,5 +33,6 @@
     <PackageReference Include="Microsoft.TeamFoundationServer.Client" Version="19.232.0-preview" />
     <PackageReference Include="Octokit" Version="14.0.0" />
     <PackageReference Include="System.CommandLine" Version="2.0.2" />
+    <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.3" />
   </ItemGroup>
 </Project>
