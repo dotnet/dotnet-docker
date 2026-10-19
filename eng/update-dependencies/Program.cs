@@ -3,7 +3,7 @@
 
 using System.CommandLine;
 using Maestro.Common;
-using Maestro.Common.AzureDevOpsTokens;
+using Maestro.Common.Telemetry;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
 using Microsoft.DotNet.Docker.UpdateDependencies;
@@ -11,6 +11,8 @@ using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
 using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
+using Microsoft.DotNet.Internal.AzureDevOps.Authentication;
+using Microsoft.DotNet.Internal.Credentials;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
