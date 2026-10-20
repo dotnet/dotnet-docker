@@ -31,6 +31,12 @@ We publish .NET container images for the following versions of each Linux distro
 
 Pre-release versions of the above distros will be published in the [nightly repositories](https://github.com/dotnet/dotnet-docker/blob/nightly/README.md), pending the availability of pre-release base images.
 
+#### Host Compatibility
+
+Linux containers share the host's kernel and container runtime. Newer container base images may use system calls that older Linux kernels or outdated container runtime seccomp profiles do not support. Running newer images on an old or end-of-life host OS can cause operations inside the container to fail with errors such as `Operation not permitted` (`EPERM`) or `Function not implemented` (`ENOSYS`).
+
+If you encounter these errors, upgrade the host kernel and container runtime, or pin to a tag for an older supported OS version.
+
 #### FedRAMP Compliance
 
 For [.NET appliance images](./supported-tags.md#net-appliance-images) based on Azure Linux, base image OS upgrades will be delayed until the new version of Azure Linux has FedRAMP approval.
