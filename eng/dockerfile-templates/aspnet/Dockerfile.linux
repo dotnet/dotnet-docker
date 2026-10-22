@@ -24,8 +24,7 @@
     set osVersionBase to when(isUbuntu && ARCH_VERSIONED = "arm32v7", "jammy", osVersionBase) ^
 
     set installerImageTag to when(isDistrolessAzureLinux,
-        cat(VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")], "/base/core:",
-            OS_VERSION_NUMBER),
+        VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|core")],
         when(isAlpine || isFullAzureLinux,
             runtimeBaseTag,
             cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))) ^

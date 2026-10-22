@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime
 
 # Installer image
-FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0 AS installer
+FROM mcr.microsoft.com/azurelinux/core:4 AS installer
 
 RUN dnf install -y \
         ca-certificates \
