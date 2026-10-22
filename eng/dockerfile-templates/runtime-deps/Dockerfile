@@ -15,11 +15,11 @@
             cat(ARCH_VERSIONED, "/debian"),
             when(isUbuntu,
                 "ubuntu.azurecr.io/ubuntu",
-                when(isAzureLinux,
-                    cat(VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|repo")], "/base/core"),
-                    "<NOT-IMPLEMENTED>")))) ^
-    set baseImageTag to when(isAlpine || isAzureLinux, OS_VERSION_NUMBER, OS_VERSION) ^
-    set baseImage to cat(baseImageRepo, ":", baseImageTag) ^
+                "<NOT-IMPLEMENTED>"))) ^
+    set baseImageTag to when(isAlpine, OS_VERSION_NUMBER, OS_VERSION) ^
+    set baseImage to when(isAzureLinux,
+        VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|core")],
+        cat(baseImageRepo, ":", baseImageTag)) ^
 
     set useGlobalizationInvariantMode to !ARGS["is-extra"] && (isDistroless || isAlpine) ^
     set username to "app" ^

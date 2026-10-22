@@ -1,5 +1,5 @@
 # Installer image
-FROM mcr.microsoft.com/azurelinux-beta/base/core:4.0 AS installer
+FROM mcr.microsoft.com/azurelinux/core:4 AS installer
 
 RUN dnf install -y \
         shadow-utils \
@@ -48,7 +48,7 @@ RUN \
 
 
 # .NET runtime-deps image
-FROM mcr.microsoft.com/azurelinux-beta/distroless/minimal:4.0
+FROM mcr.microsoft.com/azurelinux/core:4-distroless-minimal
 
 ENV \
     # UID of the non-root user 'app'
