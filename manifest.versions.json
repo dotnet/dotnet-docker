@@ -12,8 +12,10 @@
     "base-url|public-checksums|preview|main": "https://ci.dot.net/public-checksums",
     "base-url|public-checksums|preview|nightly": "https://ci.dot.net/public-checksums",
 
-    "azurelinux|3.0|repo": "mcr.microsoft.com/azurelinux",
-    "azurelinux|4.0|repo": "mcr.microsoft.com/azurelinux-beta",
+    "azurelinux|3.0|core": "mcr.microsoft.com/azurelinux/base/core:3.0",
+    "azurelinux|3.0|distroless-minimal": "mcr.microsoft.com/azurelinux/distroless/minimal:3.0",
+    "azurelinux|4.0|core": "mcr.microsoft.com/azurelinux/core:4",
+    "azurelinux|4.0|distroless-minimal": "mcr.microsoft.com/azurelinux/core:4-distroless-minimal",
 
     "alpine|floating-tag-version": "alpine3.24",
     "alpine|11.0|floating-tag-version": "alpine3.24",
