@@ -108,5 +108,6 @@
     [
         "pkgs": pkgs,
         "pkg-mgr": when(isDistrolessAzureLinux && !isAzureLinux3, "dnf", when(isDistrolessAzureLinux, "tdnf", "")),
-        "pkg-mgr-opts": pkgMgrOpts
+        "pkg-mgr-opts": pkgMgrOpts,
+        "upgrade-pkgs": when(OS_VERSION = "azurelinux4.0", [caCertsPkg], [])
     ])}}
