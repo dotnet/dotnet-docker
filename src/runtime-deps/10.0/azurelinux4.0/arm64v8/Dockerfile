@@ -8,7 +8,8 @@ ENV \
     # Enable detection of running in a container
     DOTNET_RUNNING_IN_CONTAINER=true
 
-RUN dnf install -y \
+RUN dnf --refresh do -y \
+    --action=install \
         ca-certificates \
         \
         # .NET dependencies
@@ -18,6 +19,8 @@ RUN dnf install -y \
         libstdc++ \
         openssl-libs \
         tzdata \
+    --action=upgrade \
+        ca-certificates \
     && dnf clean all
 
 # Create a non-root user and group
