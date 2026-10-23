@@ -9,7 +9,7 @@ ENV \
     DOTNET_RUNNING_IN_CONTAINER=true
 
 RUN dnf --refresh do -y \
-    --action=install \
+        --action=install \
         ca-certificates \
         \
         # .NET dependencies
@@ -19,7 +19,7 @@ RUN dnf --refresh do -y \
         libstdc++ \
         openssl-libs \
         tzdata \
-    --action=upgrade \
+        --action=upgrade \
         ca-certificates \
     && dnf clean all
 

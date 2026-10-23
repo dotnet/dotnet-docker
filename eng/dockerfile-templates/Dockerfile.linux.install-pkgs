@@ -20,7 +20,7 @@
     }}
 }}{{
 if isDnf && len(upgradePkgs) > 0:dnf --refresh do -y{{ARGS["pkg-mgr-opts"]}} \
-    --action=install \^
+        --action=install \^
 elif isDnf:dnf install -y{{ARGS["pkg-mgr-opts"]}} \^
 elif isApk:apk add --upgrade --no-cache{{ARGS["pkg-mgr-opts"]}} \^
 elif isTdnf:tdnf install -y{{ARGS["pkg-mgr-opts"]}} \^
@@ -28,7 +28,7 @@ else:apt-get update \
     && apt-get install -y --no-install-recommends{{ARGS["pkg-mgr-opts"]}} \}}{{
     for index, pkg in ARGS["pkgs"]:
         {{pkg}}{{if appendPkgSuffix(pkg, index):{{if pkg != "": }}\}}}}{{if isDnf && len(upgradePkgs) > 0:
-    --action=upgrade \
+        --action=upgrade \
         {{join(upgradePkgs, " ")}} \}}{{if !ARGS["no-clean"]:{{
 if isTdnf:
     && tdnf clean all{{ARGS["pkg-mgr-opts"]}}^
