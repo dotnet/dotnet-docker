@@ -1,6 +1,6 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:11.0.0-rc.2-azurelinux4.0-amd64 AS installer
+FROM $REPO:11.0.0-rc.3-azurelinux4.0-amd64 AS installer
 
 RUN dnf install -y \
         gzip \
@@ -8,7 +8,7 @@ RUN dnf install -y \
     && dnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-rc.2.26504.105 \
+RUN dotnet_sdk_version=11.0.100-rc.3.26522.148 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
@@ -27,7 +27,7 @@ RUN powershell_version=7.7.0-preview.5 \
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-rc.2-azurelinux4.0-amd64
+FROM $REPO:11.0.0-rc.3-azurelinux4.0-amd64
 
 ENV \
     # Do not generate certificate
@@ -35,7 +35,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-rc.2.26504.105 \
+    DOTNET_SDK_VERSION=11.0.100-rc.3.26522.148 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

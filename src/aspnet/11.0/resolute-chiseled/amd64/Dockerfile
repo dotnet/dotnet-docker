@@ -4,7 +4,7 @@ ARG REPO=mcr.microsoft.com/dotnet/runtime
 FROM amd64/buildpack-deps:resolute-curl AS installer
 
 # Retrieve ASP.NET Core
-RUN aspnetcore_version=11.0.0-rc.2.26504.105 \
+RUN aspnetcore_version=11.0.0-rc.3.26522.148 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/aspnetcore/Runtime/$aspnetcore_version/aspnetcore-runtime-$aspnetcore_version-linux-x64.tar.gz.sha512 \
@@ -17,9 +17,9 @@ RUN aspnetcore_version=11.0.0-rc.2.26504.105 \
 
 
 # ASP.NET Core image
-FROM $REPO:11.0.0-rc.2-resolute-chiseled-amd64
+FROM $REPO:11.0.0-rc.3-resolute-chiseled-amd64
 
 # ASP.NET Core version
-ENV ASPNET_VERSION=11.0.0-rc.2.26504.105
+ENV ASPNET_VERSION=11.0.0-rc.3.26522.148
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
