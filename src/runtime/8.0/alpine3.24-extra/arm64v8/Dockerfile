@@ -1,10 +1,10 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:8.0.32-alpine3.24-extra-arm64v8 AS installer
+FROM $REPO:8.0.33-alpine3.24-extra-arm64v8 AS installer
 
 # Retrieve .NET Runtime
-RUN dotnet_version=8.0.32 \
+RUN dotnet_version=8.0.33 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-musl-arm64.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -17,10 +17,10 @@ RUN dotnet_version=8.0.32 \
 
 
 # .NET runtime image
-FROM $REPO:8.0.32-alpine3.24-extra-arm64v8
+FROM $REPO:8.0.33-alpine3.24-extra-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=8.0.32
+ENV DOTNET_VERSION=8.0.33
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
