@@ -1,5 +1,5 @@
 ARG REPO=mcr.microsoft.com/dotnet/sdk
-FROM $REPO:10.0.402-azurelinux3.0-amd64
+FROM $REPO:10.0.403-azurelinux3.0-amd64
 
 RUN tdnf install -y \
         build-essential \
