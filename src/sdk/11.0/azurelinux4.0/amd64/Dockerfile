@@ -9,7 +9,7 @@ RUN dnf install -y \
 
 # Install .NET SDK
 RUN dotnet_sdk_version=11.0.100 \
-    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.26522.109 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.26524.110 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
