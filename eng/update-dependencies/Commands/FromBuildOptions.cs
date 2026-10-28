@@ -9,14 +9,14 @@ internal record FromBuildOptions : CreatePullRequestOptions
 {
     public required int Id { get; init; }
 
-    private static readonly PositiveIdArgument s_id = new("The BAR build ID to use as the update source");
+    private static readonly PositiveIdArgument IdArgument = new("The BAR build ID to use as the update source");
 
     public static new void AddTo(Command command)
     {
         CreatePullRequestOptions.AddTo(command);
-        command.Arguments.Add(s_id);
+        command.Arguments.Add(IdArgument);
     }
 
     public static new FromBuildOptions Bind(ParseResult result) =>
-        Bind(result, new FromBuildOptions { Id = result.GetValue(s_id) });
+        Bind(result, new FromBuildOptions { Id = result.GetValue(IdArgument) });
 }

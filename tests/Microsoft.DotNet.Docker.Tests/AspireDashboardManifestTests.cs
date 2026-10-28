@@ -1,7 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
+using System.Globalization;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using Xunit;
@@ -19,10 +19,7 @@ public sealed class AspireDashboardManifestTests
     [Theory]
     [InlineData("", "aspire/dashboard")]
     [InlineData("/nightly", "aspire/nightly/dashboard")]
-    public void RepoName_UsesAspireProductFamily(string repoNameModifier, string expectedRepoName)
-    {
-        Assert.Equal(expectedRepoName, ImageData.GetRepoName(AspireDashboardId, repoNameModifier));
-    }
+    public void RepoName_UsesAspireProductFamily(string repoNameModifier, string expectedRepoName) => Assert.Equal(expectedRepoName, ImageData.GetRepoName(AspireDashboardId, repoNameModifier));
 
     [Fact]
     public void Manifest_UsesCanonicalRepoName()
@@ -38,7 +35,7 @@ public sealed class AspireDashboardManifestTests
     [Fact]
     public void LegacySyndication_IsLimitedToAspire13()
     {
-        int majorVersion = int.Parse(Config.GetVariableValue("aspire-dashboard|major-tag"));
+        int majorVersion = int.Parse(Config.GetVariableValue("aspire-dashboard|major-tag"), CultureInfo.InvariantCulture);
         JObject aspireDashboardRepo = GetAspireDashboardRepo();
         JArray images = Assert.IsType<JArray>(aspireDashboardRepo["images"]);
         JObject image = Assert.IsType<JObject>(Assert.Single(images));

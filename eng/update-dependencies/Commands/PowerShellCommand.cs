@@ -11,12 +11,12 @@ internal static class PowerShellCommand
 {
     private const string VersionSourceName = "PowerShell/PowerShell";
 
-    private static readonly Option<bool> s_internal = new("--internal")
+    private static readonly Option<bool> Internal = new("--internal")
     {
         Description = "Use the internal (non-public) location for the version",
     };
 
-    private static readonly Option<string?> s_dotnetVersion = new("--dotnet-version")
+    private static readonly Option<string?> DotnetVersion = new("--dotnet-version")
     {
         Description = "Only update images for this .NET major.minor version (for example, 9.0)",
     };
@@ -30,22 +30,22 @@ internal static class PowerShellCommand
 
     private static Command CreateVersionCommand(IServiceProvider services)
     {
-        var version = new Argument<string>("version")
+        Argument<string> version = new Argument<string>("version")
         {
             Description = "The PowerShell version to update to",
         };
 
-        var baseUrl = new Option<string?>("--base-url")
+        Option<string?> baseUrl = new Option<string?>("--base-url")
         {
             Description = "Use this exact location for the version instead of the default public or internal one",
         };
 
-        var command = new Command("version", "Update to a specific version")
+        Command command = new Command("version", "Update to a specific version")
         {
             version,
             baseUrl,
-            s_internal,
-            s_dotnetVersion,
+            Internal,
+            DotnetVersion,
         };
 
         CreatePullRequestOptions.AddTo(command);
@@ -53,14 +53,14 @@ internal static class PowerShellCommand
         command.SetAction(async (parseResult, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(parseResult);
-            var updater = services.GetRequiredService<PowerShellUpdater>();
-            var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            PowerShellUpdater updater = services.GetRequiredService<PowerShellUpdater>();
+            DependencyUpdateRunner runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             DependencyUpdate update = updater.ResolveFromVersion(
                 parseResult.GetRequiredValue(version),
-                parseResult.GetValue(s_internal),
+                parseResult.GetValue(Internal),
                 parseResult.GetValue(baseUrl),
-                parseResult.GetValue(s_dotnetVersion));
+                parseResult.GetValue(DotnetVersion));
 
             await runner.RunAsync(options, VersionSourceName, update, cancellationToken);
         });
@@ -70,10 +70,10 @@ internal static class PowerShellCommand
 
     private static Command CreateLatestCommand(IServiceProvider services)
     {
-        var command = new Command("latest", "Update to the latest available version")
+        Command command = new Command("latest", "Update to the latest available version")
         {
-            s_internal,
-            s_dotnetVersion,
+            Internal,
+            DotnetVersion,
         };
 
         CreatePullRequestOptions.AddTo(command);
@@ -81,15 +81,15 @@ internal static class PowerShellCommand
         command.SetAction(async (parseResult, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(parseResult);
-            var updater = services.GetRequiredService<PowerShellUpdater>();
-            var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            PowerShellUpdater updater = services.GetRequiredService<PowerShellUpdater>();
+            DependencyUpdateRunner runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             ManifestVariables variables = await runner.GetTargetManifestAsync(options, cancellationToken);
 
             IReadOnlyList<DependencyUpdate> updates = await updater.ResolveLatestAsync(
                 variables,
-                parseResult.GetValue(s_internal),
-                parseResult.GetValue(s_dotnetVersion),
+                parseResult.GetValue(Internal),
+                parseResult.GetValue(DotnetVersion),
                 cancellationToken);
 
             foreach (DependencyUpdate update in updates)

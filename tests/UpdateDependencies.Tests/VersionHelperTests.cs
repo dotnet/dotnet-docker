@@ -12,8 +12,5 @@ public sealed class VersionHelperTests
     [InlineData("10.0.100", "9.0.100", "10.0.100")]
     [InlineData("11.0.100", "11.0.99", "11.0.100")]
     [InlineData("11.0.99-servicing.12345.1", "11.0.100-servicing.12345.1", "11.0.100-servicing.12345.1")]
-    public void GetHighestSdkVersion_UsesNumericOrder(string first, string second, string expected)
-    {
-        VersionHelper.GetHighestSdkVersion([first, second]).ShouldBe(expected);
-    }
+    public void GetHighestSdkVersion_UsesNumericOrder(string first, string second, string expected) => VersionHelper.GetHighestSdkVersion([first, second]).ShouldBe(expected);
 }

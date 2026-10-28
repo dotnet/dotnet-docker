@@ -13,8 +13,8 @@ public sealed class NuGetConfigUpdaterTests
     [InlineData("nightly", ".nightly")]
     public void Update_RemovesInternalFeedAndPreservesOtherVersionCredentials(string branch, string suffix)
     {
-        using var repo = new TempRepo();
-        var variables = new ManifestVariables("""{"variables":{"branch":"nightly"}}""");
+        using TempRepo repo = new TempRepo();
+        ManifestVariables variables = new ManifestVariables("""{"variables":{"branch":"nightly"}}""");
         variables.SetValue("branch", branch);
         string configDirectory = Path.Combine(repo.LocalPath, "tests", "Microsoft.DotNet.Docker.Tests", "TestAppArtifacts");
         Directory.CreateDirectory(configDirectory);

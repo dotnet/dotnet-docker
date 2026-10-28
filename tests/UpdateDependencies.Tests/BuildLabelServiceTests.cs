@@ -10,8 +10,8 @@ public sealed class BuildLabelServiceTests
     [Fact]
     public void AddBuildTags_WritesSingleTag()
     {
-        using var writer = new StringWriter();
-        var service = new BuildLabelService(writer);
+        using StringWriter writer = new StringWriter();
+        BuildLabelService service = new BuildLabelService(writer);
 
         service.AddBuildTags("my-tag");
 
@@ -25,12 +25,12 @@ public sealed class BuildLabelServiceTests
     [Fact]
     public void AddBuildTags_WritesMultipleTags()
     {
-        using var writer = new StringWriter();
-        var service = new BuildLabelService(writer);
+        using StringWriter writer = new StringWriter();
+        BuildLabelService service = new BuildLabelService(writer);
 
         service.AddBuildTags("tag1", "tag2", "tag3");
 
-        var expected = """
+        string expected = """
             ##vso[build.addbuildtag]tag1
             ##vso[build.addbuildtag]tag2
             ##vso[build.addbuildtag]tag3
@@ -42,8 +42,8 @@ public sealed class BuildLabelServiceTests
     [Fact]
     public void AddBuildTags_WithEmptyEnumerable_WritesNothing()
     {
-        using var writer = new StringWriter();
-        var service = new BuildLabelService(writer);
+        using StringWriter writer = new StringWriter();
+        BuildLabelService service = new BuildLabelService(writer);
 
         service.AddBuildTags([]);
 

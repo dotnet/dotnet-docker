@@ -1,5 +1,5 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
 using Azure.Identity;
@@ -42,14 +42,14 @@ public sealed class DependencyUpdateRunner(
         branchSuffix = branchSuffix.Replace('/', '-');
         string branchName = $"{options.TargetBranch}-{branchSuffix}";
 
-        var definition = new PullRequestDefinition(
+        PullRequestDefinition definition = new PullRequestDefinition(
             Key: branchName,
             Title: title,
             Body: string.Empty,
             TargetBranch: options.TargetBranch,
             ApplyChanges: (git, token) => ApplyAsync(git.WorkspaceDirectory, update.ApplyAsync, token));
 
-        var manager = new PullRequestManager(loggerFactory);
+        PullRequestManager manager = new PullRequestManager(loggerFactory);
         PullRequestResult result = await manager.CreateOrUpdateAsync(
             definition,
             CreatePullRequestEndpoint(configuration),
@@ -72,9 +72,9 @@ public sealed class DependencyUpdateRunner(
 
         // This clone is only read. PullRequestManager makes its own clone when it applies updates.
         IPullRequestEndpoint endpoint = CreatePullRequestEndpoint(configuration);
-        var processRunner = new ProcessRunner(loggerFactory.CreateLogger<ProcessRunner>());
+        ProcessRunner processRunner = new ProcessRunner(loggerFactory.CreateLogger<ProcessRunner>());
 
-        using var workingCopy = new GitWorkingCopy(processRunner, loggerFactory.CreateLogger<GitWorkingCopy>());
+        using GitWorkingCopy workingCopy = new GitWorkingCopy(processRunner, loggerFactory.CreateLogger<GitWorkingCopy>());
 
         AutomationIdentity identity = await endpoint.GetIdentityAsync(cancellationToken);
         await endpoint.CloneTargetAsync(workingCopy, options.TargetBranch, identity, cancellationToken);
@@ -89,7 +89,7 @@ public sealed class DependencyUpdateRunner(
     {
         repoRoot = Path.GetFullPath(repoRoot);
         string manifestPath = GetManifestPath(repoRoot);
-        var variables = ManifestVariables.FromFile(manifestPath);
+        ManifestVariables variables = ManifestVariables.FromFile(manifestPath);
         string originalContent = variables.Content;
 
         await applyUpdate(variables, repoRoot, cancellationToken);
@@ -117,16 +117,16 @@ public sealed class DependencyUpdateRunner(
     private static GitHubPullRequestEndpoint CreateGitHubPullRequestEndpoint(
         UpdateDependenciesConfiguration configuration)
     {
-        var github = configuration.GitHub;
-        var identity = new AutomationIdentity(configuration.User, configuration.Email);
-        var repo = new GitHubRepo(github.Owner, github.Repository);
+        GitHubConfiguration github = configuration.GitHub;
+        AutomationIdentity identity = new AutomationIdentity(configuration.User, configuration.Email);
+        GitHubRepo repo = new GitHubRepo(github.Owner, github.Repository);
         IGitHubAccessProvider accessProvider;
 
         if (!string.IsNullOrEmpty(github.AppClientId)
             && !string.IsNullOrEmpty(github.AppKeyUri))
         {
-            var credential = new AzureCliCredential();
-            var cryptographyClient = new CryptographyClient(new Uri(github.AppKeyUri), credential);
+            AzureCliCredential credential = new AzureCliCredential();
+            CryptographyClient cryptographyClient = new CryptographyClient(new Uri(github.AppKeyUri), credential);
             accessProvider = new GitHubAppAccessProvider(github.AppClientId, cryptographyClient);
         }
         else
@@ -140,13 +140,13 @@ public sealed class DependencyUpdateRunner(
     private static AzureDevOpsPullRequestEndpoint CreateAzureDevOpsPullRequestEndpoint(
         UpdateDependenciesConfiguration configuration)
     {
-        var azureDevOps = configuration.AzureDevOps;
+        AzureDevOpsConfiguration azureDevOps = configuration.AzureDevOps;
         string organization = new Uri(azureDevOps.Organization).Segments.Last().TrimEnd('/');
-        var client = new AzureDevOpsClient(
+        AzureDevOpsClient client = new AzureDevOpsClient(
             organization,
             azureDevOps.Project,
             azureDevOps.Token);
-        var identity = new AutomationIdentity(configuration.User, configuration.Email);
+        AutomationIdentity identity = new AutomationIdentity(configuration.User, configuration.Email);
 
         return new AzureDevOpsPullRequestEndpoint(
             client,

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.Generic;
@@ -17,8 +16,6 @@ public class TestDataTests(ITestOutputHelper outputHelper)
 {
     private readonly DockerHelper _dockerHelper = new(outputHelper);
 
-    private readonly ITestOutputHelper _outputHelper = outputHelper;
-
     private readonly Manifest _manifest = ManifestHelper.GetManifest();
 
     public static readonly IEnumerable<object[]> ImageRepos =
@@ -31,7 +28,7 @@ public class TestDataTests(ITestOutputHelper outputHelper)
     [MemberData(nameof(ImageRepos))]
     public void VerifyTestData(DotNetImageRepo imageRepo)
     {
-        var testData = GetTestData(imageRepo);
+        IEnumerable<ProductImageData> testData = GetTestData(imageRepo);
 
         string repoName = ImageData.GetRepoName(ProductImageData.GetRepoName(imageRepo));
         Repo? manifestRepo = _manifest.Repos.FirstOrDefault(r => r.Name == repoName);

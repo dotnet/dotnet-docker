@@ -11,7 +11,7 @@ internal class AzdoHttpClient(IAzdoAuthProvider azdoAuthProvider, HttpClient htt
 {
     public async Task<HttpResponseMessage> GetAsync(string requestUri, CancellationToken ct = default)
     {
-        using var request = new HttpRequestMessage(HttpMethod.Get, requestUri);
+        using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Get, requestUri);
         request.Headers.Authorization = new AuthenticationHeaderValue(
             "Basic",
             Convert.ToBase64String(

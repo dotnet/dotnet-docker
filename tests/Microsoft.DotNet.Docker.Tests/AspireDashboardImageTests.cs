@@ -1,11 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.DotNet.Docker.Tests.TestScenarios;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -55,7 +54,7 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
         ];
 
         string imageTag = imageData.GetImage(ImageRepo, DockerHelper);
-        EnvironmentVariableInfo.Validate(expectedVariables, imageTag, imageData, DockerHelper);
+        EnvironmentVariableInfo.Validate(expectedVariables, imageTag, DockerHelper);
     }
 
     [LinuxImageTheory]
@@ -67,7 +66,7 @@ public class AspireDashboardImageTests(ITestOutputHelper outputHelper) : CommonR
         IEnumerable<string> expectedPackages =
             GetExpectedPackages(imageData with { ImageVariant = DotNetImageVariant.Extra }, ImageRepo);
         IEnumerable<string> actualPackages =
-            GetInstalledPackages(imageData, ImageRepo, [ AppPath ]);
+            GetInstalledPackages(imageData, ImageRepo, [AppPath]);
 
         string imageName = imageData.GetImage(ImageRepo, DockerHelper, skipPull: true);
         ComparePackages(expectedPackages, actualPackages, imageData.IsDistroless, imageName, OutputHelper);

@@ -22,8 +22,7 @@ public sealed partial class ManifestVariables
 {
     // Token ranges always refer to the original text. Keeping edits separately avoids shifting
     // later ranges and lets a reverted value recover its original JSON escaping.
-    private readonly string _originalContent;
-    private readonly Dictionary<string, Variable> _variables = new(StringComparer.Ordinal);
+    private readonly Dictionary<string, Variable> _variables = new Dictionary<string, Variable>(StringComparer.Ordinal);
 
     /// <summary>
     /// Creates an editable snapshot of a complete manifest.
@@ -39,15 +38,15 @@ public sealed partial class ManifestVariables
     /// </exception>
     public ManifestVariables(string content)
     {
-        _originalContent = content;
+        Content = content;
 
         byte[] utf8 = Encoding.UTF8.GetBytes(content);
-        var readerOptions = new JsonReaderOptions
+        JsonReaderOptions readerOptions = new JsonReaderOptions
         {
             CommentHandling = JsonCommentHandling.Skip,
             AllowTrailingCommas = true,
         };
-        var reader = new Utf8JsonReader(utf8, readerOptions);
+        Utf8JsonReader reader = new Utf8JsonReader(utf8, readerOptions);
 
         reader.Read();
         RequireToken(reader, JsonTokenType.StartObject);
@@ -111,7 +110,7 @@ public sealed partial class ManifestVariables
     {
         get
         {
-            var content = new StringBuilder();
+            StringBuilder content = new StringBuilder();
             int position = 0;
 
             foreach (Variable variable in _variables.Values.OrderBy(variable => variable.OriginalTokenStart))
@@ -121,12 +120,12 @@ public sealed partial class ManifestVariables
                     continue;
                 }
 
-                content.Append(_originalContent, position, variable.OriginalTokenStart - position);
+                content.Append(field, position, variable.OriginalTokenStart - position);
                 content.Append(JsonSerializer.Serialize(variable.Value));
                 position = variable.OriginalTokenStart + variable.OriginalTokenLength;
             }
 
-            content.Append(_originalContent, position, _originalContent.Length - position);
+            content.Append(field, position, field.Length - position);
             return content.ToString();
         }
     }
@@ -276,7 +275,7 @@ public sealed partial class ManifestVariables
             int gapCharacterCount = Encoding.UTF8.GetCharCount(utf8.AsSpan(bytePosition, gapLength));
             int originalTokenStart = characterPosition + gapCharacterCount;
             int originalTokenLength = Encoding.UTF8.GetCharCount(utf8.AsSpan(byteStart, byteLength));
-            var variable = new Variable(value, value, originalTokenStart, originalTokenLength);
+            Variable variable = new Variable(value, value, originalTokenStart, originalTokenLength);
 
             bytePosition = byteStart + byteLength;
             characterPosition = originalTokenStart + originalTokenLength;

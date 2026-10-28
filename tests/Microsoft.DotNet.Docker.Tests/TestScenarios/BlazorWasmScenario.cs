@@ -1,8 +1,11 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable enable
 
 using Xunit.Abstractions;
 
-namespace Microsoft.DotNet.Docker.Tests;
+namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 public class BlazorWasmScenario(
     ProductImageData imageData,
