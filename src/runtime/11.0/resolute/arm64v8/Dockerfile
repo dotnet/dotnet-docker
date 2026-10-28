@@ -5,7 +5,7 @@ FROM arm64v8/buildpack-deps:resolute-curl AS installer
 
 # Retrieve .NET Runtime
 RUN dotnet_version=11.0.0 \
-    && dotnet_build_version=$dotnet_version-rtm.26524.110 \
+    && dotnet_build_version=$dotnet_version-rtm.26527.113 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
