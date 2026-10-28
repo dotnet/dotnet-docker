@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable enable
 
@@ -27,6 +26,9 @@ namespace Microsoft.DotNet.Docker.Tests;
 /// <param name="ArchitectureDir">
 /// The architecture directory where the Dockerfile is located.
 /// </param>
+/// <param name="Repo">The manifest repository containing the Dockerfile.</param>
+/// <param name="Image">The manifest image containing the Dockerfile.</param>
+/// <param name="Platform">The manifest platform describing the Dockerfile.</param>
 public sealed partial record DockerfileInfo(
     string RepoDir,
     string VersionDir,
@@ -60,7 +62,7 @@ public sealed partial record DockerfileInfo(
         Match match = DockerfileRegex.Match(dockerfilePath);
         if (!match.Success)
         {
-            throw new Exception($"Failed to parse dockerfile: {dockerfilePath}");
+            throw new FormatException($"Failed to parse dockerfile: {dockerfilePath}");
         }
 
         return new DockerfileInfo(

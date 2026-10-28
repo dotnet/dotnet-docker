@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable enable
 
@@ -9,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Microsoft.DotNet.Docker.Tests;
+namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 public class TestDockerfile(IEnumerable<string> args, IEnumerable<string> stages)
 {
@@ -27,7 +26,7 @@ public class TestDockerfile(IEnumerable<string> args, IEnumerable<string> stages
         IEnumerable<string> stageContents = stages.Select(stageContent =>
             string.Join(Environment.NewLine, stageContent));
 
-        string[] contents = [ argsContent, ..stageContents ];
+        string[] contents = [argsContent, .. stageContents];
         string dockerfileContent = string.Join(Environment.NewLine + Environment.NewLine, contents);
 
         return dockerfileContent;
@@ -42,11 +41,11 @@ public static class TestDockerfileBuilder
         COPY NuGet.config .
         """;
 
-    private static DockerOS s_os = DockerHelper.IsLinuxContainerModeEnabled
+    private static readonly DockerOS Os = DockerHelper.IsLinuxContainerModeEnabled
         ? DockerOS.Linux
         : DockerOS.Windows;
 
-    private static string[] s_commonArgs = [
+    private static readonly string[] CommonArgs = [
         "sdk_image",
         "runtime_image",
         "runtime_deps_image",
@@ -105,8 +104,8 @@ public static class TestDockerfileBuilder
         };
 
         return new TestDockerfile(
-            args: s_commonArgs,
-            stages: [ GetDefaultBuildStage(), ..publishAndAppStages ]);
+            args: CommonArgs,
+            stages: [GetDefaultBuildStage(), .. publishAndAppStages]);
     }
 
     public static TestDockerfile GetTestProjectDockerfile()
@@ -124,8 +123,8 @@ public static class TestDockerfileBuilder
             """;
 
         return new TestDockerfile(
-            args: s_commonArgs,
-            stages: [ GetDefaultBuildStage(), testStage ]);
+            args: CommonArgs,
+            stages: [GetDefaultBuildStage(), testStage]);
     }
 
     public static TestDockerfile GetBlazorWasmDockerfile(bool useWasmTools)
@@ -187,7 +186,7 @@ public static class TestDockerfileBuilder
         // App stage can remain empty in order to test publish functionality.
         string appStage = $"""FROM $runtime_deps_image AS {TestDockerfile.AppStageName}""";
 
-        return new TestDockerfile(s_commonArgs, stages: [ buildStage, publishStage, appStage ]);
+        return new TestDockerfile(CommonArgs, stages: [buildStage, publishStage, appStage]);
     }
 
     private static string GetDefaultBuildStage()
@@ -210,15 +209,17 @@ public static class TestDockerfileBuilder
         return buildStageBuilder.ToString();
     }
 
-    private static string FormatArg(string arg) => s_os == DockerOS.Windows ? $"%{arg}%" : $"${arg}";
+    private static string FormatArg(string arg) => Os == DockerOS.Windows ? $"%{arg}%" : $"${arg}";
 }
 
-public enum DockerOS {
+public enum DockerOS
+{
     Linux,
     Windows,
 }
 
-public enum PublishConfig {
+public enum PublishConfig
+{
     Aot,
     FxDependent,
     SelfContained,

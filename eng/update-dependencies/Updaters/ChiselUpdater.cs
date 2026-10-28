@@ -1,5 +1,5 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Text.RegularExpressions;
 using Octokit;
@@ -15,12 +15,10 @@ public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClien
     public static string Name => "chisel";
     public static string VersionSourceName => "chisel";
 
-    private static readonly string[] s_supportedArchitectures = ["amd64", "arm", "arm64"];
-    private static string GetChiselManifestVariable(string product, string arch, string type)
-    {
+    private static readonly string[] SupportedArchitectures = ["amd64", "arm", "arm64"];
+    private static string GetChiselManifestVariable(string product, string arch, string type) =>
         // Workaround for ambiguous method call, will be fixed with https://github.com/dotnet/csharplang/issues/8374
-        return string.Join('|', new string[] { product, "latest", ToManifestArch(arch), type });
-    }
+        string.Join('|', new string[] { product, "latest", ToManifestArch(arch), type });
 
     private static Regex GetAssetRegex(string arch) => new(@"chisel_v\d+\.\d+\.\d+_linux_" + arch + @"\.tar\.gz");
 
@@ -53,7 +51,7 @@ public sealed class ChiselUpdater(IReleasesClient releases, HttpClient httpClien
 
         variables.SetValue(BuildVersionVariable, release.TagName);
 
-        foreach (string arch in s_supportedArchitectures)
+        foreach (string arch in SupportedArchitectures)
         {
             string urlVariable = GetChiselManifestVariable(Name, arch, "url");
             string shaVariable = GetChiselManifestVariable(Name, arch, "sha384");

@@ -1,20 +1,9 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.IO;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Reflection;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using Polly;
-using Polly.Retry;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -22,13 +11,8 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests;
 
 [Trait("Category", "sdk")]
-public class PowerShellTests : ProductImageTests
+public class PowerShellTests(ITestOutputHelper outputHelper) : ProductImageTests(outputHelper)
 {
-    public PowerShellTests(ITestOutputHelper outputHelper)
-        : base(outputHelper)
-    {
-    }
-
     protected override DotNetImageRepo ImageRepo => DotNetImageRepo.SDK;
 
     public static IEnumerable<object[]> GetImageData()

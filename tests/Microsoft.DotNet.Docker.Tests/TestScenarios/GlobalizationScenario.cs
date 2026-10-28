@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.IO;
@@ -10,7 +9,10 @@ using FluentAssertions;
 namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 #nullable enable
-public sealed class GlobalizationScenario : ITestScenario, IDisposable
+public sealed class GlobalizationScenario(
+    ProductImageData imageData,
+    DotNetImageRepo repo,
+    DockerHelper dockerHelper) : ITestScenario, IDisposable
 {
     private const string Dockerfile = """
         ARG sdk_image
@@ -29,19 +31,9 @@ public sealed class GlobalizationScenario : ITestScenario, IDisposable
         """;
 
     private readonly TempFolderContext _tempFolderContext = FileHelper.UseTempFolder();
-    private readonly ProductImageData _imageData;
-    private readonly DotNetImageRepo _repo;
-    private readonly DockerHelper _dockerHelper;
-
-    public GlobalizationScenario(
-        ProductImageData imageData,
-        DotNetImageRepo repo,
-        DockerHelper dockerHelper)
-    {
-        _imageData = imageData;
-        _repo = repo;
-        _dockerHelper = dockerHelper;
-    }
+    private readonly ProductImageData _imageData = imageData;
+    private readonly DotNetImageRepo _repo = repo;
+    private readonly DockerHelper _dockerHelper = dockerHelper;
 
     public async Task ExecuteAsync()
     {

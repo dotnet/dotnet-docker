@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.IO;
@@ -10,7 +9,10 @@ using FluentAssertions;
 namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 #nullable enable
-public sealed class NlsScenario : ITestScenario, IDisposable
+public sealed class NlsScenario(
+    ProductImageData imageData,
+    DotNetImageRepo repo,
+    DockerHelper dockerHelper) : ITestScenario, IDisposable
 {
     private const string DockerfileName = "NLSTest.Dockerfile";
 
@@ -18,21 +20,11 @@ public sealed class NlsScenario : ITestScenario, IDisposable
 
     private readonly TempFolderContext _tempFolderContext = FileHelper.UseTempFolder();
 
-    private readonly ProductImageData _imageData;
+    private readonly ProductImageData _imageData = imageData;
 
-    private readonly DotNetImageRepo _repo;
+    private readonly DotNetImageRepo _repo = repo;
 
-    private readonly DockerHelper _dockerHelper;
-
-    public NlsScenario(
-        ProductImageData imageData,
-        DotNetImageRepo repo,
-        DockerHelper dockerHelper)
-    {
-        _imageData = imageData;
-        _repo = repo;
-        _dockerHelper = dockerHelper;
-    }
+    private readonly DockerHelper _dockerHelper = dockerHelper;
 
     // ICU is not supported on Nano Server
     private bool IsIcuSupported => _imageData.OS.Family == OSFamily.WindowsServerCore;
@@ -58,7 +50,7 @@ public sealed class NlsScenario : ITestScenario, IDisposable
 
         if (IsIcuSupported)
         {
-            buildArgs = [..buildArgs, $"icu_expected={IsIcuSupported}"];
+            buildArgs = [.. buildArgs, $"icu_expected={IsIcuSupported}"];
         }
 
         string tag = nameof(NlsScenario).ToLowerInvariant();

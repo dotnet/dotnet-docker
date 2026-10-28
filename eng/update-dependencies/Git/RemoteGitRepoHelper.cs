@@ -36,7 +36,7 @@ internal sealed class RemoteGitRepoHelper(
     /// <inheritdoc />
     public async Task<string> CreatePullRequestAsync(PullRequestCreationInfo request)
     {
-        var darcPullRequest = new PullRequest
+        PullRequest darcPullRequest = new PullRequest
         {
             Title = request.Title,
             Description = request.Body,
@@ -48,8 +48,8 @@ internal sealed class RemoteGitRepoHelper(
             "Creating pull request '{PrTitle}' from branch {PrHeadBranch} to {PrBaseBranch}",
             darcPullRequest.Title, darcPullRequest.HeadBranch, darcPullRequest.BaseBranch);
 
-        var pullRequestInfo = await _remoteGitRepo.CreatePullRequestAsync(RemoteUrl, darcPullRequest);
-        var pullRequestApiUrl = pullRequestInfo.Url;
+        PullRequest pullRequestInfo = await _remoteGitRepo.CreatePullRequestAsync(RemoteUrl, darcPullRequest);
+        string pullRequestApiUrl = pullRequestInfo.Url;
 
         _logger.LogInformation(
             "Created pull request {PullRequestTitle} at {PullRequestUrl}",

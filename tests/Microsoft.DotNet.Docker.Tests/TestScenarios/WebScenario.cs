@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable enable
 
 using System;
@@ -8,14 +11,14 @@ using Polly;
 using Polly.Retry;
 using Xunit.Abstractions;
 
-namespace Microsoft.DotNet.Docker.Tests;
+namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 public abstract class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
     : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
 {
-    protected virtual int? PortOverride { get; } = null;
+    protected virtual int? PortOverride { get; }
 
-    protected virtual string? Endpoint { get; } = null;
+    protected virtual string? Endpoint { get; }
 
     protected override string SampleName { get; } = "web";
 
@@ -67,8 +70,8 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
         string? pathAndQuery = null,
         AuthenticationHeaderValue? authorizationHeader = null)
     {
-        const int RetryAttempts = 4;
-        const int RetryDelaySeconds = 3;
+        const int retryAttempts = 4;
+        const int retryDelaySeconds = 3;
 
         if (!string.IsNullOrEmpty(pathAndQuery) && !pathAndQuery.StartsWith('/'))
         {
@@ -82,17 +85,17 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
 
         ResiliencePipeline pipeline = new ResiliencePipelineBuilder()
             .AddRetry(new RetryStrategyOptions()
-                {
-                    BackoffType = DelayBackoffType.Exponential,
-                    MaxRetryAttempts = RetryAttempts,
-                    Delay = TimeSpan.FromSeconds(RetryDelaySeconds),
+            {
+                BackoffType = DelayBackoffType.Exponential,
+                MaxRetryAttempts = retryAttempts,
+                Delay = TimeSpan.FromSeconds(retryDelaySeconds),
 
-                    // If the container is still starting up, it will refuse connections until it's ready.
-                    // If it crashed, stop retrying immediately.
-                    ShouldHandle = new PredicateBuilder()
+                // If the container is still starting up, it will refuse connections until it's ready.
+                // If it crashed, stop retrying immediately.
+                ShouldHandle = new PredicateBuilder()
                         .Handle<HttpRequestException>(exception =>
                             DockerHelper.ContainerIsRunning(containerName)),
-                })
+            })
             .Build();
 
         using HttpClient client = new();
@@ -132,7 +135,7 @@ public abstract class WebScenario(ProductImageData imageData, DockerHelper docke
         ITestOutputHelper outputHelper,
         int containerPort,
         string? pathAndQuery = null,
-        Action<HttpResponseMessage>? validateCallback = null)
+        Action<HttpResponseMessage>? _ = null)
     {
         (await GetHttpResponseFromContainerAsync(
             containerName,

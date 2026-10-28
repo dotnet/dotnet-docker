@@ -27,7 +27,7 @@ internal sealed class RemoteGitRepoFactory(IServiceProvider serviceProvider) : I
     /// <inheritdoc />
     public IRemoteGitRepo CreateRemoteGitRepo(string remoteUrl)
     {
-        var gitRemoteKind = ParseGitRemoteFromUrl(remoteUrl);
+        GitRemote gitRemoteKind = ParseGitRemoteFromUrl(remoteUrl);
 
         return gitRemoteKind switch
         {
@@ -53,7 +53,7 @@ internal sealed class RemoteGitRepoFactory(IServiceProvider serviceProvider) : I
         {
             { Host: "github.com" } => GitRemote.GitHub,
             { Host: var host } when host is "dev.azure.com"
-                || host.EndsWith("visualstudio.com") => GitRemote.AzureDevOps,
+                || host.EndsWith("visualstudio.com", StringComparison.Ordinal) => GitRemote.AzureDevOps,
             _ => GitRemote.None,
         };
     }

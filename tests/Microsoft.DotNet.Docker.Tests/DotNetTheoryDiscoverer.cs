@@ -7,26 +7,21 @@ using System.Linq;
 using Xunit.Abstractions;
 using Xunit.Sdk;
 
-namespace Microsoft.DotNet.Docker.Tests
+namespace Microsoft.DotNet.Docker.Tests;
+
+public class DotNetTheoryDiscoverer(IMessageSink diagnosticMessageSink) : TheoryDiscoverer(diagnosticMessageSink)
 {
-    public class DotNetTheoryDiscoverer : TheoryDiscoverer
+    public override IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo theoryAttribute)
     {
-        public DotNetTheoryDiscoverer(IMessageSink diagnosticMessageSink) : base(diagnosticMessageSink)
+        IEnumerable<IXunitTestCase> results = base.Discover(discoveryOptions, testMethod, theoryAttribute);
+
+        if (results.Count() == 1 &&
+            results.First() is ExecutionErrorTestCase errorTestCase &&
+            errorTestCase.ErrorMessage.StartsWith("No data found for", StringComparison.Ordinal))
         {
+            return CreateTestCasesForSkippedDataRow(discoveryOptions, testMethod, theoryAttribute, [], errorTestCase.ErrorMessage);
         }
 
-        public override IEnumerable<IXunitTestCase> Discover(ITestFrameworkDiscoveryOptions discoveryOptions, ITestMethod testMethod, IAttributeInfo theoryAttribute)
-        {
-            IEnumerable<IXunitTestCase> results = base.Discover(discoveryOptions, testMethod, theoryAttribute);
-
-            if (results.Count() == 1 &&
-                results.First() is ExecutionErrorTestCase errorTestCase &&
-                errorTestCase.ErrorMessage.StartsWith("No data found for"))
-            {
-                return CreateTestCasesForSkippedDataRow(discoveryOptions, testMethod, theoryAttribute, Array.Empty<object>(), errorTestCase.ErrorMessage);
-            }
-
-            return results;
-        }
+        return results;
     }
 }

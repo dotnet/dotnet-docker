@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 
@@ -125,7 +124,7 @@ public sealed record OSInfo(
     /// Checks if the TagName starts with the specified value.
     /// Provides backward compatibility with string-based OS checks.
     /// </summary>
-    public bool StartsWith(string value) => TagName.StartsWith(value);
+    public bool StartsWith(string value) => TagName.StartsWith(value, StringComparison.Ordinal);
 
     /// <summary>
     /// Implicit conversion to string for backward compatibility with existing code.

@@ -7,7 +7,7 @@ internal static class GitValidationExtensions
 {
     public static async Task EnsureBranchExistsAsync(this IRemoteGitRepoHelper remote, string branchName)
     {
-        var branch = await remote.RemoteBranchExistsAsync(branchName);
+        bool branch = await remote.RemoteBranchExistsAsync(branchName);
         if (!branch)
         {
             throw new InvalidOperationException(

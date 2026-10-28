@@ -23,7 +23,7 @@ public sealed class AzureCredentialProviderTests
     [Fact]
     public void ConfiguredServiceConnection_UsesAzurePipelinesCredential()
     {
-        var provider = CreateProvider(ServiceConnections, systemAccessToken: "token", inPipeline: true);
+        AzureCredentialProvider provider = CreateProvider(ServiceConnections, systemAccessToken: "token", inPipeline: true);
 
         provider.GetCredential("staging").ShouldBeOfType<AzurePipelinesCredential>();
     }
@@ -31,7 +31,7 @@ public sealed class AzureCredentialProviderTests
     [Fact]
     public void UnknownServiceConnection_Throws()
     {
-        var provider = CreateProvider(ServiceConnections, systemAccessToken: "token", inPipeline: true);
+        AzureCredentialProvider provider = CreateProvider(ServiceConnections, systemAccessToken: "token", inPipeline: true);
 
         Should.Throw<KeyNotFoundException>(() => provider.GetCredential("other"))
             .Message.ShouldContain("staging");
@@ -40,7 +40,7 @@ public sealed class AzureCredentialProviderTests
     [Fact]
     public void MissingSystemAccessToken_Throws()
     {
-        var provider = CreateProvider(ServiceConnections, systemAccessToken: null, inPipeline: true);
+        AzureCredentialProvider provider = CreateProvider(ServiceConnections, systemAccessToken: null, inPipeline: true);
 
         Should.Throw<InvalidOperationException>(() => provider.GetCredential("staging"));
     }
@@ -48,7 +48,7 @@ public sealed class AzureCredentialProviderTests
     [Fact]
     public void NoServiceConnectionsInPipeline_Throws()
     {
-        var provider = CreateProvider(serviceConnections: null, systemAccessToken: "token", inPipeline: true);
+        AzureCredentialProvider provider = CreateProvider(serviceConnections: null, systemAccessToken: "token", inPipeline: true);
 
         Should.Throw<KeyNotFoundException>(() => provider.GetCredential("staging"))
             .Message.ShouldContain("<none>");
@@ -57,7 +57,7 @@ public sealed class AzureCredentialProviderTests
     [Fact]
     public void Locally_UsesDeveloperCredential()
     {
-        var provider = CreateProvider(ServiceConnections, systemAccessToken: null, inPipeline: false);
+        AzureCredentialProvider provider = CreateProvider(ServiceConnections, systemAccessToken: null, inPipeline: false);
 
         provider.GetCredential("staging").ShouldBeOfType<AzureCliCredential>();
     }
@@ -74,7 +74,7 @@ public sealed class AzureCredentialProviderTests
             })
             .Build();
 
-        var environmentService = Mock.Of<IEnvironmentService>(env =>
+        IEnvironmentService environmentService = Mock.Of<IEnvironmentService>(env =>
             env.IsRunningInAzurePipelines() == inPipeline && env.GetSystemAccessToken() == systemAccessToken);
 
         return new AzureCredentialProvider(configuration, environmentService);

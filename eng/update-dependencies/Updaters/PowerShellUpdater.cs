@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
 using System.Net;
 using Azure;
 using Azure.Core;
@@ -160,7 +161,7 @@ public sealed class PowerShellUpdater(
             return await CreateBlobClient(checksumsUrl).ExistsAsync(cancellationToken);
         }
 
-        using var request = new HttpRequestMessage(HttpMethod.Head, checksumsUrl);
+        using HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Head, checksumsUrl);
         using HttpResponseMessage response = await httpClient.SendAsync(request, cancellationToken);
 
         if (response.StatusCode == HttpStatusCode.NotFound)
@@ -176,7 +177,7 @@ public sealed class PowerShellUpdater(
     private BlobClient CreateBlobClient(string url)
     {
         TokenCredential credential = credentialProvider.GetCredential(ServiceConnectionNames.Staging);
-        var options = new BlobClientOptions { Transport = new HttpClientTransport(httpClient) };
+        BlobClientOptions options = new BlobClientOptions { Transport = new HttpClientTransport(httpClient) };
 
         return new BlobClient(new Uri(url), credential, options);
     }
@@ -232,12 +233,12 @@ public sealed class PowerShellUpdater(
     // Parses lines of the form "<hash> *<file name>", where '*' marks binary mode and is optional.
     private static Dictionary<string, string> ParseChecksums(string content)
     {
-        const StringSplitOptions SplitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
-        var checksums = new Dictionary<string, string>();
+        const StringSplitOptions splitOptions = StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries;
+        Dictionary<string, string> checksums = [];
 
-        foreach (string line in content.Split('\n', SplitOptions))
+        foreach (string line in content.Split('\n', splitOptions))
         {
-            if (line.Split(' ', 2, SplitOptions) is not [var hash, var file])
+            if (line.Split(' ', 2, splitOptions) is not [var hash, var file])
             {
                 throw new FormatException($"Unexpected line in {ChecksumsFileName}: '{line}'");
             }
@@ -294,9 +295,9 @@ public sealed class PowerShellUpdater(
         // 7.6.0-preview.5 -> 7.6.0-preview.6, 7.6.0-rc.1, 7.6.0
         // 7.6.0-rc.2      -> 7.6.0-rc.3, 7.6.0
 
-        var stableRelease = new SemanticVersion(version.Major, version.Minor, version.Patch);
+        SemanticVersion stableRelease = new SemanticVersion(version.Major, version.Minor, version.Patch);
 
-        var getPrerelease = (string label, int number) =>
+        SemanticVersion GetPrerelease(string label, int number) =>
             new SemanticVersion(version.Major, version.Minor, version.Patch, $"{label}.{number}");
 
         return version.ReleaseLabels.ToArray() switch
@@ -304,13 +305,13 @@ public sealed class PowerShellUpdater(
             [] => [new SemanticVersion(version.Major, version.Minor, version.Patch + 1)],
             ["preview", var number] =>
                 [
-                    getPrerelease("preview", int.Parse(number) + 1),
-                    getPrerelease("rc", 1),
+                    GetPrerelease("preview", int.Parse(number, CultureInfo.InvariantCulture) + 1),
+                    GetPrerelease("rc", 1),
                     stableRelease
                 ],
             ["rc", var number] =>
                 [
-                    getPrerelease("rc", int.Parse(number) + 1),
+                    GetPrerelease("rc", int.Parse(number, CultureInfo.InvariantCulture) + 1),
                     stableRelease
                 ],
             _ => throw new FormatException($"Unexpected PowerShell version '{version}'."),

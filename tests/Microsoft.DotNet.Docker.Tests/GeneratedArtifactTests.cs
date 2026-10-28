@@ -1,6 +1,5 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.Generic;
@@ -18,35 +17,30 @@ using Xunit.Abstractions;
 namespace Microsoft.DotNet.Docker.Tests;
 
 [Trait("Category", "pre-build")]
-public class GeneratedArtifactTests
+public class GeneratedArtifactTests(ITestOutputHelper outputHelper)
 {
-    private static readonly string s_generateDockerfilesScript =
+    private static readonly string GenerateDockerfilesScript =
         Path.Combine(Config.SourceRepoRoot, "eng", "dockerfile-templates", "Get-GeneratedDockerfiles.ps1");
 
-    private static readonly string s_generateTagsDocumentationScript =
+    private static readonly string GenerateTagsDocumentationScript =
         Path.Combine(Config.SourceRepoRoot, "eng", "readme-templates", "Get-GeneratedReadmes.ps1");
 
-    private ITestOutputHelper OutputHelper { get; }
-
-    public GeneratedArtifactTests(ITestOutputHelper outputHelper)
-    {
-        OutputHelper = outputHelper;
-    }
+    private ITestOutputHelper OutputHelper { get; } = outputHelper;
 
     [Fact]
     public void VerifyDockerfileTemplates()
     {
-        ValidateGeneratedArtifacts(s_generateDockerfilesScript,
+        ValidateGeneratedArtifacts(GenerateDockerfilesScript,
             $"The Dockerfiles are out of sync with the templates." +
-            $"Update the Dockerfiles by running `{s_generateDockerfilesScript}`.");
+            $"Update the Dockerfiles by running `{GenerateDockerfilesScript}`.");
     }
 
     [Fact]
     public void VerifyReadmeTemplates()
     {
-        ValidateGeneratedArtifacts(s_generateTagsDocumentationScript,
+        ValidateGeneratedArtifacts(GenerateTagsDocumentationScript,
             $"The Readmes are out of sync with the templates." +
-            $"Update the Readmes by running `{s_generateTagsDocumentationScript}`.");
+            $"Update the Readmes by running `{GenerateTagsDocumentationScript}`.");
     }
 
     [Fact]
@@ -60,26 +54,26 @@ public class GeneratedArtifactTests
             return;
         }
 
-        const string InternalDockerfilesSubfolder = "Baselines";
+        const string internalDockerfilesSubfolder = "Baselines";
 
         using TempFolderContext outputDirectory = FileHelper.UseTempFolder();
         string dockerfilesOutputDirectory = Path.Combine(outputDirectory.Path, "src");
-        string errorMessage = $"Failed to generate Dockerfiles using `{s_generateDockerfilesScript}`.";
+        string errorMessage = $"Failed to generate Dockerfiles using `{GenerateDockerfilesScript}`.";
 
         // Override base URLs to make templates generate internal versions of Dockerfiles
-        const string InternalBaseUrl = "https://dotnetstage.blob.core.windows.net";
+        const string internalBaseUrl = "https://dotnetstage.blob.core.windows.net";
         string customImageBuilderArgs =
-            $" --var 'base-url|public|maintenance|main={InternalBaseUrl}'" +
-            $" --var 'base-url|public|maintenance|nightly={InternalBaseUrl}'" +
-            $" --var 'base-url|public|preview|main={InternalBaseUrl}'" +
-            $" --var 'base-url|public|preview|nightly={InternalBaseUrl}'" +
-            $" --var 'base-url|public-checksums|maintenance|main={InternalBaseUrl}'" +
-            $" --var 'base-url|public-checksums|maintenance|nightly={InternalBaseUrl}'" +
-            $" --var 'base-url|public-checksums|preview|main={InternalBaseUrl}'" +
-            $" --var 'base-url|public-checksums|preview|nightly={InternalBaseUrl}'";
+            $" --var 'base-url|public|maintenance|main={internalBaseUrl}'" +
+            $" --var 'base-url|public|maintenance|nightly={internalBaseUrl}'" +
+            $" --var 'base-url|public|preview|main={internalBaseUrl}'" +
+            $" --var 'base-url|public|preview|nightly={internalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|maintenance|main={internalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|maintenance|nightly={internalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|preview|main={internalBaseUrl}'" +
+            $" --var 'base-url|public-checksums|preview|nightly={internalBaseUrl}'";
 
         // PowerShell's internal storage uses a different layout than its public storage
-        const string InternalPowerShellBaseUrl = "https://pscoretestdata.blob.core.windows.net";
+        const string internalPowerShellBaseUrl = "https://pscoretestdata.blob.core.windows.net";
         foreach (Match match in Config.GetVariableNames()
             .Select(name => Regex.Match(name, @"^powershell\|(?<dotnetVersion>[\d.]+)\|base-url$"))
             .Where(match => match.Success))
@@ -87,13 +81,13 @@ public class GeneratedArtifactTests
             string dotnetVersion = match.Groups["dotnetVersion"].Value;
             string powershellVersion = Config.GetVariableValue($"powershell|{dotnetVersion}|build-version");
             string internalUrl =
-                $"{InternalPowerShellBaseUrl}/v{powershellVersion.Replace('.', '-')}-nuget/globaltool";
+                $"{internalPowerShellBaseUrl}/v{powershellVersion.Replace('.', '-')}-nuget/globaltool";
             customImageBuilderArgs += $" --var '{match.Value}={internalUrl}'";
         }
 
         // Generate internal Dockerfiles
         ExecuteScript(
-            s_generateDockerfilesScript,
+            GenerateDockerfilesScript,
             $"-Output {outputDirectory.Path} -CustomImageBuilderArgs \"{customImageBuilderArgs}\"",
             errorMessage);
 
@@ -124,7 +118,7 @@ public class GeneratedArtifactTests
 
         string GetDiscriminator(string dockerfilePath) =>
             dockerfilePath
-                .Remove(0, dockerfilesOutputDirectory.Length + 1)
+[(dockerfilesOutputDirectory.Length + 1)..]
                 .Replace('/', '-')
                 .Replace('\\', '-');
 
@@ -141,7 +135,7 @@ public class GeneratedArtifactTests
                     $"{discriminator[1..]}.{fileType}.{fileExtension}");
 
         Action<ShouldMatchConfigurationBuilder> Configure(string dockerfilePath) =>
-            (ShouldMatchConfigurationBuilder config) =>
+            config =>
             {
                 config
                     // Don't launch diff tool automatically since we have a large number of files
@@ -149,7 +143,7 @@ public class GeneratedArtifactTests
                     // Use the caller location (this method) for the test method name,
                     // since we perform the comparison inside an extension method
                     .UseCallerLocation()
-                    .SubFolder(InternalDockerfilesSubfolder)
+                    .SubFolder(internalDockerfilesSubfolder)
                     // Discriminator determines the name of the approved files,
                     // which needs to be unique per Dockerfile
                     .WithDiscriminator(GetDiscriminator(dockerfilePath))
@@ -162,10 +156,7 @@ public class GeneratedArtifactTests
             path => File.ReadAllText(path).ShouldMatchApproved(configureOptions: Configure(path)));
     }
 
-    private void ValidateGeneratedArtifacts(string generateScriptPath, string errorMessage)
-    {
-        ExecuteScript(generateScriptPath, "-Validate", errorMessage);
-    }
+    private void ValidateGeneratedArtifacts(string generateScriptPath, string errorMessage) => ExecuteScript(generateScriptPath, "-Validate", errorMessage);
 
     private void ExecuteScript(string generateScriptPath, string arguments, string errorMessage)
     {
