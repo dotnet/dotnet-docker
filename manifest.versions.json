@@ -235,7 +235,7 @@
     "rocks-toolbox|10.0|url": "$(rocks-toolbox|latest|url)",
     "rocks-toolbox|11.0|url": "$(rocks-toolbox|latest|url)",
 
-    "rocks-toolbox|latest|version": "v1.2.0",
+    "rocks-toolbox|latest|version": "v1.2.1",
     "rocks-toolbox|8.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|9.0|version": "$(rocks-toolbox|latest|version)",
     "rocks-toolbox|10.0|version": "$(rocks-toolbox|latest|version)",
