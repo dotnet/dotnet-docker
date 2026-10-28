@@ -20,9 +20,9 @@ internal static class MonitorCommand
 
     private static Command CreatePipelineBuildCommand(IServiceProvider services)
     {
-        var runId = new PositiveIdArgument("The Azure DevOps pipeline run ID to use as the update source");
+        PositiveIdArgument runId = new PositiveIdArgument("The Azure DevOps pipeline run ID to use as the update source");
 
-        var command = new Command("pipeline-build", "Update from an Azure DevOps pipeline run")
+        Command command = new Command("pipeline-build", "Update from an Azure DevOps pipeline run")
         {
             runId
         };
@@ -32,8 +32,8 @@ internal static class MonitorCommand
         command.SetAction(async (parseResult, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(parseResult);
-            var updater = services.GetRequiredService<MonitorUpdater>();
-            var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            MonitorUpdater updater = services.GetRequiredService<MonitorUpdater>();
+            DependencyUpdateRunner runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             DependencyUpdate update = await updater.ResolveFromPipelineBuildAsync(
                 parseResult.GetValue(runId),
@@ -47,12 +47,12 @@ internal static class MonitorCommand
 
     private static Command CreateVersionCommand(IServiceProvider services)
     {
-        var version = new Argument<string>("version")
+        Argument<string> version = new Argument<string>("version")
         {
             Description = "The product version to use as the update source",
         };
 
-        var command = new Command("version", "Update to a specific version")
+        Command command = new Command("version", "Update to a specific version")
         {
             version
         };
@@ -62,8 +62,8 @@ internal static class MonitorCommand
         command.SetAction(async (parseResult, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(parseResult);
-            var updater = services.GetRequiredService<MonitorUpdater>();
-            var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            MonitorUpdater updater = services.GetRequiredService<MonitorUpdater>();
+            DependencyUpdateRunner runner = services.GetRequiredService<DependencyUpdateRunner>();
 
             DependencyUpdate update = updater.ResolveFromVersion(parseResult.GetRequiredValue(version));
 

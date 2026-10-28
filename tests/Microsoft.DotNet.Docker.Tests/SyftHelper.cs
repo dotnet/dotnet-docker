@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable enable
 
@@ -18,7 +17,7 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
 {
     private const string OutputFileName = "syft-output.json";
 
-    private static readonly Lazy<string> s_syftImageTag = new(() =>
+    private static readonly Lazy<string> SyftImageTag = new(() =>
         $"{Config.GetVariableValue("syft|repo")}:{Config.GetVariableValue("syft|tag")}"
     );
 
@@ -31,11 +30,11 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         IEnumerable<string>? excludePaths = null
     )
     {
-        using var tempDir = FileHelper.UseTempFolder();
-        var tempDirPath = tempDir.Path;
+        using TempFolderContext tempDir = FileHelper.UseTempFolder();
+        string tempDirPath = tempDir.Path;
 
-        var syftImage = _dockerHelper.PullDockerHubImage(s_syftImageTag.Value);
-        var imageToInspect = imageData.GetImage(imageRepo, _dockerHelper);
+        string syftImage = _dockerHelper.PullDockerHubImage(SyftImageTag.Value);
+        string imageToInspect = imageData.GetImage(imageRepo, _dockerHelper);
 
         // Ignore the dotnet folder, or else syft will report all the packages in the .NET Runtime.
         // We only care about the packages from the linux distro for these tests.
@@ -44,8 +43,8 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
 
         // Create a Dockerfile tailored to this specific scan (allows us to inline the image name
         // in exec-form RUN)
-        var dockerfilePath = Path.Combine(tempDirPath, "Dockerfile");
-        var dockerfileContents = CreateDockerfileContents(syftImage, imageToInspect, excludePaths);
+        string dockerfilePath = Path.Combine(tempDirPath, "Dockerfile");
+        string dockerfileContents = CreateDockerfileContents(syftImage, imageToInspect, excludePaths);
         File.WriteAllText(dockerfilePath, dockerfileContents);
 
         _outputHelper.WriteLine(
@@ -84,10 +83,10 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
     /// <param name="syftImage">The Syft image tag to use for scanning</param>
     /// <param name="imageToScan">The image that will be scanned</param>
     /// <param name="excludePaths">
-    /// Paths to exclude from the scan, relative to the root of <see cref="imageToScan"/>
+    /// Paths to exclude from the scan, relative to the root of <paramref name="imageToScan"/>
     /// </param>
     /// <returns>
-    /// The contents of a Dockerfile that, when built, will scan <see cref="imageToScan"/> using
+    /// The contents of a Dockerfile that, when built, will scan <paramref name="imageToScan"/> using
     /// Syft and output the results in a scratch image layer. When used in combination with the
     /// docker build --output argument, the results will be written to a file named `syft.json`.
     /// </returns>
@@ -117,30 +116,32 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         ];
 
         excludePaths ??= [];
-        IEnumerable<string> excludeArgs = excludePaths.SelectMany(path => {
+        IEnumerable<string> excludeArgs = excludePaths.SelectMany(path =>
+        {
             // Syft expects relative paths. The paths are relative to the scan directory, which in
             // this case is /rootfs/.
-            if (!path.StartsWith("./"))
+            if (!path.StartsWith("./", StringComparison.Ordinal))
             {
                 path = "./" + path.TrimStart('/');
             }
+
             return new[] { "--exclude", path };
         });
 
         syftCommand = [.. syftCommand, .. excludeArgs];
-        var syftCommandString = string.Join(", ", syftCommand.Select(a => $"\"{a}\""));
+        string syftCommandString = string.Join(", ", syftCommand.Select(a => $"\"{a}\""));
 
         // Since syft is running outside its container, it can't access its copy of CA certificates,
         // meaning it can't make a secure HTTPS connection to its update server, so we need to
         // disable its update check. Also, we don't need it checking for updates during tests anyways.
-        const string DisableSyftUpdateCheck = "ENV SYFT_CHECK_FOR_APP_UPDATE=0";
+        const string disableSyftUpdateCheck = "ENV SYFT_CHECK_FOR_APP_UPDATE=0";
 
         return $"""
             FROM {syftImage} AS syft
             FROM {imageToScan} AS scan-image
 
             FROM syft AS run-scan
-            {DisableSyftUpdateCheck}
+            {disableSyftUpdateCheck}
             USER root
             RUN --mount=from=scan-image,source=/,target=/rootfs \
                 [{syftCommandString}]

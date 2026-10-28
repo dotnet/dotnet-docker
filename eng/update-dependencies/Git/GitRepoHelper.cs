@@ -38,14 +38,14 @@ internal sealed class GitRepoHelper(
     /// <inheritdoc />
     public async Task CheckoutRemoteBranchAsync(string branchName)
     {
-        var currentBranch = await Local.GetCurrentBranchAsync();
+        string currentBranch = await Local.GetCurrentBranchAsync();
         if (currentBranch == branchName)
         {
             _logger.LogInformation("Already on branch {BranchName}", branchName);
             return;
         }
 
-        var branchExists = await Remote.RemoteBranchExistsAsync(branchName);
+        bool branchExists = await Remote.RemoteBranchExistsAsync(branchName);
         if (!branchExists)
         {
             throw new InvalidBranchException($"Branch '{branchName}' does not exist on remote.");
@@ -58,8 +58,8 @@ internal sealed class GitRepoHelper(
     public async Task PushLocalBranchAsync(string branchName)
     {
         // Get all remotes and find the one that matches the target repo.
-        var remotes = await Local.ListAllRemotesAsync();
-        var targetRemote = remotes.First(remote => remote.Url == _repoUri);
+        IEnumerable<GitRemoteInfo> remotes = await Local.ListAllRemotesAsync();
+        GitRemoteInfo targetRemote = remotes.First(remote => remote.Url == _repoUri);
 
         _logger.LogInformation("Pushing branch {BranchName} to remote {RemoteUrl}", branchName, targetRemote.Url);
         await _libGit2Client.Push(Local.LocalPath, branchName, targetRemote.Url);

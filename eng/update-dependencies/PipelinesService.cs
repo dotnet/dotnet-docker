@@ -3,6 +3,7 @@
 
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.TeamFoundation.Build.WebApi;
+using Microsoft.VisualStudio.Services.WebApi;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
@@ -27,20 +28,20 @@ internal sealed class PipelinesService(IAzdoAuthProvider azdoAuthProvider) : IPi
     /// <inheritdoc/>
     public async Task<BuildArtifact> GetArtifactAsync(string azdoOrg, string azdoProject, int buildId, string artifactName)
     {
-        var client = GetBuildHttpClient(azdoOrg);
+        BuildHttpClient client = GetBuildHttpClient(azdoOrg);
         return await client.GetArtifactAsync(azdoProject, buildId, artifactName);
     }
 
     /// <inheritdoc/>
     public async Task<IReadOnlyList<string>> GetBuildTagsAsync(string azdoOrg, string azdoProject, int buildId)
     {
-        var client = GetBuildHttpClient(azdoOrg);
+        BuildHttpClient client = GetBuildHttpClient(azdoOrg);
         return await client.GetBuildTagsAsync(azdoProject, buildId);
     }
 
     private BuildHttpClient GetBuildHttpClient(string azdoOrg)
     {
-        var connection = _azdoAuthProvider.GetVssConnection(azdoOrg);
+        VssConnection connection = _azdoAuthProvider.GetVssConnection(azdoOrg);
         return connection.GetClient<BuildHttpClient>();
     }
 }

@@ -1,22 +1,20 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable enable
 
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
-namespace Microsoft.DotNet.Docker.Tests;
+namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
-public abstract class ConsoleAppScenario : ProjectTemplateTestScenario
+public abstract class ConsoleAppScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper) : ProjectTemplateTestScenario(imageData, dockerHelper, outputHelper)
 {
     protected override string SampleName { get; } = "console";
 
     protected override DotNetImageRepo RuntimeImageRepo { get; } = DotNetImageRepo.Runtime;
 
     protected override DotNetImageRepo SdkImageRepo { get; } = DotNetImageRepo.SDK;
-
-    public ConsoleAppScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
-        : base(imageData, dockerHelper, outputHelper)
-    {
-    }
 
     protected override Task RunAsync(string image, string? user, string? command = null)
     {

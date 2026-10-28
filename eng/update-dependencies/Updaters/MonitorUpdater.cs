@@ -13,7 +13,7 @@ public sealed class MonitorUpdater(
     UpdateDependenciesConfiguration configuration,
     ILogger<MonitorUpdater> logger)
 {
-    private static readonly (string Product, string ArchiveName)[] s_products =
+    private static readonly (string Product, string ArchiveName)[] Products =
     [
         ("monitor", "dotnet-monitor"),
         ("monitor-base", "dotnet-monitor-base"),
@@ -31,7 +31,7 @@ public sealed class MonitorUpdater(
 
     private async Task<string> GetVersionFromPipelineAsync(int pipelineRunId, CancellationToken cancellationToken)
     {
-        var versionFile = new PipelineArtifactFile("Build_Info", "dotnet-monitor.nupkg.buildversion");
+        PipelineArtifactFile versionFile = new PipelineArtifactFile("Build_Info", "dotnet-monitor.nupkg.buildversion");
         string version = await pipelineArtifactProvider
             .GetArtifactTextContentAsync(
                 configuration.AzureDevOps.Organization,
@@ -46,7 +46,7 @@ public sealed class MonitorUpdater(
     public DependencyUpdate ResolveFromVersion(string version)
     {
         version = version.Trim();
-        var parsedVersion = SemanticVersion.Parse(version);
+        SemanticVersion parsedVersion = SemanticVersion.Parse(version);
         string dockerfileVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}";
 
         return new DependencyUpdate(
@@ -80,16 +80,16 @@ public sealed class MonitorUpdater(
         variables.SetValue(baseUrlVariable, $"$(base-url|public|{quality}|{branch})");
         variables.SetValue(checksumsBaseUrlVariable, $"$(base-url|public-checksums|{quality}|{branch})");
 
-        foreach (var (product, _) in s_products)
+        foreach ((string? product, string _) in Products)
         {
             UpdateVersion(variables, $"{product}|{dockerfileVersion}|build-version", version);
             UpdateVersion(variables, $"{product}|{dockerfileVersion}|product-version", productVersion);
         }
 
-        foreach (var (product, archiveName) in s_products)
+        foreach ((string? product, string? archiveName) in Products)
         {
             string prefix = $"{product}|{dockerfileVersion}|";
-            var checksumVariables = variables.Names
+            IEnumerable<string> checksumVariables = variables.Names
                 .Where(name => name.StartsWith(prefix, StringComparison.Ordinal))
                 .Where(name => name.EndsWith("|sha", StringComparison.Ordinal));
 
