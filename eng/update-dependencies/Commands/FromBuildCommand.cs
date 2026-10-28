@@ -13,15 +13,15 @@ internal static class FromBuildCommand
 {
     public static Command CreateCliCommand<TUpdater>(IServiceProvider services) where TUpdater : class, IUpdater
     {
-        var command = new Command("build-id", "Update from a specific BAR build");
+        Command command = new Command("build-id", "Update from a specific BAR build");
         FromBuildOptions.AddTo(command);
 
         command.SetAction(async (result, cancellationToken) =>
         {
             FromBuildOptions options = FromBuildOptions.Bind(result);
-            var barClient = services.GetRequiredService<IBasicBarClient>();
-            var updater = (IBarBuildUpdater)services.GetRequiredService<TUpdater>();
-            var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            IBasicBarClient barClient = services.GetRequiredService<IBasicBarClient>();
+            IBarBuildUpdater updater = (IBarBuildUpdater)services.GetRequiredService<TUpdater>();
+            DependencyUpdateRunner runner = services.GetRequiredService<DependencyUpdateRunner>();
             Build build = await barClient.GetBuildAsync(options.Id).WaitAsync(cancellationToken);
             DependencyUpdate update = await updater.ResolveFromBarBuildAsync(build, cancellationToken);
 

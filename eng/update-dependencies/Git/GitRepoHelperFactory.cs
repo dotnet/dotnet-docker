@@ -77,11 +77,11 @@ internal sealed class GitRepoHelperFactory(
             gitDirectory: null);
         _logger.LogInformation("Cloned '{RepoUri}' to '{LocalCloneDir}'", repoUri, localCloneDir);
 
-        var gitRepoHelper = CreateFromLocal(repoUri, localCloneDir);
+        GitRepoHelper gitRepoHelper = CreateFromLocal(repoUri, localCloneDir);
 
         if (gitIdentity is { } identity)
         {
-            var localGitRepo = _localGitRepoFactory.Create(new NativePath(localCloneDir));
+            ILocalGitRepo localGitRepo = _localGitRepoFactory.Create(new NativePath(localCloneDir));
             await localGitRepo.SetConfigValue("user.name", identity.Name);
             await localGitRepo.SetConfigValue("user.email", identity.Email);
             _logger.LogInformation(
@@ -97,13 +97,13 @@ internal sealed class GitRepoHelperFactory(
     {
         localPath ??= Directory.GetCurrentDirectory();
 
-        var localGitRepo = _localGitRepoFactory.Create(new NativePath(localPath));
-        var localGitRepoHelper = new LocalGitRepoHelper(
+        ILocalGitRepo localGitRepo = _localGitRepoFactory.Create(new NativePath(localPath));
+        LocalGitRepoHelper localGitRepoHelper = new LocalGitRepoHelper(
             localPath: localPath,
             localGitRepo: localGitRepo,
             logger: _serviceProvider.GetRequiredService<ILogger<LocalGitRepoHelper>>());
 
-        var remoteGitRepoHelper = new RemoteGitRepoHelper(
+        RemoteGitRepoHelper remoteGitRepoHelper = new RemoteGitRepoHelper(
             repoUri,
             _remoteFactory.CreateRemoteGitRepo(repoUri),
             localGitRepo: localGitRepo,

@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 #nullable enable
 
@@ -10,17 +9,20 @@ using System.IO;
 using System.Threading.Tasks;
 using Xunit.Abstractions;
 
-namespace Microsoft.DotNet.Docker.Tests;
+namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
-public abstract class ProjectTemplateTestScenario : ITestScenario
+public abstract class ProjectTemplateTestScenario(
+    ProductImageData imageData,
+    DockerHelper dockerHelper,
+    ITestOutputHelper outputHelper) : ITestScenario
 {
     protected static string OSDockerfileSuffix { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "windows";
     protected static string? AdminUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "root" : null;
     protected static string? NonRootUser { get; } = DockerHelper.IsLinuxContainerModeEnabled ? "app" : "ContainerUser";
 
-    protected DockerHelper DockerHelper { get; }
-    protected ProductImageData ImageData { get; }
-    protected ITestOutputHelper OutputHelper { get; }
+    protected DockerHelper DockerHelper { get; } = dockerHelper;
+    protected ProductImageData ImageData { get; } = imageData;
+    protected ITestOutputHelper OutputHelper { get; } = outputHelper;
 
     protected virtual bool NonRootUserSupported => DockerHelper.IsLinuxContainerModeEnabled;
 
@@ -33,20 +35,10 @@ public abstract class ProjectTemplateTestScenario : ITestScenario
     protected abstract DotNetImageRepo RuntimeImageRepo { get; }
     protected abstract DotNetImageRepo SdkImageRepo { get; }
 
-    public ProjectTemplateTestScenario(
-        ProductImageData imageData,
-        DockerHelper dockerHelper,
-        ITestOutputHelper outputHelper)
-    {
-        DockerHelper = dockerHelper;
-        ImageData = imageData;
-        OutputHelper = outputHelper;
-    }
-
     private string Build(TestSolution testSolution, string stageTarget, string[]? customBuildArgs)
     {
-        const string DockerfileName = "Dockerfile";
-        string dockerfilePath = Path.Combine(DockerHelper.TestArtifactsDir, DockerfileName);
+        const string dockerfileName = "Dockerfile";
+        string dockerfilePath = Path.Combine(DockerHelper.TestArtifactsDir, dockerfileName);
         File.WriteAllText(dockerfilePath, Dockerfile.Content);
 
         string tag = ImageData.GetIdentifier(stageTarget);
@@ -62,15 +54,15 @@ public abstract class ProjectTemplateTestScenario : ITestScenario
         {
             // Docker needs all FROM images to be defined even if we won't use them for testing Composite images
             ProductImageData runtimeDepsImageData = ImageData.ImageVariant.HasFlag(DotNetImageVariant.Composite)
-                ?  new ProductImageData()
-                    {
-                        Version = ImageData.Version,
-                        OS = ImageData.OS,
-                        Arch = ImageData.Arch,
-                        SdkOS = ImageData.SdkOS,
-                        ImageVariant = DotNetImageVariant.None,
-                        SupportedImageRepos = DotNetImageRepo.Runtime_Deps,
-                    }
+                ? new ProductImageData()
+                {
+                    Version = ImageData.Version,
+                    OS = ImageData.OS,
+                    Arch = ImageData.Arch,
+                    SdkOS = ImageData.SdkOS,
+                    ImageVariant = DotNetImageVariant.None,
+                    SupportedImageRepos = DotNetImageRepo.Runtime_Deps,
+                }
                 : ImageData;
 
             buildArgs.Add($"runtime_deps_image={runtimeDepsImageData.GetImage(DotNetImageRepo.Runtime_Deps, DockerHelper)}");
@@ -81,12 +73,12 @@ public abstract class ProjectTemplateTestScenario : ITestScenario
             buildArgs.AddRange(customBuildArgs);
         }
 
-        const string InternalAccessTokenVar = "InternalAccessToken";
+        const string internalAccessTokenVar = "InternalAccessToken";
 
         if (!string.IsNullOrEmpty(Config.InternalAccessToken))
         {
-            buildArgs.Add(InternalAccessTokenVar);
-            Environment.SetEnvironmentVariable(InternalAccessTokenVar, Config.InternalAccessToken);
+            buildArgs.Add(internalAccessTokenVar);
+            Environment.SetEnvironmentVariable(internalAccessTokenVar, Config.InternalAccessToken);
         }
 
         try
@@ -103,7 +95,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario
         {
             if (!string.IsNullOrEmpty(Config.InternalAccessToken))
             {
-                Environment.SetEnvironmentVariable(InternalAccessTokenVar, null);
+                Environment.SetEnvironmentVariable(internalAccessTokenVar, null);
             }
         }
 
@@ -139,7 +131,7 @@ public abstract class ProjectTemplateTestScenario : ITestScenario
             // publish command with a different RID than the default would end up restoring images. This is not
             // what we'd want and plus it would fail in that case if it was targeting a private NuGet feed because
             // the password isn't necessarily provided in that stage.
-            string[] customBuildArgs = [ ..CustomDockerBuildArgs, $"rid={ImageData.Rid}" ];
+            string[] customBuildArgs = [.. CustomDockerBuildArgs, $"rid={ImageData.Rid}"];
 
             // Build and run app on SDK image
             string buildTag = Build(testSolution, TestDockerfile.BuildStageName, customBuildArgs);

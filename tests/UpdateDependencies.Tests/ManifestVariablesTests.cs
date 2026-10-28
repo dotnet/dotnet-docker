@@ -15,7 +15,7 @@ public sealed class ManifestVariablesTests
     [InlineData("literal", true)]
     public void ShouldUpdateLiteral_ExcludesMissingEmptyAndReferenceValues(string name, bool expected)
     {
-        var variables = new ManifestVariables("""
+        ManifestVariables variables = new ManifestVariables("""
             {"variables":{"empty":"","reference":"$(literal)","literal":"1.2.3"}}
             """);
 
@@ -30,7 +30,7 @@ public sealed class ManifestVariablesTests
         const string content =
             "{\r\n  // keep this comment\r\n  \"other\": {\"version\":\"old\"},\r\n"
             + "  \"variables\": { \"version\" \t:  \"old\", \"empty\": \"\", },\r\n}\r\n";
-        var variables = new ManifestVariables(content);
+        ManifestVariables variables = new ManifestVariables(content);
 
         variables.SetValue("version", "new").ShouldBeTrue();
 
@@ -50,14 +50,14 @@ public sealed class ManifestVariablesTests
             """;
         // Use actual multibyte characters before the edited token.
         string original = content.Replace("\\u00e9", "\u00e9\U0001F600");
-        var variables = new ManifestVariables(original);
+        ManifestVariables variables = new ManifestVariables(original);
         const string replacement = "quote: \" slash: \\ newline:\n dollar: $1 \u00e9";
 
         variables.SetValue("name", replacement).ShouldBeTrue();
         variables.SetValue("later", "longer value").ShouldBeTrue();
         variables.SetValue("name", replacement).ShouldBeFalse();
 
-        var reparsed = new ManifestVariables(variables.Content);
+        ManifestVariables reparsed = new ManifestVariables(variables.Content);
         reparsed.GetRawValue("name").ShouldBe(replacement);
         reparsed.GetRawValue("later").ShouldBe("longer value");
         variables.Content.ShouldStartWith("{\"note\":\"\u00e9\U0001F600\",");
@@ -74,7 +74,7 @@ public sealed class ManifestVariablesTests
         const string content =
             "{\"variables\":{\"first\":\"\u00e9\U0001F600\",/* \u00e9 */"
             + "\"\u00e9\":\"middle\",\"last\":\"\U0001F600\"}}";
-        var variables = new ManifestVariables(content);
+        ManifestVariables variables = new ManifestVariables(content);
 
         // Edit out of source order, with different replacement lengths.
         variables.SetValue("last", "long replacement");
@@ -96,7 +96,7 @@ public sealed class ManifestVariablesTests
     public void SetValue_UnchangedDecodedValuePreservesOriginalEscapes()
     {
         const string content = """{"variables":{"version":"\u0031"}}""";
-        var variables = new ManifestVariables(content);
+        ManifestVariables variables = new ManifestVariables(content);
 
         variables.SetValue("version", "1").ShouldBeFalse();
 
@@ -106,7 +106,7 @@ public sealed class ManifestVariablesTests
     [Fact]
     public void GetValue_ResolvesCurrentValuesWithoutRewritingReferences()
     {
-        var variables = new ManifestVariables("""
+        ManifestVariables variables = new ManifestVariables("""
             {"variables":{
               "version":"1",
               "alias":"$(version)",
@@ -131,13 +131,13 @@ public sealed class ManifestVariablesTests
     public void MissingVariables_AreNotTreatedAsEmptyOrInserted()
     {
         const string content = """{"variables":{"empty":"","alias":"$(missing)"}}""";
-        var variables = new ManifestVariables(content);
+        ManifestVariables variables = new ManifestVariables(content);
 
         variables.Contains("missing").ShouldBeFalse();
         Should.Throw<KeyNotFoundException>(() => variables.GetRawValue("missing"));
         Should.Throw<KeyNotFoundException>(() => variables.GetValue("missing"));
         variables.SetValue("missing", "value").ShouldBeFalse();
-        var error = Should.Throw<KeyNotFoundException>(() => variables.GetValue("alias"));
+        KeyNotFoundException error = Should.Throw<KeyNotFoundException>(() => variables.GetValue("alias"));
 
         error.Message.ShouldContain("alias -> missing");
         variables.Content.ShouldBe(content);
@@ -148,9 +148,9 @@ public sealed class ManifestVariablesTests
     [InlineData("""{"variables":{"a":"$(b)","b":"$(c)","c":"$(a)"}}""", "a -> b -> c -> a")]
     public void GetValue_ReportsReferenceCycles(string content, string expectedChain)
     {
-        var variables = new ManifestVariables(content);
+        ManifestVariables variables = new ManifestVariables(content);
 
-        var error = Should.Throw<InvalidOperationException>(() => variables.GetValue("a"));
+        InvalidOperationException error = Should.Throw<InvalidOperationException>(() => variables.GetValue("a"));
 
         error.Message.ShouldContain(expectedChain);
         variables.SetValue("a", "fixed");
@@ -171,10 +171,7 @@ public sealed class ManifestVariablesTests
     [InlineData("""{"variables":{},"variables":{}}""")]
     [InlineData("""{"variables":{}} {}""")]
     [InlineData("""{"variables":{"a":"1"}""")]
-    public void Constructor_RejectsInvalidOrAmbiguousManifests(string content)
-    {
-        Should.Throw<JsonException>(() => new ManifestVariables(content));
-    }
+    public void Constructor_RejectsInvalidOrAmbiguousManifests(string content) => Should.Throw<JsonException>(() => new ManifestVariables(content));
 
     [Fact]
     public void Constructor_AcceptsEmptyVariablesAndSkipsUnrelatedStructures()
@@ -182,7 +179,7 @@ public sealed class ManifestVariablesTests
         const string content = """
             {"before":[{"variables":{"a":1}}],"variables":{},"after":{"a":[1,2]}}
             """;
-        var variables = new ManifestVariables(content);
+        ManifestVariables variables = new ManifestVariables(content);
 
         variables.Names.ShouldBeEmpty();
         variables.Content.ShouldBe(content);

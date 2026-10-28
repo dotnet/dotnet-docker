@@ -27,7 +27,7 @@ internal sealed class RemoteGitRepoFactory(IServiceProvider serviceProvider) : I
     /// <inheritdoc />
     public IRemoteGitRepo CreateRemoteGitRepo(string remoteUrl)
     {
-        var gitRemoteKind = ParseGitRemoteFromUrl(remoteUrl);
+        GitRemote gitRemoteKind = ParseGitRemoteFromUrl(remoteUrl);
 
         return gitRemoteKind switch
         {

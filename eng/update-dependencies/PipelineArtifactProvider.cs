@@ -50,7 +50,7 @@ internal class PipelineArtifactProvider(
     private readonly ILogger<PipelineArtifactProvider> _logger = logger;
     private readonly AzdoHttpClient _azdoHttpClient = azdoHttpClient;
 
-    private static readonly IEnumerable<PipelineArtifactFile> s_releaseConfigFiles =
+    private static readonly IEnumerable<PipelineArtifactFile> ReleaseConfigFiles =
     [
         // Newest known location for release artifact data
         new PipelineArtifactFile("manifests", "ReleaseConfig.json"),
@@ -67,11 +67,11 @@ internal class PipelineArtifactProvider(
         string azdoProject,
         int stagingPipelineRunId)
     {
-        var releaseConfigJson = await GetArtifactTextContentAsync(
+        string releaseConfigJson = await GetArtifactTextContentAsync(
             azdoOrganization,
             azdoProject,
             stagingPipelineRunId,
-            s_releaseConfigFiles);
+            ReleaseConfigFiles);
 
         return ReleaseConfig.FromJson(releaseConfigJson);
     }
@@ -97,6 +97,7 @@ internal class PipelineArtifactProvider(
         {
             throw new ArgumentException("Azure DevOps organization is required", nameof(azdoOrganization));
         }
+
         if (string.IsNullOrWhiteSpace(azdoProject))
         {
             throw new ArgumentException("Azure DevOps project is required", nameof(azdoProject));
@@ -128,9 +129,9 @@ internal class PipelineArtifactProvider(
                 _logger.LogInformation(
                     "Downloading artifact {pipelineArtifact} from {downloadUrl}",
                     pipelineArtifact, downloadUrl);
-                using var response = await _azdoHttpClient.GetAsync(downloadUrl);
+                using HttpResponseMessage response = await _azdoHttpClient.GetAsync(downloadUrl);
                 response.EnsureSuccessStatusCode();
-                var textContent = await response.Content.ReadAsStringAsync();
+                string textContent = await response.Content.ReadAsStringAsync();
                 return textContent;
             }
             catch (Exception e)

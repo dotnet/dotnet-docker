@@ -1,6 +1,5 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System.Linq;
 using Newtonsoft.Json.Linq;
@@ -17,10 +16,7 @@ public sealed class AspireDashboardManifestTests
     [Theory]
     [InlineData("", "aspire/dashboard")]
     [InlineData("/nightly", "aspire/nightly/dashboard")]
-    public void RepoName_UsesAspireProductFamily(string repoNameModifier, string expectedRepoName)
-    {
-        Assert.Equal(expectedRepoName, ImageData.GetRepoName(AspireDashboardId, repoNameModifier));
-    }
+    public void RepoName_UsesAspireProductFamily(string repoNameModifier, string expectedRepoName) => Assert.Equal(expectedRepoName, ImageData.GetRepoName(AspireDashboardId, repoNameModifier));
 
     [Fact]
     public void Manifest_UsesCanonicalRepoName()

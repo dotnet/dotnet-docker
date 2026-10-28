@@ -5,11 +5,10 @@ using System;
 using Xunit;
 using Xunit.Sdk;
 
-namespace Microsoft.DotNet.Docker.Tests
+namespace Microsoft.DotNet.Docker.Tests;
+
+[XunitTestCaseDiscoverer("Microsoft.DotNet.Docker.Tests.DotNetTheoryDiscoverer", "Microsoft.DotNet.Docker.Tests")]
+[AttributeUsage(AttributeTargets.Method)]
+public class DotNetTheoryAttribute : TheoryAttribute
 {
-    [XunitTestCaseDiscoverer("Microsoft.DotNet.Docker.Tests.DotNetTheoryDiscoverer", "Microsoft.DotNet.Docker.Tests")]
-    [AttributeUsage(AttributeTargets.Method)]
-    public class DotNetTheoryAttribute : TheoryAttribute
-    {
-    }
 }

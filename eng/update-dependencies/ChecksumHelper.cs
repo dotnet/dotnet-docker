@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 using System.Diagnostics;
 using System.Security.Cryptography;
 using System.Text;
@@ -17,18 +20,17 @@ internal static class ChecksumHelper
         {
             if (response.IsSuccessStatusCode)
             {
-                using (Stream httpStream = await response.Content.ReadAsStreamAsync(cancellationToken))
-                using (SHA512 hash = SHA512.Create())
-                {
-                    byte[] hashedInputBytes = hash.ComputeHash(httpStream);
+                using Stream httpStream = await response.Content.ReadAsStreamAsync(cancellationToken);
+                using SHA512 hash = SHA512.Create();
+                byte[] hashedInputBytes = hash.ComputeHash(httpStream);
 
-                    StringBuilder stringBuilder = new(128);
-                    foreach (byte b in hashedInputBytes)
-                    {
-                        stringBuilder.Append(b.ToString("X2"));
-                    }
-                    sha = stringBuilder.ToString();
+                StringBuilder stringBuilder = new(128);
+                foreach (byte b in hashedInputBytes)
+                {
+                    stringBuilder.Append(b.ToString("X2"));
                 }
+
+                sha = stringBuilder.ToString();
             }
             else
             {

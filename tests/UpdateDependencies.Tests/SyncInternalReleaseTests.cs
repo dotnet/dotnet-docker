@@ -2,12 +2,12 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Collections.Immutable;
+using Microsoft.DotNet.DarcLib;
+using Microsoft.DotNet.Docker.Shared;
 using Microsoft.DotNet.Docker.UpdateDependencies;
 using Microsoft.DotNet.Docker.UpdateDependencies.Commands;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
 using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
-using Microsoft.DotNet.DarcLib;
-using Microsoft.DotNet.Docker.Shared;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
@@ -28,7 +28,7 @@ public sealed class SyncInternalReleaseTests
     /// The primary thing that changes the behavior of the command is the state of the remote git
     /// repository, which is mocked in the tests.
     /// </summary>
-    private static readonly SyncInternalReleaseOptions s_defaultOptions = new()
+    private static readonly SyncInternalReleaseOptions DefaultOptions = new()
     {
         SourceBranch = ReleaseBranch,
         TargetBranch = InternalReleaseBranch
@@ -41,7 +41,7 @@ public sealed class SyncInternalReleaseTests
     [Fact]
     public async Task WhitespaceArgumentsFails()
     {
-        var configuration = new UpdateDependenciesConfiguration
+        UpdateDependenciesConfiguration configuration = new UpdateDependenciesConfiguration
         {
             AzureDevOps = new()
             {
@@ -50,9 +50,9 @@ public sealed class SyncInternalReleaseTests
                 Repository = "   ",
             },
         };
-        var options = s_defaultOptions with { SourceBranch = "   ", TargetBranch = "   " };
-        var repoFactory = new Mock<IGitRepoHelperFactory>(MockBehavior.Strict);
-        var command = CreateCommand(repoFactory: repoFactory.Object, configuration: configuration);
+        SyncInternalReleaseOptions options = DefaultOptions with { SourceBranch = "   ", TargetBranch = "   " };
+        Mock<IGitRepoHelperFactory> repoFactory = new Mock<IGitRepoHelperFactory>(MockBehavior.Strict);
+        SyncInternalReleaseCommand command = CreateCommand(repoFactory: repoFactory.Object, configuration: configuration);
 
         await Should.ThrowAsync<ArgumentException>(() => command.ExecuteAsync(options));
 
@@ -67,9 +67,9 @@ public sealed class SyncInternalReleaseTests
     [Fact]
     public async Task InternalSourceBranchFails()
     {
-        var options = s_defaultOptions with { SourceBranch = "internal/foo" };
+        SyncInternalReleaseOptions options = DefaultOptions with { SourceBranch = "internal/foo" };
 
-        var command = CreateCommand();
+        SyncInternalReleaseCommand command = CreateCommand();
 
         await Should.ThrowAsync<InvalidBranchException>(() => command.ExecuteAsync(options));
     }
@@ -81,10 +81,10 @@ public sealed class SyncInternalReleaseTests
     [Fact]
     public async Task CreateInternalBranch()
     {
-        var options = s_defaultOptions;
+        SyncInternalReleaseOptions options = DefaultOptions;
 
-        var repoMock = new Mock<IGitRepoHelper>();
-        var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
+        Mock<IGitRepoHelper> repoMock = new Mock<IGitRepoHelper>();
+        Mock<IGitRepoHelperFactory> repoFactoryMock = new Mock<IGitRepoHelperFactory>();
         repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup:
@@ -93,9 +93,9 @@ public sealed class SyncInternalReleaseTests
         // Source branch exists on remote
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
 
-        var command = CreateCommand(repoFactory: repoFactoryMock.Object);
+        SyncInternalReleaseCommand command = CreateCommand(repoFactory: repoFactoryMock.Object);
 
-        var exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options);
         exitCode.ShouldBe(0);
 
         // The command should have created the target branch based off of the source branch.
@@ -109,27 +109,27 @@ public sealed class SyncInternalReleaseTests
     [Fact]
     public async Task AlreadyUpToDate()
     {
-        var options = s_defaultOptions;
+        SyncInternalReleaseOptions options = DefaultOptions;
 
         // Strict mock behavior ensures that no extra calls are made that are
         // not explicitly set up in this test.
-        var repoMock = new Mock<IGitRepoHelper>(MockBehavior.Strict);
-        var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
+        Mock<IGitRepoHelper> repoMock = new Mock<IGitRepoHelper>(MockBehavior.Strict);
+        Mock<IGitRepoHelperFactory> repoFactoryMock = new Mock<IGitRepoHelperFactory>();
         repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.TargetBranch)).ReturnsAsync(true);
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
         // They point to the same commit.
-        const string Sha = "0000000000000000000000000000000000000001";
-        repoMock.Setup(r => r.Remote.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(Sha);
-        repoMock.Setup(r => r.Remote.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(Sha);
+        const string sha = "0000000000000000000000000000000000000001";
+        repoMock.Setup(r => r.Remote.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(sha);
+        repoMock.Setup(r => r.Remote.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(sha);
         repoMock.Setup(r => r.Dispose());
 
-        var command = CreateCommand(repoFactory: repoFactoryMock.Object);
+        SyncInternalReleaseCommand command = CreateCommand(repoFactory: repoFactoryMock.Object);
 
         // Command should succeed.
-        var exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options);
         exitCode.ShouldBe(0);
         // Command should not have done anything else that we didn't expect.
         repoMock.VerifyAll();
@@ -142,16 +142,16 @@ public sealed class SyncInternalReleaseTests
     [Fact]
     public async Task FastForward()
     {
-        var options = s_defaultOptions;
+        SyncInternalReleaseOptions options = DefaultOptions;
 
-        var localRepoMock = new Mock<ILocalGitRepoHelper>();
-        var remoteRepoMock = new Mock<IRemoteGitRepoHelper>();
+        Mock<ILocalGitRepoHelper> localRepoMock = new Mock<ILocalGitRepoHelper>();
+        Mock<IRemoteGitRepoHelper> remoteRepoMock = new Mock<IRemoteGitRepoHelper>();
 
-        var repoMock = new Mock<IGitRepoHelper>();
+        Mock<IGitRepoHelper> repoMock = new Mock<IGitRepoHelper>();
         repoMock.Setup(r => r.Local).Returns(localRepoMock.Object);
         repoMock.Setup(r => r.Remote).Returns(remoteRepoMock.Object);
 
-        var repoFactoryMock = new Mock<IGitRepoHelperFactory>();
+        Mock<IGitRepoHelperFactory> repoFactoryMock = new Mock<IGitRepoHelperFactory>();
         repoFactoryMock.Setup(f => f.CreateAndCloneAsync(RemoteAzdoUrl, null, It.IsAny<(string, string)?>())).ReturnsAsync(repoMock.Object);
 
         // Setup: Both target and source branches exist on remote.
@@ -159,10 +159,10 @@ public sealed class SyncInternalReleaseTests
         repoMock.Setup(r => r.Remote.RemoteBranchExistsAsync(options.SourceBranch)).ReturnsAsync(true);
 
         // They point to different commits.
-        const string OldSha = "0000000000000000000000000000000000000001";
-        const string NewSha = "0000000000000000000000000000000000000002";
-        remoteRepoMock.Setup(r => r.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(OldSha);
-        remoteRepoMock.Setup(r => r.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(NewSha);
+        const string oldSha = "0000000000000000000000000000000000000001";
+        const string newSha = "0000000000000000000000000000000000000002";
+        remoteRepoMock.Setup(r => r.GetRemoteBranchShaAsync(options.TargetBranch)).ReturnsAsync(oldSha);
+        remoteRepoMock.Setup(r => r.GetRemoteBranchShaAsync(options.SourceBranch)).ReturnsAsync(newSha);
 
         // The target branch is behind the source branch.
         localRepoMock
@@ -174,10 +174,10 @@ public sealed class SyncInternalReleaseTests
             .Setup(r => r.GetPullRequestInfoAsync(It.IsAny<string>()))
             .ReturnsAsync(Mock.Of<PullRequest>());
 
-        var command = CreateCommand(repoFactory: repoFactoryMock.Object);
+        SyncInternalReleaseCommand command = CreateCommand(repoFactory: repoFactoryMock.Object);
 
         // Command should succeed.
-        var exitCode = await command.ExecuteAsync(options);
+        int exitCode = await command.ExecuteAsync(options);
         exitCode.ShouldBe(0);
 
         // Should have created a pull request.
@@ -200,48 +200,48 @@ public sealed class SyncInternalReleaseTests
     [Fact]
     public async Task Sync()
     {
-        var options = s_defaultOptions with
+        SyncInternalReleaseOptions options = DefaultOptions with
         {
             StagingStorageAccount = "dotnetstage"
         };
 
         // Target and source branches both exist, but at different commits,
         // and the target branch is not an ancestor of the source branch.
-        var gitScenario = new GitTestScenario(localRepoPath: LocalRepoPath, remoteRepoUrl: RemoteAzdoUrl)
+        GitTestScenario gitScenario = new GitTestScenario(localRepoPath: LocalRepoPath, remoteRepoUrl: RemoteAzdoUrl)
             .AddRemoteBranch(options.SourceBranch, "0000000000000000000000000000000000000001")
             .AddRemoteBranch(options.TargetBranch, "0000000000000000000000000000000000000002");
 
         // Actual value of the pull request URL is not important here, just that we allow one to
         // be created and pretend it exists afterwards.
-        const string PullRequestUrl = nameof(PullRequestUrl);
-        var pullRequestIsCreated = false;
+        const string pullRequestUrl = nameof(pullRequestUrl);
+        bool pullRequestIsCreated = false;
         gitScenario.RepoMock
             .Setup(repo => repo.Remote.CreatePullRequestAsync(It.IsAny<PullRequestCreationInfo>()))
             .Callback(() => pullRequestIsCreated = true)
-            .ReturnsAsync(PullRequestUrl);
+            .ReturnsAsync(pullRequestUrl);
         gitScenario.RepoMock
-            .Setup(repo => repo.Remote.GetPullRequestInfoAsync(PullRequestUrl))
+            .Setup(repo => repo.Remote.GetPullRequestInfoAsync(pullRequestUrl))
             .ReturnsAsync(() => pullRequestIsCreated
                 ? Mock.Of<PullRequest>()
-                : throw new Exception($"PR {PullRequestUrl} was not created first"));
+                : throw new Exception($"PR {pullRequestUrl} was not created first"));
 
         // For this scenario, two internal versions have been checked in to this repo.
-        var internalVersions = new Dictionary<DotNetVersion, string>
+        Dictionary<DotNetVersion, string> internalVersions = new Dictionary<DotNetVersion, string>
         {
             { DotNetVersion.Parse("8.0"), "stage-8000000" },
             { DotNetVersion.Parse("10.0"), "stage-1000000" }
         };
-        var internalVersionsService = CreateInternalVersionsService(LocalRepoPath, internalVersions);
+        IInternalVersionsService internalVersionsService = CreateInternalVersionsService(LocalRepoPath, internalVersions);
 
-        var fromStagingPipelineCommandMock = new Mock<ICommand<FromStagingPipelineOptions>>();
+        Mock<ICommand<FromStagingPipelineOptions>> fromStagingPipelineCommandMock = new Mock<ICommand<FromStagingPipelineOptions>>();
 
-        var syncCommand = CreateCommand(
+        SyncInternalReleaseCommand syncCommand = CreateCommand(
             repoFactory: gitScenario.RepoFactoryMock.Object,
             fromStagingPipelineCommand: fromStagingPipelineCommandMock.Object,
             internalVersionsService: internalVersionsService);
 
         // Run the command
-        var exitCode = await syncCommand.ExecuteAsync(options);
+        int exitCode = await syncCommand.ExecuteAsync(options);
         exitCode.ShouldBe(0);
 
         // Verify that we re-applied all internal versions by calling the downstream command.
@@ -261,7 +261,7 @@ public sealed class SyncInternalReleaseTests
         // There should be one commit for resetting the target branch to match
         // the source branch, and then one commit for each internal version
         // that was re-applied.
-        var numberOfCommits = 1 + internalVersions.Count;
+        int numberOfCommits = 1 + internalVersions.Count;
         gitScenario.RepoMock.Verify(
             repo => repo.Local.CommitAsync(
                 It.IsAny<string>(),
@@ -299,16 +299,16 @@ public sealed class SyncInternalReleaseTests
         UpdateDependenciesConfiguration? configuration = null) =>
             // New parameters should be null by default and initialized with mocks if not specified.
             new(configuration ?? new UpdateDependenciesConfiguration
+            {
+                User = "Test User",
+                Email = "test@example.com",
+                AzureDevOps = new()
                 {
-                    User = "Test User",
-                    Email = "test@example.com",
-                    AzureDevOps = new()
-                    {
-                        Organization = AzdoOrgUrl,
-                        Project = AzdoProject,
-                        Repository = AzdoRepo,
-                    },
+                    Organization = AzdoOrgUrl,
+                    Project = AzdoProject,
+                    Repository = AzdoRepo,
                 },
+            },
                 repoFactory ?? Mock.Of<IGitRepoHelperFactory>(),
                 fromStagingPipelineCommand ?? Mock.Of<ICommand<FromStagingPipelineOptions>>(),
                 internalVersionsService ?? Mock.Of<IInternalVersionsService>(),
@@ -321,9 +321,9 @@ public sealed class SyncInternalReleaseTests
     private static IInternalVersionsService CreateInternalVersionsService(
         string repoPath, Dictionary<DotNetVersion, string> versions)
     {
-        var internalStagingBuilds = new InternalStageContainers(versions.ToImmutableDictionary());
+        InternalStageContainers internalStagingBuilds = new InternalStageContainers(versions.ToImmutableDictionary());
 
-        var mock = new Mock<IInternalVersionsService>();
+        Mock<IInternalVersionsService> mock = new Mock<IInternalVersionsService>();
         mock.Setup(s => s.GetInternalStagingBuilds(repoPath))
             .Returns(internalStagingBuilds);
 

@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using System.Collections.Immutable;
 using Microsoft.DotNet.Docker.Shared;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Sync;
@@ -14,15 +13,15 @@ internal sealed class InternalVersionsService : IInternalVersionsService
     /// <inheritdoc/>
     public InternalStageContainers GetInternalStagingBuilds(string repoRoot)
     {
-        var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
+        string internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
         try
         {
-            var fileContents = File.ReadAllLines(internalVersionFile);
+            string[] fileContents = File.ReadAllLines(internalVersionFile);
             return InternalStageContainers.Parse(fileContents);
         }
         catch (FileNotFoundException)
         {
-            return new InternalStageContainers(ImmutableDictionary<DotNetVersion, string>.Empty);
+            return new InternalStageContainers([]);
         }
     }
 
@@ -39,9 +38,9 @@ internal sealed class InternalVersionsService : IInternalVersionsService
         // 2) lots of regex JSON manipulation which is error-prone and harder to maintain
         //
         // So for now, the separate file and format is a compromise.
-        var builds = GetInternalStagingBuilds(repoRoot);
+        InternalStageContainers builds = GetInternalStagingBuilds(repoRoot);
         builds = builds.Add(dotNetVersion, stageContainerName);
-        var internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
+        string internalVersionFile = Path.Combine(repoRoot, InternalVersionsFileName);
         File.WriteAllText(internalVersionFile, builds.ToString());
     }
 }

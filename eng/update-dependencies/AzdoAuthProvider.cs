@@ -55,9 +55,9 @@ public class AzdoAuthProvider(
     /// </returns>
     public VssConnection GetVssConnection(string azdoOrg)
     {
-        var baseUrl = new Uri(azdoOrg);
-        var credential = new VssBasicCredential(userName: string.Empty, password: AccessToken);
-        var connection = new VssConnection(baseUrl, credential);
+        Uri baseUrl = new Uri(azdoOrg);
+        VssBasicCredential credential = new VssBasicCredential(userName: string.Empty, password: AccessToken);
+        VssConnection connection = new VssConnection(baseUrl, credential);
         return connection;
     }
 }

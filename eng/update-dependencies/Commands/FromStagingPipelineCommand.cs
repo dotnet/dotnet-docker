@@ -2,10 +2,11 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.CommandLine;
+using Microsoft.DotNet.Docker.Shared;
 using Microsoft.DotNet.Docker.UpdateDependencies.Git;
+using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 using Microsoft.DotNet.Docker.UpdateDependencies.Sync;
 using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
-using Microsoft.DotNet.Docker.Shared;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
@@ -62,7 +63,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
 
     public static Command CreateCliCommand(IServiceProvider services)
     {
-        var command = new Command("staging-pipeline", "Update .NET from staging pipeline runs");
+        Command command = new Command("staging-pipeline", "Update .NET from staging pipeline runs");
         FromStagingPipelineOptions.AddTo(command);
         command.SetAction((result, _) =>
         {
@@ -74,7 +75,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
 
     public async Task<int> ExecuteAsync(FromStagingPipelineOptions options)
     {
-        var stageContainers = options.GetStageContainerList();
+        IReadOnlyList<string> stageContainers = options.GetStageContainerList();
 
         if (stageContainers.Count == 0)
         {
@@ -91,17 +92,17 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         // passed in, we may or may not want to actually perform git operations. GitRepoContext
         // decides what git operations to perform and tells us where to make changes. This keeps
         // all the git-related logic in one place.
-        var gitRepoContext = await _createGitRepoContextAsync(options);
+        GitRepoContext gitRepoContext = await _createGitRepoContextAsync(options);
 
         List<string> commitMessages = [];
         List<string> prBodySections = [];
 
         // Process each stage container, creating a separate commit for each
-        foreach (var stageContainer in stageContainers)
+        foreach (string stageContainer in stageContainers)
         {
             _logger.LogInformation("Processing stage container: {StageContainer}", stageContainer);
 
-            var (commitMessage, prBodySection) = await ProcessStageContainerAsync(
+            (string? commitMessage, string? prBodySection) = await ProcessStageContainerAsync(
                 options,
                 stageContainer,
                 gitRepoContext);
@@ -114,11 +115,11 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         }
 
         // Create pull request with all commits
-        var prTitle = stageContainers.Count == 1
+        string prTitle = stageContainers.Count == 1
             ? $"[{options.TargetBranch}] {commitMessages[0]}"
             : $"[{options.TargetBranch}] Update .NET dependencies from {stageContainers.Count} stage containers";
 
-        var prBody = string.Join(Environment.NewLine + Environment.NewLine, prBodySections);
+        string prBody = string.Join(Environment.NewLine + Environment.NewLine, prBodySections);
         await gitRepoContext.PushAndCreatePullRequest(prTitle, prBody);
 
         return 0;
@@ -135,10 +136,10 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         string stageContainer,
         GitRepoContext gitRepoContext)
     {
-        var stagingPipelineRunId = StagingPipelineOptionsExtensions.GetStagingPipelineRunId(stageContainer);
+        int stagingPipelineRunId = StagingPipelineOptionsExtensions.GetStagingPipelineRunId(stageContainer);
 
         // Log staging pipeline tags for diagnostic purposes
-        var stagingPipelineTags = await _pipelinesService.GetBuildTagsAsync(
+        IReadOnlyList<string> stagingPipelineTags = await _pipelinesService.GetBuildTagsAsync(
             _configuration.AzureDevOps.Organization,
             _configuration.AzureDevOps.Project,
             stagingPipelineRunId);
@@ -160,7 +161,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
                 + $"/{stageContainer}/assets/shipping/assets";
         }
 
-        var releaseConfig = await _pipelineArtifactProvider.GetReleaseConfigAsync(
+        ReleaseConfig releaseConfig = await _pipelineArtifactProvider.GetReleaseConfigAsync(
             _configuration.AzureDevOps.Organization,
             _configuration.AzureDevOps.Project,
             stagingPipelineRunId);
@@ -183,7 +184,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
         string? aspnetVersion = options.Internal ? releaseConfig.AspBuild : releaseConfig.Asp;
 
         // Example build URL: https://dev.azure.com/<org>/<project>/_build/results?buildId=<stagingPipelineRunId>
-        var buildUrl = $"{_configuration.AzureDevOps.Organization.TrimEnd('/')}/{_configuration.AzureDevOps.Project}/_build/results?buildId={stagingPipelineRunId}";
+        string buildUrl = $"{_configuration.AzureDevOps.Organization.TrimEnd('/')}/{_configuration.AzureDevOps.Project}/_build/results?buildId={stagingPipelineRunId}";
         _logger.LogInformation(
             "Applying internal build {StageContainer} ({BuildUrl})",
             stageContainer, buildUrl);
@@ -194,7 +195,7 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
                 variables, repoRoot, releaseConfig, internalBaseUrl, token),
             CancellationToken.None);
 
-        var commitMessage = releaseConfig switch
+        string commitMessage = releaseConfig switch
         {
             { SdkOnly: true } => $"Update .NET {majorMinorVersionString} SDK to {sdkVersion}",
             _ => $"Update .NET {majorMinorVersionString} to {sdkVersion} SDK / {runtimeVersion} Runtime",
@@ -208,8 +209,9 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
             newVersionsList.Add($"- ASPNET: {aspnetVersion}");
             newVersionsList.Add($"- ASPNET-COMPOSITE: {aspnetVersion}");
         }
+
         newVersionsList.Add($"- SDK: {sdkVersion}");
-        var prBodySection = $"""
+        string prBodySection = $"""
             ## .NET {majorMinorVersionString}
 
             This updates .NET {majorMinorVersionString} to the following versions:
@@ -280,21 +282,22 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
 
             if (options.SubmitPullRequest)
             {
-                var remoteUrl = configuration.AzureDevOps.GetRepoUrl();
-                var targetBranch = options.TargetBranch;
-                var buildId = environmentService.GetBuildId() ?? "";
-                var stageContainerList = options.GetStageContainerList();
+                string remoteUrl = configuration.AzureDevOps.GetRepoUrl();
+                string targetBranch = options.TargetBranch;
+                string buildId = environmentService.GetBuildId() ?? "";
+                IReadOnlyList<string> stageContainerList = options.GetStageContainerList();
                 if (stageContainerList.Count == 0)
                 {
                     throw new ArgumentException("At least one stage container must be provided.");
                 }
-                var prBranch = options.CreatePullRequestBranchName(
+
+                string prBranch = options.CreatePullRequestBranchName(
                     $"update-deps-int-{stageContainerList[0]}",
                     buildId);
-                var committer = configuration.GetCommitterIdentity();
+                (string Name, string Email) committer = configuration.GetCommitterIdentity();
 
                 // Clone the repo and configure git identity for commits
-                var git = await gitRepoFactory.CreateAndCloneAsync(remoteUrl, gitIdentity: committer);
+                IGitRepoHelper git = await gitRepoFactory.CreateAndCloneAsync(remoteUrl, gitIdentity: committer);
                 // Ensure the branch we want to modify exists, then check it out
                 await git.Remote.EnsureBranchExistsAsync(targetBranch);
                 // Create a new branch to push changes to and create a PR from
@@ -325,17 +328,19 @@ internal partial class FromStagingPipelineCommand : ICommand<FromStagingPipeline
                 logger.LogInformation("No git operations will be performed.");
                 localRepoPath = options.RepoRoot;
 
-                commitChanges = async (commitMessage) =>
+                commitChanges = (commitMessage) =>
                 {
                     logger.LogInformation("Skipping commit.");
                     logger.LogInformation("Commit message: {CommitMessage}", commitMessage);
+                    return Task.CompletedTask;
                 };
 
-                pushAndCreatePullRequest = async (prTitle, prBody) =>
+                pushAndCreatePullRequest = (prTitle, prBody) =>
                 {
                     logger.LogInformation("Skipping push and pull request creation.");
                     logger.LogInformation("Pull request title: {PullRequestTitle}", prTitle);
                     logger.LogInformation("Pull request body:\n{PullRequestBody}", prBody);
+                    return Task.CompletedTask;
                 };
             }
 

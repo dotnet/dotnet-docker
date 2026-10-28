@@ -38,7 +38,7 @@ public sealed class AspireUpdater(
             throw new ArgumentException($"BAR build {build.Id} is not an Aspire build.", nameof(build));
         }
 
-        var dashboardAssets = build.Assets.Where(asset =>
+        Asset[] dashboardAssets = build.Assets.Where(asset =>
             asset.Name.Contains("aspire-dashboard-linux-x64")
             || asset.Name.Contains("aspire-dashboard-linux-arm64"))
             .ToArray();
@@ -65,10 +65,10 @@ public sealed class AspireUpdater(
         string branch = variables.GetValue("branch");
         string dashboardBaseUrl = variables.GetValue($"aspire-dashboard|base-url|{branch}");
 
-        var dashboardChecksums = await Task.WhenAll(dashboardAssets
+        string[] dashboardChecksums = await Task.WhenAll(dashboardAssets
             .Select(asset => GetChecksumAsync($"{dashboardBaseUrl}/{asset.Name}", cancellationToken)));
 
-        var majorMinorVersion = VersionHelper.ResolveMajorMinorVersion(version);
+        Version majorMinorVersion = VersionHelper.ResolveMajorMinorVersion(version);
 
         // Aspire Dashboard builds always use "preview 1"; tags use the stable product version.
         string productVersion = VersionHelper.ResolveProductVersion(version, isStableRelease: true);
@@ -79,7 +79,7 @@ public sealed class AspireUpdater(
         variables.SetValue("aspire-dashboard|minor-tag", majorMinorVersion.ToString(2));
         variables.SetValue("aspire-dashboard|major-tag", majorMinorVersion.Major.ToString());
 
-        foreach (var (asset, checksum) in dashboardAssets.Zip(dashboardChecksums))
+        foreach ((Asset? asset, string? checksum) in dashboardAssets.Zip(dashboardChecksums))
         {
             string arch = asset.Name.Contains("arm64") ? "arm64" : "x64";
             variables.SetValue($"aspire-dashboard|linux|{arch}|sha", checksum);

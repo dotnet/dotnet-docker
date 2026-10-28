@@ -21,26 +21,21 @@ public static partial class ManifestHelper
     /// <param name="branch">
     /// Name of the branch. This is typically "main" or "nightly".
     /// </param>
+    /// <param name="versionSourceName">The version source used to identify the product.</param>
+    /// <param name="sdkOnlyRelease">Whether the release updates only the SDK.</param>
     public static IEnumerable<string> GetBaseUrlVariableNames(
         string dockerfileVersion,
         string branch,
         string versionSourceName = "",
         bool sdkOnlyRelease = false)
     {
-        string product;
-        if (sdkOnlyRelease)
-        {
-            product = "sdk";
-        }
-        else
-        {
-            product = versionSourceName switch
+        string product = sdkOnlyRelease
+            ? "sdk"
+            : versionSourceName switch
             {
                 string v when v.Contains("aspire-dashboard") => "aspire-dashboard",
                 _ => "dotnet",
             };
-        }
-
         return [
             $"{product}|{dockerfileVersion}|base-url|{branch}",
             $"{product}|{dockerfileVersion}|base-url|checksums|{branch}",

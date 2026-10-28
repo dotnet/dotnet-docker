@@ -1,5 +1,5 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 using System.ComponentModel;
 using System.Diagnostics;
@@ -28,7 +28,7 @@ internal static class ScriptRunner
         cancellationToken.ThrowIfCancellationRequested();
         Trace.TraceInformation($"Executing '{scriptPath}'");
 
-        var startInfo = new ProcessStartInfo("pwsh")
+        ProcessStartInfo startInfo = new ProcessStartInfo("pwsh")
         {
             WorkingDirectory = repoRoot,
             UseShellExecute = false,
@@ -36,7 +36,7 @@ internal static class ScriptRunner
         startInfo.ArgumentList.Add("-NoProfile");
         startInfo.ArgumentList.Add("-File");
         startInfo.ArgumentList.Add(scriptPath);
-        using var process = new Process { StartInfo = startInfo };
+        using Process process = new Process { StartInfo = startInfo };
 
         // Support both execution within Windows 10, Nano Server and Linux environments.
         try

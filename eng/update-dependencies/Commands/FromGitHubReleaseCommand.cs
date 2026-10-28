@@ -17,8 +17,8 @@ internal static class FromGitHubReleaseCommand
         command.SetAction(async (result, cancellationToken) =>
         {
             CreatePullRequestOptions options = CreatePullRequestOptions.Bind(result);
-            var updater = (IGitHubReleaseUpdater)services.GetRequiredService<TUpdater>();
-            var runner = services.GetRequiredService<DependencyUpdateRunner>();
+            IGitHubReleaseUpdater updater = (IGitHubReleaseUpdater)services.GetRequiredService<TUpdater>();
+            DependencyUpdateRunner runner = services.GetRequiredService<DependencyUpdateRunner>();
             DependencyUpdate update = await updater.ResolveFromGitHubReleaseAsync(cancellationToken);
 
             await runner.RunAsync(options, TUpdater.VersionSourceName, update, cancellationToken);

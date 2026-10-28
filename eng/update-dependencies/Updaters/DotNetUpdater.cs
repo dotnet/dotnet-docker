@@ -1,8 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 using Microsoft.DotNet.DarcLib;
+using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.Logging;
 using NuGet.Versioning;
@@ -24,9 +24,9 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
         logger.LogInformation("Updating .NET from BAR build {BuildId} at {Commit}", build.Id, build.Commit);
 
         IEnumerable<Asset> assets = await barClient.GetAssetsAsync(buildId: build.Id).WaitAsync(cancellationToken);
-        var versions = ProductVersions.FromVmrBuildAssets(assets);
+        ProductVersions versions = ProductVersions.FromVmrBuildAssets(assets);
         string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(versions.Sdk.Version).ToString(2);
-        var productVersions = new Dictionary<string, string?>
+        Dictionary<string, string?> productVersions = new Dictionary<string, string?>
         {
             ["dotnet"] = versions.Runtime.Version,
             ["runtime"] = versions.Runtime.Version,
@@ -61,7 +61,7 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
     {
         bool isInternal = !string.IsNullOrEmpty(internalBaseUrl);
         string dockerfileVersion = VersionHelper.ResolveMajorMinorVersion(release.RuntimeBuild).ToString(2);
-        var productVersions = new Dictionary<string, string?>();
+        Dictionary<string, string?> productVersions = [];
 
         // SDK-only releases are almost always one-off updates/bug
         // fixes on top of an existing release of the Runtime and
@@ -78,6 +78,7 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
             productVersions["aspnet"] = isInternal ? release.AspBuild : release.Asp;
             productVersions["aspnet-composite"] = productVersions["aspnet"];
         }
+
         productVersions["sdk"] = VersionHelper.GetHighestSdkVersion(isInternal ? release.SdkBuilds : release.Sdks);
 
         logger.LogInformation("Resolved .NET product versions: {Versions}",
@@ -96,12 +97,12 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
         NuGetConfigUpdater.Update(variables, repoRoot, dockerfileVersion, productVersions["sdk"], !string.IsNullOrEmpty(internalBaseUrl));
         BaseUrlUpdater.Update(variables, dockerfileVersion, internalBaseUrl, productVersions.Count == 1);
 
-        foreach (var (product, version) in productVersions)
+        foreach ((string? product, string? version) in productVersions)
         {
             string productVersion = "";
             if (version is not null)
             {
-                var parsedVersion = SemanticVersion.Parse(version);
+                SemanticVersion parsedVersion = SemanticVersion.Parse(version);
                 productVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}.{parsedVersion.Patch}";
                 if (parsedVersion.IsPrerelease && parsedVersion.ReleaseLabels.First() is not ("servicing" or "rtm"))
                 {

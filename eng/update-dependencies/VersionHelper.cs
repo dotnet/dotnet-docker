@@ -23,7 +23,7 @@ internal static class VersionHelper
     /// A version that may already be a simple 3-part version (e.g. "8.0.100"),
     /// or a full build version (e.g. "8.0.100-servicing.12345.6").
     /// </param>
-    /// <param name="isStableRelease"
+    /// <param name="isStableRelease">
     /// Whether the build version is a stable release. This should be false
     /// for preview releases only. Release candidates are considered stable.
     /// </param>
@@ -38,7 +38,7 @@ internal static class VersionHelper
             int monikerSeparatorIndex = buildVersion.IndexOf('-');
             if (monikerSeparatorIndex >= 0)
             {
-                return buildVersion.Substring(0, monikerSeparatorIndex);
+                return buildVersion[..monikerSeparatorIndex];
             }
         }
 

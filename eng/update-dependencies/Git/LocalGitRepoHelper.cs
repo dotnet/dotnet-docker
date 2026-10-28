@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using Microsoft.DotNet.DarcLib;
+using Microsoft.DotNet.DarcLib.Helpers;
 using Microsoft.Extensions.Logging;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Git;
@@ -40,7 +41,7 @@ internal sealed class LocalGitRepoHelper(
     {
         try
         {
-            var result = await _localGitRepo.GetShaForRefAsync(gitRef);
+            string result = await _localGitRepo.GetShaForRefAsync(gitRef);
             return result;
         }
         catch
@@ -50,16 +51,13 @@ internal sealed class LocalGitRepoHelper(
     }
 
     /// <inheritdoc />
-    public async Task StageAsync(params IEnumerable<string> paths)
-    {
-        await _localGitRepo.StageAsync(paths);
-    }
+    public async Task StageAsync(params IEnumerable<string> paths) => await _localGitRepo.StageAsync(paths);
 
     /// <inheritdoc />
     public async Task<string> CommitAsync(string message, (string Name, string Email) author)
     {
-        var gitStatusLines = await _localGitRepo.RunGitCommandAsync(["status"]);
-        var gitStatus = string.Join(Environment.NewLine, gitStatusLines);
+        ProcessExecutionResult gitStatusLines = await _localGitRepo.RunGitCommandAsync(["status"]);
+        string gitStatus = string.Join(Environment.NewLine, gitStatusLines);
         _logger.LogInformation(
             """
             Git status:
@@ -68,7 +66,7 @@ internal sealed class LocalGitRepoHelper(
             gitStatus);
 
         await _localGitRepo.CommitAsync(message, allowEmpty: false, author);
-        var commitSha = await _localGitRepo.GetShaForRefAsync("HEAD");
+        string commitSha = await _localGitRepo.GetShaForRefAsync("HEAD");
 
         _logger.LogInformation(
             "Created commit {commitSha}, message: '{commitMessage}' ({authorName} <{authorEmail}>)",
@@ -80,22 +78,22 @@ internal sealed class LocalGitRepoHelper(
     /// <inheritdoc />
     public async Task<bool> IsAncestorAsync(string ancestorRef, string descendantRef)
     {
-        var ancestorCommit = await GetShaForRefAsync(ancestorRef);
-        var descendantCommit = await GetShaForRefAsync(descendantRef);
+        string? ancestorCommit = await GetShaForRefAsync(ancestorRef);
+        string? descendantCommit = await GetShaForRefAsync(descendantRef);
 
         if (ancestorCommit is null || descendantCommit is null)
         {
             return false;
         }
 
-        var isAncestor = await _localGitRepo.IsAncestorCommit(ancestorCommit, descendantCommit);
+        bool isAncestor = await _localGitRepo.IsAncestorCommit(ancestorCommit, descendantCommit);
         return isAncestor;
     }
 
     /// <inheritdoc />
     public async Task<IEnumerable<GitRemoteInfo>> ListAllRemotesAsync()
     {
-        var remotesOutput = await _localGitRepo.ExecuteGitCommand("remote", "-v");
+        ProcessExecutionResult remotesOutput = await _localGitRepo.ExecuteGitCommand("remote", "-v");
 
         /* Example output of `git remote -v`:
         origin  https://github.com/dotnet/runtime (fetch)

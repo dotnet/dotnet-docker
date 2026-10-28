@@ -14,6 +14,7 @@ namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 /// The absolute path of the repo to update. This is not always the repo the command was run
 /// from: when creating a pull request, the update is applied to a temporary clone instead.
 /// </param>
+/// <param name="cancellationToken">The token used to cancel the update.</param>
 public delegate Task ApplyUpdateAsync(
     ManifestVariables variables,
     string repoRoot,

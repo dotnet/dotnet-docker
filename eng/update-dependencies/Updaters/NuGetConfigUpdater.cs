@@ -60,6 +60,7 @@ public static class NuGetConfigUpdater
             // Using the Save method preserves the XML declaration header. ToString doesn't do that.
             doc.Save(writer);
         }
+
         return builder.ToString();
     }
 
@@ -176,13 +177,8 @@ public static class NuGetConfigUpdater
         return node;
     }
 
-    private class Utf8StringWriter : StringWriter
+    private class Utf8StringWriter(StringBuilder stringBuilder) : StringWriter(stringBuilder)
     {
-        public Utf8StringWriter(StringBuilder stringBuilder)
-            : base(stringBuilder)
-        {
-        }
-
         public override Encoding Encoding => Encoding.UTF8;
     }
 }

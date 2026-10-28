@@ -6,15 +6,14 @@ using System.IO;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Microsoft.DotNet.Docker.Tests
+namespace Microsoft.DotNet.Docker.Tests;
+
+internal static class HttpClientExtensions
 {
-    internal static class HttpClientExtensions
+    public static async Task DownloadFileAsync(this HttpClient client, Uri uri, string path)
     {
-        public static async Task DownloadFileAsync(this HttpClient client, Uri uri, string path)
-        {
-            using Stream stream = await client.GetStreamAsync(uri);
-            using FileStream fileStream = new(path, FileMode.OpenOrCreate);
-            await stream.CopyToAsync(fileStream);
-        }
+        using Stream stream = await client.GetStreamAsync(uri);
+        using FileStream fileStream = new(path, FileMode.OpenOrCreate);
+        await stream.CopyToAsync(fileStream);
     }
 }

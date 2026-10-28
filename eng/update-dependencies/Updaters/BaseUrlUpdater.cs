@@ -20,8 +20,8 @@ public static class BaseUrlUpdater
         string internalBaseUrl,
         bool sdkOnlyRelease)
     {
-        var upstreamBranch = manifestVariables.GetValue("branch");
-        var baseUrlVarNames = ManifestHelper.GetBaseUrlVariableNames(
+        string upstreamBranch = manifestVariables.GetValue("branch");
+        IEnumerable<string> baseUrlVarNames = ManifestHelper.GetBaseUrlVariableNames(
             dockerfileVersion: dockerfileVersion,
             branch: upstreamBranch,
             sdkOnlyRelease: sdkOnlyRelease);

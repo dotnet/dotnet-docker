@@ -1,11 +1,11 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
+using System.Formats.Tar;
 using System.IO;
+using System.IO.Compression;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -14,429 +14,405 @@ using System.Text;
 using System.Threading.Tasks;
 using Polly;
 using Polly.Retry;
-using System.Formats.Tar;
-using System.IO.Compression;
 using Xunit;
 using Xunit.Abstractions;
 
 #nullable enable
-namespace Microsoft.DotNet.Docker.Tests
+using Microsoft.DotNet.Docker.Tests.TestScenarios;
+
+namespace Microsoft.DotNet.Docker.Tests;
+
+[Trait("Category", "sdk")]
+public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(outputHelper)
 {
-    [Trait("Category", "sdk")]
-    public class SdkImageTests : ProductImageTests
+    private static readonly Dictionary<string, IEnumerable<SdkContentFileInfo>> SdkContentsCache =
+        [];
+
+    private static readonly RetryStrategyOptions SdkDownloadRetryStrategy =
+        new()
+        {
+            BackoffType = DelayBackoffType.Exponential,
+            MaxRetryAttempts = 4,
+            Delay = TimeSpan.FromSeconds(3),
+        };
+
+    private static readonly ResiliencePipeline SdkDownloadPipeline =
+        new ResiliencePipelineBuilder()
+            .AddRetry(SdkDownloadRetryStrategy)
+            .Build();
+
+    private static readonly HttpClient HttpClient = CreateHttpClient();
+
+    protected override DotNetImageRepo ImageRepo => DotNetImageRepo.SDK;
+
+    public static IEnumerable<object[]> GetImageData()
     {
-        private static readonly Dictionary<string, IEnumerable<SdkContentFileInfo>> s_sdkContentsCache =
-            new Dictionary<string, IEnumerable<SdkContentFileInfo>>();
+        return TestData.GetImageData(DotNetImageRepo.SDK)
+            .Where(imageData => !imageData.IsDistroless)
+            .Select(imageData => new object[] { imageData });
+    }
 
-        private static readonly RetryStrategyOptions s_sdkDownloadRetryStrategy =
-            new()
+    [LinuxImageTheory]
+    [MemberData(nameof(GetImageData))]
+    public async void VerifyBlazorWasmScenario(ProductImageData imageData)
+    {
+        bool useWasmTools = true;
+
+        // `wasm-tools` workload does not work on ARM
+        if (imageData.IsArm)
+        {
+            useWasmTools = false;
+        }
+
+        // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
+        if (imageData.OS.Family == OSFamily.Alpine && imageData.Version.Major == 8)
+        {
+            useWasmTools = false;
+        }
+
+        // Emscripten SDK workload is the wrong version on linux-musl-x64 in .NET 10 Preview 6
+        // Remove in nightly branch when https://github.com/dotnet/dotnet/issues/1487 is resolved
+        if (imageData.Version.Major == 10)
+        {
+            useWasmTools = false;
+        }
+
+        BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
+        await testScenario.ExecuteAsync();
+    }
+
+    [LinuxImageTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyInsecureFiles(ProductImageData imageData) => VerifyCommonInsecureFiles(imageData);
+
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyNoSasToken(ProductImageData imageData) => VerifyCommonNoSasToken(imageData);
+
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyEnvironmentVariables(ProductImageData imageData)
+    {
+        string imageName = imageData.GetImage(ImageRepo, DockerHelper);
+        string version = imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper);
+
+        List<EnvironmentVariableInfo> variables =
+        [
+            EnvironmentVariableInfo.Require("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
+            EnvironmentVariableInfo.Require("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
+            EnvironmentVariableInfo.Require("NUGET_XMLDOC_MODE", "skip"),
+            EnvironmentVariableInfo.Require("DOTNET_SDK_VERSION", version) with
             {
-                BackoffType = DelayBackoffType.Exponential,
-                MaxRetryAttempts = 4,
-                Delay = TimeSpan.FromSeconds(3),
-            };
+                IsProductVersion = true
+            },
+            AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
+            RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
+            EnvironmentVariableInfo.Require("DOTNET_NOLOGO", "true"),
+            // DOTNET_ROLL_FORWARD must not be set globally, as it can silently change
+            // the runtime that unrelated workloads (e.g. dotnet test) execute on.
+            // See https://github.com/dotnet/dotnet-docker/issues/7255.
+            EnvironmentVariableInfo.Forbid("DOTNET_ROLL_FORWARD"),
+            ..GetCommonEnvironmentVariables(),
+        ];
 
-        private static readonly ResiliencePipeline s_sdkDownloadPipeline =
-            new ResiliencePipelineBuilder()
-                .AddRetry(s_sdkDownloadRetryStrategy)
-                .Build();
-
-        private static readonly HttpClient s_httpClient = CreateHttpClient();
-
-        public SdkImageTests(ITestOutputHelper outputHelper)
-            : base(outputHelper)
+        if (imageData.SdkOS.Family == OSFamily.Alpine)
         {
+            variables.Add(EnvironmentVariableInfo.Require("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
         }
 
-        protected override DotNetImageRepo ImageRepo => DotNetImageRepo.SDK;
+        EnvironmentVariableInfo.Validate(variables, imageName, DockerHelper);
+    }
 
-        public static IEnumerable<object[]> GetImageData()
+    /// <summary>
+    /// Verifies that the dotnet folder contents of an SDK container match the contents in the official SDK archive file.
+    /// </summary>
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public async Task VerifyDotnetFolderContents(ProductImageData imageData)
+    {
+        if (Config.IsInternal)
         {
-            return TestData.GetImageData(DotNetImageRepo.SDK)
-                .Where(imageData => !imageData.IsDistroless)
-                .Select(imageData => new object[] { imageData });
+            // Skip this test for internal builds, since this test does not
+            // yet authenticate to download the internal staged version of
+            // the .NET SDK.
+            return;
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public async void VerifyBlazorWasmScenario(ProductImageData imageData)
+        // Workaround for https://github.com/dotnet/sdk/issues/55238
+        if (imageData.SdkOS.Family == OSFamily.Alpine && imageData.Version.Major == 11)
         {
-            bool useWasmTools = true;
-
-            // `wasm-tools` workload does not work on ARM
-            if (imageData.IsArm)
-            {
-                useWasmTools = false;
-            }
-
-            // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-            if (imageData.OS.Family == OSFamily.Alpine && imageData.Version.Major == 8)
-            {
-                useWasmTools = false;
-            }
-
-            // Emscripten SDK workload is the wrong version on linux-musl-x64 in .NET 10 Preview 6
-            // Remove in nightly branch when https://github.com/dotnet/dotnet/issues/1487 is resolved
-            if (imageData.Version.Major == 10)
-            {
-                useWasmTools = false;
-            }
-
-            BlazorWasmScenario testScenario = new(imageData, DockerHelper, OutputHelper, useWasmTools);
-            await testScenario.ExecuteAsync();
+            return;
         }
 
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInsecureFiles(ProductImageData imageData)
+        IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
+        IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
+
+        using TempFileContext actualFilesContext = FileHelper.UseTempFile("container-image");
+        using TempFileContext expectedFilesContext = FileHelper.UseTempFile("sdk-archive");
+
+        File.WriteAllLines(actualFilesContext.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
+        File.WriteAllLines(expectedFilesContext.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
+
+        bool filesMatch = FileHelper.CompareFiles(expectedFilesContext.Path, actualFilesContext.Path, OutputHelper);
+
+        Assert.True(filesMatch, "Differences found in the dotnet folder contents.");
+    }
+
+    [LinuxImageTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyInstalledPackages(ProductImageData imageData) => VerifyInstalledPackagesBase(imageData, ImageRepo);
+
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyDefaultUser(ProductImageData imageData) => VerifyCommonDefaultUser(imageData);
+
+    /// <summary>
+    /// Verifies that a git command can be executed without failure.
+    /// </summary>
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyGitInstallation(ProductImageData imageData)
+    {
+        DockerHelper.Run(
+            image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
+            name: imageData.GetIdentifier($"git"),
+            command: "git version");
+    }
+
+    /// <summary>
+    /// Verifies that a tar command can be executed without failure.
+    /// </summary>
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyTarInstallation(ProductImageData imageData)
+    {
+        // tar should exist in the SDK for both Linux and Windows. The --version option works in either OS
+        DockerHelper.Run(
+            image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
+            name: imageData.GetIdentifier("tar"),
+            command: "tar --version"
+        );
+    }
+
+    /// <summary>
+    /// Verifies that dnx is on the PATH and that it is functional.
+    /// </summary>
+    [DotNetTheory]
+    [MemberData(nameof(GetImageData))]
+    public void VerifyDnxInstallation(ProductImageData imageData)
+    {
+        if (!imageData.SupportsDnx)
         {
-            base.VerifyCommonInsecureFiles(imageData);
+            return;
         }
 
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyNoSasToken(ProductImageData imageData)
+        string dnxCommand = DockerHelper.IsLinuxContainerModeEnabled
+            ? "dnx --help"
+            : "dnx.cmd --help";
+
+        DockerHelper.Run(
+            image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
+            name: imageData.GetIdentifier("dnx"),
+            command: dnxCommand
+        );
+    }
+
+    private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
+    {
+        string dotnetPath;
+        string destinationPath;
+        string command;
+
+        if (DockerHelper.IsLinuxContainerModeEnabled)
         {
-            base.VerifyCommonNoSasToken(imageData);
+            dotnetPath = "/usr/share/dotnet";
+            destinationPath = "/sdk";
+
+            // Alpine's BusyBox find doesn't support comma-separated types (-type f,l)
+            command = imageData.SdkOS.Family == OSFamily.Alpine
+                ? $"find {destinationPath} ( -type f -o -type l ) -exec sha512sum {{}} +"
+                : $"find {destinationPath} -type f,l -exec sha512sum {{}} +";
+        }
+        else
+        {
+            dotnetPath = "\"Program Files\\dotnet\"";
+            destinationPath = "C:\\sdk";
+            string powerShellCommand =
+                $"Get-ChildItem -File -Force -Recurse '{destinationPath}' " +
+                "| Get-FileHash -Algorithm SHA512 " +
+                "| select @{name='Value'; expression={$_.Hash + '  ' +$_.Path}} " +
+                "| select -ExpandProperty Value";
+            command = $"pwsh -Command \"{powerShellCommand}\"";
         }
 
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyEnvironmentVariables(ProductImageData imageData)
-        {
-            string imageName = imageData.GetImage(ImageRepo, DockerHelper);
-            string version = imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper);
+        string baseImage = imageData.GetImage(ImageRepo, DockerHelper);
+        string tag = imageData.GetIdentifier("SdkContents").ToLower();
 
-            List<EnvironmentVariableInfo> variables =
+        DockerHelper.Build(
+            tag: tag,
+            dockerfile: Path.Combine(DockerHelper.TestArtifactsDir, "Dockerfile.copy"),
+            contextDir: DockerHelper.TestArtifactsDir,
+            platform: imageData.Platform,
+            buildArgs:
             [
-                EnvironmentVariableInfo.Require("DOTNET_GENERATE_ASPNET_CERTIFICATE", "false"),
-                EnvironmentVariableInfo.Require("DOTNET_USE_POLLING_FILE_WATCHER", "true"),
-                EnvironmentVariableInfo.Require("NUGET_XMLDOC_MODE", "skip"),
-                EnvironmentVariableInfo.Require("DOTNET_SDK_VERSION", version) with
-                {
-                    IsProductVersion = true
-                },
-                AspnetImageTests.GetAspnetVersionVariableInfo(ImageRepo, imageData, DockerHelper),
-                RuntimeImageTests.GetRuntimeVersionVariableInfo(ImageRepo, imageData, DockerHelper),
-                EnvironmentVariableInfo.Require("DOTNET_NOLOGO", "true"),
-                // DOTNET_ROLL_FORWARD must not be set globally, as it can silently change
-                // the runtime that unrelated workloads (e.g. dotnet test) execute on.
-                // See https://github.com/dotnet/dotnet-docker/issues/7255.
-                EnvironmentVariableInfo.Forbid("DOTNET_ROLL_FORWARD"),
-                ..GetCommonEnvironmentVariables(),
-            ];
+                $"copy_image={baseImage}",
+                $"base_image={baseImage}",
+                $"copy_origin={dotnetPath}",
+                $"copy_destination={destinationPath}"
+            ]);
 
-            if (imageData.SdkOS.Family == OSFamily.Alpine)
+        string containerFileList = DockerHelper.Run(
+            image: tag,
+            name: tag,
+            command: command,
+            silenceOutput: true);
+
+        return containerFileList
+            .Split("\n")
+            .Select(line =>
             {
-                variables.Add(EnvironmentVariableInfo.Require("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
-            }
+                string[] parts = line.Split("  ").Select(part => part.Trim()).ToArray();
+                return new SdkContentFileInfo(Path.GetRelativePath(destinationPath, parts[1]), parts[0]);
+            })
+            .OrderBy(fileInfo => fileInfo.Path);
+    }
 
-            EnvironmentVariableInfo.Validate(variables, imageName, imageData, DockerHelper);
-        }
+    private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
+    {
+        string sdkUrl = GetSdkUrl(imageData);
+        OutputHelper.WriteLine("Downloading SDK archive: " + sdkUrl);
 
-        /// <summary>
-        /// Verifies that the dotnet folder contents of an SDK container match the contents in the official SDK archive file.
-        /// </summary>
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public async Task VerifyDotnetFolderContents(ProductImageData imageData)
+        if (!SdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo>? files))
         {
-            if (Config.IsInternal)
+            using TempFolderContext tempFolder = FileHelper.UseTempFolder();
+            string sdkFile = Path.Combine(tempFolder.Path, "sdk-archive");
+
+            await SdkDownloadPipeline.ExecuteAsync(async cancellationToken => await HttpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile));
+
+            using TempFolderContext extractFolder = FileHelper.UseTempFolder();
+
+            if (Path.GetExtension(sdkUrl).Equals(".zip", StringComparison.OrdinalIgnoreCase))
             {
-                // Skip this test for internal builds, since this test does not
-                // yet authenticate to download the internal staged version of
-                // the .NET SDK.
-                return;
-            }
-
-            // Workaround for https://github.com/dotnet/sdk/issues/55238
-            if (imageData.SdkOS.Family == OSFamily.Alpine && imageData.Version.Major == 11)
-            {
-                return;
-            }
-
-            IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
-            IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
-
-            using TempFileContext actualFilesContext = FileHelper.UseTempFile("container-image");
-            using TempFileContext expectedFilesContext = FileHelper.UseTempFile("sdk-archive");
-
-            File.WriteAllLines(actualFilesContext.Path, actualDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
-            File.WriteAllLines(expectedFilesContext.Path, expectedDotnetFiles.Select(file => $"{file.Path} {file.Sha512}"));
-
-            bool filesMatch = FileHelper.CompareFiles(expectedFilesContext.Path, actualFilesContext.Path, OutputHelper);
-
-            Assert.True(filesMatch, "Differences found in the dotnet folder contents.");
-        }
-
-        [LinuxImageTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyInstalledPackages(ProductImageData imageData)
-        {
-            VerifyInstalledPackagesBase(imageData, ImageRepo);
-        }
-
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyDefaultUser(ProductImageData imageData)
-        {
-            VerifyCommonDefaultUser(imageData);
-        }
-
-        /// <summary>
-        /// Verifies that a git command can be executed without failure.
-        /// </summary>
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyGitInstallation(ProductImageData imageData)
-        {
-            DockerHelper.Run(
-                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
-                name: imageData.GetIdentifier($"git"),
-                command: "git version");
-        }
-
-        /// <summary>
-        /// Verifies that a tar command can be executed without failure.
-        /// </summary>
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyTarInstallation(ProductImageData imageData)
-        {
-            // tar should exist in the SDK for both Linux and Windows. The --version option works in either OS
-            DockerHelper.Run(
-                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
-                name: imageData.GetIdentifier("tar"),
-                command: "tar --version"
-            );
-        }
-
-        /// <summary>
-        /// Verifies that dnx is on the PATH and that it is functional.
-        /// </summary>
-        [DotNetTheory]
-        [MemberData(nameof(GetImageData))]
-        public void VerifyDnxInstallation(ProductImageData imageData)
-        {
-            if (!imageData.SupportsDnx)
-            {
-                return;
-            }
-
-            var dnxCommand = DockerHelper.IsLinuxContainerModeEnabled
-                ? "dnx --help"
-                : "dnx.cmd --help";
-
-            DockerHelper.Run(
-                image: imageData.GetImage(DotNetImageRepo.SDK, DockerHelper),
-                name: imageData.GetIdentifier("dnx"),
-                command: dnxCommand
-            );
-        }
-
-        private IEnumerable<SdkContentFileInfo> GetActualSdkContents(ProductImageData imageData)
-        {
-            string dotnetPath;
-            string destinationPath;
-            string command;
-
-            if (DockerHelper.IsLinuxContainerModeEnabled)
-            {
-                dotnetPath = "/usr/share/dotnet";
-                destinationPath = "/sdk";
-                
-                // Alpine's BusyBox find doesn't support comma-separated types (-type f,l)
-                if (imageData.SdkOS.Family == OSFamily.Alpine)
-                {
-                    command = $"find {destinationPath} ( -type f -o -type l ) -exec sha512sum {{}} +";
-                }
-                else
-                {
-                    command = $"find {destinationPath} -type f,l -exec sha512sum {{}} +";
-                }
+                ZipFile.ExtractToDirectory(sdkFile, extractFolder.Path);
             }
             else
             {
-                dotnetPath = "\"Program Files\\dotnet\"";
-                destinationPath = "C:\\sdk";
-                string powerShellCommand =
-                    $"Get-ChildItem -File -Force -Recurse '{destinationPath}' " +
-                    "| Get-FileHash -Algorithm SHA512 " +
-                    "| select @{name='Value'; expression={$_.Hash + '  ' +$_.Path}} " +
-                    "| select -ExpandProperty Value";
-                command = $"pwsh -Command \"{powerShellCommand}\"";
+                using FileStream fileStream = File.OpenRead(sdkFile);
+                using GZipStream gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
+                TarFile.ExtractToDirectory(gzipStream, extractFolder.Path, overwriteFiles: false);
             }
 
-            string baseImage = imageData.GetImage(ImageRepo, DockerHelper);
-            string tag = imageData.GetIdentifier("SdkContents").ToLower();
-
-            DockerHelper.Build(
-                tag: tag,
-                dockerfile: Path.Combine(DockerHelper.TestArtifactsDir, "Dockerfile.copy"),
-                contextDir: DockerHelper.TestArtifactsDir,
-                platform: imageData.Platform,
-                buildArgs:
-                [
-                    $"copy_image={baseImage}",
-                    $"base_image={baseImage}",
-                    $"copy_origin={dotnetPath}",
-                    $"copy_destination={destinationPath}"
-                ]);
-
-            string containerFileList = DockerHelper.Run(
-                image: tag,
-                name: tag,
-                command: command,
-                silenceOutput: true);
-
-            return containerFileList
-                .Split("\n")
-                .Select(line =>
+            files = Directory.EnumerateFiles(extractFolder.Path, "*", SearchOption.AllDirectories)
+                .Select(file =>
                 {
-                    string[] parts = line.Split("  ").Select(part => part.Trim()).ToArray();
-                    return new SdkContentFileInfo(Path.GetRelativePath(destinationPath, parts[1]), parts[0]);
+                    string filePath = Path.GetFullPath(file);
+                    string relativePath = Path.GetRelativePath(extractFolder.Path, filePath);
+
+                    byte[] fileData = File.ReadAllBytes(filePath);
+                    byte[] sha512HashBytes = SHA512.HashData(fileData);
+                    string sha512Hash = Convert.ToHexString(sha512HashBytes);
+
+                    return new SdkContentFileInfo(relativePath, sha512Hash);
                 })
-                .OrderBy(fileInfo => fileInfo.Path);
+                .OrderBy(file => file.Path)
+                .ToArray();
+
+            SdkContentsCache.Add(sdkUrl, files);
         }
 
-        private async Task<IEnumerable<SdkContentFileInfo>> GetExpectedSdkContentsAsync(ProductImageData imageData)
+        return files;
+    }
+
+    private static string GetSdkVersionFileLabel(string sdkBuildVersion, string dotnetVersion)
+    {
+        // This should be kept in sync with the template for computing the SDK version file:
+        // https://github.com/dotnet/dotnet-docker/blob/4f48d36a98187a6e350d54167ef5b568ccd3882f/eng/dockerfile-templates/sdk/Dockerfile.linux.install-sdk#L22-L31
+
+        bool isStableBranding = !sdkBuildVersion.Contains('-')
+            || sdkBuildVersion.Contains("-servicing")
+            || sdkBuildVersion.Contains("-rtm");
+
+        if (isStableBranding)
         {
-            string sdkUrl = GetSdkUrl(imageData);
-            OutputHelper.WriteLine("Downloading SDK archive: " + sdkUrl);
-
-            if (!s_sdkContentsCache.TryGetValue(sdkUrl, out IEnumerable<SdkContentFileInfo>? files))
-            {
-                using TempFolderContext tempFolder = FileHelper.UseTempFolder();
-                string sdkFile = Path.Combine(tempFolder.Path, "sdk-archive");
-
-                await s_sdkDownloadPipeline.ExecuteAsync(async cancellationToken =>
-                {
-                    await s_httpClient.DownloadFileAsync(new Uri(sdkUrl), sdkFile);
-                });
-
-                using TempFolderContext extractFolder = FileHelper.UseTempFolder();
-
-                if (Path.GetExtension(sdkUrl).Equals(".zip", StringComparison.OrdinalIgnoreCase))
-                {
-                    ZipFile.ExtractToDirectory(sdkFile, extractFolder.Path);
-                }
-                else
-                {
-                    using FileStream fileStream = File.OpenRead(sdkFile);
-                    using var gzipStream = new GZipStream(fileStream, CompressionMode.Decompress);
-                    TarFile.ExtractToDirectory(gzipStream, extractFolder.Path, overwriteFiles: false);
-                }
-
-                files = Directory.EnumerateFiles(extractFolder.Path, "*", SearchOption.AllDirectories)
-                    .Select(file =>
-                    {
-                        string filePath = Path.GetFullPath(file);
-                        string relativePath = Path.GetRelativePath(extractFolder.Path, filePath);
-
-                        byte[] fileData = File.ReadAllBytes(filePath);
-                        byte[] sha512HashBytes = SHA512.HashData(fileData);
-                        string sha512Hash = Convert.ToHexString(sha512HashBytes);
-
-                        return new SdkContentFileInfo(relativePath, sha512Hash);
-                    })
-                    .OrderBy(file => file.Path)
-                    .ToArray();
-
-                s_sdkContentsCache.Add(sdkUrl, files);
-            }
-
-            return files;
+            return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version");
         }
 
-        private static string GetSdkVersionFileLabel(string sdkBuildVersion, string dotnetVersion)
+        bool useFinalVersion =
+            Config.TryGetVariableValue($"sdk|{dotnetVersion}|use-final-version", out string finalFlag)
+            && finalFlag == "true";
+        if (useFinalVersion)
         {
-            // This should be kept in sync with the template for computing the SDK version file:
-            // https://github.com/dotnet/dotnet-docker/blob/4f48d36a98187a6e350d54167ef5b568ccd3882f/eng/dockerfile-templates/sdk/Dockerfile.linux.install-sdk#L22-L31
-
-            bool isStableBranding = !sdkBuildVersion.Contains('-')
-                || sdkBuildVersion.Contains("-servicing")
-                || sdkBuildVersion.Contains("-rtm");
-
-            if (isStableBranding)
-            {
-                return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version");
-            }
-
-            bool useFinalVersion =
-                Config.TryGetVariableValue($"sdk|{dotnetVersion}|use-final-version", out string finalFlag)
-                && finalFlag == "true";
-            if (useFinalVersion)
-            {
-                return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version") + ".final";
-            }
-
-            return sdkBuildVersion;
+            return Config.GetVariableValue($"sdk|{dotnetVersion}|product-version") + ".final";
         }
 
-        private string GetSdkUrl(ProductImageData imageData)
+        return sdkBuildVersion;
+    }
+
+    private string GetSdkUrl(ProductImageData imageData)
+    {
+        bool isInternal = Config.IsInternal;
+        string sdkBuildVersion = Config.GetBuildVersion(ImageRepo, imageData.VersionString);
+        string sdkFileVersionLabel = isInternal
+            ? imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper)
+            : GetSdkVersionFileLabel(sdkBuildVersion, imageData.VersionString);
+
+        string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
+        if (imageData.SdkOS.Family == OSFamily.Alpine)
         {
-            bool isInternal = Config.IsInternal;
-            string sdkBuildVersion = Config.GetBuildVersion(ImageRepo, imageData.VersionString);
-            string sdkFileVersionLabel = isInternal
-                ? imageData.GetProductVersion(ImageRepo, ImageRepo, DockerHelper)
-                : GetSdkVersionFileLabel(sdkBuildVersion, imageData.VersionString);
-
-            string osType = DockerHelper.IsLinuxContainerModeEnabled ? "linux" : "win";
-            if (imageData.SdkOS.Family == OSFamily.Alpine)
-            {
-                osType += "-musl";
-            }
-
-            string architecture = imageData.Arch switch
-            {
-                Arch.Amd64 => "x64",
-                Arch.Arm => "arm",
-                Arch.Arm64 => "arm64",
-                _ => throw new InvalidOperationException($"Unexpected architecture type: '{imageData.Arch}'"),
-            };
-
-            string fileType = DockerHelper.IsLinuxContainerModeEnabled ? "tar.gz" : "zip";
-            string baseUrl = Config.GetBaseUrl(imageData.VersionString);
-            string url = $"{baseUrl}/Sdk/{sdkBuildVersion}/dotnet-sdk-{sdkFileVersionLabel}-{osType}-{architecture}.{fileType}";
-
-            return url;
+            osType += "-musl";
         }
 
-        private record SdkContentFileInfo
+        string architecture = imageData.Arch switch
         {
-            public string Path { get; init; }
-            public string Sha512 { get; init; }
+            Arch.Amd64 => "x64",
+            Arch.Arm => "arm",
+            Arch.Arm64 => "arm64",
+            _ => throw new InvalidOperationException($"Unexpected architecture type: '{imageData.Arch}'"),
+        };
 
-            public SdkContentFileInfo(string path, string sha512)
-            {
-                Path = NormalizePath(path);
-                Sha512 = sha512.ToLower();
-            }
+        string fileType = DockerHelper.IsLinuxContainerModeEnabled ? "tar.gz" : "zip";
+        string baseUrl = Config.GetBaseUrl(imageData.VersionString);
+        string url = $"{baseUrl}/Sdk/{sdkBuildVersion}/dotnet-sdk-{sdkFileVersionLabel}-{osType}-{architecture}.{fileType}";
 
-            private static string NormalizePath(string path)
-            {
-                return path
-                    .Replace("\\", "/")
-                    .Replace("/usr/share/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
-                    .Replace("c:/program files/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
-                    .TrimStart('/')
-                    .ToLower();
-            }
-        }
+        return url;
+    }
 
-        private static HttpClient CreateHttpClient()
+    private record SdkContentFileInfo
+    {
+        public string Path { get; init; }
+        public string Sha512 { get; init; }
+
+        public SdkContentFileInfo(string path, string sha512)
         {
-            var client = new HttpClient();
-
-            if (Config.IsInternal)
-            {
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                    "Basic",
-                    Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
-                        Config.InternalAccessToken))));
-            };
-
-            return client;
+            Path = NormalizePath(path);
+            Sha512 = sha512.ToLower();
         }
+
+        private static string NormalizePath(string path)
+        {
+            return path
+                .Replace("\\", "/")
+                .Replace("/usr/share/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
+                .Replace("c:/program files/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
+                .TrimStart('/')
+                .ToLower();
+        }
+    }
+
+    private static HttpClient CreateHttpClient()
+    {
+        HttpClient client = new HttpClient();
+
+        if (Config.IsInternal)
+        {
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                "Basic",
+                Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
+                    Config.InternalAccessToken))));
+        }
+
+        ;
+
+        return client;
     }
 }

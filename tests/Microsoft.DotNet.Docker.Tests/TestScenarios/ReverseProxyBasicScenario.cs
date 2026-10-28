@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable enable
 
 using System;
@@ -5,17 +8,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Runtime.ExceptionServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using FluentAssertions.Execution;
 using Shouldly;
 using Xunit;
 using Xunit.Abstractions;
-using Xunit.Sdk;
 
-namespace Microsoft.DotNet.Docker.Tests;
+namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 
 public class YarpBasicScenario : ITestScenario
 {
@@ -183,9 +183,9 @@ public class YarpBasicScenario : ITestScenario
     {
         public int SpanIdCount { get; set; }
         public int LogMessageCount { get; set; }
-        public List<string> MetricNames { get; init; } = new();
-        public List<string> ResourceNames { get; init; } = new();
-        public List<string> TraceIds { get; init; } = new();
+        public List<string> MetricNames { get; init; } = [];
+        public List<string> ResourceNames { get; init; } = [];
+        public List<string> TraceIds { get; init; } = [];
         [JsonIgnore]
         public int MetricNameCount => MetricNames.Count;
         [JsonIgnore]

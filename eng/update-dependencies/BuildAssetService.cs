@@ -23,7 +23,7 @@ internal class BuildAssetService(HttpClient httpClient, ILogger<BuildAssetServic
         try
         {
             _logger.LogInformation("Fetching contents from {url}", url);
-            var response = await _httpClient.GetAsync(url);
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             string content = await response.Content.ReadAsStringAsync();
             _logger.LogInformation(
@@ -44,8 +44,8 @@ internal class BuildAssetService(HttpClient httpClient, ILogger<BuildAssetServic
 
     private string ResolveAssetUrl(Asset asset)
     {
-        var blobStorageLocations = asset.Locations.Where(l => l.Location.Contains("blob.core.windows.net"));
-        var azdoLocations = asset.Locations.Where(l => l.Location.Contains("dev.azure.com"));
+        IEnumerable<AssetLocation> blobStorageLocations = asset.Locations.Where(l => l.Location.Contains("blob.core.windows.net"));
+        IEnumerable<AssetLocation> azdoLocations = asset.Locations.Where(l => l.Location.Contains("dev.azure.com"));
 
         string allLocations =
             string.Join(Environment.NewLine, asset.Locations.Select(l => $"Type: {l.Type}; Url: {l.Location}"));
@@ -67,8 +67,5 @@ internal class BuildAssetService(HttpClient httpClient, ILogger<BuildAssetServic
         return url;
     }
 
-    private static string FormatErrorMessage(Asset asset, string message)
-    {
-        return $"Build {asset.BuildId} Asset {asset.Name} (version {asset.Version}) {message}";
-    }
+    private static string FormatErrorMessage(Asset asset, string message) => $"Build {asset.BuildId} Asset {asset.Name} (version {asset.Version}) {message}";
 }

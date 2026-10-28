@@ -52,13 +52,13 @@ public record ReleaseConfig
     [MemberNotNullWhen(false, nameof(AspBuild))]
     public required bool SdkOnly { get; init; }
 
-    private static readonly JsonSerializerOptions s_jsonOptions = new()
+    private static readonly JsonSerializerOptions JsonOptions = new()
     {
         WriteIndented = true
     };
 
     public override string ToString() =>
-        JsonSerializer.Serialize(this, s_jsonOptions);
+        JsonSerializer.Serialize(this, JsonOptions);
 
     public static ReleaseConfig FromJson(string json) =>
         JsonSerializer.Deserialize<ReleaseConfig>(json)

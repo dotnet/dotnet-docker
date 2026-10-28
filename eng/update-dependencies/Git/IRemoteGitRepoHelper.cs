@@ -18,8 +18,8 @@ internal interface IRemoteGitRepoHelper
     Task<bool> RemoteBranchExistsAsync(string branchName);
 
     /// <summary>
-    /// Create a new branch in the remote repository. The <see cref="newBranch"/>
-    /// will be based off of the <see cref="baseBranch"/>.
+    /// Create a new branch in the remote repository. The <paramref name="newBranch"/>
+    /// will be based off of the <paramref name="baseBranch"/>.
     /// </summary>
     /// <param name="newBranch">
     /// This branch will be created on the remote repository.
