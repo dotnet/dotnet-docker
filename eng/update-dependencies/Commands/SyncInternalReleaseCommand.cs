@@ -85,9 +85,9 @@ internal sealed class SyncInternalReleaseCommand(
         }
 
         string sourceSha = await repo.Remote.GetRemoteBranchShaAsync(options.SourceBranch)
-            ?? throw new Exception("Failed to get source branch SHA even though branch exists on remote.");
+            ?? throw new InvalidOperationException("Failed to get source branch SHA even though branch exists on remote.");
         string targetSha = await repo.Remote.GetRemoteBranchShaAsync(options.TargetBranch)
-            ?? throw new Exception("Failed to get target branch SHA even though branch exists on remote.");
+            ?? throw new InvalidOperationException("Failed to get target branch SHA even though branch exists on remote.");
 
         // If both branches are at the same commit, then there is nothing to do.
         if (sourceSha == targetSha)

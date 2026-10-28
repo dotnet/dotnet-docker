@@ -145,9 +145,9 @@ public class StaticTagTests
             // (which only .NET Monitor had at the time) and the update from CBL-Mariner
             // to Azure Linux. Rewrite the OS to match CBL-Mariner in this instance.
             string os = dockerfileInfo.OsDir;
-            if (repo.Name.EndsWith("monitor") &&
-                dockerfileInfo.VersionDir.StartsWith("8.") &&
-                OS.AzureLinuxDistroless.Equals(os))
+            if (repo.Name.EndsWith("monitor", StringComparison.Ordinal) &&
+                dockerfileInfo.VersionDir.StartsWith("8.", StringComparison.Ordinal) &&
+                string.Equals(OS.AzureLinuxDistroless, os, StringComparison.Ordinal))
             {
                 os = OS.MarinerDistroless;
             }
@@ -279,7 +279,7 @@ public class StaticTagTests
         }
     }
 
-    private static IEnumerable<object[]> GetTagTestObjects(TestType testType)
+    private static object[][] GetTagTestObjects(TestType testType)
     {
         List<object[]> testObjects = [];
         foreach (Repo repo in GetManifest().Repos)

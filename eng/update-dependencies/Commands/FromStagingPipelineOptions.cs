@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.CommandLine;
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Commands;
@@ -20,7 +21,7 @@ internal partial record FromStagingPipelineOptions : CreatePullRequestOptions
     /// <summary>
     /// Whether or not to use the internal versions of the staged build.
     /// </summary>
-    public bool Internal { get; init; } = false;
+    public bool Internal { get; init; }
 
     /// <summary>
     /// This Azure Storage Account will be used as a source for the update.
@@ -94,6 +95,6 @@ internal static partial class StagingPipelineOptionsExtensions
                 $"Invalid stage container name '{stageContainer}'. Expected format: 'stage-{{buildId}}' (e.g., 'stage-1234567')");
         }
 
-        return int.Parse(match.Groups[1].Value);
+        return int.Parse(match.Groups[1].Value, CultureInfo.InvariantCulture);
     }
 }

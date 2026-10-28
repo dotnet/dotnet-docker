@@ -108,7 +108,7 @@ internal class PipelineArtifactProvider(
         foreach (PipelineArtifactFile pipelineArtifact in artifactsToTry)
         {
             _logger.LogInformation(
-                "Trying to get artifact from pipeline run {pipelineRunId} using {artifactFile}",
+                "Trying to get artifact from pipeline run {PipelineRunId} using {ArtifactFile}",
                 pipelineRunId, pipelineArtifact);
 
             try
@@ -127,7 +127,7 @@ internal class PipelineArtifactProvider(
                     $"/content?format=file&subPath=%2F{pipelineArtifact.SubPath}");
 
                 _logger.LogInformation(
-                    "Downloading artifact {pipelineArtifact} from {downloadUrl}",
+                    "Downloading artifact {PipelineArtifact} from {DownloadUrl}",
                     pipelineArtifact, downloadUrl);
                 using HttpResponseMessage response = await _azdoHttpClient.GetAsync(downloadUrl);
                 response.EnsureSuccessStatusCode();
@@ -137,7 +137,7 @@ internal class PipelineArtifactProvider(
             catch (Exception e)
             {
                 // Log the exception and continue to the next artifact file
-                _logger.LogError(e, "Failed to retrieve {artifactFile}: {message}", pipelineArtifact, e.Message);
+                _logger.LogError(e, "Failed to retrieve {ArtifactFile}: {Message}", pipelineArtifact, e.Message);
                 exceptions.Add(e);
             }
         }

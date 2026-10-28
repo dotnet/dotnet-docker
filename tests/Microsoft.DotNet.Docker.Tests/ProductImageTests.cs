@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
@@ -80,7 +81,7 @@ public abstract class ProductImageTests
         );
 
         string rootFsPathWithTrailingSlash = rootFsPath;
-        if (!rootFsPathWithTrailingSlash.EndsWith("/"))
+        if (!rootFsPathWithTrailingSlash.EndsWith('/'))
         {
             rootFsPathWithTrailingSlash += "/";
         }
@@ -89,7 +90,7 @@ public abstract class ProductImageTests
             .ReplaceLineEndings()
             .Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries)
             // Writable files in the /tmp/.dotnet directory are allowed for global mutexes
-            .Where(line => !line.StartsWith($"{rootFsPathWithTrailingSlash}tmp/.dotnet"))
+            .Where(line => !line.StartsWith($"{rootFsPathWithTrailingSlash}tmp/.dotnet", StringComparison.Ordinal))
             // Exclude the non-root user's home directory. It will show up as a directory without a user or group
             // because we're not examining the distroless container directly, but rather copying its contents into
             // a container with a shell but doesn't have the non-root user defined.
@@ -104,7 +105,7 @@ public abstract class ProductImageTests
         string actualUser = DockerHelper.GetImageUser(imageTag);
 
         string expectedUser = imageData.IsDistroless && ImageRepo != DotNetImageRepo.SDK
-            ? imageData.NonRootUID.ToString()
+            ? imageData.NonRootUID?.ToString(CultureInfo.InvariantCulture) ?? string.Empty
             // For Windows, only Nano Server defines a user, which seems wrong.
             // I've logged https://dev.azure.com/microsoft/OS/_workitems/edit/40146885 for this.
             : imageData.OS.Family == OSFamily.NanoServer ? "ContainerUser" : string.Empty;
@@ -139,7 +140,7 @@ public abstract class ProductImageTests
             optionalRunArgs: $"--entrypoint /bin/sh"
         );
 
-        int uid = int.Parse(uidString);
+        int uid = int.Parse(uidString, CultureInfo.InvariantCulture);
 
         // UIDs below 1000 are reserved for system accounts
         Assert.True(uid >= 1000);
@@ -251,10 +252,10 @@ public abstract class ProductImageTests
         return expectedPackages.Distinct().OrderBy(s => s);
     }
 
-    private static IEnumerable<string> GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
+    private static string[] GetDistrolessBasePackages(ProductImageData imageData) => imageData switch
     {
-        { OS.Family: OSFamily.AzureLinux } => new[]
-            {
+        { OS.Family: OSFamily.AzureLinux } =>
+            [
                     "SymCrypt",
                     "SymCrypt-OpenSSL",
                     "azurelinux-release",
@@ -262,7 +263,7 @@ public abstract class ProductImageTests
                     "filesystem",
                     "prebuilt-ca-certificates",
                     "tzdata"
-                },
+                ],
         { OS.Family: OSFamily.Ubuntu } =>
             [
                     "base-files"
@@ -380,13 +381,13 @@ public abstract class ProductImageTests
     private static IEnumerable<string> GetResoluteChiseledArchSpecificPackages(ProductImageData imageData) =>
         imageData.Arch == Arch.Amd64 ? ["gcc-16"] : [];
 
-    private static IEnumerable<string> GetExtraPackages(ProductImageData imageData) => imageData switch
+    private static string[] GetExtraPackages(ProductImageData imageData) => imageData switch
     {
-        { IsDistroless: true, OS.Family: OSFamily.AzureLinux } => new[]
-            {
+        { IsDistroless: true, OS.Family: OSFamily.AzureLinux } =>
+            [
                     "icu",
                     "tzdata"
-                },
+                ],
         { OS: var os } when os == OS.ResoluteChiseled =>
             [
                     "icu",

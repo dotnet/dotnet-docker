@@ -16,9 +16,9 @@ namespace Microsoft.DotNet.Docker.Tests.TestScenarios;
 public abstract class WebScenario(ProductImageData imageData, DockerHelper dockerHelper, ITestOutputHelper outputHelper)
     : ConsoleAppScenario(imageData, dockerHelper, outputHelper)
 {
-    protected virtual int? PortOverride { get; } = null;
+    protected virtual int? PortOverride { get; }
 
-    protected virtual string? Endpoint { get; } = null;
+    protected virtual string? Endpoint { get; }
 
     protected override string SampleName { get; } = "web";
 

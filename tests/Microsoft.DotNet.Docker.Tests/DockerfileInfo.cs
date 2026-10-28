@@ -62,7 +62,7 @@ public sealed partial record DockerfileInfo(
         Match match = DockerfileRegex.Match(dockerfilePath);
         if (!match.Success)
         {
-            throw new Exception($"Failed to parse dockerfile: {dockerfilePath}");
+            throw new FormatException($"Failed to parse dockerfile: {dockerfilePath}");
         }
 
         return new DockerfileInfo(

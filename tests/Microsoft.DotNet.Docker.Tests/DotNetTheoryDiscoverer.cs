@@ -17,7 +17,7 @@ public class DotNetTheoryDiscoverer(IMessageSink diagnosticMessageSink) : Theory
 
         if (results.Count() == 1 &&
             results.First() is ExecutionErrorTestCase errorTestCase &&
-            errorTestCase.ErrorMessage.StartsWith("No data found for"))
+            errorTestCase.ErrorMessage.StartsWith("No data found for", StringComparison.Ordinal))
         {
             return CreateTestCasesForSkippedDataRow(discoveryOptions, testMethod, theoryAttribute, [], errorTestCase.ErrorMessage);
         }

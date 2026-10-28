@@ -111,11 +111,11 @@ public record ProductImageData : ImageData
     public static string GetImageVariantName(DotNetImageVariant imageVariant)
     {
         IEnumerable<string> imageVariants = [];
-        foreach (DotNetImageVariant enumValue in Enum.GetValues(typeof(DotNetImageVariant)))
+        foreach (DotNetImageVariant enumValue in Enum.GetValues<DotNetImageVariant>())
         {
             if (enumValue != DotNetImageVariant.None && imageVariant.HasFlag(enumValue))
             {
-                imageVariants = imageVariants.Append(Enum.GetName(typeof(DotNetImageVariant), enumValue).ToLowerInvariant());
+                imageVariants = imageVariants.Append(Enum.GetName(enumValue).ToLowerInvariant());
             }
         }
 

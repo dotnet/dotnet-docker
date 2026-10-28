@@ -10,7 +10,7 @@ public class SkippableTheoryAttribute : DotNetTheoryAttribute
 {
     public SkippableTheoryAttribute(params string[] skippedOperatingSystems)
     {
-        if (Config.OsNames.Any() && !Config.OsNames.Any(osName => osName != "*"))
+        if (Config.OsNames.Length != 0 && !Config.OsNames.Any(osName => osName != "*"))
         {
             foreach (string osName in Config.OsNames)
             {

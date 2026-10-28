@@ -34,13 +34,13 @@ public readonly record struct ImageVersion
 
     public static string TrimBuildVersionForRelease(string buildVersion)
     {
-        int servicingIndex = buildVersion.IndexOf("-servicing.");
+        int servicingIndex = buildVersion.IndexOf("-servicing.", StringComparison.Ordinal);
         if (servicingIndex != -1)
         {
             buildVersion = buildVersion[..servicingIndex];
         }
 
-        int rtmIndex = buildVersion.IndexOf("-rtm.");
+        int rtmIndex = buildVersion.IndexOf("-rtm.", StringComparison.Ordinal);
         if (rtmIndex != -1)
         {
             buildVersion = buildVersion[..rtmIndex];

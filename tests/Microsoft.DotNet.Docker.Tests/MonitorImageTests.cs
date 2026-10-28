@@ -4,6 +4,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -580,12 +581,12 @@ public class MonitorImageTests(ITestOutputHelper outputHelper) : CommonRuntimeIm
 
         if (addDefaultArgs)
         {
-            builtCommandline.AppendFormat("{0} ", Switch_DefaultImageCmd);
+            builtCommandline.AppendFormat(CultureInfo.InvariantCulture, "{0} ", Switch_DefaultImageCmd);
         }
 
         if (noAuthentication)
         {
-            builtCommandline.AppendFormat("{0} ", Switch_NoAuthentication);
+            builtCommandline.AppendFormat(CultureInfo.InvariantCulture, "{0} ", Switch_NoAuthentication);
         }
 
         string cmdsResult = builtCommandline.ToString().Trim(spaceChar);
@@ -605,14 +606,14 @@ public class MonitorImageTests(ITestOutputHelper outputHelper) : CommonRuntimeIm
     {
         // Need to allow pulling of the sample image since these are not built in the same pipeline
         // as the other images; otherwise, these tests will fail due to lack of sample image.
-        string tag = imageData.GetTagNameBase(SampleImageType.Aspnetapp);
+        string tag = SampleImageData.GetTagNameBase(SampleImageType.Aspnetapp);
         imageName = imageData.GetImage(tag, DockerHelper, allowPull: true);
         containerName = imageData.GetIdentifier("monitortest-sample");
         // If user is empty, then image is running as same as docker daemon (typically root)
         userIdentifier = string.IsNullOrEmpty(DockerHelper.GetImageUser(imageName)) ? 0 : imageData.NonRootUID.Value;
     }
 
-    private void VerifyStatusCode(HttpResponseMessage message, HttpStatusCode statusCode)
+    private static void VerifyStatusCode(HttpResponseMessage message, HttpStatusCode statusCode)
     {
         if (message.StatusCode != statusCode)
         {

@@ -61,7 +61,7 @@ internal sealed class LocalGitRepoHelper(
         _logger.LogInformation(
             """
             Git status:
-            {gitStatus}
+            {GitStatus}
             """,
             gitStatus);
 
@@ -69,7 +69,7 @@ internal sealed class LocalGitRepoHelper(
         string commitSha = await _localGitRepo.GetShaForRefAsync("HEAD");
 
         _logger.LogInformation(
-            "Created commit {commitSha}, message: '{commitMessage}' ({authorName} <{authorEmail}>)",
+            "Created commit {CommitSha}, message: '{CommitMessage}' ({AuthorName} <{AuthorEmail}>)",
             commitSha, message, author.Name, author.Email);
 
         return commitSha;

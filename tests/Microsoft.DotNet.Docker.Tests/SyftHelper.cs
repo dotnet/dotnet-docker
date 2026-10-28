@@ -120,7 +120,7 @@ public sealed class SyftHelper(DockerHelper dockerHelper, ITestOutputHelper outp
         {
             // Syft expects relative paths. The paths are relative to the scan directory, which in
             // this case is /rootfs/.
-            if (!path.StartsWith("./"))
+            if (!path.StartsWith("./", StringComparison.Ordinal))
             {
                 path = "./" + path.TrimStart('/');
             }

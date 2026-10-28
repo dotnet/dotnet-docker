@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.DotNet.Docker.Tests.TestScenarios;
@@ -28,10 +29,10 @@ public abstract class CommonRuntimeImageTests(ITestOutputHelper outputHelper) : 
 
         if (!imageData.IsWindows)
         {
-            variables.Add(EnvironmentVariableInfo.Require("APP_UID", imageData.NonRootUID?.ToString()));
+            variables.Add(EnvironmentVariableInfo.Require("APP_UID", imageData.NonRootUID?.ToString(CultureInfo.InvariantCulture)));
         }
 
-        variables.Add(EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
+        variables.Add(EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString(CultureInfo.InvariantCulture)));
 
         if (customVariables != null)
         {

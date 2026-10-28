@@ -26,8 +26,8 @@ public abstract class ProjectTemplateTestScenario(
 
     protected virtual bool NonRootUserSupported => DockerHelper.IsLinuxContainerModeEnabled;
 
-    protected virtual bool InjectCustomTestCode { get; } = false;
-    protected virtual bool OutputIsStatic { get; } = false;
+    protected virtual bool InjectCustomTestCode { get; }
+    protected virtual bool OutputIsStatic { get; }
     protected virtual string[] CustomDockerBuildArgs { get; } = [];
 
     protected abstract string SampleName { get; }

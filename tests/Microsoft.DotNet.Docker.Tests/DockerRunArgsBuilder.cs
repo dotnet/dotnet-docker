@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Microsoft.DotNet.Docker.Tests;
 
-internal class DockerRunArgsBuilder
+internal sealed class DockerRunArgsBuilder
 {
     private readonly StringBuilder _builder =
         new StringBuilder();

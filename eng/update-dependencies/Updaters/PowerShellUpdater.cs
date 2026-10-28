@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
 using System.Net;
 using Azure;
 using Azure.Core;
@@ -304,13 +305,13 @@ public sealed class PowerShellUpdater(
             [] => [new SemanticVersion(version.Major, version.Minor, version.Patch + 1)],
             ["preview", var number] =>
                 [
-                    GetPrerelease("preview", int.Parse(number) + 1),
+                    GetPrerelease("preview", int.Parse(number, CultureInfo.InvariantCulture) + 1),
                     GetPrerelease("rc", 1),
                     stableRelease
                 ],
             ["rc", var number] =>
                 [
-                    GetPrerelease("rc", int.Parse(number) + 1),
+                    GetPrerelease("rc", int.Parse(number, CultureInfo.InvariantCulture) + 1),
                     stableRelease
                 ],
             _ => throw new FormatException($"Unexpected PowerShell version '{version}'."),

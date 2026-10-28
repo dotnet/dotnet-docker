@@ -40,8 +40,8 @@ public record SampleImageData : ImageData
         return imageName;
     }
 
-    public string GetTagNameBase(SampleImageType imageType) =>
-        Enum.GetName(typeof(SampleImageType), imageType).ToLowerInvariant();
+    public static string GetTagNameBase(SampleImageType imageType) =>
+        Enum.GetName(imageType).ToLowerInvariant();
 
     public static string GetImageName(string tag) =>
         GetImageName(tag, "samples", string.Empty);

@@ -179,7 +179,7 @@ public class YarpBasicScenario : ITestScenario
     """;
 
     // Needs to be kept in sync with {RepoRoot}\tests\Microsoft.DotNet.Docker.Tests\TestAppArtifacts\otlptestlistener\OtlpTestListener\DataModel\TelemetryResults.cs
-    private class TelemetryResults
+    private sealed class TelemetryResults
     {
         public int SpanIdCount { get; set; }
         public int LogMessageCount { get; set; }

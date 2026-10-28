@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.Logging;
@@ -77,7 +78,7 @@ public sealed class AspireUpdater(
         variables.SetValue("aspire-dashboard|product-version", productVersion);
         variables.SetValue("aspire-dashboard|fixed-tag", productVersion);
         variables.SetValue("aspire-dashboard|minor-tag", majorMinorVersion.ToString(2));
-        variables.SetValue("aspire-dashboard|major-tag", majorMinorVersion.Major.ToString());
+        variables.SetValue("aspire-dashboard|major-tag", majorMinorVersion.Major.ToString(CultureInfo.InvariantCulture));
 
         foreach ((Asset? asset, string? checksum) in dashboardAssets.Zip(dashboardChecksums))
         {

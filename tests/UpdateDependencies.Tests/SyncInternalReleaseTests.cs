@@ -223,7 +223,7 @@ public sealed class SyncInternalReleaseTests
             .Setup(repo => repo.Remote.GetPullRequestInfoAsync(pullRequestUrl))
             .ReturnsAsync(() => pullRequestIsCreated
                 ? Mock.Of<PullRequest>()
-                : throw new Exception($"PR {pullRequestUrl} was not created first"));
+                : throw new InvalidOperationException($"PR {pullRequestUrl} was not created first"));
 
         // For this scenario, two internal versions have been checked in to this repo.
         Dictionary<DotNetVersion, string> internalVersions = new Dictionary<DotNetVersion, string>
@@ -290,7 +290,7 @@ public sealed class SyncInternalReleaseTests
     /// Helper method to create a <see cref="SyncInternalReleaseCommand"/> instance with optional
     /// mocked dependencies. If dependencies are not provided, default mocks will be used.
     /// </summary>
-    private SyncInternalReleaseCommand CreateCommand(
+    private static SyncInternalReleaseCommand CreateCommand(
         IGitRepoHelperFactory? repoFactory = null,
         ICommand<FromStagingPipelineOptions>? fromStagingPipelineCommand = null,
         IInternalVersionsService? internalVersionsService = null,
@@ -333,7 +333,7 @@ public sealed class SyncInternalReleaseTests
     /// <summary>
     /// Helper class for setting up scenarios on a <see cref="IGitRepoHelper"/> mock.
     /// </summary>
-    private class GitTestScenario
+    private sealed class GitTestScenario
     {
         public Mock<IGitRepoHelper> RepoMock { get; } = new();
 

@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Diagnostics;
+using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -27,7 +28,7 @@ internal static class ChecksumHelper
                 StringBuilder stringBuilder = new(128);
                 foreach (byte b in hashedInputBytes)
                 {
-                    stringBuilder.Append(b.ToString("X2"));
+                    stringBuilder.Append(b.ToString("X2", CultureInfo.InvariantCulture));
                 }
 
                 sha = stringBuilder.ToString();

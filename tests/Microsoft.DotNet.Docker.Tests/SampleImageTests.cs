@@ -3,6 +3,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ public class SampleImageTests(ITestOutputHelper outputHelper)
         await VerifySampleAsync(imageData, SampleImageType.Dotnetapp, (image, containerName) =>
         {
             string output = DockerHelper.Run(image, containerName);
-            Assert.True(output.Contains("42") || output.StartsWith("Hello"));
+            Assert.True(output.Contains("42") || output.StartsWith("Hello", StringComparison.Ordinal));
 
             ValidateEnvironmentVariables(imageData, image, SampleImageType.Dotnetapp);
 
@@ -139,7 +140,7 @@ public class SampleImageTests(ITestOutputHelper outputHelper)
         Func<string, string, Task> verifyImageAsync)
     {
         string image = imageData.GetImage(sampleImageType, DockerHelper);
-        string imageType = Enum.GetName(typeof(SampleImageType), sampleImageType).ToLowerInvariant();
+        string imageType = Enum.GetName(sampleImageType).ToLowerInvariant();
         try
         {
             if (!imageData.IsPublished)
@@ -178,7 +179,7 @@ public class SampleImageTests(ITestOutputHelper outputHelper)
 
         if (imageType == SampleImageType.Aspnetapp)
         {
-            variables.Add(EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString()));
+            variables.Add(EnvironmentVariableInfo.Require("ASPNETCORE_HTTP_PORTS", imageData.DefaultPort.ToString(CultureInfo.InvariantCulture)));
         }
 
         EnvironmentVariableInfo.Validate(

@@ -91,7 +91,7 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
         ManifestVariables variables,
         string repoRoot,
         string dockerfileVersion,
-        IReadOnlyDictionary<string, string?> productVersions,
+        Dictionary<string, string?> productVersions,
         string internalBaseUrl)
     {
         NuGetConfigUpdater.Update(variables, repoRoot, dockerfileVersion, productVersions["sdk"], !string.IsNullOrEmpty(internalBaseUrl));

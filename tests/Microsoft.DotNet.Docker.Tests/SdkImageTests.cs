@@ -246,7 +246,7 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
         }
 
         string baseImage = imageData.GetImage(ImageRepo, DockerHelper);
-        string tag = imageData.GetIdentifier("SdkContents").ToLower();
+        string tag = imageData.GetIdentifier("SdkContents").ToLowerInvariant();
 
         DockerHelper.Build(
             tag: tag,
@@ -377,7 +377,7 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
         return url;
     }
 
-    private record SdkContentFileInfo
+    private sealed record SdkContentFileInfo
     {
         public string Path { get; init; }
         public string Sha512 { get; init; }
@@ -385,7 +385,7 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
         public SdkContentFileInfo(string path, string sha512)
         {
             Path = NormalizePath(path);
-            Sha512 = sha512.ToLower();
+            Sha512 = sha512.ToLowerInvariant();
         }
 
         private static string NormalizePath(string path)
@@ -395,7 +395,7 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
                 .Replace("/usr/share/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
                 .Replace("c:/program files/dotnet", string.Empty, StringComparison.OrdinalIgnoreCase)
                 .TrimStart('/')
-                .ToLower();
+                .ToLowerInvariant();
         }
     }
 
@@ -407,8 +407,7 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
         {
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
                 "Basic",
-                Convert.ToBase64String(Encoding.ASCII.GetBytes(string.Format("{0}:{1}", "",
-                    Config.InternalAccessToken))));
+                Convert.ToBase64String(Encoding.ASCII.GetBytes($":{Config.InternalAccessToken}")));
         }
 
         ;

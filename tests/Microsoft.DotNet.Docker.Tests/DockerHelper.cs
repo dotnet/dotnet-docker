@@ -271,7 +271,7 @@ public class DockerHelper(ITestOutputHelper outputHelper)
         ExecuteWithLogging(
             $"inspect -f \"{{{{(index (index .NetworkSettings.Ports \\\"{containerPort}/tcp\\\") 0).HostPort}}}}\" {container}");
 
-    public string GetContainerWorkPath(string relativePath)
+    public static string GetContainerWorkPath(string relativePath)
     {
         string separator = IsLinuxContainerModeEnabled ? "/" : "\\";
         return $"{ContainerWorkDir}{separator}{relativePath}";

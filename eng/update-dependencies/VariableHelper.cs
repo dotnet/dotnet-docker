@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
@@ -19,8 +20,8 @@ public static class VariableHelper
     {
         string variableGroupFormat = $"(?<{VariableGroupName}>({{0}}))";
         string joinedVariableNames = string.Join('|', variableNames);
-        string upperCasedVariableGroup = string.Format(variableGroupFormat, joinedVariableNames.ToUpperInvariant());
-        string lowerCasedVariableGroup = string.Format(variableGroupFormat, joinedVariableNames.ToLowerInvariant());
+        string upperCasedVariableGroup = string.Format(CultureInfo.InvariantCulture, variableGroupFormat, joinedVariableNames.ToUpperInvariant());
+        string lowerCasedVariableGroup = string.Format(CultureInfo.InvariantCulture, variableGroupFormat, joinedVariableNames.ToLowerInvariant());
 
         string argEnvPattern = $" {upperCasedVariableGroup}[= ](?<{ValueGroupName}>[^\\s$]+)";
         string linuxPattern = $"\\b{lowerCasedVariableGroup}=(?<{ValueGroupName}>[^\\s]+)";

@@ -1,6 +1,8 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
+
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
 internal static class VersionHelper
@@ -13,7 +15,7 @@ internal static class VersionHelper
             throw new InvalidOperationException($"Could not parse major-minor version from '{versionString}'.");
         }
 
-        return new Version(major: int.Parse(versionParts[0]), minor: int.Parse(versionParts[1]));
+        return new Version(major: int.Parse(versionParts[0], CultureInfo.InvariantCulture), minor: int.Parse(versionParts[1], CultureInfo.InvariantCulture));
     }
 
     /// <summary>

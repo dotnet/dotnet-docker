@@ -124,7 +124,7 @@ public sealed record OSInfo(
     /// Checks if the TagName starts with the specified value.
     /// Provides backward compatibility with string-based OS checks.
     /// </summary>
-    public bool StartsWith(string value) => TagName.StartsWith(value);
+    public bool StartsWith(string value) => TagName.StartsWith(value, StringComparison.Ordinal);
 
     /// <summary>
     /// Implicit conversion to string for backward compatibility with existing code.

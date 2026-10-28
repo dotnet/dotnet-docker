@@ -112,7 +112,7 @@ public static class Config
         }
 
         return GetVariableValue(
-            $"{imageRepo.ToString().ToLower()}|{dotnetVersion}|build-version",
+            $"{imageRepo.ToString().ToLowerInvariant()}|{dotnetVersion}|build-version",
             (JObject)ManifestVersions.Value["variables"]);
     }
 

@@ -482,6 +482,18 @@ dotnet_naming_style.s_camelcase.required_suffix =
 dotnet_naming_style.s_camelcase.word_separator =
 dotnet_naming_style.s_camelcase.capitalization = camel_case
 
+[eng/update-dependencies/**.cs]
+# CA1848: Prefer LoggerMessage delegates over ILogger extension methods.
+# CA1873: Guard potentially expensive logging arguments.
+# Source-generated logging is overkill for this project.
+dotnet_diagnostic.CA1848.severity = none
+dotnet_diagnostic.CA1873.severity = none
+
+[tests/**.cs]
+# CA1707: Remove underscores from identifier names.
+# Keep descriptive test names and version/repository identifiers.
+dotnet_diagnostic.CA1707.severity = none
+
 [tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/**.cs]
 # These are inputs to generated test applications, not part of the test runner.
 generated_code = true

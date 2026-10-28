@@ -577,7 +577,7 @@ public static class TestData
         string archFilterPattern = GetFilterRegexPattern("IMAGE_ARCH");
         return imageData
             .Where(imageData => archFilterPattern == null
-                || Regex.IsMatch(Enum.GetName(typeof(Arch), imageData.Arch), archFilterPattern, RegexOptions.IgnoreCase));
+                || Regex.IsMatch(Enum.GetName(imageData.Arch), archFilterPattern, RegexOptions.IgnoreCase));
     }
 
     public static IEnumerable<ImageData> FilterImagesByOs(this IEnumerable<ImageData> imageData)

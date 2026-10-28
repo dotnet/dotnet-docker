@@ -16,7 +16,7 @@ namespace Microsoft.DotNet.Docker.Tests;
 
 public class TestSolution : IDisposable
 {
-    private bool _disposed = false;
+    private bool _disposed;
     private readonly DockerHelper _dockerHelper;
     private readonly ProductImageData _imageData;
     private readonly string _appName = "app";
@@ -92,7 +92,7 @@ public class TestSolution : IDisposable
         return solutionDir;
     }
 
-    private void InjectCustomTestCode(string appDir)
+    private static void InjectCustomTestCode(string appDir)
     {
         string programFilePath = Path.Combine(appDir, "Program.cs");
 
@@ -156,7 +156,7 @@ public class TestSolution : IDisposable
         File.WriteAllText(programFilePath, newContent);
     }
 
-    private string GetUserDirectoryWriteAccessValidationCode()
+    private static string GetUserDirectoryWriteAccessValidationCode()
     {
         string userDirEnvVarName = DockerHelper.IsLinuxContainerModeEnabled ? "HOME" : "USERPROFILE";
         return

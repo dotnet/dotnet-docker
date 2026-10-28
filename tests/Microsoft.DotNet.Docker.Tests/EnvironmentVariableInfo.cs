@@ -10,15 +10,15 @@ namespace Microsoft.DotNet.Docker.Tests;
 
 public record EnvironmentVariableInfo
 {
-    public bool AllowAnyValue { get; init; } = false;
-    public string? ExpectedValue { get; init; } = null;
+    public bool AllowAnyValue { get; init; }
+    public string? ExpectedValue { get; init; }
     public string Name { get; init; }
-    public bool IsProductVersion { get; init; } = false;
+    public bool IsProductVersion { get; init; }
 
     /// <summary>
     /// When true, the variable is expected to NOT be set on the image.
     /// </summary>
-    public bool ShouldNotExist { get; init; } = false;
+    public bool ShouldNotExist { get; init; }
 
     private EnvironmentVariableInfo(string name) => Name = name;
 

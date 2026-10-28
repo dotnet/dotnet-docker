@@ -1,10 +1,13 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
 using System.Text.RegularExpressions;
 using NuGet.Versioning;
 
+#pragma warning disable CA1716 // Avoid language keywords in namespaces: this shared code is consumed only by C# projects.
 namespace Microsoft.DotNet.Docker.Shared;
+#pragma warning restore CA1716
 
 /// <summary>
 /// Represents the version of a .NET build artifact.
@@ -42,8 +45,8 @@ public sealed partial class DotNetVersion(SemanticVersion version) : SemanticVer
         // Don't use System.Version.Parse here, because it defaults unmatched
         // minor/patch versions to -1, whereas we want them to default to 0.
         GroupCollection matchGroups = MajorMinorVersionRegex.Match(versionString).Groups;
-        int major = int.Parse(matchGroups["major"].Value);
-        int minor = int.TryParse(matchGroups["minor"].Value.TrimStart('.'), out int minorValue) ? minorValue : 0;
+        int major = int.Parse(matchGroups["major"].Value, CultureInfo.InvariantCulture);
+        int minor = int.TryParse(matchGroups["minor"].Value.TrimStart('.'), NumberStyles.Integer, CultureInfo.InvariantCulture, out int minorValue) ? minorValue : 0;
         return new DotNetVersion(new SemanticVersion(major, minor, 0));
     }
 
