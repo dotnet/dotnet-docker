@@ -1,7 +1,6 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Maestro.Common;
 using Maestro.Common.Telemetry;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
@@ -20,15 +19,15 @@ internal sealed class TempRepo : IDisposable
         Directory.CreateDirectory(LocalPath);
 
         // Create a temp repo that can be used for testing commands using a real git process
-        var logger = Mock.Of<ILogger>();
-        var processManager = new ProcessManager(logger, "git");
-        var git = new LocalGitClient(
+        ILogger logger = Mock.Of<ILogger>();
+        ProcessManager processManager = new ProcessManager(logger, "git");
+        LocalGitClient git = new LocalGitClient(
             Mock.Of<IRemoteTokenProvider>(),
             Mock.Of<ITelemetryRecorder>(),
             processManager,
             new FileSystem(),
             logger);
-        var localGitRepoFactory = new LocalGitRepoFactory(git, processManager);
+        LocalGitRepoFactory localGitRepoFactory = new LocalGitRepoFactory(git, processManager);
 
         LocalGitRepo = localGitRepoFactory.Create(new NativePath(LocalPath));
     }

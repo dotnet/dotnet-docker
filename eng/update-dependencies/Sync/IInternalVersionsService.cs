@@ -24,6 +24,7 @@ internal interface IInternalVersionsService
     /// If a version already exists for the same dockerfileVersion, it will be
     /// overwritten.
     /// </remarks>
+    /// <param name="repoRoot">The root of the repository to update.</param>
     /// <param name="dotNetVersion">.NET build or product version</param>
     /// <param name="stageContainer">the stage container name (e.g., "stage-1234567")</param>
     void RecordInternalStagingBuild(string repoRoot, DotNetVersion dotNetVersion, string stageContainer);

@@ -1,0 +1,4 @@
+<Project>
+  <!-- Stop Directory.Build.props discovery here so test-app fixtures do not inherit
+       the repository's code-style enforcement and warnings-as-errors settings. -->
+</Project>

@@ -22,14 +22,14 @@ internal class BuildAssetService(HttpClient httpClient, ILogger<BuildAssetServic
         string url = ResolveAssetUrl(asset);
         try
         {
-            _logger.LogInformation("Fetching contents from {url}", url);
-            var response = await _httpClient.GetAsync(url);
+            _logger.LogInformation("Fetching contents from {Url}", url);
+            HttpResponseMessage response = await _httpClient.GetAsync(url);
             response.EnsureSuccessStatusCode();
             string content = await response.Content.ReadAsStringAsync();
             _logger.LogInformation(
                 """
-                Successfully fetched contents from {url}:
-                {content}
+                Successfully fetched contents from {Url}:
+                {Content}
                 """,
                 url, content);
             // Remove trailing newlines
@@ -37,22 +37,22 @@ internal class BuildAssetService(HttpClient httpClient, ILogger<BuildAssetServic
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Failed to fetch contents from {url}", url);
+            _logger.LogError(ex, "Failed to fetch contents from {Url}", url);
             throw;
         }
     }
 
     private string ResolveAssetUrl(Asset asset)
     {
-        var blobStorageLocations = asset.Locations.Where(l => l.Location.Contains("blob.core.windows.net"));
-        var azdoLocations = asset.Locations.Where(l => l.Location.Contains("dev.azure.com"));
+        IEnumerable<AssetLocation> blobStorageLocations = asset.Locations.Where(l => l.Location.Contains("blob.core.windows.net"));
+        IEnumerable<AssetLocation> azdoLocations = asset.Locations.Where(l => l.Location.Contains("dev.azure.com"));
 
         string allLocations =
             string.Join(Environment.NewLine, asset.Locations.Select(l => $"Type: {l.Type}; Url: {l.Location}"));
         _logger.LogInformation(
             """
-            Asset {asset.Name} has {asset.Locations.Count} locations:
-            {allLocations}
+            Asset {AssetName} has {LocationCount} locations:
+            {AllLocations}
             """,
             asset.Name, asset.Locations.Count, allLocations);
 
@@ -63,12 +63,9 @@ internal class BuildAssetService(HttpClient httpClient, ILogger<BuildAssetServic
             ?? throw new InvalidOperationException(FormatErrorMessage(asset, "does not have any valid locations"));
 
         string url = $"{bestLocation.Location}/{asset.Name}";
-        _logger.LogInformation("Using location {url}", url);
+        _logger.LogInformation("Using location {Url}", url);
         return url;
     }
 
-    private static string FormatErrorMessage(Asset asset, string message)
-    {
-        return $"Build {asset.BuildId} Asset {asset.Name} (version {asset.Version}) {message}";
-    }
+    private static string FormatErrorMessage(Asset asset, string message) => $"Build {asset.BuildId} Asset {asset.Name} (version {asset.Version}) {message}";
 }
