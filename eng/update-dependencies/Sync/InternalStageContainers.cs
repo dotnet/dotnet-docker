@@ -22,7 +22,7 @@ internal sealed record InternalStageContainers(ImmutableDictionary<DotNetVersion
     /// </remarks>
     public static InternalStageContainers Parse(IEnumerable<string> lines)
     {
-        var versions = lines
+        ImmutableDictionary<DotNetVersion, string> versions = lines
             .Select(line => line.Split('=', 2))
             .Where(parts => parts.Length == 2)
             .ToImmutableDictionary(

@@ -3,8 +3,13 @@ name: Update Dependencies Tests
 on:
   pull_request:
     paths:
+      - '.editorconfig'
+      - 'Directory.Build.props'
+      - 'Microsoft.DotNet.Docker.slnx'
       - 'eng/update-dependencies/**'
-      - 'tests/UpdateDependencies.Tests/**'
+      - 'eng/shared/**'
+      - 'tests/**'
+      - '!tests/Microsoft.DotNet.Docker.Tests/TestAppArtifacts/**'
       - '.github/workflows/update-dependencies-tests.yml'
 
 permissions: {}
@@ -28,13 +33,16 @@ jobs:
       - name: Restore dependencies
         run: >
           dotnet restore
-          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          Microsoft.DotNet.Docker.slnx
           --verbosity normal
 
-      - name: Build tests
+      - name: Verify formatting
+        run: dotnet format Microsoft.DotNet.Docker.slnx --no-restore --verify-no-changes
+
+      - name: Build solution
         run: >
           dotnet build
-          tests/UpdateDependencies.Tests/UpdateDependencies.Tests.csproj
+          Microsoft.DotNet.Docker.slnx
           --no-restore
 
       - name: Run tests

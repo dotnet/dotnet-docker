@@ -29,7 +29,7 @@ internal sealed class BuildLabelService(TextWriter output) : IBuildLabelService
     /// <inheritdoc />
     public void AddBuildTags(params IEnumerable<string> tags)
     {
-        foreach (var tag in tags)
+        foreach (string tag in tags)
         {
             output.WriteLine($"##vso[build.addbuildtag]{tag}");
         }

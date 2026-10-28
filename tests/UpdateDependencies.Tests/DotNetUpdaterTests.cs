@@ -1,10 +1,10 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
-using Microsoft.DotNet.Docker.UpdateDependencies;
-using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
-using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
 using Microsoft.DotNet.DarcLib;
+using Microsoft.DotNet.Docker.UpdateDependencies;
+using Microsoft.DotNet.Docker.UpdateDependencies.Model.Release;
+using Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 using Microsoft.Extensions.Logging;
 
 namespace UpdateDependencies.Tests;
@@ -20,9 +20,9 @@ public sealed class DotNetUpdaterTests
     [InlineData("11.0.2+build.123", "11.0.2")]
     public async Task Staging_WritesBuildVersionAndProductTag(string buildVersion, string productVersion)
     {
-        using var repo = new TempRepo();
-        var variables = CreateManifest(repo.LocalPath);
-        var release = CreateRelease() with { RuntimeBuild = buildVersion };
+        using TempRepo repo = new TempRepo();
+        ManifestVariables variables = CreateManifest(repo.LocalPath);
+        ReleaseConfig release = CreateRelease() with { RuntimeBuild = buildVersion };
 
         await CreateUpdater().UpdateFromStagingPipelineAsync(
             variables, repo.LocalPath, release, "https://example/internal", TestContext.Current.CancellationToken);
@@ -38,8 +38,8 @@ public sealed class DotNetUpdaterTests
     [InlineData("11.0.1", "11.0.2")]
     public async Task Staging_PreservesDisabledVersionsAndAliases(string current, string expected)
     {
-        using var repo = new TempRepo();
-        var variables = CreateManifest(repo.LocalPath);
+        using TempRepo repo = new TempRepo();
+        ManifestVariables variables = CreateManifest(repo.LocalPath);
         variables.SetValue("runtime|11.0|build-version", current);
 
         await CreateUpdater().UpdateFromStagingPipelineAsync(

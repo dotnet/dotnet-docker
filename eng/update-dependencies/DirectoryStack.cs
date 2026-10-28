@@ -1,5 +1,5 @@
-// Copyright (c) .NET Foundation and contributors. All rights reserved.
-// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
@@ -25,7 +25,7 @@ internal static class DirectoryStack
     /// </summary>
     private sealed class DirectoryContext : IDisposable
     {
-        private static readonly Stack<string> s_directoryStack = new();
+        private static readonly Stack<string> DirectoryStack = new();
 
         private bool _disposed;
 
@@ -51,7 +51,7 @@ internal static class DirectoryStack
         /// </summary>
         private static void Push(string path)
         {
-            s_directoryStack.Push(Directory.GetCurrentDirectory());
+            DirectoryStack.Push(Directory.GetCurrentDirectory());
             Directory.SetCurrentDirectory(path);
         }
 
@@ -62,9 +62,9 @@ internal static class DirectoryStack
         /// </summary>
         private static void Pop()
         {
-            if (s_directoryStack.Count > 0)
+            if (DirectoryStack.Count > 0)
             {
-                string previousDirectory = s_directoryStack.Pop();
+                string previousDirectory = DirectoryStack.Pop();
                 Directory.SetCurrentDirectory(previousDirectory);
             }
             else

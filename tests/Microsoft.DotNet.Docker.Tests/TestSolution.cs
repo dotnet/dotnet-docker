@@ -1,3 +1,6 @@
+// Licensed to the .NET Foundation under one or more agreements.
+// The .NET Foundation licenses this file to you under the MIT license.
+
 #nullable enable
 
 using System;
@@ -13,17 +16,16 @@ namespace Microsoft.DotNet.Docker.Tests;
 
 public class TestSolution : IDisposable
 {
-    private bool _disposed = false;
+    private bool _disposed;
     private readonly DockerHelper _dockerHelper;
     private readonly ProductImageData _imageData;
     private readonly string _appName = "app";
-    private readonly string _solutionDir;
     private readonly string _testProjectDir;
     private readonly string _appProjectDir;
 
     public string SampleName { get; }
 
-    public string SolutionDir => _solutionDir;
+    public string SolutionDir { get; }
 
     public TestSolution(ProductImageData imageData, string sampleName, DockerHelper dockerHelper, bool injectCustomTestCode = false)
     {
@@ -31,11 +33,11 @@ public class TestSolution : IDisposable
         _imageData = imageData;
         _dockerHelper = dockerHelper;
 
-        _solutionDir = Path.Combine(Directory.GetCurrentDirectory(), $"{sampleName}App{DateTime.Now.ToFileTime()}");
-        _testProjectDir = Path.Combine(_solutionDir, "tests");
-        _appProjectDir = Path.Combine(_solutionDir, _appName);
+        SolutionDir = Path.Combine(Directory.GetCurrentDirectory(), $"{sampleName}App{DateTime.Now.ToFileTime()}");
+        _testProjectDir = Path.Combine(SolutionDir, "tests");
+        _appProjectDir = Path.Combine(SolutionDir, _appName);
 
-        CreateTestSolutionWithSdkImage(_solutionDir, sampleName);
+        CreateTestSolutionWithSdkImage(SolutionDir, sampleName);
 
         if (injectCustomTestCode)
         {
@@ -90,7 +92,7 @@ public class TestSolution : IDisposable
         return solutionDir;
     }
 
-    private void InjectCustomTestCode(string appDir)
+    private static void InjectCustomTestCode(string appDir)
     {
         string programFilePath = Path.Combine(appDir, "Program.cs");
 
@@ -145,7 +147,7 @@ public class TestSolution : IDisposable
 
             MethodDeclarationSyntax newMainMethod = mainMethod.InsertNodesBefore(
                 mainMethod.Body.ChildNodes().First(),
-                new SyntaxNode[] { testHttpsConnectivityStatement });
+                [testHttpsConnectivityStatement]);
 
             SyntaxNode newRoot = programTree.GetRoot().ReplaceNode(mainMethod, newMainMethod);
             newContent = newRoot.ToFullString();
@@ -154,7 +156,7 @@ public class TestSolution : IDisposable
         File.WriteAllText(programFilePath, newContent);
     }
 
-    private string GetUserDirectoryWriteAccessValidationCode()
+    private static string GetUserDirectoryWriteAccessValidationCode()
     {
         string userDirEnvVarName = DockerHelper.IsLinuxContainerModeEnabled ? "HOME" : "USERPROFILE";
         return
@@ -201,7 +203,7 @@ public class TestSolution : IDisposable
         {
             if (disposing)
             {
-                Directory.Delete(_solutionDir, recursive: true);
+                Directory.Delete(SolutionDir, recursive: true);
             }
 
             _disposed = true;
