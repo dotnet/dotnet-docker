@@ -6,6 +6,8 @@ parameters:
   publicProjectName: null
   publishConfig: null
   pool: ""
+  # Optional pool priority: High, Medium, or Low. Empty leaves pool defaults unchanged.
+  poolPriority: ""
   isStandalonePublish: false
   customPublishInitSteps: []
   customInitSteps: []
@@ -53,12 +55,28 @@ stages:
 
     pool:
       ${{ if ne(parameters.pool, '') }}:
-        ${{ parameters.pool }}
+        ${{ if ne(parameters.poolPriority, '') }}:
+          ${{ each property in parameters.pool }}:
+            ${{ if ne(property.key, 'demands') }}:
+              ${{ property.key }}: ${{ property.value }}
+          demands:
+          - ${{ if parameters.pool.demands }}:
+            - ${{ parameters.pool.demands }}
+          - Priority -equals ${{ parameters.poolPriority }}
+        ${{ else }}:
+          ${{ parameters.pool }}
       ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: $(linuxAmd64PublicPoolName)
-        demands: ImageOverride -equals $(linuxAmd64PublicPoolImage)
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands:
+          - ImageOverride -equals $(linuxAmd64PublicPoolImage)
+          - Priority -equals ${{ parameters.poolPriority }}
+        ${{ else }}:
+          demands: ImageOverride -equals $(linuxAmd64PublicPoolImage)
         os: linux
       ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxAmd64InternalPoolName)
         image: $(linuxAmd64InternalPoolImage)
         os: linux
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands: Priority -equals ${{ parameters.poolPriority }}

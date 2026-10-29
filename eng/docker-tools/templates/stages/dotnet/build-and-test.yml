@@ -3,6 +3,8 @@
 
 parameters:
   linuxAmd64Pool: ""
+  # Optional pool priority: High, Medium, or Low. Empty leaves pool defaults unchanged.
+  poolPriority: ""
 
   # Custom init steps for all jobs
   customInitSteps: []
@@ -77,15 +79,31 @@ stages:
     # Linux AMD64
     linuxAmd64Pool:
       ${{ if ne(parameters.linuxAmd64Pool, '') }}:
-        ${{ parameters.linuxAmd64Pool }}
+        ${{ if ne(parameters.poolPriority, '') }}:
+          ${{ each property in parameters.linuxAmd64Pool }}:
+            ${{ if ne(property.key, 'demands') }}:
+              ${{ property.key }}: ${{ property.value }}
+          demands:
+          - ${{ if parameters.linuxAmd64Pool.demands }}:
+            - ${{ parameters.linuxAmd64Pool.demands }}
+          - Priority -equals ${{ parameters.poolPriority }}
+        ${{ else }}:
+          ${{ parameters.linuxAmd64Pool }}
       ${{ elseif eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: $(linuxAmd64PublicPoolName)
-        demands: ImageOverride -equals $(linuxAmd64PublicPoolImage)
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands:
+          - ImageOverride -equals $(linuxAmd64PublicPoolImage)
+          - Priority -equals ${{ parameters.poolPriority }}
+        ${{ else }}:
+          demands: ImageOverride -equals $(linuxAmd64PublicPoolImage)
         os: linux
       ${{ elseif eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxAmd64InternalPoolName)
         image: $(linuxAmd64InternalPoolImage)
         os: linux
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands: Priority -equals ${{ parameters.poolPriority }}
 
     # Linux Arm64
     linuxArm64Pool:
@@ -93,10 +111,17 @@ stages:
       hostArchitecture: Arm64
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: $(linuxArm64PublicPoolName)
-        demands: ImageOverride -equals $(linuxArm64PublicPoolImage)
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands:
+          - ImageOverride -equals $(linuxArm64PublicPoolImage)
+          - Priority -equals ${{ parameters.poolPriority }}
+        ${{ else }}:
+          demands: ImageOverride -equals $(linuxArm64PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxArm64InternalPoolName)
         image: $(linuxArm64InternalPoolImage)
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands: Priority -equals ${{ parameters.poolPriority }}
 
     # Linux Arm32
     linuxArm32Pool:
@@ -104,10 +129,17 @@ stages:
       hostArchitecture: Arm64
       ${{ if eq(variables['System.TeamProject'], parameters.publicProjectName) }}:
         name: $(linuxArm32PublicPoolName)
-        demands: ImageOverride -equals $(linuxArm32PublicPoolImage)
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands:
+          - ImageOverride -equals $(linuxArm32PublicPoolImage)
+          - Priority -equals ${{ parameters.poolPriority }}
+        ${{ else }}:
+          demands: ImageOverride -equals $(linuxArm32PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         name: $(linuxArm32InternalPoolName)
         image: $(linuxArm32InternalPoolImage)
+        ${{ if ne(parameters.poolPriority, '') }}:
+          demands: Priority -equals ${{ parameters.poolPriority }}
 
     # Windows Server 2016
     windows2016Pool:
@@ -117,6 +149,8 @@ stages:
         image: $(windowsServer2016PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         image: $(windowsServer2016InternalPoolImage)
+      ${{ if ne(parameters.poolPriority, '') }}:
+        demands: Priority -equals ${{ parameters.poolPriority }}
 
     # Windows Server 2019 (1809)
     windows1809Pool:
@@ -126,6 +160,8 @@ stages:
         image: $(windowsServer2019PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         image: $(windowsServer2019InternalPoolImage)
+      ${{ if ne(parameters.poolPriority, '') }}:
+        demands: Priority -equals ${{ parameters.poolPriority }}
 
     # Windows Server 2022
     windows2022Pool:
@@ -135,6 +171,8 @@ stages:
         image: $(windowsServer2022PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         image: $(windowsServer2022InternalPoolImage)
+      ${{ if ne(parameters.poolPriority, '') }}:
+        demands: Priority -equals ${{ parameters.poolPriority }}
 
     # Windows Server 2025
     windows2025Pool:
@@ -144,3 +182,5 @@ stages:
         image: $(windowsServer2025PublicPoolImage)
       ${{ if eq(variables['System.TeamProject'], parameters.internalProjectName) }}:
         image: $(windowsServer2025InternalPoolImage)
+      ${{ if ne(parameters.poolPriority, '') }}:
+        demands: Priority -equals ${{ parameters.poolPriority }}
