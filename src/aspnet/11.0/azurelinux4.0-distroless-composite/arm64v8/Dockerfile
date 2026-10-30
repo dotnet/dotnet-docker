@@ -11,7 +11,7 @@ RUN dnf install -y \
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=11.0.0 \
-    && aspnetcore_build_version=$aspnetcore_version-rtm.26527.113 \
+    && aspnetcore_build_version=$aspnetcore_version-rtm.26529.110 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-arm64.tar.gz.sha512 \

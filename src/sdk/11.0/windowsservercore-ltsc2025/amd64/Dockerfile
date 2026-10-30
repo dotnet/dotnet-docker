@@ -26,7 +26,7 @@ RUN powershell -Command " `
         `
         # Retrieve .NET SDK
         $dotnet_sdk_version = '11.0.100'; `
-        $dotnet_sdk_build_version = $dotnet_sdk_version + '-rtm.26527.113'; `
+        $dotnet_sdk_build_version = $dotnet_sdk_version + '-rtm.26529.110'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `

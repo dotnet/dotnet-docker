@@ -4,7 +4,7 @@ FROM $REPO:11.0.0-alpine3.24-arm64v8 AS installer
 
 # Install .NET SDK
 RUN dotnet_sdk_version=11.0.100 \
-    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.26527.113 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.26529.110 \
     && wget \
         https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz \
         https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-arm64.tar.gz.sha512 \
