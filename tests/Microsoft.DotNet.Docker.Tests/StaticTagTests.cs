@@ -220,6 +220,64 @@ public class StaticTagTests
                 architecture: checkArchitecture ? info.ArchitectureDir : null);
     }
 
+    [Theory]
+    [InlineData("composite")]
+    [InlineData("composite-extra")]
+    public void FloatingAlpineCompositeTag_OnLatestVersion(string variant)
+    {
+        Repo repo = GetManifest().Repos.Single(repo => repo.Id == "aspnet");
+        List<DockerfileInfo> dockerfiles = GetDockerfileTags(repo).Keys.ToList();
+        string floatingOs = $"{OS.Alpine}-{variant}";
+        string architectures = string.Join("|", dockerfiles
+            .Select(info => Regex.Escape(info.ArchitectureDir))
+            .Distinct());
+        Regex sharedTagPattern = GetTagRegex(VersionType.MajorMinor, productVersion: null, floatingOs, architecture: null);
+        Regex platformTagPattern = GetTagRegex(VersionType.MajorMinor, productVersion: null, floatingOs, $"(?:{architectures})");
+
+        IEnumerable<DockerfileInfo> compositeDockerfiles = dockerfiles
+            .Where(info => info.OsDir.StartsWith(OS.Alpine, StringComparison.Ordinal) &&
+                info.OsDir.EndsWith($"-{variant}", StringComparison.Ordinal));
+
+        using (new AssertionScope())
+        {
+            compositeDockerfiles.Should().NotBeEmpty($"ASP.NET should have Alpine {variant} images");
+
+            foreach (IGrouping<(string VersionDir, string ArchitectureDir), DockerfileInfo> group in
+                compositeDockerfiles.GroupBy(info => (info.VersionDir, info.ArchitectureDir)))
+            {
+                string expectedOsDir = $"{Config.GetVariableValue($"alpine|{group.Key.VersionDir}|floating-tag-version")}-{variant}";
+                group.Should().ContainSingle(info => info.OsDir == expectedOsDir,
+                    because: $"ASP.NET {group.Key.VersionDir} {group.Key.ArchitectureDir} should have an image for {expectedOsDir}");
+            }
+
+            foreach (DockerfileInfo info in dockerfiles)
+            {
+                string expectedOsDir = $"{Config.GetVariableValue($"alpine|{info.VersionDir}|floating-tag-version")}-{variant}";
+                string expectedSharedTag = $"{Config.GetVariableValue($"dotnet|{info.VersionDir}|minor-tag")}-{floatingOs}";
+                string expectedPlatformTag = $"{expectedSharedTag}-{info.ArchitectureDir}";
+                List<string> sharedTags = GetResolvedSharedTags(info.Image)
+                    .Where(tag => sharedTagPattern.IsMatch(tag) || platformTagPattern.IsMatch(tag))
+                    .ToList();
+                List<string> platformTags = info.Platform.GetResolvedTags()
+                    .Where(tag => sharedTagPattern.IsMatch(tag) || platformTagPattern.IsMatch(tag))
+                    .ToList();
+
+                if (info.OsDir == expectedOsDir)
+                {
+                    sharedTags.Should().Equal([expectedSharedTag],
+                        because: $"image {info} should have exactly its shared Alpine {variant} floating tag");
+                    platformTags.Should().Equal([expectedPlatformTag],
+                        because: $"image {info} should have exactly its architecture-specific Alpine {variant} floating tag");
+                }
+                else
+                {
+                    sharedTags.Should().BeEmpty($"image {info} should not have an Alpine {variant} floating tag");
+                    platformTags.Should().BeEmpty($"image {info} should not have an Alpine {variant} floating tag");
+                }
+            }
+        }
+    }
+
     // - <Major.Minor.Patch>
     // - <Major.Minor>
     // - <Major>                                                Appliance repos only
