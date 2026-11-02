@@ -10,7 +10,7 @@ RUN dnf install -y \
 
 # Retrieve .NET Runtime
 RUN dotnet_version=11.0.0 \
-    && dotnet_build_version=$dotnet_version-rtm.26529.110 \
+    && dotnet_build_version=$dotnet_version-rtm.26531.101 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-x64.tar.gz.sha512 \
