@@ -2,6 +2,9 @@ parameters:
 - name: dependencyName
   type: string
   default: ""
+- name: poolPriority
+  type: string
+  default: ""
 - name: updateSteps
   type: stepList
   default: []
@@ -13,6 +16,8 @@ jobs:
     name: $(default1ESInternalPoolName)
     image: $(default1ESInternalPoolImage)
     os: linux
+    ${{ if ne(parameters.poolPriority, '') }}:
+      demands: Priority -equals ${{ parameters.poolPriority }}
   steps:
   - checkout: self
     fetchDepth: 0

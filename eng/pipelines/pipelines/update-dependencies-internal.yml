@@ -20,6 +20,10 @@ parameters:
   type: string
   default: ""
 
+- name: poolPriority
+  type: string
+  default: ""
+
 extends:
   template: /eng/docker-tools/templates/1es.yml@self
   parameters:
@@ -31,6 +35,7 @@ extends:
       - template: /eng/pipelines/jobs/update-dependency.yml@self
         parameters:
           dependencyName: dotnet
+          poolPriority: ${{ parameters.poolPriority }}
           updateSteps:
           - ${{ if eq(parameters.stageContainers, '') }}:
             - "stageContainers parameter must not be empty.": error
