@@ -16,7 +16,7 @@ public sealed class MonitorUpdaterTests
     [InlineData("9.0.5", "9.0.5")]
     public async Task Version_WritesBuildVersionAndProductTag(string version, string productVersion)
     {
-        var variables = new ManifestVariables("""
+        ManifestVariables variables = new ManifestVariables("""
             {
                 "variables": {
                     "branch": "nightly",
@@ -25,8 +25,8 @@ public sealed class MonitorUpdaterTests
                 }
             }
             """);
-        using var httpClient = new HttpClient();
-        var updater = CreateUpdater(httpClient);
+        using HttpClient httpClient = new HttpClient();
+        MonitorUpdater updater = CreateUpdater(httpClient);
 
         DependencyUpdate update = updater.ResolveFromVersion(version);
         await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
@@ -38,7 +38,7 @@ public sealed class MonitorUpdaterTests
     [Fact]
     public async Task Version_PreservesAliasesAndOtherVersionChecksums()
     {
-        var variables = new ManifestVariables("""
+        ManifestVariables variables = new ManifestVariables("""
             {
                 "variables": {
                     "branch": "nightly",
@@ -50,8 +50,8 @@ public sealed class MonitorUpdaterTests
                 }
             }
             """);
-        using var httpClient = new HttpClient();
-        var updater = CreateUpdater(httpClient);
+        using HttpClient httpClient = new HttpClient();
+        MonitorUpdater updater = CreateUpdater(httpClient);
 
         DependencyUpdate update = updater.ResolveFromVersion("9.0.5");
         await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);

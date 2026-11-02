@@ -2,7 +2,6 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.CommandLine;
-using Maestro.Common;
 using Maestro.Common.Telemetry;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.DarcLib.Helpers;
@@ -19,7 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using AzureDevOpsClient = Microsoft.DotNet.DarcLib.AzureDevOpsClient;
 
-var builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(new HostApplicationBuilderSettings
 {
     ContentRootPath = AppContext.BaseDirectory,
 });
@@ -31,7 +30,7 @@ builder.Logging.AddSimpleConsole(options =>
     options.SingleLine = false;
 });
 
-var configuration = builder.Configuration
+UpdateDependenciesConfiguration configuration = builder.Configuration
     .GetRequiredSection("UpdateDependencies")
     .Get<UpdateDependenciesConfiguration>()
         ?? throw new InvalidOperationException("Failed to bind UpdateDependencies configuration.");
@@ -49,8 +48,8 @@ services.AddTransient<IFileSystem, FileSystem>();
 // Auth services needed for DarcLib remote git operations
 services.AddSingleton<IRemoteTokenProvider>(sp =>
 {
-    var azdoTokenProvider = sp.GetRequiredService<IAzureDevOpsTokenProvider>();
-    var gitHubTokenProvider = new ResolvedTokenProvider(configuration.GitHub.Token);
+    IAzureDevOpsTokenProvider azdoTokenProvider = sp.GetRequiredService<IAzureDevOpsTokenProvider>();
+    ResolvedTokenProvider gitHubTokenProvider = new ResolvedTokenProvider(configuration.GitHub.Token);
     return new RemoteTokenProvider(
         azdoTokenProvider: azdoTokenProvider,
         gitHubTokenProvider: gitHubTokenProvider);
@@ -72,7 +71,7 @@ services.AddSingleton<IRemoteGitRepoFactory, RemoteGitRepoFactory>();
 // Process-based git client
 services.AddSingleton<ILocalGitClient, LocalGitClient>();
 // LocalGitClient wants a non-generic ILogger, for some reason.
-services.AddSingleton<ILogger>(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
+services.AddSingleton(sp => sp.GetRequiredService<ILoggerFactory>().CreateLogger(nameof(LocalGitClient)));
 // Git repo cloner that calls out to the `git` executable. It is lighter on memory
 // than the LibGit2Sharp-based implementation.
 services.AddSingleton<IGitRepoCloner, GitNativeRepoCloner>();
@@ -98,8 +97,8 @@ services.AddSingleton<IInternalVersionsService, InternalVersionsService>();
 
 services.AddSingleton(_ =>
 {
-    var productHeader = new Octokit.ProductHeaderValue("dotnet-docker-update-dependencies");
-    var client = new Octokit.GitHubClient(productHeader);
+    Octokit.ProductHeaderValue productHeader = new Octokit.ProductHeaderValue("dotnet-docker-update-dependencies");
+    Octokit.GitHubClient client = new Octokit.GitHubClient(productHeader);
     if (!string.IsNullOrWhiteSpace(configuration.GitHub.Token))
     {
         client.Credentials = new Octokit.Credentials(configuration.GitHub.Token);
@@ -127,7 +126,7 @@ services.AddSingleton<SyncInternalReleaseCommand>();
 
 using IHost host = builder.Build();
 
-var rootCommand = new RootCommand("Update dotnet-docker dependencies")
+RootCommand rootCommand = new RootCommand("Update dotnet-docker dependencies")
 {
     DependencyCommand.CreateCliCommand<AspireUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<ChiselUpdater>(host.Services),

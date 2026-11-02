@@ -23,13 +23,13 @@
     "alpine|9.0|floating-tag-version": "$(alpine|floating-tag-version)",
     "alpine|8.0|floating-tag-version": "$(alpine|floating-tag-version)",
 
-    "aspire-dashboard|build-version": "17.0.0-preview.1.26520.10",
+    "aspire-dashboard|build-version": "17.0.0-preview.1.26552.1",
     "aspire-dashboard|product-version": "17.0.0",
     "aspire-dashboard|fixed-tag": "17.0.0",
     "aspire-dashboard|minor-tag": "17.0",
     "aspire-dashboard|major-tag": "17",
-    "aspire-dashboard|linux|x64|sha": "db1ea8601ee4b5a21316d67528313ba4fe48de3c11ffd806edd180474df8b1eae572d00aa164ed2400b4c5660b056da11e6f82b353b5eb4103846fe72bb17f9d",
-    "aspire-dashboard|linux|arm64|sha": "10bd16277eff481717f9ca81811a3ab0fda02ccbd44cc938819e7191d57e6a84f0557bf8568e0ad1990c15440f845d4ba034bdd0665e2b2fe7122eeaaf0ea27b",
+    "aspire-dashboard|linux|x64|sha": "9a43d6cf0d10d4a45fb4c95b41d0b006f3f888f5a665be634b391da746dc2f01fe7db369f85e8e18462f31ae2c94511e56f06d26f35edacd3972caebfdba9ac3",
+    "aspire-dashboard|linux|arm64|sha": "697b64a1ba23effa0cb373cbc4e473b9b43448b6c96a5a481c07d3142ef1c9bff2cbd1389623ddcdd666b3e74a8d7195c1909f2cbda2bdb2aee844d2f8938939",
     "aspire-dashboard|base-url|main": "$(base-url|public|preview|nightly)",
     "aspire-dashboard|base-url|nightly": "$(base-url|public|preview|nightly)",
 
@@ -129,8 +129,8 @@
     "libssl|noble": "3t64",
     "libssl|resolute": "3t64",
 
-    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.3/MinGit-2.56.0.3-64-bit.zip",
-    "mingit|latest|x64|sha": "2e5619966e588fde5f8122c5557cad50c0fbafcaed736689f40ec1dfb1d78ea7",
+    "mingit|latest|x64|url": "https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.4/MinGit-2.56.0.4-64-bit.zip",
+    "mingit|latest|x64|sha": "e3bf78351fe777fba47ddee5950082f8a98bb0f02604fdc7ba3ee2cb68ffa877",
     "mingit|8.0|x64|url": "$(mingit|latest|x64|url)",
     "mingit|8.0|x64|sha": "$(mingit|latest|x64|sha)",
     "mingit|9.0|x64|url": "$(mingit|latest|x64|url)",
@@ -170,7 +170,7 @@
     "monitor-ext-s3storage|9.0|linux|x64|sha": "0ac83d2d95b575c4f891a1190fc92d4dc5d53203fd50a55ab081d9e0652d5ce11a743cd81dea94f8c96acdc2614b2627009b8f0ffb16ae708061cbf8ed27e1ad",
     "monitor-ext-s3storage|9.0|linux|arm64|sha": "08a3a4613c3095d1980938ac0ea6a6dc743ce169b9ba9ac861715252b7bd45d1b3027fdfc30fc8d9c5948e56ef34f53c3c6eed9dea3271c2635867a2064ad5fc",
 
-    "monitor|10.0|build-version": "10.0.6-preview.1.26518.1",
+    "monitor|10.0|build-version": "10.0.6-preview.1.26551.2",
     "monitor|10.0|product-version": "10.0.6-preview.1",
     "monitor|10.0|fixed-tag": "$(monitor|10.0|product-version)",
     "monitor|10.0|minor-tag": "10.0",

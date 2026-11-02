@@ -1,221 +1,217 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
-// See the LICENSE file in the project root for more information.
 
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace Microsoft.DotNet.Docker.Tests
+namespace Microsoft.DotNet.Docker.Tests;
+
+public record ProductImageData : ImageData
 {
-    public record ProductImageData : ImageData
+    private OSInfo _sdkOS;
+    private ImageVersion? _versionFamily;
+
+    public bool HasCustomSdk => _sdkOS is not null;
+
+    public bool GlobalizationInvariantMode => !SupportsGlobalization;
+
+    // PowerShell does not support Arm-based Alpine
+    public bool SupportsPowerShell => !(OS.Family == OSFamily.Alpine && IsArm);
+
+    /// <summary>
+    /// Indicates whether the SDK version of the image supports `dnx` and
+    /// should have it installed.
+    /// </summary>
+    public bool SupportsDnx => VersionFamily != ImageVersion.V8_0 && VersionFamily != ImageVersion.V9_0;
+
+    public OSInfo SdkOS
     {
-        private OSInfo _sdkOS;
-        private string _osTag;
-        private string _osDir;
-        private ImageVersion? _versionFamily;
-
-        public bool HasCustomSdk => _sdkOS is not null;
-
-        public bool GlobalizationInvariantMode => !SupportsGlobalization;
-
-        // PowerShell does not support Arm-based Alpine
-        public bool SupportsPowerShell => !(OS.Family == OSFamily.Alpine && IsArm);
-
-        /// <summary>
-        /// Indicates whether the SDK version of the image supports `dnx` and
-        /// should have it installed.
-        /// </summary>
-        public bool SupportsDnx => VersionFamily != ImageVersion.V8_0 && VersionFamily != ImageVersion.V9_0;
-
-        public OSInfo SdkOS
-        {
-            get => HasCustomSdk ? _sdkOS : OS;
-            init => _sdkOS = value;
-        }
-
-        public DotNetImageVariant SdkImageVariant { get; init; } = DotNetImageVariant.None;
-
-        public string OSTag
-        {
-            get => _osTag ?? OS;
-            init => _osTag = value;
-        }
-
-        public string OSDir
-        {
-            get => _osDir ?? OSTag;
-            init => _osDir = value;
-        }
-
-        public ImageVersion Version { get; init; }
-
-        public ImageVersion VersionFamily
-        {
-            get { return _versionFamily.GetValueOrDefault(Version); }
-            init { _versionFamily = value; }
-        }
-
-        public DotNetImageVariant ImageVariant { get; init;}
-
-        public DotNetImageRepo SupportedImageRepos { get; init; } = DotNetImageRepo.Runtime_Deps
-                                                                    | DotNetImageRepo.Runtime
-                                                                    | DotNetImageRepo.Aspnet
-                                                                    | DotNetImageRepo.SDK;
-
-        public string VersionString => Version.ToString();
-
-        private bool SupportsGlobalization
-        {
-            get
-            {
-                bool isSizeFocusedImage = IsDistroless || OS.Family == OSFamily.Alpine;
-                return ImageVariant.HasFlag(DotNetImageVariant.Extra) || !isSizeFocusedImage;
-            }
-        }
-
-        public string GetDockerfilePath(DotNetImageRepo imageRepo)
-        {
-            // Aspire Dashboard Dockerfiles are not organized by product version or OS.
-            if (imageRepo == DotNetImageRepo.Aspire_Dashboard)
-            {
-                return $"{GetRepoSrcPath(imageRepo)}/{GetArchLabel()}";
-            }
-
-            IEnumerable<string> pathComponents =
-            [
-                GetRepoSrcPath(imageRepo),
-                Version.ToString(),
-                OSDir + GetVariantSuffix(),
-                GetArchLabel()
-            ];
-
-            // Don't use Path.Join since it will use Windows path separators when run locally.
-            return string.Join('/', pathComponents);
-        }
-
-        private string GetVariantSuffix() =>
-            ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
-
-        public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
-
-        public static string GetRepoName(DotNetImageRepo imageRepo) => imageRepo switch
-        {
-            DotNetImageRepo.Monitor_Base => "monitor/base",
-            _ => Enum.GetName(imageRepo).ToLowerInvariant().Replace('_', '-')
-        };
-
-        private static string GetRepoSrcPath(DotNetImageRepo imageRepo) => "src/" + imageRepo switch
-        {
-            DotNetImageRepo.Monitor_Base => "monitor-base",
-            _ => GetRepoName(imageRepo)
-        };
-
-        public static string GetImageVariantName(DotNetImageVariant imageVariant)
-        {
-            IEnumerable<string> imageVariants = [];
-            foreach (DotNetImageVariant enumValue in Enum.GetValues(typeof(DotNetImageVariant)))
-            {
-                if (enumValue != DotNetImageVariant.None && imageVariant.HasFlag(enumValue))
-                {
-                    imageVariants = imageVariants.Append(Enum.GetName(typeof(DotNetImageVariant), enumValue).ToLowerInvariant());
-                }
-            }
-            return string.Join('-', imageVariants);
-        }
-
-        public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper, bool skipPull = false)
-        {
-            // ASP.NET composite includes its own runtime that we want to test.
-            if (ImageVariant.HasFlag(DotNetImageVariant.Composite) && imageRepo == DotNetImageRepo.Runtime)
-            {
-                imageRepo = DotNetImageRepo.Aspnet;
-            }
-
-            if (imageRepo != DotNetImageRepo.SDK && !SupportedImageRepos.HasFlag(imageRepo))
-            {
-                throw new ArgumentOutOfRangeException(nameof(imageRepo),
-                    $"Unsupported image type '{imageRepo}' for Image Variant '{ImageVariant}'");
-            }
-
-            string tag = GetTagName(imageRepo);
-            string imageName = GetImageName(tag, GetRepoName(imageRepo));
-
-            if (!skipPull)
-            {
-                // Pull the image to ensure it exists
-                PullImageIfNecessary(imageName, dockerHelper);
-            }
-
-            return imageName;
-        }
-
-        public string GetProductVersion(DotNetImageRepo imageRepoToUse, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
-        {
-            string imageName = GetImage(imageRepoToUse, dockerHelper);
-            return GetProductVersion(imageName, productVersionRepo, dockerHelper);
-        }
-
-        public string GetProductVersion(string imageName, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
-        {
-            string containerName = GetIdentifier($"GetProductVersion-{productVersionRepo}");
-
-            return productVersionRepo switch
-            {
-                DotNetImageRepo.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
-                DotNetImageRepo.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
-                DotNetImageRepo.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
-                _ => throw new NotSupportedException($"Unsupported image type '{productVersionRepo}'"),
-            };
-        }
-
-        private string GetRuntimeVersion(string imageName, string containerName, string runtimeName, DockerHelper dockerHelper)
-        {
-            const string versionGroupName = "Version";
-
-            string runtimeListing = dockerHelper.Run(imageName, containerName, FormatDotnetCommand("--list-runtimes"));
-            Regex versionRegex = new Regex($"{runtimeName} (?<{versionGroupName}>[^\\s]+) ");
-            Match match = versionRegex.Match(runtimeListing);
-            return match.Success ? match.Groups[versionGroupName].Value : string.Empty;
-        }
-
-        private string FormatDotnetCommand(string command)
-        {
-            // For distroless, dotnet will be the default entrypoint so we don't need to specify "dotnet" in the command.
-            // See https://github.com/dotnet/dotnet-docker/issues/3866
-            if (IsDistroless)
-            {
-                return command;
-            }
-
-            return $"dotnet {command}";
-        }
-
-        private string GetTagName(DotNetImageRepo imageRepo)
-        {
-            ImageVersion imageVersion;
-            string os;
-            string variant = ImageRepoIsSupported(imageRepo) && ImageVariant != DotNetImageVariant.None
-                ? GetImageVariantName(ImageVariant)
-                : "";
-
-            switch (imageRepo)
-            {
-                case DotNetImageRepo.SDK:
-                    imageVersion = Version;
-                    os = SdkOS;
-                    variant = GetImageVariantName(SdkImageVariant);
-                    break;
-                default:
-                    imageVersion = Version;
-                    os = OSTag;
-                    break;
-            }
-
-            return GetTagName(imageVersion.GetTagName(), os, variant);
-        }
-
-        public bool ImageRepoIsSupported(DotNetImageRepo imageRepo) => SupportedImageRepos.HasFlag(imageRepo);
+        get => HasCustomSdk ? _sdkOS : OS;
+        init => _sdkOS = value;
     }
+
+    public DotNetImageVariant SdkImageVariant { get; init; } = DotNetImageVariant.None;
+
+    public string OSTag
+    {
+        get => field ?? OS;
+        init;
+    }
+
+    public string OSDir
+    {
+        get => field ?? OSTag;
+        init;
+    }
+
+    public ImageVersion Version { get; init; }
+
+    public ImageVersion VersionFamily
+    {
+        get => _versionFamily.GetValueOrDefault(Version); init => _versionFamily = value;
+    }
+
+    public DotNetImageVariant ImageVariant { get; init; }
+
+    public DotNetImageRepo SupportedImageRepos { get; init; } = DotNetImageRepo.Runtime_Deps
+                                                                | DotNetImageRepo.Runtime
+                                                                | DotNetImageRepo.Aspnet
+                                                                | DotNetImageRepo.SDK;
+
+    public string VersionString => Version.ToString();
+
+    private bool SupportsGlobalization
+    {
+        get
+        {
+            bool isSizeFocusedImage = IsDistroless || OS.Family == OSFamily.Alpine;
+            return ImageVariant.HasFlag(DotNetImageVariant.Extra) || !isSizeFocusedImage;
+        }
+    }
+
+    public string GetDockerfilePath(DotNetImageRepo imageRepo)
+    {
+        // Aspire Dashboard Dockerfiles are not organized by product version or OS.
+        if (imageRepo == DotNetImageRepo.Aspire_Dashboard)
+        {
+            return $"{GetRepoSrcPath(imageRepo)}/{GetArchLabel()}";
+        }
+
+        IEnumerable<string> pathComponents =
+        [
+            GetRepoSrcPath(imageRepo),
+            Version.ToString(),
+            OSDir + GetVariantSuffix(),
+            GetArchLabel()
+        ];
+
+        // Don't use Path.Join since it will use Windows path separators when run locally.
+        return string.Join('/', pathComponents);
+    }
+
+    private string GetVariantSuffix() =>
+        ImageVariant == DotNetImageVariant.None ? "" : $"-{GetImageVariantName(ImageVariant)}";
+
+    public override string GetIdentifier(string type) => $"{VersionString}-{base.GetIdentifier(type)}";
+
+    public static string GetRepoName(DotNetImageRepo imageRepo) => imageRepo switch
+    {
+        DotNetImageRepo.Monitor_Base => "monitor/base",
+        _ => Enum.GetName(imageRepo).ToLowerInvariant().Replace('_', '-')
+    };
+
+    private static string GetRepoSrcPath(DotNetImageRepo imageRepo) => "src/" + imageRepo switch
+    {
+        DotNetImageRepo.Monitor_Base => "monitor-base",
+        _ => GetRepoName(imageRepo)
+    };
+
+    public static string GetImageVariantName(DotNetImageVariant imageVariant)
+    {
+        IEnumerable<string> imageVariants = [];
+        foreach (DotNetImageVariant enumValue in Enum.GetValues<DotNetImageVariant>())
+        {
+            if (enumValue != DotNetImageVariant.None && imageVariant.HasFlag(enumValue))
+            {
+                imageVariants = imageVariants.Append(Enum.GetName(enumValue).ToLowerInvariant());
+            }
+        }
+
+        return string.Join('-', imageVariants);
+    }
+
+    public string GetImage(DotNetImageRepo imageRepo, DockerHelper dockerHelper, bool skipPull = false)
+    {
+        // ASP.NET composite includes its own runtime that we want to test.
+        if (ImageVariant.HasFlag(DotNetImageVariant.Composite) && imageRepo == DotNetImageRepo.Runtime)
+        {
+            imageRepo = DotNetImageRepo.Aspnet;
+        }
+
+        if (imageRepo != DotNetImageRepo.SDK && !SupportedImageRepos.HasFlag(imageRepo))
+        {
+            throw new ArgumentOutOfRangeException(nameof(imageRepo),
+                $"Unsupported image type '{imageRepo}' for Image Variant '{ImageVariant}'");
+        }
+
+        string tag = GetTagName(imageRepo);
+        string imageName = GetImageName(tag, GetRepoName(imageRepo));
+
+        if (!skipPull)
+        {
+            // Pull the image to ensure it exists
+            PullImageIfNecessary(imageName, dockerHelper);
+        }
+
+        return imageName;
+    }
+
+    public string GetProductVersion(DotNetImageRepo imageRepoToUse, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
+    {
+        string imageName = GetImage(imageRepoToUse, dockerHelper);
+        return GetProductVersion(imageName, productVersionRepo, dockerHelper);
+    }
+
+    public string GetProductVersion(string imageName, DotNetImageRepo productVersionRepo, DockerHelper dockerHelper)
+    {
+        string containerName = GetIdentifier($"GetProductVersion-{productVersionRepo}");
+
+        return productVersionRepo switch
+        {
+            DotNetImageRepo.SDK => dockerHelper.Run(imageName, containerName, "dotnet --version"),
+            DotNetImageRepo.Runtime => GetRuntimeVersion(imageName, containerName, "Microsoft.NETCore.App", dockerHelper),
+            DotNetImageRepo.Aspnet => GetRuntimeVersion(imageName, containerName, "Microsoft.AspNetCore.App", dockerHelper),
+            _ => throw new NotSupportedException($"Unsupported image type '{productVersionRepo}'"),
+        };
+    }
+
+    private string GetRuntimeVersion(string imageName, string containerName, string runtimeName, DockerHelper dockerHelper)
+    {
+        const string versionGroupName = "Version";
+
+        string runtimeListing = dockerHelper.Run(imageName, containerName, FormatDotnetCommand("--list-runtimes"));
+        Regex versionRegex = new Regex($"{runtimeName} (?<{versionGroupName}>[^\\s]+) ");
+        Match match = versionRegex.Match(runtimeListing);
+        return match.Success ? match.Groups[versionGroupName].Value : string.Empty;
+    }
+
+    private string FormatDotnetCommand(string command)
+    {
+        // For distroless, dotnet will be the default entrypoint so we don't need to specify "dotnet" in the command.
+        // See https://github.com/dotnet/dotnet-docker/issues/3866
+        if (IsDistroless)
+        {
+            return command;
+        }
+
+        return $"dotnet {command}";
+    }
+
+    private string GetTagName(DotNetImageRepo imageRepo)
+    {
+        ImageVersion imageVersion;
+        string os;
+        string variant = ImageRepoIsSupported(imageRepo) && ImageVariant != DotNetImageVariant.None
+            ? GetImageVariantName(ImageVariant)
+            : "";
+
+        switch (imageRepo)
+        {
+            case DotNetImageRepo.SDK:
+                imageVersion = Version;
+                os = SdkOS;
+                variant = GetImageVariantName(SdkImageVariant);
+                break;
+            default:
+                imageVersion = Version;
+                os = OSTag;
+                break;
+        }
+
+        return GetTagName(imageVersion.GetTagName(), os, variant);
+    }
+
+    public bool ImageRepoIsSupported(DotNetImageRepo imageRepo) => SupportedImageRepos.HasFlag(imageRepo);
 }

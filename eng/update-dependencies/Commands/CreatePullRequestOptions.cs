@@ -12,22 +12,22 @@ public record CreatePullRequestOptions
     public string TargetBranch { get; set; } = "nightly";
     public bool SubmitPullRequest { get; set; }
 
-    private static readonly Option<string> s_repoRoot = new("--repo-root")
+    private static readonly Option<string> RepoRootOption = new("--repo-root")
     {
         Description = "The root of the dotnet-docker repo to run against (defaults to current working directory)",
         DefaultValueFactory = _ => Directory.GetCurrentDirectory(),
     };
-    private static readonly Option<bool> s_submitPullRequest = new("--submit-pr")
+    private static readonly Option<bool> SubmitPullRequestOption = new("--submit-pr")
     {
         Description = "Apply updates in a temporary clone and submit a pull request with them."
             + " By default, updates are applied to the local repo and no git operations are run.",
     };
-    private static readonly Option<string> s_sourceBranch = new("--source-branch")
+    private static readonly Option<string> SourceBranchOption = new("--source-branch")
     {
         Description = "Branch to pull updates from",
         DefaultValueFactory = _ => "",
     };
-    private static readonly Option<string> s_targetBranch = new("--target-branch")
+    private static readonly Option<string> TargetBranchOption = new("--target-branch")
     {
         Description = "Pull request will be submitted targeting this branch",
         DefaultValueFactory = _ => "nightly",
@@ -35,10 +35,10 @@ public record CreatePullRequestOptions
 
     public static void AddTo(Command command)
     {
-        command.Options.Add(s_repoRoot);
-        command.Options.Add(s_submitPullRequest);
-        command.Options.Add(s_sourceBranch);
-        command.Options.Add(s_targetBranch);
+        command.Options.Add(RepoRootOption);
+        command.Options.Add(SubmitPullRequestOption);
+        command.Options.Add(SourceBranchOption);
+        command.Options.Add(TargetBranchOption);
     }
 
     public static CreatePullRequestOptions Bind(ParseResult result) =>
@@ -47,17 +47,17 @@ public record CreatePullRequestOptions
     protected static TOptions Bind<TOptions>(ParseResult result, TOptions options)
         where TOptions : CreatePullRequestOptions
     {
-        options.RepoRoot = result.GetRequiredValue(s_repoRoot);
-        options.SubmitPullRequest = result.GetValue(s_submitPullRequest);
-        options.SourceBranch = result.GetRequiredValue(s_sourceBranch);
-        options.TargetBranch = result.GetRequiredValue(s_targetBranch);
+        options.RepoRoot = result.GetRequiredValue(RepoRootOption);
+        options.SubmitPullRequest = result.GetValue(SubmitPullRequestOption);
+        options.SourceBranch = result.GetRequiredValue(SourceBranchOption);
+        options.TargetBranch = result.GetRequiredValue(TargetBranchOption);
         return options;
     }
 
     public string CreatePullRequestBranchName(string name, string buildId = "")
     {
-        var buildIdSuffix = string.IsNullOrWhiteSpace(buildId) ? string.Empty : $"-{buildId}";
-        var sanitizedTargetBranch = TargetBranch.Replace('/', '-');
+        string buildIdSuffix = string.IsNullOrWhiteSpace(buildId) ? string.Empty : $"-{buildId}";
+        string sanitizedTargetBranch = TargetBranch.Replace('/', '-');
         return $"{sanitizedTargetBranch}/{name}{buildIdSuffix}";
     }
 }

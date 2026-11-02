@@ -1,6 +1,7 @@
 ﻿// Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Globalization;
 using System.Text;
 using System.Xml.Linq;
 using Microsoft.DotNet.Docker.Shared;
@@ -60,6 +61,7 @@ public static class NuGetConfigUpdater
             // Using the Save method preserves the XML declaration header. ToString doesn't do that.
             doc.Save(writer);
         }
+
         return builder.ToString();
     }
 
@@ -129,7 +131,7 @@ public static class NuGetConfigUpdater
     private static void RemoveAllInternalPackageSources(XElement packageSources)
     {
         IEnumerable<XElement> elements = packageSources.Elements()
-            .Where(pkgSrc => pkgSrc.Attribute("key")?.Value.EndsWith(PkgSrcSuffix) == true)
+            .Where(pkgSrc => pkgSrc.Attribute("key")?.Value.EndsWith(PkgSrcSuffix, StringComparison.Ordinal) == true)
             .ToList();
         foreach (XElement element in elements)
         {
@@ -176,13 +178,8 @@ public static class NuGetConfigUpdater
         return node;
     }
 
-    private class Utf8StringWriter : StringWriter
+    private class Utf8StringWriter(StringBuilder stringBuilder) : StringWriter(stringBuilder, CultureInfo.InvariantCulture)
     {
-        public Utf8StringWriter(StringBuilder stringBuilder)
-            : base(stringBuilder)
-        {
-        }
-
         public override Encoding Encoding => Encoding.UTF8;
     }
 }
