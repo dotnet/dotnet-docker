@@ -14,6 +14,10 @@ parameters:
 - name: sourceBuildPipelineRunId
   type: string
 
+- name: poolPriority
+  type: string
+  default: ""
+
 - name: noCache
   type: boolean
   default: false
@@ -47,6 +51,7 @@ stages:
     internalProjectName: ${{ parameters.internalProjectName }}
     publicProjectName: ${{ parameters.publicProjectName }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+    poolPriority: ${{ parameters.poolPriority }}
     noCache: ${{ parameters.noCache }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}
     storageAccountServiceConnection: ${{ parameters.storageAccountServiceConnection }}
