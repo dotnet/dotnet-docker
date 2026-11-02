@@ -26,6 +26,10 @@ parameters:
   type: boolean
   default: false
 
+- name: poolPriority
+  type: string
+  default: ""
+
 # Additional service connections needed by this pipeline that are not included
 # in the publishConfig.
 - name: additionalServiceConnections
@@ -41,6 +45,7 @@ stages:
     versionsRepoRef: ${{ parameters.versionsRepoRef }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     noCache: ${{ parameters.noCache }}
+    poolPriority: ${{ parameters.poolPriority }}
 
 - template: /eng/pipelines/stages/publish.yml@self
   parameters:
@@ -50,3 +55,4 @@ stages:
     versionsRepoRef: ${{ parameters.versionsRepoRef }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     additionalServiceConnections: ${{ parameters.additionalServiceConnections }}
+    poolPriority: ${{ parameters.poolPriority }}
