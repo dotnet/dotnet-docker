@@ -17,6 +17,10 @@ parameters:
 - name: targetBranch
   type: string
 
+- name: poolPriority
+  type: string
+  default: ""
+
 extends:
   template: /eng/docker-tools/templates/1es.yml@self
   parameters:
@@ -31,6 +35,8 @@ extends:
           name: $(default1ESInternalPoolName)
           image: $(default1ESInternalPoolImage)
           os: linux
+          ${{ if ne(parameters.poolPriority, '') }}:
+            demands: Priority -equals ${{ parameters.poolPriority }}
 
         steps:
         - checkout: self
