@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Branch manager</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="toolbar">
+    <h1 class="title">Branch manager</h1>
+    <span id="repo-name" class="muted"></span>
+    <span id="status" class="status muted" role="status"></span>
+    <div class="spacer"></div>
+    <button id="add-branch" class="btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="branch-popover">Add branch</button>
+    <button id="refresh" class="btn" type="button">Refresh</button>
+    <button id="port" class="btn" type="button" disabled>Port to…</button>
+    <button id="unlink" class="btn" type="button" disabled>Unlink</button>
+    <button id="link" class="btn primary" type="button" disabled>Link changes</button>
+  </header>
+
+  <main id="scroller" class="scroller">
+    <div id="board" class="board" aria-live="polite"></div>
+    <div id="footer" class="footer"></div>
+  </main>
+
+  <div id="branch-popover" class="popover" role="dialog" aria-labelledby="picker-title" hidden>
+    <div id="picker-title" class="picker-title"></div>
+    <input id="branch-filter" class="filter" type="search" placeholder="Filter branches" aria-label="Filter branches" autocomplete="off">
+    <ul id="branch-list" class="branch-list"></ul>
+  </div>
+
+  <dialog id="port-dialog" class="dialog" aria-labelledby="port-title">
+    <header class="dialog-head">
+      <div>
+        <h2 id="port-title" class="dialog-title">Port changes</h2>
+        <p class="muted dialog-sub">Review what will be ported and edit the prompt. Nothing is sent until you confirm.</p>
+      </div>
+      <button id="port-close" class="icon-btn" type="button" aria-label="Close">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>
+      </button>
+    </header>
+
+    <div class="dialog-body">
+      <div class="field">
+        <label for="port-target">Port to branch</label>
+        <select id="port-target" class="select"></select>
+      </div>
+
+      <p id="port-notice" class="notice" hidden></p>
+
+      <fieldset class="field">
+        <legend id="port-items-label">Changes</legend>
+        <ul id="port-items" class="port-items"></ul>
+      </fieldset>
+
+      <div class="field">
+        <div class="field-row">
+          <label for="port-prompt">Prompt for Copilot</label>
+          <button id="port-regenerate" class="text-btn" type="button" hidden>Regenerate from the changes above</button>
+        </div>
+        <textarea id="port-prompt" class="prompt" rows="14" spellcheck="false"></textarea>
+        <p id="port-prompt-note" class="muted hint" hidden></p>
+        <p id="port-error" class="notice error" role="alert" hidden></p>
+      </div>
+    </div>
+
+    <footer class="dialog-foot">
+      <span id="port-summary" class="muted"></span>
+      <button id="port-cancel" class="btn" type="button">Cancel</button>
+      <button id="port-send" class="btn primary" type="button" disabled>Send to Copilot</button>
+    </footer>
+  </dialog>
+
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
