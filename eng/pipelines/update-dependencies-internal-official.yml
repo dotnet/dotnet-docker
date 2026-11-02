@@ -24,3 +24,4 @@ extends:
     stagingStorageAccount: "dotnetstage"
     targetBranch: "$(targetBranch)"
     gitServiceConnectionName: "$(updateDepsInt.serviceConnectionName)"
+    poolPriority: High
