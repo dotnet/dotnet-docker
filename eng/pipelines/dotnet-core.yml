@@ -48,6 +48,7 @@ extends:
         stagesTemplateParameters:
           versionsRepoRef: VersionsRepo
           sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
+          poolPriority: High
           noCache: ${{ parameters.noCache }}
           additionalServiceConnections:
           - name: $(kusto.serviceConnectionName)
