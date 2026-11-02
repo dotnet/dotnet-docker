@@ -55,6 +55,7 @@ extends:
         stagesTemplate: /eng/pipelines/stages/build-and-test.yml@self
         stagesTemplateParameters:
           isStandaloneBuild: true
+          poolPriority: High
           versionsRepoRef: VersionsRepo
           sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
           noCache: ${{ parameters.noCache }}
