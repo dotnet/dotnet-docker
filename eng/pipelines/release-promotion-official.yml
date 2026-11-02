@@ -34,6 +34,7 @@ extends:
         stagesTemplate: /eng/pipelines/stages/publish.yml@self
         stagesTemplateParameters:
           versionsRepoRef: VersionsRepo
+          poolPriority: High
           isStandalonePublish: true
           # Whenever staged images are published, we need to override the commit SHA since they were
           # staged from an earlier, internal commit. We want the image info's commit URLs to point to
