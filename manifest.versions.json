@@ -284,7 +284,7 @@
     "sdk|11.0|minor-tag": "$(dotnet|11.0|minor-tag)",
 
     "syft|repo": "anchore/syft",
-    "syft|version": "v1.55.0",
+    "syft|version": "v1.56.0",
     "syft|tag": "$(syft|version)-debug"
   }
 }
