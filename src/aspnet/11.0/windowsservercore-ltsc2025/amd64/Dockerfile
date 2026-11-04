@@ -11,7 +11,7 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $aspnetcore_version = '11.0.0'; `
-        $aspnetcore_build_version = $aspnetcore_version + '-rtm.26552.115'; `
+        $aspnetcore_build_version = $aspnetcore_version + '-rtm.26553.118'; `
         $aspnetcore_file = 'aspnetcore-runtime-' + $aspnetcore_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $aspnetcore_file + '.sha512'; `
         `
