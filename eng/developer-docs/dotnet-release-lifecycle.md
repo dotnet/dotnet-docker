@@ -48,8 +48,6 @@ Add due dates to each of the issues so that we don't lose track of them.
   - [ ] In [readme templates](https://github.com/dotnet/dotnet-docker/blob/main/eng/readme-templates/FeaturedTags.md):
     - [ ] Switch Featured Tags from "(Preview)" to "(Release Candidate)" in `nightly` branch
     - [ ] Add new .NET Version to Featured Tags as "(Release Candidate)" in `main` branch
-- [ ] Move .NET Docker projects to the new .NET version's TFM
-  - [Example issue](https://github.com/dotnet/docker-tools/issues/1181)
 - [ ] Update samples to new .NET version
   - Consider creating new samples to feature new .NET or .NET Docker features
   - [ ] Update documentation as necessary to reference the new .NET version
@@ -64,7 +62,6 @@ In this repo:
 
 - [ ] Move `latest` tags in `manifest.json` to the new version
 - [ ] Update documentation as necessary to reference the new .NET version
-- [ ] Update IIS sample URL to final version of `dotnet-hosting-win.exe` (remove "preview" from the URL): <https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/Dockerfile.windowsservercore-iis#L19>.
 - [ ] Remove suffix "(Release Candidate)" from Featured Tags and replace with "(Long-Term Support)" or "(Standard Support)"
 
 In other repos:
@@ -78,6 +75,14 @@ Create announcement:
 - [ ] Post a new announcement on the [GitHub Discussions page](https://github.com/dotnet/dotnet-docker/discussions/new?category=announcements) page and pin the announcement
   - Include new .NET Docker features and breaking changes and defer to other official .NET documentation/announcements for other features
   - [Example announcement](https://github.com/dotnet/dotnet-docker/discussions/4995)
+
+## Post-release
+
+Complete these tasks after the new .NET version is generally available.
+
+- [ ] Move .NET Docker engineering projects to the new .NET version's TFM
+  - [Example issue](https://github.com/dotnet/docker-tools/issues/1181)
+- [ ] Update IIS sample URL to final version of `dotnet-hosting-win.exe` (remove "preview" from the URL): <https://github.com/dotnet/dotnet-docker/blob/main/samples/AspNetCoreRazorApp/Dockerfile.windowsservercore-iis#L19>.
 
 ## EOL
 
