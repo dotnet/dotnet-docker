@@ -22,8 +22,7 @@ tags".
 * `latest`
 
 For .NET 11, version-only tags refer to Ubuntu 26.04 (Resolute). The `latest`
-tag follows the latest stable .NET release and does not necessarily refer to
-.NET 11 while it is in preview.
+tag follows the latest stable .NET release, currently .NET 11.
 
 For comparison, .NET 8 and .NET 9 version-only tags refer to Debian 12
 (Bookworm), and .NET 10 version-only tags refer to Ubuntu 24.04 (Noble).
