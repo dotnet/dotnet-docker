@@ -1,4 +1,4 @@
-import { escapeHtml } from "./util.js";
+import { escapeHtml, stripTitle } from "./util.js";
 
 const $ = (selector) => document.querySelector(selector);
 
@@ -21,12 +21,6 @@ function sourceRank(branches, target) {
         }),
     );
 }
-
-const stripTitle = (subject) =>
-    subject
-        .replace(/\s*\(#\d+\)\s*$/, "")
-        .replace(/^(?:\[[^\]]+\]\s*)+/, "")
-        .trim();
 
 /**
  * The versions of a change that can be ported to `target`: one per branch that has merged commits for it,
@@ -134,13 +128,40 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
     function syncUi() {
         const count = included().length;
         $("#port-items-label").textContent = `Changes to port (${count} of ${session.items.length})`;
-        $("#port-summary").textContent = count ? `${count} ${count === 1 ? "change" : "changes"} to ${session.target}` : "";
+        $("#port-summary").textContent = count
+            ? `${count} ${count === 1 ? "change" : "changes"} to ${session.target}`
+            : "Choose at least one change to port.";
         $("#port-regenerate").hidden = !session.dirty;
+        $("#port-restore").hidden = !session.backup || session.dirty;
         const note = $("#port-prompt-note");
         note.hidden = !session.stale;
         note.textContent = "The changes above were modified after you edited the prompt, so the prompt may be out of date.";
         sendButton.disabled = !count || session.generating || session.sending || !prompt.value.trim();
         sendButton.textContent = session.sending ? "Sending…" : "Send to Copilot";
+    }
+
+    /** What the generated prompt depends on, to tell whether a restored edit still matches the choices. */
+    const signature = () =>
+        JSON.stringify([session.target, included().map(({ row, choice }) => [row.id, choice.key])]);
+
+    /** Rebuilds the prompt from the choices, keeping the user's hand-edited text so it can be restored. */
+    function discardAndRegenerate() {
+        if (session.dirty) {
+            session.backup = { text: prompt.value, signature: signature() };
+        }
+        regenerate();
+    }
+
+    function restoreEdits() {
+        const { text, signature: saved } = session.backup;
+        session.sequence++;
+        session.backup = null;
+        session.generating = false;
+        session.dirty = true;
+        session.stale = saved !== signature();
+        prompt.value = text;
+        prompt.focus();
+        syncUi();
     }
 
     async function regenerate() {
@@ -202,7 +223,7 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
         const clicked = rowId ? board.rows.find((row) => row.id === rowId) : null;
         const rows = [...new Set([clicked, ...selectedRows].filter(Boolean))].filter((row) => !row.pending);
         if (!rows.length) {
-            toast("Open pull requests that haven't merged yet can't be ported.", "error");
+            toast("Open pull requests can't be ported until they merge. Select a merged change instead.", "error");
             return;
         }
 
@@ -215,7 +236,7 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
             return;
         }
 
-        session = { board, rows, branches, target: initial, choices: new Map(), items: [], sequence: 0, dirty: false, stale: false };
+        session = { board, rows, branches, target: initial, choices: new Map(), items: [], sequence: 0, dirty: false, stale: false, backup: null };
         targetSelect.innerHTML = branches
             .map((name) => `<option value="${escapeHtml(name)}" ${name === initial ? "selected" : ""}>${escapeHtml(name)}</option>`)
             .join("");
@@ -288,9 +309,11 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
 
     prompt.addEventListener("input", () => {
         session.dirty = true;
+        session.backup = null;
         syncUi();
     });
-    $("#port-regenerate").addEventListener("click", regenerate);
+    $("#port-regenerate").addEventListener("click", discardAndRegenerate);
+    $("#port-restore").addEventListener("click", restoreEdits);
     sendButton.addEventListener("click", send);
     $("#port-cancel").addEventListener("click", close);
     $("#port-close").addEventListener("click", close);

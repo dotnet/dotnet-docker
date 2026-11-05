@@ -13,6 +13,8 @@
   --dash: color-mix(in srgb, var(--fg) 30%, var(--bg));
   --danger: var(--true-color-red, #cf222e);
   --success: var(--true-color-green, #1a7f37);
+  /* Form field edges need 3:1 against their surroundings (WCAG 1.4.11); --border is only decorative. */
+  --field-border: color-mix(in srgb, var(--fg) 55%, var(--bg));
   --font: var(--font-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif);
   --mono: var(--font-mono, ui-monospace, SFMono-Regular, Consolas, monospace);
   --column-gap: 28px;
@@ -37,16 +39,31 @@ body {
 
 .muted { color: var(--muted); }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
 .toolbar {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  justify-content: space-between;
+  gap: 8px 16px;
   padding: 10px 16px;
   border-bottom: 1px solid var(--border);
 }
+.toolbar-info { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 12px; min-width: 0; }
+.toolbar-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 8px; }
 .toolbar .title { margin: 0; font-size: 15px; font-weight: 600; }
 .status { font-size: 12px; }
-.spacer { flex: 1; }
+.hint-inline { font-size: 12px; }
 
 .btn {
   font: inherit;
@@ -57,8 +74,8 @@ body {
   color: var(--fg);
   cursor: pointer;
 }
-.btn:hover:not(:disabled) { background: var(--hover); }
-.btn:disabled { opacity: 0.5; cursor: default; }
+.btn:hover:not(:disabled):not([aria-disabled="true"]) { background: var(--hover); }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.5; cursor: default; }
 .btn.primary { background: var(--accent); border-color: var(--accent); color: var(--color-white, #fff); }
 .btn.primary:hover:not(:disabled) { background: var(--accent); filter: brightness(1.1); }
 
@@ -78,7 +95,14 @@ body {
 .icon-btn[aria-pressed="true"] { background: var(--accent-soft); color: var(--accent); }
 .icon-btn svg { width: 14px; height: 14px; }
 
-.scroller { flex: 1; overflow: auto; padding: 0 16px 32px; background: var(--page); }
+.scroller {
+  flex: 1;
+  overflow: auto;
+  padding: 0 16px 32px;
+  background: var(--page);
+  /* Keeps a focused control from landing under the sticky column header (WCAG 2.4.11). */
+  scroll-padding-block-start: calc(var(--head-height, 56px) + 8px);
+}
 
 .board {
   --tracks: repeat(var(--cols, 1), minmax(var(--min-column), 1fr));
@@ -117,7 +141,8 @@ body {
   align-items: center;
   gap: 4px;
   min-width: 0;
-  padding: 12px 0 8px;
+  /* 7px + the button's 6px padding puts the branch name on the card content edge (1px border + 12px padding). */
+  padding: 12px 0 8px 7px;
 }
 .name-btn {
   display: flex;
@@ -126,7 +151,6 @@ body {
   gap: 4px;
   min-width: 0;
   padding: 2px 6px;
-  margin-left: -6px;
   border: 0;
   border-radius: 6px;
   background: transparent;
@@ -137,26 +161,25 @@ body {
 .name-btn svg { flex: none; width: 14px; height: 14px; color: var(--muted); }
 .col-head .name {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
+  text-align: start;
   font: 600 14px / 20px var(--mono);
 }
 .col-head .count { color: var(--muted); font-size: 12px; margin-right: 4px; }
-.col-head .warn { flex-basis: 100%; color: var(--danger); font-size: 12px; }
+.col-head .warn { flex-basis: 100%; padding-inline-start: 6px; color: var(--danger); font-size: 12px; }
 
 .day {
   position: relative;
   z-index: 2;
   display: flex;
   align-items: center;
-  gap: 8px;
   padding: 16px 0 6px;
   color: var(--muted);
   font-size: 12px;
 }
-.day span { background: var(--page); padding-right: 8px; }
-.day svg { width: 14px; height: 14px; }
+/* Each span carries the page background to mask the timeline behind it; flex centers the icon on the text. */
+.day span { display: flex; align-items: center; background: var(--page); padding-right: 8px; }
+.day svg { display: block; width: 14px; height: 14px; }
 
 .row { position: relative; z-index: 1; margin-bottom: 10px; }
 
@@ -190,7 +213,7 @@ body {
 .card-title a:hover { text-decoration: underline; }
 .card-title a.pr { color: var(--accent); font-weight: 400; }
 
-.meta { display: flex; flex-wrap: wrap; gap: 2px 10px; margin-top: 4px; color: var(--muted); font-size: 12px; }
+.meta { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; margin-top: 4px; color: var(--muted); font-size: 12px; }
 .meta .sha { font-family: var(--mono); }
 .meta a.sha { color: inherit; text-decoration: none; }
 .meta a.sha:hover { color: var(--accent); text-decoration: underline; }
@@ -198,16 +221,15 @@ body {
   padding: 0 7px;
   border: 1px solid var(--border);
   border-radius: 999px;
-  font-size: 11px;
-  line-height: 18px;
+  /* Same size and 22px box as .mini-btn, so chips and the Unlink button line up edge to edge. */
+  font-size: 12px;
+  line-height: 20px;
 }
 .chip.linked { color: var(--accent); border-color: color-mix(in srgb, var(--accent) 45%, var(--border)); }
 .chip.draft { color: var(--muted); }
 
+/* Plain inline content (not inline-flex) so the button has a text baseline and aligns with the rest of the meta row. */
 .mini-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
   margin-left: auto;
   padding: 0 8px;
   border: 1px solid var(--border);
@@ -218,7 +240,7 @@ body {
   line-height: 20px;
   cursor: pointer;
 }
-.mini-btn svg { width: 12px; height: 12px; }
+.mini-btn svg { display: inline-block; width: 12px; height: 12px; margin-inline-end: 4px; vertical-align: -2px; }
 .mini-btn:hover { background: var(--hover); }
 
 
@@ -251,8 +273,8 @@ body {
 .gap svg { width: 16px; height: 16px; }
 .gap:hover, .gap:focus-visible { border-color: var(--accent); color: var(--accent); background: color-mix(in srgb, var(--accent) 6%, var(--page)); }
 
-.empty, .loading, .error { grid-column: 1 / -1; padding: 48px 0; text-align: center; color: var(--muted); }
-.error { color: var(--danger); }
+.empty, .loading, .board-error { grid-column: 1 / -1; padding: 48px 0; text-align: center; color: var(--muted); }
+.board-error { color: var(--danger); }
 
 .footer { display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 24px 0 0; color: var(--muted); font-size: 12px; }
 
@@ -267,7 +289,7 @@ body {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
 }
 .picker-title { padding: 0 2px 6px; color: var(--muted); font-size: 12px; }
-.filter { width: 100%; padding: 5px 8px; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--border); border-radius: 6px; }
+.filter { width: 100%; padding: 5px 8px; font: inherit; color: var(--fg); background: var(--bg); border: 1px solid var(--field-border); border-radius: 6px; }
 .branch-list { list-style: none; margin: 8px 0 0; padding: 0; max-height: 280px; overflow: auto; }
 .branch-list button {
   display: block;
@@ -280,19 +302,26 @@ body {
   font: 13px / 18px var(--mono);
   text-align: left;
   cursor: pointer;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 .branch-list button:hover, .branch-list button:focus-visible { background: var(--hover); }
 .branch-list .hint { padding: 6px 8px; color: var(--muted); font-size: 12px; }
 
-.toast {
+.toasts {
   position: fixed;
   z-index: 20;
-  left: 50%;
+  inset-inline: 0;
   bottom: 20px;
-  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  pointer-events: none;
+}
+.toast {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   max-width: min(90vw, 560px);
   padding: 8px 14px;
   background: var(--fg);
@@ -300,8 +329,13 @@ body {
   border-radius: 8px;
   font-size: 13px;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+  pointer-events: auto;
 }
+/* Empty live regions stay in the page (so announcements work) but take no space. */
+.toast:empty { padding: 0; border: 0; box-shadow: none; background: transparent; }
 .toast[data-kind="error"] { background: var(--danger); color: var(--color-white, #fff); }
+.toast .text-btn { flex: none; color: inherit; font-size: 13px; text-decoration: underline; }
+.toast :focus-visible { outline-color: currentColor; }
 
 [hidden] { display: none !important; }
 
@@ -343,6 +377,7 @@ body {
 .dialog-body { flex: 1; display: flex; flex-direction: column; gap: 16px; padding: 16px 20px; overflow: auto; }
 .dialog-foot {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
@@ -354,12 +389,12 @@ body {
 
 .field { display: flex; flex-direction: column; gap: 6px; min-width: 0; margin: 0; padding: 0; border: 0; }
 .field > label, .field > legend, .field-row label { padding: 0; font-size: 13px; font-weight: 600; }
-.field-row { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; }
+.field-row { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 8px; }
 .select {
   align-self: flex-start;
   max-width: 100%;
   padding: 5px 8px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--field-border);
   border-radius: 6px;
   background: var(--bg);
   color: var(--fg);
@@ -369,7 +404,7 @@ body {
   width: 100%;
   min-height: 180px;
   padding: 10px 12px;
-  border: 1px solid var(--border);
+  border: 1px solid var(--field-border);
   border-radius: 8px;
   background: var(--page);
   color: var(--fg);
@@ -385,7 +420,7 @@ body {
   background: var(--page);
   font-size: 12px;
 }
-.notice.error { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 50%, var(--border)); }
+.notice-error { color: var(--danger); border-color: color-mix(in srgb, var(--danger) 50%, var(--border)); }
 
 .port-items {
   display: flex;
@@ -401,17 +436,17 @@ body {
 .port-item { padding: 10px 12px; background: var(--bg); }
 .port-item + .port-item { border-top: 1px solid var(--border); }
 .port-item[data-excluded] { background: var(--page); }
-.port-item[data-excluded] .port-title,
-.port-item[data-excluded] .port-sources,
-.port-item[data-excluded] .port-source.single { opacity: 0.5; }
+/* Excluded items change color and weight rather than fading, so their text keeps its contrast. */
+.port-item[data-excluded] .port-title { color: var(--muted); font-weight: 400; }
+.port-item[data-excluded] .port-branch { color: var(--muted); }
 .port-item-head { display: flex; align-items: flex-start; gap: 8px; font-weight: 600; line-height: 1.35; cursor: pointer; }
 .port-item-head input { flex: none; margin: 3px 0 0; accent-color: var(--accent); }
 .port-sources { display: flex; flex-direction: column; gap: 2px; margin: 6px 0 0 23px; }
-.port-source { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 3px 6px; border-radius: 6px; font-size: 12px; cursor: pointer; }
+.port-source { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; min-width: 0; padding: 3px 6px; border-radius: 6px; font-size: 12px; cursor: pointer; }
 .port-sources .port-source:hover { background: var(--hover); }
-.port-source input { flex: none; margin: 0; accent-color: var(--accent); }
+.port-source input { flex: none; margin: 0; accent-color: var(--accent); align-self: center; }
 .port-source.single { margin: 6px 0 0 17px; cursor: default; }
 .port-branch { flex: none; font-family: var(--mono); font-weight: 600; }
 .port-refs { flex: none; font-family: var(--mono); color: var(--muted); }
-.port-text { min-width: 0; overflow: hidden; color: var(--muted); text-overflow: ellipsis; white-space: nowrap; }
+.port-text { min-width: 0; overflow-wrap: anywhere; color: var(--muted); }
 .port-empty { padding: 16px; text-align: center; }

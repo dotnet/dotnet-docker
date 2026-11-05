@@ -1,4 +1,4 @@
-import { escapeHtml, octicon } from "./util.js";
+import { escapeHtml, octicon, setText, stripTitle } from "./util.js";
 import { createPortDialog } from "./port.js";
 
 const $ = (selector) => document.querySelector(selector);
@@ -15,7 +15,9 @@ const state = {
 const ICONS = {
     plus: '<path d="M8 3v10M3 8h10"/>',
     close: '<path d="M4 4l8 8M12 4l-8 8"/>',
+    // Sorted: one arrow, newest first. Idle: two arrows. The shapes differ so the state doesn't rely on color.
     sort: '<path d="M8 3v10M4 9l4 4 4-4"/>',
+    sortIdle: '<path d="M5 13V3M2.5 5.5L5 3l2.5 2.5M11 3v10M8.5 10.5L11 13l2.5-2.5"/>',
     chevron: '<path d="M4 6l4 4 4-4"/>',
     unlink: '<path d="M6.5 9.5l3-3M5 8l-1.5 1.5a2.1 2.1 0 003 3L8 11M11 8l1.5-1.5a2.1 2.1 0 00-3-3L8 5"/>',
     commit: '<circle cx="8" cy="8" r="3"/><path d="M1 8h4M11 8h4"/>',
@@ -43,8 +45,15 @@ async function api(route, body) {
     return data;
 }
 
-const dayFormat = new Intl.DateTimeFormat(undefined, { year: "numeric", month: "short", day: "numeric" });
-const dateTimeFormat = new Intl.DateTimeFormat(undefined, { dateStyle: "medium", timeStyle: "short" });
+const dayFormat = new Intl.DateTimeFormat(undefined, { weekday: "long", year: "numeric", month: "short", day: "numeric" });
+const dateTimeFormat = new Intl.DateTimeFormat(undefined, {
+    weekday: "long",
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+    hour: "numeric",
+    minute: "2-digit",
+});
 const relativeFormat = new Intl.RelativeTimeFormat(undefined, { numeric: "auto" });
 
 function relativeTime(iso) {
@@ -64,14 +73,33 @@ function relativeTime(iso) {
     return "just now";
 }
 
+const infoToast = $("#toast");
+const errorToast = $("#toast-error");
 let toastTimer;
+
+/**
+ * Both toast regions stay in the page, empty, so screen readers register them before any text arrives.
+ * Info toasts clear themselves; errors stay until dismissed because they may need acting on.
+ */
 function toast(message, kind = "info") {
-    const element = $("#toast");
-    element.textContent = message;
-    element.dataset.kind = kind;
-    element.hidden = false;
+    if (kind === "error") {
+        const text = document.createElement("span");
+        text.textContent = message;
+        const dismiss = document.createElement("button");
+        dismiss.type = "button";
+        dismiss.className = "text-btn";
+        dismiss.textContent = "Dismiss";
+        dismiss.addEventListener("click", dismissError);
+        errorToast.replaceChildren(text, dismiss);
+        return;
+    }
+    infoToast.textContent = message;
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => (element.hidden = true), kind === "error" ? 6000 : 3500);
+    toastTimer = setTimeout(() => infoToast.replaceChildren(), 5000);
+}
+
+function dismissError() {
+    errorToast.replaceChildren();
 }
 
 async function run(action, { success } = {}) {
@@ -127,37 +155,52 @@ async function refresh() {
     const result = await run(() => api("refresh", {}));
     state.fetching = false;
     if (result?.failed?.length) {
-        toast(`Could not fetch ${result.failed.map((f) => f.branch).join(", ")}`, "error");
+        const names = result.failed.map((f) => f.branch).join(", ");
+        const repo = state.board?.repo.slug ?? "the repository";
+        toast(`Couldn't fetch ${names}. Check your network connection and your access to ${repo}, then select Refresh.`, "error");
     }
     await load();
 }
 
+/** First line of a failure message, which is usually all a person needs to read. */
+const firstLine = (text) => String(text).split("\n").find((line) => line.trim())?.trim().replace(/[.:]$/, "") ?? "";
+
 function renderToolbar() {
     const board = state.board;
-    $("#repo-name").textContent = board?.repo.slug ?? "";
-    $("#refresh").disabled = state.fetching;
-    $("#refresh").textContent = state.fetching ? "Fetching…" : "Refresh";
+    setText($("#repo-name"), board?.repo.slug ?? "");
+
+    // aria-disabled, not disabled, so keyboard focus stays on the button while it works.
+    const refreshButton = $("#refresh");
+    refreshButton.setAttribute("aria-disabled", String(state.fetching));
+
     const pullRequestError = board?.openPullRequests?.error;
-    $("#status").textContent = state.fetching
-        ? ""
-        : [board?.fetchedAt ? `Fetched ${relativeTime(board.fetchedAt)}` : "", pullRequestError ? "Open pull requests unavailable" : ""]
-              .filter(Boolean)
-              .join(" · ");
-    $("#status").title = pullRequestError ?? "";
+    const parts = state.fetching
+        ? ["Fetching branches…"]
+        : [
+              board?.fetchedAt ? `Fetched ${relativeTime(board.fetchedAt)}` : "",
+              pullRequestError
+                  ? `Open pull requests unavailable: ${firstLine(pullRequestError)}. Check that the GitHub CLI (gh) is installed and signed in, then select Refresh.`
+                  : "",
+          ];
+    setText($("#status"), parts.filter(Boolean).join(" · "));
+
     const count = state.selected.size;
     $("#link").disabled = count < 2;
-    $("#link").textContent = count >= 2 ? `Link changes (${count})` : "Link changes";
-    $("#link").title = count >= 2 ? "" : "Select two or more changes to link them";
+    setText($("#link"), count >= 2 ? `Link changes (${count})` : "Link changes");
 
     const unlinkable = selectedLinked();
     $("#unlink").disabled = unlinkable.length === 0;
-    $("#unlink").textContent = unlinkable.length ? `Unlink (${unlinkable.length})` : "Unlink";
-    $("#unlink").title = unlinkable.length ? "" : "Select linked changes to separate them from their row";
+    setText($("#unlink"), unlinkable.length ? `Unlink (${unlinkable.length})` : "Unlink");
 
     const portable = selectedRowCount();
     $("#port").disabled = portable === 0;
-    $("#port").textContent = portable ? `Port ${portable} ${portable === 1 ? "change" : "changes"} to…` : "Port to…";
-    $("#port").title = portable ? "" : "Select the changes you want to port to another branch";
+    setText($("#port"), portable ? `Port ${portable} ${portable === 1 ? "change" : "changes"} to…` : "Port to…");
+
+    // Text beside the buttons, because a tooltip on a disabled button never reaches keyboard users.
+    setText(
+        $("#hint"),
+        !board ? "" : count === 0 ? "Tick changes to link, unlink or port them." : count === 1 ? "1 selected. Tick another to link them." : `${count} selected`,
+    );
 }
 
 /** Number of distinct changes (rows) that have at least one selected commit or pull request. */
@@ -214,12 +257,12 @@ function cardHtml(sha, row) {
     const [label, tooltip] = linked ? reasonLabel(row.linked) : [];
     const chip = linked ? `<span class="chip linked" title="${escapeHtml(tooltip)}">${escapeHtml(label)}</span>` : "";
     const unlink = linked
-        ? `<button type="button" class="mini-btn" data-action="unlink" data-sha="${sha}" title="Not the same change: separate this ${what} from the others in this row" aria-label="Unlink ${commit.short} from this row">${icon("unlink")}Unlink</button>`
+        ? `<button type="button" class="mini-btn" data-action="unlink" data-sha="${sha}" data-focus="unlink:${sha}" title="Not the same change: separate this ${what} from the others in this row" aria-label="Unlink ${commit.short} from this row">${icon("unlink")}Unlink</button>`
         : "";
 
     return `
       <article class="card" data-sha="${sha}" ${isPr ? 'data-kind="pr"' : ""} ${selected ? "data-selected" : ""}>
-        <input type="checkbox" data-action="select" data-sha="${sha}" ${selected ? "checked" : ""} aria-label="Select ${escapeHtml(commit.short)} ${escapeHtml(title)}">
+        <input type="checkbox" data-action="select" data-sha="${sha}" data-focus="select:${sha}" ${selected ? "checked" : ""} aria-label="Select ${escapeHtml(commit.short)} ${escapeHtml(title)}">
         <div>
           <div class="card-title">${prIcon}<span>${titleHtml}${prHtml}</span></div>
           <div class="meta">
@@ -236,18 +279,21 @@ function cardHtml(sha, row) {
 
 function cellHtml(row, branch, errored) {
     const shas = row.cells[branch.name];
+    const name = escapeHtml(branch.name);
+    // Each cell names its branch, because a screen reader reads the rows without the column headers.
+    const open = `<div class="cell" role="group" aria-label="${name}">`;
     if (shas.length > 1) {
         // Several commits that are one change share a single outer border.
-        return `<div class="cell"><div class="stack">${shas.map((sha) => cardHtml(sha, row)).join("")}</div></div>`;
+        return `${open}<div class="stack">${shas.map((sha) => cardHtml(sha, row)).join("")}</div></div>`;
     }
     if (shas.length) {
-        return `<div class="cell">${cardHtml(shas[0], row)}</div>`;
+        return `${open}${cardHtml(shas[0], row)}</div>`;
     }
     if (errored || row.pending) {
-        return `<div class="cell"></div>`;
+        return `${open}</div>`;
     }
-    const name = escapeHtml(branch.name);
-    return `<div class="cell"><button type="button" class="gap" data-action="port" data-row="${row.id}" data-branch="${name}" title="Port this change to ${name}" aria-label="Port this change to ${name}">${icon("plus")}</button></div>`;
+    const subject = escapeHtml(stripTitle(state.board.commits[row.shas[0]].subject));
+    return `${open}<button type="button" class="gap" data-action="port" data-row="${row.id}" data-branch="${name}" data-focus="port:${row.id}:${name}" title="Port this change to ${name}" aria-label="Port “${subject}” to ${name}">${icon("plus")}</button></div>`;
 }
 
 function headHtml(branch, board) {
@@ -255,12 +301,12 @@ function headHtml(branch, board) {
     const sorted = board.sortBranch === branch.name;
     return `
       <div class="col-head" data-branch="${name}">
-        <button type="button" class="name-btn" data-action="pick-branch" data-branch="${name}" title="Switch branch" aria-haspopup="true" aria-label="${name}: switch branch">
+        <button type="button" class="name-btn" data-action="pick-branch" data-branch="${name}" data-focus="pick:${name}" title="Switch branch" aria-haspopup="dialog" aria-expanded="false" aria-label="${name}: switch branch">
           <span class="name">${name}</span>${icon("chevron")}
         </button>
         <span class="count" title="Changes loaded for this branch">${branch.count}</span>
-        <button type="button" class="icon-btn" data-action="sort" data-branch="${name}" aria-pressed="${sorted}" title="${sorted ? "Rows are sorted by this branch, newest first" : `Sort rows by ${name}, newest first`}" aria-label="Sort by ${name}">${icon("sort")}</button>
-        <button type="button" class="icon-btn" data-action="remove-branch" data-branch="${name}" title="Stop tracking ${name}" aria-label="Stop tracking ${name}">${icon("close")}</button>
+        <button type="button" class="icon-btn" data-action="sort" data-branch="${name}" data-focus="sort:${name}" aria-pressed="${sorted}" title="${sorted ? "Rows are sorted by this branch, newest first" : `Sort rows by ${name}, newest first`}" aria-label="Sort by ${name}">${icon(sorted ? "sort" : "sortIdle")}</button>
+        <button type="button" class="icon-btn" data-action="remove-branch" data-branch="${name}" data-focus="remove:${name}" title="Stop tracking ${name}" aria-label="Stop tracking ${name}">${icon("close")}</button>
         ${branch.error ? `<span class="warn">${escapeHtml(branch.error)}</span>` : ""}
       </div>`;
 }
@@ -272,7 +318,7 @@ function renderBoard() {
     if (!board) {
         element.style.removeProperty("--cols");
         element.innerHTML = state.error
-            ? `<div class="error">${escapeHtml(state.error)}</div>`
+            ? `<div class="board-error">${escapeHtml(state.error)}</div>`
             : `<div class="loading">Loading…</div>`;
         return;
     }
@@ -317,15 +363,51 @@ function renderFooter() {
     }
     const since = dayFormat.format(new Date(board.since));
     footer.innerHTML = board.hasMore
-        ? `<span>Showing changes since ${escapeHtml(since)}</span><button type="button" class="btn" data-action="load-more" ${state.loading ? "disabled" : ""}>Load older changes</button>`
+        ? `<span>Showing changes since ${escapeHtml(since)}</span><button type="button" class="btn" data-action="load-more" data-focus="more" ${state.loading ? "disabled" : ""}>Load older changes</button>`
         : `<span>Showing all changes since ${escapeHtml(since)}. There is nothing older.</span>`;
 }
 
+// The board is rebuilt on every change, which would drop keyboard focus onto <body>.
+// Remember the focused control by its data-focus key and put focus back afterwards.
+let focusRequest = null;
+
+function focusedKey() {
+    const element = document.activeElement;
+    return element?.dataset?.focus && element.closest("#board, #footer") ? element.dataset.focus : null;
+}
+
+function restoreFocus(keys) {
+    for (const key of keys) {
+        const target = document.querySelector(`[data-focus="${CSS.escape(key)}"]`);
+        if (target) {
+            target.focus();
+            return;
+        }
+    }
+    // The control is gone, so land on the nearest stable place instead of <body>.
+    (keys.includes("more") ? $("#footer") : document.querySelector('[data-focus^="pick:"]'))?.focus();
+}
+
 function render() {
+    const keys = focusRequest ?? [focusedKey()].filter(Boolean);
+    focusRequest = null;
     renderToolbar();
     renderBoard();
     renderFooter();
+    updateHeadHeight();
+    if (keys.length) {
+        restoreFocus(keys);
+    }
 }
+
+// Focused controls scroll into view; keep them clear of the sticky column header (WCAG 2.4.11).
+function updateHeadHeight() {
+    const head = document.querySelector(".head-row");
+    if (head) {
+        $("#scroller").style.setProperty("--head-height", `${head.offsetHeight}px`);
+    }
+}
+new ResizeObserver(updateHeadHeight).observe($("#board"));
 
 function updateSelectionUi(sha) {
     document.querySelectorAll(`.card[data-sha="${sha}"]`).forEach((card) => {
@@ -380,6 +462,8 @@ $("#board").addEventListener("click", async (event) => {
         await run(() => api("config", { branches: remaining }));
         await load();
     } else if (action === "unlink") {
+        // The Unlink button disappears with the link, so hand focus to the same commit's checkbox.
+        focusRequest = [`select:${sha}`];
         await run(() => api("unlink", { shas: [sha] }), { success: "Unlinked" });
         state.selected.delete(sha);
         await load();
@@ -390,26 +474,37 @@ $("#board").addEventListener("click", async (event) => {
 
 $("#footer").addEventListener("click", async (event) => {
     if (event.target.closest('[data-action="load-more"]')) {
+        const previousRows = state.board.rows.length;
         state.months += 1;
         await load();
+        // Move focus into the new content instead of leaving it on a button that is now far below it.
+        const firstNew = document.querySelectorAll("#board .row")[previousRows];
+        (firstNew?.querySelector("[data-focus^='select:']") ?? document.querySelector('[data-focus="more"]') ?? $("#footer")).focus();
+        toast(`Loaded changes back to ${dayFormat.format(new Date(state.board.since))}.`);
     }
 });
 
 $("#link").addEventListener("click", async () => {
     const shas = [...state.selected];
+    focusRequest = [`select:${shas[0]}`];
     const result = await run(() => api("link", { shas }), { success: `Linked ${shas.length} changes` });
     if (result) {
         state.selected.clear();
         await load();
+    } else {
+        focusRequest = null;
     }
 });
 
 $("#unlink").addEventListener("click", async () => {
     const shas = selectedLinked();
+    focusRequest = [`select:${shas[0]}`];
     const result = await run(() => api("unlink", { shas }), { success: `Unlinked ${shas.length} ${shas.length === 1 ? "change" : "changes"}` });
     if (result) {
         shas.forEach((sha) => state.selected.delete(sha));
         await load();
+    } else {
+        focusRequest = null;
     }
 });
 
@@ -424,7 +519,10 @@ const portDialog = createPortDialog({
     getBoard: () => state.board,
     getSelected: () => state.selected,
     onSent: () => {
+        // The toolbar button that opened the dialog is disabled once the selection clears.
+        const first = [...state.selected][0];
         state.selected.clear();
+        focusRequest = first ? [`select:${first}`] : null;
         render();
     },
 });
@@ -454,6 +552,7 @@ function renderBranchList() {
             ? shown.map((name) => `<li><button type="button" data-branch="${escapeHtml(name)}">${escapeHtml(name)}</button></li>`).join("")
             : `<li class="hint">No matching branches.</li>`) +
         (matches.length > shown.length ? `<li class="hint">${matches.length - shown.length} more. Keep typing to narrow.</li>` : "");
+    setText($("#branch-count"), `${matches.length} ${matches.length === 1 ? "branch" : "branches"}`);
 }
 
 function positionPopover(trigger, mode) {
@@ -469,13 +568,13 @@ function closePicker({ restoreFocus = false } = {}) {
     if (!picker) {
         return;
     }
-    const { mode, branch } = picker;
+    const { mode, branch, trigger } = picker;
     picker = null;
     popover.hidden = true;
-    addButton.setAttribute("aria-expanded", "false");
+    trigger.setAttribute("aria-expanded", "false");
     if (restoreFocus) {
-        const trigger = mode === "add" ? addButton : [...document.querySelectorAll(".name-btn")].find((b) => b.dataset.branch === branch);
-        trigger?.focus();
+        const target = mode === "add" ? addButton : [...document.querySelectorAll(".name-btn")].find((b) => b.dataset.branch === branch);
+        target?.focus();
     }
 }
 
@@ -487,10 +586,11 @@ function openPicker(mode, trigger, branch) {
         closePicker();
         return;
     }
+    closePicker();
     picker = { mode, branch, trigger };
     $("#picker-title").textContent = mode === "add" ? "Track another branch" : `Replace ${branch} with`;
     popover.hidden = false;
-    addButton.setAttribute("aria-expanded", String(mode === "add"));
+    trigger.setAttribute("aria-expanded", "true");
     filterInput.value = "";
     renderBranchList();
     positionPopover(trigger, mode);
@@ -504,6 +604,11 @@ async function chooseBranch(name) {
     const config = { branches: mode === "replace" ? tracked.map((b) => (b === branch ? name : b)) : [...tracked, name] };
     if (mode === "replace" && state.board.sortBranch === branch) {
         config.sortBranch = name;
+    }
+    // The column's header button is rebuilt under the new name; the toolbar button just takes focus back.
+    focusRequest = mode === "replace" ? [`pick:${name}`] : null;
+    if (mode === "add") {
+        addButton.focus();
     }
     await run(() => api("config", config));
     await load();
@@ -549,8 +654,20 @@ document.addEventListener("click", (event) => {
     }
 });
 document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && picker) {
+    if (event.key !== "Escape") {
+        return;
+    }
+    if (picker) {
         closePicker({ restoreFocus: true });
+    } else if (errorToast.hasChildNodes() && !$("#port-dialog").open) {
+        dismissError();
+    }
+});
+// Tabbing out of the picker closes it, so it never stays open behind focus that has moved on.
+popover.addEventListener("focusout", (event) => {
+    const next = event.relatedTarget;
+    if (picker && next !== null && !popover.contains(next) && next !== picker.trigger) {
+        closePicker();
     }
 });
 $("#scroller").addEventListener("scroll", () => closePicker(), { passive: true });

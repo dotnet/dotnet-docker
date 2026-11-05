@@ -1,6 +1,20 @@
 export const escapeHtml = (value) =>
     String(value).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 
+/** The title of a change without its `[branch]` tags or `(#123)` suffix. */
+export const stripTitle = (subject) =>
+    subject
+        .replace(/\s*\(#\d+\)\s*$/, "")
+        .replace(/^(?:\[[^\]]+\]\s*)+/, "")
+        .trim();
+
+/** Writes text only when it changed, so a live region doesn't re-announce identical text. */
+export function setText(element, text) {
+    if (element.textContent !== text) {
+        element.textContent = text;
+    }
+}
+
 // Filled 16px icons copied from GitHub's Octicons (MIT), so pull requests look as they do on GitHub.
 const OCTICONS = {
     "git-pull-request":
