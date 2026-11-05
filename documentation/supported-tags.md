@@ -49,7 +49,7 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 
 They include:
 
-- For .NET 10, multi-platform tags refer to Ubuntu unless otherwise specified (like `8.0-alpine`).
+- For .NET 10 and later, multi-platform tags refer to Ubuntu unless otherwise specified (like `11.0-alpine`). .NET 10 defaults to Ubuntu 24.04 (Noble), and .NET 11 defaults to Ubuntu 26.04 (Resolute).
 - For .NET versions prior to 10, multi-platform tags refer to Debian unless otherwise specified.
 - All [supported architectures](supported-platforms.md#architectures).
 

@@ -13,7 +13,7 @@ docker build --pull -t releasesapp .
 docker run --rm releasesapp
 ```
 
-It will produce output similar to this:
+It will produce output similar to this example report, dated September 11, 2026, before .NET 11 GA:
 
 <details>
 <summary>Command output</summary>
