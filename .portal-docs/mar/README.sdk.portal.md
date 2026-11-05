@@ -16,10 +16,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
   * `docker pull mcr.microsoft.com/dotnet/sdk:11.0`
 * `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/sdk:10.0`
-* `9.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/sdk:9.0`
-* `8.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/sdk:8.0`
 
 ## Related Repositories
 

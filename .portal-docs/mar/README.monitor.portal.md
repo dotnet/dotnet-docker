@@ -8,10 +8,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 * `10` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/monitor:10`
-* `9` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:9`
-* `8` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/monitor:8`
 
 ## Related Repositories
 
