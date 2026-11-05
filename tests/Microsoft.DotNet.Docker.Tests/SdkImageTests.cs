@@ -138,12 +138,6 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
             return;
         }
 
-        // Workaround for https://github.com/dotnet/sdk/issues/55238
-        if (imageData.SdkOS.Family == OSFamily.Alpine && imageData.Version.Major == 11)
-        {
-            return;
-        }
-
         IEnumerable<SdkContentFileInfo> actualDotnetFiles = GetActualSdkContents(imageData);
         IEnumerable<SdkContentFileInfo> expectedDotnetFiles = await GetExpectedSdkContentsAsync(imageData);
 
