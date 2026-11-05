@@ -4,7 +4,7 @@
 
 # Featured Tags
 
-* `11.0` (Release Candidate)
+* `11.0` (Standard Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:11.0`
 * `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/sdk:10.0`
