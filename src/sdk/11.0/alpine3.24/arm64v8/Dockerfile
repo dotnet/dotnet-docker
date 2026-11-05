@@ -42,12 +42,6 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-# Workaround for https://github.com/dotnet/sdk/issues/55238
-RUN printf '%s\n' \
-        '#!/bin/sh' \
-        'exec /usr/share/dotnet/dotnet dnx "$@"' \
-        > /usr/share/dotnet/dnx \
-    && chmod +x /usr/share/dotnet/dnx \
-    && ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
+RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
