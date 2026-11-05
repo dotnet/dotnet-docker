@@ -26,7 +26,7 @@ You can also reach the app's API endpoint from the command line:
 ```bash
 $ curl http://localhost:8000/Environment
 {
-  "runtimeVersion": ".NET 11.0.0-rc.1",
+  "runtimeVersion": ".NET 11.0.0",
   "osVersion": "Ubuntu 26.04 LTS",
   "osArchitecture": "X64",
   "user": "app",
