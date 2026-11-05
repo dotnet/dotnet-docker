@@ -14,10 +14,6 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:11.0`
 * `10.0` (Long-Term Support)
   * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:10.0`
-* `9.0` (Standard Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:9.0`
-* `8.0` (Long-Term Support)
-  * `docker pull mcr.microsoft.com/dotnet/nightly/runtime:8.0`
 
 ## Related Repositories
 

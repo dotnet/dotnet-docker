@@ -21,22 +21,6 @@ Azure Linux .NET images are [publicly supported](https://github.com/dotnet/dotne
   * `docker pull mcr.microsoft.com/dotnet/runtime:10.0-azurelinux3.0`
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:10.0-azurelinux3.0`
 
-.NET 9
-
-* `9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/aspnet:9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime:9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:9.0-azurelinux3.0`
-
-.NET 8
-
-* `8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/sdk:8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime:8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0-azurelinux3.0`
-
 ## Azure Linux Distroless
 
 Azure Linux distroless .NET images contain only the minimal set of packages .NET needs, with everything else removed.
