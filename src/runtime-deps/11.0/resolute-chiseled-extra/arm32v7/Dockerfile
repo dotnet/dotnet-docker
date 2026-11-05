@@ -7,7 +7,7 @@ RUN curl --fail --show-error --location --output chisel.tar.gz https://github.co
     && echo "$chisel_sha384  chisel.tar.gz" | sha384sum -c - \
     && tar --gzip --extract --no-same-owner --file chisel.tar.gz --directory /usr/bin/ \
     && rm chisel.tar.gz \
-    && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.0/chisel-wrapper \
+    && curl --fail --show-error --location --output /usr/bin/chisel-wrapper https://raw.githubusercontent.com/canonical/rocks-toolbox/v1.2.1/chisel-wrapper \
     && chmod 755 /usr/bin/chisel-wrapper \
     # Workaround for https://github.com/canonical/rocks-toolbox/issues/55
     && sed --in-place \
