@@ -1,13 +1,31 @@
-import { dirname } from "node:path";
+import { readFileSync } from "node:fs";
+import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CanvasError, createCanvas, joinSession } from "@github/copilot-sdk/extension";
 import { createService } from "./lib/service.mjs";
 import { startServer } from "./lib/server.mjs";
 
 let session;
+
+/** The repo and working directory Copilot recorded for this session; they stay correct wherever the extension is installed. */
+function sessionDirectories() {
+    if (!session?.workspacePath) {
+        return [];
+    }
+    try {
+        const yaml = readFileSync(join(session.workspacePath, "workspace.yaml"), "utf8");
+        return ["git_root", "cwd"]
+            .map((key) => new RegExp(`^${key}:\\s*(.+?)\\s*$`, "m").exec(yaml)?.[1]?.replace(/^(["'])(.*)\1$/, "$2"))
+            .filter(Boolean);
+    } catch {
+        return [];
+    }
+}
+
 const service = createService({
-    // The extension lives inside the repo it manages, so its own folder is a reliable fallback.
-    getWorkingDirectories: () => [process.cwd(), dirname(fileURLToPath(import.meta.url))],
+    // The session's own directories come first: they are right wherever the extension is installed. The extension's
+    // folder is a last resort that only helps when it is installed inside the repo.
+    getWorkingDirectories: () => [...sessionDirectories(), process.cwd(), dirname(fileURLToPath(import.meta.url))],
     sendPrompt: (prompt) => session.send({ prompt }),
 });
 
@@ -39,7 +57,7 @@ const shasSchema = {
 };
 
 const portingBoard = createCanvas({
-    id: "porting-board",
+    id: "branch-manager",
     displayName: "Branch manager",
     description:
         "Side-by-side commit and open pull request history for several branches, with changes linked across branches and gaps shown where a change is missing.",

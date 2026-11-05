@@ -24,7 +24,7 @@ function emptyState() {
  */
 export function stateDirectory() {
     const home = process.env.COPILOT_HOME || path.join(homedir(), ".copilot");
-    return path.join(home, "extensions", "porting-board", "artifacts");
+    return path.join(home, "extensions", "branch-manager", "artifacts");
 }
 
 export function createStore(repoKey) {

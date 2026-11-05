@@ -8,33 +8,38 @@
 </head>
 <body>
   <header class="toolbar">
-    <h1 class="title">Branch manager</h1>
-    <span id="repo-name" class="muted"></span>
-    <span id="status" class="status muted" role="status"></span>
-    <div class="spacer"></div>
-    <button id="add-branch" class="btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="branch-popover">Add branch</button>
-    <button id="refresh" class="btn" type="button">Refresh</button>
-    <button id="port" class="btn" type="button" disabled>Port to…</button>
-    <button id="unlink" class="btn" type="button" disabled>Unlink</button>
-    <button id="link" class="btn primary" type="button" disabled>Link changes</button>
+    <div class="toolbar-info">
+      <h1 class="title">Branch manager</h1>
+      <span id="repo-name" class="muted"></span>
+      <span id="status" class="status muted" role="status"></span>
+    </div>
+    <div class="toolbar-actions">
+      <span id="hint" class="hint-inline muted"></span>
+      <button id="add-branch" class="btn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="branch-popover">Add branch</button>
+      <button id="refresh" class="btn" type="button">Refresh</button>
+      <button id="port" class="btn" type="button" disabled>Port to…</button>
+      <button id="unlink" class="btn" type="button" disabled>Unlink</button>
+      <button id="link" class="btn primary" type="button" disabled>Link changes</button>
+    </div>
   </header>
 
   <main id="scroller" class="scroller">
-    <div id="board" class="board" aria-live="polite"></div>
-    <div id="footer" class="footer"></div>
+    <div id="board" class="board"></div>
+    <div id="footer" class="footer" tabindex="-1"></div>
   </main>
 
-  <div id="branch-popover" class="popover" role="dialog" aria-labelledby="picker-title" hidden>
+  <div id="branch-popover" class="popover" role="dialog" aria-labelledby="picker-title" tabindex="-1" hidden>
     <div id="picker-title" class="picker-title"></div>
     <input id="branch-filter" class="filter" type="search" placeholder="Filter branches" aria-label="Filter branches" autocomplete="off">
+    <p id="branch-count" class="sr-only" role="status"></p>
     <ul id="branch-list" class="branch-list"></ul>
   </div>
 
-  <dialog id="port-dialog" class="dialog" aria-labelledby="port-title">
+  <dialog id="port-dialog" class="dialog" aria-labelledby="port-title" aria-describedby="port-sub">
     <header class="dialog-head">
       <div>
         <h2 id="port-title" class="dialog-title">Port changes</h2>
-        <p class="muted dialog-sub">Review what will be ported and edit the prompt. Nothing is sent until you confirm.</p>
+        <p id="port-sub" class="muted dialog-sub">Review what will be ported and edit the prompt. Nothing is sent until you confirm.</p>
       </div>
       <button id="port-close" class="icon-btn" type="button" aria-label="Close">
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 4l8 8M12 4l-8 8"/></svg>
@@ -57,11 +62,12 @@
       <div class="field">
         <div class="field-row">
           <label for="port-prompt">Prompt for Copilot</label>
-          <button id="port-regenerate" class="text-btn" type="button" hidden>Regenerate from the changes above</button>
+          <button id="port-regenerate" class="text-btn" type="button" hidden>Discard my edits and regenerate</button>
+          <button id="port-restore" class="text-btn" type="button" hidden>Restore my edits</button>
         </div>
         <textarea id="port-prompt" class="prompt" rows="14" spellcheck="false"></textarea>
         <p id="port-prompt-note" class="muted hint" hidden></p>
-        <p id="port-error" class="notice error" role="alert" hidden></p>
+        <p id="port-error" class="notice notice-error" role="alert" hidden></p>
       </div>
     </div>
 
@@ -72,7 +78,10 @@
     </footer>
   </dialog>
 
-  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+  <div class="toasts">
+    <div id="toast" class="toast" role="status"></div>
+    <div id="toast-error" class="toast" data-kind="error" role="alert"></div>
+  </div>
 
   <script type="module" src="app.js"></script>
 </body>
