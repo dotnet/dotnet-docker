@@ -4,7 +4,7 @@ The [samples](./README.md) rely on a functioning [Kubernetes](https://kubernetes
 
 ## Local environment
 
-If you are new to Kubernetes, you'll likely want to start with a [local environment](https://kubernetes.io/docs/tasks/tools/), such as [Docker Desktop](https://docs.docker.com/desktop/kubernetes/), [K3s](https://k3s.io/), [Minikube](https://minikube.sigs.k8s.io/docs/), [OpenShift Local](https://developers.redhat.com/products/openshift-local), or [Rancher](https://rancherdesktop.io/).
+If you are new to Kubernetes, you'll likely want to start with a [local environment](https://kubernetes.io/docs/tasks/tools/), such as [Docker Desktop](https://docs.docker.com/desktop/use-desktop/kubernetes/), [K3s](https://k3s.io/), [Minikube](https://minikube.sigs.k8s.io/docs/), [OpenShift Local](https://developers.redhat.com/products/openshift-local), or [Rancher](https://rancherdesktop.io/).
 
 Isolated Kubernetes environments make it easy to install one or more apps, and delete all the state with a single gesture afterwords. For example, minikube makes that easy and [offers a copy of `kubectl`](https://minikube.sigs.k8s.io/docs/handbook/kubectl/) so that you don't need to install it separately (however, it still uses the global kubectl configuration).
 
