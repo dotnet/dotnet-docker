@@ -118,4 +118,4 @@ Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example run
 
 As a result, we need a reliable pattern that can produce multiple variants of images on one machine, but that doesn't use emulation. That's what this document describes.
 
-> [QEMU context](https://gitlab.com/qemu-project/qemu/-/issues/249)
+> [QEMU context](https://gitlab.com/qemu-project/qemu/-/work_items/249)
