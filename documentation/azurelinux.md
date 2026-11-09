@@ -5,6 +5,14 @@ Azure Linux .NET images are [publicly supported](https://github.com/dotnet/dotne
 
 ## Featured Tags
 
+.NET 11
+
+* `11.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/sdk:11.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/aspnet:11.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/runtime:11.0-azurelinux3.0`
+  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:11.0-azurelinux3.0`
+
 .NET 10
 
 * `10.0-azurelinux3.0`
@@ -12,22 +20,6 @@ Azure Linux .NET images are [publicly supported](https://github.com/dotnet/dotne
   * `docker pull mcr.microsoft.com/dotnet/aspnet:10.0-azurelinux3.0`
   * `docker pull mcr.microsoft.com/dotnet/runtime:10.0-azurelinux3.0`
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:10.0-azurelinux3.0`
-
-.NET 9
-
-* `9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/sdk:9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/aspnet:9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime:9.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:9.0-azurelinux3.0`
-
-.NET 8
-
-* `8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/sdk:8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime:8.0-azurelinux3.0`
-  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0-azurelinux3.0`
 
 ## Azure Linux Distroless
 
@@ -42,6 +34,7 @@ Azure Linux distroless .NET images are available for all supported .NET versions
 
 You can use the following image tags:
 
+* `11.0-azurelinux3.0-distroless`
 * `10.0-azurelinux3.0-distroless`
 * `9.0-azurelinux3.0-distroless`
 * `8.0-azurelinux3.0-distroless`
@@ -51,7 +44,7 @@ You can use the following image tags:
 If your app requires additional packages besides `icu` and `tzdata`, you can follow the same pattern that .NET uses to install the .NET runtime dependencies.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/nightly/aspnet:11.0-azurelinux3.0-distroless AS base
+FROM mcr.microsoft.com/dotnet/aspnet:11.0-azurelinux3.0-distroless AS base
 
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 

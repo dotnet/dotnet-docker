@@ -18,8 +18,8 @@ RUN --mount=type=secret,id=ACCESSTOKEN,required=true dotnet_sdk_version=0.0.0 \
 RUN --mount=type=secret,id=ACCESSTOKEN,required=true powershell_version=0.0.0 \
     && powershell_url_version=$(printf '%s' "$powershell_version" | tr '.' '-') \
     && wget --header "Authorization: Bearer $(cat /run/secrets/ACCESSTOKEN)" --header "x-ms-version: 2017-11-09" --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha512='{sha512_placeholder}' \
-    && echo "$powershell_sha512  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha512sum -c -
+    && powershell_sha256='{sha256_placeholder}' \
+    && echo "$powershell_sha256  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
@@ -53,13 +53,7 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
 COPY --from=installer ["/PowerShell.Linux.Alpine.0.0.0.nupkg", "/"]
 
-# Workaround for https://github.com/dotnet/sdk/issues/55238
-RUN printf '%s\n' \
-        '#!/bin/sh' \
-        'exec /usr/share/dotnet/dotnet dnx "$@"' \
-        > /usr/share/dotnet/dnx \
-    && chmod +x /usr/share/dotnet/dnx \
-    && ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
+RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 

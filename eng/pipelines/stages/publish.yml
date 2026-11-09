@@ -11,6 +11,9 @@ parameters:
   - name: linuxAmd64Pool
     type: string
     default: ""
+  - name: poolPriority
+    type: string
+    default: ""
   - name: isStandalonePublish
     type: boolean
     default: false
@@ -45,6 +48,7 @@ stages:
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     additionalServiceConnections: ${{ parameters.additionalServiceConnections }}
     pool: ${{ parameters.linuxAmd64Pool }}
+    poolPriority: ${{ parameters.poolPriority }}
     customPublishInitSteps:
     - ${{ parameters.customPublishInitSteps }}
     - template: /eng/pipelines/steps/set-public-source-branch-var.yml@self

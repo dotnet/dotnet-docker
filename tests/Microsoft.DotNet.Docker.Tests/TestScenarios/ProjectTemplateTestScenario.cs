@@ -104,13 +104,6 @@ public abstract class ProjectTemplateTestScenario(
 
     public async Task ExecuteAsync()
     {
-        if (ImageData.Version.Major == 11)
-        {
-            OutputHelper.WriteLine("Skipping project template test scenario for .NET 11 since project templates are"
-                + " not updated yet. Re-enable when https://github.com/dotnet/sdk/issues/50295 is resolved.");
-            return;
-        }
-
         List<string> tags = [];
         TestSolution? testSolution = null;
 
