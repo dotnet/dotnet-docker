@@ -232,6 +232,18 @@ export function createService({ getWorkingDirectories, sendPrompt, openUrl = ope
         return { linked: full };
     }
 
+    /** Merged commits a `pr:N` link alias refers to once that pull request has merged. */
+    function mergedCommitsOf(token) {
+        const match = /^pr:(\d+)$/.exec(token);
+        if (!match) {
+            return [];
+        }
+        const number = Number(match[1]);
+        return [...knownChanges.values()]
+            .filter((change) => change.kind !== "pr" && change.pr === number)
+            .map((change) => change.sha);
+    }
+
     async function unlink(shas) {
         const { repo, store } = await getContext();
         const full = [...new Set(await expandShas(repo.root, shas))];
@@ -239,10 +251,22 @@ export function createService({ getWorkingDirectories, sendPrompt, openUrl = ope
             throw new Error("Select at least one commit to unlink.");
         }
         const removed = new Set(full);
+        if (!lastBoard) {
+            await getBoard();
+        }
+
+        // A link made while a PR was open is stored as `pr:N`; keep the commits it still stands for.
+        const withoutRemoved = (token) => {
+            if (removed.has(token)) {
+                return [];
+            }
+            const merged = mergedCommitsOf(token);
+            return merged.some((sha) => removed.has(sha)) ? merged.filter((sha) => !removed.has(sha)) : [token];
+        };
 
         await store.update((state) => {
             state.links = state.links
-                .map((group) => ({ ...group, shas: group.shas.filter((sha) => !removed.has(sha)) }))
+                .map((group) => ({ ...group, shas: [...new Set(group.shas.flatMap(withoutRemoved))] }))
                 .filter((group) => group.shas.length > 1);
             for (const sha of full) {
                 if (!state.detached.includes(sha)) {
@@ -331,11 +355,16 @@ export function createService({ getWorkingDirectories, sendPrompt, openUrl = ope
     async function describeBoard({ months = 1, onlyMissing = false, limit = 100 } = {}) {
         const board = await getBoard({ months });
         const names = board.branches.map((b) => b.name);
+        const unavailable = board.branches.filter((b) => b.error);
+        const unavailableNames = new Set(unavailable.map((b) => b.name));
         const rows = board.rows
             .map((row) => ({
                 linkedBy: row.linked,
                 // Nothing has merged in a pending row, so nothing is missing from other branches yet.
-                missingFrom: row.pending ? [] : names.filter((name) => row.cells[name].length === 0),
+                // A branch whose history couldn't be read is unknown, not empty.
+                missingFrom: row.pending
+                    ? []
+                    : names.filter((name) => !unavailableNames.has(name) && row.cells[name].length === 0),
                 changes: row.shas.map((sha) => {
                     const c = board.commits[sha];
                     return {
@@ -354,6 +383,7 @@ export function createService({ getWorkingDirectories, sendPrompt, openUrl = ope
         return {
             repo: board.repo.slug,
             branches: names,
+            unavailableBranches: unavailable.map((b) => ({ branch: b.name, error: b.error })),
             since: board.since,
             totalRows: rows.length,
             rows: rows.slice(0, limit),

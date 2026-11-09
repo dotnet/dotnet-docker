@@ -100,20 +100,18 @@ function findBySha(commits, sha) {
 function referencedPrs(node) {
     const numbers = new Set();
     const text = `${node.subject}\n${node.body}`;
+    const branch = isPullRequest(node) ? BACKPORT_BRANCH.exec(node.headRef ?? "") : null;
+    if (branch) {
+        numbers.add(Number(branch[1]));
+    }
     for (const match of text.matchAll(PORT_REFERENCE)) {
         numbers.add(Number(match[1]));
     }
 
-    if (isPullRequest(node)) {
-        const branch = BACKPORT_BRANCH.exec(node.headRef ?? "");
-        if (branch) {
-            numbers.add(Number(branch[1]));
-        }
-        // PR descriptions list their sources on separate lines from the word "ports".
-        if (HAS_PORT_WORD.test(text)) {
-            for (const match of text.matchAll(ANY_PR_LINK)) {
-                numbers.add(Number(match[1]));
-            }
+    // PR descriptions list their sources on separate lines from the word "ports".
+    if (isPullRequest(node) && HAS_PORT_WORD.test(text)) {
+        for (const match of text.matchAll(ANY_PR_LINK)) {
+            numbers.add(Number(match[1]));
         }
     }
 
@@ -217,11 +215,28 @@ export function buildBoard({
         }
     }
     for (const node of linkable) {
-        for (const number of referencedPrs(node)) {
-            for (const target of linkableByPr.get(number) ?? []) {
-                if (target.sha !== node.sha && disjoint(node.branches, target.branches)) {
-                    components.union(node.sha, target.sha, "reference");
-                }
+        const sources = [...referencedPrs(node)]
+            .map((number) =>
+                (linkableByPr.get(number) ?? []).filter(
+                    (target) => target.sha !== node.sha && disjoint(node.branches, target.branches),
+                ),
+            )
+            .filter((targets) => targets.length > 0);
+
+        // A change that ports several PRs at once can't share a row with all of them without
+        // fusing independent changes, so it joins only the first source it can fit with.
+        const batch = sources.length > 1;
+        if (batch) {
+            const placed = (targets) => targets.some((target) => components.find(target.sha) === components.find(node.sha));
+            sources.sort((a, b) => Number(placed(b)) - Number(placed(a)));
+        }
+        for (const targets of sources) {
+            let attached = false;
+            for (const target of targets) {
+                attached = components.union(node.sha, target.sha, "reference", { strict: batch }) || attached;
+            }
+            if (batch && attached) {
+                break;
             }
         }
     }

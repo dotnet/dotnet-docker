@@ -164,41 +164,48 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
         syncUi();
     }
 
+    /**
+     * Every async continuation checks it still belongs to the dialog opening that started it (the session object)
+     * and to the latest generation of that opening (the sequence), so late responses never touch newer state.
+     * The previous prompt is cleared up front: it no longer matches the choices, so it must not be sendable if this fails.
+     */
     async function regenerate() {
+        const owner = session;
         const items = included();
-        const sequence = ++session.sequence;
-        session.dirty = false;
-        session.stale = false;
+        const sequence = ++owner.sequence;
+        const current = () => session === owner && owner.sequence === sequence;
+        owner.dirty = false;
+        owner.stale = false;
+        prompt.value = "";
         showError();
 
         if (!items.length) {
-            prompt.value = "";
-            session.generating = false;
+            owner.generating = false;
             syncUi();
             return;
         }
 
-        session.generating = true;
+        owner.generating = true;
         syncUi();
         try {
             const { prompt: text } = await api("port/prompt", {
-                target: session.target,
+                target: owner.target,
                 items: items.map(({ options, choice }) => {
                     const option = options.find((o) => o.key === choice.key);
                     return { shas: option.shas, branches: option.branches };
                 }),
             });
-            if (session?.sequence !== sequence) {
+            if (!current()) {
                 return;
             }
             prompt.value = text;
         } catch (error) {
-            if (session?.sequence === sequence) {
+            if (current()) {
                 showError(error.message);
             }
         }
-        if (session?.sequence === sequence) {
-            session.generating = false;
+        if (current()) {
+            owner.generating = false;
             syncUi();
         }
     }
@@ -261,22 +268,33 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
         if (sendButton.disabled) {
             return;
         }
+        const owner = session;
         const count = included().length;
-        const { target } = session;
-        session.sending = true;
+        const { target } = owner;
+        owner.sending = true;
         showError();
         syncUi();
         try {
             await api("port/send", { prompt: prompt.value });
         } catch (error) {
-            session.sending = false;
-            showError(error.message);
-            syncUi();
+            if (session === owner) {
+                owner.sending = false;
+                showError(error.message);
+                syncUi();
+            } else {
+                toast(error.message, "error");
+            }
             return;
         }
-        close();
+        // The prompt has gone to Copilot even if the dialog was closed meanwhile, but the page state may have moved on since.
+        const active = session === owner;
+        if (active) {
+            close();
+        }
         toast(`Sent to Copilot: port ${count} ${count === 1 ? "change" : "changes"} to ${target}`);
-        onSent();
+        if (active) {
+            onSent();
+        }
     }
 
     targetSelect.addEventListener("change", () => {
@@ -308,6 +326,8 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
     });
 
     prompt.addEventListener("input", () => {
+        session.sequence++;
+        session.generating = false;
         session.dirty = true;
         session.backup = null;
         syncUi();
@@ -318,10 +338,7 @@ export function createPortDialog({ api, toast, getBoard, getSelected, onSent }) 
     $("#port-cancel").addEventListener("click", close);
     $("#port-close").addEventListener("click", close);
     dialog.addEventListener("close", () => {
-        if (session) {
-            session.sequence++;
-            session = null;
-        }
+        session = null;
     });
 
     return { open };
