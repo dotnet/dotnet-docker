@@ -79,7 +79,7 @@ For more information, see the [composite images section in the Image Variants do
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.0-resolute-amd64, 11.0-resolute-amd64, 11.0.0-resolute, 11.0-resolute, 11.0.0, 11.0 | [Dockerfile](src/aspnet/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
+11.0.0-resolute-amd64, 11.0-resolute-amd64, 11.0.0-resolute, 11.0-resolute, 11.0.0, 11.0, latest | [Dockerfile](src/aspnet/11.0/resolute/amd64/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-amd64, 11.0-resolute-chiseled-amd64, 11.0.0-resolute-chiseled, 11.0-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/amd64/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-extra-amd64, 11.0-resolute-chiseled-extra-amd64, 11.0.0-resolute-chiseled-extra, 11.0-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/amd64/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-composite-amd64, 11.0-resolute-chiseled-composite-amd64, 11.0.0-resolute-chiseled-composite, 11.0-resolute-chiseled-composite | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite/amd64/Dockerfile) | Ubuntu 26.04
@@ -98,7 +98,7 @@ Tags | Dockerfile | OS Version
 11.0.0-azurelinux4.0-distroless-extra-amd64, 11.0-azurelinux4.0-distroless-extra-amd64, 11.0.0-azurelinux4.0-distroless-extra, 11.0-azurelinux4.0-distroless-extra | [Dockerfile](src/aspnet/11.0/azurelinux4.0-distroless-extra/amd64/Dockerfile) | Azure Linux 4.0
 11.0.0-azurelinux4.0-distroless-composite-amd64, 11.0-azurelinux4.0-distroless-composite-amd64, 11.0.0-azurelinux4.0-distroless-composite, 11.0-azurelinux4.0-distroless-composite | [Dockerfile](src/aspnet/11.0/azurelinux4.0-distroless-composite/amd64/Dockerfile) | Azure Linux 4.0
 11.0.0-azurelinux4.0-distroless-composite-extra-amd64, 11.0-azurelinux4.0-distroless-composite-extra-amd64, 11.0.0-azurelinux4.0-distroless-composite-extra, 11.0-azurelinux4.0-distroless-composite-extra | [Dockerfile](src/aspnet/11.0/azurelinux4.0-distroless-composite-extra/amd64/Dockerfile) | Azure Linux 4.0
-10.0.15-noble-amd64, 10.0-noble-amd64, 10.0.15-noble, 10.0-noble, 10.0.15, 10.0, latest | [Dockerfile](src/aspnet/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
+10.0.15-noble-amd64, 10.0-noble-amd64, 10.0.15-noble, 10.0-noble, 10.0.15, 10.0 | [Dockerfile](src/aspnet/10.0/noble/amd64/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-amd64, 10.0-noble-chiseled-amd64, 10.0.15-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/amd64/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-extra-amd64, 10.0-noble-chiseled-extra-amd64, 10.0.15-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/amd64/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-composite-amd64, 10.0-noble-chiseled-composite-amd64, 10.0.15-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/amd64/Dockerfile) | Ubuntu 24.04
@@ -157,7 +157,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.0-resolute-arm64v8, 11.0-resolute-arm64v8, 11.0.0-resolute, 11.0-resolute, 11.0.0, 11.0 | [Dockerfile](src/aspnet/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
+11.0.0-resolute-arm64v8, 11.0-resolute-arm64v8, 11.0.0-resolute, 11.0-resolute, 11.0.0, 11.0, latest | [Dockerfile](src/aspnet/11.0/resolute/arm64v8/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-arm64v8, 11.0-resolute-chiseled-arm64v8, 11.0.0-resolute-chiseled, 11.0-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/arm64v8/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-extra-arm64v8, 11.0-resolute-chiseled-extra-arm64v8, 11.0.0-resolute-chiseled-extra, 11.0-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-composite-arm64v8, 11.0-resolute-chiseled-composite-arm64v8, 11.0.0-resolute-chiseled-composite, 11.0-resolute-chiseled-composite | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 26.04
@@ -176,7 +176,7 @@ Tags | Dockerfile | OS Version
 11.0.0-azurelinux4.0-distroless-extra-arm64v8, 11.0-azurelinux4.0-distroless-extra-arm64v8, 11.0.0-azurelinux4.0-distroless-extra, 11.0-azurelinux4.0-distroless-extra | [Dockerfile](src/aspnet/11.0/azurelinux4.0-distroless-extra/arm64v8/Dockerfile) | Azure Linux 4.0
 11.0.0-azurelinux4.0-distroless-composite-arm64v8, 11.0-azurelinux4.0-distroless-composite-arm64v8, 11.0.0-azurelinux4.0-distroless-composite, 11.0-azurelinux4.0-distroless-composite | [Dockerfile](src/aspnet/11.0/azurelinux4.0-distroless-composite/arm64v8/Dockerfile) | Azure Linux 4.0
 11.0.0-azurelinux4.0-distroless-composite-extra-arm64v8, 11.0-azurelinux4.0-distroless-composite-extra-arm64v8, 11.0.0-azurelinux4.0-distroless-composite-extra, 11.0-azurelinux4.0-distroless-composite-extra | [Dockerfile](src/aspnet/11.0/azurelinux4.0-distroless-composite-extra/arm64v8/Dockerfile) | Azure Linux 4.0
-10.0.15-noble-arm64v8, 10.0-noble-arm64v8, 10.0.15-noble, 10.0-noble, 10.0.15, 10.0, latest | [Dockerfile](src/aspnet/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
+10.0.15-noble-arm64v8, 10.0-noble-arm64v8, 10.0.15-noble, 10.0-noble, 10.0.15, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-arm64v8, 10.0-noble-chiseled-arm64v8, 10.0.15-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-extra-arm64v8, 10.0-noble-chiseled-extra-arm64v8, 10.0.15-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm64v8/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-composite-arm64v8, 10.0-noble-chiseled-composite-arm64v8, 10.0.15-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/arm64v8/Dockerfile) | Ubuntu 24.04
@@ -235,7 +235,7 @@ Tags | Dockerfile | OS Version
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-11.0.0-resolute-arm32v7, 11.0-resolute-arm32v7, 11.0.0-resolute, 11.0-resolute, 11.0.0, 11.0 | [Dockerfile](src/aspnet/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
+11.0.0-resolute-arm32v7, 11.0-resolute-arm32v7, 11.0.0-resolute, 11.0-resolute, 11.0.0, 11.0, latest | [Dockerfile](src/aspnet/11.0/resolute/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-arm32v7, 11.0-resolute-chiseled-arm32v7, 11.0.0-resolute-chiseled, 11.0-resolute-chiseled | [Dockerfile](src/aspnet/11.0/resolute-chiseled/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-extra-arm32v7, 11.0-resolute-chiseled-extra-arm32v7, 11.0.0-resolute-chiseled-extra, 11.0-resolute-chiseled-extra | [Dockerfile](src/aspnet/11.0/resolute-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 26.04
 11.0.0-resolute-chiseled-composite-arm32v7, 11.0-resolute-chiseled-composite-arm32v7, 11.0.0-resolute-chiseled-composite, 11.0-resolute-chiseled-composite | [Dockerfile](src/aspnet/11.0/resolute-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 26.04
@@ -244,7 +244,7 @@ Tags | Dockerfile | OS Version
 11.0.0-alpine3.24-extra-arm32v7, 11.0-alpine3.24-extra-arm32v7, 11.0-alpine-extra-arm32v7, 11.0.0-alpine3.24-extra, 11.0-alpine3.24-extra, 11.0-alpine-extra | [Dockerfile](src/aspnet/11.0/alpine3.24-extra/arm32v7/Dockerfile) | Alpine 3.24
 11.0.0-alpine3.24-composite-arm32v7, 11.0-alpine3.24-composite-arm32v7, 11.0-alpine-composite-arm32v7, 11.0.0-alpine3.24-composite, 11.0-alpine3.24-composite, 11.0-alpine-composite | [Dockerfile](src/aspnet/11.0/alpine3.24-composite/arm32v7/Dockerfile) | Alpine 3.24
 11.0.0-alpine3.24-composite-extra-arm32v7, 11.0-alpine3.24-composite-extra-arm32v7, 11.0-alpine-composite-extra-arm32v7, 11.0.0-alpine3.24-composite-extra, 11.0-alpine3.24-composite-extra, 11.0-alpine-composite-extra | [Dockerfile](src/aspnet/11.0/alpine3.24-composite-extra/arm32v7/Dockerfile) | Alpine 3.24
-10.0.15-noble-arm32v7, 10.0-noble-arm32v7, 10.0.15-noble, 10.0-noble, 10.0.15, 10.0, latest | [Dockerfile](src/aspnet/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
+10.0.15-noble-arm32v7, 10.0-noble-arm32v7, 10.0.15-noble, 10.0-noble, 10.0.15, 10.0 | [Dockerfile](src/aspnet/10.0/noble/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-arm32v7, 10.0-noble-chiseled-arm32v7, 10.0.15-noble-chiseled, 10.0-noble-chiseled | [Dockerfile](src/aspnet/10.0/noble-chiseled/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-extra-arm32v7, 10.0-noble-chiseled-extra-arm32v7, 10.0.15-noble-chiseled-extra, 10.0-noble-chiseled-extra | [Dockerfile](src/aspnet/10.0/noble-chiseled-extra/arm32v7/Dockerfile) | Ubuntu 24.04
 10.0.15-noble-chiseled-composite-arm32v7, 10.0-noble-chiseled-composite-arm32v7, 10.0.15-noble-chiseled-composite, 10.0-noble-chiseled-composite | [Dockerfile](src/aspnet/10.0/noble-chiseled-composite/arm32v7/Dockerfile) | Ubuntu 24.04
