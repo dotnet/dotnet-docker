@@ -27,7 +27,10 @@ stages:
     publishConfig: ${{ parameters.publishConfig }}
     isStandalonePublish: ${{ parameters.isStandalonePublish }}
     customInitSteps: ${{ parameters.customInitSteps }}
-    additionalServiceConnections: ${{ parameters.additionalServiceConnections }}
+    additionalServiceConnections:
+    - ${{ if variables['dotnetContainersBot.gitHubAuthArgs'] }}:
+      - name: DotnetContainersGitHubBot
+    - ${{ parameters.additionalServiceConnections }}
     sourceBuildPipelineDefinitionId: ${{ parameters.sourceBuildPipelineDefinitionId }}
     sourceBuildPipelineRunId: ${{ parameters.sourceBuildPipelineRunId }}
     versionsRepoRef: ${{ parameters.versionsRepoRef }}

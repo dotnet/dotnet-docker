@@ -197,7 +197,7 @@ jobs:
         $(dryRunArg)
 
   - script: >
-      $(runImageBuilderCmd) publishImageInfo
+      $(runAuthedImageBuilderCmd) publishImageInfo
       'imageInfo/full-image-info-new.json'
       '$(gitHubVersionsRepoInfo.userName)'
       '$(gitHubVersionsRepoInfo.email)'
@@ -210,6 +210,9 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     condition: and(succeeded(), eq(variables['publishImageInfo'], 'true'))
     displayName: Publish Image Info
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      SYSTEM_OIDCREQUESTURI: $(System.OidcRequestUri)
 
   # Task displayNames names are hardcoded to reference the task prefix used by 1ES official
   # pipelines in eng/docker-tools/templates/1es-official.yml.
@@ -224,7 +227,7 @@ jobs:
   # Skipped for PR builds because manifest lists are not created in PR builds (see post-build.yml).
   # Without manifest lists present in image-info.json, the postPublishNotification fails with a NRE.
   - script: >
-      $(runImageBuilderCmd) postPublishNotification
+      $(runAuthedImageBuilderCmd) postPublishNotification
       '$(publishNotificationRepoName)'
       '$(branchName)'
       'imageInfo/image-info.json'
@@ -247,6 +250,9 @@ jobs:
       $(imageBuilder.commonCmdArgs)
     displayName: Post Publish Notification
     condition: and(always(), eq(variables['publishNotificationsEnabled'], 'true'), ne(variables['Build.Reason'], 'PullRequest'))
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+      SYSTEM_OIDCREQUESTURI: $(System.OidcRequestUri)
 
   - powershell: |
       # Default to current build number if parameter was not overridden
