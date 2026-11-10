@@ -115,9 +115,19 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
             ..GetCommonEnvironmentVariables(),
         ];
 
+        if (!imageData.IsWindows)
+        {
+            variables.Add(EnvironmentVariableInfo.Require("VSTEST_ARTIFACTS_BASE_DIRECTORY", "/tmp"));
+        }
+
         if (imageData.SdkOS.Family == OSFamily.Alpine)
         {
             variables.Add(EnvironmentVariableInfo.Require("DOTNET_SYSTEM_GLOBALIZATION_INVARIANT", "false"));
+        }
+
+        if (imageData.IsWindows)
+        {
+            variables.Add(EnvironmentVariableInfo.Require("VSTEST_ARTIFACTS_BASE_DIRECTORY", @"C:\Windows\Temp"));
         }
 
         EnvironmentVariableInfo.Validate(variables, imageName, DockerHelper);
