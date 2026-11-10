@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:10.0.14-alpine3.24-amd64 AS installer
+FROM $REPO:10.0.15-alpine3.24-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=10.0.403 \
+RUN dotnet_sdk_version=10.0.404 \
     && wget \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
         https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
@@ -15,14 +15,14 @@ RUN dotnet_sdk_version=10.0.403 \
         dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512
 
 # Download PowerShell
-RUN powershell_version=7.6.9 \
+RUN powershell_version=7.6.10 \
     && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha256='6696a3ad4322209a9ba9dd8156eef65eee7e20bc7a6318439c11598044d83c70' \
+    && powershell_sha256='cf3dc65947f7be8afc118fc15e90131de2e41678404e366ad14ed3f871da71db' \
     && echo "$powershell_sha256  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
-FROM $REPO:10.0.14-alpine3.24-amd64
+FROM $REPO:10.0.15-alpine3.24-amd64
 
 ENV \
     # Do not generate certificate
@@ -30,11 +30,13 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=10.0.403 \
+    DOTNET_SDK_VERSION=10.0.404 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Use /tmp for private VSTest artifacts directories in containers
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=/tmp \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
@@ -50,14 +52,14 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.Alpine.7.6.9.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.Alpine.7.6.10.nupkg", "/"]
 
 RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.6.9 \
+RUN powershell_version=7.6.10 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
     && dotnet nuget locals all --clear \

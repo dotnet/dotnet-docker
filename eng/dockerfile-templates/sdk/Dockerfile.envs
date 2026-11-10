@@ -22,13 +22,17 @@
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false {{lineContinuation}}
     # Do not show first run text
-    DOTNET_NOLOGO=true {{lineContinuation}}
+    DOTNET_NOLOGO=true {{lineContinuation}}{{if isWindows:
+    # Use a shared base for private, user-only VSTest artifacts directories
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=C:\Windows\Temp {{lineContinuation}}}}
     # SDK version
     DOTNET_SDK_VERSION={{sdkVersion}} {{lineContinuation}}{{if isAlpine:
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false {{lineContinuation}}}}
     # Enable correct mode for dotnet watch (only mode supported in a container)
-    DOTNET_USE_POLLING_FILE_WATCHER=true {{lineContinuation}}
+    DOTNET_USE_POLLING_FILE_WATCHER=true {{lineContinuation}}{{if !isWindows:
+    # Use /tmp for private VSTest artifacts directories in containers
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=/tmp {{lineContinuation}}}}
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip {{if ARGS["include-powershell-vars"]:{{lineContinuation}}
     # PowerShell telemetry for docker image usage

@@ -1,9 +1,9 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:11.0.0-rc.3-alpine3.24-amd64 AS installer
+FROM $REPO:11.0.0-alpine3.24-amd64 AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-rc.3.26522.148 \
+RUN dotnet_sdk_version=11.0.100 \
     && wget \
         https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz \
         https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512 \
@@ -15,14 +15,14 @@ RUN dotnet_sdk_version=11.0.100-rc.3.26522.148 \
         dotnet-sdk-$dotnet_sdk_version-linux-musl-x64.tar.gz.sha512
 
 # Download PowerShell
-RUN powershell_version=7.7.0-rc.1 \
+RUN powershell_version=7.7.0 \
     && wget --output-document PowerShell.Linux.Alpine.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.Alpine.$powershell_version.nupkg \
-    && powershell_sha256='5295ad373abb3e6a2b96792460974c6e142799405d278fbf4bedccada4144af3' \
+    && powershell_sha256='cb0bf14b267ea177e78458a09c3c0c5ce8af8fb0a9c55bf1b11f873ac40e1930' \
     && echo "$powershell_sha256  PowerShell.Linux.Alpine.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-rc.3-alpine3.24-amd64
+FROM $REPO:11.0.0-alpine3.24-amd64
 
 ENV \
     # Do not generate certificate
@@ -30,11 +30,13 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-rc.3.26522.148 \
+    DOTNET_SDK_VERSION=11.0.100 \
     # Disable the invariant mode (set in base image)
     DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=false \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Use /tmp for private VSTest artifacts directories in containers
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=/tmp \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
@@ -50,14 +52,14 @@ RUN apk add --upgrade --no-cache \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.Alpine.7.7.0-rc.1.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.Alpine.7.7.0.nupkg", "/"]
 
 RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.7.0-rc.1 \
+RUN powershell_version=7.7.0 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.Alpine \
     && dotnet nuget locals all --clear \

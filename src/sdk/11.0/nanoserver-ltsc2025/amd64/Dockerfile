@@ -25,7 +25,7 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '11.0.100-rc.3.26522.148'; `
+        $dotnet_sdk_version = '11.0.100'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
@@ -44,9 +44,9 @@ RUN powershell -Command " `
             $dotnet_sha512_file; `
         `
         # Install PowerShell global tool
-        $powershell_version = '7.7.0-rc.1'; `
+        $powershell_version = '7.7.0'; `
         Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha256 = '32f42ed3b5fb7e013031ddc29c7045bef77752e8cd16fbb87c39da1f3f509627'; `
+        $powershell_sha256 = '0cf8128964aee0f9d8d20afbd090435185a73c55d0039178dc3d3b177a8d4eb1'; `
         if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha256).Hash -ne $powershell_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -64,15 +64,17 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:11.0.0-rc.3-nanoserver-ltsc2025
+FROM $REPO:11.0.0-nanoserver-ltsc2025
 
 ENV `
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Do not show first run text
     DOTNET_NOLOGO=true `
+    # Use a shared base for private, user-only VSTest artifacts directories
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=C:\Windows\Temp `
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-rc.3.26522.148 `
+    DOTNET_SDK_VERSION=11.0.100 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
