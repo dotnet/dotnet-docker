@@ -125,6 +125,7 @@ export function createService({ getWorkingDirectories, sendPrompt, openUrl = ope
         since.setMonth(since.getMonth() - span);
         const sinceIso = since.toISOString();
 
+        const trackedRefs = branches.map((name) => resolveRef(refs, repo.remote, name)).filter(Boolean);
         const [loaded, pullRequestResults] = await Promise.all([
             Promise.all(
                 branches.map(async (name) => {
@@ -134,7 +135,7 @@ export function createService({ getWorkingDirectories, sendPrompt, openUrl = ope
                     }
                     try {
                         const [commits, hasOlder] = await Promise.all([
-                            readCommits(repo.root, ref, sinceIso),
+                            readCommits(repo.root, ref, sinceIso, trackedRefs),
                             hasOlderCommits(repo.root, ref, sinceIso),
                         ]);
                         return { name, commits, hasOlder };

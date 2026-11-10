@@ -1,10 +1,31 @@
 const PR_SUFFIX = /\(#(\d+)\)\s*$/;
 const CHERRY_PICK = /\(cherry picked from commit ([0-9a-f]{7,40})\)/gi;
 const PORT_WORD = String.raw`(?:back-?port|forward-?port|port|cherry[- ]?pick|mirror)(?:s|ed|ing)?`;
-// A "backport of #123" style reference on one line.
-const PORT_REFERENCE = new RegExp(String.raw`\b${PORT_WORD}\b[^\n]{0,80}?(?:#|\/pull\/)(\d+)`, "gi");
-const HAS_PORT_WORD = new RegExp(String.raw`\b${PORT_WORD}\b`, "i");
-const ANY_PR_LINK = /(?:#|\/pull\/)(\d+)/g;
+// #123, owner/repo#123, a .../pull/123 URL, or a Markdown link to one of those.
+const PR_REF = [
+    String.raw`\[(?:[\w.-]+\/[\w.-]+)?#\d+\b[^\]\n]*\]\([^)\s]*\)`,
+    String.raw`\[[^\]\n]*\]\(https?:\/\/[^)\s]*\/pull\/\d+[^)\s]*\)`,
+    String.raw`(?:[\w.-]+\/[\w.-]+)?#\d+\b`,
+    String.raw`https?:\/\/[^\s)\]]*\/pull\/\d+\b`,
+].join("|");
+const REF_LIST = String.raw`(?:${PR_REF})(?:(?:[ \t]*,[ \t]*(?:and[ \t]+)?|[ \t]+and[ \t]+|[ \t]*&[ \t]*|[ \t]+)(?:${PR_REF}))*`;
+// The port word must govern the references: "Ports #1, #2 and #3", "Backport of #1", "Port changes from <url>".
+const PORT_REFERENCE = new RegExp(
+    String.raw`\b${PORT_WORD}:?[ \t]+(?:(?:the[ \t]+)?(?:changes?|commits?|prs?|pull[ \t]+requests?)[ \t]+)?(?:(?:of|from)[ \t]+)?(${REF_LIST})`,
+    "gi",
+);
+// A line that introduces a list of ported changes: "Ports:", "This PR ports the following changes ...".
+const PORT_INTRO = new RegExp(
+    String.raw`^[ \t]*(?:#+[ \t]*)?(?:\*\*)?(?:\[[^\]\n]*\][ \t]*)*(?:this[ \t]+(?:pr|pull[ \t]+request|change)[ \t]+)?${PORT_WORD}\b`,
+    "i",
+);
+const LIST_ITEM = /^[ \t]*(?:[-*+]|\d+[.)]|\|)/;
+// A list item or table row that starts with a PR reference.
+const LISTED_REF = new RegExp(
+    String.raw`^[ \t]*(?:[-*+]|\d+[.)]|\|)[ \t]*(?:\*\*)?(?:${PORT_WORD}:?[ \t]+)?(?:${PR_REF})`,
+    "i",
+);
+const PR_NUMBER = /(?:#|\/pull\/)(\d+)/g;
 // Branch names made by the repo's /backport workflow, e.g. backport/pr-7457-to-main.
 const BACKPORT_BRANCH = /^backport\/pr-(\d+)-to-/;
 
@@ -105,13 +126,24 @@ function referencedPrs(node) {
         numbers.add(Number(branch[1]));
     }
     for (const match of text.matchAll(PORT_REFERENCE)) {
-        numbers.add(Number(match[1]));
+        for (const ref of match[1].matchAll(PR_NUMBER)) {
+            numbers.add(Number(ref[1]));
+        }
     }
 
-    // PR descriptions list their sources on separate lines from the word "ports".
-    if (isPullRequest(node) && HAS_PORT_WORD.test(text)) {
-        for (const match of text.matchAll(ANY_PR_LINK)) {
-            numbers.add(Number(match[1]));
+    // Port PR descriptions list their sources below an intro line such as "This PR ports the following changes:".
+    let inList = false;
+    for (const line of text.split(/\r?\n/)) {
+        if (PORT_INTRO.test(line)) {
+            inList = true;
+        } else if (inList && line.trim() && !LIST_ITEM.test(line)) {
+            inList = false;
+        } else if (inList) {
+            const listed = LISTED_REF.exec(line);
+            const first = listed ? [...listed[0].matchAll(PR_NUMBER)][0] : null;
+            if (first) {
+                numbers.add(Number(first[1]));
+            }
         }
     }
 

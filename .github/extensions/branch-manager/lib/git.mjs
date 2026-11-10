@@ -101,16 +101,17 @@ export function resolveRef(refs, remote, branch) {
     return null;
 }
 
-export async function readCommits(root, ref, sinceIso) {
+/** `trackedRefs` are the board's branches; their first-parent histories identify branch-sync merges. */
+export async function readCommits(root, ref, sinceIso, trackedRefs = []) {
     const format = ["%H", "%P", "%an", "%cI", "%s", "%b"].join(FIELD) + RECORD;
-    const out = await runGit(root, [
-        "log",
-        ref,
-        `--since=${sinceIso}`,
-        "--max-count=5000",
-        `--format=${format}`,
-        "--",
+    const others = trackedRefs.filter((other) => other !== ref);
+    const [out, landed] = await Promise.all([
+        runGit(root, ["log", ref, `--since=${sinceIso}`, "--max-count=5000", `--format=${format}`, "--"]),
+        others.length
+            ? runGit(root, ["rev-list", "--first-parent", `--since=${sinceIso}`, ...others, "--"])
+            : "",
     ]);
+    const landedElsewhere = new Set(landed.split("\n").map((line) => line.trim()).filter(Boolean));
 
     const records = [];
     for (const record of out.split(RECORD)) {
@@ -121,7 +122,7 @@ export async function readCommits(root, ref, sinceIso) {
         const [sha, parents, author, date, subject, body = ""] = text.split(FIELD);
         records.push({ sha, parents: parents ? parents.split(" ") : [], author, date, subject, body });
     }
-    return selectChanges(records);
+    return selectChanges(records, landedElsewhere);
 }
 
 export async function hasOlderCommits(root, ref, sinceIso) {
