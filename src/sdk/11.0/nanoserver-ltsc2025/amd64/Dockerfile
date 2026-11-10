@@ -71,6 +71,8 @@ ENV `
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Do not show first run text
     DOTNET_NOLOGO=true `
+    # Use a shared base for private, user-only VSTest artifacts directories
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=C:\Windows\Temp `
     # SDK version
     DOTNET_SDK_VERSION=11.0.100 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
