@@ -1221,8 +1221,7 @@
             "$(dotnet|10.0|fixed-tag)-noble": {},
             "$(dotnet|10.0|minor-tag)-noble": {},
             "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|10.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -1868,7 +1867,8 @@
             "$(dotnet|11.0|fixed-tag)-resolute": {},
             "$(dotnet|11.0|minor-tag)-resolute": {},
             "$(dotnet|11.0|fixed-tag)": {},
-            "$(dotnet|11.0|minor-tag)": {}
+            "$(dotnet|11.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -3964,8 +3964,7 @@
             "$(dotnet|10.0|fixed-tag)-noble": {},
             "$(dotnet|10.0|minor-tag)-noble": {},
             "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|10.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -4789,7 +4788,8 @@
             "$(dotnet|11.0|fixed-tag)-resolute": {},
             "$(dotnet|11.0|minor-tag)-resolute": {},
             "$(dotnet|11.0|fixed-tag)": {},
-            "$(dotnet|11.0|minor-tag)": {}
+            "$(dotnet|11.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -7889,8 +7889,7 @@
             "$(dotnet|10.0|fixed-tag)-noble": {},
             "$(dotnet|10.0|minor-tag)-noble": {},
             "$(dotnet|10.0|fixed-tag)": {},
-            "$(dotnet|10.0|minor-tag)": {},
-            "latest": {}
+            "$(dotnet|10.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -9225,7 +9224,8 @@
             "$(dotnet|11.0|fixed-tag)-resolute": {},
             "$(dotnet|11.0|minor-tag)-resolute": {},
             "$(dotnet|11.0|fixed-tag)": {},
-            "$(dotnet|11.0|minor-tag)": {}
+            "$(dotnet|11.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
@@ -11174,8 +11174,7 @@
             "$(sdk|10.0|fixed-tag)-noble": {},
             "$(sdk|10.0|minor-tag)-noble": {},
             "$(sdk|10.0|fixed-tag)": {},
-            "$(sdk|10.0|minor-tag)": {},
-            "latest": {}
+            "$(sdk|10.0|minor-tag)": {}
           },
           "platforms": [
             {
@@ -11617,7 +11616,8 @@
             "$(sdk|11.0|fixed-tag)-resolute": {},
             "$(sdk|11.0|minor-tag)-resolute": {},
             "$(sdk|11.0|fixed-tag)": {},
-            "$(sdk|11.0|minor-tag)": {}
+            "$(sdk|11.0|minor-tag)": {},
+            "latest": {}
           },
           "platforms": [
             {
