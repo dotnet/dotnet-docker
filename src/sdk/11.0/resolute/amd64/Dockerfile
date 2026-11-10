@@ -3,8 +3,8 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM amd64/buildpack-deps:resolute-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100 \
-    && dotnet_sdk_build_version=$dotnet_sdk_version-rtm.26555.108 \
+RUN dotnet_sdk_version=11.0.101 \
+    && dotnet_sdk_build_version=$dotnet_sdk_version-servicing.26559.117 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_build_version/dotnet-sdk-$dotnet_sdk_version-linux-x64.tar.gz.sha512 \
@@ -23,7 +23,7 @@ RUN powershell_version=7.7.0-preview.5 \
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-resolute-amd64
+FROM $REPO:11.0.1-resolute-amd64
 
 ENV \
     # Do not generate certificate
@@ -31,7 +31,7 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100 \
+    DOTNET_SDK_VERSION=11.0.101 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

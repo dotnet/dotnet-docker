@@ -1,7 +1,7 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:11.0.0-azurelinux4.0-arm64v8 AS installer
+FROM $REPO:11.0.1-azurelinux4.0-arm64v8 AS installer
 
 RUN dnf install -y \
         gzip \
@@ -9,8 +9,8 @@ RUN dnf install -y \
     && dnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0 \
-    && dotnet_build_version=$dotnet_version-rtm.26555.108 \
+RUN dotnet_version=11.0.1 \
+    && dotnet_build_version=$dotnet_version-servicing.26559.117 \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_build_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
@@ -23,10 +23,10 @@ RUN dotnet_version=11.0.0 \
 
 
 # .NET runtime image
-FROM $REPO:11.0.0-azurelinux4.0-arm64v8
+FROM $REPO:11.0.1-azurelinux4.0-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0
+ENV DOTNET_VERSION=11.0.1
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
