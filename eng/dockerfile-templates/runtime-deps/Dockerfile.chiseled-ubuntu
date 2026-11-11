@@ -21,6 +21,7 @@
 
     set basePkgs to [
             "base-files_base",
+            "base-files_chisel",
             "base-files_release-info",
             "ca-certificates_data",
             "libc6_libs",
@@ -28,9 +29,6 @@
             cat(opensslPkg, "_libs"),
             "libstdc++6_libs"
         ] ^
-
-    set basePkgs to when (dotnetVersion = "8.0", cat(basePkgs, ["zlib1g_libs"]), basePkgs) ^
-    set basePkgs to when (dotnetVersion != "8.0" && dotnetVersion != "9.0", cat(basePkgs, ["base-files_chisel"]), basePkgs) ^
 
     _ tzdata package layout changed greatly between jammy and noble. tzdata_zoneinfo-icu is no longer necessary.
         See https://github.com/canonical/chisel-releases/pull/91. ^

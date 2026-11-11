@@ -5,7 +5,6 @@
             for example globalization support
         staging-dir (optional): Location of the staging directory for distroless installation ^
 
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
     set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
@@ -40,7 +39,6 @@
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)])
             ]
         )) ^
-    set basePkgs to when(dotnetVersion = "8.0", cat(basePkgs, [zlibPkg]), basePkgs) ^
 
     set standardPkgs to sort(cat(basePkgs,
         when(isAzureLinux || isAlpine,
@@ -90,7 +88,7 @@
             dotnetDepsComment
         ]) ^
 
-    set suffixPkgs to when(isAlpine && dotnetVersion != "8.0", ["", "# manually update zlib from alpine base image", zlibPkg], []) ^
+    set suffixPkgs to when(isAlpine, ["", "# manually update zlib from alpine base image", zlibPkg], []) ^
 
     set pkgs to cat(prefixPkgs, pkgs, suffixPkgs) ^
 
