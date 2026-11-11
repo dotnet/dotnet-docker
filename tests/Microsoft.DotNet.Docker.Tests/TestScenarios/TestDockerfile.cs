@@ -147,7 +147,7 @@ public static class TestDockerfileBuilder
                     && . /etc/os-release \
                     && case $ID in \
                         alpine) apk add --no-cache python3 ;; \
-                        debian | ubuntu) apt-get update \
+                        ubuntu) apt-get update \
                             && apt-get install -y --no-install-recommends python3 \
                             && rm -rf /var/lib/apt/lists/* ;; \
                         azurelinux) tdnf install -y python3 \

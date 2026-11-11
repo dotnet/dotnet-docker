@@ -144,7 +144,7 @@ public abstract class ProductImageTests
 
         // UIDs below 1000 are reserved for system accounts
         Assert.True(uid >= 1000);
-        // Debian has a UID_MAX of 60000
+        // Linux distros typically have a UID_MAX of 60000
         Assert.True(uid <= 60000);
     }
 
@@ -281,16 +281,6 @@ public abstract class ProductImageTests
                 "openssl-libs",
                 "libstdc++"
             ],
-        { OS: { Family: OSFamily.Ubuntu, Version: "22.04" } } =>
-            [
-                "ca-certificates",
-                "gcc-12-base",
-                "libc6",
-                "libgcc-s1",
-                "libssl3",
-                "openssl",
-                "libstdc++6"
-            ],
         { OS: var os } when os == OS.ResoluteChiseled =>
             [
                 "ca-certificates",
@@ -344,16 +334,6 @@ public abstract class ProductImageTests
                 "libssl3",
                 "libstdc++"
             ],
-        { OS: var os } when os == OS.BookwormSlim =>
-            [
-                "ca-certificates",
-                "libc6",
-                "libgcc-s1",
-                "libicu72",
-                "libssl3",
-                "tzdata",
-                "libstdc++6"
-            ],
         _ => throw new NotSupportedException($"Unknown runtime-deps packages for OS '{imageData.OS}'")
     };
 
@@ -379,11 +359,6 @@ public abstract class ProductImageTests
         { OS: var os } when os == OS.NobleChiseled =>
             [
                     "libicu74",
-                    "tzdata"
-                ],
-        { OS: var os } when os == OS.JammyChiseled =>
-            [
-                    "libicu70",
                     "tzdata"
                 ],
         { OS.Family: OSFamily.Alpine } =>

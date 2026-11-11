@@ -17,8 +17,6 @@
 
     set installerImageTag to cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl") ^
 
-    set opensslPkg to when(match(osVersionBase, "jammy"), "libssl3", "libssl3t64") ^
-
     set basePkgs to [
             "base-files_base",
             "base-files_chisel",
@@ -26,21 +24,14 @@
             "ca-certificates_data",
             "libc6_libs",
             "libgcc-s1_libs",
-            cat(opensslPkg, "_libs"),
+            "libssl3t64_libs",
             "libstdc++6_libs"
         ] ^
 
-    _ tzdata package layout changed greatly between jammy and noble. tzdata_zoneinfo-icu is no longer necessary.
-        See https://github.com/canonical/chisel-releases/pull/91. ^
-    set tzdataPkgs to when(match(osVersionBase, "jammy"),
-        [
-            "tzdata_zoneinfo",
-            "tzdata_zoneinfo-icu"
-        ],
-        [
+    set tzdataPkgs to [
             "tzdata_zoneinfo",
             "tzdata-legacy_zoneinfo"
-        ]) ^
+        ] ^
     set icuPkgs to [ cat("libicu", VARIABLES[cat("libicu|", osVersionBase)], "_libs") ] ^
     set extraPkgs to cat(basePkgs, tzdataPkgs, icuPkgs) ^
 

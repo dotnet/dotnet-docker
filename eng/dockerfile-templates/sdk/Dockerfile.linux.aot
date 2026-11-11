@@ -4,8 +4,6 @@
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
-    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
-    set ubuntuVersion to when(find(OS_VERSION, "jammy") >= 0, "jammy", "noble") ^
 
     _ Native AOT only requires gcc. Native AOT in .NET really only needs a linker and something to drive the linker.
       The runtime falls back to using gcc to drive linking when clang is not present, and both use the same bfd linker
