@@ -205,11 +205,6 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
     [MemberData(nameof(GetImageData))]
     public void VerifyDnxInstallation(ProductImageData imageData)
     {
-        if (!imageData.SupportsDnx)
-        {
-            return;
-        }
-
         string dnxCommand = DockerHelper.IsLinuxContainerModeEnabled
             ? "dnx --help"
             : "dnx.cmd --help";
