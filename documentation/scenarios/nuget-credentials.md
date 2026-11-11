@@ -35,7 +35,7 @@ Here's an example `nuget.config` file containing the credentials:
 In the Dockerfile, the `nuget.config` file is copied via the build context and stored in the file system only for the `build` stage. In the `runtime` stage, only the binaries of the application are copied, not the `nuget.config` file so the credentials are not exposed in the final image.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 WORKDIR /source
 
 # Copy project file and restore as distinct layers
@@ -48,7 +48,7 @@ COPY --link . .
 RUN dotnet publish --no-restore -o /app
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/runtime:9.0
+FROM mcr.microsoft.com/dotnet/runtime:11.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
@@ -85,7 +85,7 @@ When making use of the `ARG` instruction, the name of the argument is made avail
 In the Dockerfile below, there are two stages: build and runtime. The build stage is responsible for building the application project. It defines two `ARG` values which match the names of the environment variables used in the the `nuget.config` file. But the build stage is not the final stage of the Dockerfile so the `--build-arg` values that are passed to the `docker build` command do not get exposed in the resulting image. All the final stage is really doing is copying the built output of the application from the build stage since that's all that's needed to run the application.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 
 ARG Nuget_CustomFeedUserName
 ARG Nuget_CustomFeedPassword
@@ -102,7 +102,7 @@ COPY --link . .
 RUN dotnet publish --no-restore -o /app
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/runtime:9.0
+FROM mcr.microsoft.com/dotnet/runtime:11.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
@@ -142,7 +142,7 @@ Instead, the credentials for `customfeed` are defined in the Dockerfile by makin
 ### Linux
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 ARG FEED_ACCESSTOKEN
 WORKDIR /source
 
@@ -159,7 +159,7 @@ COPY --link . .
 RUN dotnet publish --no-restore -o /app
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/runtime:9.0
+FROM mcr.microsoft.com/dotnet/runtime:11.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID
@@ -169,7 +169,7 @@ ENTRYPOINT ["./ConsoleApp"]
 ### Windows
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:9.0-nanoserver-ltsc2022 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 AS build
 WORKDIR /source
 
 SHELL ["pwsh", "-Command", "$ErrorActionPreference = 'Stop'; $ProgressPreference = 'SilentlyContinue';"]
@@ -194,7 +194,7 @@ COPY --link . .
 RUN dotnet publish --no-restore -o /app
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/runtime:9.0-nanoserver-ltsc2022
+FROM mcr.microsoft.com/dotnet/runtime:11.0-nanoserver-ltsc2025
 WORKDIR /app
 COPY --link --from=build /app .
 ENTRYPOINT ["ConsoleApp"]
@@ -280,7 +280,7 @@ The Dockerfile references the `nugetconfig` secret with the `--mount=type=secret
 
 ```Dockerfile
 # syntax=docker/dockerfile:1
-FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:11.0 AS build
 WORKDIR /source
 
 # Copy project file and restore as distinct layers
@@ -293,7 +293,7 @@ COPY --link . .
 RUN dotnet publish --no-restore -o /app
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/runtime:9.0
+FROM mcr.microsoft.com/dotnet/runtime:11.0
 WORKDIR /app
 COPY --link --from=build /app .
 USER $APP_UID

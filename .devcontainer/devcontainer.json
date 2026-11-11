@@ -1,5 +1,5 @@
 {
-    "image": "mcr.microsoft.com/dotnet/sdk:9.0-noble",
+    "image": "mcr.microsoft.com/dotnet/sdk:10.0-noble",
     "features": {
         "ghcr.io/devcontainers/features/common-utils": {
             "username": "app",

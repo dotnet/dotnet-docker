@@ -25,11 +25,11 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `8.0.11-noble-amd64`
-- `8.0.11-noble-arm64v8`
-- `8.0.11-nanoserver-ltsc2022`
-- `8.0.11-alpine3.21-arm64v8`
-- `8.0.11-bookworm-slim-arm32v7`
+- `10.0.15-noble-amd64`
+- `10.0.15-noble-arm64v8`
+- `10.0.15-nanoserver-ltsc2025`
+- `10.0.15-alpine3.24-arm64v8`
+- `10.0.15-resolute-arm32v7`
 
 ### `<Major.Minor .NET Version>-<OS>-<Architecture>`
 
@@ -37,11 +37,11 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `8.0-noble-arm64v8`
-- `8.0-noble-amd64`
-- `8.0-nanoserver-ltsc2022`
-- `8.0-alpine3.21-arm64v8`
-- `8.0-bookworm-slim-arm32v7`
+- `10.0-noble-arm64v8`
+- `10.0-noble-amd64`
+- `10.0-nanoserver-ltsc2025`
+- `10.0-alpine3.24-arm64v8`
+- `10.0-resolute-arm32v7`
 
 ## Multi-platform tags
 
@@ -49,8 +49,7 @@ These tags reference images for [multiple platforms](https://docs.docker.com/bui
 
 They include:
 
-- For .NET 10 and later, multi-platform tags refer to Ubuntu unless otherwise specified (like `11.0-alpine`). .NET 10 defaults to Ubuntu 24.04 (Noble), and .NET 11 defaults to Ubuntu 26.04 (Resolute).
-- For .NET versions prior to 10, multi-platform tags refer to Debian unless otherwise specified.
+- Multi-platform tags refer to Ubuntu unless otherwise specified (like `11.0-alpine`). .NET 10 defaults to Ubuntu 24.04 (Noble), and .NET 11 defaults to Ubuntu 26.04 (Resolute).
 - All [supported architectures](supported-platforms.md#architectures).
 
 > [!WARNING]
@@ -64,10 +63,10 @@ They include:
 > with a single-platform tag like so:
 >
 > ```Dockerfile
-> FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-ltsc2022
-> FROM mcr.microsoft.com/dotnet/sdk:8.0-nanoserver-1809
-> FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2019
-> FROM mcr.microsoft.com/dotnet/sdk:8.0-windowsservercore-ltsc2022
+> FROM mcr.microsoft.com/dotnet/sdk:10.0-nanoserver-ltsc2025
+> FROM mcr.microsoft.com/dotnet/sdk:10.0-nanoserver-ltsc2022
+> FROM mcr.microsoft.com/dotnet/sdk:10.0-windowsservercore-ltsc2025
+> FROM mcr.microsoft.com/dotnet/sdk:10.0-windowsservercore-ltsc2022
 > ```
 
 ### `<Major.Minor.Patch .NET Version>-<OS version>`
@@ -76,8 +75,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `8.0.11-noble`
-- `8.0.11-alpine3.21`
+- `10.0.15-noble`
+- `10.0.15-alpine3.24`
 
 ### `<Major.Minor .NET Version>-<OS version>`
 
@@ -85,8 +84,8 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `8.0-alpine3.21`
-- `8.0-noble`
+- `10.0-alpine3.24`
+- `10.0-noble`
 
 ### `<Major.Minor .NET Version>-alpine`
 
@@ -94,13 +93,13 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `8.0-alpine`
-- `9.0-alpine`
+- `10.0-alpine`
+- `11.0-alpine`
 
 > [!NOTE]
 >
-> - New versions of Alpine will be published with version-specific tags (e.g. `8.0-alpine3.21`).
-> - Floating tag (e.g. `8.0-alpine`) will be updated with the new Alpine version a month later.
+> - New versions of Alpine will be published with version-specific tags (e.g. `11.0-alpine3.24`).
+> - Floating tag (e.g. `11.0-alpine`) will be updated with the new Alpine version a month later.
 > - Tag changes will be [announced](https://github.com/dotnet/dotnet-docker/discussions/categories/announcements) so that users know when the tags they want are available.
 
 ### `<Major.Minor.Patch .NET Version>`
@@ -109,8 +108,8 @@ These "fixed version" tags reference an image with a specific `Major.Minor.Patch
 
 Examples:
 
-- `8.0.11`
-- `9.0.11`
+- `10.0.15`
+- `11.0.0`
 
 ### `<Major.Minor .NET Version>`
 
@@ -118,19 +117,19 @@ These "floating version" tags reference an image with a specific `Major.Minor` (
 
 Examples:
 
-- `8.0`
-- `9.0`
+- `10.0`
+- `11.0`
 
 ### Image Variants
 
-Starting with 8.0, .NET offers several image variants that provide different features for the size-focused OSes, Alpine, Azure Linux, and Ubuntu Chiseled.
+.NET offers several image variants that provide different features for the size-focused OSes, Alpine, Azure Linux, and Ubuntu Chiseled.
 You can use these variants by appending the variant name (e.g. `extra`, `chiseled`) to the OS name.
 
 Examples:
 
-- `8.0-noble-chiseled`
-- `8.0.11-noble-chiseled-extra`
-- `9.0.0-alpine3.21-extra`
+- `10.0-noble-chiseled`
+- `10.0.15-noble-chiseled-extra`
+- `10.0.15-alpine3.24-extra`
 
 For more information, see the [Image Variants documentation](./image-variants.md).
 
@@ -154,7 +153,7 @@ Each .NET release goes through multiple [support phases](https://github.com/dotn
 While a new .NET version is in preview, both the fixed and floating version tags have a special preview suffix.
 When a .NET version moves from Preview to Release Candidate, the `-preview` suffix is dropped from the floating version tags.
 This is because .NET Release Candidates are supported for production use under a "Go-Live" license, so the preview label no longer applies.
-In this case, fixed versions will use an `-rc.<RC Number>` suffix since the patch version would otherwise clash with the GA release (e.g. `9.0.0`).
+In this case, fixed versions will use an `-rc.<RC Number>` suffix since the patch version would otherwise clash with the GA release (e.g. `11.0.0`).
 
 | Support phase | Fixed version tag format | Floating version tag format |
 | --- | --- | --- |
@@ -170,10 +169,10 @@ See [.NET's release policies](https://github.com/dotnet/core/blob/main/release-p
 
 Examples:
 
-- `8.0.11`
-- `8.0.11-alpine3.21`
-- `9.0.0-preview.7`
-- `9.0.0-rc.1`
+- `10.0.15`
+- `10.0.15-alpine3.24`
+- `11.0.0-preview.7`
+- `11.0.0-rc.1`
 
 > [!NOTE]
 >
@@ -187,11 +186,11 @@ Examples:
 
 Examples:
 
-- `8.0`
-- `9.0`
-- `9.0-alpine3.21`
-- `9.0-preview`
-- `9.0-preview-noble`
+- `10.0`
+- `11.0`
+- `11.0-alpine3.24`
+- `11.0-preview`
+- `11.0-preview-resolute`
 
 > [!NOTE]
 >
@@ -204,15 +203,15 @@ Version-specific operating system tags reference an image with a specific OS ver
 
 Examples:
 
-- `8.0-noble`
-- `9.0-alpine3.21`
+- `10.0-noble`
+- `10.0-alpine3.24`
 
 > [!NOTE]
 >
 > - These tags are updated in response to base image updates (like an Ubuntu base image) for the supported life of the .NET release or until the OS they are based on reaches EOL, whichever is sooner.
 > - Digest pinning is required to request a specific patch of an operating system (e.g. `mcr.microsoft.com/dotnet/runtime@sha256:4d3d5a5131a0621509ab8a75f52955f2d0150972b5c5fb918e2e59d4cb9a9823`).
 > - If an image is only available for one operating system, then the operating system will be omitted from the tag.
-> - For [Debian](https://en.wikipedia.org/wiki/Debian_version_history) and [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used instead of version numbers.
+> - For [Ubuntu](https://en.wikipedia.org/wiki/Ubuntu_version_history) images, release codenames are used instead of version numbers.
 
 ### .NET appliance images
 

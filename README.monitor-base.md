@@ -19,8 +19,8 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 The following Dockerfiles demonstrate how you can use this base image to build a .NET Monitor image with a custom set of extensions.
 
-* [Ubuntu Chiseled - amd64](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.1/ubuntu-chiseled/amd64/Dockerfile)
-* [Ubuntu Chiseled - arm64v8](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.1/ubuntu-chiseled/arm64v8/Dockerfile)
+* [Azure Linux Distroless - amd64](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/10.0/azurelinux-distroless/amd64/Dockerfile)
+* [Azure Linux Distroless - arm64v8](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/10.0/azurelinux-distroless/arm64v8/Dockerfile)
 
 ## Related Repositories
 
@@ -68,7 +68,7 @@ Tags | Dockerfile | OS Version
 
 ### Image Update Policy
 
-* **Base Image Updates:** Images are re-built within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
+* **Base Image Updates:** Images are re-built within 12 hours of any updates to their base images (e.g. ubuntu:noble, windows/nanoserver:ltsc2025, etc.).
 * **.NET Releases:** Images are re-built as part of releasing new .NET versions. This includes new major versions, minor versions, and servicing releases.
 * **Critical CVEs:** Images are re-built to pick up critical CVE fixes as described by the CVE Update Policy below.
 * **Monthly Re-builds:** Images are re-built monthly, typically on the second Tuesday of the month, in order to pick up lower-severity CVE fixes.
