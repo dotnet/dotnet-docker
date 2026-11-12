@@ -53,3 +53,4 @@ extends:
           additionalServiceConnections:
           - name: $(kusto.serviceConnectionName)
           - name: $(marStatus.serviceConnectionName)
+          - name: DotnetContainersGitHubBot
