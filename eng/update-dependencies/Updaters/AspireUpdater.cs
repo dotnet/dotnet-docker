@@ -28,7 +28,19 @@ public sealed class AspireUpdater(
 
     public async Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken)
     {
-        Build build = await barClient.GetLatestBuildAsync(PublicRepository, channelId).WaitAsync(cancellationToken);
+        // Aspire channels receive builds from both the public and internal repos (e.g. internal servicing
+        // builds), so the latest build may come from either one.
+        Build?[] builds = await Task.WhenAll(
+            barClient.GetLatestBuildAsync(PublicRepository, channelId),
+            barClient.GetLatestBuildAsync(InternalRepository, channelId)).WaitAsync(cancellationToken);
+
+        Build build = builds.OfType<Build>().MaxBy(b => b.DateProduced)
+            ?? throw new InvalidOperationException($"Could not find an Aspire build in BAR channel {channelId}.");
+
+        logger.LogInformation(
+            "Using latest Aspire build {BuildId} from {Repository}",
+            build.Id, build.GitHubRepository ?? build.AzureDevOpsRepository);
+
         return await ResolveFromBarBuildAsync(build, cancellationToken);
     }
 
