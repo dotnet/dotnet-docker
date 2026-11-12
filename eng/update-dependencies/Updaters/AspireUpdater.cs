@@ -48,8 +48,13 @@ public sealed class AspireUpdater(
             internalBuild = null;
         }
 
-        Build build = new[] { publicBuild, internalBuild }.OfType<Build>().MaxBy(b => b.DateProduced)
-            ?? throw new InvalidOperationException($"Could not find a usable Aspire build in BAR channel {channelId}.");
+        Build[] candidates = new[] { publicBuild, internalBuild }.OfType<Build>().ToArray();
+        if (candidates.Length == 0)
+        {
+            throw new InvalidOperationException($"Could not find a usable Aspire build in BAR channel {channelId}.");
+        }
+
+        Build build = candidates.MaxBy(b => b.DateProduced)!;
 
         logger.LogInformation(
             "Using latest Aspire build {BuildId} from {Repository}",
