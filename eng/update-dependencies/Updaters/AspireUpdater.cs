@@ -54,7 +54,7 @@ public sealed class AspireUpdater(
             throw new InvalidOperationException($"Could not find a usable Aspire build in BAR channel {channelId}.");
         }
 
-        Build build = candidates.MaxBy(b => b.DateProduced)!;
+        Build build = candidates.OrderByDescending(b => b.DateProduced).First();
 
         logger.LogInformation(
             "Using latest Aspire build {BuildId} from {Repository}",
