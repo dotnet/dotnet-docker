@@ -100,9 +100,11 @@ public sealed class AspireUpdater(
             GetDashboardAssets(build).First().Version, isStableRelease: true);
         string tag = $"v{productVersion}";
 
+        // Octokit has no "exists" API for releases. Get returns only published releases (never drafts)
+        // and throws NotFoundException when there is no release for the tag.
         try
         {
-            await releases.Get("microsoft", "aspire", tag).WaitAsync(cancellationToken);
+            _ = await releases.Get("microsoft", "aspire", tag).WaitAsync(cancellationToken);
             return true;
         }
         catch (NotFoundException)
