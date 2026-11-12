@@ -9,7 +9,7 @@ RUN powershell -Command `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         $dotnet_version = '11.0.1'; `
-        $dotnet_build_version = $dotnet_version + '-servicing.26560.122'; `
+        $dotnet_build_version = $dotnet_version + '-servicing.26561.113'; `
         $dotnet_file = 'dotnet-runtime-' + $dotnet_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
