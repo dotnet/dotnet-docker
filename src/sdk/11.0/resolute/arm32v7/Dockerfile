@@ -3,11 +3,11 @@ ARG REPO=mcr.microsoft.com/dotnet/aspnet
 FROM arm32v7/buildpack-deps:jammy-curl AS installer
 
 # Install .NET SDK
-RUN dotnet_sdk_version=11.0.100-rc.3.26522.148 \
+RUN dotnet_sdk_version=11.0.100 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512 \
-    && echo "$(cat dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512| tr 'A-F' 'a-f')  dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz" | sha512sum -c - \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512 \
+    && sha512sum -c dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz --directory /dotnet ./dnx ./packs ./sdk ./sdk-manifests ./templates ./LICENSE.txt ./ThirdPartyNotices.txt \
     && rm \
@@ -15,14 +15,14 @@ RUN dotnet_sdk_version=11.0.100-rc.3.26522.148 \
         dotnet-sdk-$dotnet_sdk_version-linux-arm.tar.gz.sha512
 
 # Download PowerShell
-RUN powershell_version=7.7.0-rc.1 \
+RUN powershell_version=7.7.0 \
     && curl --fail --show-error --location --output PowerShell.Linux.arm32.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Linux.arm32.$powershell_version.nupkg \
-    && powershell_sha256='89b2c8fb61abf6ef81ec4c307f029a646e3c7f8fd6f244be10e46c92efcc2514' \
+    && powershell_sha256='171d94d1cebbd83e93b6a4290e7a15883d5ebbaafbc6949a13afee383b3fb86f' \
     && echo "$powershell_sha256  PowerShell.Linux.arm32.$powershell_version.nupkg" | sha256sum -c -
 
 
 # .NET SDK image
-FROM $REPO:11.0.0-rc.3-resolute-arm32v7
+FROM $REPO:11.0.0-resolute-arm32v7
 
 ENV \
     # Do not generate certificate
@@ -30,9 +30,11 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=11.0.100-rc.3.26522.148 \
+    DOTNET_SDK_VERSION=11.0.100 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Use /tmp for private VSTest artifacts directories in containers
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=/tmp \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage
@@ -48,14 +50,14 @@ RUN apt-get update \
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
-COPY --from=installer ["/PowerShell.Linux.arm32.7.7.0-rc.1.nupkg", "/"]
+COPY --from=installer ["/PowerShell.Linux.arm32.7.7.0.nupkg", "/"]
 
 RUN ln -s /usr/share/dotnet/dnx /usr/bin/dnx \
     # Trigger first run experience by running arbitrary cmd
     && dotnet help
 
 # Install PowerShell global tool
-RUN powershell_version=7.7.0-rc.1 \
+RUN powershell_version=7.7.0 \
     && mkdir --parents /usr/share/powershell \
     && dotnet tool install --add-source / --tool-path /usr/share/powershell --version $powershell_version PowerShell.Linux.arm32 \
     && dotnet nuget locals all --clear \

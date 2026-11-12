@@ -10,8 +10,8 @@ RUN powershell -Command " `
         $ErrorActionPreference = 'Stop'; `
         $ProgressPreference = 'SilentlyContinue'; `
         `
-        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.56.0.windows.4/MinGit-2.56.0.4-64-bit.zip; `
-        $mingit_sha256 = 'e3bf78351fe777fba47ddee5950082f8a98bb0f02604fdc7ba3ee2cb68ffa877'; `
+        Invoke-WebRequest -OutFile mingit.zip https://github.com/git-for-windows/git/releases/download/v2.56.1.windows.1/MinGit-2.56.1-64-bit.zip; `
+        $mingit_sha256 = '4a92850b6e917da4fd010669b614b55dccf5b0ec333a534cc4be4700dfefdafd'; `
         if ((Get-FileHash mingit.zip -Algorithm sha256).Hash -ne $mingit_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
@@ -25,8 +25,8 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '9.0.320'; `
-        $dotnet_version = '9.0.22'; `
+        $dotnet_sdk_version = '9.0.321'; `
+        $dotnet_version = '9.0.23'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
@@ -74,15 +74,17 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:9.0.22-nanoserver-ltsc2025
+FROM $REPO:9.0.23-nanoserver-ltsc2025
 
 ENV `
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Do not show first run text
     DOTNET_NOLOGO=true `
+    # Use a shared base for private, user-only VSTest artifacts directories
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=C:\Windows\Temp `
     # SDK version
-    DOTNET_SDK_VERSION=9.0.320 `
+    DOTNET_SDK_VERSION=9.0.321 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
