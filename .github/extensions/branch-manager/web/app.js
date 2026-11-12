@@ -227,7 +227,6 @@ function reasonLabel(reasons) {
     const [reason] = reasons;
     return {
         "cherry-pick": ["Auto: cherry-pick", "Matched by a cherry-pick trailer"],
-        reference: ["Auto: reference", "Matched by a port/backport reference to another PR"],
         title: ["Auto: same title", "Matched by identical title on different branches"],
     }[reason];
 }

@@ -1,6 +1,6 @@
 import { runCommand } from "./git.mjs";
 
-const FIELDS = "number,title,author,createdAt,url,headRefName,isDraft,body";
+const FIELDS = "number,title,author,createdAt,url,isDraft";
 
 /** Open pull requests targeting `branch`, via the GitHub CLI. */
 export async function listOpenPullRequests(cwd, slug, branch) {
@@ -17,9 +17,7 @@ export async function listOpenPullRequests(cwd, slug, branch) {
         author: pr.author?.login ?? "unknown",
         createdAt: pr.createdAt,
         url: pr.url,
-        headRef: pr.headRefName,
         isDraft: pr.isDraft,
-        body: pr.body ?? "",
         base: branch,
     }));
 }

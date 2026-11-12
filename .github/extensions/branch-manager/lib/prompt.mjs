@@ -8,27 +8,13 @@
 export function buildPortPrompt({ repoSlug, target, items }) {
     const many = items.length > 1;
     const repo = repoSlug ? ` in ${repoSlug}` : "";
-    const sources = [...new Set(items.flatMap((item) => item.branches))];
-    const title = many
-        ? `Port changes from ${sources.length ? sources.join(", ") : "other branches"} to ${target}`
-        : `[${target}] ${stripTitle(items[0].changes.at(-1).subject)}`;
 
     const lines = [
-        `Port the following ${many ? "changes" : "change"} to the \`${target}\` branch${repo}. ` +
+        `Use the porting-changes skill to port the following ${many ? "changes" : "change"} to the \`${target}\` branch${repo}. ` +
             `Put ${many ? "all of them" : "it"} in a single new branch and a single pull request.`,
         "",
         many ? "Changes to port, oldest first:" : "Change to port:",
         ...items.flatMap(describeItem),
-        "",
-        "Instructions:",
-        "- Use the porting-changes skill and its pull request template.",
-        `- Base the new branch on \`origin/${target}\`. Cherry-pick the final commits listed above, in order, ` +
-            "and resolve any conflicts so each change keeps its original intent.",
-        `- Pull request title: \`${title}\``,
-        '- In the pull request description, link every original pull request listed above (for example "Ports #1234") ' +
-            "so the Branch manager can associate this pull request with the originals.",
-        ...(many ? ["- Since this pull request contains multiple changes, it should be rebase merged."] : []),
-        "- Show me the result and get my confirmation before opening the pull request.",
     ];
     return lines.join("\n");
 }

@@ -1,39 +1,10 @@
 const PR_SUFFIX = /\(#(\d+)\)\s*$/;
 const CHERRY_PICK = /\(cherry picked from commit ([0-9a-f]{7,40})\)/gi;
-const PORT_WORD = String.raw`(?:back-?port|forward-?port|port|cherry[- ]?pick|mirror)(?:s|ed|ing)?`;
-// #123, owner/repo#123, a .../pull/123 URL, or a Markdown link to one of those.
-const PR_REF = [
-    String.raw`\[(?:[\w.-]+\/[\w.-]+)?#\d+\b[^\]\n]*\]\([^)\s]*\)`,
-    String.raw`\[[^\]\n]*\]\(https?:\/\/[^)\s]*\/pull\/\d+[^)\s]*\)`,
-    String.raw`(?:[\w.-]+\/[\w.-]+)?#\d+\b`,
-    String.raw`https?:\/\/[^\s)\]]*\/pull\/\d+\b`,
-].join("|");
-const REF_LIST = String.raw`(?:${PR_REF})(?:(?:[ \t]*,[ \t]*(?:and[ \t]+)?|[ \t]+and[ \t]+|[ \t]*&[ \t]*|[ \t]+)(?:${PR_REF}))*`;
-// The port word must govern the references: "Ports #1, #2 and #3", "Backport of #1", "Port changes from <url>".
-const PORT_REFERENCE = new RegExp(
-    String.raw`\b${PORT_WORD}:?[ \t]+(?:(?:the[ \t]+)?(?:changes?|commits?|prs?|pull[ \t]+requests?)[ \t]+)?(?:(?:of|from)[ \t]+)?(${REF_LIST})`,
-    "gi",
-);
-// A line that introduces a list of ported changes: "Ports:", "This PR ports the following changes ...".
-const PORT_INTRO = new RegExp(
-    String.raw`^[ \t]*(?:#+[ \t]*)?(?:\*\*)?(?:\[[^\]\n]*\][ \t]*)*(?:this[ \t]+(?:pr|pull[ \t]+request|change)[ \t]+)?${PORT_WORD}\b`,
-    "i",
-);
-const LIST_ITEM = /^[ \t]*(?:[-*+]|\d+[.)]|\|)/;
-// A list item or table row that starts with a PR reference.
-const LISTED_REF = new RegExp(
-    String.raw`^[ \t]*(?:[-*+]|\d+[.)]|\|)[ \t]*(?:\*\*)?(?:${PORT_WORD}:?[ \t]+)?(?:${PR_REF})`,
-    "i",
-);
-const PR_NUMBER = /(?:#|\/pull\/)(\d+)/g;
-// Branch names made by the repo's /backport workflow, e.g. backport/pr-7457-to-main.
-const BACKPORT_BRANCH = /^backport\/pr-(\d+)-to-/;
-
 const TITLE_MATCH_WINDOW_MS = 45 * 24 * 60 * 60 * 1000;
 const MIN_TITLE_LENGTH = 8;
 
 // Strongest evidence first; used to pick the single label shown on a card.
-export const LINK_REASONS = ["manual", "cherry-pick", "reference", "title"];
+export const LINK_REASONS = ["manual", "cherry-pick", "title"];
 
 export function extractPr(subject) {
     const match = PR_SUFFIX.exec(subject);
@@ -117,46 +88,12 @@ function findBySha(commits, sha) {
     return undefined;
 }
 
-/** PR numbers this change says it is a port of. */
-function referencedPrs(node) {
-    const numbers = new Set();
-    const text = `${node.subject}\n${node.body}`;
-    const branch = isPullRequest(node) ? BACKPORT_BRANCH.exec(node.headRef ?? "") : null;
-    if (branch) {
-        numbers.add(Number(branch[1]));
-    }
-    for (const match of text.matchAll(PORT_REFERENCE)) {
-        for (const ref of match[1].matchAll(PR_NUMBER)) {
-            numbers.add(Number(ref[1]));
-        }
-    }
-
-    // Port PR descriptions list their sources below an intro line such as "This PR ports the following changes:".
-    let inList = false;
-    for (const line of text.split(/\r?\n/)) {
-        if (PORT_INTRO.test(line)) {
-            inList = true;
-        } else if (inList && line.trim() && !LIST_ITEM.test(line)) {
-            inList = false;
-        } else if (inList) {
-            const listed = LISTED_REF.exec(line);
-            const first = listed ? [...listed[0].matchAll(PR_NUMBER)][0] : null;
-            if (first) {
-                numbers.add(Number(first[1]));
-            }
-        }
-    }
-
-    numbers.delete(node.pr);
-    return numbers;
-}
-
 /**
  * Groups changes across branches into rows. A change is a commit or an open pull request.
  *
  * A commit reachable from several tracked branches (e.g. after a merge) is one commit.
  * Different changes are grouped by manual links first, then by automatic evidence
- * (cherry-pick trailers, "backport of #N" references, matching titles).
+ * (`git cherry-pick -x` trailers, matching titles).
  *
  * Open pull requests are identified as `pr:<number>`. Rows that contain one are listed
  * first, because they are work in flight.
@@ -192,14 +129,13 @@ export function buildBoard({
             kind: "pr",
             pr: pr.number,
             subject: pr.title,
-            body: pr.body ?? "",
+            body: "",
             author: pr.author,
             date: pr.createdAt,
             time: Date.parse(pr.createdAt),
             branches: [pr.base],
             url: pr.url,
             isDraft: pr.isDraft,
-            headRef: pr.headRef,
         });
     }
 
@@ -236,39 +172,6 @@ export function buildBoard({
             const source = findBySha(nodes, match[1]);
             if (source && !isDetached(source)) {
                 components.union(commit.sha, source.sha, "cherry-pick");
-            }
-        }
-    }
-
-    const linkableByPr = new Map();
-    for (const node of linkable) {
-        if (node.pr !== null) {
-            linkableByPr.set(node.pr, [...(linkableByPr.get(node.pr) ?? []), node]);
-        }
-    }
-    for (const node of linkable) {
-        const sources = [...referencedPrs(node)]
-            .map((number) =>
-                (linkableByPr.get(number) ?? []).filter(
-                    (target) => target.sha !== node.sha && disjoint(node.branches, target.branches),
-                ),
-            )
-            .filter((targets) => targets.length > 0);
-
-        // A change that ports several PRs at once can't share a row with all of them without
-        // fusing independent changes, so it joins only the first source it can fit with.
-        const batch = sources.length > 1;
-        if (batch) {
-            const placed = (targets) => targets.some((target) => components.find(target.sha) === components.find(node.sha));
-            sources.sort((a, b) => Number(placed(b)) - Number(placed(a)));
-        }
-        for (const targets of sources) {
-            let attached = false;
-            for (const target of targets) {
-                attached = components.union(node.sha, target.sha, "reference", { strict: batch }) || attached;
-            }
-            if (batch && attached) {
-                break;
             }
         }
     }
