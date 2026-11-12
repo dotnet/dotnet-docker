@@ -392,12 +392,14 @@ public abstract class ProductImageTests
             [
                     "icu",
                     "libicu78",
-                    "tzdata"
+                    "tzdata",
+                    "tzdata-legacy"
                 ],
         { OS: var os } when os == OS.NobleChiseled =>
             [
                     "libicu74",
-                    "tzdata"
+                    "tzdata",
+                    "tzdata-legacy"
                 ],
         { OS: var os } when os == OS.JammyChiseled =>
             [
