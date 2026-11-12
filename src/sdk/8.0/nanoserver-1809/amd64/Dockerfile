@@ -25,8 +25,8 @@ RUN powershell -Command " `
         $ProgressPreference = 'SilentlyContinue'; `
         `
         # Retrieve .NET SDK
-        $dotnet_sdk_version = '8.0.427'; `
-        $dotnet_version = '8.0.33'; `
+        $dotnet_sdk_version = '8.0.428'; `
+        $dotnet_version = '8.0.34'; `
         $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
         $dotnet_checksums_file = $dotnet_version + '-sha.txt'; `
         `
@@ -74,15 +74,17 @@ RUN powershell -Command " `
 
 
 # SDK image
-FROM $REPO:8.0.33-nanoserver-1809
+FROM $REPO:8.0.34-nanoserver-1809
 
 ENV `
     # Do not generate certificate
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Do not show first run text
     DOTNET_NOLOGO=true `
+    # Use a shared base for private, user-only VSTest artifacts directories
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=C:\Windows\Temp `
     # SDK version
-    DOTNET_SDK_VERSION=8.0.427 `
+    DOTNET_SDK_VERSION=8.0.428 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance

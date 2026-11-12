@@ -1,14 +1,14 @@
 ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
-FROM $REPO:8.0.33-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:8.0.34-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Install .NET SDK
-RUN dotnet_sdk_version=8.0.427 \
-    && dotnet_version=8.0.33 \
+RUN dotnet_sdk_version=8.0.428 \
+    && dotnet_version=8.0.34 \
     && curl --fail --show-error --location \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/Sdk/$dotnet_sdk_version/dotnet-sdk-$dotnet_sdk_version-linux-arm64.tar.gz \
         --remote-name https://builds.dotnet.microsoft.com/dotnet/checksums/$dotnet_version-sha.txt \
@@ -28,7 +28,7 @@ RUN powershell_version=7.4.22 \
 
 
 # .NET SDK image
-FROM $REPO:8.0.33-azurelinux3.0-arm64v8
+FROM $REPO:8.0.34-azurelinux3.0-arm64v8
 
 ENV \
     # Do not generate certificate
@@ -36,9 +36,11 @@ ENV \
     # Do not show first run text
     DOTNET_NOLOGO=true \
     # SDK version
-    DOTNET_SDK_VERSION=8.0.427 \
+    DOTNET_SDK_VERSION=8.0.428 \
     # Enable correct mode for dotnet watch (only mode supported in a container)
     DOTNET_USE_POLLING_FILE_WATCHER=true \
+    # Use /tmp for private VSTest artifacts directories in containers
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=/tmp \
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip \
     # PowerShell telemetry for docker image usage

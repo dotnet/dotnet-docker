@@ -1,18 +1,18 @@
 ARG REPO=mcr.microsoft.com/dotnet/runtime-deps
 
 # Installer image
-FROM $REPO:11.0.0-rc.3-azurelinux3.0-arm64v8 AS installer
+FROM $REPO:11.0.0-azurelinux3.0-arm64v8 AS installer
 
 RUN tdnf install -y \
         tar \
     && tdnf clean all
 
 # Retrieve .NET Runtime
-RUN dotnet_version=11.0.0-rc.3.26522.148 \
+RUN dotnet_version=11.0.0 \
     && curl --fail --show-error --location \
-        --remote-name https://ci.dot.net/public/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
-        --remote-name https://ci.dot.net/public-checksums/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
-    && echo "$(cat dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512)  dotnet-runtime-$dotnet_version-linux-arm64.tar.gz" | sha512sum -c - \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz \
+        --remote-name https://builds.dotnet.microsoft.com/dotnet/Runtime/$dotnet_version/dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
+    && sha512sum -c dotnet-runtime-$dotnet_version-linux-arm64.tar.gz.sha512 \
     && mkdir --parents /dotnet \
     && tar --gzip --extract --no-same-owner --file dotnet-runtime-$dotnet_version-linux-arm64.tar.gz --directory /dotnet \
     && rm \
@@ -21,10 +21,10 @@ RUN dotnet_version=11.0.0-rc.3.26522.148 \
 
 
 # .NET runtime image
-FROM $REPO:11.0.0-rc.3-azurelinux3.0-arm64v8
+FROM $REPO:11.0.0-azurelinux3.0-arm64v8
 
 # .NET Runtime version
-ENV DOTNET_VERSION=11.0.0-rc.3.26522.148
+ENV DOTNET_VERSION=11.0.0
 
 COPY --from=installer ["/dotnet", "/usr/share/dotnet"]
 
