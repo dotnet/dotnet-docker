@@ -5,11 +5,13 @@ using System.Globalization;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.Logging;
+using Octokit;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public sealed class AspireUpdater(
     IBasicBarClient barClient,
+    IReleasesClient releases,
     HttpClient httpClient,
     ILogger<AspireUpdater> logger)
         : IBarBuildUpdater, IBarChannelUpdater
@@ -34,8 +36,20 @@ public sealed class AspireUpdater(
             barClient.GetLatestBuildAsync(PublicRepository, channelId),
             barClient.GetLatestBuildAsync(InternalRepository, channelId)).WaitAsync(cancellationToken);
 
-        Build build = builds.OfType<Build>().MaxBy(b => b.DateProduced)
-            ?? throw new InvalidOperationException($"Could not find an Aspire build in BAR channel {channelId}.");
+        Build? publicBuild = builds[0];
+        Build? internalBuild = builds[1];
+
+        // Internal builds may be unreleased (e.g. embargoed security fixes). Only use one after its
+        // version has been publicly released, to avoid disclosing it early in a public PR.
+        if (internalBuild is not null
+            && (publicBuild is null || internalBuild.DateProduced > publicBuild.DateProduced)
+            && !await IsReleasedOnGitHubAsync(internalBuild, cancellationToken))
+        {
+            internalBuild = null;
+        }
+
+        Build build = new[] { publicBuild, internalBuild }.OfType<Build>().MaxBy(b => b.DateProduced)
+            ?? throw new InvalidOperationException($"Could not find a usable Aspire build in BAR channel {channelId}.");
 
         logger.LogInformation(
             "Using latest Aspire build {BuildId} from {Repository}",
@@ -51,6 +65,17 @@ public sealed class AspireUpdater(
             throw new ArgumentException($"BAR build {build.Id} is not an Aspire build.", nameof(build));
         }
 
+        Asset[] dashboardAssets = GetDashboardAssets(build);
+        string version = dashboardAssets.First().Version;
+        logger.LogInformation("Found Aspire build version: {Version}", version);
+
+        return Task.FromResult(new DependencyUpdate(
+            Description: $"Update Aspire Dashboard to {version}",
+            ApplyAsync: (variables, _, token) => ApplyAsync(variables, dashboardAssets, version, token)));
+    }
+
+    private static Asset[] GetDashboardAssets(Build build)
+    {
         Asset[] dashboardAssets = build.Assets.Where(asset =>
             asset.Name.Contains("aspire-dashboard-linux-x64")
             || asset.Name.Contains("aspire-dashboard-linux-arm64"))
@@ -61,12 +86,27 @@ public sealed class AspireUpdater(
             throw new InvalidOperationException($"Could not find aspire-dashboard-linux-* assets in build {build.Id}");
         }
 
-        string version = dashboardAssets.First().Version;
-        logger.LogInformation("Found Aspire build version: {Version}", version);
+        return dashboardAssets;
+    }
 
-        return Task.FromResult(new DependencyUpdate(
-            Description: $"Update Aspire Dashboard to {version}",
-            ApplyAsync: (variables, _, token) => ApplyAsync(variables, dashboardAssets, version, token)));
+    private async Task<bool> IsReleasedOnGitHubAsync(Build build, CancellationToken cancellationToken)
+    {
+        string productVersion = VersionHelper.ResolveProductVersion(
+            GetDashboardAssets(build).First().Version, isStableRelease: true);
+        string tag = $"v{productVersion}";
+
+        try
+        {
+            await releases.Get("microsoft", "aspire", tag).WaitAsync(cancellationToken);
+            return true;
+        }
+        catch (NotFoundException)
+        {
+            logger.LogInformation(
+                "Skipping internal Aspire build {BuildId}: no public GitHub release {Tag} exists yet",
+                build.Id, tag);
+            return false;
+        }
     }
 
     private async Task ApplyAsync(
