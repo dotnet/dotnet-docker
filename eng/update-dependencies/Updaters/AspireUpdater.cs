@@ -36,31 +36,31 @@ public sealed class AspireUpdater(
             barClient.GetLatestBuildAsync(PublicRepository, channelId),
             barClient.GetLatestBuildAsync(InternalRepository, channelId)).WaitAsync(cancellationToken);
 
-        Build? publicBuild = builds[0];
-        Build? internalBuild = builds[1];
+        Build? publicRepoBuild = builds[0];
+        Build? internalRepoBuild = builds[1];
 
         // Internal builds may be unreleased (e.g. embargoed security fixes). Only use one after its
         // version has been publicly released, to avoid disclosing it early in a public PR.
-        if (internalBuild is not null
-            && (publicBuild is null || internalBuild.DateProduced > publicBuild.DateProduced)
-            && !await IsReleasedOnGitHubAsync(internalBuild, cancellationToken))
+        if (internalRepoBuild is not null
+            && (publicRepoBuild is null || internalRepoBuild.DateProduced > publicRepoBuild.DateProduced)
+            && !await IsReleasedOnGitHubAsync(internalRepoBuild, cancellationToken))
         {
-            internalBuild = null;
+            internalRepoBuild = null;
         }
 
-        Build[] candidates = new[] { publicBuild, internalBuild }.OfType<Build>().ToArray();
+        Build[] candidates = new[] { publicRepoBuild, internalRepoBuild }.OfType<Build>().ToArray();
         if (candidates.Length == 0)
         {
             throw new InvalidOperationException($"Could not find a usable Aspire build in BAR channel {channelId}.");
         }
 
-        Build build = candidates.OrderByDescending(b => b.DateProduced).First();
+        Build latestPublicBuild = candidates.OrderByDescending(b => b.DateProduced).First();
 
         logger.LogInformation(
             "Using latest Aspire build {BuildId} from {Repository}",
-            build.Id, build.GitHubRepository ?? build.AzureDevOpsRepository);
+            latestPublicBuild.Id, latestPublicBuild.GitHubRepository ?? latestPublicBuild.AzureDevOpsRepository);
 
-        return await ResolveFromBarBuildAsync(build, cancellationToken);
+        return await ResolveFromBarBuildAsync(latestPublicBuild, cancellationToken);
     }
 
     public Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken)
