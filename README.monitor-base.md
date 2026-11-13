@@ -23,8 +23,8 @@ The [.NET Docker samples](https://github.com/dotnet/dotnet-docker/blob/main/samp
 
 The following Dockerfiles demonstrate how you can use this base image to build a .NET Monitor image with a custom set of extensions.
 
-* [Ubuntu Chiseled - amd64](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.1/ubuntu-chiseled/amd64/Dockerfile)
-* [Ubuntu Chiseled - arm64v8](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/8.1/ubuntu-chiseled/arm64v8/Dockerfile)
+* [Azure Linux Distroless - amd64](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/10.0/azurelinux-distroless/amd64/Dockerfile)
+* [Azure Linux Distroless - arm64v8](https://github.com/dotnet/dotnet-docker/blob/main/src/monitor/10.0/azurelinux-distroless/arm64v8/Dockerfile)
 
 ## Related Repositories
 
@@ -52,18 +52,12 @@ The following Dockerfiles demonstrate how you can use this base image to build a
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
 10.0.6-preview.1-amd64, 10.0-amd64, 10.0.6-preview.1, 10.0, 10, latest | [Dockerfile](src/monitor-base/10.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
-9.0.6-amd64, 9.0-amd64, 9.0.6, 9.0, 9 | [Dockerfile](src/monitor-base/9.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
-8.1.4-ubuntu-chiseled-amd64, 8.1-ubuntu-chiseled-amd64, 8-ubuntu-chiseled-amd64, 8.1.4-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.4, 8.1, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/amd64/Dockerfile) | Ubuntu 22.04
-8.1.4-azurelinux-distroless-amd64, 8.1-azurelinux-distroless-amd64, 8-azurelinux-distroless-amd64, 8.1.4-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor-base/8.1/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
 10.0.6-preview.1-arm64v8, 10.0-arm64v8, 10.0.6-preview.1, 10.0, 10, latest | [Dockerfile](src/monitor-base/10.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-9.0.6-arm64v8, 9.0-arm64v8, 9.0.6, 9.0, 9 | [Dockerfile](src/monitor-base/9.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
-8.1.4-ubuntu-chiseled-arm64v8, 8.1-ubuntu-chiseled-arm64v8, 8-ubuntu-chiseled-arm64v8, 8.1.4-ubuntu-chiseled, 8.1-ubuntu-chiseled, 8-ubuntu-chiseled, 8.1.4, 8.1, 8 | [Dockerfile](src/monitor-base/8.1/ubuntu-chiseled/arm64v8/Dockerfile) | Ubuntu 22.04
-8.1.4-azurelinux-distroless-arm64v8, 8.1-azurelinux-distroless-arm64v8, 8-azurelinux-distroless-arm64v8, 8.1.4-azurelinux-distroless, 8.1-azurelinux-distroless, 8-azurelinux-distroless | [Dockerfile](src/monitor-base/8.1/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 <!--End of generated tags-->
 
@@ -79,7 +73,7 @@ Tags | Dockerfile | OS Version
 
 ### Image Update Policy
 
-* **Base Image Updates:** Images are re-built within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
+* **Base Image Updates:** Images are re-built within 12 hours of any updates to their base images (e.g. ubuntu:noble, windows/nanoserver:ltsc2025, etc.).
 * **.NET Releases:** Images are re-built as part of releasing new .NET versions. This includes new major versions, minor versions, and servicing releases.
 * **Critical CVEs:** Images are re-built to pick up critical CVE fixes as described by the CVE Update Policy below.
 * **Monthly Re-builds:** Images are re-built monthly, typically on the second Tuesday of the month, in order to pick up lower-severity CVE fixes.

@@ -36,8 +36,6 @@ You can use the following image tags:
 
 * `11.0-azurelinux3.0-distroless`
 * `10.0-azurelinux3.0-distroless`
-* `9.0-azurelinux3.0-distroless`
-* `8.0-azurelinux3.0-distroless`
 
 ### Installing Additional Packages
 

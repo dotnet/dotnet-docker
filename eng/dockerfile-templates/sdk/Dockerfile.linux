@@ -18,7 +18,6 @@
     set isPowerShellSupported to !(isAlpine && ARCH_SHORT != "x64") ^
     set isPowerShellInternal to isPowerShellSupported &&
         find(VARIABLES[cat("powershell|", dotnetVersion, "|base-url")], "pscoretestdata") >= 0 ^
-    set includePowerShellVars to isPowerShellSupported || dotnetVersion = "8.0" || dotnetVersion = "9.0" ^
     set powershellNupkgPlatform to when(isAlpine, "Linux.Alpine", cat("Linux.", ARCH_NUPKG)) ^
     set powershellNupkgName to cat(
         "PowerShell.",
@@ -28,18 +27,8 @@
         ".nupkg"
     ) ^
 
-    set dnxIsSupported to dotnetVersion != "8.0" && dotnetVersion != "9.0" ^
-
     set pkgs to filter(
         when(isAlpine,
-            when(dotnetVersion = "8.0",
-            [
-                "curl",
-                "git",
-                "icu-data-full",
-                "icu-libs",
-                "tzdata",
-            ],
             [
                 "curl",
                 "git",
@@ -47,7 +36,7 @@
                 "icu-libs",
                 "libatomic",
                 "tzdata",
-            ]),
+            ],
         when(isAzureLinux,
             [
                 "git",
@@ -63,16 +52,14 @@
         )), len) ^
 
     set sdkExtractPaths to [
+        "./dnx",
         "./packs",
         "./sdk",
         "./sdk-manifests",
         "./templates",
         "./LICENSE.txt",
         "./ThirdPartyNotices.txt"
-    ]^
-    if (dnxIsSupported):{{
-        set sdkExtractPaths to cat(["./dnx"], sdkExtractPaths)
-    }}^_
+    ]
 
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 # Installer image
@@ -97,7 +84,7 @@ RUN {{if isPowerShellInternal:--mount=type=secret,id=ACCESSTOKEN,required=true }
 # .NET SDK image
 FROM {{baseImageTag}}
 
-{{InsertTemplate("Dockerfile.envs", ["include-powershell-vars": includePowerShellVars])}}
+{{InsertTemplate("Dockerfile.envs", ["include-powershell-vars": isPowerShellSupported])}}
 
 RUN {{InsertTemplate("../Dockerfile.linux.install-pkgs",
 [
@@ -108,14 +95,13 @@ COPY --from=installer ["/dotnet", "/usr/share/dotnet"]{{if isPowerShellSupported
 
 COPY --from=installer ["/{{powershellNupkgName}}", "/"]}}
 
-{{if dnxIsSupported:RUN {{
+RUN {{
         InsertTemplate("../Dockerfile.linux.symlink", [
             "from": "/usr/share/dotnet/dnx",
             "to": "/usr/bin/dnx"
         ])
     }} \
-    }}{{InsertTemplate("Dockerfile.linux.first-run", [
-        "append-cmd": dnxIsSupported
-    ], when(dnxIsSupported, "    ", ""))}}{{if isPowerShellSupported:
+    # Trigger first run experience by running arbitrary cmd
+    && dotnet help{{if isPowerShellSupported:
 
 {{InsertTemplate("Dockerfile.linux.install-powershell")}}}}

@@ -1,5 +1,3 @@
-ARG REPO=mcr.microsoft.com/dotnet/aspnet
-
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
@@ -23,7 +21,7 @@ RUN yarp_version=3.0.0-preview.1.25375.1 \
 
 
 # YARP image
-FROM $REPO:9.0.23-azurelinux3.0-distroless-arm64v8
+FROM mcr.microsoft.com/dotnet/aspnet:9.0.23-azurelinux3.0-distroless-arm64v8
 
 COPY --from=installer ["/app", "/app"]
 

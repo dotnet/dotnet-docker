@@ -5,17 +5,14 @@
 
     set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
-    set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isAzureLinux to defined(match(OS_VERSION, "^azurelinux\d+\.\d+$")) ^
 
     set baseImageRepo to when(isAlpine,
         cat(ARCH_VERSIONED, "/alpine"),
-        when(isDebian,
-            cat(ARCH_VERSIONED, "/debian"),
-            when(isUbuntu,
-                "ubuntu.azurecr.io/ubuntu",
-                "<NOT-IMPLEMENTED>"))) ^
+        when(isUbuntu,
+            "ubuntu.azurecr.io/ubuntu",
+            "<NOT-IMPLEMENTED>")) ^
     set baseImageTag to when(isAlpine, OS_VERSION_NUMBER, OS_VERSION) ^
     set baseImage to when(isAzureLinux,
         VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|core")],

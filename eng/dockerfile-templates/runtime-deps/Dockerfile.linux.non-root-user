@@ -8,8 +8,6 @@
         no-shell (optional): Indicates whether the shell should be set to /bin/false ^
 
     set isAlpine to find(OS_VERSION, "alpine") >= 0 ^
-    set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
-    set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
     set isChiseledUbuntu to find(OS_VERSION, "chiseled") >= 0 ^

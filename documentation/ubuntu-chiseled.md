@@ -12,14 +12,14 @@ These images offer dramatically smaller deployment sizes and attack surface comp
 
 ## Featured Tags
 
+* `11.0-resolute-chiseled`
+  * `docker pull mcr.microsoft.com/dotnet/aspnet:11.0-resolute-chiseled`
+  * `docker pull mcr.microsoft.com/dotnet/runtime:11.0-resolute-chiseled`
+  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:11.0-resolute-chiseled`
 * `10.0-noble-chiseled`
   * `docker pull mcr.microsoft.com/dotnet/aspnet:10.0-noble-chiseled`
   * `docker pull mcr.microsoft.com/dotnet/runtime:10.0-noble-chiseled`
   * `docker pull mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled`
-* `8.0-noble-chiseled`
-  * `docker pull mcr.microsoft.com/dotnet/aspnet:8.0-noble-chiseled`
-  * `docker pull mcr.microsoft.com/dotnet/runtime:8.0-noble-chiseled`
-  * `docker pull mcr.microsoft.com/dotnet/runtime-deps:8.0-noble-chiseled`
 
 We’re not offering a chiseled SDK image as there wasn't a strong need for one, and a chiseled SDK image could be hard to use for some scenarios.
 You can continue to use the existing full Ubuntu SDK images to build your apps to run on Chiseled.
@@ -34,12 +34,9 @@ Please see our sample Dockerfiles for examples on how to use Ubuntu Chiseled .NE
 * [AspNetCoreRazorApp](../samples/AspNetCoreRazorApp/Dockerfile.chiseled)
 * [AspNetCoreNativeAot](../samples/AspNetCoreNativeAot/Dockerfile) (and [icu version](../samples/AspNetCoreNativeAot/Dockerfile.icu))
 
-If your app's Dockerfile doesn't depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu or Debian images.
+If your app's Dockerfile doesn't depend on any shell scripts for setup, Ubuntu Chiseled images could be a drop-in replacement for our full Ubuntu images.
 
 ## How do I install additional packages on Chiseled images?
-
-> [!IMPORTANT]
-> Installing additional packages requires the presence of the [Chisel manifest](https://github.com/dotnet/dotnet-docker/issues/6135), which is currently only available in **.NET 10+** images.
 
 [Chisel](https://github.com/canonical/chisel) is built on the idea of package slices.
 Slices are basically subsets of packages, with their own content and set of dependencies to other internal and external slices.
@@ -50,7 +47,7 @@ First, acquire `chisel` and `chisel-wrapper`.
 `chisel-wrapper` (from [rocks-toolbox](https://github.com/canonical/rocks-toolbox/)) is used to generate a dpkg status file documenting which packages are installed, which is used by many vulnerability scanning tools.
 
 ```Dockerfile
-FROM mcr.microsoft.com/dotnet/nightly/sdk:10.0-noble AS chisel
+FROM mcr.microsoft.com/dotnet/sdk:10.0-noble AS chisel
 
 # Docker build arg documentation: https://docs.docker.com/build/building/variables/
 # Find the latest chisel releases: https://github.com/canonical/chisel/releases
@@ -77,7 +74,7 @@ Then, copy over the filesystem from your desired base image and use `chisel` and
 See [canonical/chisel-releases](https://github.com/canonical/chisel-releases) for available slices.
 
 ```Dockerfile
-COPY --from=mcr.microsoft.com/dotnet/nightly/runtime-deps:10.0-noble-chiseled / /rootfs/
+COPY --from=mcr.microsoft.com/dotnet/runtime-deps:10.0-noble-chiseled / /rootfs/
 
 RUN chisel-wrapper --generate-dpkg-status /rootfs/var/lib/dpkg/status -- \
         --release ubuntu-24.04 --root /rootfs/ \

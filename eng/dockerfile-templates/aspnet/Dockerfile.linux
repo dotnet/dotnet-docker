@@ -12,11 +12,8 @@
     set baseUrl to VARIABLES[cat("dotnet|", dotnetVersion, "|base-url|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
     set runtimeDepsVariant to when(ARGS["is-extra"], "-extra", "") ^
-    set tagVersion to when(dotnetVersion = "8.0",
-        VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")],
-        VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")]) ^
+    set tagVersion to VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")] ^
     set runtimeBaseTag to cat("$REPO:", tagVersion, "-", OS_VERSION, runtimeDepsVariant, ARCH_TAG_SUFFIX) ^
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set osVersionBase to when(isDistroless, match(OS_VERSION, ".+(?=.*-)")[0], OS_VERSION_BASE) ^
 
     _ Workaround for https://bugs.launchpad.net/ubuntu/+source/tar/+bug/2059734. Remove when fixed. ^
