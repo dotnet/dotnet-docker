@@ -1,5 +1,5 @@
 variables:
-  imageNames.imageBuilderName: mcr.microsoft.com/dotnet-buildtools/image-builder@sha256:c8c684de0970f5cc1d5a237f7d71ffa12dcc9311294c543cd684cc29df79f379
+  imageNames.imageBuilderName: mcr.microsoft.com/dotnet-buildtools/image-builder@sha256:34ce3d3b32e8a5c29c8a531802310fdf77a8ab421a9a05d19f7d7497704b951e
   imageNames.imageBuilder: $(imageNames.imageBuilderName)
   imageNames.imageBuilder.withrepo: imagebuilder-withrepo:$(Build.BuildId)-$(System.JobId)
   imageNames.testRunner: mcr.microsoft.com/dotnet-buildtools/prereqs:azurelinux3.0-docker-testrunner
