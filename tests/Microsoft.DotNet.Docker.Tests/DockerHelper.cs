@@ -106,24 +106,21 @@ public class DockerHelper(ITestOutputHelper outputHelper)
         string dockerfile = Path.Combine(TestArtifactsDir, "Dockerfile.copy");
         string distrolessImageTag = imageData.GetImage(imageRepo, this);
 
-        // Use the runtime-deps image as the target of the filesystem copy.
+        // Use the distro-full runtime-deps image as the target of the filesystem copy.
         // Not all images are versioned the same as the mainline .NET products.
         // Use the version family (e.g. the .NET product family version) as the
         // version of the runtime-deps image get the correct image.
+        // The distro-full OS must be used when resolving the image name so that the registry is chosen based on
+        // whether the distro-full image (not the distroless image) was produced by this build.
         ProductImageData runtimeDepsImageData = new()
         {
             Version = imageData.VersionFamily,
-            OS = imageData.OS,
+            OS = imageData.OS with { IsDistroless = false },
             Arch = imageData.Arch,
         };
 
-        // Make sure we don't try to get an image that we don't need before we specify that we want the distro-full
-        // version. The image might not be on disk. The correct, distro-full versino will be pulled in the helper
-        // image build.
-        string baseImageTag = runtimeDepsImageData
-            .GetImage(DotNetImageRepo.Runtime_Deps, this, skipPull: true)
-            .Replace("-distroless", string.Empty)
-            .Replace("-chiseled", string.Empty);
+        // The image might not be on disk. It will be pulled in the helper image build.
+        string baseImageTag = runtimeDepsImageData.GetImage(DotNetImageRepo.Runtime_Deps, this, skipPull: true);
 
         string tag = imageData.GetIdentifier("distroless-helper");
 
