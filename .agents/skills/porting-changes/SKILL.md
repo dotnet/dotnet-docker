@@ -32,6 +32,7 @@ Security, correctness, and release-blocking fixes may take priority over the nor
 ## Choosing an integration method
 
 - The default flow is to cherry-pick the final (squashed or merged) commits for each change/PR directly from the source branch.
+- Always use `git cherry-pick -x`. It adds a `(cherry picked from commit <sha>)` line to the commit message, which records where the change came from so people and tools can trace the port back to its original.
 - If the change does not apply cleanly, confirm the expected behavior with the user. The change may require extra work to preserve the user's intention.
 
 ## Applying changes
