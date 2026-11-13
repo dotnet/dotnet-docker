@@ -169,14 +169,6 @@ public abstract class ProductImageTests
             return;
         }
 
-        if (imageData.OS == OS.ResoluteChiseled)
-        {
-            OutputHelper.WriteLine(
-                "Temporarily skipping installed-packages verification for Ubuntu 26.04 chiseled images."
-                + " Re-enable when images include the fix for https://github.com/canonical/rocks-toolbox/issues/52.");
-            return;
-        }
-
         IEnumerable<string> expectedPackages = GetExpectedPackages(imageData, imageRepo);
         IEnumerable<string> actualPackages = GetInstalledPackages(imageData, imageRepo, extraExcludePaths);
 
@@ -305,6 +297,7 @@ public abstract class ProductImageTests
                     "libzstd",
                     "libzstd1",
                     "openssl",
+                    "openssl-provider-legacy",
                     "zlib",
                     "zlib1g"
                 ],
@@ -392,12 +385,14 @@ public abstract class ProductImageTests
             [
                     "icu",
                     "libicu78",
-                    "tzdata"
+                    "tzdata",
+                    "tzdata-legacy"
                 ],
         { OS: var os } when os == OS.NobleChiseled =>
             [
                     "libicu74",
-                    "tzdata"
+                    "tzdata",
+                    "tzdata-legacy"
                 ],
         { OS: var os } when os == OS.JammyChiseled =>
             [
