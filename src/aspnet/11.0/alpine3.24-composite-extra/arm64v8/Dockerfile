@@ -5,7 +5,7 @@ FROM $REPO:11.0.1-alpine3.24-extra-arm64v8 AS installer
 
 # Retrieve ASP.NET Composite Runtime
 RUN aspnetcore_version=11.0.1 \
-    && aspnetcore_build_version=$aspnetcore_version-servicing.26561.113 \
+    && aspnetcore_build_version=$aspnetcore_version-servicing.26562.103 \
     && wget \
         https://ci.dot.net/public/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz \
         https://ci.dot.net/public-checksums/aspnetcore/Runtime/$aspnetcore_build_version/aspnetcore-runtime-composite-$aspnetcore_version-linux-musl-arm64.tar.gz.sha512 \
