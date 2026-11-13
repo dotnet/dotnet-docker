@@ -74,7 +74,7 @@ View the current tags at the [Microsoft Artifact Registry portal](https://mcr.mi
 
 ## Image Update Policy
 
-* **Base Image Updates:** Images are re-built within 12 hours of any updates to their base images (e.g. debian:bookworm-slim, windows/nanoserver:ltsc2022, etc.).
+* **Base Image Updates:** Images are re-built within 12 hours of any updates to their base images (e.g. ubuntu:noble, windows/nanoserver:ltsc2025, etc.).
 * **.NET Releases:** Images are re-built as part of releasing new .NET versions. This includes new major versions, minor versions, and servicing releases.
 * **Critical CVEs:** Images are re-built to pick up critical CVE fixes as described by the CVE Update Policy below.
 * **Monthly Re-builds:** Images are re-built monthly, typically on the second Tuesday of the month, in order to pick up lower-severity CVE fixes.

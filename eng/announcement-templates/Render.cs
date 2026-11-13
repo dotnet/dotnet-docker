@@ -234,11 +234,11 @@ sealed record AlpineVersionEolTemplateParameters(
 
         var dotnetExampleVersion1 = AnsiConsole.Prompt(
             new TextPrompt<string>("First .NET example version for tags:")
-                .DefaultValue("8.0"));
+                .DefaultValue("10.0"));
 
         var dotnetExampleVersion2 = AnsiConsole.Prompt(
             new TextPrompt<string>("Second .NET example version for tags:")
-                .DefaultValue("9.0"));
+                .DefaultValue("11.0"));
 
         return new AlpineVersionEolTemplateParameters(
             removedVersion,

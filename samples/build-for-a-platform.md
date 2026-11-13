@@ -114,7 +114,7 @@ This pattern results in, for example, `amd64` images always being used. Those im
 
 ## .NET and QEMU
 
-Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example running `x64` code on an `arm64` machine. [.NET doesn't support being run in QEMU](https://github.com/dotnet/core/blob/main/release-notes/8.0/supported-os.md#qemu). That means that the SDK needs to always be run natively, to enable [multi-stage build](https://docs.docker.com/build/building/multi-stage/). Multi-stage build is used by all of our samples.
+Docker Desktop uses [QEMU](https://www.qemu.org/) for emulation, for example running `x64` code on an `arm64` machine. [.NET doesn't support being run in QEMU](https://github.com/dotnet/core/blob/main/release-notes/10.0/supported-os.md#notes). That means that the SDK needs to always be run natively, to enable [multi-stage build](https://docs.docker.com/build/building/multi-stage/). Multi-stage build is used by all of our samples.
 
 As a result, we need a reliable pattern that can produce multiple variants of images on one machine, but that doesn't use emulation. That's what this document describes.
 

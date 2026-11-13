@@ -45,7 +45,7 @@ View the sample app at `http://localhost:8080/` or call `curl http://localhost:8
 
 ```bash
 % curl http://localhost:8080/Environment
-{"runtimeVersion":".NET 8.0.5","osVersion":"Alpine Linux v3.19","osArchitecture":"X64","user":"root","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":34095104,"hostName":"dotnet-resource-limits-8685bd4b75-jltn5"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Alpine Linux v3.24","osArchitecture":"X64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":34095104,"hostName":"dotnet-resource-limits-8685bd4b75-jltn5"}
 ```
 
 `processorCount` is display as `1`, as expected.

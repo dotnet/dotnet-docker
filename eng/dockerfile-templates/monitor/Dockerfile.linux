@@ -1,5 +1,4 @@
 {{
-    set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
@@ -22,18 +21,12 @@
     set monitorBaseChecksumUrl to cat(monitorBaseChecksumUrl, monitorChecksumPath) ^
 
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
-    set monitorBaseTagOs to when(isAzureLinux,
-        "azurelinux-distroless",
-        "ubuntu-chiseled") ^
-    set monitorBaseTagHasOs to monitorMajor = "8" ^
-    set monitorBaseTagOsSuffix to when(monitorBaseTagHasOs, cat("-", monitorBaseTagOs), "") ^
     set monitorBaseTag to
-        cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], monitorBaseTagOsSuffix, ARCH_TAG_SUFFIX) ^
+        cat("$REPO:", VARIABLES[cat("monitor|", monitorMajorMinor, "|product-version")], ARCH_TAG_SUFFIX) ^
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
         VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|core")],
-        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
-    set extensionsTemplate to when(monitorMajor != "8" && monitorMajor != "9", "Dockerfile.linux.install-extensions.10", "Dockerfile.linux.install-extensions")
+        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))
 }}ARG REPO=mcr.microsoft.com/dotnet/monitor/base
 
 # Installer image
@@ -42,9 +35,8 @@ FROM {{installerImageTag}} AS installer
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 }}
 # Retrieve .NET Monitor extensions
-{{InsertTemplate(extensionsTemplate, [
+{{InsertTemplate("Dockerfile.linux.install-extensions", [
     "monitorVersion": monitorVersion,
-    "monitorMajorMinor": monitorMajorMinor,
     "monitorBaseUrl": monitorBaseUrl,
     "monitorBaseChecksumUrl": monitorBaseChecksumUrl
 ])}}

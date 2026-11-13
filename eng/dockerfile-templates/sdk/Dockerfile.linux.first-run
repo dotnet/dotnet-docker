@@ -1,5 +1,0 @@
-{{
-    _ ARGS
-        append-cmd: Indicates whether to append the command to an existing command
-}}# Trigger first run experience by running arbitrary cmd
-{{if ARGS["append-cmd"]:&&^else:RUN}} dotnet help

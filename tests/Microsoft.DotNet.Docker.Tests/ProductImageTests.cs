@@ -144,7 +144,7 @@ public abstract class ProductImageTests
 
         // UIDs below 1000 are reserved for system accounts
         Assert.True(uid >= 1000);
-        // Debian has a UID_MAX of 60000
+        // Linux distros typically have a UID_MAX of 60000
         Assert.True(uid <= 60000);
     }
 
@@ -271,109 +271,71 @@ public abstract class ProductImageTests
         _ => throw new NotSupportedException($"Unsupported distroless OS '{imageData.OS}'")
     };
 
-    private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData)
+    private static IEnumerable<string> GetRuntimeDepsPackages(ProductImageData imageData) => imageData switch
     {
-        IEnumerable<string> packages = imageData switch
-        {
-            { OS.Family: OSFamily.AzureLinux } =>
-                [
-                    "glibc",
-                    "libgcc",
-                    "openssl",
-                    "openssl-libs",
-                    "libstdc++"
-                ],
-            { OS: { Family: OSFamily.Ubuntu, Version: "22.04" } } =>
-                [
-                    "ca-certificates",
-                    "gcc-12-base",
-                    "libc6",
-                    "libgcc-s1",
-                    "libssl3",
-                    "openssl",
-                    "libstdc++6"
-                ],
-            { OS: var os } when os == OS.ResoluteChiseled =>
-                [
-                    "ca-certificates",
-                    "gcc-16-base",
-                    ..GetResoluteChiseledArchSpecificPackages(imageData),
-                    "libc6",
-                    "libgcc-s1",
-                    "libssl3t64",
-                    "libstdc++6",
-                    "libzstd",
-                    "libzstd1",
-                    "openssl",
-                    "zlib",
-                    "zlib1g"
-                ],
-            { OS: { Family: OSFamily.Ubuntu, Version: "26.04" } } =>
-                [
-                    "ca-certificates",
-                    "gcc-16-base",
-                    "libc6",
-                    "libgcc-s1",
-                    "libssl3t64",
-                    "openssl",
-                    "libstdc++6"
-                ],
-            { OS: var os } when os == OS.NobleChiseled =>
-                [
-                    "ca-certificates",
-                    "gcc-14-base",
-                    "gcc-14",
-                    "libc6",
-                    "libgcc-s1",
-                    "libssl3t64",
-                    "openssl",
-                    "libstdc++6"
-                ],
-            { OS: { Family: OSFamily.Ubuntu, Version: "24.04" } } =>
-                [
-                    "ca-certificates",
-                    "gcc-14-base",
-                    "libc6",
-                    "libgcc-s1",
-                    "libssl3t64",
-                    "openssl",
-                    "libstdc++6"
-                ],
-            { OS.Family: OSFamily.Alpine } =>
-                [
-                    "ca-certificates-bundle",
-                    "libgcc",
-                    "libssl3",
-                    "libstdc++"
-                ],
-            { OS: var os } when os == OS.BookwormSlim =>
-                [
-                    "ca-certificates",
-                    "libc6",
-                    "libgcc-s1",
-                    "libicu72",
-                    "libssl3",
-                    "tzdata",
-                    "libstdc++6"
-                ],
-            _ => throw new NotSupportedException($"Unknown runtime-deps packages for OS '{imageData.OS}'")
-        };
-
-        // zlib is not required for .NET 9+
-        // - https://github.com/dotnet/dotnet-docker/issues/5687
-        if (imageData.Version.Major == 8)
-        {
-            packages = [.. packages, GetZLibPackage(imageData.OS)];
-        }
-
-        return packages;
-    }
-
-    private static string GetZLibPackage(OSInfo os)
-    {
-        OSFamily[] unversionedZLibOSFamilies = [OSFamily.Alpine, OSFamily.AzureLinux];
-        return unversionedZLibOSFamilies.Contains(os.Family) ? "zlib" : "zlib1g";
-    }
+        { OS.Family: OSFamily.AzureLinux } =>
+            [
+                "glibc",
+                "libgcc",
+                "openssl",
+                "openssl-libs",
+                "libstdc++"
+            ],
+        { OS: var os } when os == OS.ResoluteChiseled =>
+            [
+                "ca-certificates",
+                "gcc-16-base",
+                ..GetResoluteChiseledArchSpecificPackages(imageData),
+                "libc6",
+                "libgcc-s1",
+                "libssl3t64",
+                "libstdc++6",
+                "libzstd",
+                "libzstd1",
+                "openssl",
+                "zlib",
+                "zlib1g"
+            ],
+        { OS: { Family: OSFamily.Ubuntu, Version: "26.04" } } =>
+            [
+                "ca-certificates",
+                "gcc-16-base",
+                "libc6",
+                "libgcc-s1",
+                "libssl3t64",
+                "openssl",
+                "libstdc++6"
+            ],
+        { OS: var os } when os == OS.NobleChiseled =>
+            [
+                "ca-certificates",
+                "gcc-14-base",
+                "gcc-14",
+                "libc6",
+                "libgcc-s1",
+                "libssl3t64",
+                "openssl",
+                "libstdc++6"
+            ],
+        { OS: { Family: OSFamily.Ubuntu, Version: "24.04" } } =>
+            [
+                "ca-certificates",
+                "gcc-14-base",
+                "libc6",
+                "libgcc-s1",
+                "libssl3t64",
+                "openssl",
+                "libstdc++6"
+            ],
+        { OS.Family: OSFamily.Alpine } =>
+            [
+                "ca-certificates-bundle",
+                "libgcc",
+                "libssl3",
+                "libstdc++"
+            ],
+        _ => throw new NotSupportedException($"Unknown runtime-deps packages for OS '{imageData.OS}'")
+    };
 
     /// <summary>
     /// Syft detects gcc-16 as an additional binary package on amd64 resolute chiseled images.
@@ -397,11 +359,6 @@ public abstract class ProductImageTests
         { OS: var os } when os == OS.NobleChiseled =>
             [
                     "libicu74",
-                    "tzdata"
-                ],
-        { OS: var os } when os == OS.JammyChiseled =>
-            [
-                    "libicu70",
                     "tzdata"
                 ],
         { OS.Family: OSFamily.Alpine } =>

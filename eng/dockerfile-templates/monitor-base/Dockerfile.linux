@@ -2,7 +2,6 @@
     _ .NET major version matches the major version of dotnet-monitor ^
     set dotnetMajor to split(PRODUCT_VERSION, ".")[0] ^
     set dotnetMajorMinor to cat(dotnetMajor, ".0") ^
-    set monitorMajor to split(PRODUCT_VERSION, ".")[0] ^
     set monitorMajorMinor to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set buildVersion to VARIABLES[cat("monitor|", monitorMajorMinor, "|build-version")] ^
     set monitorVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
@@ -29,8 +28,7 @@
     set osVersionBase to match(OS_VERSION, ".+(?=.*-)")[0] ^
     set installerImageTag to when(isAzureLinux,
         VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|core")],
-        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl")) ^
-    set monitorBaseTemplate to when(monitorMajor != "8" && monitorMajor != "9", "Dockerfile.linux.install-monitor-base.10", "Dockerfile.linux.install-monitor-base")
+        cat(ARCH_VERSIONED, "/buildpack-deps:", osVersionBase, "-curl"))
 }}ARG REPO=mcr.microsoft.com/dotnet/aspnet
 
 # Installer image
@@ -39,9 +37,8 @@ FROM {{installerImageTag}} AS installer
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 }}
 # Retrieve .NET Monitor Base
-{{InsertTemplate(monitorBaseTemplate, [
+{{InsertTemplate("Dockerfile.linux.install-monitor-base", [
     "monitorVersion": monitorVersion,
-    "monitorMajorMinor": monitorMajorMinor,
     "monitorBaseUrl": monitorBaseUrl,
     "monitorBaseChecksumUrl": monitorBaseChecksumUrl
 ])}}

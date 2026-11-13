@@ -64,12 +64,6 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
             useWasmTools = false;
         }
 
-        // `wasm-tools` is not supported on Alpine for .NET < 9 due to https://github.com/dotnet/sdk/issues/32327
-        if (imageData.OS.Family == OSFamily.Alpine && imageData.Version.Major == 8)
-        {
-            useWasmTools = false;
-        }
-
         // Emscripten SDK workload is the wrong version on linux-musl-x64 in .NET 10 Preview 6
         // Remove in nightly branch when https://github.com/dotnet/dotnet/issues/1487 is resolved
         if (imageData.Version.Major == 10)
@@ -205,11 +199,6 @@ public class SdkImageTests(ITestOutputHelper outputHelper) : ProductImageTests(o
     [MemberData(nameof(GetImageData))]
     public void VerifyDnxInstallation(ProductImageData imageData)
     {
-        if (!imageData.SupportsDnx)
-        {
-            return;
-        }
-
         string dnxCommand = DockerHelper.IsLinuxContainerModeEnabled
             ? "dnx --help"
             : "dnx.cmd --help";

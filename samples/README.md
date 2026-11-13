@@ -7,10 +7,6 @@ Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) direct
 > [!IMPORTANT]
 >
 > [.NET 10 containers breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/10#containers)
->
-> [.NET 9 containers breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/9.0#containers)
->
-> [.NET 8 containers breaking changes](https://learn.microsoft.com/dotnet/core/compatibility/8.0#containers)
 
 ## Building images
 
@@ -41,7 +37,6 @@ Kubernetes samples are provided in the [kubernetes](kubernetes/README.md) direct
 
 ## Other documentation
 
-* [.NET 8 Container Workshop](https://github.com/richlander/container-workshop)
 * [Introduction to .NET and Docker](https://learn.microsoft.com/dotnet/core/docker/)
 * [Announcing built-in container support for the .NET SDK](https://devblogs.microsoft.com/dotnet/announcing-builtin-container-support-for-the-dotnet-sdk/)
 * [Staying safe in containers](https://devblogs.microsoft.com/dotnet/staying-safe-with-dotnet-containers/)

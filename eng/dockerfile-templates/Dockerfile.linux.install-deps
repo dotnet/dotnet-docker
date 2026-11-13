@@ -5,9 +5,7 @@
             for example globalization support
         staging-dir (optional): Location of the staging directory for distroless installation ^
 
-    set dotnetVersion to join(slice(split(PRODUCT_VERSION, "."), 0, 2), ".") ^
     set isAlpine to find(OS_ARCH_HYPHENATED, "Alpine") >= 0 ^
-    set isDebian to find(OS_ARCH_HYPHENATED, "Debian") >= 0 ^
     set isUbuntu to find(OS_ARCH_HYPHENATED, "Ubuntu") >= 0 ^
     set isAzureLinux to find(OS_VERSION, "azurelinux") >= 0 ^
     set isDistrolessAzureLinux to defined(match(OS_VERSION, "^azurelinux\d+\.\d+-distroless$")) ^
@@ -16,7 +14,6 @@
 
     set dotnetDepsComment to "# .NET dependencies" ^
 
-    set zlibPkg to when(isUbuntu || isDebian, "zlib1g", "zlib") ^
     set caCertsPkg to when(isDistrolessAzureLinux,
         "prebuilt-ca-certificates",
         when(isAlpine,
@@ -40,7 +37,6 @@
                 cat("libssl", VARIABLES[cat("libssl|", OS_VERSION_BASE)])
             ]
         )) ^
-    set basePkgs to when(dotnetVersion = "8.0", cat(basePkgs, [zlibPkg]), basePkgs) ^
 
     set standardPkgs to sort(cat(basePkgs,
         when(isAzureLinux || isAlpine,
@@ -65,18 +61,17 @@
                 "icu-libs",
                 "tzdata"
             ],
-            cat(
             [
                 cat("libicu", VARIABLES[cat("libicu|", OS_VERSION_BASE)]),
-                "tzdata"
-            ],
-            when(isUbuntu && OS_VERSION_BASE != "jammy", [ "tzdata-legacy" ], []))
+                "tzdata",
+                "tzdata-legacy"
+            ]
         )))) ^
 
     set pkgs to
         when(ARGS["is-aot"],
             basePkgs,
-            when(ARGS["is-extra"] || isDebian || isUbuntu || isFullAzureLinux,
+            when(ARGS["is-extra"] || isUbuntu || isFullAzureLinux,
                 extraPkgs,
                 standardPkgs)) ^
 
@@ -90,7 +85,7 @@
             dotnetDepsComment
         ]) ^
 
-    set suffixPkgs to when(isAlpine && dotnetVersion != "8.0", ["", "# manually update zlib from alpine base image", zlibPkg], []) ^
+    set suffixPkgs to when(isAlpine, ["", "# manually update zlib from alpine base image", "zlib"], []) ^
 
     set pkgs to cat(prefixPkgs, pkgs, suffixPkgs) ^
 

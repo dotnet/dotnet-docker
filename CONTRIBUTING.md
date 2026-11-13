@@ -44,22 +44,22 @@ See the [branch guide](eng/developer-docs/branches.md) for branch roles and the 
 
 The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/build-and-test.ps1) script will build and test the .NET Docker images. Given the matrix of supported .NET versions, distros, and architectures there are numerous Dockerfiles and building can take a while. To make this manageable, the script supports several options for filtering down what images get built and tested.
 
-- Build and test all of the .NET 9.0 images for the Docker platform your machine is targeting (e.g. linux/x64, linux/arm, linux/arm64, windows/x64).
+- Build and test all of the .NET 10.0 images for the Docker platform your machine is targeting (e.g. linux/x64, linux/arm, linux/arm64, windows/x64).
 
     ``` console
-    > ./build-and-test.ps1 -Version 9.0
+    > ./build-and-test.ps1 -Version 10.0
     ```
 
-- Build the 9.0 Ubuntu Noble images using version and OS arguments. Note that this *will not* build `noble-chiseled` images as those are labeled by a different `OS` in [manifest.json](/manifest.json).
+- Build the 10.0 Ubuntu Noble images using version and OS arguments. Note that this *will not* build `noble-chiseled` images as those are labeled by a different `OS` in [manifest.json](/manifest.json).
 
     ``` console
-    > ./build-and-test.ps1 -Version 9.0 -OS noble -Mode Build
+    > ./build-and-test.ps1 -Version 10.0 -OS noble -Mode Build
     ```
 
-- Build the 9.0 Ubuntu Noble images using Dockerfile paths. This *will* will build `noble-chiseled` images as those Dockerfiles will match the `noble` part of the `Paths` argument.
+- Build the 10.0 Ubuntu Noble images using Dockerfile paths. This *will* will build `noble-chiseled` images as those Dockerfiles will match the `noble` part of the `Paths` argument.
 
     ``` console
-    > ./build-and-test.ps1 -Paths '*9.0*noble*' -Mode Build
+    > ./build-and-test.ps1 -Paths '*10.0*noble*' -Mode Build
     ```
 
 - Build and test the samples
@@ -68,16 +68,16 @@ The [`build-and-test.ps1`](https://github.com/dotnet/dotnet-docker/blob/main/bui
     > ./build-and-test.ps1 -Paths '*samples*' -TestCategories sample
     ```
 
-- Test the 9.0 Nano Server 1809 images (remember to switch to Windows container mode in Docker Desktop)
+- Test the 11.0 Nano Server LTSC 2025 images (remember to switch to Windows container mode in Docker Desktop)
 
     ``` console
-    > ./build-and-test.ps1 -Version 9.0 -OS nanoserver-1809 -Mode Test
+    > ./build-and-test.ps1 -Version 11.0 -OS nanoserver-ltsc2025 -Mode Test
     ```
 
 - Build and test images on an arm64 device (e.g. Apple Silicon Mac or Linux ARM64 machine). Note: The architecture argument must be `arm64`, not `arm64v8`.
 
     ``` console
-    > ./build-and-test.ps1 -Paths '*9.0*noble*' -Architecture arm64
+    > ./build-and-test.ps1 -Paths '*10.0*noble*' -Architecture arm64
     ```
 
 ### Editing Dockerfiles
@@ -119,7 +119,7 @@ If you want to test images that have already been built and published to a regis
 - Run tests against published images without building locally:
 
     ``` console
-    > ./tests/run-tests.ps1 -PullImages -Paths '*9.0*noble*'
+    > ./tests/run-tests.ps1 -PullImages -Paths '*10.0*noble*'
     ```
 
 #### Running Specific Tests
@@ -129,13 +129,13 @@ To run specific tests, use the `-CustomTestFilter` argument with either `run-tes
 - Run a specific test by name:
 
     ``` console
-    > ./tests/run-tests.ps1 -Paths '*9.0*noble*' -CustomTestFilter "FullyQualifiedName~VerifyEnvironmentVariables"
+    > ./tests/run-tests.ps1 -Paths '*10.0*noble*' -CustomTestFilter "FullyQualifiedName~VerifyEnvironmentVariables"
     ```
 
 - Run tests using `build-and-test.ps1` with a custom filter:
 
     ``` console
-    > ./build-and-test.ps1 -Paths '*9.0*noble*' -Mode Test -CustomTestFilter "FullyQualifiedName~VerifyPackageInstallation"
+    > ./build-and-test.ps1 -Paths '*10.0*noble*' -Mode Test -CustomTestFilter "FullyQualifiedName~VerifyPackageInstallation"
     ```
 
 #### Debugging Tests Using VS Code
@@ -146,7 +146,7 @@ To start, open [tasks.json](.vscode/tasks.json) and find the "Test with debugger
 Check the `args` and `env` settings to filter down to the exact image you want to test.
 
 To filter tests to a specific image, use the `DOCKERFILE_PATHS` environment variable.
-For example, to test only Alpine 3.21 ASP.NET images, you could set the `DOCKERFILE_PATHS` to `src/aspnet/9.0/alpine3.21/amd64`.
+For example, to test only Alpine 3.24 ASP.NET images, you could set the `DOCKERFILE_PATHS` to `src/aspnet/11.0/alpine3.24/amd64`.
 To run specific individual tests, you can use [Xunit test filtering](https://learn.microsoft.com/dotnet/core/testing/selective-unit-tests?pivots=xunit) arguments to filter by fully qualified test name and test category.
 
 To start debugging, open the VS Code command palette and type "Tasks: Run Task", then choose the "Test with debugger" task. The terminal will open and print a process ID:
