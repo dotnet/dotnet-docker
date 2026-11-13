@@ -16,7 +16,9 @@ parameters:
   - name: updateDotnet
     displayName: Update .NET?
     type: boolean
-    default: true
+    # Disabled: .NET 11 is in maintenance, so nightly no longer takes pre-release updates.
+    # Re-enable when .NET 12 alpha builds begin.
+    default: false
   - name: updateAspire
     displayName: Update Aspire Dashboard?
     type: boolean
