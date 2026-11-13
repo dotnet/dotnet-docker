@@ -41,7 +41,7 @@ You can use this in place of the default distroless images by appending the `-ex
 - `mcr.microsoft.com/dotnet/runtime:10.0-azurelinux3.0-extra`
 - `mcr.microsoft.com/dotnet/aspnet:10.0-azurelinux3.0-extra`
 
-Please see ["Announcement: New approach for differentiating .NET 8+ images"](https://github.com/dotnet/dotnet-docker/discussions/4821) for more info.
+See the [Image Variants documentation](./image-variants.md) for more info.
 
 ### How can I scan distroless images for security vulnerabilities?
 

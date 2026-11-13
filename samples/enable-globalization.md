@@ -13,13 +13,14 @@ In many scenarios, globalization support with ICU is required, for example, to c
 .NET container images that include ICU:
 
 - Alpine `sdk` images
-- Debian images
-- Ubuntu images
+- Azure Linux (non-distroless) images
+- Ubuntu (non-chiseled) images
 - All [`extra` variant](../documentation/image-variants.md) images
 
 .NET container images that do not include ICU:
 
 - Alpine `aspnet`, `monitor`, `runtime`, `runtime-deps` images
+- Azure Linux distroless images
 - Ubuntu chiseled images
 
 Images that do not include ICU enable [Globalization Invariant Mode](https://aka.ms/dotnet/globalization/invariant), which provides more basic globalization behaviors in absence of using ICU.
@@ -74,23 +75,32 @@ With `tzdata` installed and the timezone configured (via the `TZ` environment va
 
 Without `tzdata` installed, `DateTime.UtcNow` and `DateTime.Now` will return the same value, `TimeZoneInfo.Local` will return a value for UTC, and the call to `TimeZoneInfo.FindSystemTimeZoneById` will fail resulting in an exception.
 
-.NET container images do not install `tzdata`, however, Debian images contain it (at the time of writing). If you rely on this library, you need to install it by adding the following instructions to the final stage within a `Dockerfile`, depending on the distro you use.
+.NET container images that include `tzdata`:
+
+- Alpine `sdk` images
+- Azure Linux (non-distroless) images
+- Ubuntu (non-chiseled) images
+- All [`extra` variant](../documentation/image-variants.md) images
+
+.NET container images that do not include `tzdata`:
+
+- Alpine `aspnet`, `monitor`, `runtime`, `runtime-deps` images
+- Azure Linux distroless images
+- Ubuntu chiseled images
+
+If you rely on `tzdata` in an image that doesn't include it by default, you can use an [`extra` variant](../documentation/image-variants.md) image or install `tzdata` in the final stage of your `Dockerfile`, depending on the distro you use.
 
 ### Alpine
 
 `tzdata` can be added to a .NET Alpine image with the following `Dockerfile` fragment.
 
-```bash
+```Dockerfile
 RUN apk add --no-cache tzdata
 ```
 
-### Ubuntu
+### Ubuntu chiseled images
 
-`tzdata` can be added to a .NET Ubuntu image with the following `Dockerfile` fragment.
-
-```bash
-apt update && DEBIAN_FRONTEND=noninteractive apt install -y tzdata && rm -rf /var/lib/apt/lists/*
-```
+`tzdata` slices (`tzdata_zoneinfo` and `tzdata-legacy_zoneinfo`) can be added to an Ubuntu chiseled image using Chisel, as demonstrated in the [Ubuntu Chiseled documentation](../documentation/ubuntu-chiseled.md#how-do-i-install-additional-packages-on-chiseled-images).
 
 ### Launching a container with timezone information
 

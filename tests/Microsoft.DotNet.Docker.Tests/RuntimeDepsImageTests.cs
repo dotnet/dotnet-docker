@@ -118,9 +118,6 @@ public class RuntimeDepsImageTests(ITestOutputHelper outputHelper) : CommonRunti
             return;
         }
 
-        // https://github.com/dotnet/dotnet-docker/issues/5973#issuecomment-2501510550
-        bool shouldContainManifest = imageData.Version.Major is not 8 and not 9;
-
         const string rootFs = "/rootfs";
         const string chiselManifestFileName = "/var/lib/chisel/manifest.wall";
 
@@ -134,14 +131,7 @@ public class RuntimeDepsImageTests(ITestOutputHelper outputHelper) : CommonRunti
             name: imageData.GetIdentifier(nameof(VerifyChiselManifest)),
             command: $"find {rootFs}/var/lib/ -path *chisel* -type f");
 
-        if (shouldContainManifest)
-        {
-            Assert.Contains(chiselManifestFileName, actualOutput);
-        }
-        else
-        {
-            Assert.DoesNotContain(chiselManifestFileName, actualOutput);
-        }
+        Assert.Contains(chiselManifestFileName, actualOutput);
     }
 
     private string GetOSReleaseInfo(

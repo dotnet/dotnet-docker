@@ -101,15 +101,13 @@ public class StaticTagTests
             because: $"latest tag should be on .NET {expectedMajorVersion} in repo {repo.Name}");
     }
 
-    // - <Major.Minor.Patch>-<os>-<architecture>                Non-windows only for non-Appliance repos, old schema only for Appliance repos
-    // - <Major.Minor>-<os>-<architecture>                      Non-windows only for non-Appliance repos, old schema only for Appliance repos
-    // - <Major>-<os>-<architecture>                            Old schema only for Appliance repos
-    // - <Major.Minor.Patch>-<os>                               Non-Appliance repos, old schema only for Appliance repos
-    // - <Major.Minor>-<os>                                     Non-Appliance repos, old schema only for Appliance repos
-    // - <Major>-<os                                            Old schema only for Appliance repos
-    // - <Major.Minor.Patch>-<architecture>                     New schema only for Appliance repos only
-    // - <Major.Minor>-<architecture>                           New schema only for Appliance repos only
-    // - <Major>-<architecture>                                 New schema and non-monitor for Appliance repos only
+    // - <Major.Minor.Patch>-<os>-<architecture>                Non-windows, non-Appliance repos only
+    // - <Major.Minor>-<os>-<architecture>                      Non-windows, non-Appliance repos only
+    // - <Major.Minor.Patch>-<os>                               Non-Appliance repos only
+    // - <Major.Minor>-<os>                                     Non-Appliance repos only
+    // - <Major.Minor.Patch>-<architecture>                     Appliance repos only
+    // - <Major.Minor>-<architecture>                           Appliance repos only
+    // - <Major>-<architecture>                                 Non-monitor Appliance repos only
     [Theory]
     [MemberData(nameof(GetTagTestObjects), TestType.Platform)]
     public void PlatformTag_TagExists(
@@ -137,25 +135,10 @@ public class StaticTagTests
 
             bool hasPreviewInMajorVersionGroup = HasPreviewProductVersion(repo, dockerfileVersion.Major);
 
-            // .NET Monitor 8 Azure Linux images do not have Azure Linux platform
-            //  (e.g. *-amd64) tags but do have undocumented CBL-Mariner tags. The tag
-            // pattern test assumes that a dockerfile will produce platform tags for the
-            // underlying OS, which is true for most cases, but not for .NET Monitor 8
-            // due to combination of undocumenting platform tags for appliance images
-            // (which only .NET Monitor had at the time) and the update from CBL-Mariner
-            // to Azure Linux. Rewrite the OS to match CBL-Mariner in this instance.
-            string os = dockerfileInfo.OsDir;
-            if (repo.Name.EndsWith("monitor", StringComparison.Ordinal) &&
-                dockerfileInfo.VersionDir.StartsWith("8.", StringComparison.Ordinal) &&
-                string.Equals(OS.AzureLinuxDistroless, os, StringComparison.Ordinal))
-            {
-                os = OS.MarinerDistroless;
-            }
-
             Regex expectedPattern = GetTagRegex(
                 versionType,
                 dockerfileInfo.ProductVersion,
-                checkOs ? os : null,
+                checkOs ? dockerfileInfo.OsDir : null,
                 checkArchitecture ? dockerfileInfo.ArchitectureDir : null);
 
             IEnumerable<string> matchingTags = tags.Where(tag => expectedPattern.IsMatch(tag));
@@ -351,81 +334,24 @@ public class StaticTagTests
                 case TestType.Platform:
                     if (ApplianceRepoIds.Contains(repo.Id))
                     {
-                        // Only appliance repos have major version tags
-                        // Only appliance repos have floating distro tags (<cref="IsApplianceVersionUsingOldSchema"/>)
+                        // Appliance repos exclude the OS from all tags and only include architecture
                         testObjects.AddRange(
                         [
                             GetTagTestInput(
                                 testType,
                                 repo,
                                 VersionType.MajorMinorPatch,
-                                checkOs: true,
-                                checkArchitecture: true,
-                                skipDockerfileOn: IsApplianceVersionUsingNewSchema
-                            ), // <Major.Minor.Patch>-<os>-<architecture>
-
-                            GetTagTestInput(
-                                testType,
-                                repo,
-                                VersionType.MajorMinorPatch,
-                                checkOs: true,
-                                checkArchitecture: false,
-                                skipDockerfileOn: IsApplianceVersionUsingNewSchema
-                            ), // <Major.Minor.Patch>-<os>
-
-                            GetTagTestInput(
-                                testType,
-                                repo,
-                                VersionType.MajorMinorPatch,
                                 checkOs: false,
-                                checkArchitecture: true,
-                                skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                checkArchitecture: true
                             ), // <Major.Minor.Patch>-<architecture>
 
                             GetTagTestInput(
                                 testType,
                                 repo,
                                 VersionType.MajorMinor,
-                                checkOs: true,
-                                checkArchitecture: true,
-                                skipDockerfileOn: IsApplianceVersionUsingNewSchema
-                            ), // <Major.Minor>-<os>-<architecture>
-
-                            GetTagTestInput(
-                                testType,
-                                repo,
-                                VersionType.MajorMinor,
-                                checkOs: true,
-                                checkArchitecture: false,
-                                skipDockerfileOn: IsApplianceVersionUsingNewSchema
-                            ), // <Major.Minor>-<os>
-
-                            GetTagTestInput(
-                                testType,
-                                repo,
-                                VersionType.MajorMinor,
                                 checkOs: false,
-                                checkArchitecture: true,
-                                skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                checkArchitecture: true
                             ), // <Major.Minor>-<architecture>
-
-                            GetTagTestInput(
-                                testType,
-                                repo,
-                                VersionType.Major,
-                                checkOs: true,
-                                checkArchitecture: true,
-                                skipDockerfileOn: IsApplianceVersionUsingNewSchema
-                            ), // <Major>-<os>-<architecture>
-
-                            GetTagTestInput(
-                                testType,
-                                repo,
-                                VersionType.Major,
-                                checkOs: true,
-                                checkArchitecture: false,
-                                skipDockerfileOn: IsApplianceVersionUsingNewSchema
-                            ) // <Major>-<os>
                         ]);
 
                         if (!repo.Name.Contains("monitor"))
@@ -436,8 +362,7 @@ public class StaticTagTests
                                 repo,
                                 VersionType.Major,
                                 checkOs: false,
-                                checkArchitecture: true,
-                                skipDockerfileOn: IsApplianceVersionUsingOldSchema
+                                checkArchitecture: true
                             )); // <Major>-<architecture>
                         }
                     }
@@ -617,17 +542,6 @@ public class StaticTagTests
 
     private static bool IsWindows(DockerfileInfo dockerfileInfo) =>
         dockerfileInfo.OsDir.Contains("windowsservercore") || dockerfileInfo.OsDir.Contains("nanoserver");
-
-    // Certain versions of appliance repos use a new tag schema.
-    // This new schema excludes the OS from all tags.
-    // The aspire-dashboard repo uses this schema for all versions.
-    // The monitor and monitor-base repos use this schema for versions 9 and above.
-    private static bool IsApplianceVersionUsingOldSchema(DockerfileInfo dockerfileInfo) =>
-        dockerfileInfo.RepoDir.Contains("monitor") && dockerfileInfo.ProductVersion.Major <= 8;
-
-    // <cref="IsApplianceVersionUsingOldSchema"/>
-    private static bool IsApplianceVersionUsingNewSchema(DockerfileInfo dockerfileInfo) =>
-        !IsApplianceVersionUsingOldSchema(dockerfileInfo);
 
     /// <summary>
     /// Determines if the <paramref name="productVersion"/> is the latest in its major version group.
