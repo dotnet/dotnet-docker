@@ -30,12 +30,6 @@
     set checksumsBaseUrl to VARIABLES[cat(baseUrlType, "|", dotnetVersion, "|base-url|checksums|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
-    _ ASP.NET Core 8.0 sha512 files get published as nonshipping artifacts instead of shipping artifacts ^
-    _ Tracking issue: https://github.com/dotnet/release/issues/1395 ^
-    if (dotnetVersion = "8.0" && find(product, "aspnet") >= 0 && isInternal):{{
-        set checksumsBaseUrl to replace(checksumsBaseUrl, "shipping", "nonshipping")
-    }}^
-
     set productVersion to when(product = "sdk",
         VARIABLES[cat(product, "|", dotnetVersion, "|product-version")],
         VARIABLES[cat("dotnet|", dotnetVersion, "|product-version")]
@@ -73,25 +67,15 @@
       When https://github.com/dotnet/release/issues/1382 is fixed, internal sha
       files should match the new format. ^
     set isReleasedBuild to find(baseUrl, "builds.dotnet.microsoft.com") >= 0 ^
-    set useNewChecksumFiles to (isReleasedBuild && dotnetVersion != "8.0" && dotnetVersion != "9.0") ^
-    set shaUrlIsAggregate to ((dotnetVersion = "8.0" || dotnetVersion = "9.0") && !isInternal) ^
-    set shaFileContentIsBare to (useNewChecksumFiles && isWindows) || (!useNewChecksumFiles && !shaUrlIsAggregate) ^
+    set useNewChecksumFiles to isReleasedBuild ^
+    set shaFileContentIsBare to isWindows || !useNewChecksumFiles ^
     set shaExtension to when(useNewChecksumFiles && isWindows, ".sha512-bare", ".sha512") ^
 
-    set shaUrlPath to when(shaUrlIsAggregate,
-        VARIABLES[cat("dotnet|", dotnetVersion, "|aggregate-checksums")],
-        cat(downloadPath, shaExtension)) ^
+    set shaUrlPath to cat(downloadPath, shaExtension) ^
     set shaUrl to cat(checksumsBaseUrl, shaUrlPath) ^
 
     set shaUrlParts to split(shaUrl, "/") ^
     set shaFileName to shaUrlParts[len(shaUrlParts) - 1] ^
-
-    _ The .NET SDK has two versions associated with it - SDK version and Runtime version.
-      Aggregate checksum files are associated with the .NET runtime version, so if we're
-      installing the SDK we need to have a separate variable for the runtime version. ^
-    if (product = "sdk" && shaUrlIsAggregate):{{
-        set runtimeVersion to VARIABLES[cat("runtime|", dotnetVersion, "|build-version")]
-    }}^
 
     set downloadFiles to cat("Dockerfile.", templatePlatform, ".download-files") ^
     set validateChecksum to cat("Dockerfile.", templatePlatform, ".validate-checksum") ^
@@ -166,9 +150,6 @@
             "dotnet_file_version")),
         fileVersion
     )^_
-}}}}{{if runtimeVersion:{{lineEnd}}
-{{continue}}{{
-    assign("dotnet_version", runtimeVersion)
 }}}}{{if useFileVariables:{{lineEnd}}
 {{continue}}{{
     set fileNameVar to when(product = "aspnet", "aspnetcore_file", "dotnet_file")^
@@ -176,7 +157,7 @@
     set fileName to replaceVariables(fileName)
 }}{{lineEnd}}
 {{continue}}{{
-    set shaFileVar to when(shaUrlIsAggregate, "dotnet_checksums_file", "dotnet_sha512_file")^
+    set shaFileVar to "dotnet_sha512_file"^
     assign(shaFileVar, shaFileName)^
     set shaFileName to replaceVariables(shaFileName)
 }}}}{{lineEnd}}{{extraLine}}
@@ -203,7 +184,6 @@
         "sha-function": shaFunction,
         "sha-file": replaceVariables(shaFileName),
         "sha-file-is-bare": shaFileContentIsBare,
-        "sha-file-is-aggregate": shaUrlIsAggregate,
         "use-cmd-escape": isWindows && product = "sdk"
     ])
 }}{{if ARGS["extract-to"]:{{lineEnd}}{{extraLine}}

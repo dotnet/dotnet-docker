@@ -35,7 +35,7 @@ body:
     attributes:
       label: Which .NET image(s) are you using?
       description: Please specify the exact digest if possible; otherwise, provide the tag name
-      placeholder: mcr.microsoft.com/dotnet/sdk:8.0@sha256:00ab6163f4c8fdf8ea427b1fa9d9d2312ff623d5810577ad73605a07ba67397a
+      placeholder: mcr.microsoft.com/dotnet/sdk:11.0@sha256:<digest>
 
   - type: markdown
     attributes:

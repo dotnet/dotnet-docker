@@ -24,8 +24,7 @@ tags".
 For .NET 11, version-only tags refer to Ubuntu 26.04 (Resolute). The `latest`
 tag follows the latest stable .NET release, currently .NET 11.
 
-For comparison, .NET 8 and .NET 9 version-only tags refer to Debian 12
-(Bookworm), and .NET 10 version-only tags refer to Ubuntu 24.04 (Noble).
+For comparison, .NET 10 version-only tags refer to Ubuntu 24.04 (Noble).
 
 These convenience tags don't support Windows. See the [Multi-Platform
 Tags](/documentation/supported-tags.md#multi-platform-tags) documentation for
@@ -33,7 +32,7 @@ more info.
 
 ## Targeting a specific operating system
 
-If you want a specific operating system image, you should use a specific operating system tag. For .NET 11, we publish images for [Alpine](#alpine-linux), [Azure Linux](#azure-linux), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core). [Debian](#debian) images are available for .NET 8 and .NET 9.
+If you want a specific operating system image, you should use a specific operating system tag. We publish images for [Alpine](#alpine-linux), [Azure Linux](#azure-linux), [Ubuntu](#ubuntu), [Windows Nano Server](#nano-server), and [Windows Server Core](#windows-server-core).
 
 The following tags demonstrate the pattern used to describe each operating system (using .NET 11.0 as the example):
 
@@ -80,24 +79,6 @@ docker pull mcr.microsoft.com/dotnet/runtime:11.0-alpine
 |-------------------------|---------------------------------|
 | [Globalization]         | Yes, for non-distroless images.<br>Globalization supported in distroless images with `-extra` image variant. |
 | [Distroless Images]     | No                              |
-
-#### [Debian](https://www.debian.org/)
-
-* Stability-focused, extensive package repository.
-* Full featured .NET images including many packages.
-
-|                 |                                                                 |
-|-----------------|-----------------------------------------------------------------|
-| Releases        | [Approximately every 2 years](https://www.debian.org/releases/) |
-| Security        | [Debian Security Information](https://www.debian.org/security/) |
-| Support         | [Debian User Support](https://www.debian.org/support)           |
-| Package format  | `.deb`                                                          |
-| Package manager | `apt`/ `dpkg`                                                   |
-
-| Supported .NET Features |     |
-|-------------------------|-----|
-| [Globalization]         | Yes |
-| [Distroless Images]     | No  |
 
 #### [Ubuntu](https://ubuntu.com/)
 

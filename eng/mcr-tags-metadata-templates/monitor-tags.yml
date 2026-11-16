@@ -1,5 +1,2 @@
 $(McrTagsYmlRepo:monitor)
 $(McrTagsYmlTagGroup:10.0)
-$(McrTagsYmlTagGroup:9.0)
-$(McrTagsYmlTagGroup:8.1-ubuntu-chiseled)
-$(McrTagsYmlTagGroup:8.1-azurelinux-distroless)

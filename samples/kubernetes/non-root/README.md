@@ -39,7 +39,7 @@ $ kubectl exec dotnet-fakepod-7db6ff8b6d-zdc9n -- whoami
 app
 ```
 
-This pattern won't work for this sample because `whoami` doesn't exist in .NET chiseled images. They are appliance images with no shell and no extra tools (like `whoami`, `top`, and `ps`). This pattern will work fine with apps built with our regular images (like `8.0`, `8.0-alpine` and `8.0-jammy`).
+This pattern won't work for this sample because `whoami` doesn't exist in .NET chiseled images. They are appliance images with no shell and no extra tools (like `whoami`, `top`, and `ps`). This pattern will work fine with apps built with our regular images (like `11.0`, `11.0-alpine`, and `10.0-noble`).
 
 If you see `CreateContainerConfigError`, then the pod failed to deploy.
 
@@ -63,7 +63,7 @@ View the sample app at `http://localhost:8080/` or call `curl http://localhost:8
 
 ```bash
 % curl http://localhost:8080/Environment
-{"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":8,"totalAvailableMemoryBytes":4113563648,"memoryLimit":0,"memoryUsage":34082816,"hostName":"dotnet-non-root-8467576789-9dj8g"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Ubuntu 26.04.1 LTS","osArchitecture":"Arm64","user":"app","processorCount":8,"totalAvailableMemoryBytes":4113563648,"memoryLimit":0,"memoryUsage":34082816,"hostName":"dotnet-non-root-8467576789-9dj8g"}
 ```
 
 `user` is displayed as `app`, as expected.

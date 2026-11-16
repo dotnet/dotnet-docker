@@ -20,7 +20,7 @@ Add due dates to each of the issues so that we don't lose track of them.
     - [ ] Add entries for the new .NET versions in `manifest.versions.json`
     - [ ] Add new images for the new .NET version in each repo in `manifest.json`
       - [ ] Move `latest` tags to the new .NET version
-      - [ ] [Floating tags should have a `-preview` suffix](https://github.com/dotnet/dotnet-docker/issues/4117). For example: `9.0-preview`.
+      - [ ] [Floating tags should have a `-preview` suffix](https://github.com/dotnet/dotnet-docker/issues/4117). For example: `11.0-preview`.
       - For fixed tags, the `-alpha.1` suffixes that is part of the .NET version sufficient and no additional suffix is necessary
     - Adjust existing templates or add new templates in `eng/dockerfile-templates/` if necessary
     - If there are no major changes between .NET versions, the new images can share `runtime-deps` layers with the previous .NET version

@@ -28,14 +28,14 @@ You can query the app.
 
 ```bash
 % curl http://localhost:8080/Environment
-{"runtimeVersion":".NET 8.0.5","osVersion":"Alpine Linux v3.19","osArchitecture":"X64","user":"root","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":34238464,"hostName":"dotnet-resource-limits-8685bd4b75-jltn5"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Alpine Linux v3.24","osArchitecture":"X64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":34238464,"hostName":"dotnet-resource-limits-8685bd4b75-jltn5"}
 ```
 
 You can query basic information from `dotnet-monitor` with the following approach.
 
 ```bash
 % curl http://localhost:52323/info
-{"version":"8.0.2-servicing.24258.10+25e00f40ba2a55512ea59365e73ddb4b27c73280","runtimeVersion":"8.0.5","diagnosticPortMode":"Listen","diagnosticPortName":"/diag/dotnet-monitor.sock"}
+{"version":"10.0.5+25e00f40ba2a55512ea59365e73ddb4b27c73280","runtimeVersion":"10.0.15","diagnosticPortMode":"Listen","diagnosticPortName":"/diag/dotnet-monitor.sock"}
  % curl http://localhost:52323/processes
 [{"pid":1,"uid":"6dd610b6-bc0c-4bf1-a882-4fa0afea34d2","name":"AspNetCoreRazorApp","isDefault":true}]
 % curl "http://localhost:52323/processes?pid=1"

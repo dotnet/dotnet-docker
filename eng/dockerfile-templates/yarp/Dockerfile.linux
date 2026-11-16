@@ -2,7 +2,7 @@
     set yarpVersionParts to split(PRODUCT_VERSION, ".") ^
     set yarpMajorMinor to cat(yarpVersionParts[0], ".", yarpVersionParts[1]) ^
     set aspnetBaseTag to
-        cat("$REPO:", VARIABLES[cat("dotnet|9.0|fixed-tag")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+        cat("mcr.microsoft.com/dotnet/aspnet:", VARIABLES[cat("yarp|", yarpMajorMinor, "|aspnet-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set installerImageTag to VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|core")] ^
 
     set baseUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])] ^
@@ -19,9 +19,7 @@
     set appDir to "/app" ^
     set sha to VARIABLES[join(["yarp", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
 
-}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
-
-# Installer image
+}}# Installer image
 FROM {{installerImageTag}} AS installer
 
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}

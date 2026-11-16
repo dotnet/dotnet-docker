@@ -137,7 +137,7 @@ docker run --rm -v ${pwd}:c:\app -w c:\app mcr.microsoft.com/dotnet/sdk:11.0-nan
 ```
 
 > [!WARNING]
-> From .NET 8 onwards, [.NET multi-platform images are Linux-only](https://learn.microsoft.com/dotnet/core/compatibility/containers/8.0/multi-platform-tags).
+> [.NET multi-platform images are Linux-only](https://learn.microsoft.com/dotnet/core/compatibility/containers/8.0/multi-platform-tags).
 > This means Windows containers must all be referenced by a full tag name including the specific Windows version.
 
 You can see the built binaries with the following command:

@@ -19,7 +19,7 @@ View the sample app at `http://localhost:8080/` and call `curl http://localhost:
 
 ```bash
 $ curl http://localhost:8080/Environment 
-{"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":31797248,"hostName":"hello-dotnet-5b887d9fbd-b6bmh"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Ubuntu 26.04.1 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":31797248,"hostName":"hello-dotnet-5b887d9fbd-b6bmh"}
 ```
 
 The `LoadBalancer` variant can also be applied locally. It will use port `80`.
@@ -45,7 +45,7 @@ And then call the `Environment` endpoint with `curl`.
 
 ```bash
 $ curl http://localhost/Environment 
-{"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":54845440,"hostName":"hello-dotnet-bd5fdfcfb-f5vjq"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Ubuntu 26.04.1 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":54845440,"hostName":"hello-dotnet-bd5fdfcfb-f5vjq"}
 ```
 
 The following example uses minikube.
@@ -83,7 +83,7 @@ And then a call with `curl`.
 
 ```bash
 $ curl http://localhost/Environment
-{"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":42151936,"hostName":"hello-dotnet-86f4cffb9d-blcnb"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Ubuntu 26.04.1 LTS","osArchitecture":"Arm64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":42151936,"hostName":"hello-dotnet-86f4cffb9d-blcnb"}
 ```
 
 This is the same as with Docker Desktop, just with the additional requirement of using `minikube tunnel`.
@@ -119,7 +119,7 @@ The `EXTERNAL-IP` will resolve (after a brief wait) and you will be able to acce
 
 ```bash
 $ curl http://20.51.80.224/Environment
-{"runtimeVersion":".NET 8.0.4","osVersion":"Ubuntu 22.04.4 LTS","osArchitecture":"X64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":42323968,"hostName":"hello-dotnet-bd5fdfcfb-twgqs"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Ubuntu 26.04.1 LTS","osArchitecture":"X64","user":"app","processorCount":1,"totalAvailableMemoryBytes":78643200,"memoryLimit":104857600,"memoryUsage":42323968,"hostName":"hello-dotnet-bd5fdfcfb-twgqs"}
 ```
 
 You may notice that this approach is using raw HTTP on an internet-facing endpoint. That's only acceptable for brief testing like this. [Enforce HTTPS in ASP.NET Core](https://learn.microsoft.com/aspnet/core/security/enforcing-ssl) and [What is Application Gateway Ingress Controller?](https://learn.microsoft.com/azure/application-gateway/ingress-controller-overview) describe options for exposing secure HTTPS endpoints.

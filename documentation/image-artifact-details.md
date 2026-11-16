@@ -15,7 +15,7 @@ This document is intended to be complimentary to the [Instructions for Finding L
 * .NET SDK
 * PowerShell
 
-You can see these components installed in the [runtime](https://github.com/dotnet/dotnet-docker/blob/d90e7bd1d10c8781f0008f5ab1327ca3481e78de/src/runtime/8.0/bookworm-slim/amd64/Dockerfile#L6-L13), [aspnet](https://github.com/dotnet/dotnet-docker/blob/d90e7bd1d10c8781f0008f5ab1327ca3481e78de/src/aspnet/8.0/bookworm-slim/amd64/Dockerfile#L6-L12), and [sdk](https://github.com/dotnet/dotnet-docker/blob/d90e7bd1d10c8781f0008f5ab1327ca3481e78de/src/sdk/8.0/bookworm-slim/amd64/Dockerfile#L26-L48) Dockerfiles.
+You can see these components installed in the [runtime](https://github.com/dotnet/dotnet-docker/blob/57e3a51c4b8f7dcd10a615c733203ae08d3ddd35/src/runtime/10.0/noble/amd64/Dockerfile#L6-L16), [aspnet](https://github.com/dotnet/dotnet-docker/blob/57e3a51c4b8f7dcd10a615c733203ae08d3ddd35/src/aspnet/10.0/noble/amd64/Dockerfile#L6-L16), and [sdk](https://github.com/dotnet/dotnet-docker/blob/57e3a51c4b8f7dcd10a615c733203ae08d3ddd35/src/sdk/10.0/noble/amd64/Dockerfile#L5-L21) Dockerfiles.
 
 ### .NET Runtime and ASP.NET Core Images
 

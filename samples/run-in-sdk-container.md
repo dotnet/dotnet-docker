@@ -28,7 +28,7 @@ The following example demonstrates using `dotnet run` with a console app in a .N
 The instructions assume you are in the `samples/ConsoleApp` directory (due to the [volume mounting](https://docs.docker.com/engine/storage/volumes/) `-v` syntax).
 
 ```console
-% docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
+% docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet run
          42
          42              ,d                             ,d
          42              42                             42
@@ -39,8 +39,8 @@ a8"    `Y42 a8"     "8a  42    42P'   `"8a a8P_____42   42
  `"8bbdP"Y8  `"YbbdP"'   "Y428 42       42  `"Ybbd8"'   "Y428
 
 OSArchitecture: X64
-OSDescription: Debian GNU/Linux 12 (bookworm)
-FrameworkDescription: .NET 8.0.0
+OSDescription: Ubuntu 26.04.1 LTS
+FrameworkDescription: .NET 11.0.0
 
 UserName: root
 HostName : 0dea5548ae88
@@ -56,7 +56,7 @@ The following instructions demonstrate this scenario in various environments.
 ### Linux or macOS
 
 ```console
-docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
+docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet run
 ```
 
 ### Windows using Linux containers
@@ -64,7 +64,7 @@ docker run --rm -it -v $(pwd):/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dot
 This example uses PowerShell.
 
 ```console
-docker run --rm -it -v ${pwd}:/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
+docker run --rm -it -v ${pwd}:/app/ -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet run
 ```
 
 ### Windows using Windows containers
@@ -72,7 +72,7 @@ docker run --rm -it -v ${pwd}:/app/ -w /app mcr.microsoft.com/dotnet/sdk:8.0 dot
 This example uses PowerShell.
 
 ```console
-docker run --rm -it -v ${pwd}:c:\app\ -w \app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run
+docker run --rm -it -v ${pwd}:c:\app\ -w \app mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 dotnet run
 ```
 
 ## ASP.NET Core App
@@ -82,7 +82,7 @@ The following example demonstrates using `dotnet run` with an ASP.NET Core app i
 The instructions assume you are in the `samples/AspNetCoreRazorApp/AspNetCoreRazorApp` directory (due to the [volume mounting](https://docs.docker.com/engine/storage/volumes/) `-v` syntax used).
 
 ```console
-% docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --no-launch-profile
+% docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:11.0 dotnet run --no-launch-profile
 
 info: Microsoft.Hosting.Lifetime[0]
       Now listening on: http://[::]:8080
@@ -104,7 +104,7 @@ The following instructions demonstrate this scenario in various environments:
 ### Linux or macOS
 
 ```console
-docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:11.0 dotnet run --no-launch-profile
 ```
 
 ### Windows using Linux containers
@@ -112,7 +112,7 @@ docker run --rm -it -p 8000:8080 -v $(pwd):/app/ -w /app -e ASPNETCORE_HTTP_URLS
 This example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:8080 -v ${pwd}:/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:8080 -v ${pwd}:/app/ -w /app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:11.0 dotnet run --no-launch-profile
 ```
 
 ### Windows using Windows containers
@@ -120,7 +120,7 @@ docker run --rm -it -p 8000:8080 -v ${pwd}:/app/ -w /app -e ASPNETCORE_HTTP_URLS
 This example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app\ -w \app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --no-launch-profile
+docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app\ -w \app -e ASPNETCORE_HTTP_URLS=8080 -e ASPNETCORE_ENVIRONMENT=Development mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 dotnet run --no-launch-profile
 ```
 
 ## Using a launch profile to configure ASP.NET Core
@@ -145,7 +145,7 @@ The following instructions demonstrate this scenario in various environments:
 ### Linux or macOS
 
 ```console
-docker run --rm -it -p 8000:8080 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --launch-profile publicdev
+docker run --rm -it -p 8000:8080 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet run --launch-profile publicdev
 ```
 
 ### Windows using Linux containers
@@ -153,7 +153,7 @@ docker run --rm -it -p 8000:8080 -v $(pwd):/app -w /app mcr.microsoft.com/dotnet
 The following example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:8080 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --launch-profile publicdev
+docker run --rm -it -p 8000:8080 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet/sdk:11.0 dotnet run --launch-profile publicdev
 ```
 
 ### Windows using Windows containers
@@ -161,7 +161,7 @@ docker run --rm -it -p 8000:8080 -v ${pwd}:/app -w /app mcr.microsoft.com/dotnet
 The following example uses PowerShell.
 
 ```console
-docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/sdk:8.0 dotnet run --launch-profile publicdev
+docker run --rm -it -p 8000:8080 -v ${pwd}:C:\app -w C:\app mcr.microsoft.com/dotnet/sdk:11.0-nanoserver-ltsc2025 dotnet run --launch-profile publicdev
 ```
 
 ## More Samples

@@ -10,61 +10,56 @@ namespace UpdateDependencies.Tests;
 public sealed class MonitorUpdaterTests
 {
     [Theory]
-    [InlineData("9.0.5-servicing.25556.2", "9.0.5")]
-    [InlineData("9.0.0-rtm.12345.1", "9.0.0")]
-    [InlineData("9.0.3-preview.1.26303.1", "9.0.3-preview.1")]
-    [InlineData("9.0.5", "9.0.5")]
+    [InlineData("10.0.5-servicing.25556.2", "10.0.5")]
+    [InlineData("10.0.0-rtm.12345.1", "10.0.0")]
+    [InlineData("10.0.3-preview.1.26303.1", "10.0.3-preview.1")]
+    [InlineData("10.0.5", "10.0.5")]
     public async Task Version_WritesBuildVersionAndProductTag(string version, string productVersion)
     {
         ManifestVariables variables = new ManifestVariables("""
             {
                 "variables": {
                     "branch": "nightly",
-                    "monitor|9.0|build-version": "9.0.1",
-                    "monitor|9.0|product-version": "9.0.1"
+                    "monitor|10.0|build-version": "10.0.1",
+                    "monitor|10.0|product-version": "10.0.1"
                 }
             }
             """);
-        using HttpClient httpClient = new HttpClient();
-        MonitorUpdater updater = CreateUpdater(httpClient);
+        MonitorUpdater updater = CreateUpdater();
 
         DependencyUpdate update = updater.ResolveFromVersion(version);
         await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
-        variables.GetRawValue("monitor|9.0|build-version").ShouldBe(version);
-        variables.GetRawValue("monitor|9.0|product-version").ShouldBe(productVersion);
+        variables.GetRawValue("monitor|10.0|build-version").ShouldBe(version);
+        variables.GetRawValue("monitor|10.0|product-version").ShouldBe(productVersion);
     }
 
     [Fact]
-    public async Task Version_PreservesAliasesAndOtherVersionChecksums()
+    public async Task Version_PreservesAliases()
     {
         ManifestVariables variables = new ManifestVariables("""
             {
                 "variables": {
                     "branch": "nightly",
-                    "monitor|9.0|build-version": "9.0.1",
-                    "monitor|9.0|product-version": "9.0.1",
-                    "monitor-base|9.0|build-version": "$(monitor|9.0|build-version)",
-                    "monitor-base|9.0|product-version": "$(monitor|9.0|product-version)",
-                    "monitor|8.0|linux|x64|sha": "unrelated"
+                    "monitor|10.0|build-version": "10.0.1",
+                    "monitor|10.0|product-version": "10.0.1",
+                    "monitor-base|10.0|build-version": "$(monitor|10.0|build-version)",
+                    "monitor-base|10.0|product-version": "$(monitor|10.0|product-version)"
                 }
             }
             """);
-        using HttpClient httpClient = new HttpClient();
-        MonitorUpdater updater = CreateUpdater(httpClient);
+        MonitorUpdater updater = CreateUpdater();
 
-        DependencyUpdate update = updater.ResolveFromVersion("9.0.5");
+        DependencyUpdate update = updater.ResolveFromVersion("10.0.5");
         await update.ApplyAsync(variables, "", TestContext.Current.CancellationToken);
 
-        variables.GetRawValue("monitor-base|9.0|build-version").ShouldBe("$(monitor|9.0|build-version)");
-        variables.GetRawValue("monitor-base|9.0|product-version").ShouldBe("$(monitor|9.0|product-version)");
-        variables.GetRawValue("monitor|8.0|linux|x64|sha").ShouldBe("unrelated");
+        variables.GetRawValue("monitor-base|10.0|build-version").ShouldBe("$(monitor|10.0|build-version)");
+        variables.GetRawValue("monitor-base|10.0|product-version").ShouldBe("$(monitor|10.0|product-version)");
     }
 
-    private static MonitorUpdater CreateUpdater(HttpClient httpClient) =>
+    private static MonitorUpdater CreateUpdater() =>
         new(
             Mock.Of<IPipelineArtifactProvider>(),
-            httpClient,
             new UpdateDependenciesConfiguration(),
             Mock.Of<ILogger<MonitorUpdater>>());
 }

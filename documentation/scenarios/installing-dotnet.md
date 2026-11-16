@@ -159,8 +159,8 @@ Another benefit of installing via a package manager is that all of .NET's depend
 .NET is available in the default package manager feeds for some Linux distros as well as from the Microsoft package repository (packages.microsoft.com).
 However, you should only use one or the other to install .NET.
 
-Starting with .NET 9, we have stopped publishing .NET packages on `packages.microsoft.com` for distros that publish their own .NET packages.
-For more details please see [.NET 9 Package Publishing announcement](https://github.com/dotnet/core/discussions/9556).
+Microsoft does not publish .NET packages on `packages.microsoft.com` for distros that publish their own .NET packages.
+For more details please see the [package publishing announcement](https://github.com/dotnet/core/discussions/9556).
 
 .NET is supported by Microsoft when downloaded from a Microsoft source. Best effort support is offered from Microsoft when downloaded from elsewhere. You can open issues at [dotnet/core](https://github.com/dotnet/core/issues/new) if you run into problems.
 
@@ -171,9 +171,9 @@ This distribution of .NET is built and supported by the Ubuntu package maintaine
 Package installation commands for other distros are documented in [Install .NET on Linux](https://learn.microsoft.com/dotnet/core/install/linux).
 
 ```Dockerfile
-FROM ubuntu:noble
+FROM ubuntu:resolute
 RUN apt-get update \
-    && apt-get install -y dotnet-sdk-8.0 \
+    && apt-get install -y dotnet-sdk-10.0 \
     && rm -rf /var/lib/apt/lists/*
 ```
 
@@ -205,7 +205,7 @@ RUN apt-get update \
     # Install .NET
     && apt-get update \
     && apt-get install -y --no-install-recommends \
-        dotnet-runtime-8.0 \
+        dotnet-runtime-10.0 \
     \
     # Cleanup
     && rm -rf /var/lib/apt/lists/*

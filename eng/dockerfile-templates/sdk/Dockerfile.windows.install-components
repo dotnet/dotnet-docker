@@ -9,6 +9,8 @@
     set isServerCore to find(OS_VERSION, "windowsservercore") >= 0 ^
 
     set sdkExtractPaths to [
+        "dnx.cmd",
+        "dnx.ps1",
         "LICENSE.txt",
         "ThirdPartyNotices.txt",
         "packs",
@@ -17,9 +19,6 @@
         "templates",
         "shared"
     ] ^
-    if (dotnetVersion != "8.0" && dotnetVersion != "9.0"):{{
-        set sdkExtractPaths to cat(["dnx.cmd", "dnx.ps1"], sdkExtractPaths)
-    }}^
 
     set sdkExtractGroups to [
         [

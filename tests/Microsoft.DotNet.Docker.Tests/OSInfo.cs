@@ -23,7 +23,6 @@ public enum OSFamily
 {
     Alpine,
     AzureLinux,
-    Debian,
     Ubuntu,
     NanoServer,
     WindowsServerCore
@@ -60,8 +59,6 @@ public sealed record OSInfo(
         {
             static string GetCodename(OSFamily family, string version) => (family, version) switch
             {
-                (OSFamily.Debian, "12") => "bookworm",
-                (OSFamily.Ubuntu, "22.04") => "jammy",
                 (OSFamily.Ubuntu, "24.04") => "noble",
                 (OSFamily.Ubuntu, "26.04") => "resolute",
                 _ => throw new InvalidOperationException($"Unknown {family} version: {version}")
@@ -71,7 +68,6 @@ public sealed record OSInfo(
             {
                 OSFamily.Alpine => string.IsNullOrEmpty(Version) ? "alpine" : $"alpine{Version}",
                 OSFamily.AzureLinux => $"azurelinux{Version}",
-                OSFamily.Debian => $"{GetCodename(Family, Version)}-slim",
                 OSFamily.Ubuntu => GetCodename(Family, Version),
                 OSFamily.NanoServer => $"nanoserver-{Version.ToLowerInvariant().Replace(" ", "")}",
                 OSFamily.WindowsServerCore => $"windowsservercore-{Version.ToLowerInvariant().Replace(" ", "")}",
@@ -98,7 +94,6 @@ public sealed record OSInfo(
             {
                 OSFamily.Alpine => "Alpine",
                 OSFamily.AzureLinux => "Azure Linux",
-                OSFamily.Debian => "Debian",
                 OSFamily.Ubuntu => "Ubuntu",
                 OSFamily.NanoServer => "Nano Server",
                 OSFamily.WindowsServerCore => "Windows Server Core",

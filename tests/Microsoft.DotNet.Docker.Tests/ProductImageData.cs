@@ -20,12 +20,6 @@ public record ProductImageData : ImageData
     // PowerShell does not support Arm-based Alpine
     public bool SupportsPowerShell => !(OS.Family == OSFamily.Alpine && IsArm);
 
-    /// <summary>
-    /// Indicates whether the SDK version of the image supports `dnx` and
-    /// should have it installed.
-    /// </summary>
-    public bool SupportsDnx => VersionFamily != ImageVersion.V8_0 && VersionFamily != ImageVersion.V9_0;
-
     public OSInfo SdkOS
     {
         get => HasCustomSdk ? _sdkOS : OS;

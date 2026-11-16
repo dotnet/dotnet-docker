@@ -31,7 +31,7 @@ Should look like:
 
 ```bash
 $ curl http://localhost:8080/Environment
-{"runtimeVersion":".NET 8.0.1","osVersion":"Alpine Linux v3.18","osArchitecture":"X64","user":"root","processorCount":8,"totalAvailableMemoryBytes":67373219840,"memoryLimit":0,"memoryUsage":30572544,"hostName":"dotnet-app-547757d7f4-xqmsk"}
+{"runtimeVersion":".NET 11.0.0","osVersion":"Alpine Linux v3.24","osArchitecture":"X64","user":"app","processorCount":8,"totalAvailableMemoryBytes":67373219840,"memoryLimit":0,"memoryUsage":30572544,"hostName":"dotnet-app-547757d7f4-xqmsk"}
 ```
 
 Delete the resources.

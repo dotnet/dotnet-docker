@@ -6,7 +6,6 @@ resources:
       branches:
         include:
         - main
-        - feature/9.x
         - release/*
         - internal/release/*
       tags:
