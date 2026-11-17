@@ -8,7 +8,7 @@ This document describes the platforms (OS and architectures) supported by the of
 
 Policies:
 
-- Images will be published for the latest OS version at the time a new .NET major version is released.
+- Images will be published for the latest OS versions available at the time a new .NET major version reaches [active support](https://dotnet.microsoft.com/platform/support/policy/dotnet-core).
 - When new OS versions are released, new images will be added to the latest .NET version and latest LTS .NET version.
 - .NET versions that are within 6 months of EOL may not get new image variants.
 - We stop publishing updates to images when the associated .NET version reaches [end of support](https://dotnet.microsoft.com/platform/support/policy/dotnet-core) or when the OS base image stops receiving updates, whichever happens first.
