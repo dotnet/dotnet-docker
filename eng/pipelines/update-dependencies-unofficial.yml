@@ -18,6 +18,14 @@ parameters:
   displayName: Aspire build channel (see aka.ms/bar)
   type: string
   default: ""
+- name: updateYarp
+  displayName: Update YARP?
+  type: boolean
+  default: false
+- name: yarpChannel
+  displayName: YARP build channel (see aka.ms/bar)
+  type: string
+  default: ""
 # This parameter will show up as a multi-select dropdown when queueing the pipeline
 - name: tools
   type: stringList
@@ -45,5 +53,7 @@ extends:
     vmrChannel: ${{ parameters.vmrChannel }}
     updateAspire: ${{ parameters.updateAspire }}
     aspireDailyChannel: ${{ parameters.aspireChannel }}
+    updateYarp: ${{ parameters.updateYarp }}
+    yarpChannel: ${{ parameters.yarpChannel }}
     updateDotnet: ${{ parameters.updateDotnet }}
     tools: ${{ parameters.tools }}

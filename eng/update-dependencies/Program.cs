@@ -116,6 +116,7 @@ services.AddSingleton<MonitorUpdater>();
 services.AddSingleton<PowerShellUpdater>();
 services.AddSingleton<RocksToolboxUpdater>();
 services.AddSingleton<SyftUpdater>();
+services.AddSingleton<YarpUpdater>();
 
 // Additional commands
 //
@@ -134,6 +135,7 @@ RootCommand rootCommand = new RootCommand("Update dotnet-docker dependencies")
     DependencyCommand.CreateCliCommand<MinGitUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<RocksToolboxUpdater>(host.Services),
     DependencyCommand.CreateCliCommand<SyftUpdater>(host.Services),
+    DependencyCommand.CreateCliCommand<YarpUpdater>(host.Services),
     MonitorCommand.CreateCliCommand(host.Services),
     PowerShellCommand.CreateCliCommand(host.Services),
     SyncInternalReleaseCommand.CreateCliCommand(host.Services),

@@ -2,6 +2,7 @@
 // The .NET Foundation licenses this file to you under the MIT license.
 
 using System.Globalization;
+using NuGet.Versioning;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies;
 
@@ -45,6 +46,22 @@ internal static class VersionHelper
         }
 
         return buildVersion;
+    }
+
+    /// <summary>
+    /// Resolves the product version of an Arcade build version by removing its build number:
+    /// "9.0.3-preview.1.26303.1" becomes "9.0.3-preview.1", and stable-branded builds such as
+    /// "9.0.5-servicing.25556.2" or "9.0.0-rtm.12345.1" become "9.0.5" and "9.0.0".
+    /// </summary>
+    public static string ResolveArcadeProductVersion(SemanticVersion buildVersion)
+    {
+        string productVersion = $"{buildVersion.Major}.{buildVersion.Minor}.{buildVersion.Patch}";
+        if (buildVersion.IsPrerelease && buildVersion.ReleaseLabels.First() is not ("servicing" or "rtm"))
+        {
+            productVersion += $"-{string.Join(".", buildVersion.ReleaseLabels.Take(2))}";
+        }
+
+        return productVersion;
     }
 
     /// <summary>

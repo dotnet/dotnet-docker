@@ -23,6 +23,10 @@ parameters:
     displayName: Update Aspire Dashboard?
     type: boolean
     default: true
+  - name: updateYarp
+    displayName: Update YARP?
+    type: boolean
+    default: true
   # This parameter will show up as a multi-select dropdown when queueing the pipeline
   - name: tools
     type: stringList
@@ -52,6 +56,8 @@ extends:
     updateAspire: ${{ parameters.updateAspire }}
     aspireDailyChannel: $(aspireDailyChannel)
     aspireGaChannel: $(aspireGaChannel)
+    updateYarp: ${{ parameters.updateYarp }}
+    yarpChannel: $(yarpChannel)
     tools: ${{ parameters.tools }}
     submitPullRequest: ${{ not(parameters.skipPullRequest) }}
     ${{ if ne(parameters.skipPullRequest, true) }}:
