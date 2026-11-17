@@ -5,7 +5,6 @@
   },
   "registry": "mcr.microsoft.com",
   "variables": {
-    "syndicatedAspireDashboardRepo": "dotnet/aspire-dashboard",
     "syndicatedRuntimeDepsRepo": "dotnet/core/runtime-deps",
     "syndicatedRuntimeRepo": "dotnet/core/runtime",
     "syndicatedAspnetRepo": "dotnet/core/aspnet",
@@ -6469,7 +6468,6 @@
       "images": [
         {
           "productVersion": "$(aspire-dashboard|product-version)",
-          "syndication": "$(syndicatedAspireDashboardRepo)",
           "sharedTags": {
             "$(aspire-dashboard|fixed-tag)": {},
             "$(aspire-dashboard|minor-tag)": {},

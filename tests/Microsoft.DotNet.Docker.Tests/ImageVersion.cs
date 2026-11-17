@@ -9,11 +9,7 @@ public readonly record struct ImageVersion
 {
     private readonly Version _version;
 
-    public static readonly ImageVersion V13_2 = new(new Version(13, 2), isPreview: false);
-    public static readonly ImageVersion V13_3 = new(new Version(13, 3), isPreview: false);
-    public static readonly ImageVersion V13_4 = new(new Version(13, 4), isPreview: false);
-    public static readonly ImageVersion V13_5 = new(new Version(13, 5), isPreview: false);
-    public static readonly ImageVersion V13_6 = new(new Version(13, 6), isPreview: false);
+    public static readonly ImageVersion V17_0 = new(new Version(17, 0), isPreview: false);
     public static readonly ImageVersion V10_0 = new(new Version(10, 0), isPreview: false);
     public static readonly ImageVersion V11_0 = new(new Version(11, 0), isPreview: false);
 

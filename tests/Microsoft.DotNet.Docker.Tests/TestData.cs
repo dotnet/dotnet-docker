@@ -267,7 +267,7 @@ public static class TestData
     private static readonly ProductImageData[] AspireDashboardTestData =
     [
         new() {
-            Version = V13_6,
+            Version = V17_0,
             VersionFamily = V11_0,
             OS = OS.AzureLinux30Distroless,
             OSTag = "",
@@ -276,7 +276,7 @@ public static class TestData
             SupportedImageRepos = DotNetImageRepo.Aspire_Dashboard,
         },
         new() {
-            Version = V13_6,
+            Version = V17_0,
             VersionFamily = V11_0,
             OS = OS.AzureLinux30Distroless,
             OSTag = "",
