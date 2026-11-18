@@ -55,7 +55,7 @@ ARG DOTNET_VERSION="10.0.X"
 FROM amd64/ubuntu:noble AS runtime-deps
 
 # Install .NET Runtime dependencies. References:
-# - https://github.com/dotnet/core/blob/main/release-notes/10.0/os-packages.md#ubuntu-2404-noble-numbat
+# - https://github.com/dotnet/core/blob/main/release-notes/10.0/dotnet-dependencies.md#ubuntu-2404-noble-numbat
 # - https://github.com/dotnet/dotnet-docker/blob/main/src/runtime-deps/10.0/noble/amd64/Dockerfile
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
