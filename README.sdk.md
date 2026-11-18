@@ -80,6 +80,8 @@ Tags | Dockerfile | OS Version
 10.0.404-alpine3.24-aot-amd64, 10.0-alpine3.24-aot-amd64, 10.0-alpine-aot-amd64, 10.0.404-alpine3.24-aot, 10.0-alpine3.24-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.24-aot/amd64/Dockerfile) | Alpine 3.24
 10.0.404-azurelinux3.0-amd64, 10.0-azurelinux3.0-amd64, 10.0.404-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/amd64/Dockerfile) | Azure Linux 3.0
 10.0.404-azurelinux3.0-aot-amd64, 10.0-azurelinux3.0-aot-amd64, 10.0.404-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/amd64/Dockerfile) | Azure Linux 3.0
+10.0.404-azurelinux4.0-amd64, 10.0-azurelinux4.0-amd64, 10.0.404-azurelinux4.0, 10.0-azurelinux4.0 | [Dockerfile](src/sdk/10.0/azurelinux4.0/amd64/Dockerfile) | Azure Linux 4.0
+10.0.404-azurelinux4.0-aot-amd64, 10.0-azurelinux4.0-aot-amd64, 10.0.404-azurelinux4.0-aot, 10.0-azurelinux4.0-aot | [Dockerfile](src/sdk/10.0/azurelinux4.0-aot/amd64/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm64 Tags
 
@@ -101,6 +103,8 @@ Tags | Dockerfile | OS Version
 10.0.404-alpine3.24-aot-arm64v8, 10.0-alpine3.24-aot-arm64v8, 10.0-alpine-aot-arm64v8, 10.0.404-alpine3.24-aot, 10.0-alpine3.24-aot, 10.0-alpine-aot | [Dockerfile](src/sdk/10.0/alpine3.24-aot/arm64v8/Dockerfile) | Alpine 3.24
 10.0.404-azurelinux3.0-arm64v8, 10.0-azurelinux3.0-arm64v8, 10.0.404-azurelinux3.0, 10.0-azurelinux3.0 | [Dockerfile](src/sdk/10.0/azurelinux3.0/arm64v8/Dockerfile) | Azure Linux 3.0
 10.0.404-azurelinux3.0-aot-arm64v8, 10.0-azurelinux3.0-aot-arm64v8, 10.0.404-azurelinux3.0-aot, 10.0-azurelinux3.0-aot | [Dockerfile](src/sdk/10.0/azurelinux3.0-aot/arm64v8/Dockerfile) | Azure Linux 3.0
+10.0.404-azurelinux4.0-arm64v8, 10.0-azurelinux4.0-arm64v8, 10.0.404-azurelinux4.0, 10.0-azurelinux4.0 | [Dockerfile](src/sdk/10.0/azurelinux4.0/arm64v8/Dockerfile) | Azure Linux 4.0
+10.0.404-azurelinux4.0-aot-arm64v8, 10.0-azurelinux4.0-aot-arm64v8, 10.0.404-azurelinux4.0-aot, 10.0-azurelinux4.0-aot | [Dockerfile](src/sdk/10.0/azurelinux4.0-aot/arm64v8/Dockerfile) | Azure Linux 4.0
 
 ### Linux arm32 Tags
 
