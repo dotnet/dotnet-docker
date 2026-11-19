@@ -230,7 +230,9 @@ public static class TestData
         new ProductImageData { Version = V10_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
         new ProductImageData { Version = V10_0, OS = OS.ServerCoreLtsc2025, Arch = Arch.Amd64 },
 
+        new ProductImageData { Version = V11_0, OS = OS.NanoServerLtsc2022, Arch = Arch.Amd64 },
         new ProductImageData { Version = V11_0, OS = OS.NanoServerLtsc2025, Arch = Arch.Amd64 },
+        new ProductImageData { Version = V11_0, OS = OS.ServerCoreLtsc2022, Arch = Arch.Amd64 },
         new ProductImageData { Version = V11_0, OS = OS.ServerCoreLtsc2025, Arch = Arch.Amd64 },
     ];
 

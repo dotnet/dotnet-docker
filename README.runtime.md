@@ -153,6 +153,8 @@ Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
 11.0.0-nanoserver-ltsc2025, 11.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/11.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
 11.0.0-windowsservercore-ltsc2025, 11.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/11.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
+11.0.0-nanoserver-ltsc2022, 11.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/11.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
+11.0.0-windowsservercore-ltsc2022, 11.0-windowsservercore-ltsc2022 | [Dockerfile](src/runtime/11.0/windowsservercore-ltsc2022/amd64/Dockerfile) | Windows Server Core 2022
 10.0.15-nanoserver-ltsc2025, 10.0-nanoserver-ltsc2025 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2025/amd64/Dockerfile) | Nano Server 2025
 10.0.15-windowsservercore-ltsc2025, 10.0-windowsservercore-ltsc2025 | [Dockerfile](src/runtime/10.0/windowsservercore-ltsc2025/amd64/Dockerfile) | Windows Server Core 2025
 10.0.15-nanoserver-ltsc2022, 10.0-nanoserver-ltsc2022 | [Dockerfile](src/runtime/10.0/nanoserver-ltsc2022/amd64/Dockerfile) | Nano Server 2022
