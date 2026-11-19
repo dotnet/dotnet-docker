@@ -5,11 +5,13 @@ using System.Globalization;
 using Microsoft.DotNet.DarcLib;
 using Microsoft.DotNet.ProductConstructionService.Client.Models;
 using Microsoft.Extensions.Logging;
+using Octokit;
 
 namespace Microsoft.DotNet.Docker.UpdateDependencies.Updaters;
 
 public sealed class AspireUpdater(
     IBasicBarClient barClient,
+    IReleasesClient releases,
     HttpClient httpClient,
     ILogger<AspireUpdater> logger)
         : IBarBuildUpdater, IBarChannelUpdater
@@ -28,8 +30,37 @@ public sealed class AspireUpdater(
 
     public async Task<DependencyUpdate> ResolveFromBarChannelAsync(int channelId, CancellationToken cancellationToken)
     {
-        Build build = await barClient.GetLatestBuildAsync(PublicRepository, channelId).WaitAsync(cancellationToken);
-        return await ResolveFromBarBuildAsync(build, cancellationToken);
+        // Aspire channels receive builds from both the public and internal repos (e.g. internal servicing
+        // builds), so the latest build may come from either one.
+        Build?[] builds = await Task.WhenAll(
+            barClient.GetLatestBuildAsync(PublicRepository, channelId),
+            barClient.GetLatestBuildAsync(InternalRepository, channelId)).WaitAsync(cancellationToken);
+
+        Build? publicRepoBuild = builds[0];
+        Build? internalRepoBuild = builds[1];
+
+        // Internal builds may be unreleased (e.g. embargoed security fixes). Only use one after its
+        // version has been publicly released, to avoid disclosing it early in a public PR.
+        if (internalRepoBuild is not null
+            && (publicRepoBuild is null || internalRepoBuild.DateProduced > publicRepoBuild.DateProduced)
+            && !await IsReleasedOnGitHubAsync(internalRepoBuild, cancellationToken))
+        {
+            internalRepoBuild = null;
+        }
+
+        Build[] candidates = new[] { publicRepoBuild, internalRepoBuild }.OfType<Build>().ToArray();
+        if (candidates.Length == 0)
+        {
+            throw new InvalidOperationException($"Could not find a usable Aspire build in BAR channel {channelId}.");
+        }
+
+        Build latestPublicBuild = candidates.OrderByDescending(b => b.DateProduced).First();
+
+        logger.LogInformation(
+            "Using latest Aspire build {BuildId} from {Repository}",
+            latestPublicBuild.Id, latestPublicBuild.GitHubRepository ?? latestPublicBuild.AzureDevOpsRepository);
+
+        return await ResolveFromBarBuildAsync(latestPublicBuild, cancellationToken);
     }
 
     public Task<DependencyUpdate> ResolveFromBarBuildAsync(Build build, CancellationToken cancellationToken)
@@ -39,6 +70,17 @@ public sealed class AspireUpdater(
             throw new ArgumentException($"BAR build {build.Id} is not an Aspire build.", nameof(build));
         }
 
+        Asset[] dashboardAssets = GetDashboardAssets(build);
+        string version = dashboardAssets.First().Version;
+        logger.LogInformation("Found Aspire build version: {Version}", version);
+
+        return Task.FromResult(new DependencyUpdate(
+            Description: $"Update Aspire Dashboard to {version}",
+            ApplyAsync: (variables, _, token) => ApplyAsync(variables, dashboardAssets, version, token)));
+    }
+
+    private static Asset[] GetDashboardAssets(Build build)
+    {
         Asset[] dashboardAssets = build.Assets.Where(asset =>
             asset.Name.Contains("aspire-dashboard-linux-x64")
             || asset.Name.Contains("aspire-dashboard-linux-arm64"))
@@ -49,12 +91,29 @@ public sealed class AspireUpdater(
             throw new InvalidOperationException($"Could not find aspire-dashboard-linux-* assets in build {build.Id}");
         }
 
-        string version = dashboardAssets.First().Version;
-        logger.LogInformation("Found Aspire build version: {Version}", version);
+        return dashboardAssets;
+    }
 
-        return Task.FromResult(new DependencyUpdate(
-            Description: $"Update Aspire Dashboard to {version}",
-            ApplyAsync: (variables, _, token) => ApplyAsync(variables, dashboardAssets, version, token)));
+    private async Task<bool> IsReleasedOnGitHubAsync(Build build, CancellationToken cancellationToken)
+    {
+        string productVersion = VersionHelper.ResolveProductVersion(
+            GetDashboardAssets(build).First().Version, isStableRelease: true);
+        string tag = $"v{productVersion}";
+
+        // Octokit has no "exists" API for releases. Get returns only published releases (never drafts)
+        // and throws NotFoundException when there is no release for the tag.
+        try
+        {
+            _ = await releases.Get("microsoft", "aspire", tag).WaitAsync(cancellationToken);
+            return true;
+        }
+        catch (NotFoundException)
+        {
+            logger.LogInformation(
+                "Skipping internal Aspire build {BuildId}: no public GitHub release {Tag} exists yet",
+                build.Id, tag);
+            return false;
+        }
     }
 
     private async Task ApplyAsync(

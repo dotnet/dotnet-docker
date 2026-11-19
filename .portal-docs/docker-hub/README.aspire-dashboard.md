@@ -1,7 +1,7 @@
 # Featured Tags
 
-* `13`
-  * `docker pull mcr.microsoft.com/aspire/dashboard:13`
+* `17`
+  * `docker pull mcr.microsoft.com/aspire/dashboard:17`
 
 # About
 
@@ -14,7 +14,7 @@ For preview builds, see the [nightly Aspire Dashboard image](https://mcr.microso
 Run the dashboard locally:
 
 ```console
-docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 mcr.microsoft.com/aspire/dashboard:13
+docker run --rm -d --name aspire-dashboard -p 127.0.0.1:18888:18888 -p 127.0.0.1:4317:18889 -p 127.0.0.1:4318:18890 mcr.microsoft.com/aspire/dashboard:17
 ```
 
 Open `http://localhost:18888`. To sign in, use the login URL or token printed in the container logs:
