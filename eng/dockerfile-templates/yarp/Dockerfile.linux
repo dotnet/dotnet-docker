@@ -1,31 +1,34 @@
 {{
-    set yarpVersionParts to split(PRODUCT_VERSION, ".") ^
-    set yarpMajorMinor to cat(yarpVersionParts[0], ".", yarpVersionParts[1]) ^
+    set yarpMajor to split(PRODUCT_VERSION, ".")[0] ^
+    set dotnetVersion to VARIABLES[cat("yarp|", yarpMajor, "|dotnet-version")] ^
     set aspnetBaseTag to
-        cat("mcr.microsoft.com/dotnet/aspnet:", VARIABLES[cat("yarp|", yarpMajorMinor, "|aspnet-version")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
+        cat("$REPO:", VARIABLES[cat("dotnet|", dotnetVersion, "|fixed-tag")], "-", OS_VERSION, ARCH_TAG_SUFFIX) ^
     set installerImageTag to VARIABLES[cat("azurelinux|", OS_VERSION_NUMBER, "|core")] ^
 
-    set baseUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|", VARIABLES["branch"])] ^
-    set baseChecksumUrl to VARIABLES[cat("yarp|", yarpMajorMinor, "|base-url|checksums|", VARIABLES["branch"])] ^
+    set baseUrl to VARIABLES[cat("yarp|", yarpMajor, "|base-url|", VARIABLES["branch"])] ^
+    set baseChecksumUrl to VARIABLES[cat("yarp|", yarpMajor, "|base-url|checksums|", VARIABLES["branch"])] ^
     set isInternal to find(baseUrl, "dotnetstage") >= 0 ^
 
-    set buildVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|build-version")] ^
+    set buildVersion to VARIABLES[cat("yarp|", yarpMajor, "|build-version")] ^
     set yarpVersionVariable to when(find(buildVersion, '-rtm') >= 0 || find(buildVersion, '-servicing') >= 0, "product-version", "build-version") ^
-    set yarpVersion to VARIABLES[cat("yarp|", yarpMajorMinor, "|", yarpVersionVariable)] ^
+    set yarpVersion to VARIABLES[cat("yarp|", yarpMajor, "|", yarpVersionVariable)] ^
     set versionFolder to when(buildVersion != yarpVersion, buildVersion, '$yarp_version') ^
 
     set downloadUrl to cat(baseUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".tar.gz") ^
     set shaUrl to cat(baseChecksumUrl, "/reverse-proxy/", versionFolder, "/", "reverse-proxy-linux-", ARCH_SHORT, ".tar.gz.sha512") ^
-    set appDir to "/app" ^
-    set sha to VARIABLES[join(["yarp", yarpMajorMinor, "linux", ARCH_SHORT, "sha"], "|")]
+    set appDir to "/staging/app" ^
+    set sha to VARIABLES[join(["yarp", yarpMajor, "linux", ARCH_SHORT, "sha"], "|")]
 
-}}# Installer image
+}}ARG REPO=mcr.microsoft.com/dotnet/aspnet
+
+# Installer image
 FROM {{installerImageTag}} AS installer
 
 {{InsertTemplate("../Dockerfile.linux.distroless-azurelinux-installer-prereqs")}}
 
 # Retrieve YARP
 RUN {{if isInternal:--mount=type=secret,id=ACCESSTOKEN,required=true }}yarp_version={{yarpVersion}} \
+    && mkdir -p /staging/etc/wwwroot \
     && {{InsertTemplate("../Dockerfile.linux.download-appliance", [
         "product": "yarp",
         "productVersion": yarpVersion,
@@ -33,13 +36,14 @@ RUN {{if isInternal:--mount=type=secret,id=ACCESSTOKEN,required=true }}yarp_vers
         "sha-url": shaUrl,
         "sha-url-is-bare": "true",
         "extract-to": appDir
-    ], "    ")}}
+    ], "    ")}} \
+    && chmod 755 {{appDir}}
 
 
 # YARP image
 FROM {{aspnetBaseTag}}
 
-COPY --from=installer ["/app", "/app"]
+COPY --from=installer /staging/ /
 
 {{InsertTemplate("Dockerfile.envs")}}
 

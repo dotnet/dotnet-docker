@@ -4,8 +4,8 @@
 
 # Featured Tags
 
-* `2.3-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:2.3-preview`
+* `3.0-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:3.0-preview`
 
 # About
 

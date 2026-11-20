@@ -16,6 +16,10 @@ parameters:
 - name: aspireGaChannel
   type: string
   default: ""
+# BAR channel to read YARP versions from. Controls updates to the nightly branch.
+- name: yarpChannel
+  type: string
+  default: ""
 # .NET image components to update. This should be a list of strings.
 # 'stringList' is not a supported type for parameters in templates, so we need use 'object' instead.
 # https://learn.microsoft.com/azure/devops/pipelines/process/runtime-parameters#parameter-data-types
@@ -28,6 +32,10 @@ parameters:
   default: true
 # Whether or not to try and update the Aspire Dashboard version according to the channel parameter
 - name: updateAspire
+  type: boolean
+  default: true
+# Whether or not to try and update the YARP version according to the channel parameter
+- name: updateYarp
   type: boolean
   default: true
 # Whether to submit a pull request with the updates instead of applying them locally
@@ -125,6 +133,32 @@ extends:
                   ${{ insert }}: ${{ parameters.updateEnvironment }}
                   ${{ if parameters.submitPullRequest }}:
                     UpdateDependencies__BarToken: $(barAccessToken)
+
+      - ${{ if and(parameters.updateYarp, ne(parameters.yarpChannel, '')) }}:
+        - template: /eng/pipelines/jobs/update-dependency.yml@self
+          parameters:
+            dependencyName: yarp
+            updateSteps:
+            - ${{ if parameters.submitPullRequest }}:
+              - template: /eng/pipelines/steps/get-bar-token.yml@self
+            - task: AzureCLI@2
+              displayName: Update YARP
+              inputs:
+                ${{ if parameters.submitPullRequest }}:
+                  azureSubscription: DotnetContainersGitHubBot
+                ${{ else }}:
+                  azureSubscription: "Darc: Maestro Production"
+                scriptType: "pscore"
+                scriptLocation: "inlineScript"
+                inlineScript: >-
+                  dotnet run --project eng/update-dependencies/update-dependencies.csproj --
+                  yarp channel
+                  ${{ parameters.yarpChannel }}
+                  --submit-pr ${{ parameters.submitPullRequest }}
+              env:
+                ${{ insert }}: ${{ parameters.updateEnvironment }}
+                ${{ if parameters.submitPullRequest }}:
+                  UpdateDependencies__BarToken: $(barAccessToken)
 
       - ${{ each tool in parameters.tools }}:
         - template: /eng/pipelines/jobs/update-dependency.yml@self

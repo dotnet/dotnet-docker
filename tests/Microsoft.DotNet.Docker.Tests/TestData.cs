@@ -307,8 +307,8 @@ public static class TestData
     private static readonly ProductImageData[] YarpTestData =
     [
         new() {
-            Version = new ImageVersion(new Version(2,3), isPreview: true),
-            VersionFamily = V9_0,
+            Version = new ImageVersion(new Version(3,0), isPreview: true),
+            VersionFamily = V10_0,
             OS = OS.AzureLinux30Distroless,
             OSTag = "",
             OSDir = OS.AzureLinuxDistroless,
@@ -316,8 +316,8 @@ public static class TestData
             SupportedImageRepos = DotNetImageRepo.Yarp,
         },
         new() {
-            Version = new ImageVersion(new Version(2,3), isPreview: true),
-            VersionFamily = V9_0,
+            Version = new ImageVersion(new Version(3,0), isPreview: true),
+            VersionFamily = V10_0,
             OS = OS.AzureLinux30Distroless,
             OSTag = "",
             OSDir = OS.AzureLinuxDistroless,

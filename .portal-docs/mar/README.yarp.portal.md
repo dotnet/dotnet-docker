@@ -10,8 +10,8 @@ Watch [discussions](https://github.com/dotnet/dotnet-docker/discussions/categori
 
 ## Featured Tags
 
-* `2.3-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:2.3-preview`
+* `3.0-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:3.0-preview`
 
 ## Related Repositories
 

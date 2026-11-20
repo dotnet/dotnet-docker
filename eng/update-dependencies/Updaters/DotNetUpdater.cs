@@ -99,16 +99,9 @@ public sealed class DotNetUpdater(IBasicBarClient barClient, ILogger<DotNetUpdat
 
         foreach ((string? product, string? version) in productVersions)
         {
-            string productVersion = "";
-            if (version is not null)
-            {
-                SemanticVersion parsedVersion = SemanticVersion.Parse(version);
-                productVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}.{parsedVersion.Patch}";
-                if (parsedVersion.IsPrerelease && parsedVersion.ReleaseLabels.First() is not ("servicing" or "rtm"))
-                {
-                    productVersion += $"-{string.Join(".", parsedVersion.ReleaseLabels.Take(2))}";
-                }
-            }
+            string productVersion = version is null
+                ? ""
+                : VersionHelper.ResolveArcadeProductVersion(SemanticVersion.Parse(version));
 
             UpdateVersion(variables, $"{product}|{dockerfileVersion}|build-version", version ?? "");
             UpdateVersion(variables, $"{product}|{dockerfileVersion}|product-version", productVersion);
