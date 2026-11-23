@@ -63,14 +63,7 @@ public sealed class MonitorUpdater(
         SemanticVersion parsedVersion)
     {
         string dockerfileVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}";
-        bool stableBranding = parsedVersion.ReleaseLabels.FirstOrDefault() is "servicing" or "rtm";
-        string productVersion = $"{parsedVersion.Major}.{parsedVersion.Minor}.{parsedVersion.Patch}";
-
-        // Preview tags keep the release label and number; archive names keep the full build version.
-        if (parsedVersion.IsPrerelease && !stableBranding)
-        {
-            productVersion += $"-{string.Join(".", parsedVersion.ReleaseLabels.Take(2))}";
-        }
+        string productVersion = VersionHelper.ResolveArcadeProductVersion(parsedVersion);
 
         string branch = variables.GetValue("branch");
         string quality = branch == "main" ? "maintenance" : "preview";

@@ -12,8 +12,8 @@
   * `docker pull mcr.microsoft.com/dotnet/samples:aspnetapp-chiseled`^
 elif match(SHORT_REPO, "monitor") || match(REPO, "monitor/base"):* `10` (Long-Term Support)
   * `docker pull {{FULL_REPO}}:10`^
-elif match(REPO, "yarp"):* `2.3-preview`
-  * `docker pull {{FULL_REPO}}:2.3-preview`^
+elif match(REPO, "yarp"):* `3.0-preview`
+  * `docker pull {{FULL_REPO}}:3.0-preview`^
 else:* `11.0` (Standard Support)
   * `docker pull {{FULL_REPO}}:11.0`
 * `10.0` (Long-Term Support)

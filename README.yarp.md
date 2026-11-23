@@ -6,8 +6,8 @@
 
 ## Featured Tags
 
-* `2.3-preview`
-  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:2.3-preview`
+* `3.0-preview`
+  * `docker pull mcr.microsoft.com/dotnet/nightly/yarp:3.0-preview`
 
 ## About
 
@@ -110,13 +110,13 @@ You can skip HTTPS validation for the OTLP endpoint only by passing the environm
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-2.3.0-preview.5, 2.3-preview, 2-preview, latest | [Dockerfile](src/yarp/2.3/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
+3.0.0-preview.1, 3.0-preview, 3-preview, latest | [Dockerfile](src/yarp/3.0/azurelinux-distroless/amd64/Dockerfile) | Azure Linux 3.0
 
 ### Linux arm64 Tags
 
 Tags | Dockerfile | OS Version
 ---- | ---------- | ----------
-2.3.0-preview.5, 2.3-preview, 2-preview, latest | [Dockerfile](src/yarp/2.3/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
+3.0.0-preview.1, 3.0-preview, 3-preview, latest | [Dockerfile](src/yarp/3.0/azurelinux-distroless/arm64v8/Dockerfile) | Azure Linux 3.0
 
 <!--End of generated tags-->
 

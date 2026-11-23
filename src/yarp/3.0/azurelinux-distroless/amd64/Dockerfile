@@ -1,3 +1,5 @@
+ARG REPO=mcr.microsoft.com/dotnet/aspnet
+
 # Installer image
 FROM mcr.microsoft.com/azurelinux/base/core:3.0 AS installer
 
@@ -8,22 +10,24 @@ RUN tdnf install -y \
     && tdnf clean all
 
 # Retrieve YARP
-RUN yarp_version=3.0.0-preview.1.25375.1 \
+RUN yarp_version=3.0.0-preview.1.26559.1 \
+    && mkdir -p /staging/etc/wwwroot \
     && curl --fail --show-error --location \
         --remote-name https://ci.dot.net/public/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.tar.gz \
         --remote-name https://ci.dot.net/public-checksums/reverse-proxy/$yarp_version/reverse-proxy-linux-x64.tar.gz.sha512 \
     && echo "$(cat reverse-proxy-linux-x64.tar.gz.sha512)  reverse-proxy-linux-x64.tar.gz" | sha512sum -c - \
-    && mkdir --parents /app \
-    && tar --gzip --extract --no-same-owner --file reverse-proxy-linux-x64.tar.gz --directory /app \
+    && mkdir --parents /staging/app \
+    && tar --gzip --extract --no-same-owner --file reverse-proxy-linux-x64.tar.gz --directory /staging/app \
     && rm  \
         reverse-proxy-linux-x64.tar.gz \
-        reverse-proxy-linux-x64.tar.gz.sha512
+        reverse-proxy-linux-x64.tar.gz.sha512 \
+    && chmod 755 /staging/app
 
 
 # YARP image
-FROM mcr.microsoft.com/dotnet/aspnet:9.0.23-azurelinux3.0-distroless-amd64
+FROM $REPO:10.0.15-azurelinux3.0-distroless-amd64
 
-COPY --from=installer ["/app", "/app"]
+COPY --from=installer /staging/ /
 
 ENV \
     # Unset ASPNETCORE_HTTP_PORTS from base image
