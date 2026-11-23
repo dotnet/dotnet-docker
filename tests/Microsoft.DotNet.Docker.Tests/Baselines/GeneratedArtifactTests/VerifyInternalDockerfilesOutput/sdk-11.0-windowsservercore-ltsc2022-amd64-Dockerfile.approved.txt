@@ -29,8 +29,8 @@ RUN `
         `
         # Retrieve .NET SDK
         $dotnet_sdk_version = '0.0.0'; `
-        $dotnet_sdk_build_version = $dotnet_sdk_version + '.25609.108'; `
-        $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_version + '-win-x64.zip'; `
+        $dotnet_sdk_build_version = $dotnet_sdk_version + ''; `
+        $dotnet_file = 'dotnet-sdk-' + $dotnet_sdk_build_version + '-win-x64.zip'; `
         $dotnet_sha512_file = $dotnet_file + '.sha512'; `
         `
         $Headers = @{ `
@@ -53,9 +53,14 @@ RUN `
         `
         # Install PowerShell global tool
         $powershell_version = '0.0.0'; `
-        Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://powershellinfraartifacts-gkhedzdeaghdezhr.z01.azurefd.net/tool/$powershell_version/PowerShell.Windows.x64.$powershell_version.nupkg; `
-        $powershell_sha512 = '{sha512_placeholder}'; `
-        if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha512).Hash -ne $powershell_sha512) { `
+        $powershell_url_version = $powershell_version.Replace('.', '-'); `
+        $Headers = @{ `
+            Authorization = \"Bearer $env:ACCESSTOKEN\"; `
+            'x-ms-version' = '2017-11-09'; `
+        }; `
+        Invoke-WebRequest -OutFile PowerShell.Windows.x64.$powershell_version.nupkg https://pscoretestdata.blob.core.windows.net/v$powershell_url_version-nuget/globaltool/PowerShell.Windows.x64.$powershell_version.nupkg -Headers $Headers; `
+        $powershell_sha256 = '{sha256_placeholder}'; `
+        if ((Get-FileHash PowerShell.Windows.x64.$powershell_version.nupkg -Algorithm sha256).Hash -ne $powershell_sha256) { `
             Write-Host 'CHECKSUM VERIFICATION FAILED!'; `
             exit 1; `
         }; `
@@ -79,6 +84,8 @@ ENV `
     DOTNET_GENERATE_ASPNET_CERTIFICATE=false `
     # Do not show first run text
     DOTNET_NOLOGO=true `
+    # Use a shared base for private, user-only VSTest artifacts directories
+    VSTEST_ARTIFACTS_BASE_DIRECTORY=C:\Windows\Temp `
     # SDK version
     DOTNET_SDK_VERSION=0.0.0 `
     # Enable correct mode for dotnet watch (only mode supported in a container)
@@ -86,9 +93,7 @@ ENV `
     # Skip extraction of XML docs - generally not useful within an image/container - helps performance
     NUGET_XMLDOC_MODE=skip `
     # PowerShell telemetry for docker image usage
-    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-WindowsServerCore-ltsc2022 `
-    # Workaround for https://github.com/PowerShell/PowerShell/issues/20685
-    DOTNET_ROLL_FORWARD=Major
+    POWERSHELL_DISTRIBUTION_CHANNEL=PSDocker-DotnetSDK-WindowsServerCore-ltsc2022
 
 RUN setx /M PATH "%PATH%;C:\Program Files\powershell;C:\Program Files\MinGit\cmd"
 
